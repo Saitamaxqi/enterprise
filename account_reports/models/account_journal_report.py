@@ -1379,6 +1379,8 @@ class AccountJournalReportHandler(models.AbstractModel):
 
         if review:
             context_update['search_default_to_check'] = 1
+            if options['all_entries']:
+                context_update['search_default_to_check_draft'] = 1
 
         if journal.type in ('bank', 'credit'):
             params['view_ref'] = 'account_reports.view_journal_report_audit_bank_move_line_tree'

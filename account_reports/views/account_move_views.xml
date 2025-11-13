@@ -118,6 +118,9 @@
         <field name="model">account.move.line</field>
         <field name="inherit_id" ref="account.view_account_move_line_filter" />
         <field name="arch" type="xml">
+            <filter name="to_check" position="after">
+                <filter string="Draft To Review" name="to_check_draft" domain="[('move_id.checked', '=', False), ('parent_state', '=', 'draft')]" invisible="1"/>
+            </filter>
             <field name="journal_id" position="after">
                 <field name="exclude_bank_lines"/>
             </field>
