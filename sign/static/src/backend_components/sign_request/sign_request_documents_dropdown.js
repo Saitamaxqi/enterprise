@@ -56,7 +56,7 @@ export class SignRequestDocumentsDropdown extends Component {
                 [signRequestId],
                 ['access_token', 'state']
             );
-            if (signRequestData) {
+            if (signRequestData?.length) {
                 // Initialize signInfo with the fetched data
                 this.signInfo.set({
                     documentId: signRequestId,
