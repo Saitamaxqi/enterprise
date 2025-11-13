@@ -282,11 +282,12 @@ class AccountReport(models.Model):
 
     def _is_available_for(self, options):
         # Overridden to support 'oss' availability condition
+        reports = super()._is_available_for(options)
         reports_available_by_oss = self.filtered(lambda r: r.availability_condition == 'oss')
         if reports_available_by_oss:
             oss_tag = self.env.ref('l10n_eu_oss.tag_oss')
             company_ids = self.get_report_company_ids(options)
             if self.env['account.tax.repartition.line'].search_count([('tag_ids', 'in', oss_tag.ids), ('company_id', 'in', company_ids)], limit=1):
-                return super()._is_available_for(options)
+                reports += reports_available_by_oss
 
-        return super(AccountReport, self - reports_available_by_oss)._is_available_for(options)
+        return reports

@@ -7,6 +7,8 @@ class AccountReport(models.Model):
     availability_condition = fields.Selection(selection_add=[('coa_children', "Children of the Chart of Accounts")])
 
     def _is_available_for(self, options):
+        reports = super()._is_available_for(options)
+
         reports_available_by_coa_children = self.filtered(lambda r: r.availability_condition == 'coa_children')
         if reports_available_by_coa_children:
             companies = self.env['res.company'].browse(self.get_report_company_ids(options))
@@ -15,10 +17,9 @@ class AccountReport(models.Model):
                 for code in companies.mapped('chart_template')
                 for parent in self.env['account.chart.template']._get_parent_template(code)
             }
-            reports = self - reports_available_by_coa_children.filtered(lambda r: r.chart_template not in chart_templates)
-            return super(AccountReport, reports)._is_available_for(options)
+            reports += reports_available_by_coa_children.filtered(lambda r: r.chart_template in chart_templates)
 
-        return super()._is_available_for(options)
+        return reports
 
     def _compute_is_account_coverage_report_available(self):
         coa_children_reports = self.filtered(lambda report: report.availability_condition == 'coa_children')

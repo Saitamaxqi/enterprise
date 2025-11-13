@@ -5420,27 +5420,32 @@ class AccountReport(models.Model):
         """
         companies = self.env['res.company'].browse(self.get_report_company_ids(options))
 
-        reports = self
-        reports_available_by_country = self.filtered(lambda r: r.availability_condition == 'country')
-        reports_available_by_coa = self.filtered(lambda r: r.availability_condition == 'coa')
+        reports = self.filtered(lambda r: r.availability_condition == 'always')
 
-        if reports_available_by_country:
-            countries = companies.account_fiscal_country_id
-            reports_allowing_foreign_vat = reports_available_by_country.filtered('allow_foreign_vat')
-            reports -= (reports_available_by_country - reports_allowing_foreign_vat).filtered('country_id')
+        reports_by_country = self.filtered(lambda r: r.availability_condition == 'country')
+        if reports_by_country:
+            company_countries = companies.account_fiscal_country_id
 
-            if reports_allowing_foreign_vat:
+            reports_foreign_vat = reports_by_country.filtered('allow_foreign_vat')
+            reports_no_foreign_vat = reports_by_country - reports_foreign_vat
+
+            fp_countries = self.env['res.country']
+            if reports_foreign_vat:
                 foreign_vat_fpos = self.env['account.fiscal.position'].search([
                     ('foreign_vat', '!=', False),
                     ('company_id', 'in', companies.ids),
                 ])
-                countries += foreign_vat_fpos.country_id
-                reports -= reports_allowing_foreign_vat.filtered(lambda r: r.country_id and r.country_id not in countries)
+                fp_countries |= foreign_vat_fpos.country_id
 
-        if reports_available_by_coa:
+            reports += reports_by_country.filtered(lambda r: not r.country_id)
+            reports += reports_no_foreign_vat.filtered(lambda r: r.country_id and r.country_id in company_countries)
+            reports += reports_foreign_vat.filtered(lambda r: r.country_id and r.country_id in (company_countries | fp_countries))
+
+        reports_by_coa = self.filtered(lambda r: r.availability_condition == 'coa')
+        if reports_by_coa:
             # When restricting to 'coa', the report is only available if all the companies have the same CoA as the report
             chart_templates = set(companies.mapped('chart_template'))
-            reports -= reports_available_by_coa.filtered(lambda r: r.chart_template not in chart_templates)
+            reports += reports_by_coa.filtered(lambda r: r.chart_template in chart_templates)
 
         return reports
 
