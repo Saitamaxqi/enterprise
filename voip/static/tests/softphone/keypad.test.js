@@ -240,3 +240,17 @@ test("clicking a keypad key should not focus the input on mobile", async () => {
     const input = document.querySelector(".o-voip-Keypad-searchBar input");
     expect(document.activeElement).not.toBe(input);
 });
+
+test.tags("focus required");
+test("Selection starting at the beginning is removed when clicking Backspace.", async () => {
+    await start();
+    await click(".o_menu_systray [title='Show Softphone']");
+    await click(".o-voip-Softphone nav button:contains(Keypad)");
+    await insertText(".o-voip-Keypad-searchBar input:focus", "0123456");
+    const input = document.querySelector(".o-voip-Keypad-searchBar input");
+    input.setSelectionRange(0, 2);
+    await click(".o-voip-Keypad-searchBar button[title=Backspace]");
+    expect(input.selectionStart).toBe(0);
+    expect(input.selectionEnd).toBe(0);
+    await contains(".o-voip-Keypad-searchBar input:value(23456)");
+});

@@ -279,7 +279,7 @@ export class Keypad extends Component {
             selectionStart === selectionEnd && selectionStart !== 0
                 ? selectionStart - 1
                 : selectionStart;
-        if (selectionStart !== 0) {
+        if (selectionEnd !== 0) {
             this.props.state.input.value =
                 value.slice(0, cursorPosition) + value.slice(selectionEnd);
             this.updateCountryCode();
