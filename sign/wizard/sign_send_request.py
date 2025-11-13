@@ -331,7 +331,7 @@ class SignSendRequest(models.TransientModel):
         :return: nothing, sets the value in the only_autofill_readonly field.
         """
         for request in self:
-            role_to_user_map = {signer.role_id.id: signer.partner_id.user_id for signer in self.signer_ids}
+            role_to_user_map = {signer.role_id.id: signer.partner_id.main_user_id for signer in self.signer_ids}
             only_autofill_readonly = True
             for item in request.template_id.sign_item_ids:
                 user = role_to_user_map.get(item.responsible_id.id)
