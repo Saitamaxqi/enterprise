@@ -100,8 +100,8 @@ class TestSawtQapGeneration(TestAccountReportsCommon, TestPhCommon):
                 # Header
                 ['HSAWT', 'H1701Q', '123456789', '0123', '"Test Company"', '""', '""', '""', '09/2024', ''],
                 # Details
-                ['DSAWT', 'D1701Q', '0', '789456123', '0789', '"Test Partner"', '"Smith"', '"John"', '"Doe"', '09/2024', '"WI011 - Prof Fees"', 'WI011', '10.00', '450.00', '45.00'],
-                ['DSAWT', 'D1701Q', '1', '789456123', '0456', '"Test Partner Company"', '""', '""', '""', '09/2024', '"WI011 - Prof Fees"', 'WI011', '10.00', '500.00', '50.00'],
+                ['DSAWT', 'D1701Q', '0', '789456123', '0789', '"Test Partner"', '"Smith"', '"John"', '"Doe"', '09/2024', '"Prof Fees"', 'WI011', '10.00', '450.00', '45.00'],
+                ['DSAWT', 'D1701Q', '1', '789456123', '0456', '"Test Partner Company"', '""', '""', '""', '09/2024', '"Prof Fees"', 'WI011', '10.00', '500.00', '50.00'],
                 # Control
                 ['CSAWT', 'C1701Q', '123456789', '0123', '09/2024', '950.00', '95.00'],
             ]
@@ -133,8 +133,8 @@ class TestSawtQapGeneration(TestAccountReportsCommon, TestPhCommon):
                 # Header
                 ['HSAWT', 'H1701', '123456789', '0123', '"Test Company"', '""', '""', '""', '12/2024', ''],
                 # Details
-                ['DSAWT', 'D1701', '0', '789456123', '0789', '"Test Partner"', '"Smith"', '"John"', '"Doe"', '12/2024', '"WI011 - Prof Fees"', 'WI011', '10.00', '700.00', '70.00'],
-                ['DSAWT', 'D1701', '1', '789456123', '0456', '"Test Partner Company"', '""', '""', '""', '12/2024', '"WI011 - Prof Fees"', 'WI011', '10.00', '725.00', '72.50'],
+                ['DSAWT', 'D1701', '0', '789456123', '0789', '"Test Partner"', '"Smith"', '"John"', '"Doe"', '12/2024', '"Prof Fees"', 'WI011', '10.00', '700.00', '70.00'],
+                ['DSAWT', 'D1701', '1', '789456123', '0456', '"Test Partner Company"', '""', '""', '""', '12/2024', '"Prof Fees"', 'WI011', '10.00', '725.00', '72.50'],
                 # Control
                 ['CSAWT', 'C1701', '123456789', '0123', '12/2024', '1425.00', '142.50'],
             ]
@@ -166,8 +166,8 @@ class TestSawtQapGeneration(TestAccountReportsCommon, TestPhCommon):
                 # Header
                 ['HSAWT', 'H1702Q', '123456789', '0123', '"Test Company"', '""', '""', '""', '12/2024', ''],
                 # Details
-                ['DSAWT', 'D1702Q', '0', '789456123', '0789', '"Test Partner"', '"Smith"', '"John"', '"Doe"', '12/2024', '"WI011 - Prof Fees"', 'WI011', '10.00', '250.00', '25.00'],
-                ['DSAWT', 'D1702Q', '1', '789456123', '0456', '"Test Partner Company"', '""', '""', '""', '12/2024', '"WI011 - Prof Fees"', 'WI011', '10.00', '225.00', '22.50'],
+                ['DSAWT', 'D1702Q', '0', '789456123', '0789', '"Test Partner"', '"Smith"', '"John"', '"Doe"', '12/2024', '"Prof Fees"', 'WI011', '10.00', '250.00', '25.00'],
+                ['DSAWT', 'D1702Q', '1', '789456123', '0456', '"Test Partner Company"', '""', '""', '""', '12/2024', '"Prof Fees"', 'WI011', '10.00', '225.00', '22.50'],
                 # Control
                 ['CSAWT', 'C1702Q', '123456789', '0123', '12/2024', '475.00', '47.50'],
             ]
@@ -199,8 +199,8 @@ class TestSawtQapGeneration(TestAccountReportsCommon, TestPhCommon):
                 # Header
                 ['HSAWT', 'H1702', '123456789', '0123', '"Test Company"', '""', '""', '""', '12/2024', ''],
                 # Details
-                ['DSAWT', 'D1702', '0', '789456123', '0789', '"Test Partner"', '"Smith"', '"John"', '"Doe"', '12/2024', '"WI011 - Prof Fees"', 'WI011', '10.00', '700.00', '70.00'],
-                ['DSAWT', 'D1702', '1', '789456123', '0456', '"Test Partner Company"', '""', '""', '""', '12/2024', '"WI011 - Prof Fees"', 'WI011', '10.00', '725.00', '72.50'],
+                ['DSAWT', 'D1702', '0', '789456123', '0789', '"Test Partner"', '"Smith"', '"John"', '"Doe"', '12/2024', '"Prof Fees"', 'WI011', '10.00', '700.00', '70.00'],
+                ['DSAWT', 'D1702', '1', '789456123', '0456', '"Test Partner Company"', '""', '""', '""', '12/2024', '"Prof Fees"', 'WI011', '10.00', '725.00', '72.50'],
                 # Control
                 ['CSAWT', 'C1702', '123456789', '0123', '12/2024', '1425.00', '142.50'],
             ]
