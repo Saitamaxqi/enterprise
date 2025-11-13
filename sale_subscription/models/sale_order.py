@@ -601,6 +601,11 @@ class SaleOrder(models.Model):
             kwargs['model_description'] = _("Subscription")
         super()._notify_thread(message, msg_vals=msg_vals, **kwargs)
 
+    def _fetch_duplicate_orders(self):
+        # Renewal subscription orders ('2_renewal') should not duplicate orders
+        non_renewal_orders = self.filtered_domain([('subscription_state', '!=', '2_renewal')])
+        return super(SaleOrder, non_renewal_orders)._fetch_duplicate_orders()
+
     ###########
     # CRUD    #
     ###########
