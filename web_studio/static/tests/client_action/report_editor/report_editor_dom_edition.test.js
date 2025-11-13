@@ -513,7 +513,7 @@ test("add t-field", async () => {
         getEditorOptions()
     );
     await insertText(editor, "/");
-    await contains(".o-we-powerbox .o-we-command-name:contains(/^Field$/)").click();
+    await contains(".o-we-powerbox .o-we-command-name:text(Field)").click();
 
     await contains(
         ".o-web-studio-report-dynamic-placeholder-popover .o_model_field_selector_value"
