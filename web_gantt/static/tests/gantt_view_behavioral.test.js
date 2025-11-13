@@ -267,7 +267,7 @@ test("select cells to plan a task: 1-level grouped", async () => {
     const { moveTo, drop } = await contains(getCell("11", "December 2018")).drag();
     moveTo(getCell("12", "December 2018"));
     await runAllTimers(); // Pointer move is subjected to throttleForAnimation in gantt
-    drop();
+    await drop();
 
     expect.verifySteps(["[dialog] Create"]);
 });
@@ -311,7 +311,7 @@ test("select cells to plan a task: 2-level grouped", async () => {
     const dragAndDrop2 = await contains(getCell("11", "December 2018", "Project 1")).drag();
     dragAndDrop2.moveTo(getCell("12", "December 2018", "Project 1"));
     await advanceTime(20);
-    dragAndDrop2.drop();
+    await dragAndDrop2.drop();
 
     expect.verifySteps(["[dialog] Create"]);
 });
