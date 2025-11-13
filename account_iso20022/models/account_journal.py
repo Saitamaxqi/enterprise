@@ -78,7 +78,7 @@ class AccountJournal(models.Model):
             payment_method_codes = rec.mapped('outbound_payment_method_line_ids.payment_method_id.code')
             rec.has_sepa_ct_payment_method = (
                 'sepa_ct' in payment_method_codes
-                or 'iso20022_ch' in payment_method_codes and self.env['ir.config_parameter'].get_param('iso20022_ch_force_sepa')
+                or 'iso20022_ch' in payment_method_codes and self.env['ir.config_parameter'].sudo().get_param('iso20022_ch_force_sepa')
             )
 
     @api.depends('outbound_payment_method_line_ids.payment_method_id.code')
@@ -146,7 +146,7 @@ class AccountJournal(models.Model):
         chf_currency = self.env.ref('base.CHF')
         payments_date_instr_wise = defaultdict(list)
         today = fields.Date.today()
-        iso20022_ch_force_sepa = self.env['ir.config_parameter'].get_param('iso20022_ch_force_sepa')
+        iso20022_ch_force_sepa = self.env['ir.config_parameter'].sudo().get_param('iso20022_ch_force_sepa')
         for payment in payments:
             required_payment_date = max(payment['payment_date'], today)
             currency_id = payment['currency_id'] or self.company_id.currency_id.id
@@ -231,7 +231,7 @@ class AccountJournal(models.Model):
         return PmtTpInf
 
     def _get_LclInstrm(self, payment_method_code):
-        if payment_method_code == 'iso20022' and (local_instrument_code := self.env['ir.config_parameter'].get_param('account_iso20022.local_instrument_code')):
+        if payment_method_code == 'iso20022' and (local_instrument_code := self.env['ir.config_parameter'].sudo().get_param('account_iso20022.local_instrument_code')):
             LclInstrm = etree.Element("LclInstrm")
             Cd = etree.SubElement(LclInstrm, 'Cd')
             Cd.text = local_instrument_code
