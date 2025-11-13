@@ -163,6 +163,31 @@ class TestSEPACreditTransfer(TestSEPACreditTransferCommon):
         self.assertEqual(street, "icekthN")
         self.assertEqual(len(InstrId), 31, "InstrId should be trimmed to 31 characters: `35 - len('amp;')`")
 
+    def test_sepa_with_no_end_to_end_id(self):
+        """
+        Test to make sure the end-to-end ID is generated and added to the XML even if end_to_end_uuid is empty.
+        """
+
+        payment = self.createPayment(self.partner_a, 500)
+        payment.end_to_end_uuid = False
+        payment.action_post()
+
+        self.bank_journal.bank_id.bic = "BBRUBEBB"
+        self.bank_journal.sepa_pain_version = 'pain.001.001.03'
+        batch = self.env['account.batch.payment'].create({
+            'journal_id': self.bank_journal.id,
+            'payment_ids': [Command.set([payment.id])],
+            'payment_method_id': self.sepa_ct_method.id,
+            'batch_type': 'outbound',
+        })
+
+        batch.validate_batch()
+
+        ct_doc = etree.fromstring(base64.b64decode(batch.export_file))
+        namespaces = {'ns': 'urn:iso:std:iso:20022:tech:xsd:pain.001.001.03'}
+        EndToEndId = ct_doc.findtext('.//ns:EndToEndId', namespaces=namespaces)
+        self.assertEqual(len(EndToEndId), 32, "A 32 character UUID hex value should have been generated")
+
     def _check_structured_reference(self, country_code, payment):
         if country_code == 'ch':
             payment.partner_bank_id.sudo().allow_out_payment = False

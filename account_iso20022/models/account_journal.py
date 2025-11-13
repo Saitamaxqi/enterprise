@@ -4,6 +4,7 @@ import re
 import time
 from collections import defaultdict
 from lxml import etree
+from uuid import uuid4
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
@@ -287,7 +288,7 @@ class AccountJournal(models.Model):
             InstrId = etree.SubElement(PmtId, "InstrId")
             InstrId.text = sanitize_communication(payment['name'], 35)
         EndToEndId = etree.SubElement(PmtId, "EndToEndId")
-        EndToEndId.text = payment.get('end_to_end_uuid')
+        EndToEndId.text = payment.get('end_to_end_uuid') or uuid4().hex
         Amt = etree.SubElement(CdtTrfTxInf, "Amt")
 
         currency_id = self.env['res.currency'].search([('id', '=', payment['currency_id'])], limit=1)
