@@ -93,7 +93,7 @@ class HrAttendance(models.Model):
             ])
             work_entries = self.env['hr.work.entry'].sudo().search(domain)
             slots = [{'date': attendance.date, 'employee_id': attendance.employee_id.id} for attendance in self]
-            self.env["hr.work.entry.regeneration.wizard"].regenerate_work_entries(slots=slots, record_ids=work_entries.ids)
+            self.env["hr.work.entry.regeneration.wizard"].sudo().regenerate_work_entries(slots=slots, record_ids=work_entries.ids)
         if not open_attendances:
             return res
         skip_check = not bool({'check_in', 'check_out', 'employee_id'} & vals.keys())
