@@ -109,10 +109,11 @@ class ResPartner(models.Model):
         if search_terms:
             escaped_search_terms = escape_psql(search_terms)
             subdomain = Domain.OR([
-                [("phone_mobile_search", "like", escaped_search_terms)],
                 [("complete_name", "ilike", escaped_search_terms)],
                 [("email", "ilike", escaped_search_terms)],
             ])
+            if len(search_terms) >= self._phone_search_min_length:
+                subdomain |= Domain("phone_mobile_search", "like", escaped_search_terms)
             if t9_search:
                 subdomain = Domain.OR([subdomain, [("t9_name", "ilike", f" {escaped_search_terms}")]])
             domain = Domain.AND([domain, subdomain])
