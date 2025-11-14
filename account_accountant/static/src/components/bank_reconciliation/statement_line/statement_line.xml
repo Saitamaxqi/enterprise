@@ -58,7 +58,7 @@
                                 </span>
                             </div>
                             <!-- Only available on large screen -->
-                            <div class="o_top_button_line d-none d-md-flex align-items-start text-truncate">
+                            <div class="o_button_line d-none d-md-flex align-items-start text-truncate">
                                 <BankRecButtonList t-props="buttonListProps" suspenseAccountLine="suspenseAccountLine" t-if="!recordData.is_reconciled or (userCanReview and !recordData.checked)"/>
                                 <span class="badge rounded-pill py-1 ps-1 text-success bg-success-subtle" t-att-class="{ 'pe-1': !isUnfolded }" t-if="recordData.is_reconciled">
                                     <i class="fa fa-check"/>

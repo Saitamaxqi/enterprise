@@ -132,18 +132,15 @@
                         grid-column: 5 / 6;
                     }
 
-                    .o_top_button_line {
-                        display: flex !important;
+                    .o_button_line {
                         gap: map-get($spacers, 1);
                         align-items: center;
-                    }
-                }
 
-                .o_button_line {
-                    grid-column: 2 / 5;
+                        grid-column: 3 / 4;
 
-                    button {
-                        max-width: 100%;
+                        button {
+                            max-width: 100%;
+                        }
                     }
                 }
             }
