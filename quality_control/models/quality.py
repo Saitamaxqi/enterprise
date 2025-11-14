@@ -608,6 +608,11 @@ class QualityCheck(models.Model):
             if self.move_line_id:
                 if not self.move_line_id._is_checkable(check_picked):
                     return False
+        # Only process qc related to tracked product if its lot is set
+        if self.move_line_id and self.product_id.tracking in ["serial", "lot"]:
+            if self.move_line_id.picking_type_use_create_lots or self.move_line_id.picking_type_use_existing_lots:
+                if not self.move_line_id.lot_id and not self.move_line_id.lot_name:
+                    return False
         return True
 
 

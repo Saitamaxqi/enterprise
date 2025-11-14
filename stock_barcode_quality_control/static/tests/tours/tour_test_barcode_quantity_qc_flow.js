@@ -158,7 +158,8 @@ registry.category("web_tour.tours").add("test_quality_check_partial_reception_ba
             run: "click",
         },
         {
-            trigger: ".modal-content:has(.o_field_widget[name=nb_checks]:contains(3)) .btn-close",
+            trigger:
+                ".modal-content:contains(product1):has(.o_field_widget[name=nb_checks]:contains(1)) .btn-close",
             run: "click",
         },
         {
