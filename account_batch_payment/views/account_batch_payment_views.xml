@@ -34,7 +34,7 @@ if records:
                 <sheet>
                     <group>
                         <group>
-                            <field name="batch_type" readonly="payment_ids.length"/>
+                            <field name="batch_type" readonly="payment_ids.length" force_save="1"/>
                             <field name="journal_id" domain="[('type', '=', 'bank')]" options="{'no_open': True, 'no_create': True}" readonly="state != 'draft'"/>
                             <field name="currency_id" invisible="1"/>
                             <field name="available_payment_method_ids" invisible="1"/>
