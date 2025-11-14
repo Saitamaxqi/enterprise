@@ -207,7 +207,7 @@ class FedexRequest:
         else:
             # For other countries, keep the part after the hyphen
             split_code = state_code.split('-')
-            if split_code[0] == country_code:
+            if split_code[0] == country_code and len(split_code) > 1:
                 return split_code[1]
             else:
                 return state_code
