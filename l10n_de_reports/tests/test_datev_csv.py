@@ -1012,3 +1012,14 @@ class TestDatevCSV(AccountTestInvoicingCommon):
             ]
         })
         self.assertEqual(move.l10n_de_datev_main_account_id, self.company_data['default_account_receivable'])
+
+    @freeze_time('2021-01-02 18:00')
+    def test_datev_company_name(self):
+        """
+        Test that DATEV report is exported succesfully even with complex company name
+        """
+        self.company_data['company'].name = 'Test Company GmbH & Co. AB'
+        report = self.env.ref('account_reports.general_ledger_report')
+        options = report.get_options({})
+        vals = self.env[report.custom_handler_model_name].l10n_de_datev_export_to_zip(options)
+        self.assertEqual(vals['file_name'], 'general_ledger_jan_2021_test_company_gmbh_&_co._ab_data.ZIP')

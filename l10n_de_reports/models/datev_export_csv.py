@@ -109,7 +109,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             buf.seek(0)
             content = buf.read()
 
-        filename, extension = report.get_default_report_filename(options, 'ZIP').split('.')
+        filename, extension = report.get_default_report_filename(options, 'ZIP').rsplit('.', 1)
         return {
             'file_name': f'{filename}_atch.{extension}' if options.get('add_attachments') else f'{filename}_data.{extension}',
             'file_content': content,
