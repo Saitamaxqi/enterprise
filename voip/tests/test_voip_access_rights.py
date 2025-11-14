@@ -142,32 +142,32 @@ class TestVoipAccessRights(common.TransactionCase):
         with self.assertRaises(AccessError):
             call_made_by_other.with_user(regular_user).unlink()
 
-    def test_officer_access_to_providers(self):
+    def test_regular_user_access_to_providers(self):
         """
-        Officers can only read provider records of their companies, not create, write, or unlink.
+        Regular users can only read provider records of their companies, not create, write, or unlink.
         """
         company_a = self.env["res.company"].create({"name": "Company A"})
         company_b = self.env["res.company"].create({"name": "Company B"})
-        officer_user = self._create_user_in_company(company_a, "Officer", "officer", groups="voip.group_voip_officer")
+        regular_user = self._create_user_in_company(company_a, "Regular", "regular")
         provider_a = self.env["voip.provider"].create({"name": "Provider A", "company_id": company_a.id})
         provider_b = self.env["voip.provider"].create({"name": "Provider B", "company_id": company_b.id})
 
         with self.assertRaises(AccessError):
-            self.env["voip.provider"].with_user(officer_user).create({"name": "New Provider", "company_id": company_a.id})
-        provider_a.with_user(officer_user).read()
+            self.env["voip.provider"].with_user(regular_user).create({"name": "New Provider", "company_id": company_a.id})
+        provider_a.with_user(regular_user).read()
         with self.assertRaises(AccessError):
-            provider_a.with_user(officer_user).write({"name": "Updated Provider"})
+            provider_a.with_user(regular_user).write({"name": "Updated Provider"})
         with self.assertRaises(AccessError):
-            provider_a.with_user(officer_user).unlink()
+            provider_a.with_user(regular_user).unlink()
 
         with self.assertRaises(AccessError):
-            self.env["voip.provider"].with_user(officer_user).create({"name": "Other Company Provider", "company_id": company_b.id})
+            self.env["voip.provider"].with_user(regular_user).create({"name": "Other Company Provider", "company_id": company_b.id})
         with self.assertRaises(AccessError):
-            provider_b.with_user(officer_user).read()
+            provider_b.with_user(regular_user).read()
         with self.assertRaises(AccessError):
-            provider_b.with_user(officer_user).write({"name": "Updated Provider"})
+            provider_b.with_user(regular_user).write({"name": "Updated Provider"})
         with self.assertRaises(AccessError):
-            provider_b.with_user(officer_user).unlink()
+            provider_b.with_user(regular_user).unlink()
 
     def test_admin_access_to_providers(self):
         """
@@ -195,20 +195,3 @@ class TestVoipAccessRights(common.TransactionCase):
             provider_b.with_user(admin_user).write({"name": "Updated Provider"})
         with self.assertRaises(AccessError):
             provider_b.with_user(admin_user).unlink()
-
-    def test_regular_user_no_crud_on_providers(self):
-        """
-        Regular users cannot perform any CRUD operations on voip.provider, even in their own company.
-        """
-        company_a = self.env["res.company"].create({"name": "Company A"})
-        regular_user = self._create_user_in_company(company_a, "Regular", "regular")
-        provider_a = self.env["voip.provider"].create({"name": "Provider A", "company_id": company_a.id})
-
-        with self.assertRaises(AccessError):
-            self.env["voip.provider"].with_user(regular_user).create({"name": "New Provider", "company_id": company_a.id})
-        with self.assertRaises(AccessError):
-            provider_a.with_user(regular_user).read()
-        with self.assertRaises(AccessError):
-            provider_a.with_user(regular_user).write({"name": "Edited Provider A"})
-        with self.assertRaises(AccessError):
-            provider_a.with_user(regular_user).unlink()

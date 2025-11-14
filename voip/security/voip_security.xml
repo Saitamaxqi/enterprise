@@ -41,10 +41,10 @@
         <field name="domain_force">[("user_id.company_id", "in", company_ids + [False])]</field>
     </record>
 
-    <record id="voip_provider_officer_rule" model="ir.rule">
-        <field name="name">voip.provider: officers can only read records in their companies.</field>
+    <record id="voip_provider_user_rule" model="ir.rule">
+        <field name="name">voip.provider: users can only read records in their companies.</field>
         <field name="model_id" ref="model_voip_provider"/>
-        <field name="groups" eval="[Command.link(ref('group_voip_officer'))]"/>
+        <field name="groups" eval="[Command.link(ref('base.group_user'))]"/>
         <field name="domain_force">[("company_id", "in", company_ids + [False])]</field>
     </record>
 
