@@ -644,7 +644,10 @@ class AccountMove(models.Model):
             # We assume that if the user has specifically created a credit note/receipt, it is indeed a credit note/receipt.
             detected_move_type = ocr_results.get('type')
             if detected_move_type == 'receipt':
-                self.move_type = self.move_type.replace('invoice', 'receipt')
+                if self.move_type == 'in_invoice':
+                    self.move_type = 'in_receipt'
+                elif self.move_type == 'out_invoice' and self.env['ir.config_parameter'].sudo().get_param('account.show_sale_receipts'):
+                    self.move_type = 'out_receipt'
             elif detected_move_type == 'refund':
                 self.action_switch_move_type()
 
