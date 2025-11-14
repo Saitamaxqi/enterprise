@@ -477,12 +477,3 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_fleet.field_hr_version__wishlist_car_total_depreciated_cost
 msgid "Wishlist Car Total Depreciated Cost"
 msgstr "Coût total amorti de la voiture souhaitée"
-
-#~ msgid "Benefit in Kind (Company Car)"
-#~ msgstr "Avantage de toute nature (Voiture de société)"
-
-#~ msgid "CO2 Emissions"
-#~ msgstr "Taux d'émission de CO2"
-
-#~ msgid "Car BIK"
-#~ msgstr "ATN voiture"

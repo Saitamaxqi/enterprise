@@ -36,14 +36,3 @@ msgstr "ID"
 #: model:ir.model,name:documents_l10n_ch_hr_payroll.model_hr_payslip
 msgid "Pay Slip"
 msgstr "Gehaltsabrechnung"
-
-#~ msgid "\"Documents\" app settings"
-#~ msgstr "Konfiguration der \"Dokumenten\"-App"
-
-#~ msgid ""
-#~ "<strong>Warning: </strong>In order to post the individual account sheets "
-#~ "in the employee portal, you have to Enable \"Human Resources\" in the"
-#~ msgstr ""
-#~ "<strong>Warnung: </strong>Um die einzelnen Kontoblätter im "
-#~ "Mitarbeiterportal zu verbuchen, müssen Sie im Menü \"Personal\" die "
-#~ "Option \"Personal\" aktivieren."

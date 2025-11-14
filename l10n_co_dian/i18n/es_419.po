@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.5a1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-11 06:26+0000\n"
+"POT-Creation-Date: 2025-11-13 19:58+0000\n"
 "PO-Revision-Date: 2025-07-11 06:26+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: es_419\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -17,33 +18,33 @@ msgstr ""
 
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_commercial_state__received
+#: model:ir.model.fields.selection,name:l10n_co_dian.selection__l10n_co_dian_document__commercial_state__received
 msgid "030 - Received"
 msgstr "030 - Recibido"
 
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_commercial_state__claimed
+#: model:ir.model.fields.selection,name:l10n_co_dian.selection__l10n_co_dian_document__commercial_state__claimed
 msgid "031 - Claimed"
 msgstr "031 - Reclamado"
 
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_commercial_state__goods_received
+#: model:ir.model.fields.selection,name:l10n_co_dian.selection__l10n_co_dian_document__commercial_state__goods_received
 msgid "032 - Goods Received"
 msgstr "032 - Mercancías recibidas"
 
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_commercial_state__accepted
+#: model:ir.model.fields.selection,name:l10n_co_dian.selection__l10n_co_dian_document__commercial_state__accepted
 msgid "033 - Accepted by Customer"
 msgstr "033 - Aceptado por el Cliente"
 
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_commercial_state__accepted_by_issuer
+#: model:ir.model.fields.selection,name:l10n_co_dian.selection__l10n_co_dian_document__commercial_state__accepted_by_issuer
 msgid "034 - Accepted by Issuer"
 msgstr "034 - Aceptado por el Emisor"
-
-#. module: l10n_co_dian
-#: model:ir.actions.server,name:l10n_co_dian.ir_cron_update_event_status_ir_actions_server
-msgid "1. Cron Job - Update Invoice Commercial States"
-msgstr "1. Trabajo cron: Actualizar estados comerciales de facturas"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
@@ -82,8 +83,7 @@ msgstr ""
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
-msgid ""
-"6c33aba6cd0086c0af774f5ff5e3535e16dc9a753df6bdd8da3d5d242ccee7016d4fc897225593b6e240a9e9f8b19373"
+msgid "6c33aba6cd0086c0af774f5ff5e3535e16dc9a753df6bdd8da3d5d242ccee7016d4fc897225593b6e240a9e9f8b19373"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -91,17 +91,26 @@ msgstr ""
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"        <t t-out=\"object._l10n_co_dian_get_mail_commercial_state_label()\"/> event reported to DIAN.\n"
+"        <t t-out=\"object._l10n_co_dian_get_mail_commercial_state_label()\"/"
+"> event reported to DIAN.\n"
 "    </p>\n"
 "</div>\n"
 "            "
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"        <t t-out=\"object._l10n_co_dian_get_mail_commercial_state_label()\"/> evento reportado a la DIAN.\n"
+"        <t t-out=\"object._l10n_co_dian_get_mail_commercial_state_label()\"/"
+"> evento reportado a la DIAN.\n"
 "    </p>\n"
 "</div>\n"
 "            "
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.res_partner_form_inherit
+msgid ""
+"<i title=\"Update data\" role=\"img\" aria-label=\"Update Data\" class=\"fa "
+"fa-fw fa-refresh\"/>"
+msgstr ""
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
@@ -118,8 +127,8 @@ msgstr "<strong>Términos de pago</strong>"
 #: code:addons/l10n_co_dian/models/account_edi_xml_ubl_dian.py:0
 msgid "A posted time is required to compute the CUFE/CUDE/CUDS."
 msgstr ""
-"Es necesario contar con la hora de publicación para calcular el "
-"CUFE/CUDE/CUDS."
+"Es necesario contar con la hora de publicación para calcular el CUFE/CUDE/"
+"CUDS."
 
 #. module: l10n_co_dian
 #. odoo-python
@@ -162,8 +171,7 @@ msgstr "Activar proceso de certificación"
 #. module: l10n_co_dian
 #: model:ir.model.fields,help:l10n_co_dian.field_res_config_settings__l10n_co_dian_certification_process
 msgid ""
-"Activate this checkbox if you are in the certification process with the "
-"DIAN."
+"Activate this checkbox if you are in the certification process with the DIAN."
 msgstr ""
 "Active esta casilla si está en el proceso de certificación con la DIAN."
 
@@ -199,12 +207,6 @@ msgid "Add your certificates to sign your documents."
 msgstr "Agregue sus certificados para firmar sus documentos."
 
 #. module: l10n_co_dian
-#. odoo-python
-#: code:addons/l10n_co_dian/models/res_company.py:0
-msgid "All Documents"
-msgstr "Todos los Documentos"
-
-#. module: l10n_co_dian
 #: model:product.template,name:l10n_co_dian.product_product_administracion_product_template
 msgid "Administracion"
 msgstr ""
@@ -216,9 +218,15 @@ msgid ""
 "Alcohol percentage should be set on the %(field_description)s field for "
 "product: %(product_name)s when using ICL taxes."
 msgstr ""
-"El porcentaje de alcohol debe establecerse en el campo del "
-"%(field_description)s para el producto: %(product_name)s al usar impuestos "
+"El porcentaje de alcohol debe establecerse en el campo del %"
+"(field_description)s para el producto: %(product_name)s al usar impuestos "
 "ICL."
+
+#. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/res_config_settings.py:0
+msgid "All Documents"
+msgstr "Todos los Documentos"
 
 #. module: l10n_co_dian
 #. odoo-python
@@ -235,11 +243,9 @@ msgstr "La referencia URI %(uri)s ambigua se resolvió en %(count)d nodos"
 #. module: l10n_co_dian
 #. odoo-python
 #: code:addons/l10n_co_dian/models/account_edi_xml_ubl_dian.py:0
-msgid ""
-"An Electronic Invoice Type must be selected before sending the invoice."
+msgid "An Electronic Invoice Type must be selected before sending the invoice."
 msgstr ""
-"Debe seleccionar un Tipo de Documento Electrónico antes de enviar la "
-"factura."
+"Debe seleccionar un Tipo de Documento Electrónico antes de enviar la factura."
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
@@ -338,7 +344,7 @@ msgstr "Proceso de certificación"
 
 #. module: l10n_co_dian
 #. odoo-python
-#: code:addons/l10n_co_dian/models/res_company.py:0
+#: code:addons/l10n_co_dian/models/res_config_settings.py:0
 msgid "Certification Process Has Concluded"
 msgstr "El Proceso de Habilitación ha Concluido"
 
@@ -357,6 +363,11 @@ msgstr "Motivo de la Reclamación"
 #: model:mail.template,name:l10n_co_dian.email_template_commercial_event
 msgid "Colombia Commercial Event"
 msgstr "Evento Comercial Colombia"
+
+#. module: l10n_co_dian
+#: model:ir.actions.server,name:l10n_co_dian.ir_cron_update_event_status_ir_actions_server
+msgid "Colombian EDI: Update Invoice Commercial States"
+msgstr ""
 
 #. module: l10n_co_dian
 #: model:ir.model,name:l10n_co_dian.model_l10n_co_dian_document
@@ -403,6 +414,11 @@ msgstr ""
 "se generarán desde Odoo"
 
 #. module: l10n_co_dian
+#: model:ir.model,name:l10n_co_dian.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "Contado"
 msgstr ""
@@ -413,6 +429,11 @@ msgid "Control key acquired in the DIAN portal, used to generate the CUFE"
 msgstr ""
 "Clave de control adquirida en el portal de la DIAN, utilizada para generar "
 "el CUFE"
+
+#. module: l10n_co_dian
+#: model:ir.model,website_form_label:l10n_co_dian.model_res_partner
+msgid "Create a Customer"
+msgstr ""
 
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_claim_wizard__create_uid
@@ -542,6 +563,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_co_dian.field_mail_template__display_name
 #: model:ir.model.fields,field_description:l10n_co_dian.field_res_company__display_name
 #: model:ir.model.fields,field_description:l10n_co_dian.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:l10n_co_dian.field_res_partner__display_name
 msgid "Display Name"
 msgstr "Mostrar nombre"
 
@@ -631,7 +653,7 @@ msgstr ""
 
 #. module: l10n_co_dian
 #. odoo-python
-#: code:addons/l10n_co_dian/models/account_move.py:0
+#: code:addons/l10n_co_dian/models/l10n_co_dian_document.py:0
 msgid ""
 "Error(s) while generating the UBL file:\n"
 "- %s"
@@ -642,12 +664,13 @@ msgstr ""
 #. module: l10n_co_dian
 #: model:mail.template,subject:l10n_co_dian.email_template_commercial_event
 msgid ""
-"Evento;{{ object.ref }};{{ "
-"object.company_id.partner_id._get_vat_without_verification_code() }};{{ "
-"object.company_id.partner_id.l10n_co_edi_commercial_name or "
-"object.company_id.partner_id.name }};{{ "
-"object._l10n_co_dian_get_electronic_document_number() }};{{ "
-"object._l10n_co_dian_get_commercial_state_string() }}"
+"Evento;{{ object.ref }};"
+"{{ object.company_id.partner_id._get_vat_without_verification_code() }};"
+"{{ object.company_id.partner_id.l10n_co_edi_commercial_name or "
+"object.company_id.partner_id.name }};"
+"{{ object._l10n_co_dian_get_electronic_document_number() }};"
+"{{ object._l10n_co_dian_get_mail_commercial_state_label().split(' - ', 1)"
+"[0] }}"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -707,6 +730,7 @@ msgstr "Ir a Socio"
 #: model:ir.model.fields,field_description:l10n_co_dian.field_mail_template__id
 #: model:ir.model.fields,field_description:l10n_co_dian.field_res_company__id
 #: model:ir.model.fields,field_description:l10n_co_dian.field_res_config_settings__id
+#: model:ir.model.fields,field_description:l10n_co_dian.field_res_partner__id
 msgid "ID"
 msgstr "Identificación"
 
@@ -801,6 +825,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_move__l10n_co_dian_document_ids
 msgid "L10N Co Dian Document"
 msgstr "L10N Co Dian Documento"
+
+#. module: l10n_co_dian
+#: model:ir.model.fields,field_description:l10n_co_dian.field_res_partner__l10n_co_dian_enable_update_data
+#: model:ir.model.fields,field_description:l10n_co_dian.field_res_users__l10n_co_dian_enable_update_data
+msgid "L10N Co Dian Enable Update Data"
+msgstr ""
 
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_account_bank_statement_line__l10n_co_dian_identifier_type
@@ -922,17 +952,17 @@ msgstr "Cantidad de Facturas a Certificar"
 
 #. module: l10n_co_dian
 #. odoo-python
-#: code:addons/l10n_co_dian/models/res_company.py:0
-msgid "Open"
-msgstr "Abrir"
-
-#. module: l10n_co_dian
-#. odoo-python
 #: code:addons/l10n_co_dian/models/account_move.py:0
 msgid "Only invoicing users can update the DIAN commercial status."
 msgstr ""
 "Sólo los usuarios facturadores pueden actualizar el estado comercial de la "
 "DIAN."
+
+#. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/res_config_settings.py:0
+msgid "Open"
+msgstr "Abrir"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.l10n_co_dian_operation_mode_view_tree
@@ -953,13 +983,14 @@ msgstr ""
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_commercial_state__pending
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_state__invoice_pending
+#: model:ir.model.fields.selection,name:l10n_co_dian.selection__l10n_co_dian_document__commercial_state__pending
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__l10n_co_dian_document__state__invoice_pending
 msgid "Pending"
 msgstr "Pendiente"
 
 #. module: l10n_co_dian
 #. odoo-python
-#: code:addons/l10n_co_dian/models/res_company.py:0
+#: code:addons/l10n_co_dian/models/res_config_settings.py:0
 msgid "Please click below to check the status of your documents."
 msgstr "Dar clic abajo para consultar el estado de tus documentos."
 
@@ -1043,14 +1074,14 @@ msgstr "Envíe el documento soporte a la DIAN"
 msgid ""
 "Send test electronic documents with your certificate to achieve the "
 "'Enabled' status in the DIAN portal for 'in house software' operation mode. "
-"In the fields below, define the number of 'Total Required Accepted Documents' "
-"specified in the Test Set assigned by the DIAN."
+"In the fields below, define the number of 'Total Required Accepted "
+"Documents' specified in the Test Set assigned by the DIAN."
 msgstr ""
 "Envíe documentos electrónicos de prueba con su certificado para lograr el "
 "estado 'Habilitado' en el portal de la DIAN para el modo de operación "
-"'Software propio'. En los campos de abajo, defina la cantidad de "
-"'Total de Documentos Aceptados Requeridos' especificados en el "
-"Set de Pruebas asignado por la DIAN."
+"'Software propio'. En los campos de abajo, defina la cantidad de 'Total de "
+"Documentos Aceptados Requeridos' especificados en el Set de Pruebas asignado "
+"por la DIAN."
 
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_state__invoice_sending_failed
@@ -1179,8 +1210,8 @@ msgid ""
 "Testing ID is needed for the certification process with the DIAN and for "
 "general testing of electronic invoicing workflows"
 msgstr ""
-"El ID de pruebas es necesario para el proceso de certificación con la DIAN y"
-" para las pruebas generales de los flujos de trabajo de facturación "
+"El ID de pruebas es necesario para el proceso de certificación con la DIAN y "
+"para las pruebas generales de los flujos de trabajo de facturación "
 "electrónica"
 
 #. module: l10n_co_dian
@@ -1205,8 +1236,7 @@ msgstr "El Bill CUFE/CUDE es necesario para el envío de eventos comerciales."
 #. odoo-python
 #: code:addons/l10n_co_dian/models/account_move.py:0
 msgid "The Bill Reference is required to send commercial events."
-msgstr ""
-"La Referencia de Factura es necesaria para enviar eventos comerciales."
+msgstr "La Referencia de Factura es necesaria para enviar eventos comerciales."
 
 #. module: l10n_co_dian
 #. odoo-python
@@ -1257,12 +1287,6 @@ msgstr "Los valores del diario se actualizaron con éxito."
 
 #. module: l10n_co_dian
 #. odoo-python
-#: code:addons/l10n_co_dian/models/account_edi_xml_ubl_dian.py:0
-msgid "The original debited invoice has no CUFE."
-msgstr "La factura debitada original no tiene CUFE."
-
-#. module: l10n_co_dian
-#. odoo-python
 #: code:addons/l10n_co_dian/models/res_config_settings.py:0
 msgid ""
 "The number of invoices, credit notes, or debit notes to certify must be "
@@ -1273,10 +1297,16 @@ msgstr ""
 
 #. module: l10n_co_dian
 #. odoo-python
+#: code:addons/l10n_co_dian/models/account_edi_xml_ubl_dian.py:0
+msgid "The original debited invoice has no CUFE."
+msgstr "La factura debitada original no tiene CUFE."
+
+#. module: l10n_co_dian
+#. odoo-python
 #: code:addons/l10n_co_dian/models/account_move.py:0
 msgid ""
-"The receiving partner's identification number is required to send commercial"
-" events."
+"The receiving partner's identification number is required to send commercial "
+"events."
 msgstr ""
 "Para el envío de eventos comerciales es necesario el número de "
 "identificación del socio receptor."
@@ -1316,13 +1346,19 @@ msgid "There is no support document linked to this credit note."
 msgstr "No hay documento soporte vinculado a esta nota de crédito."
 
 #. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/res_config_settings.py:0
+msgid "This action must only be called while in certification mode."
+msgstr ""
+
+#. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.res_config_settings_view_form
 msgid ""
-"Tick if you are testing workflows for electronic invoicing or if you need to"
-" activate the certification process environment"
+"Tick if you are testing workflows for electronic invoicing or if you need to "
+"activate the certification process environment"
 msgstr ""
-"Seleccione la casilla si está probando flujos de trabajo para la facturación"
-" electrónica o si necesita activar el entorno de proceso de certificación"
+"Seleccione la casilla si está probando flujos de trabajo para la facturación "
+"electrónica o si necesita activar el entorno de proceso de certificación"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
@@ -1387,8 +1423,8 @@ msgid ""
 "and technical control key"
 msgstr ""
 "Use el NIT de la empresa y el código de software para obtener el número de "
-"resolución, la fecha de                         resolución, el prefijo de la"
-" secuencia, los números de secuencia y la clave de control técnico"
+"resolución, la fecha de                         resolución, el prefijo de la "
+"secuencia, los números de secuencia y la clave de control técnico"
 
 #. module: l10n_co_dian
 #: model:product.template,name:l10n_co_dian.product_product_utilidad_product_template
@@ -1412,9 +1448,21 @@ msgid ""
 "Volume in milliliters should be set on the %(field_description)s field for "
 "product: %(product_name)s when using IBUA taxes."
 msgstr ""
-"El volumen en mililitros debe establecerse en el campo del "
-"%(field_description)s para el producto: %(product_name)s al usar impuestos "
+"El volumen en mililitros debe establecerse en el campo del %"
+"(field_description)s para el producto: %(product_name)s al usar impuestos "
 "IBUA."
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.res_config_settings_view_form
+msgid ""
+"Warning! This action will perform irreversible changes to your database to "
+"best guarantee certification with DIAN. Please make sure you are only "
+"running this on a testing database."
+msgstr ""
+"Atención! Al activar esta acción se realizarán cambios irreversibles a su "
+"base de datos con el objetivo de garantizar el éxito de su habilitación con "
+"la DIAN. Por favor asegurese de correr la acción en una base de datos de "
+"prueba."
 
 #. module: l10n_co_dian
 #: model:ir.model,name:l10n_co_dian.model_l10n_co_dian_claim_wizard
@@ -1427,17 +1475,6 @@ msgstr ""
 #: model:ir.model.constraint,message:l10n_co_dian.constraint_l10n_co_dian_operation_mode_uniq_software_operation_mode
 msgid "You cannot have two records with same mode"
 msgstr "No puede tener dos registros con el mismo modo"
-
-#. module: l10n_co_dian
-#: model_terms:ir.ui.view,arch_db:l10n_co_dian.res_config_settings_view_form
-msgid ""
-"Warning! This action will perform irreversible changes to your database to "
-"best guarantee certification with DIAN. Please make sure you are only "
-"running this on a testing database."
-msgstr ""
-"Atención! Al activar esta acción se realizarán cambios irreversibles a su "
-"base de datos con el objetivo de garantizar el éxito de su habilitación con la DIAN. "
-"Por favor asegurese de correr la acción en una base de datos de prueba."
 
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__zip_key

@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-28 10:48+0000\n"
+"POT-Creation-Date: 2025-11-13 19:59+0000\n"
 "PO-Revision-Date: 2022-11-28 10:48+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -19,3 +20,8 @@ msgstr ""
 #: model:ir.actions.client,name:l10n_dz_reports.action_account_report_dz_pl
 msgid "Profit and loss"
 msgstr "Compte de résultats"
+
+#. module: l10n_dz_reports
+#: model:account.return.type,name:l10n_dz_reports.dz_tax_return_type
+msgid "Tax"
+msgstr ""

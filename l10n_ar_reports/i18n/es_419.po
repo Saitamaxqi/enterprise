@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~17.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-28 09:54+0000\n"
+"POT-Creation-Date: 2025-11-13 19:53+0000\n"
 "PO-Revision-Date: 2024-11-28 09:54+0000\n"
 "Last-Translator: Fernanda Alvarez, 2024\n"
 "Language-Team: \n"
@@ -24,13 +24,13 @@ msgstr "+%s líneas sin previsualización"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__afip_responsibility_type_id
-msgid "AFIP Responsibility Type"
-msgstr "Tipo de responsabilidad AFIP"
+msgid "ARCA Responsibility Type"
+msgstr ""
 
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
-msgid "AFIP responsibility"
-msgstr "Responsabilidad AFIP"
+msgid "ARCA responsibility"
+msgstr ""
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__afip_responsibility_type_name
@@ -54,8 +54,8 @@ msgstr ""
 
 #. module: l10n_ar_reports
 #: model:ir.model,name:l10n_ar_reports.model_l10n_ar_tax_report_handler
-msgid "Argentinian Report Custom Handler"
-msgstr "Gestor personalizado de reportes argentinos"
+msgid "Argentinian Tax Report Custom Handler"
+msgstr "Gestor personalizado de reportes fiscales argentinos"
 
 #. module: l10n_ar_reports
 #. odoo-python
@@ -133,6 +133,9 @@ msgstr "Fecha: Último mes"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__display_name
+#: model:ir.model.fields,field_description:l10n_ar_reports.field_l10n_ar_tax_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_ar_reports.field_res_company__display_name
+#: model:ir.model.fields,field_description:l10n_ar_reports.field_res_config_settings__display_name
 msgid "Display Name"
 msgstr "Nombre a mostrar"
 
@@ -191,12 +194,10 @@ msgid "Grav. 5%"
 msgstr ""
 
 #. module: l10n_ar_reports
-#: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
-msgid "Group By..."
-msgstr "Agrupar por..."
-
-#. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__id
+#: model:ir.model.fields,field_description:l10n_ar_reports.field_l10n_ar_tax_report_handler__id
+#: model:ir.model.fields,field_description:l10n_ar_reports.field_res_company__id
+#: model:ir.model.fields,field_description:l10n_ar_reports.field_res_config_settings__id
 msgid "ID"
 msgstr ""
 
@@ -344,6 +345,11 @@ msgid "Status"
 msgstr "Estado"
 
 #. module: l10n_ar_reports
+#: model:account.return.type,name:l10n_ar_reports.ar_tax_return_type
+msgid "Tax"
+msgstr ""
+
+#. module: l10n_ar_reports
 #. odoo-javascript
 #: code:addons/l10n_ar_reports/static/src/components/argentinian_report/filter_tax_type.xml:0
 msgid "Tax Type:"
@@ -366,10 +372,12 @@ msgstr "El contacto '%s' no tiene país configurado."
 #: code:addons/l10n_ar_reports/static/src/components/argentinian_report/warnings.xml:0
 msgid ""
 "This report contains more lines than the limit set on it.\n"
-"        To save performance, the exceeding lines are hidden from this preview, but they will be appear in exported files as usual."
+"        To save performance, the exceeding lines are hidden from this "
+"preview, but they will be appear in exported files as usual."
 msgstr ""
 "Este reporte incluye más líneas que el límite establecido en él.\n"
-"        Las líneas restantes están ocultas en esta vista previa para mejorar el funcionamiento, pero aparecerán en los archivos exportados."
+"        Las líneas restantes están ocultas en esta vista previa para mejorar "
+"el funcionamiento, pero aparecerán en los archivos exportados."
 
 #. module: l10n_ar_reports
 #. odoo-python
@@ -472,9 +480,3 @@ msgstr "Sin prorateo"
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
 msgid "ZIP"
 msgstr "Código postal"
-
-
-#. module: l10n_ar_reports
-#: model:ir.model,name:l10n_ar_reports.model_l10n_ar_tax_report_handler
-msgid "Argentinian Tax Report Custom Handler"
-msgstr "Gestor personalizado de reportes fiscales argentinos"

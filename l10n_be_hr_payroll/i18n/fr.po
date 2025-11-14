@@ -391,17 +391,17 @@ msgstr ""
 "- Revenu élevé : le conjoint gagne plus de %(low_income_threshold)s € net/"
 "mois.\n"
 "\n"
-"- Revenu faible : le conjoint gagne entre %(no_income_threshold)s € et "
-"%(low_income_threshold)s € net/mois.\n"
+"- Revenu faible : le conjoint gagne entre %(no_income_threshold)s € et %"
+"(low_income_threshold)s € net/mois.\n"
 "\n"
 "- Sans revenu : le conjoint gagne moins de %(no_income_threshold)s € net/"
 "mois.\n"
 "\n"
-"- Pension élevée : le conjoint perçoit une pension supérieure à "
-"%(other_income_threshold)s € net/mois.\n"
+"- Pension élevée : le conjoint perçoit une pension supérieure à %"
+"(other_income_threshold)s € net/mois.\n"
 "\n"
-"- Pension faible : le conjoint perçoit une pension inférieure à "
-"%(other_income_threshold)s € net/mois.\n"
+"- Pension faible : le conjoint perçoit une pension inférieure à %"
+"(other_income_threshold)s € net/mois.\n"
 "\n"
 "Les revenus comprennent les revenus professionnels, les rémunérations, les "
 "allocations de chômage, les rentes ou revenus similaires."
@@ -1532,9 +1532,9 @@ msgid ""
 "transport_mode_private_car or l10n_be_mobility_budget\">Distance home-work</"
 "span>"
 msgstr ""
-"<span class=\"o_form_label\" groups=\"hr.group_hr_user\" invisible="
-"\"not transport_mode_private_car or l10n_be_mobility_budget\">Distance "
-"domicile-travail</span>"
+"<span class=\"o_form_label\" groups=\"hr.group_hr_user\" invisible=\"not "
+"transport_mode_private_car or l10n_be_mobility_budget\">Distance domicile-"
+"travail</span>"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_employee_view_form
@@ -1875,11 +1875,10 @@ msgid ""
 "                                <span invisible=\"onss_declaration_count "
 "&gt; 1\" class=\"o_stat_text\">ONSS Declarations</span>"
 msgstr ""
-"<span invisible=\"onss_declaration_count == 1\" class=\"o_stat_text\""
-">Déclaration ONSS</span>\n"
-"                                <span invisible="
-"\"onss_declaration_count &gt; 1\" class=\"o_stat_text\">Déclarations "
-"ONSS</span>"
+"<span invisible=\"onss_declaration_count == 1\" "
+"class=\"o_stat_text\">Déclaration ONSS</span>\n"
+"                                <span invisible=\"onss_declaration_count "
+"&gt; 1\" class=\"o_stat_text\">Déclarations ONSS</span>"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.l10n_be_onss_declaration_view_form
@@ -1889,8 +1888,8 @@ msgid ""
 "                                <span invisible=\"onss_file_count &gt; 1\" "
 "class=\"o_stat_text\">ONSS Files</span>"
 msgstr ""
-"<span invisible=\"onss_file_count == 1\" class=\"o_stat_text\">Fichier "
-"ONSS</span>\n"
+"<span invisible=\"onss_file_count == 1\" class=\"o_stat_text\">Fichier ONSS</"
+"span>\n"
 "                                <span invisible=\"onss_file_count &gt; 1\" "
 "class=\"o_stat_text\">Fichiers ONSS</span>"
 
@@ -2084,8 +2083,8 @@ msgid ""
 "reference remuneration - additional time off amount</small>"
 msgstr ""
 "<strong class=\"ps-4\">Pécule de vacances double :</strong><small> 6,8 % de "
-"la rémunération brute de référence - montant des jours "
-"supplémentaires</small>"
+"la rémunération brute de référence - montant des jours supplémentaires</"
+"small>"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_termination_holidays_n
@@ -4180,8 +4179,8 @@ msgstr "DECLARATION AU PRECOMPTE MOBILIER (Pr.M)"
 #: code:addons/l10n_be_hr_payroll/models/l10n_be_onss_declaration.py:0
 msgid "DIMONA NISS Mutation declaration (old: %(old_niss)s, new %(new_niss)s)"
 msgstr ""
-"Déclaration DIMONA de mutation NISS (ancien : %(old_niss)s, nouveau : "
-"%(new_niss)s)"
+"Déclaration DIMONA de mutation NISS (ancien : %(old_niss)s, nouveau : %"
+"(new_niss)s)"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -5415,8 +5414,8 @@ msgid ""
 "€) not equal to total (%(total_employment_bonus)s) for payslip (id=%"
 "(payslip_id)s) of employee %(employee_name)s"
 msgstr ""
-"Bonus à l'emploi : Le volet A (%(bonus_volet_A)s €) + volet B "
-"(%(bonus_volet_B)s €) n'est pas égal au total (%(total_employment_bonus)s) "
+"Bonus à l'emploi : Le volet A (%(bonus_volet_A)s €) + volet B (%"
+"(bonus_volet_B)s €) n'est pas égal au total (%(total_employment_bonus)s) "
 "pour la fiche de paie (id=%(payslip_id)s) de l'employé %(employee_name)s"
 
 #. module: l10n_be_hr_payroll
@@ -6634,7 +6633,8 @@ msgstr "Incompatibilité entre l’employeur et le 2e pilier de pension"
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/models/l10n_be_onss_declaration.py:0
 msgid "Incompatibility between joint committee and type of worker"
-msgstr "Incompatibilité entre la commission paritaire et le type de travailleur"
+msgstr ""
+"Incompatibilité entre la commission paritaire et le type de travailleur"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -6685,8 +6685,8 @@ msgid ""
 "Incompatibility between the value of the Identification tag and the value of "
 "the Environment tag provided in the RFH2 of a message"
 msgstr ""
-"Incompatibilité entre la valeur de l’étiquette Identification et celle de l’"
-"étiquette Environment fournie dans le RFH2 d’un message"
+"Incompatibilité entre la valeur de l’étiquette Identification et celle de "
+"l’étiquette Environment fournie dans le RFH2 d’un message"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -8347,8 +8347,8 @@ msgstr "Nouvel horaire de travail"
 #: code:addons/l10n_be_hr_payroll/wizard/l10n_be_hr_payroll_schedule_change_wizard.py:0
 msgid "New working schedule on %(contract_name)s.<br/>New total: %(days)s"
 msgstr ""
-"Nouvel horaire de travail pour %(contract_name)s.<br/>Nouveau Total : "
-"%(days)s"
+"Nouvel horaire de travail pour %(contract_name)s.<br/>Nouveau Total : %"
+"(days)s"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__activity_calendar_event_id
@@ -8393,8 +8393,8 @@ msgid ""
 "No DMFA location unit linked to work address %(work_address)s for employee %"
 "(employee)s"
 msgstr ""
-"Aucune unité d’implantation DmfA liée à l’adresse de travail %(work_address)"
-"s pour le travailleur %(employee)s"
+"Aucune unité d’implantation DmfA liée à l’adresse de travail %"
+"(work_address)s pour le travailleur %(employee)s"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -8412,7 +8412,8 @@ msgstr "Aucun attribut d’institution de destination dans la balise Mailbox"
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/models/l10n_be_onss_declaration.py:0
 msgid "No Dimona as a casual worker for this occupation"
-msgstr "Pas de Dimona en tant que travailleur occasionnel pour cette occupation"
+msgstr ""
+"Pas de Dimona en tant que travailleur occasionnel pour cette occupation"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__no_onss
@@ -9774,8 +9775,8 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Veuillez configurer un sexe (homme ou femme) pour les travailleurs suivants :"
-"\n"
+"Veuillez configurer un sexe (homme ou femme) pour les travailleurs "
+"suivants :\n"
 "\n"
 "%s"
 
@@ -10212,8 +10213,8 @@ msgid ""
 "Reason for termination of statutory relationship or career element with the "
 "reporting employer missing"
 msgstr ""
-"Motif de fin de relation statutaire ou d’élément de carrière avec l’"
-"employeur déclarant manquant"
+"Motif de fin de relation statutaire ou d’élément de carrière avec "
+"l’employeur déclarant manquant"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_declaration__state__received
@@ -11293,8 +11294,8 @@ msgid ""
 "Technical problem: Unable to check the \"Young worker without experience\" "
 "status"
 msgstr ""
-"Problème technique : impossible de vérifier le statut "
-"\"Jeune travailleur sans expérience\""
+"Problème technique : impossible de vérifier le statut \"Jeune travailleur "
+"sans expérience\""
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_file__declaration_type__twct
@@ -11812,8 +11813,8 @@ msgid ""
 "The destination 'sector-institution' of the Mailbox tag is invalid (non-"
 "numeric)."
 msgstr ""
-"La destination \"secteur-institution\" de la balise Mailbox est invalide ("
-"non numérique)."
+"La destination \"secteur-institution\" de la balise Mailbox est invalide "
+"(non numérique)."
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -11961,16 +11962,16 @@ msgstr "Le numéro de ticket attendu n’a pas été indiqué"
 msgid ""
 "The file contains at least one data block that is not a form (Form block)"
 msgstr ""
-"Le fichier contient au moins un bloc de données qui n’est pas un formulaire ("
-"bloc Form)"
+"Le fichier contient au moins un bloc de données qui n’est pas un formulaire "
+"(bloc Form)"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/models/l10n_be_onss_declaration.py:0
 msgid "The file is not valid based on the associated data models (XML schema)"
 msgstr ""
-"Le fichier n’est pas valide au regard des modèles de données associés ("
-"schéma XML)"
+"Le fichier n’est pas valide au regard des modèles de données associés "
+"(schéma XML)"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -12428,8 +12429,8 @@ msgid ""
 "The time (hours/minutes) of the activity is before the time of the accident, "
 "even though the activity and the accident occurred at the same time"
 msgstr ""
-"L’heure (heures/minutes) de l’activité est antérieure à l’heure de l’"
-"accident, alors que l’activité et l’accident ont eu lieu simultanément"
+"L’heure (heures/minutes) de l’activité est antérieure à l’heure de "
+"l’accident, alors que l’activité et l’accident ont eu lieu simultanément"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -14336,691 +14337,3 @@ msgid ""
 msgstr ""
 "€<span class=\"me-2\"/>\n"
 "            (="
-
-#~ msgid "%(employee)s - Part Time %(calendar)s"
-#~ msgstr "%(employee)s - Temps partiel %(calendar)s"
-
-#~ msgid "(Hours / Week)"
-#~ msgstr "(Heures/Semaine)"
-
-#~ msgid "- Previous occupation for Double Holiday Pay Recovery in"
-#~ msgstr ""
-#~ "- Occupation antérieure pour la récupération du double pécule de vacances "
-#~ "en"
-
-#~ msgid "- Simple Holiday Pay from previous employer to recover in"
-#~ msgstr "- Simple pécule de vacances de l'ancien employeur à récupérer en"
-
-#~ msgid ""
-#~ "- Without Income: The spouse of the income recipient has no professional "
-#~ "income.\n"
-#~ "\n"
-#~ "- High income: The spouse of the recipient of the income has professional "
-#~ "income, other than pensions, annuities or similar income, which exceeds %"
-#~ "(low_income_threshold)s€ net per month.\n"
-#~ "\n"
-#~ "- Low Income: The spouse of the recipient of the income has professional "
-#~ "income, other than pensions, annuities or similar income, which does not "
-#~ "exceed %(low_income_threshold)s€ net per month.\n"
-#~ "\n"
-#~ "- Low Pensions: The spouse of the beneficiary of the income has "
-#~ "professional income which consists exclusively of pensions, annuities or "
-#~ "similar income and which does not exceed %(other_income_threshold)s€ net "
-#~ "per month.\n"
-#~ "\n"
-#~ "- High Pensions: The spouse of the beneficiary of the income has "
-#~ "professional income which consists exclusively of pensions, annuities or "
-#~ "similar income and which exceeds %(other_income_threshold)s€ net per "
-#~ "month."
-#~ msgstr ""
-#~ "- Sans revenus : Le conjoint du bénéficiaire n'a pas de revenus "
-#~ "professionnels propres.\n"
-#~ "\n"
-#~ "- Revenus élevés : Le conjoint du bénéficiaire des revenus a des revenus "
-#~ "professionnels propres, autres que des pensions, des rentes ou des "
-#~ "revenus similaires, qui dépassent %(low_income_threshold)s€ nets par "
-#~ "mois.\n"
-#~ "\n"
-#~ "- Revenus faibles : Le conjoint du bénéficiaire a des revenus "
-#~ "professionnels propres, autres que des pensions, des rentes ou des "
-#~ "revenus similaires, qui ne dépassent pas %(low_income_threshold)s€ nets "
-#~ "par mois.\n"
-#~ "\n"
-#~ "- Pensions faibles : Le conjoint du bénéficiaire a des revenus "
-#~ "professionnels propres constitués exclusivement de pensions, de rentes ou "
-#~ "de revenus similaires qui ne dépassent pas %(other_income_threshold)s€ "
-#~ "nets par mois.\n"
-#~ "\n"
-#~ "- Pensions élevées : Le conjoint du bénéficiaire a des revenus "
-#~ "professionnels propres constitués exclusivement de pensions, de rentes ou "
-#~ "de revenus similaires qui dépassent %(other_income_threshold)s€ nets par "
-#~ "mois."
-
-#~ msgid "0,87% of gross reference remuneration"
-#~ msgstr "0,87% de la rémunération brute de référence"
-
-#~ msgid "0987"
-#~ msgstr "0987"
-
-#~ msgid "100000"
-#~ msgstr "100000"
-
-#~ msgid "20"
-#~ msgstr "20"
-
-#~ msgid "2022"
-#~ msgstr "2022"
-
-#~ msgid "21-04-2001"
-#~ msgstr "21-04-2001"
-
-#~ msgid "2334"
-#~ msgstr "2334"
-
-#~ msgid "3456"
-#~ msgstr "3456"
-
-#~ msgid "34565"
-#~ msgstr "34565"
-
-#~ msgid "34893"
-#~ msgstr "34893"
-
-#~ msgid "5 Hours/Week"
-#~ msgstr "5 Heures/Semaine"
-
-#~ msgid "567877"
-#~ msgstr "567877"
-
-#~ msgid "6,8% of gross reference remuneration"
-#~ msgstr "6,8% de la rémunération brute de référence"
-
-#~ msgid "6,8% of gross reference remuneration - additional time off amount"
-#~ msgstr ""
-#~ "6,8% de la rémunération brute de référence - montant des congés "
-#~ "additionnels"
-
-#~ msgid "6870"
-#~ msgstr "6870"
-
-#~ msgid "7,67% of gross reference remuneration"
-#~ msgstr "7,67% de la rémunération brute de référence"
-
-#~ msgid ""
-#~ "7,67% of gross reference remuneration * (time off not taken) / (right to "
-#~ "time off)"
-#~ msgstr ""
-#~ "7,67% de la rémunération brute de référence * (# congés non pris) / "
-#~ "(droit aux congés)"
-
-#~ msgid "9876"
-#~ msgstr "9876"
-
-#~ msgid "<span class=\"ms-3\" invisible=\"wage_type == 'hourly'\">%</span>"
-#~ msgstr "<span class=\"ms-3\" invisible=\"wage_type == 'hourly'\">%</span>"
-
-#~ msgid "<span class=\"ms-3\"> / month</span>"
-#~ msgstr "<span class=\"ms-3\"> / mois</span>"
-
-#~ msgid "<span class=\"ms-3\">/ month</span>"
-#~ msgstr "<span class=\"ms-3\">/ mois</span>"
-
-#~ msgid "<span class=\"ms-3\">/ worked day</span>"
-#~ msgstr "<span class=\"ms-3\">/ jours presté</span>"
-
-#~ msgid "<span class=\"ms-3\">/ year</span>"
-#~ msgstr "<span class=\"ms-3\">/ an</span>"
-
-#~ msgid ""
-#~ "<span class=\"o_form_label\" groups=\"hr.group_hr_user\" invisible=\"not "
-#~ "transport_mode_private_car\">Distance home-work</span>"
-#~ msgstr ""
-#~ "<span class=\"o_form_label\" groups=\"hr.group_hr_user\" invisible=\"not "
-#~ "transport_mode_private_car\">Distance domicile-lieu de travail</span>"
-
-#~ msgid "<span class=\"o_stat_text\">Eligible Employees</span>"
-#~ msgstr "<span class=\"o_stat_text\">Employés éligibles</span>"
-
-#~ msgid "<span> %</span>"
-#~ msgstr "<span> %</span>"
-
-#~ msgid "<span> included:</span>"
-#~ msgstr "<span> inclus :</span>"
-
-#~ msgid "<span> years old</span>"
-#~ msgstr "<span> ans</span>"
-
-#~ msgid "<span>/Holiday year </span>"
-#~ msgstr "<span>/année de vacances </span>"
-
-#~ msgid "<span>Remuneration for the period from </span>"
-#~ msgstr "<span>Rémunération pour la période du </span>"
-
-#~ msgid ""
-#~ "<span>Social contributions on the various vacation pay have already been "
-#~ "paid.</span>"
-#~ msgstr ""
-#~ "<span>Les cotisations sociales sur les différents congés payés ont déjà "
-#~ "été payées.</span>"
-
-#~ msgid "<span>included:</span>"
-#~ msgstr "<span>inclus :</span>"
-
-#~ msgid "<span>to </span>"
-#~ msgstr "<span>à </span>"
-
-#~ msgid "<span>€</span>"
-#~ msgstr "<span>€</span>"
-
-#~ msgid "<strong>Bank Account</strong>"
-#~ msgstr "<strong>Compte bancaire</strong>"
-
-#~ msgid "<strong>Job Position</strong>"
-#~ msgstr "<strong>Fonction</strong>"
-
-#~ msgid "<strong>Pay holiday double complementary</strong>"
-#~ msgstr "<strong>Double pécule de vacances complémentaire</strong>"
-
-#~ msgid "<strong>Pay holiday double</strong>"
-#~ msgstr "<strong>Double pécule de vacances</strong>"
-
-#~ msgid ""
-#~ "<strong>Pay holiday double</strong> only if the majority of vacation "
-#~ "days\n"
-#~ "                        have not yet been taken"
-#~ msgstr ""
-#~ "<strong>Double pécule de vacances</strong> seulement si la majorité des "
-#~ "jours de vacances\n"
-#~ "                                n'ont pas encore été pris"
-
-#~ msgid "<strong>Pay simple</strong>"
-#~ msgstr "<strong>Pécule simple</strong>"
-
-#~ msgid "<strong>TOTAL</strong>"
-#~ msgstr "<strong>TOTAL</strong>"
-
-#~ msgid "Absence Work Entry Type"
-#~ msgstr "Type de prestation d'absence"
-
-#~ msgid "Additional Time (Paid)"
-#~ msgstr "Temps supplémentaire (payé)"
-
-#~ msgid "Additional amount to deduct"
-#~ msgstr "Congés additionnels à déduire"
-
-#~ msgid "Additional time off (european, ...)"
-#~ msgstr "Congés additionnels (européens, ...)"
-
-#~ msgid "Allocation Time Off"
-#~ msgstr "Allocations de congés"
-
-#~ msgid "Allocations N"
-#~ msgstr "Allocations N"
-
-#~ msgid "Allow ONSS Reduction for Restructuring"
-#~ msgstr "Autoriser la réduction ONSS pour restructuration"
-
-#~ msgid "Average remuneration by month current year"
-#~ msgstr "Rémunération moyenne par mois cette année"
-
-#~ msgid "Average remuneration by month previous year"
-#~ msgstr "Rémunération moyenne par mois l'année précédente"
-
-#~ msgid "Average remuneration for the 12 months preceding unpaid leave"
-#~ msgstr ""
-#~ "Rémunération moyenne durant les 12 mois précédant le congé non rémunéré"
-
-#~ msgid "Beneficiary holdings"
-#~ msgstr "Exploitations bénéficiaires"
-
-#~ msgid "Benefit in Kind Deductions (All)"
-#~ msgstr "Déductions des avantages de toute nature (tous)"
-
-#~ msgid "Benefits in kind and bonuses"
-#~ msgstr "Avantages de toute nature et bonus"
-
-#~ msgid "Boulevard de Waterloo"
-#~ msgstr "Boulevard de Waterloo"
-
-#~ msgid "Breastfeeding Break"
-#~ msgstr "Congé allaitement"
-
-#~ msgid "By Gender"
-#~ msgstr "Par sexe"
-
-#~ msgid "By gender"
-#~ msgstr "Par sexe"
-
-#~ msgid ""
-#~ "CSV format: you may edit it directly with your favorite spreadsheet "
-#~ "software, the rightmost column (value) contains the commission value over "
-#~ "3 months. When you're done, reimport the file to generate the commission "
-#~ "payslips with the accurate commissions."
-#~ msgstr ""
-#~ "Format CSV : vous pouvez le modifier directement avec votre tableur "
-#~ "préféré, la colonne la plus à droite (valeur) contient la valeur de la "
-#~ "commission sur 3 mois. Lorsque vous avez terminé, réimportez le fichier "
-#~ "pour générer les fiches de paie des commissions avec les commissions "
-#~ "exactes."
-
-#~ msgid "Car BIK"
-#~ msgstr "ATN voiture"
-
-#~ msgid "Commission Amount"
-#~ msgstr "Montant de la commission"
-
-#~ msgid "Contract and Employee Analysis Report"
-#~ msgstr "Rapport d'analyse du contrat et de l'employé"
-
-#~ msgid "Contract history"
-#~ msgstr "Historique des contrats"
-
-#~ msgid "Corona Unemployment"
-#~ msgstr "Chômage Corona"
-
-#~ msgid "Credit Time"
-#~ msgstr "Crédit-temps"
-
-#~ msgid "Credit time contract"
-#~ msgstr "Contrat crédit-temps"
-
-#~ msgid "Days Unpaid time off current year"
-#~ msgstr "Jours de congés non rémunérés pour l'année courante"
-
-#~ msgid "Days Unpaid time off previous year"
-#~ msgstr "Jours de congés non rémunérés pour l'année précédente"
-
-#~ msgid "Default Work Entry Type"
-#~ msgstr "Type de prestation par défaut"
-
-#~ msgid "Disabled"
-#~ msgstr "Handicapé"
-
-#~ msgid "Documents Enabled"
-#~ msgstr "Documents Activés"
-
-#~ msgid "Economic Unemployment"
-#~ msgstr "Chômage économique"
-
-#~ msgid "Educational Time Off"
-#~ msgstr "Congé éducation"
-
-#~ msgid "Eghezee"
-#~ msgstr "Eghezee"
-
-#~ msgid "Employees With Invalid Configured Gender"
-#~ msgstr "Employés dont le sexe configuré est invalide"
-
-#~ msgid "End-of-year bonus, 13th month or other similar amount"
-#~ msgstr "Bonus de fin d'année, 13ème mois ou autres montants similaires"
-
-#~ msgid "Error while importing file"
-#~ msgstr "Erreur lors de l'import du fichier"
-
-#~ msgid "European Time Off"
-#~ msgstr "Congé européen"
-
-#~ msgid "Export"
-#~ msgstr "Exporter"
-
-#~ msgid "Export Complete"
-#~ msgstr "Export complet"
-
-#~ msgid "Export the employees file"
-#~ msgstr "Exporter le fichier des employés"
-
-#~ msgid "Extra Legal Time Off"
-#~ msgstr "Congé extra-légal"
-
-#~ msgid "Fiscal Voluntary Rate"
-#~ msgstr "Taux de volontariat fiscal"
-
-#~ msgid "Fixed and variable remuneration"
-#~ msgstr "Rémunérations fixes et variables"
-
-#~ msgid "Flemish Educational Time Off"
-#~ msgstr "Congé éducation flamand"
-
-#~ msgid "Full Time Equivalent (Today)"
-#~ msgstr "Équivalent temps plein (Aujourd'hui)"
-
-#~ msgid "Gender"
-#~ msgstr "Sexe"
-
-#~ msgid "Generate Warrant Payslips"
-#~ msgstr "Générer les fiches de paie de warrants"
-
-#~ msgid "Generate Warrant Payslips Lines"
-#~ msgstr "Générer les lignes de fiches de paie de warrants"
-
-#~ msgid "Generate payslips for all selected employees"
-#~ msgstr "Générer les fiches de paie pour tous les employés sélectionnés"
-
-#~ msgid "Has Ambulatory Insurance"
-#~ msgstr "A une assurance ambulatoire"
-
-#~ msgid "Has Hospital Insurance"
-#~ msgstr "A une assurance hospitalisation"
-
-#~ msgid "Has Valid Schedule Change Contract"
-#~ msgstr "A un contrat valide de changement d'horaire"
-
-#~ msgid "Holiday pay details:"
-#~ msgstr "Détails du pécule de vacances :"
-
-#~ msgid "Home-Work Distance"
-#~ msgstr "Distance Domicile-Lieu de Travail"
-
-#~ msgid "Home-Work Distance in Km"
-#~ msgstr "Distance domicile-travail en km"
-
-#~ msgid "Home-Work Distance unit"
-#~ msgstr "Unité distance domicile-travail"
-
-#~ msgid "If the employee is declared disabled by law"
-#~ msgstr "Si l'employé est déclaré handicapé par la loi"
-
-#~ msgid "Import Complete"
-#~ msgstr "Import terminé"
-
-#~ msgid "Import File"
-#~ msgstr "Importer le fichier"
-
-#~ msgid "Import the employee file"
-#~ msgstr "Importer le fichier de l'employé"
-
-#~ msgid "Limburg"
-#~ msgstr "Limbourg"
-
-#~ msgid "Lines Count"
-#~ msgstr "Nombre de lignes"
-
-#~ msgid "Long Term Sick"
-#~ msgstr "Maladie de longue durée"
-
-#~ msgid "Marc Demo"
-#~ msgstr "Marc Demo"
-
-#~ msgid "Maternity Time Off"
-#~ msgstr "Congé maternité"
-
-#~ msgid "Meal Voucher (Employer)"
-#~ msgstr "Chèques-repas (Cotisation patronale)"
-
-#~ msgid "Medical Assistance"
-#~ msgstr "Assistance médicale"
-
-#~ msgid "No Certificate definer on the Payroll Configuration"
-#~ msgstr "Pas de spécification de certificat dans la configuration de la paie"
-
-#~ msgid "Notice (Unprovided)"
-#~ msgstr "Préavis (non fourni)"
-
-#~ msgid "Number of days of unpaid time off taken during current year"
-#~ msgstr "Nombre de jours de congés non rémunérés durant l'année courante"
-
-#~ msgid "Number of days of unpaid time off taken during previous year"
-#~ msgstr "Nombre de jours de congés non rémunérés durant l'année précédente"
-
-#~ msgid "Odoo"
-#~ msgstr "Odoo"
-
-#~ msgid ""
-#~ "Only one DMFA per year and per quarter is allowed. Another one already "
-#~ "exists."
-#~ msgstr ""
-#~ "Seulement une déclaration DMFA est autorisée par an et par trimestre. Une "
-#~ "autre existe déjà."
-
-#~ msgid "Operation not supported"
-#~ msgstr "Opération non prise en charge"
-
-#~ msgid "Overtime worked"
-#~ msgstr "Heures supplémentaires effectuées"
-
-#~ msgid "Parental Time Off"
-#~ msgstr "Congé parental"
-
-#~ msgid "Partial Incapacity (due to illness)"
-#~ msgstr "Incapacité partielle (pour cause de maladie)"
-
-#~ msgid "Paternity Time Off (Legal)"
-#~ msgstr "Congé de paternité (Légal)"
-
-#~ msgid "Paternity Time Off (Paid by Company)"
-#~ msgstr "Congé de paternité (Payé par la société)"
-
-#~ msgid "Payroll Analysis Report"
-#~ msgstr "Rapport d'analyse de paie"
-
-#~ msgid "Payslip Batches"
-#~ msgstr "Lots de fiches de paie"
-
-#~ msgid "Payslip current year"
-#~ msgstr "Fiches de paie de l'année courante"
-
-#~ msgid "Payslip previous year"
-#~ msgstr "Fiches de paie de l'année précédente"
-
-#~ msgid ""
-#~ "Please configure a gender (either male or female) for the following "
-#~ "employee: %s"
-#~ msgstr ""
-#~ "Veuillez configurer un sexe (masculin ou féminin) pour l'employé suivant: "
-#~ "%s"
-
-#~ msgid ""
-#~ "Please configure a gender (either male or female) for the following "
-#~ "employees:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Veuillez configurer un sexe (soit masculin, soit féminin) pour les "
-#~ "employés suivants :\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Populate"
-#~ msgstr "Populer"
-
-#~ msgid "Public Holiday"
-#~ msgstr "Jour férié"
-
-#~ msgid "Public Holiday Compensation"
-#~ msgstr "Récupération de jour férié"
-
-#~ msgid "Reason Code"
-#~ msgstr "Code de la raison du départ"
-
-#~ msgid "Recovery Additional Time"
-#~ msgstr "Temps de récupération supplémentaire"
-
-#~ msgid "Recovery Bank Holiday"
-#~ msgstr "Récupération de jour férié"
-
-#~ msgid "Reference Working Time"
-#~ msgstr "Horaire de référence"
-
-#~ msgid ""
-#~ "Remuneration of statutory holidays occurring within 30 days of the end "
-#~ "date of the contract"
-#~ msgstr ""
-#~ "Rémunération des jours fériés survenant dans les 30 jours suivant la date "
-#~ "de fin du contrat"
-
-#~ msgid "Rue du Paradis"
-#~ msgstr "Rue du Paradis"
-
-#~ msgid "SDE"
-#~ msgstr "SDE"
-
-#~ msgid "Salary Attachment"
-#~ msgstr "Saisie sur salaire"
-
-#~ msgid "Salary Attachments"
-#~ msgstr "Saisies sur salaire"
-
-#~ msgid "Sick Time Off (Without Guaranteed Salary)"
-#~ msgstr "Congé maladie (Sans salaire garanti)"
-
-#~ msgid "Simple Holiday Pay - Variable Salary"
-#~ msgstr "Simple pécule de vacances - Salaire variable"
-
-#~ msgid "Small Unemployment"
-#~ msgstr "Petit chômage"
-
-#~ msgid "Small Unemployment (Brief Holiday)"
-#~ msgstr "Petit chômage"
-
-#~ msgid "Solicitation Time Off"
-#~ msgstr "Congé de sollicitation"
-
-#~ msgid ""
-#~ "Some employee don't have any contract.:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Certains employés n'ont pas de contrat :\n"
-#~ "%s"
-
-#~ msgid "Strike"
-#~ msgstr "Grève"
-
-#~ msgid "Structure"
-#~ msgstr "Structure"
-
-#~ msgid "Taking into account for remuneration:"
-#~ msgstr "Pris en compte pour la rémunération :"
-
-#~ msgid "The Fiscal Voluntary rate on wage should be between 0 and 100."
-#~ msgstr "Le taux de volontariat fiscal doit être compris entre 0 et 100."
-
-#~ msgid "The file has been downloaded."
-#~ msgstr "Le fichier a été téléchargé."
-
-#~ msgid ""
-#~ "The files won't be posted in the employee portal if you don't have the "
-#~ "Documents app."
-#~ msgstr ""
-#~ "Les fichiers ne seront pas publiés sur le portail des employés si vous "
-#~ "n'avez pas l'application Documents."
-
-#~ msgid ""
-#~ "The work entry type used when generating work entries to fit full time "
-#~ "working schedule."
-#~ msgstr ""
-#~ "Le type d'entrée de travail utilisé lors de la génération d'entrées de "
-#~ "travail pour s'adapter à l'horaire de travail à temps plein."
-
-#~ msgid "There is no payslip to generate for those employees"
-#~ msgstr "Il n'y a aucune fiche de paie à générer pour ces employés"
-
-#~ msgid "Time Off N"
-#~ msgstr "Congés N"
-
-#~ msgid "Time Percentage in R&D"
-#~ msgstr "Pourcentage d'occupation en R&D"
-
-#~ msgid "Time off allocated during current year"
-#~ msgstr "Congés alloués durant l'année courante"
-
-#~ msgid "Time off taken during current year"
-#~ msgstr "Congés pris durant l'année courante"
-
-#~ msgid "To the attention of the next employer"
-#~ msgstr "A l'attention du prochain employeur"
-
-#~ msgid "Total Net"
-#~ msgstr "Net total"
-
-#~ msgid "Total allocated days"
-#~ msgstr "Nombre total de jours alloués"
-
-#~ msgid "Total gross wage"
-#~ msgstr "Salaire Brut Total"
-
-#~ msgid "Total time off days"
-#~ msgstr "Nombre total de jours de congé"
-
-#~ msgid "Training"
-#~ msgstr "Formation"
-
-#~ msgid "Training Time Off"
-#~ msgstr "Congé éducation"
-
-#~ msgid "Unjustified Reason"
-#~ msgstr "Raison non justifiée"
-
-#~ msgid "Unpaid Time Off"
-#~ msgstr "Congés non payés"
-
-#~ msgid "Unpredictable Reason"
-#~ msgstr "Raison impérieuse"
-
-#~ msgid "User"
-#~ msgstr "Utilisateur"
-
-#~ msgid "Various bonuses"
-#~ msgstr "Bonus divers"
-
-#~ msgid ""
-#~ "We draw your attention to the fact that this information is based on the "
-#~ "data in Odoo and / or that you\n"
-#~ "                            have introduced in Odoo and that it is "
-#~ "important that they be accompanied by a verification on your part\n"
-#~ "                            according to the particularities related to "
-#~ "contract of the worker or your company which Odoo would not\n"
-#~ "                            know."
-#~ msgstr ""
-#~ "Attention : ces informations sont basées sur les données dans Odoo et/ou "
-#~ "sur ce que vous\n"
-#~ "                            avez introduit dans Odoo. Il est essentiel de "
-#~ "les vérifier\n"
-#~ "                            selon les particularités liées au contrat du "
-#~ "travailleur ou de votre entreprise qu'Odoo ne peut pas\n"
-#~ "                            connaître."
-
-#~ msgid ""
-#~ "When you're done with the commission edition, click on the 'Generate "
-#~ "Payslip' button to generate a batch of payslips using the commissions "
-#~ "you've provided."
-#~ msgstr ""
-#~ "Lorsque vous avez terminé avec l'édition des commissions, cliquez sur le "
-#~ "bouton 'Générer la fiche de paie' pour générer un lot de fiches de paie "
-#~ "en utilisant les commissions que vous avez fournies."
-
-#~ msgid ""
-#~ "Whether or not the employee has a contract candidate for a working "
-#~ "schedule change"
-#~ msgstr ""
-#~ "Si l'employé a ou non un contrat candidat pour un changement d'horaire de "
-#~ "travail"
-
-#~ msgid "With High income"
-#~ msgstr "Avec revenus élevés"
-
-#~ msgid "Work Accident"
-#~ msgstr "Accident de travail"
-
-#~ msgid "Work Accident Time Off"
-#~ msgstr "Congé accident de travail"
-
-#~ msgid "Work entry type for regular attendances."
-#~ msgstr "Type de prestation pour les présences régulières."
-
-#~ msgid "Working Schedule"
-#~ msgstr "Heures de travail"
-
-#~ msgid "You should upload a file to import first."
-#~ msgstr "Vous devez d'abord charger un fichier à importer."
-
-#~ msgid "Youth Time Off"
-#~ msgstr "Vacances jeunes"
-
-#~ msgid "for clearly defined work"
-#~ msgstr "pour un travail clairement défini"
-
-#~ msgid "if spouse has professionnel income or not"
-#~ msgstr "si le conjoint a un revenu professionnel ou non"
-
-#~ msgid "number of dependent children declared as disabled"
-#~ msgstr "nombre d'enfants à charge déclarés handicapés"

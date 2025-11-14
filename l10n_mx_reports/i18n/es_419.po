@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.1alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-06 15:41+0000\n"
+"POT-Creation-Date: 2025-11-13 20:07+0000\n"
 "PO-Revision-Date: 2025-03-06 15:41+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -19,8 +19,12 @@ msgstr ""
 #. module: l10n_mx_reports
 #. odoo-python
 #: code:addons/l10n_mx_reports/models/trial_balance.py:0
-#, python-format
 msgid "\t- %(name)s"
+msgstr ""
+
+#. module: l10n_mx_reports
+#: model:ir.model.fields.selection,name:l10n_mx_reports.selection__res_partner__l10n_mx_type_of_operation__02
+msgid " 02 - Alienation of Assets"
 msgstr ""
 
 #. module: l10n_mx_reports
@@ -34,15 +38,34 @@ msgid " 06 - Renting of buildings"
 msgstr " 06 - Alquiler de edificios"
 
 #. module: l10n_mx_reports
+#: model:ir.model.fields.selection,name:l10n_mx_reports.selection__res_partner__l10n_mx_type_of_operation__07
+msgid " 07 - Import of goods or services"
+msgstr ""
+
+#. module: l10n_mx_reports
+#: model:ir.model.fields.selection,name:l10n_mx_reports.selection__res_partner__l10n_mx_type_of_operation__08
+msgid " 08 - Import via virtual transfer"
+msgstr ""
+
+#. module: l10n_mx_reports
 #: model:ir.model.fields.selection,name:l10n_mx_reports.selection__res_partner__l10n_mx_type_of_operation__85
 msgid " 85 - Others"
 msgstr " 85 - Otros"
 
 #. module: l10n_mx_reports
-#. odoo-python
-#: code:addons/l10n_mx_reports/models/trial_balance.py:0
-msgid "Accounts with too much tags"
-msgstr "Cuentas con demasiadas etiquetas"
+#: model:ir.model.fields.selection,name:l10n_mx_reports.selection__res_partner__l10n_mx_type_of_operation__87
+msgid " 87 - Global Operations"
+msgstr ""
+
+#. module: l10n_mx_reports
+#: model:ir.model,name:l10n_mx_reports.model_account_account
+msgid "Account"
+msgstr ""
+
+#. module: l10n_mx_reports
+#: model:ir.model,name:l10n_mx_reports.model_account_chart_template
+msgid "Account Chart Template"
+msgstr ""
 
 #. module: l10n_mx_reports
 #. odoo-python
@@ -54,11 +77,6 @@ msgstr "Cuentas sin etiqueta"
 #: model:ir.model.fields,help:l10n_mx_reports.field_res_country__demonym
 msgid "Adjective for relationship between a person and a country."
 msgstr "Adjetivo para relación entre una persona y un país."
-
-#. module: l10n_mx_reports
-#: model:ir.model,name:l10n_mx_reports.model_ir_attachment
-msgid "Attachment"
-msgstr "Adjunto"
 
 #. module: l10n_mx_reports
 #. odoo-python
@@ -75,6 +93,11 @@ msgstr "Contacto"
 #: model:ir.model,name:l10n_mx_reports.model_res_country
 msgid "Country"
 msgstr "País"
+
+#. module: l10n_mx_reports
+#: model:ir.model,website_form_label:l10n_mx_reports.model_res_partner
+msgid "Create a Customer"
+msgstr ""
 
 #. module: l10n_mx_reports
 #. odoo-python
@@ -111,16 +134,34 @@ msgid "Demonym"
 msgstr "Demónimo"
 
 #. module: l10n_mx_reports
-#. odoo-python
-#: code:addons/l10n_mx_reports/models/trial_balance.py:0
-#, python-format
-msgid "Generate report"
-msgstr "Generar reporte"
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_account_account__display_name
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_account_chart_template__display_name
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_account_trial_balance_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_res_country__display_name
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_res_partner__display_name
+msgid "Display Name"
+msgstr ""
 
 #. module: l10n_mx_reports
 #. odoo-python
 #: code:addons/l10n_mx_reports/models/trial_balance.py:0
-#, python-format
+msgid "Generate report"
+msgstr "Generar reporte"
+
+#. module: l10n_mx_reports
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_account_account__id
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_account_chart_template__id
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_account_trial_balance_report_handler__id
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_l10n_mx_report_handler__id
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_res_country__id
+#: model:ir.model.fields,field_description:l10n_mx_reports.field_res_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_mx_reports
+#. odoo-python
+#: code:addons/l10n_mx_reports/models/trial_balance.py:0
 msgid "Invalid SAT code: %s"
 msgstr ""
 
@@ -154,14 +195,6 @@ msgstr ""
 msgid ""
 "Mexico: Nationality based in the supplier country. Is the seventh column in "
 "DIOT report."
-msgstr ""
-
-#. module: l10n_mx_reports
-#: model:ir.model.fields,help:l10n_mx_reports.field_res_partner__l10n_mx_type_of_operation
-#: model:ir.model.fields,help:l10n_mx_reports.field_res_users__l10n_mx_type_of_operation
-msgid ""
-"Mexico: The type of operations that this supplier performs. This is the "
-"second column in DIOT report."
 msgstr ""
 
 #. module: l10n_mx_reports
@@ -211,17 +244,6 @@ msgstr "Mostrar lista"
 #. odoo-python
 #: code:addons/l10n_mx_reports/models/trial_balance.py:0
 msgid ""
-"Some account prefixes used in your trial balance use both Debit and Credit "
-"balance account tags. This is not allowed."
-msgstr ""
-"Algunos prefijos de cuenta utilizados en su balance de sumas y saldos "
-"utilizan a la vez etiquetas de cuenta de saldo deudor y acreedor. Esto no "
-"está permitido."
-
-#. module: l10n_mx_reports
-#. odoo-python
-#: code:addons/l10n_mx_reports/models/trial_balance.py:0
-msgid ""
 "Some accounts present in your trial balance don't have a Debit or a Credit "
 "balance account tag."
 msgstr ""
@@ -231,7 +253,6 @@ msgstr ""
 #. module: l10n_mx_reports
 #. odoo-python
 #: code:addons/l10n_mx_reports/models/trial_balance.py:0
-#, python-format
 msgid ""
 "Some of your accounts do not respect Odoo's code guidelines.\n"
 "\n"
@@ -242,11 +263,16 @@ msgstr ""
 "%(account_names)s"
 
 #. module: l10n_mx_reports
+#: model:account.return.type,name:l10n_mx_reports.mx_tax_return_type
+msgid "Tax"
+msgstr ""
+
+#. module: l10n_mx_reports
 #. odoo-python
 #: code:addons/l10n_mx_reports/models/account_diot.py:0
 msgid ""
-"The report cannot be generated because some partners are missing a valid RFC"
-" or type of operation"
+"The report cannot be generated because some partners are missing a valid RFC "
+"or type of operation"
 msgstr ""
 "El informe no se puede generar porque a algunos interlocutores les falta un "
 "RFC válido o tipo de operación"

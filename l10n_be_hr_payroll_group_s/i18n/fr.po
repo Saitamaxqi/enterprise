@@ -314,12 +314,3 @@ msgstr "versions"
 #: code:addons/l10n_be_hr_payroll_group_s/models/hr_payroll_export_group_s.py:0
 msgid "work entry types"
 msgstr "types de prestations"
-
-#~ msgid "Contract"
-#~ msgstr "Contrat"
-
-#~ msgid ""
-#~ "The contract %(contract)s must have a Group S code to export to Group S."
-#~ msgstr ""
-#~ "Le contract %(contract)s doit avoir un code Group S pour être exporté "
-#~ "vers le Group S."

@@ -50,28 +50,3 @@ msgstr "Nom affiché"
 #: model:ir.model.fields,field_description:documents_l10n_be_hr_payroll.field_l10n_be_social_security_certificate__id
 msgid "ID"
 msgstr "ID"
-
-#~ msgid "\"Documents\" app settings"
-#~ msgstr "configuration de l'application \"Documents\""
-
-#~ msgid ""
-#~ "<strong>Warning: </strong>In order to post the 281.10 sheets in the "
-#~ "employee portal, you have to Enable \"Human Resources\" in the"
-#~ msgstr ""
-#~ "<strong>Attention :</strong> Afin de publier les fiches 281.10 dans le "
-#~ "portail des employés, vous devez Activer \"Ressources Humaines\" dans la"
-
-#~ msgid ""
-#~ "<strong>Warning: </strong>In order to post the 281.45 sheets in the "
-#~ "employee portal, you have to Enable \"Human Resources\" in the"
-#~ msgstr ""
-#~ "<strong>Attention : </strong>Afin d'afficher les fiches 281.45 dans le "
-#~ "portail des employés, vous devez Activer \"Ressources Humaines\" dans la"
-
-#~ msgid ""
-#~ "<strong>Warning: </strong>In order to post the individual account sheets "
-#~ "in the employee portal, you have to Enable \"Human Resources\" in the"
-#~ msgstr ""
-#~ "<strong>Attention : </strong>Afin d'afficher les fiches de compte "
-#~ "individuel dans le portail des employés, vous devez Activer \"Ressources "
-#~ "Humaines\" dans la"

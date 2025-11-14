@@ -255,22 +255,3 @@ msgstr "versions"
 #: code:addons/l10n_be_hr_payroll_acerta/models/hr_payroll_export_acerta.py:0
 msgid "work entry types"
 msgstr "types de prestations"
-
-#~ msgid "Acerta code is missing for contract: %(contract)s"
-#~ msgstr "Le code Acerta est manquant pour le contrat : %(contract)s"
-
-#~ msgid "Acerta code is missing for work entry type %(work_entry_type)s"
-#~ msgstr ""
-#~ "Le code Acerta est manquant pour le type de prestation de travail %"
-#~ "(work_entry_type)s"
-
-#~ msgid "Brief Holiday (Birth)"
-#~ msgstr "Congé de naissance"
-
-#~ msgid "Contract"
-#~ msgstr "Contrat"
-
-#~ msgid ""
-#~ "The following contracts have an Acerta code that is too long: %"
-#~ "(contracts)s"
-#~ msgstr "Les contrats suivants ont un code Acerta trop long : %(contracts)s"

@@ -249,15 +249,3 @@ msgstr "employés"
 #: code:addons/l10n_be_hr_payroll_ucm/models/hr_payroll_export_ucm.py:0
 msgid "work entry types"
 msgstr "types de prestations"
-
-#~ msgid "Contract"
-#~ msgstr "Contrat"
-
-#~ msgid "The following employees do not have a ucm code: %(names)s"
-#~ msgstr "Les employés suivants n'ont pas de code UCM : %(names)s"
-
-#~ msgid "The work entry type %(we)s does not have a UCM code"
-#~ msgstr "Le type de prestation de travail %(we)s n'a pas de code UCM"
-
-#~ msgid "ucm"
-#~ msgstr "UCM"

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-17 19:33+0000\n"
-"PO-Revision-Date: 2025-03-17 19:33+0000\n"
+"POT-Creation-Date: 2025-11-13 20:12+0000\n"
+"PO-Revision-Date: 2025-11-13 20:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -77,6 +77,11 @@ msgstr ""
 #. module: l10n_uy_edi
 #: model:ir.model,name:l10n_uy_edi.model_account_move_send
 msgid "Account Move Send"
+msgstr ""
+
+#. module: l10n_uy_edi
+#: model:ir.model,name:l10n_uy_edi.model_account_move_send_wizard
+msgid "Account Move Send Wizard"
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -233,7 +238,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
 msgid ""
-"Company Name: \"%(company_name)s\", Company ID: (%(company_id)s), Error: "
+"Company Name: \"%(company_name)s\", Company ID: (%(company_id)s), Errors: "
 "\"%(error)s\""
 msgstr ""
 
@@ -271,6 +276,11 @@ msgstr ""
 #. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
 msgid "Create Uruware Test Account"
+msgstr ""
+
+#. module: l10n_uy_edi
+#: model:ir.model,website_form_label:l10n_uy_edi.model_res_partner
+msgid "Create a Customer"
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -314,8 +324,17 @@ msgid ""
 msgstr ""
 
 #. module: l10n_uy_edi
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_journal__display_name
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move__display_name
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move_send__display_name
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move_send_wizard__display_name
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_latam_document_type__display_name
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_addenda__display_name
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__display_name
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_company__display_name
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_partner__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -385,7 +404,7 @@ msgstr ""
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
 msgid ""
 "ERROR: This is what we receive when requesting notification data (610) "
-"%(response)s"
+"%(tree)s"
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -482,13 +501,17 @@ msgid "Ground"
 msgstr ""
 
 #. module: l10n_uy_edi
-#: model_terms:ir.ui.view,arch_db:l10n_uy_edi.l10n_uy_edi_addenda_view_search
-msgid "Group By..."
-msgstr ""
-
-#. module: l10n_uy_edi
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_journal__id
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move__id
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move_line__id
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move_send__id
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move_send_wizard__id
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_latam_document_type__id
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_addenda__id
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__id
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_company__id
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_config_settings__id
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_partner__id
 msgid "ID"
 msgstr ""
 
@@ -802,20 +825,6 @@ msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
-#: code:addons/l10n_uy_edi/models/account_move.py:0
-msgid "The related CFE (%s) should be electronic"
-msgstr ""
-
-#. module: l10n_uy_edi
-#. odoo-python
-#: code:addons/l10n_uy_edi/models/account_move.py:0
-msgid ""
-"The Uruguayan xml you are trying to upload contains more than one CFE and up"
-" to now it is processed only the first one existing in the xml file."
-msgstr ""
-
-#. module: l10n_uy_edi
-#. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
 msgid ""
 "The account creating request has been successfully sent. The credentials "
@@ -838,6 +847,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
 msgid "The partner of the CFE needs to have an Identification Type"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid "The related CFE (%s) should be electronic"
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -1096,14 +1111,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
 msgid ""
-"We found an error when dismissing the notification: id: %(id_req)s. Error: "
-"%(error)s"
-msgstr ""
-
-#. module: l10n_uy_edi
-#. odoo-python
-#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-msgid "We found an error while consulting a notification %(error)s."
+"We found an error while consulting a notification %(joined_errors_msg)s."
 msgstr ""
 
 #. module: l10n_uy_edi

@@ -470,12 +470,3 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_fleet.field_hr_version__wishlist_car_total_depreciated_cost
 msgid "Wishlist Car Total Depreciated Cost"
 msgstr "Totaal afgeschreven kosten auto op verlanglijst"
-
-#~ msgid "Benefit in Kind (Company Car)"
-#~ msgstr "Voordeel alle aard (Bedrijfswagen)"
-
-#~ msgid "CO2 Emissions"
-#~ msgstr "CO2-uitstoot"
-
-#~ msgid "Car BIK"
-#~ msgstr "VAA Auto"

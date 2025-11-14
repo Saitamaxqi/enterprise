@@ -250,12 +250,3 @@ msgstr "prisma"
 #: code:addons/l10n_be_hr_payroll_prisma/models/hr_payroll_export_prisma.py:0
 msgid "work entry types"
 msgstr "types de prestations"
-
-#~ msgid "Contract"
-#~ msgstr "Contrat"
-
-#~ msgid "Prisma code is missing for work entry type %(work_entry_type)s"
-#~ msgstr "Les employés suivants n'ont pas de code Prisma : %(names)s"
-
-#~ msgid "The following employees do not have a Prisma code: %(names)s"
-#~ msgstr "Les employés suivants n'ont pas de code Prisma : %(names)s"

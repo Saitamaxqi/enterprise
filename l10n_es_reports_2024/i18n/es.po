@@ -24,8 +24,8 @@ msgstr "Discrepancia de criterio administrativo"
 #. module: l10n_es_reports_2024
 #: model:ir.model.fields,field_description:l10n_es_reports_2024.field_l10n_es_reports_aeat_boe_mod303_export_wizard__rectification_direct_debit
 msgid ""
-"As a result of the presentation of the corrective self-assessment, I request"
-" to cancel/modify the direct debit made"
+"As a result of the presentation of the corrective self-assessment, I request "
+"to cancel/modify the direct debit made"
 msgstr ""
 "Como consecuencia de la presentación de la autoliquidación rectificativa, "
 "solicito cancelar/modificar la domiciliación efectuada"

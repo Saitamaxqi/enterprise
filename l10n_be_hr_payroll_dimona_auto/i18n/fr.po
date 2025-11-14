@@ -507,7 +507,8 @@ msgstr "Aucune date de fin n'est définie sur le contrat de l'étudiant."
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_dimona_auto/wizard/l10n_be_dimona_wizard.py:0
 msgid "There is no defined planned hours on the student contract."
-msgstr "Il n'y a pas d'heures planifiées définies sur le contrat de l'étudiant."
+msgstr ""
+"Il n'y a pas d'heures planifiées définies sur le contrat de l'étudiant."
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python

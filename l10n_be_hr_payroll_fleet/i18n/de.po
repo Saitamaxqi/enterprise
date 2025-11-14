@@ -476,12 +476,3 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_fleet.field_hr_version__wishlist_car_total_depreciated_cost
 msgid "Wishlist Car Total Depreciated Cost"
 msgstr "Wunschliste Auto Abschreibungskosten Gesamt"
-
-#~ msgid "Benefit in Kind (Company Car)"
-#~ msgstr "Sachleistung (Firmenwagen)"
-
-#~ msgid "CO2 Emissions"
-#~ msgstr "CO2-Emissionen"
-
-#~ msgid "Car BIK"
-#~ msgstr "Auto Sachleistung"

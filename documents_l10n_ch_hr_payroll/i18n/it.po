@@ -37,13 +37,3 @@ msgstr ""
 #: model:ir.model,name:documents_l10n_ch_hr_payroll.model_hr_payslip
 msgid "Pay Slip"
 msgstr ""
-
-#~ msgid "\"Documents\" app settings"
-#~ msgstr "Impostazioni app \"Documenti\""
-
-#~ msgid ""
-#~ "<strong>Warning: </strong>In order to post the individual account sheets "
-#~ "in the employee portal, you have to Enable \"Human Resources\" in the"
-#~ msgstr ""
-#~ "<strong>Avviso: </strong>per registrare i fogli relativi a conti "
-#~ "individuali nel portale dipendenti, devi attivare \"Risorse umane\" in"
