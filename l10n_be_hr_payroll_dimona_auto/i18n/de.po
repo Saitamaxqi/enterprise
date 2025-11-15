@@ -3,13 +3,14 @@
 # * l10n_be_hr_payroll_dimona_auto
 #
 # "Larissa Manderfeld (lman)" <lman@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-09 12:56+0000\n"
-"PO-Revision-Date: 2025-11-04 23:10+0000\n"
-"Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
+"PO-Revision-Date: 2025-11-15 22:50+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_be_hr_payroll_dimona_auto/de/>\n"
 "Language: de\n"
@@ -41,6 +42,8 @@ msgstr ""
 msgid ""
 "Cannot connect with the ONSS servers. Please contact an administrator. (%s)"
 msgstr ""
+"Es kann keine Verbindung zu den LSS-Servern hergestellt werden. Wenden Sie "
+"sich an einen Administrator. (%s)"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.actions.server,name:l10n_be_hr_payroll_dimona_auto.ir_action_server_action_close_dimona
@@ -53,28 +56,28 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_period__company_id
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_relation__company_id
 msgid "Company"
-msgstr ""
+msgstr "Unternehmen"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_declaration__content
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_period__content
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_relation__content
 msgid "Content"
-msgstr ""
+msgstr "Inhalt"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_declaration__create_uid
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_period__create_uid
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_relation__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Erstellt von"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_declaration__create_date
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_period__create_date
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_relation__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Erstellt am"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
@@ -90,12 +93,15 @@ msgid ""
 "%(anomalies)s\n"
 "%(informations)s"
 msgstr ""
+"DIMONA-Meldung mit nicht blockierenden Anomalien behandelt und akzeptiert\n"
+"%(anomalies)s\n"
+"%(informations)s"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_dimona_auto/models/l10n_be_dimona_declaration.py:0
 msgid "DIMONA declaration treated and accepted without anomalies"
-msgstr ""
+msgstr "DIMONA-Meldung ohne Anomalien behandelt und akzeptiert"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
@@ -104,31 +110,34 @@ msgid ""
 "DIMONA declaration treated and refused (blocking anomalies)\n"
 "%s"
 msgstr ""
+"DIMONA-Meldung behandelt und abgelehnt (blockierende Anomalien)\n"
+"%s"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_dimona_auto/models/l10n_be_dimona_declaration.py:0
 msgid "DIMONA declaration waiting worker identification by Sigedis"
 msgstr ""
+"DIMONA-Meldung zur Identifizierung von wartenden Arbeitnehmern durch Sigedis"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_declaration__date_end
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_period__date_end
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_relation__date_end
 msgid "Date End"
-msgstr ""
+msgstr "Enddatum"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_declaration__date_start
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_period__date_start
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_relation__date_start
 msgid "Date Start"
-msgstr ""
+msgstr "Startdatum"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_period__declaration_ids
 msgid "Declaration"
-msgstr ""
+msgstr "Erklärung"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_period__declaration_count
@@ -138,12 +147,12 @@ msgstr ""
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_declaration__name
 msgid "Declaration ID"
-msgstr ""
+msgstr "ID der Erklärung"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_declaration__declaration_type
 msgid "Declaration Type"
-msgstr ""
+msgstr "Art der Meldung"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona_auto.selection__l10n_be_dimona_declaration__declaration_type__dimona_cancel
@@ -234,7 +243,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model,name:l10n_be_hr_payroll_dimona_auto.model_l10n_be_dimona_wizard
 msgid "Dimona Wizard"
-msgstr ""
+msgstr "Dimona-Assistent"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona_auto.selection__hr_version__l10n_be_dimona_next_action__cancel
@@ -268,7 +277,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_relation__display_name
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
@@ -277,6 +286,8 @@ msgid ""
 "Due to a technical problem at the ONSS side, the Dimona declaration could "
 "not be received by the ONSS."
 msgstr ""
+"Aufgrund eines technischen Problems auf Seiten des LSS konnte die Dimona-"
+"Meldung nicht vom LSS empfangen werden."
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
@@ -292,12 +303,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_period__employee_id
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_relation__employee_id
 msgid "Employee"
-msgstr ""
+msgstr "Mitarbeiter"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model,name:l10n_be_hr_payroll_dimona_auto.model_hr_version
 msgid "Employee Contract"
-msgstr ""
+msgstr "Arbeitsvertrag"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
@@ -306,6 +317,8 @@ msgid ""
 "Error with one or several invalid parameters on the POST request. Please "
 "contact an administrator. (%s)"
 msgstr ""
+"Fehler mit einem oder mehreren ungültigen Parametern auf der POST-Anfrage. "
+"Wenden Sie sich an einen Administrator. (%s)"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_hr_employee__id
@@ -315,7 +328,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_relation__id
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_hr_employee__l10n_be_needs_dimona_cancel
@@ -352,30 +365,30 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_period__write_uid
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_relation__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zuletzt aktualisiert von"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_declaration__write_date
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_period__write_date
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_relation__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zuletzt aktualisiert am"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_relation__name
 msgid "NISS"
-msgstr ""
+msgstr "NISS"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_dimona_auto/models/hr_version.py:0
 msgid "No DIMONA declaration is linked to this contract"
-msgstr ""
+msgstr "Mit diesem Vertrag ist keine DIMONA-Meldung verbunden."
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona_auto.selection__hr_version__l10n_be_dimona_next_action__nothing
 msgid "Nothing to do"
-msgstr ""
+msgstr "Nichts zu tun"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.actions.server,name:l10n_be_hr_payroll_dimona_auto.ir_action_server_action_open_dimona
@@ -387,7 +400,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_declaration__period_id
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_relation__period_ids
 msgid "Period"
-msgstr ""
+msgstr "Periode"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_relation__period_count
@@ -417,24 +430,24 @@ msgstr ""
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona_auto.selection__l10n_be_dimona_declaration__state__b
 msgid "Refused"
-msgstr ""
+msgstr "Verworfen"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_dimona_auto/wizard/l10n_be_dimona_wizard.py:0
 msgid "Start date and end date should belong to the same quarter."
-msgstr ""
+msgstr "Das Start- und Enddatum sollten im selben Quartal sein."
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_declaration__state
 msgid "State"
-msgstr ""
+msgstr "Bundesland"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_dimona_auto/wizard/l10n_be_dimona_wizard.py:0
 msgid "The DIMONA should be introduced before start date for students."
-msgstr ""
+msgstr "DIMONA sollte vor dem Starttermin für die Studenten eingeführt werden."
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
@@ -450,6 +463,8 @@ msgid ""
 "The declaration has been submitted but not processed yet or the declaration "
 "reference is not known. (%s)"
 msgstr ""
+"Die Meldung wurde eingereicht, aber noch nicht bearbeitet oder die "
+"Meldungsreferenz ist nicht bekannt. (%s)"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.constraint,message:l10n_be_hr_payroll_dimona_auto.constraint_l10n_be_dimona_declaration_constraint_name_unique
@@ -470,37 +485,37 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_dimona_auto/wizard/l10n_be_dimona_wizard.py:0
 msgid "There is already a IN declaration for this contract."
-msgstr ""
+msgstr "Für diesen Vertrag liegt bereits eine IN-Meldung vor."
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_dimona_auto/wizard/l10n_be_dimona_wizard.py:0
 msgid "There is no contract defined on the employee form."
-msgstr ""
+msgstr "Auf dem Mitarbeiterformular ist kein Vertrag definiert."
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_dimona_auto/wizard/l10n_be_dimona_wizard.py:0
 msgid "There is no defined end date on the student contract."
-msgstr ""
+msgstr "Der Studentenvertrag hat kein festgelegtes Enddatum."
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_dimona_auto/wizard/l10n_be_dimona_wizard.py:0
 msgid "There is no defined planned hours on the student contract."
-msgstr ""
+msgstr "Im Studentenvertrag sind keine festen Stunden festgelegt."
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_dimona_auto/wizard/l10n_be_dimona_wizard.py:0
 msgid "There is not end date defined on the employee contract."
-msgstr ""
+msgstr "Im Arbeitsvertrag ist kein Enddatum festgelegt."
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_dimona_auto/models/l10n_be_dimona_declaration.py:0
 msgid "Unknown"
-msgstr ""
+msgstr "Unbekannt"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.actions.server,name:l10n_be_hr_payroll_dimona_auto.ir_action_server_action_update_dimona
@@ -511,7 +526,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_declaration__version_id
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona_auto.selection__l10n_be_dimona_declaration__state__s
@@ -522,7 +537,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_dimona_auto/models/hr_version.py:0
 msgid "You don't have the right to call this action"
-msgstr ""
+msgstr "Sie haben nicht die Berechtigung, diese Aktion auszuführen."
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
@@ -532,6 +547,9 @@ msgid ""
 "happens, for example, if the user does not have or no longer has a mandate "
 "for the employer. (%s)"
 msgstr ""
+"Ihr Benutzer hat keine Berechtigung, diese Meldung einzusehen. Dies ist "
+"beispielsweise der Fall, wenn der Benutzer kein Mandat für den Arbeitgeber "
+"hat oder nicht mehr hat. (%s)"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
@@ -541,13 +559,16 @@ msgid ""
 "This happens, for example, if the user does not have or no longer has a "
 "mandate for the employer. (%s)"
 msgstr ""
+"Ihr Benutzer hat keine Berechtigung, eine Meldung für den Arbeitgeber zu "
+"machen. Dies ist beispielsweise der Fall, wenn der Benutzer kein Mandat für "
+"den Arbeitgeber hat oder nicht mehr hat. (%s)"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_dimona_auto/models/l10n_be_dimona_period.py:0
 #: code:addons/l10n_be_hr_payroll_dimona_auto/models/l10n_be_dimona_relation.py:0
 msgid "id"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_be_hr_payroll_dimona_auto
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona_auto.field_l10n_be_dimona_period__relation_id

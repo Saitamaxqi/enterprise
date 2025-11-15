@@ -9,13 +9,14 @@
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Larissa Manderfeld (lman)" <lman@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-09 12:56+0000\n"
-"PO-Revision-Date: 2025-11-04 23:10+0000\n"
-"Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
+"PO-Revision-Date: 2025-11-15 22:50+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_be_hr_payroll/de/>\n"
 "Language: de\n"
@@ -382,7 +383,7 @@ msgstr ""
 #: code:addons/l10n_be_hr_payroll/models/l10n_be_281_10.py:0
 #: code:addons/l10n_be_hr_payroll/models/l10n_be_281_45.py:0
 msgid "- Test"
-msgstr ""
+msgstr "- Test"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -1844,7 +1845,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_employee_view_form
 msgid "<span> / month</span>"
-msgstr ""
+msgstr "<span>/Monat</span>"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.view_hr_payroll_employee_departure_notice
@@ -1890,7 +1891,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_employee_view_form
 msgid "<span>/ year</span>"
-msgstr ""
+msgstr "<span>/Jahr</span>"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_individual_account
@@ -2003,7 +2004,7 @@ msgstr "<strong class=\"me-2\">Betrag Ökoschecks</strong>"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_belgium_payslip
 msgid "<strong class=\"me-2\">Mobility Budget (Monthly):</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Mobilitätsbudget (monatlich):</strong>"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_belgium_payslip
@@ -2172,7 +2173,7 @@ msgstr "<strong>Mitarbeiter</strong>"
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_termination_holidays_n
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_termination_holidays_n1
 msgid "<strong>From</strong>"
-msgstr ""
+msgstr "<strong>Von</strong>"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_termination_holidays_n
@@ -2269,7 +2270,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_termination_holidays_n
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_termination_holidays_n1
 msgid "<strong>To</strong>"
-msgstr ""
+msgstr "<strong>Nach</strong>"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_termination_fees
@@ -2522,7 +2523,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Aktion notwendig"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -2539,22 +2540,22 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "Aktivitäten"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Aktivitätsausnahme-Dekoration"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Status der Aktivität"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Symbol des Aktivitätstyps"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_payslip_employee_depature_notice__actual_notice_duration
@@ -2686,12 +2687,12 @@ msgstr "Zugeteilter bezahlter Urlaub"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.view_hr_payroll_employee_departure_holiday_attests
 msgid "Allocated"
-msgstr ""
+msgstr "Zugeteilt"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_payslip_employee_depature_holiday_attests_time_off_line__leave_allocation_count
 msgid "Allocations"
-msgstr ""
+msgstr "Urlaubsansprüche"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -2928,7 +2929,7 @@ msgstr "Am Ende des Geschäftsjahres"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Anzahl Anhänge"
 
 #. module: l10n_be_hr_payroll
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_cct90_attachment
@@ -3873,7 +3874,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.view_hr_payroll_attest_wizard_form
 msgid "Create"
-msgstr ""
+msgstr "Erstellen"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.l10n_be_274_XX_view_form
@@ -3974,13 +3975,13 @@ msgstr "Erstellt auf"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_onss_file__creation_date
 msgid "Creation Date"
-msgstr ""
+msgstr "Erstellungsdatum"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__l10n_be_time_credit
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_version__l10n_be_time_credit
 msgid "Credit time"
-msgstr ""
+msgstr "Zeitguthaben"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -4268,7 +4269,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.l10n_be_onss_file_view_search
 msgid "Declaration"
-msgstr ""
+msgstr "Erklärung"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_file__file_type__fo
@@ -5045,7 +5046,7 @@ msgstr "Effektives Datum"
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_281_45__lines_count
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_individual_account__lines_count
 msgid "Eligible Employees"
-msgstr ""
+msgstr "Berechtigte Mitarbeiter"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -5099,7 +5100,7 @@ msgstr "Name der Mitarbeiters"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_december_slip_wizard__version_id
 msgid "Employee Record"
-msgstr ""
+msgstr "Mitarbeiterdatensatz"
 
 #. module: l10n_be_hr_payroll
 #: model:hr.payroll.structure,payslip_name:l10n_be_hr_payroll.hr_payroll_structure_cp200_reimbursement
@@ -5408,12 +5409,12 @@ msgstr "Eintrittsdatum"
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_onss_declaration__environment
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_onss_file__environment
 msgid "Environment"
-msgstr ""
+msgstr "Umgebung"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_declaration__state__error
 msgid "Error"
-msgstr ""
+msgstr "Fehler"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_273s__error_message
@@ -5622,7 +5623,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_onss_file__file
 msgid "File"
-msgstr ""
+msgstr "Datei"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.l10n_be_onss_file_view_form
@@ -5632,7 +5633,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_onss_file__file_content
 msgid "File Content"
-msgstr ""
+msgstr "Datei-Inhalt"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_onss_file__file_count
@@ -5647,7 +5648,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_onss_file__name
 msgid "File Name"
-msgstr ""
+msgstr "Dateiname"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_onss_file__file_number
@@ -5787,17 +5788,17 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Follower"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Follower (Partner)"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,help:l10n_be_hr_payroll.field_l10n_be_dmfa__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "FontAwesome-Icon, z. B. fa-tasks"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.view_hr_payroll_alloc_employee_view_tree
@@ -6210,7 +6211,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Hat eine Nachricht"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -6407,12 +6408,12 @@ msgstr "Ip. Teil."
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Icon"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,help:l10n_be_hr_payroll.field_l10n_be_dmfa__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "Icon, um eine Ausnahmeaktivität anzuzeigen."
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_file__declaration_type__idfl
@@ -6449,13 +6450,13 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,help:l10n_be_hr_payroll.field_l10n_be_dmfa__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Falls markiert, erfordern neue Nachrichten Ihre Aufmerksamkeit."
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,help:l10n_be_hr_payroll.field_l10n_be_dmfa__message_has_error
 #: model:ir.model.fields,help:l10n_be_hr_payroll.field_l10n_be_dmfa__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Falls markiert, weisen einige Nachrichten einen Zustellungsfehler auf."
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,help:l10n_be_hr_payroll.field_l10n_be_hr_payroll_schedule_change_wizard__previous_contract_creation
@@ -7179,7 +7180,7 @@ msgstr "Versicherungsbetrag"
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_employee_view_form
 msgid "Insurances"
-msgstr ""
+msgstr "Versicherungen"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_contract_template_view_form
@@ -7305,7 +7306,7 @@ msgstr "Ip-Wert"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Ist Follower"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__l10n_be_is_below_scale
@@ -7579,7 +7580,7 @@ msgstr "Urlaubsanspruch"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_payslip_employee_depature_holiday_attests_time_off_line__leave_count
 msgid "Leaves"
-msgstr ""
+msgstr "Abwesenheiten"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_res_company__l10n_be_legal_time_off_type
@@ -7790,12 +7791,12 @@ msgstr "Menü"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Nachricht mit Zustellungsfehler"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Nachrichten"
 
 #. module: l10n_be_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_be_hr_payroll.cp200_other_input_min_withholding_tax
@@ -7852,19 +7853,19 @@ msgstr "Mobilitätsbonus"
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__l10n_be_mobility_budget
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_version__l10n_be_mobility_budget
 msgid "Mobility Budget"
-msgstr ""
+msgstr "Mobilitätsbudget"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__l10n_be_mobility_budget_amount
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_version__l10n_be_mobility_budget_amount
 msgid "Mobility Budget Amount"
-msgstr ""
+msgstr "Betrag des Mobilitätsbudgets"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__l10n_be_mobility_budget_amount_monthly
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_version__l10n_be_mobility_budget_amount_monthly
 msgid "Mobility Budget Monthly Amount"
-msgstr ""
+msgstr "Monatsbetrag des Mobilitätsbudgets"
 
 #. module: l10n_be_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_be_hr_payroll.input_be_mobility_budget_payment
@@ -8027,7 +8028,7 @@ msgstr "Einvernehmliche Einigung"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Frist für meine Aktivitäten"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.l10n_be_december_slip_wizard_view_form
@@ -8232,22 +8233,22 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr ""
+msgstr "Nächstes Aktivitätskalenderereignis"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Nächste Aktivitätsfrist"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "Zusammenfassung der nächsten Aktivität"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "Nächster Aktivitätstyp"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.dmfa_pdf_report
@@ -8353,7 +8354,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/models/l10n_be_onss_declaration.py:0
 msgid "No data"
-msgstr ""
+msgstr "Keine Daten"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -8527,7 +8528,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.l10n_be_hr_payroll_structure_cp200_cct90_basic_salary_rule
 msgid "Non-recurring performance-related benefits"
-msgstr ""
+msgstr "Nicht wiederkehrende leistungsbezogene Vorteile"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -8560,7 +8561,7 @@ msgstr ""
 #: code:addons/l10n_be_hr_payroll/models/l10n_be_onss_declaration.py:0
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_employee_view_form
 msgid "Not applicable"
-msgstr ""
+msgstr "Nicht verfügbar"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -8699,12 +8700,12 @@ msgstr "Kündigungsgehalt"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_file__declaration_type__noti
 msgid "Notification"
-msgstr ""
+msgstr "Benachrichtigung"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_declaration__state__notified
 msgid "Notified"
-msgstr ""
+msgstr "Benachrichtigt"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_273s__month__11
@@ -8725,7 +8726,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Anzahl der Aktionen"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -8795,7 +8796,7 @@ msgstr "Anzahl behinderter Kinder"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Anzahl der Fehler"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_281_10
@@ -8851,12 +8852,12 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,help:l10n_be_hr_payroll.field_l10n_be_dmfa__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Anzahl Benachrichtigungen, die eine Aktion erfordern"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,help:l10n_be_hr_payroll.field_l10n_be_dmfa__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Anzahl der Nachrichten mit Zustellungsfehler"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -9309,7 +9310,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_file__declaration_type__other
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_file__file_type__other
 msgid "Other"
-msgstr ""
+msgstr "Andere"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__other_dependent_people
@@ -9449,7 +9450,7 @@ msgstr "Teilzeit"
 #. module: l10n_be_hr_payroll
 #: model:ir.model,name:l10n_be_hr_payroll.model_hr_payslip_run
 msgid "Pay Run"
-msgstr ""
+msgstr "Abrechnungslauf"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model,name:l10n_be_hr_payroll.model_hr_payslip
@@ -9492,7 +9493,7 @@ msgstr "Strukturierte Zahlungsmitteilung:"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.view_hr_payroll_employee_departure_holiday_attests
 msgid "Payroll"
-msgstr ""
+msgstr "Personalabrechnung"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_december_slip_wizard__payslip_id
@@ -9685,7 +9686,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_declaration__state__posted
 msgid "Posted"
-msgstr ""
+msgstr "Gebucht"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_contract_template_view_form
@@ -9819,7 +9820,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_declaration__environment__r
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_file__environment__r
 msgid "Production"
-msgstr ""
+msgstr "Produktion"
 
 #. module: l10n_be_hr_payroll
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_n1_rules_professional_tax_termination
@@ -10016,7 +10017,7 @@ msgstr "MOBILIENEINKÜNFTE aus URHEBERRECHTEN und ÄHNLICHEN RECHTEN"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Bewertungen"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.l10n_be_dmfa_view_form
@@ -10050,7 +10051,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_declaration__state__received
 msgid "Received"
-msgstr ""
+msgstr "Erhalten"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_employee_view_form
@@ -10276,7 +10277,7 @@ msgstr "Datum der Kündigung"
 #. module: l10n_be_hr_payroll
 #: model:ir.model,name:l10n_be_hr_payroll.model_resource_calendar
 msgid "Resource Working Time"
-msgstr ""
+msgstr "Arbeitszeit der Ressource"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_payslip_employee_depature_notice__notice_respect
@@ -10292,7 +10293,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__activity_user_id
 msgid "Responsible User"
-msgstr ""
+msgstr "Verantwortlicher Benutzer"
 
 #. module: l10n_be_hr_payroll
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_ch_worker
@@ -10388,7 +10389,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "SMS-Zustellungsfehler"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_balance
@@ -10416,12 +10417,12 @@ msgstr "Gezahlte Gehälter im Vergleich zu den Vorjahren"
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/wizard/l10n_be_social_security_certificate.py:0
 msgid "Salary Adjustment"
-msgstr ""
+msgstr "Gehaltsanpassung"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
 msgid "Salary Adjustments"
-msgstr ""
+msgstr "Gehaltsanpassungen"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -10565,7 +10566,7 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_individual_account
 msgid "Sex"
-msgstr ""
+msgstr "Geschlecht"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_274_xx_line__sheet_id
@@ -10941,6 +10942,10 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Status basierend auf Aktivitäten\n"
+"Überfällig: Fälligkeitsdatum bereits überschritten\n"
+"Heute: Aktivität ist für heute geplant\n"
+"Geplant: zukünftige Aktivitäten."
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_balance
@@ -11022,7 +11027,7 @@ msgstr "GESAMT"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.view_hr_payroll_employee_departure_holiday_attests
 msgid "Taken"
-msgstr ""
+msgstr "Genommen"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_273S
@@ -12735,7 +12740,7 @@ msgstr "Behandlungstyp"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,help:l10n_be_hr_payroll.field_l10n_be_dmfa__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Typ der Ausnahmeaktivität im Datensatz."
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -12791,7 +12796,7 @@ msgstr "Universitätsunterricht"
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/models/l10n_be_onss_declaration.py:0
 msgid "Unknown"
-msgstr ""
+msgstr "Unbekannt"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -12980,7 +12985,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_double_pay_recovery_wizard__version_id
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_schedule_change_allocation__version_id
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_dmfa__declaration_type__batch
@@ -13012,7 +13017,7 @@ msgstr "Gehalt mit Verzichten"
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__l10n_be_wage_with_mobility_budget
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_version__l10n_be_wage_with_mobility_budget
 msgid "Wage with Mobility Budget"
-msgstr ""
+msgstr "Lohn mit Mobilitätsbudget"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_273s__state__waiting
@@ -13024,7 +13029,7 @@ msgstr "Warteliste"
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/models/l10n_be_onss_declaration.py:0
 msgid "Warning"
-msgstr ""
+msgstr "Warnung"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -13064,12 +13069,12 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_dmfa__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Website-Nachrichten"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,help:l10n_be_hr_payroll.field_l10n_be_dmfa__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Website-Kommunikationsverlauf"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -13081,7 +13086,7 @@ msgstr "Gesamtes Unternehmen"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__hr_version__spouse_fiscal_status__high_income
 msgid "With High Income"
-msgstr ""
+msgstr "Mit hohem Einkommen"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__hr_version__spouse_fiscal_status__high_pension
@@ -13955,7 +13960,7 @@ msgstr "Stunden/Woche"
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/wizard/hr_payroll_employee_departure_holiday_attest.py:0
 msgid "id"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,help:l10n_be_hr_payroll.field_hr_employee__disabled_children_bool
@@ -13988,7 +13993,7 @@ msgstr "Monate"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_file__environment__other
 msgid "other"
-msgstr ""
+msgstr "Andere"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.l10n_be_dmfa_view_form

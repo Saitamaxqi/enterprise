@@ -6,13 +6,14 @@
 # Tiffany Chang, 2025
 #
 # "Manon Rondou (ronm)" <ronm@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 19:54+0000\n"
-"PO-Revision-Date: 2025-10-29 12:10+0000\n"
-"Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
+"PO-Revision-Date: 2025-11-15 22:50+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_be_hr_contract_salary/fr/>\n"
 "Language: fr\n"
@@ -62,17 +63,17 @@ msgstr "%s € (Location)"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,job_details:l10n_be_hr_contract_salary.job_developer_be
 msgid "1 Onsite Interview"
-msgstr ""
+msgstr "1 entretien sur site"
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,job_details:l10n_be_hr_contract_salary.job_developer_be
 msgid "1 Phone Call"
-msgstr ""
+msgstr "1 appel téléphonique"
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "12 days / year, including <br>6 of your choice."
-msgstr ""
+msgstr "12 jours / an, dont <br>6 de votre choix"
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.benefit,name:l10n_be_hr_contract_salary.l10n_be_thirteen_month
@@ -87,7 +88,7 @@ msgstr "150 €"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,job_details:l10n_be_hr_contract_salary.job_developer_be
 msgid "2 open days"
-msgstr ""
+msgstr "2 journées portes ouvertes"
 
 #. module: l10n_be_hr_contract_salary
 #. odoo-python
@@ -107,7 +108,7 @@ msgstr "30,0 €"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,job_details:l10n_be_hr_contract_salary.job_developer_be
 msgid "4 Days after Interview"
-msgstr ""
+msgstr "4 jours après l'entretien"
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.personal.info,helper:l10n_be_hr_contract_salary.hr_contract_salary_personal_info_other_disabled_juniors_dependant
@@ -121,21 +122,23 @@ msgid ""
 "<a href=\"/\" class=\"btn btn-primary o_translate_inline\" "
 "target=\"_blank\"><small><b>READ</b></small></a>"
 msgstr ""
+"<a href=\"/\" class=\"btn btn-primary o_translate_inline\" target=\"_blank\""
+"><small><b>LIRE</b></small></a>"
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,job_details:l10n_be_hr_contract_salary.job_developer_be
 msgid "<span class=\"text-muted small\">Days to get an Offer</span>"
-msgstr ""
+msgstr "<span class=\"text-muted small\">Jour pour recevoir une offre</span>"
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,job_details:l10n_be_hr_contract_salary.job_developer_be
 msgid "<span class=\"text-muted small\">Process</span>"
-msgstr ""
+msgstr "<span class=\"text-muted small\">Procédure</span>"
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,job_details:l10n_be_hr_contract_salary.job_developer_be
 msgid "<span class=\"text-muted small\">Time to Answer</span>"
-msgstr ""
+msgstr "<span class=\"text-muted small\">Temps pour répondre</span>"
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_contract_salary.hr_employee_view_form
@@ -146,27 +149,27 @@ msgstr "<span>jours / an</span>"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "<strong class=\"s_rating_title\">Administrative Work</strong>"
-msgstr ""
+msgstr "<strong class=\"s_rating_title\">Travail administratif</strong>"
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "<strong class=\"s_rating_title\">Autonomy</strong>"
-msgstr ""
+msgstr "<strong class=\"s_rating_title\">Autonomie</strong>"
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "<strong class=\"s_rating_title\">Customer Relationship</strong>"
-msgstr ""
+msgstr "<strong class=\"s_rating_title\">Relation client</strong>"
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "<strong class=\"s_rating_title\">Personal Evolution</strong>"
-msgstr ""
+msgstr "<strong class=\"s_rating_title\">Évolution personnelle</strong>"
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "<strong class=\"s_rating_title\">Technical Expertise</strong>"
-msgstr ""
+msgstr "<strong class=\"s_rating_title\">Expertise technique</strong>"
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.personal.info,helper:l10n_be_hr_contract_salary.hr_contract_salary_personal_info_other_disabled_senior_dependent
@@ -177,12 +180,12 @@ msgstr ">= 66 ans"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "A full-time position <br>Attractive salary package."
-msgstr ""
+msgstr "Un poste à temps plein <br>Un package salarial attrayant."
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Achieve monthly sales objectives"
-msgstr ""
+msgstr "Atteindre les objectifs mensuels de vente"
 
 #. module: l10n_be_hr_contract_salary
 #. odoo-javascript
@@ -198,7 +201,7 @@ msgstr "Voitures supplémentaires"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Additional languages"
-msgstr ""
+msgstr "Langues additionnelles"
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.benefit,name:l10n_be_hr_contract_salary.l10n_be_ambulatory_insured_spouse
@@ -249,6 +252,18 @@ msgid ""
 "                        spirit. To be successful, you will have solid "
 "solving problem skills."
 msgstr ""
+"En tant qu'employé de notre société, vous <b>collaborerez avec chaque "
+"départment afin de créer et déployer des produits disruptifs. </b> Venez "
+"travailler dans une société en pleine croissance \n"
+"qui vous offre de chouettes avantages, ainsi que des opportunités de "
+"progression et d'apprentissage aux côtés de leaders accomplis. \n"
+"Nous recherchons un membre de notre équipe expérimenté.\n"
+"<br><br>\n"
+"Cette position est à la fois <b>créative et rigoureuse </b>, vous devez "
+"pouvoir réfléchir hors des habitudes. Nous attendons du candidat d'être "
+"proactif et d'avoir un esprit de battant. \n"
+"Pour y parvenir, vous aurez de solides compétences en résolution de "
+"problèmes."
 
 #. module: l10n_be_hr_contract_salary
 #: model:ir.model.fields,field_description:l10n_be_hr_contract_salary.field_hr_contract_salary_offer__assigned_car_warning
@@ -258,7 +273,7 @@ msgstr "Avertissement Voiture assignée"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Bachelor Degree or Higher"
-msgstr ""
+msgstr "Diplôme de baccalauréat ou supérieur"
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.benefit,name:l10n_be_hr_contract_salary.l10n_be_transport_private_bike
@@ -341,6 +356,7 @@ msgstr "Code pays"
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Create content that will help our users on a daily basis"
 msgstr ""
+"Création de contenu qui aidera nos utilisateurs sur une base journalière"
 
 #. module: l10n_be_hr_contract_salary
 #: model:ir.model.fields,field_description:l10n_be_hr_contract_salary.field_hr_job__l10n_be_custom_representation_fees
@@ -389,7 +405,7 @@ msgstr "Séniors handicapés"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Discover our products."
-msgstr ""
+msgstr "Découvrez nos produits."
 
 #. module: l10n_be_hr_contract_salary
 #: model:ir.model.fields,field_description:l10n_be_hr_contract_salary.field_fleet_vehicle_state__display_name
@@ -442,6 +458,14 @@ msgid ""
 "                    sports sessions, team building events, monthly drink, "
 "and much more"
 msgstr ""
+"Chaque employé a la chance de voir l'impact qu'a son travail.\n"
+"                    Vous pouvez réellement contribuer au succès de la "
+"société.\n"
+"                    <br>\n"
+"                    De nombreuses activités sont organisées au cours de "
+"l'année, comme des sessions de sports hebdomadaires,\n"
+"                    des événements de team-building, des after-works et bien "
+"plus encore"
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.contract.salary.benefit,description:l10n_be_hr_contract_salary.l10n_be_meal_vouchers
@@ -452,7 +476,7 @@ msgstr ""
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Eat &amp; Drink"
-msgstr ""
+msgstr "Manger & boire"
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.benefit,name:l10n_be_hr_contract_salary.l10n_be_eco_voucher
@@ -541,12 +565,12 @@ msgstr ""
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Expand your knowledge of various business industries"
-msgstr ""
+msgstr "Élargissez vos connaissances de divers secteurs d'activité"
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Experience in writing online content"
-msgstr ""
+msgstr "Expérience en rédaction de contenu en ligne."
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.job,name:l10n_be_hr_contract_salary.job_developer_be
@@ -572,7 +596,7 @@ msgstr ""
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Fruit, coffee and <br>snacks provided."
-msgstr ""
+msgstr "Fruits, café et <br>snacks sont fournis."
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.benefit,name:l10n_be_hr_contract_salary.l10n_be_fuel_card
@@ -582,12 +606,14 @@ msgstr "Carte essence"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Google Adwords experience"
-msgstr ""
+msgstr "Expérience avec Google Adwords"
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Great team of smart people, in a friendly and open culture"
 msgstr ""
+"Belle équipe de personnes intelligentes, dans une ambiance chaleureuse et "
+"ouverte."
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.resume,name:l10n_be_hr_contract_salary.hr_contract_salary_payroll_resume_gross_cp200
@@ -618,7 +644,7 @@ msgstr "Masquer dans l'offre"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Highly creative and autonomous"
-msgstr ""
+msgstr "Hautement créatif et autonome"
 
 #. module: l10n_be_hr_contract_salary
 #: model:ir.model.fields,field_description:l10n_be_hr_contract_salary.field_hr_job__l10n_be_custom_representation_fees_homeworking
@@ -811,7 +837,7 @@ msgstr "L10N Be Coût du vélo"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Lead the entire sales cycle"
-msgstr ""
+msgstr "Diriger l'ensemble du cycle de vente"
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.personal.info.value,name:l10n_be_hr_contract_salary.hr_contract_salary_personal_info_marital_cohabitant
@@ -831,7 +857,7 @@ msgstr "Marié(e)"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Master demos of our software"
-msgstr ""
+msgstr "Maîtriser les démonstrations de nos produits"
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.benefit,name:l10n_be_hr_contract_salary.l10n_be_meal_vouchers
@@ -865,7 +891,7 @@ msgstr "Montant du budget mobilité"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Must Have"
-msgstr ""
+msgstr "Compétences nécéssaires"
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.resume,name:l10n_be_hr_contract_salary.hr_contract_salary_resume_monthly_benefit
@@ -875,7 +901,7 @@ msgstr "En nature"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Negotiate and contract"
-msgstr ""
+msgstr "Négocier et conclure"
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.resume,name:l10n_be_hr_contract_salary.hr_contract_salary_resume_net_cp200
@@ -885,7 +911,7 @@ msgstr "Net"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Nice to have"
-msgstr ""
+msgstr "Agréable d'avoir"
 
 #. module: l10n_be_hr_contract_salary
 #. odoo-python
@@ -908,12 +934,16 @@ msgstr "Aucune catégorie"
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "No dumb managers, no stupid tools to use, no rigid working hours"
 msgstr ""
+"Pas de managers simplets, d'outils idiots à utiliser, d'heures de travail "
+"rigides"
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid ""
 "No waste of time in enterprise processes, real responsibilities and autonomy"
 msgstr ""
+"Pas de perte de temps dans des processus internes, véritables responsabilité "
+"et autonomie"
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.personal.info,name:l10n_be_hr_contract_salary.hr_contract_salary_personal_info_children
@@ -939,7 +969,7 @@ msgstr "Autres personnes à charge"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Our Product"
-msgstr ""
+msgstr "Notre produit"
 
 #. module: l10n_be_hr_contract_salary
 #: model:ir.model.fields,field_description:l10n_be_hr_contract_salary.field_res_config_settings__default_holidays
@@ -949,7 +979,7 @@ msgstr "Congés payés"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Passion for software products"
-msgstr ""
+msgstr "Passion pour les produits logiciels"
 
 #. module: l10n_be_hr_contract_salary
 #: model:ir.model,name:l10n_be_hr_contract_salary.model_hr_payslip
@@ -974,12 +1004,12 @@ msgstr "Personne"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Perfect written English"
-msgstr ""
+msgstr "Anglais écrit parfait"
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Perks"
-msgstr ""
+msgstr "Avantages"
 
 #. module: l10n_be_hr_contract_salary
 #: model:ir.model.fields,field_description:l10n_be_hr_contract_salary.field_hr_job__l10n_be_custom_representation_fees_phone
@@ -994,7 +1024,7 @@ msgstr "Abonnement téléphonique"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Play any sport with colleagues, <br>the bill is covered."
-msgstr ""
+msgstr "Faites du sport avec vos collègues, <br>la facture sera couverte."
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.benefit,fold_label:l10n_be_hr_contract_salary.l10n_be_transport_private_bike
@@ -1020,7 +1050,7 @@ msgstr "Transport en commun"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Qualify the customer needs"
-msgstr ""
+msgstr "Qualifez les besoins du client"
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.department,name:l10n_be_hr_contract_salary.hr_department_rdbe
@@ -1031,6 +1061,8 @@ msgstr "RD BE"
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Real responsibilities and challenges in a fast evolving company"
 msgstr ""
+"De vraies responsabilités et de vrais défis dans une société évoluant "
+"rapidement"
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.benefit,name:l10n_be_hr_contract_salary.l10n_be_representation_fees
@@ -1041,7 +1073,7 @@ msgstr "Frais de représentation"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Responsibilities"
-msgstr ""
+msgstr "Responsabilités"
 
 #. module: l10n_be_hr_contract_salary
 #: model:ir.model.fields,field_description:l10n_be_hr_contract_salary.field_hr_version__sim_card
@@ -1137,7 +1169,7 @@ msgstr ""
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Sport Activity"
-msgstr ""
+msgstr "Activité sportive"
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.personal.info,name:l10n_be_hr_contract_salary.hr_contract_salary_personal_info_spouse_birthdate
@@ -1157,7 +1189,7 @@ msgstr "Situation professionnelle du (de la) conjoint(e)"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Strong analytical skills"
-msgstr ""
+msgstr "Compétences analytiques avancées"
 
 #. module: l10n_be_hr_contract_salary
 #: model:ir.model.fields,help:l10n_be_hr_contract_salary.field_hr_contract_salary_offer__country_code
@@ -1234,7 +1266,7 @@ msgstr "Transport en train"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Trainings"
-msgstr ""
+msgstr "Formations"
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.benefit,name:l10n_be_hr_contract_salary.l10n_be_transport_company_car
@@ -1244,7 +1276,7 @@ msgstr "Moyen de transport"
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "Valid work permit for Belgium"
-msgstr ""
+msgstr "Permis de travail valide pour la Belgique"
 
 #. module: l10n_be_hr_contract_salary
 #: model:ir.model,name:l10n_be_hr_contract_salary.model_fleet_vehicle_state
@@ -1276,12 +1308,12 @@ msgstr ""
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "What We Offer"
-msgstr ""
+msgstr "Ce que nous offrons"
 
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "What's great in the job?"
-msgstr ""
+msgstr "Qu'est-ce qui est génial dans ce travail ?"
 
 #. module: l10n_be_hr_contract_salary
 #: model:hr.contract.salary.personal.info.value,name:l10n_be_hr_contract_salary.hr_contract_salary_personal_info_marital_widower
