@@ -123,15 +123,11 @@ class L10n_InReportHandler(models.AbstractModel):
             'YDS-YARDS',
             'OTH-OTHERS',
         ]
-        invalid_uqc_codes = self.env['account.move.line'].search(
-            Domain.AND([
-                aml_domain,
-                [
+        domain = aml_domain + [
                     ('product_id.l10n_in_hsn_code', 'not =ilike', '99%'),
                     ('product_id.uom_id.l10n_in_code', 'not in', uqc_codes),
-                ],
-            ])
-        ).product_id.uom_id
+                ]
+        invalid_uqc_codes = self.env['account.move.line'].search(domain).product_id.uom_id
         return 'l10n_in_reports.invalid_uqc_code_warning', invalid_uqc_codes
 
     def _get_reversed_moves_domain(self, options):

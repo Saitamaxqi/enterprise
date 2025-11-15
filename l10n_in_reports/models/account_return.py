@@ -2422,7 +2422,7 @@ class AccountReturn(models.Model):
                 'code': 'invalid_uqc_code',
                 'name': _("Invalid UQC Codes"),
                 'message': _("UQC code must match the Indian GST standards."),
-                'records_model': self.env['ir.model']._get('account.move.line').id,
+                'records_model': self.env['ir.model']._get('uom.uom').id,
                 'records_count': line_count,
                 'result': 'anomaly' if line_ids else 'reviewed',
                 'action': line_ids._get_records_action(
