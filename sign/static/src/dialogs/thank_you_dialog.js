@@ -85,7 +85,7 @@ export class ThankYouDialog extends Component {
             ]);
             this.closeAction = result.action;
             this.closeLabel = result.label;
-            const closeContext = result.custom_action ? {} : { clearBreadcrumbs: true };
+            const closeContext = result.custom_action ? { stackPosition: "replacePreviousAction" } : { clearBreadcrumbs: true };
             this.closeContext = closeContext;
         }
         if (!this.props.isRefused) {
