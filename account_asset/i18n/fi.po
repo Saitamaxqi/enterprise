@@ -25,13 +25,14 @@
 # Konsta Aavaranta, 2023
 # Ossi Mantylahti <ossi.mantylahti@obs-solutions.fi>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# Saara Hakanen <sahak@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-16 15:19+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-11-07 12:12+0000\n"
+"Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
 "account_asset/fi/>\n"
 "Language: fi\n"
@@ -1168,6 +1169,7 @@ msgid ""
 "Import your fixed assets' original data and their already accumulated "
 "depreciation."
 msgstr ""
+"Tuo käyttöomaisuutesi alkuperäiset tiedot ja tähän asti kertyneet poistot."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__already_depreciated_amount_import
@@ -1822,6 +1824,8 @@ msgid ""
 "The accumulated depreciation account (contra-asset account). Must exist in "
 "Odoo and be of \"Fixed Asset\" or \"Non-current Assets\" type."
 msgstr ""
+"Kertyneet poistot -tili (vastatili). Täytyy olla olemassa Odoossa "
+"\"Käyttöomaisuus\" tai \"Pitkäaikaiset varat\" -tyyppisenä tilinä."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__method_period

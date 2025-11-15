@@ -3,13 +3,14 @@
 # * appointment_google_reserve
 #
 # "Kwanghee Park (kwpa)" <kwpa@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-23 07:51+0000\n"
-"Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
+"PO-Revision-Date: 2025-11-13 17:16+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "appointment_google_reserve/ko/>\n"
 "Language: ko\n"
@@ -107,7 +108,7 @@ msgstr "첨부 파일 수"
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__phone_blacklisted
 msgid "Blacklisted Phone is Phone"
-msgstr ""
+msgstr "수신 거부 연락처가 전화번호입니다"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__business_category
@@ -163,7 +164,8 @@ msgstr ""
 msgid ""
 "Field used to store sanitized phone number. Helps speeding up searches and "
 "comparisons."
-msgstr ""
+msgstr "삭제된 전화 번호를 저장하는 데 사용되는 필드입니다. 검색 및 비교 속도를 "
+"높이는 데 도움이 됩니다."
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_follower_ids
@@ -235,7 +237,7 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid "I'm ready, synchronize!"
-msgstr ""
+msgstr "준비가 완료되어 동기화를 시작합니다!"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_resource__id
@@ -249,13 +251,13 @@ msgstr "ID"
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "선택할 경우, 신규 메시지에 주의를 기울여야 합니다."
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_has_error
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "선택할 경우, 일부 메시지에 전송 오류가 발생할 수 있습니다."
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__phone_sanitized_blacklisted
@@ -263,6 +265,8 @@ msgid ""
 "If the sanitized phone number is on the blacklist, the contact won't receive "
 "mass mailing sms anymore, from any list"
 msgstr ""
+"검증한 전화번호가 블랙리스트에 있는 번호인 경우, 어느 목록에서도 해당 "
+"연락처에 대해서는 더 이상 대량 발송 SMS를 보내지 않게 됩니다."
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__phone_blacklisted
@@ -271,6 +275,9 @@ msgid ""
 "distinguish which number is blacklisted             when there is both a "
 "mobile and phone field in a model."
 msgstr ""
+"해당 전화번호가 블랙리스트에 오른 번호인지 여부를 나타냅니다. 모델에 "
+"핸드폰과 유선전화 필드 양쪽이 있는 경우 블랙리스트에 올라 있는 번호를 "
+"구분하는데 사용합니다."
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_is_follower
@@ -280,12 +287,12 @@ msgstr "팔로워"
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "최근 업데이트 작업자"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "최근 갱신 일자"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__name
@@ -295,7 +302,7 @@ msgstr "판매자 이름"
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "메시지 전송 오류"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_ids
@@ -310,22 +317,22 @@ msgstr "아직 준비되지 않음"
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "작업 수"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "오류 수"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "조치할 메시지 수"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "전송 오류가 있는 메시지 수"
 
 #. module: appointment_google_reserve
 #. odoo-python
@@ -371,7 +378,7 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model,name:appointment_google_reserve.model_resource_calendar_leaves
 msgid "Resource Time Off Detail"
-msgstr ""
+msgstr "자원별 휴가 세부사항"
 
 #. module: appointment_google_reserve
 #: model:appointment.type,name:appointment_google_reserve.appointment_type_restaurant
@@ -381,7 +388,7 @@ msgstr "Rest'Odoo"
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "SMS 전송 에러"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__phone_sanitized
@@ -423,7 +430,7 @@ msgstr "웹 사이트 URL"
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "웹사이트 커뮤니케이션 이력"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.google_reserve_merchant_view_form

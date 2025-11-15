@@ -3,13 +3,14 @@
 # * ai_app
 #
 # "Kwanghee Park (kwpa)" <kwpa@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-24 02:06+0000\n"
-"Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 20:05+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/ai_app/ko/"
 ">\n"
 "Language: ko\n"
@@ -26,6 +27,9 @@ msgid ""
 "                            <span>Processing your sources, it might take a "
 "few minutes...</span>"
 msgstr ""
+"<i class=\"fa fa-clock-o me-2\"/>\n"
+"                            <span>소스를 처리하는 중이며, 몇 분 정도 소요될 "
+"수 있습니다...</span>"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_form
@@ -33,15 +37,15 @@ msgid ""
 "<span class=\"me-1\">Refresh</span>\n"
 "                            <i class=\"fa fa-refresh me-1\"/>"
 msgstr ""
+"<span class=\"me-1\">새로고침</span>\n"
+"                            <i class=\"fa fa-refresh me-1\"/>"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_form
 msgid ""
-"<span class=\"text-muted\" invisible=\"not is_system_default or "
-"focused_models\">All Models</span>"
+"<span class=\"text-muted\" invisible=\"(not is_system_default or "
+"focused_models) and interface_key != 'systray_ai_button'\">All Models</span>"
 msgstr ""
-"<span class=\"text-muted\" invisible="
-"\"not is_system_default or focused_models\">전체 모델</span>"
 
 #. module: ai_app
 #: model:ir.ui.menu,name:ai_app.ai_menu_root
@@ -72,7 +76,7 @@ msgstr "에이전트"
 #. module: ai_app
 #: model_terms:ir.actions.act_window,help:ai_app.ai_agent_action
 msgid "Agents help you manage and organize your AI operations."
-msgstr ""
+msgstr "상담원으로부터 AI 운영 관리와 조직에 대한 도움을 받을 수 있습니다."
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_form
@@ -105,12 +109,12 @@ msgstr "환경설정"
 #. module: ai_app
 #: model_terms:ir.actions.act_window,help:ai_app.ai_agent_action
 msgid "Create your first Agent!"
-msgstr ""
+msgstr "첫 상담원 생성하기!"
 
 #. module: ai_app
 #: model_terms:ir.actions.act_window,help:ai_app.ai_topic_action
 msgid "Create your first topic!"
-msgstr ""
+msgstr "첫 번째 주제를 생성하세요!"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_view_search
@@ -127,7 +131,7 @@ msgstr "기본 프롬프트"
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_topic_view_form
 msgid "Explain to the Agent what they need to do..."
-msgstr ""
+msgstr "상담원에게 필요한 작업을 설명하세요..."
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_view_search
@@ -207,7 +211,7 @@ msgstr "출처"
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_topic_view_form
 msgid "Summarize what this topic does"
-msgstr ""
+msgstr "주제에 대한 내용을 요약하세요."
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_view_search
@@ -241,7 +245,7 @@ msgstr "주제"
 #. module: ai_app
 #: model_terms:ir.actions.act_window,help:ai_app.ai_topic_action
 msgid "Topics help you manage and organize your AI operations."
-msgstr ""
+msgstr "주제를 활용하여 AI 운영에 대해 관리하고 체계화할 수 있습니다."
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.res_config_settings_view_form
@@ -266,20 +270,27 @@ msgstr ""
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_topic_view_form
 msgid "e.g. Chat with customers"
-msgstr ""
+msgstr "예: 고객과 채팅"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_form
 msgid "e.g. Get tips to close more sales"
-msgstr ""
+msgstr "예: 판매 증대 팁 얻기"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_form
 msgid "e.g. SDR Advisor"
-msgstr ""
+msgstr "예: SDR 어드바이저"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_form
 msgid ""
 "e.g. You are a support operator, you can answer questions related to ..."
-msgstr ""
+msgstr "예: 본인은 고객 지원 상담원이며, 다음과 같이 답변할 수 있습니다."
+
+#~ msgid ""
+#~ "<span class=\"text-muted\" invisible=\"not is_system_default or "
+#~ "focused_models\">All Models</span>"
+#~ msgstr ""
+#~ "<span class=\"text-muted\" invisible=\"not is_system_default or "
+#~ "focused_models\">전체 모델</span>"

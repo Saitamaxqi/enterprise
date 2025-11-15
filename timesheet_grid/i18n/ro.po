@@ -9,13 +9,14 @@
 # Martin Trigaux, 2022
 # Cozmin Candea <office@terrabit.ro>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-16 21:17+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-11-13 13:13+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Romanian <https://translate.odoo.com/projects/odoo-19/"
 "timesheet_grid/ro/>\n"
 "Language: ro\n"
@@ -319,12 +320,12 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_account_analytic_line
 msgid "Analytic Line"
-msgstr ""
+msgstr "Linie analitica"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_allow
 msgid "Approver Reminder"
-msgstr ""
+msgstr "Reminder aprobator"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_interval
@@ -383,7 +384,7 @@ msgstr "Felicitări, acum sunteți un maestru al fișelor de pontaj."
 #. module: timesheet_grid
 #: model:ir.model,website_form_label:timesheet_grid.model_project_task
 msgid "Create a Task"
-msgstr ""
+msgstr "Creează o sarcină"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__create_uid
@@ -573,6 +574,8 @@ msgid ""
 "Keep track of your working hours by project every day and bill your "
 "customers for that time."
 msgstr ""
+"Înregistrați orele de lucru pe proiect în fiecare zi și facturați clienților "
+"pentru acea perioadă de timp."
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_previous_week
@@ -620,12 +623,12 @@ msgstr "Lansați <b>temporizatorul</b> to start a new activity."
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timesheet_calendar_my_timesheets/timesheet_calendar_my_timesheets_side_panel.xml:0
 msgid "Legend"
-msgstr ""
+msgstr "Legendă"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.hr_timesheet_stop_timer_confirmation_wizard_view_form
 msgid "Log Time"
-msgstr ""
+msgstr "Înregistrează timp"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_merge_wizard_view_form
@@ -694,13 +697,13 @@ msgstr "Echipa mea"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_stop_timer_confirmation_wizard__timesheet_name
 msgid "Name"
-msgstr ""
+msgstr "Nume"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timesheet_grid/timesheet_grid_renderer.js:0
 msgid "No timesheets found. Let's create one!"
-msgstr ""
+msgstr "Nu există pontaje. Să creăm unul!"
 
 #. module: timesheet_grid
 #: model_terms:ir.actions.act_window,help:timesheet_grid.timesheet_grid_to_validate_action
@@ -750,7 +753,7 @@ msgstr ""
 #: code:addons/timesheet_grid/static/src/components/grid_timesheet_timer_header/grid_timesheet_timer_header.xml:0
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "Press"
-msgstr ""
+msgstr "Apăsați"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -793,7 +796,7 @@ msgstr "Resetare la ciornă"
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.hr_timesheet_stop_timer_confirmation_wizard_view_form
 msgid "Resume Timer"
-msgstr ""
+msgstr "Repornește cronometrul"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__timesheet_rounding
@@ -848,7 +851,7 @@ msgstr ""
 #: code:addons/timesheet_grid/static/src/components/grid_timesheet_timer_header/grid_timesheet_timer_header.xml:0
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "Shift"
-msgstr ""
+msgstr "Schimb / Tură"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -953,7 +956,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/timesheet_grid/models/project_project.py:0
 msgid "This Progress Bar is not implemented."
-msgstr ""
+msgstr "Acest Progress Bar nu este implementat."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1164,7 +1167,7 @@ msgstr "Linie validată"
 #. odoo-python
 #: code:addons/timesheet_grid/models/project_task.py:0
 msgid "Warning"
-msgstr ""
+msgstr "Atenție"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid
@@ -1231,6 +1234,8 @@ msgid ""
 "You cannot adjust the time of the timesheet for a project with timesheets "
 "disabled."
 msgstr ""
+"Nu puteți ajusta timpul fișei de pontaj pentru un proiect cu fișe de pontaj "
+"dezactivate."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1264,6 +1269,9 @@ msgid ""
 "employees who are not part of your team or are not in a state that can be "
 "validated. This may be due to the fact that they are dated in the future."
 msgstr ""
+"Nu puteți valida fișele de pontaj selectate deoarece aparțin fie angajaților "
+"care nu fac parte din echipa dvs., fie nu se află într-o stare care poate fi "
+"validată. Acest lucru se poate datora faptului că sunt datate în viitor."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1307,7 +1315,7 @@ msgstr "min"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/grid_timesheet_timer_header/grid_timesheet_timer_header.xml:0
 msgid "or"
-msgstr ""
+msgstr "sau"
 
 #. module: timesheet_grid
 #. odoo-javascript

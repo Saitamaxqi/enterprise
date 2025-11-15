@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-14 02:33+0000\n"
+"PO-Revision-Date: 2025-11-12 06:08+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "marketing_automation/ko/>\n"
@@ -27,7 +27,7 @@ msgstr ""
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
 msgid "\" <strong>bounced</strong>,"
-msgstr ""
+msgstr "\" <strong>반송됨</strong>,"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
@@ -287,7 +287,7 @@ msgstr "활동명"
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity__activity_summary
 msgid "Activity Summary"
-msgstr ""
+msgstr "활동 요약"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity__activity_type
@@ -314,7 +314,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
 msgid "Add Tag"
-msgstr ""
+msgstr "태그 추가"
 
 #. module: marketing_automation
 #. odoo-python
@@ -401,13 +401,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
 msgid "Blacklist Bounces"
-msgstr ""
+msgstr "수신 거부 반송"
 
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
 msgid "Blacklist record"
-msgstr ""
+msgstr "수신 거부 기록"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -540,13 +540,13 @@ msgstr "확인"
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
 msgid "Confirmed contacts"
-msgstr ""
+msgstr "확정된 연락처"
 
 #. module: marketing_automation
 #. odoo-javascript
 #: code:addons/marketing_automation/static/src/components/campaign_template_picker_dialog/campaign_template_picker_dialog.xml:0
 msgid "Create Campaign"
-msgstr ""
+msgstr "캠페인 만들기"
 
 #. module: marketing_automation
 #: model_terms:ir.actions.act_window,help:marketing_automation.marketing_campaign_action
@@ -677,7 +677,7 @@ msgstr "업데이트 하지 않음"
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
 msgid "Double Opt-in"
-msgstr ""
+msgstr "이중 선택"
 
 #. module: marketing_automation
 #: model:ir.model.fields.selection,name:marketing_automation.selection__marketing_activity__activity_type__email
@@ -691,7 +691,7 @@ msgstr "이메일"
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_activity.py:0
 msgid "Email cancelled"
-msgstr ""
+msgstr "이메일 취소됨"
 
 #. module: marketing_automation
 #: model:ir.model,name:marketing_automation.model_mail_compose_message
@@ -766,7 +766,7 @@ msgstr "필터"
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Generate Participants"
-msgstr ""
+msgstr "참가자 생성"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -828,7 +828,7 @@ msgstr "이 레코드를 저장하면 자동으로 생성이 됩니다."
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
 msgid "Join partnership!"
-msgstr ""
+msgstr "파트너로 함께하세요!"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity__write_uid
@@ -1589,7 +1589,7 @@ msgstr "시/도"
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
 msgid "State: {{0}}"
-msgstr ""
+msgstr "상태: {{0}}"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity__statistics_graph_data
@@ -1836,7 +1836,7 @@ msgstr "주"
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
 msgid "Welcome Flow"
-msgstr ""
+msgstr "환영 인사 단계"
 
 #. module: marketing_automation
 #. odoo-python
@@ -1949,7 +1949,7 @@ msgstr "워크플로우의 시작"
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
 msgid "cancelled, if"
-msgstr ""
+msgstr "취소된 경우"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_test_view_form
@@ -2011,7 +2011,7 @@ msgstr "테스트 참가자 생성"
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
 msgid "will be"
-msgstr ""
+msgstr "이 경우"
 
 #~ msgid "<span class=\"col-2 px-0 pt-1\">after</span>"
 #~ msgstr "<span class=\"col-2 px-0 pt-1\">이후</span>"

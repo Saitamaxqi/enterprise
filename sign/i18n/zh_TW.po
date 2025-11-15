@@ -7,13 +7,14 @@
 # Tony Ng, 2025
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-16 12:13+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 19:50+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
 "projects/odoo-19/sign/zh_Hant/>\n"
 "Language: zh_TW\n"
@@ -599,7 +600,7 @@ msgstr "加入"
 #. odoo-javascript
 #: code:addons/sign/static/src/fields/many2many_binary_field/many2many_binary_field.xml:0
 msgid "Add Attachment"
-msgstr ""
+msgstr "加入附件"
 
 #. module: sign
 #. odoo-javascript
@@ -716,7 +717,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sign.field_sign_item_role__assign_to
 #: model_terms:ir.ui.view,arch_db:sign.sign_item_role_view_form
 msgid "Assign to"
-msgstr ""
+msgstr "分配給"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__start_sign
@@ -727,7 +728,7 @@ msgstr "最少有一名簽署人已簽署該文件。"
 #. odoo-javascript
 #: code:addons/sign/static/src/fields/many2many_binary_field/many2many_binary_field.xml:0
 msgid "Attach"
-msgstr ""
+msgstr "加入附件"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_document__attachment_id
@@ -818,7 +819,7 @@ msgstr "根據不同的網站，我們的比較如下："
 #. odoo-javascript
 #: code:addons/sign/static/src/editor/plugins/signature.js:0
 msgid "Basic Bloc"
-msgstr ""
+msgstr "基本區塊"
 
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_log__request_state__sent
@@ -914,7 +915,7 @@ msgstr "中間"
 #. odoo-javascript
 #: code:addons/sign/static/src/backend_components/sign_request/sign_request_documents_dropdown.xml:0
 msgid "Certificate"
-msgstr ""
+msgstr "證書"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.doc_sign
@@ -1004,7 +1005,7 @@ msgstr "顏色索引"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "Communication"
-msgstr ""
+msgstr "溝通"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_request
@@ -1091,6 +1092,11 @@ msgstr "恭喜，你的簽名已準備好提交！"
 #: model_terms:web_tour.tour,rainbow_man_message:sign.sign_tour
 msgid "Congratulations, you signed your first document!"
 msgstr "恭喜，你簽署了第一份文件！"
+
+#. module: sign
+#: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
+msgid "Connected as"
+msgstr ""
 
 #. module: sign
 #: model:ir.model,name:sign.model_res_partner
@@ -1310,7 +1316,7 @@ msgstr "以短訊發送單次使用驗證碼，以在簽署文件時，識別簽
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__send_channel
 msgid "Delivery Method"
-msgstr ""
+msgstr "交貨方法"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
@@ -2036,7 +2042,7 @@ msgstr "簡簽"
 #. odoo-javascript
 #: code:addons/sign/static/src/editor/plugins/signature.js:0
 msgid "Insert your signature"
-msgstr ""
+msgstr "加入你的電子簽名。"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
@@ -2080,7 +2086,7 @@ msgstr "是使用者簽署人"
 
 #. module: sign
 #. odoo-python
-#: code:addons/sign/models/sign_document.py:0
+#: code:addons/sign/utils/pdf_handling.py:0
 msgid ""
 "It seems that we're not able to process one of the uploaded pdf. It is "
 "either encrypted, or encoded in a format we do not support."
@@ -2251,7 +2257,7 @@ msgstr "紀錄"
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_item_type__field_size__long_text
 msgid "Long Text"
-msgstr ""
+msgstr "長篇文字（多行）"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_log__longitude
@@ -2328,7 +2334,7 @@ msgstr "模型"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_template__model_name
 msgid "Model Name"
-msgstr ""
+msgstr "模型名稱"
 
 #. module: sign
 #. odoo-javascript
@@ -2426,7 +2432,7 @@ msgstr "檔案名稱"
 #. odoo-javascript
 #: code:addons/sign/static/src/js/tours/sign.js:0
 msgid "Nearly there, keep going!"
-msgstr ""
+msgstr "快到了，請繼續！"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__need_my_signature
@@ -2584,6 +2590,11 @@ msgid ""
 msgstr ""
 
 #. module: sign
+#: model_terms:ir.ui.view,arch_db:sign.signer_status_wrapper
+msgid "On"
+msgstr "開"
+
+#. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
 msgid "One can weighs 15 g"
 msgstr "一件可以有 15 克重"
@@ -2667,7 +2678,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_item_view_tree
 msgid "Page"
-msgstr ""
+msgstr "頁面"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container
@@ -2843,12 +2854,12 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__res_ids
 msgid "Related Document IDs"
-msgstr ""
+msgstr "相關文件識別碼"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__model
 msgid "Related Document Model"
-msgstr ""
+msgstr "相關的單據模型"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__reminder
@@ -3041,12 +3052,12 @@ msgstr "已儲存"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
 msgid "Schedule"
-msgstr ""
+msgstr "預約"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__scheduled_date
 msgid "Scheduled Date"
-msgstr ""
+msgstr "預定日期"
 
 #. module: sign
 #. odoo-python
@@ -4497,7 +4508,7 @@ msgstr "有效期至"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "Valid for"
-msgstr ""
+msgstr "對以下項目有效："
 
 #. module: sign
 #. odoo-javascript
@@ -4830,7 +4841,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__body
 msgid "body"
-msgstr ""
+msgstr "身體"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container
@@ -4852,7 +4863,7 @@ msgstr "按此處以取消它。"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "days"
-msgstr ""
+msgstr "天"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_form
@@ -5073,6 +5084,11 @@ msgstr "棵樹"
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container_pdf
 msgid "trees"
 msgstr "棵樹"
+
+#. module: sign
+#: model_terms:ir.ui.view,arch_db:sign.signer_status_wrapper
+msgid "via"
+msgstr ""
 
 #. module: sign
 #. odoo-javascript

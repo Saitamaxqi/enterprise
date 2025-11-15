@@ -3,19 +3,22 @@
 # * esg
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-08 18:43+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 20:25+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Azerbaijani <https://translate.odoo.com/projects/odoo-19/esg/"
+"az/>\n"
 "Language: az\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: esg
 #. odoo-python
@@ -27,14 +30,16 @@ msgstr ""
 #. odoo-python
 #: code:addons/esg/models/esg_other_emission.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (surət)"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid ""
 "<i class=\"fa fa-exclamation-triangle me-2\"/>\n"
-"                    You are modifying an emission factor already assigned to emissions.\n"
-"                    Changing it will update these emissions. To keep the old value, duplicate the factor."
+"                    You are modifying an emission factor already assigned to "
+"emissions.\n"
+"                    Changing it will update these emissions. To keep the old "
+"value, duplicate the factor."
 msgstr ""
 
 #. module: esg
@@ -75,7 +80,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_assignation_line__account_id
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__account_id
 msgid "Account"
-msgstr ""
+msgstr "Hesab"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__account_move_line_ids
@@ -85,7 +90,7 @@ msgstr ""
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Accounting"
-msgstr ""
+msgstr "Mühasibat Uçotu"
 
 #. module: esg
 #. odoo-javascript
@@ -97,12 +102,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_needaction
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Lazımi Hərəkət"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__active
 msgid "Active"
-msgstr ""
+msgstr "Aktiv"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__activity_flow
@@ -114,30 +119,30 @@ msgstr ""
 #: model:ir.model,name:esg.model_esg_activity_type
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__activity_type_id
 msgid "Activity Type"
-msgstr ""
+msgstr "Fəaliyyət növü"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__activity_type_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__activity_type_ids
 msgid "Activity Types"
-msgstr ""
+msgstr "Fəaliyyət Növləri"
 
 #. module: esg
 #: model:res.groups,name:esg.esg_group_manager
 msgid "Administrator"
-msgstr ""
+msgstr "Administrator"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__price_subtotal
 msgid "Amount"
-msgstr ""
+msgstr "Məbləğ"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_assignation_line.py:0
 msgid ""
-"An assignation with the rules (%(account_id)s, %(partner_id)s, "
-"%(product_id)s) already exists in the emission factor '%(factor_name)s'."
+"An assignation with the rules (%(account_id)s, %(partner_id)s, %"
+"(product_id)s) already exists in the emission factor '%(factor_name)s'."
 msgstr ""
 
 #. module: esg
@@ -172,12 +177,12 @@ msgstr ""
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
 msgid "Archived"
-msgstr ""
+msgstr "Arxivləndi"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid "Assign"
-msgstr ""
+msgstr "Təyin et"
 
 #. module: esg
 #: model:ir.actions.act_window,name:esg.factors_auto_assignment_wizard_action
@@ -200,7 +205,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_attachment_count
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Qoşma Sayı"
 
 #. module: esg
 #. odoo-python
@@ -283,7 +288,7 @@ msgstr ""
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.factors_auto_assignment_wizard_form_view
 msgid "Cancel"
-msgstr ""
+msgstr "Ləğv edin"
 
 #. module: esg
 #. odoo-javascript
@@ -354,14 +359,17 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_gas__category
 msgid "Category"
-msgstr ""
+msgstr "Kateqoriya"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/account_account.py:0
 msgid ""
-"Changing the account type to anything other than %(valid_account_type_names)s will reset all emission factors linked to journal items using this account.\n"
-"In addition, it will remove all the ESG assignations lines linked to that account.\n"
+"Changing the account type to anything other than %"
+"(valid_account_type_names)s will reset all emission factors linked to "
+"journal items using this account.\n"
+"In addition, it will remove all the ESG assignations lines linked to that "
+"account.\n"
 "Are you sure you want to continue?"
 msgstr ""
 
@@ -380,7 +388,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__code
 #: model:ir.model.fields,field_description:esg.field_esg_gas__code
 msgid "Code"
-msgstr ""
+msgstr "Kod"
 
 #. module: esg
 #. odoo-javascript
@@ -398,14 +406,14 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__color
 msgid "Color"
-msgstr ""
+msgstr "Rəng"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__company_id
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__company_id
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__company_id
 msgid "Company"
-msgstr ""
+msgstr "Şirkət"
 
 #. module: esg
 #. odoo-javascript
@@ -434,7 +442,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__scope_complete_name
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__complete_name
 msgid "Complete Name"
-msgstr ""
+msgstr "Tam Adı"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__compute_method
@@ -451,12 +459,12 @@ msgstr ""
 #. module: esg
 #: model:ir.ui.menu,name:esg.menu_esg_configuration
 msgid "Configuration"
-msgstr ""
+msgstr "Konfiqurasiya"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.factors_auto_assignment_wizard_form_view
 msgid "Confirm"
-msgstr ""
+msgstr "Təsdiq edin"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_factors_auto_assignment_wizard__start_date
@@ -491,7 +499,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__create_uid
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Tərəfindən yaradılıb"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__create_date
@@ -504,7 +512,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__create_date
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Tarixdə yaradıldı"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__currency_id
@@ -512,19 +520,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__currency_id
 #: model_terms:ir.ui.view,arch_db:esg.other_emission_form_view
 msgid "Currency"
-msgstr ""
+msgstr "Valyuta"
 
 #. module: esg
 #: model:ir.actions.client,name:esg.ir_actions_esg_dashboard_action
 #: model:ir.ui.menu,name:esg.menu_esg_dashboard
 msgid "Dashboard"
-msgstr ""
+msgstr "Şəxsi kabinet"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_database
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__database_id
 msgid "Database"
-msgstr ""
+msgstr "Verilənlər bazası"
 
 #. module: esg
 #. odoo-python
@@ -542,7 +550,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__date
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Date"
-msgstr ""
+msgstr "Tarix"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__date_end
@@ -566,7 +574,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__description
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid "Description"
-msgstr ""
+msgstr "Təsvir"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
@@ -595,7 +603,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__display_name
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Göstəriləcək Ad"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.factors_auto_assignment_wizard_form_view
@@ -608,7 +616,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:esg.database_form_view
 #: model_terms:ir.ui.view,arch_db:esg.database_kanban_view
 msgid "Download"
-msgstr ""
+msgstr "Yüklə"
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_view_database
@@ -731,8 +739,10 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:esg.action_emitted_emission_report_views
 #: model_terms:ir.actions.act_window,help:esg.action_offset_emission_report_views
 msgid ""
-"Emissions data will sync automatically from accounting when you receive supplier invoices.<br>\n"
-"                You can also manually add other emission not linked to journal entries."
+"Emissions data will sync automatically from accounting when you receive "
+"supplier invoices.<br>\n"
+"                You can also manually add other emission not linked to "
+"journal entries."
 msgstr ""
 
 #. module: esg
@@ -776,7 +786,7 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__end_date
 msgid "End Date"
-msgstr ""
+msgstr "Bitmə Tarixi"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_downstream_4
@@ -813,19 +823,19 @@ msgstr ""
 #. module: esg
 #: model:account.account,name:esg.account_expense
 msgid "Expense"
-msgstr ""
+msgstr "Xərclər"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_follower_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "İzləyicilər"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_partner_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "İzləyicilər (Tərəfdaşlar)"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_8
@@ -1017,7 +1027,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__has_message
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Mesajı Var"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c2f6
@@ -1055,7 +1065,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__id
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_7
@@ -1066,15 +1076,15 @@ msgstr ""
 #: model:ir.model.fields,help:esg.field_factors_auto_assignment_wizard__replace_previous_factors
 msgid ""
 "If checked, any emission lines that already have an emission factor "
-"(manually or automatically assigned) will be reassigned if a matching factor"
-" is found based on your configuration."
+"(manually or automatically assigned) will be reassigned if a matching factor "
+"is found based on your configuration."
 msgstr ""
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__message_needaction
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "İşarələnibsə, yeni mesajlara baxmalısınız."
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__message_has_error
@@ -1082,12 +1092,12 @@ msgstr ""
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__message_has_error
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Yoxlanılıbsa, bəzi mesajların çatdırılmasında xəta var."
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__image
 msgid "Image"
-msgstr ""
+msgstr "Şəkil"
 
 #. module: esg
 #. odoo-javascript
@@ -1128,7 +1138,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_is_follower
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "İzləyicidir"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_gas__is_mandatory_gas
@@ -1145,12 +1155,12 @@ msgstr ""
 #: model:ir.model,name:esg.model_account_move
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__move_id
 msgid "Journal Entry"
-msgstr ""
+msgstr "Jurnal Girişi"
 
 #. module: esg
 #: model:ir.model,name:esg.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Jurnal Sətirləri"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__kanban_text
@@ -1179,7 +1189,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__write_uid
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Son Yeniləyən"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__write_date
@@ -1192,18 +1202,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__write_date
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Son Yenilənmə tarixi"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_carbon_footprint_box/esg_carbon_footprint_box.xml:0
 msgid "Last Year"
-msgstr ""
+msgstr "Son İl"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__latest_version
 msgid "Latest Version"
-msgstr ""
+msgstr "Ən son Versiya"
 
 #. module: esg
 #. odoo-javascript
@@ -1214,7 +1224,7 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__level
 msgid "Level"
-msgstr ""
+msgstr "Səviyyə"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
@@ -1242,13 +1252,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_has_error
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Mesajın Çatdırılmasında xəta"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Mesajlar"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__ch4
@@ -1274,7 +1284,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_factor__compute_method__monetary
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
 msgid "Monetary"
-msgstr ""
+msgstr "Pul"
 
 #. module: esg
 #. odoo-javascript
@@ -1291,7 +1301,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_gas__name
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__name
 msgid "Name"
-msgstr ""
+msgstr "Ad"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__nb_linked_emissions
@@ -1307,7 +1317,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_carbon_analytics_box/esg_carbon_analytics_box.xml:0
 msgid "New"
-msgstr ""
+msgstr "Yeni"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_nf3
@@ -1358,31 +1368,31 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__note
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__note
 msgid "Note"
-msgstr ""
+msgstr "Qeyd"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_needaction_counter
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Hərəkətlərin sayı"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_has_error_counter
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Xətaların sayı"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__message_needaction_counter
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Əməliyyat tələb edən mesajların sayı"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__message_has_error_counter
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Çatdırılma xətası olan mesajların sayı"
 
 #. module: esg
 #. odoo-javascript
@@ -1404,7 +1414,7 @@ msgstr ""
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Other"
-msgstr ""
+msgstr "Digər"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_other_emission
@@ -1446,18 +1456,18 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__parent_id
 msgid "Parent"
-msgstr ""
+msgstr "Əsas"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__parent_path
 msgid "Parent Path"
-msgstr ""
+msgstr "Əsas Yol"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_assignation_line__partner_id
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__partner_id
 msgid "Partner"
-msgstr ""
+msgstr "Tərəfdaş"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__pfc
@@ -1498,7 +1508,7 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_assignation_line__product_id
 msgid "Product"
-msgstr ""
+msgstr "Məhsul"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_4
@@ -1533,13 +1543,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__quantity
 #: model_terms:ir.ui.view,arch_db:esg.other_emission_form_view
 msgid "Quantity"
-msgstr ""
+msgstr "Miqdar"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__rating_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Qiymətləndirmələr"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__region
@@ -1548,8 +1558,7 @@ msgstr ""
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_gas__global_warming_potential
-msgid ""
-"Relative impact of gas on global warming compared to CO₂ over 100 years"
+msgid "Relative impact of gas on global warming compared to CO₂ over 100 years"
 msgstr ""
 
 #. module: esg
@@ -1572,22 +1581,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_has_sms_error
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "SMS-in Çatdırılmasında xəta"
 
 #. module: esg
 #: model:account.account,name:esg.account_salary
 msgid "Salary"
-msgstr ""
+msgstr "Əmək haqqı"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__scope
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__scope
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__scope
 msgid "Scope"
-msgstr ""
+msgstr "Əhatə dairəsi"
 
 #. module: esg
 #. odoo-javascript
+#. odoo-python
+#: code:addons/esg/controllers/esg_dashboard.py:0
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Scope 1"
 msgstr ""
@@ -1600,6 +1611,8 @@ msgstr ""
 
 #. module: esg
 #. odoo-javascript
+#. odoo-python
+#: code:addons/esg/controllers/esg_dashboard.py:0
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Scope 2"
 msgstr ""
@@ -1612,6 +1625,8 @@ msgstr ""
 
 #. module: esg
 #. odoo-javascript
+#. odoo-python
+#: code:addons/esg/controllers/esg_dashboard.py:0
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Scope 3"
 msgstr ""
@@ -1635,7 +1650,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__sequence
 #: model:ir.model.fields,field_description:esg.field_esg_gas__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Ardıcıllıq"
 
 #. module: esg
 #. odoo-python
@@ -1646,7 +1661,7 @@ msgstr ""
 #. module: esg
 #: model:ir.ui.menu,name:esg.menu_esg_settings
 msgid "Settings"
-msgstr ""
+msgstr "Parametrlər"
 
 #. module: esg
 #. odoo-python
@@ -1660,7 +1675,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__source_id
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__source_id
 msgid "Source"
-msgstr ""
+msgstr "Mənbə"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__database_id
@@ -1676,7 +1691,7 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__start_date
 msgid "Start Date"
-msgstr ""
+msgstr "Başlanğıc Tarixi"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_direct_1
@@ -1799,7 +1814,7 @@ msgstr ""
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_list_view
 msgid "Unit"
-msgstr ""
+msgstr "Vahid"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__unit_name
@@ -1811,18 +1826,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__uom_id
 #: model_terms:ir.ui.view,arch_db:esg.other_emission_form_view
 msgid "Unit of Measure"
-msgstr ""
+msgstr "Ölçü  Vahidi"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__uom_id
 msgid "UoM"
-msgstr ""
+msgstr "Ölçü Vahidi"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.database_form_view
 #: model_terms:ir.ui.view,arch_db:esg.database_kanban_view
 msgid "Update"
-msgstr ""
+msgstr "Yeniləyin"
 
 #. module: esg
 #. odoo-python
@@ -1867,7 +1882,7 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__url
 msgid "Url"
-msgstr ""
+msgstr "URL"
 
 #. module: esg
 #. odoo-javascript
@@ -1879,7 +1894,7 @@ msgstr ""
 #. module: esg
 #: model:res.groups,name:esg.esg_group_user
 msgid "User"
-msgstr ""
+msgstr "İstifadəçi"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__valid_from
@@ -1910,7 +1925,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/esg/models/account_account.py:0
 msgid "Warning"
-msgstr ""
+msgstr "Xəbərdarlıq"
 
 #. module: esg
 #. odoo-javascript
@@ -1928,21 +1943,20 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__website_message_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Veb sayt Mesajları"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__website_message_ids
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Veb saytın kommunikasiya tarixçəsi"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/account_account.py:0
 msgid ""
-"You can only create accounts of type %(valid_account_type_names)s in the ESG"
-" module, as emission factors can only be linked to expense or asset "
-"accounts."
+"You can only create accounts of type %(valid_account_type_names)s in the ESG "
+"module, as emission factors can only be linked to expense or asset accounts."
 msgstr ""
 
 #. module: esg

@@ -9,13 +9,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Louis Travaux <lotr@odoo.com>, 2025.
 # "Manon Rondou (ronm)" <ronm@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-31 08:57+0000\n"
-"Last-Translator: Louis Travaux <lotr@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 19:34+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/iot/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -24,6 +25,12 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
 "1000000 == 0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.12.2\n"
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
+msgid "%s is currently restarting"
+msgstr ""
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
@@ -62,6 +69,12 @@ msgid "Administrator"
 msgstr "Administrateur"
 
 #. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
+msgid "All communication protocols are working properly."
+msgstr ""
+
+#. module: iot
 #: model:ir.model,name:iot.model_iot_discovered_box
 msgid "An IoT box that is in pairing mode"
 msgstr "Une IoT Box qui est en mode appairage"
@@ -69,8 +82,8 @@ msgstr "Une IoT Box qui est en mode appairage"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Are you sure you want to restart Odoo on the IoT box?"
-msgstr "Êtes-vous sûr de vouloir redémarrer Odoo sur l'IoT Box ?"
+msgid "Are you sure you want to restart Odoo on the IoT Box?"
+msgstr ""
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__drivers_auto_update
@@ -105,6 +118,14 @@ msgstr ""
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid ""
+"Blackbox driver update required. Please restart your IoT Box to update the "
+"blackbox driver."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Blackbox is running and operational"
 msgstr ""
 
@@ -120,11 +141,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__bluetooth
 msgid "Bluetooth"
 msgstr "Bluetooth"
-
-#. module: iot
-#: model:ir.ui.menu,name:iot.iot_settings_menu_action
-msgid "Cache"
-msgstr "Cache"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__camera
@@ -146,6 +162,12 @@ msgstr "Vérifiez les voyants lumineux"
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "Click on the"
 msgstr "Cliquez sur"
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
+msgid "Communication protocol '%s' is not working properly."
+msgstr ""
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__company_id
@@ -317,6 +339,13 @@ msgstr "Adresse du domaine"
 
 #. module: iot
 #. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
+msgid ""
+"Failed to check IoT Box network, check that it's connected to the Internet."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_download_logs.js:0
 msgid "Failed to download logs from %s"
 msgstr "Échec du téléchargement des journaux depuis %s"
@@ -342,8 +371,8 @@ msgstr "Échec de la réinitialisation du mot de passe de %s."
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Failed to restart Odoo on %s"
-msgstr "Échec du redémarrage d’Odoo sur %s"
+msgid "Failed to send the restart command to the IoT Box ('%s')"
+msgstr ""
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
@@ -522,6 +551,13 @@ msgid "IoT Box found. Connecting..."
 msgstr "IoT Box trouvée. Connexion en cours..."
 
 #. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
+msgid ""
+"IoT Box local network is %(lan_quality)s and internet is %(wan_quality)s"
+msgstr ""
+
+#. module: iot
 #: model:ir.actions.act_window,name:iot.iot_box_action
 #: model:ir.ui.menu,name:iot.iot_box_menu_action
 msgid "IoT Boxes"
@@ -582,12 +618,6 @@ msgstr "Mis à jour par"
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__write_date
 msgid "Last Updated on"
 msgstr "Mis à jour le"
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Last restarting process hasn't finished yet"
-msgstr "Le dernier processus de redémarrage n'est pas encore terminé"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__layout
@@ -773,12 +803,6 @@ msgid "Please activate the Vat Signing Card with PIN."
 msgstr ""
 
 #. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Please wait"
-msgstr "Veuillez patienter"
-
-#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Plug a screen or a printer to get a status."
 msgstr "Branchez un écran ou une imprimante pour obtenir un statut."
@@ -872,6 +896,11 @@ msgid "Report xml"
 msgstr "Rapport XML"
 
 #. module: iot
+#: model:ir.ui.menu,name:iot.iot_settings_menu_action
+msgid "Reporting"
+msgstr "Analyse"
+
+#. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__report_ids
 msgid "Reports"
 msgstr "Rapports"
@@ -893,24 +922,6 @@ msgstr "Rapports avec imprimantes associées"
 #: model:ir.ui.menu,name:iot.iot_clear_selected_devices
 msgid "Reset Linked Printers"
 msgstr "Réinitialiser les imprimantes associées"
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Restart Failed"
-msgstr "Échec du redémarrage"
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Restart finished"
-msgstr "Fin du redémarrage"
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Restarting"
-msgstr "En cours de redémarrage"
 
 #. module: iot
 #. odoo-javascript
@@ -947,7 +958,7 @@ msgstr "Sélectionnez l’IoT Box à connecter"
 #. module: iot
 #. odoo-python
 #: code:addons/iot/models/ir_actions_report.py:0
-msgid "Select Printers"
+msgid "Select Printers for %s"
 msgstr ""
 
 #. module: iot
@@ -1030,15 +1041,9 @@ msgid "Subtype of device."
 msgstr "Sous-type de périphérique."
 
 #. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Success"
-msgstr "Succès"
-
-#. module: iot
 #: model:ir.model,name:iot.model_ir_config_parameter
 msgid "System Parameter"
-msgstr ""
+msgstr "Paramètres système"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
@@ -1057,27 +1062,35 @@ msgid "Test page printed"
 msgstr "Page de test imprimée"
 
 #. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
+msgid "Testing communication with IoT Box and network quality, please wait..."
+msgstr ""
+
+#. module: iot
 #: model:ir.model,name:iot.model_iot_channel
 msgid "The Websocket IoT Channel"
 msgstr "Canal Websocket de l'IoT"
 
 #. module: iot
+#. odoo-python
+#: code:addons/iot/models/ir_actions_report.py:0
+msgid ""
+"The report you are trying to print requires an IoT Box to be printed.\n"
+"Make sure you linked the report '%s' to the corresponding IoT printer device."
+msgstr ""
+
+#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Then click on \"Configure\" under \"Odoo database connected\" section."
 msgstr ""
-"Cliquez ensuite sur \"Configure\" dans la section \"Odoo database connected\""
-"."
+"Cliquez ensuite sur \"Configure\" dans la section \"Odoo database "
+"connected\"."
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_device_action
 msgid "There is no device connected to your IoT Boxes"
 msgstr "Aucun périphérique n'est connecté à vos IoT Box"
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Timed out"
-msgstr "Expiré"
 
 #. module: iot
 #. odoo-javascript
@@ -1239,9 +1252,9 @@ msgid ""
 "                <br/>"
 msgstr ""
 "pour le Wi-Fi.<br/>\n"
-"                Puis, connectez l'IoT Box à une imprimante (via un câble USB)"
-" ou à un écran (via un câble micro HDMI) pour obtenir le code d'appairage.<"
-"br/>\n"
+"                Puis, connectez l'IoT Box à une imprimante (via un câble "
+"USB) ou à un écran (via un câble micro HDMI) pour obtenir le code "
+"d'appairage.<br/>\n"
 "                <br/>"
 
 #. module: iot
@@ -1267,6 +1280,36 @@ msgstr "reset.linked.printers"
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "to add an IoT Box."
 msgstr "pour ajouter une IoT Box."
+
+#~ msgid "Are you sure you want to restart Odoo on the IoT box?"
+#~ msgstr "Êtes-vous sûr de vouloir redémarrer Odoo sur l'IoT Box ?"
+
+#~ msgid "Cache"
+#~ msgstr "Cache"
+
+#~ msgid "Failed to restart Odoo on %s"
+#~ msgstr "Échec du redémarrage d’Odoo sur %s"
+
+#~ msgid "Last restarting process hasn't finished yet"
+#~ msgstr "Le dernier processus de redémarrage n'est pas encore terminé"
+
+#~ msgid "Please wait"
+#~ msgstr "Veuillez patienter"
+
+#~ msgid "Restart Failed"
+#~ msgstr "Échec du redémarrage"
+
+#~ msgid "Restart finished"
+#~ msgstr "Fin du redémarrage"
+
+#~ msgid "Restarting"
+#~ msgstr "En cours de redémarrage"
+
+#~ msgid "Success"
+#~ msgstr "Succès"
+
+#~ msgid "Timed out"
+#~ msgstr "Expiré"
 
 #~ msgid "Last Sent Value"
 #~ msgstr "Dernière valeur envoyée"

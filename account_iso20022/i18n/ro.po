@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:45+0000\n"
+"POT-Creation-Date: 2025-11-14 18:42+0000\n"
 "PO-Revision-Date: 2025-10-30 17:15+0000\n"
 "Last-Translator: Cuciureanu Larisa <larisa.cuciureanu@nexterp.ro>\n"
 "Language-Team: Romanian <https://translate.odoo.com/projects/odoo-19/"
@@ -301,26 +301,6 @@ msgid "Payments without IBAN"
 msgstr "Plăți fără IBAN"
 
 #. module: account_iso20022
-#. odoo-python
-#: code:addons/account_iso20022/models/account_journal_iso20022_ch.py:0
-msgid "Please set a bank on the journal '%(journal_name)s'."
-msgstr "Vă rugăm să setați o bancă pe jurnalul '%(journal_name)s'."
-
-#. module: account_iso20022
-#. odoo-python
-#: code:addons/account_iso20022/models/account_journal_iso20022_ch.py:0
-msgid "Please set an account number on the journal '%(journal_name)s'."
-msgstr "Vă rugăm să setați un număr de cont pe jurnalul '%(journal_name)s'."
-
-#. module: account_iso20022
-#. odoo-python
-#: code:addons/account_iso20022/models/account_journal_iso20022_ch.py:0
-msgid "Please set the bank identifier code (BIC) on this bank: %(bank_name)s"
-msgstr ""
-"Vă rugăm să setați codul de identificare bancară (BIC) pentru această bancă: "
-"%(bank_name)s"
-
-#. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_payment__iso20022_priority
 msgid "Priority"
 msgstr "Prioritate"
@@ -450,8 +430,8 @@ msgid ""
 "- 2 letters or digits: location code\n"
 "- 3 letters or digits: branch code, optional\n"
 msgstr ""
-"Codul BIC '%(bic_code)s' asociat băncii '%(bank)s' din contul bancar "
-"'%(account)s' al partenerului '%(partner)s' nu respectă convenția necesară.\n"
+"Codul BIC '%(bic_code)s' asociat băncii '%(bank)s' din contul bancar '%"
+"(account)s' al partenerului '%(partner)s' nu respectă convenția necesară.\n"
 "Trebuie să conțină 8 sau 11 caractere și să respecte următoarea structură:\n"
 "- 4 litere: codul instituției sau codul băncii\n"
 "- 2 litere: codul țării\n"
@@ -622,6 +602,18 @@ msgstr ""
 "• HIGH: Plată cu prioritate ridicată.\n"
 "• URGP: Critic, necesită procesare imediată.\n"
 "• SVDA: Plățile trebuie să fie decontate în aceeași zi cu transmiterea."
+
+#~ msgid "Please set a bank on the journal '%(journal_name)s'."
+#~ msgstr "Vă rugăm să setați o bancă pe jurnalul '%(journal_name)s'."
+
+#~ msgid "Please set an account number on the journal '%(journal_name)s'."
+#~ msgstr "Vă rugăm să setați un număr de cont pe jurnalul '%(journal_name)s'."
+
+#~ msgid ""
+#~ "Please set the bank identifier code (BIC) on this bank: %(bank_name)s"
+#~ msgstr ""
+#~ "Vă rugăm să setați codul de identificare bancară (BIC) pentru această "
+#~ "bancă: %(bank_name)s"
 
 #~ msgid "A bank account must be set on the following documents: "
 #~ msgstr "Trebuie setat un cont bancar pe următoarele documente: "

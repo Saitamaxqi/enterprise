@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-31 08:21+0000\n"
+"PO-Revision-Date: 2025-11-14 03:52+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "mrp_workorder/ja/>\n"
@@ -95,7 +95,7 @@ msgstr "例外の活動を示す装飾"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_state
 msgid "Activity State"
-msgstr "活動状態"
+msgstr "活動ステータス"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_type_icon
@@ -106,7 +106,7 @@ msgstr "活動種別アイコン"
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/control_panel.xml:0
 msgid "Add"
-msgstr ""
+msgstr "追加"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -128,13 +128,13 @@ msgstr "構成品を追加"
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.xml:0
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_mrp_production_additional_workorder_wizard
 msgid "Add Work Order"
-msgstr ""
+msgstr "作業オーダを追加"
 
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/control_panel.xml:0
 msgid "Add Workcenter"
-msgstr ""
+msgstr "作業区を追加"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -148,30 +148,31 @@ msgstr "ステップを追加"
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_record_line/stock_move.js:0
 msgid "Add line: %(productName)s"
-msgstr ""
+msgstr "明細追加: %(productName)s"
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/models/mrp_production.py:0
 msgid "Add log note"
-msgstr ""
+msgstr "ログメモを追加"
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_mrp_production_additional_workorder
 msgid "Additional Workorder"
-msgstr ""
+msgstr "追加作業オーダ"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_production_form_view
 msgid ""
 "Additional instructions that can be created and visualised from both here "
 "and the shop floor interface."
-msgstr ""
+msgstr "追加指示は、ここと製造現場のインターフェースの両方から作成し、視覚化すること"
+"ができます。"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__all_employees_allowed
 msgid "All Employees Allowed"
-msgstr ""
+msgstr "すべての許可された従業員"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__allow_producing_quantity_change
@@ -189,18 +190,19 @@ msgstr "登録を許可"
 msgid ""
 "Allow users to close MO in last work order operation or from the overview "
 "tab."
-msgstr ""
+msgstr "ユーザが最後の作業オーダのオペレーションまたは概要タブから製造オーダを終了で"
+"きるようにします。"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workcenter_form_view_inherit
 msgid "Allowed Employees"
-msgstr ""
+msgstr "許可された従業員"
 
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_quantity_dialog.xml:0
 msgid "Apply"
-msgstr ""
+msgstr "適用"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_view_employee_filter

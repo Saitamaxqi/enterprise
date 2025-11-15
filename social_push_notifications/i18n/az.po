@@ -3,19 +3,22 @@
 # * social_push_notifications
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-10-08 18:49+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-10 13:25+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Azerbaijani <https://translate.odoo.com/projects/odoo-19/"
+"social_push_notifications/az/>\n"
 "Language: az\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
@@ -42,12 +45,12 @@ msgstr ""
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
 msgid "Body"
-msgstr ""
+msgstr "Korpus"
 
 #. module: social_push_notifications
 #: model:ir.model,name:social_push_notifications.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Parametrləri Konfiqurasiya edin"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
@@ -57,7 +60,7 @@ msgstr ""
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
 msgid "Delay"
-msgstr ""
+msgstr "Gecikmə"
 
 #. module: social_push_notifications
 #. odoo-javascript
@@ -78,7 +81,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:social_push_notifications.field_website_visitor__display_name
 #: model:ir.model.fields,field_description:social_push_notifications.field_website_visitor_push_subscription__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Göstəriləcək Ad"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post__display_push_notifications_preview
@@ -161,7 +164,7 @@ msgstr ""
 #. module: social_push_notifications
 #: model:ir.model,name:social_push_notifications.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP Marşrutizasiyası"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post__has_push_notifications_account
@@ -182,12 +185,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:social_push_notifications.field_website_visitor__id
 #: model:ir.model.fields,field_description:social_push_notifications.field_website_visitor_push_subscription__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
 msgid "Icon"
-msgstr ""
+msgstr "Simvol"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.social_post_template_view_form
@@ -212,14 +215,14 @@ msgstr ""
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.social_post_template_view_form
 msgid "Message"
-msgstr ""
+msgstr "Mesaj"
 
 #. module: social_push_notifications
 #. odoo-python
 #: code:addons/social_push_notifications/models/social_live_post.py:0
 #: code:addons/social_push_notifications/models/social_post_template.py:0
 msgid "New Message"
-msgstr ""
+msgstr "Yeni Mesaj"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_res_config_settings__notification_request_delay
@@ -260,7 +263,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.utm_campaign_view_form
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.utm_campaign_view_kanban
 msgid "Notifications"
-msgstr ""
+msgstr "Bildirişlər"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_marketing_campaign__social_push_notifications_count
@@ -331,7 +334,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.utm_campaign_view_form
 msgid "Push Notifications"
-msgstr ""
+msgstr "Push bildirişlər"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_website_visitor__has_push_notifications
@@ -412,7 +415,7 @@ msgstr ""
 #. module: social_push_notifications
 #: model:ir.model,name:social_push_notifications.model_social_account
 msgid "Social Account"
-msgstr ""
+msgstr "Sosial Hesab"
 
 #. module: social_push_notifications
 #: model:ir.model,name:social_push_notifications.model_social_live_post
@@ -422,12 +425,12 @@ msgstr ""
 #. module: social_push_notifications
 #: model:ir.model,name:social_push_notifications.model_social_media
 msgid "Social Media"
-msgstr ""
+msgstr "Sosial Media"
 
 #. module: social_push_notifications
 #: model:ir.model,name:social_push_notifications.model_social_post
 msgid "Social Post"
-msgstr ""
+msgstr "Sosial Paylaşım"
 
 #. module: social_push_notifications
 #: model:ir.model,name:social_push_notifications.model_social_post_template
@@ -443,7 +446,7 @@ msgstr ""
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.social_post_template_view_form
 msgid "Target URL"
-msgstr ""
+msgstr "Hədəf URL"
 
 #. module: social_push_notifications
 #: model:ir.model.constraint,message:social_push_notifications.constraint_social_account_website_unique
@@ -466,12 +469,12 @@ msgstr ""
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
 msgid "Title"
-msgstr ""
+msgstr "Başlıq"
 
 #. module: social_push_notifications
 #: model:ir.model,name:social_push_notifications.model_utm_campaign
 msgid "UTM Campaign"
-msgstr ""
+msgstr "Kampaniyanın UTM kodu"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
@@ -501,7 +504,7 @@ msgstr ""
 #. module: social_push_notifications
 #: model:ir.ui.menu,name:social_push_notifications.social_visitor
 msgid "Visitors"
-msgstr ""
+msgstr "Ziyarətçilər"
 
 #. module: social_push_notifications
 #. odoo-python
@@ -519,13 +522,13 @@ msgstr ""
 #: model:ir.model,name:social_push_notifications.model_website
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_account__website_id
 msgid "Website"
-msgstr ""
+msgstr "Veb sayt"
 
 #. module: social_push_notifications
 #: model:ir.model,name:social_push_notifications.model_website_visitor
 #: model:ir.model.fields,field_description:social_push_notifications.field_website_visitor_push_subscription__website_visitor_id
 msgid "Website Visitor"
-msgstr ""
+msgstr "Veb sayt Ziyarətçisi"
 
 #. module: social_push_notifications
 #. odoo-python

@@ -4,12 +4,13 @@
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Junko Augias (juau)" <juau@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-16 02:42+0000\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-13 09:24+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "sale_renting/ja/>\n"
@@ -114,7 +115,7 @@ msgstr "<i class=\"fa fa-warning\"/>延滞"
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_product_form_view_rental_gantt
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental_gantt
 msgid "<span class=\"o_stat_text\">In Rental</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">貸出中</span>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
@@ -143,12 +144,12 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
 msgid "<span> per day late</span>"
-msgstr ""
+msgstr "<span> 日ごとの延滞につき</span>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
 msgid "<span> per hour late</span>"
-msgstr ""
+msgstr "<span>時間あたりの延滞につき</span>"
 
 #. module: sale_renting
 #: model_terms:web_tour.tour,rainbow_man_message:sale_renting.rental_tour
@@ -168,7 +169,7 @@ msgstr "<strong>オーダ # — </strong>"
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
 msgid "<strong>Pickup — </strong>"
-msgstr ""
+msgstr "<strong>貸出 — </strong>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
@@ -333,7 +334,7 @@ msgstr "確定済オーダ"
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__country_id
 msgid "Country"
-msgstr ""
+msgstr "国"
 
 #. module: sale_renting
 #: model:ir.actions.act_window,name:sale_renting.action_create_rental_order
@@ -764,7 +765,7 @@ msgstr "次のアクション"
 #. module: sale_renting
 #: model:sale.temporal.recurrence,name:sale_renting.recurrence_nightly
 msgid "Nightly"
-msgstr ""
+msgstr "1泊ごと"
 
 #. module: sale_renting
 #. odoo-python
@@ -775,7 +776,7 @@ msgstr ""
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__night
 msgid "Nights"
-msgstr ""
+msgstr "泊"
 
 #. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.action_rental_report
@@ -952,6 +953,7 @@ msgstr "プリンタ"
 #: model:ir.model,name:sale_renting.model_product_template
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__product_id
 #: model:ir.model.fields,field_description:sale_renting.field_res_company__extra_product
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__product_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__product_id
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
@@ -966,7 +968,6 @@ msgid "Product A"
 msgstr "プロダクトA"
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__categ_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__categ_id
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
@@ -1320,7 +1321,7 @@ msgstr "都道府県・州"
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__state
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 msgid "Status"
-msgstr "状態"
+msgstr "ステータス"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_rental_report_view_tree

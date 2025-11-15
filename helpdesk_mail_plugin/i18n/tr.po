@@ -3,13 +3,14 @@
 # * helpdesk_mail_plugin
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# DeepL <noreply-mt-deepl@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-09-18 02:41+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-11-12 15:01+0000\n"
+"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "helpdesk_mail_plugin/tr/>\n"
 "Language: tr\n"
@@ -28,56 +29,65 @@ msgstr "Kapanmış"
 #. module: helpdesk_mail_plugin
 #. odoo-javascript
 #: code:addons/helpdesk_mail_plugin/static/src/to_translate/translations_gmail.xml:0
+#, fuzzy
 msgid "Could not create the ticket"
-msgstr ""
+msgstr "Bilet oluşturulamadı"
 
 #. module: helpdesk_mail_plugin
 #. odoo-javascript
 #: code:addons/helpdesk_mail_plugin/static/src/to_translate/translations_gmail.xml:0
+#, fuzzy
 msgid "Email already logged on the ticket"
-msgstr ""
+msgstr "E-posta zaten bilete kaydedilmiş"
 
 #. module: helpdesk_mail_plugin
 #. odoo-javascript
 #: code:addons/helpdesk_mail_plugin/static/src/to_translate/translations_outlook.xml:0
+#, fuzzy
 msgid "Log Email Into Ticket"
-msgstr ""
+msgstr "E-postayı Bilete Kaydet"
 
 #. module: helpdesk_mail_plugin
 #. odoo-javascript
 #: code:addons/helpdesk_mail_plugin/static/src/to_translate/translations_gmail.xml:0
+#, fuzzy
 msgid "Log the email on the ticket"
-msgstr ""
+msgstr "E-postayı bilet üzerine kaydedin"
 
 #. module: helpdesk_mail_plugin
 #. odoo-javascript
 #: code:addons/helpdesk_mail_plugin/static/src/to_translate/translations_outlook.xml:0
+#, fuzzy
 msgid "No tickets found for this contact."
-msgstr ""
+msgstr "Bu kişi için bilet bulunamadı."
 
 #. module: helpdesk_mail_plugin
 #. odoo-javascript
 #: code:addons/helpdesk_mail_plugin/static/src/to_translate/translations_outlook.xml:0
+#, fuzzy
 msgid "Save Contact to create new Tickets."
-msgstr ""
+msgstr "Yeni Biletler oluşturmak için Kişiyi Kaydet."
 
 #. module: helpdesk_mail_plugin
 #. odoo-javascript
 #: code:addons/helpdesk_mail_plugin/static/src/to_translate/translations_gmail.xml:0
+#, fuzzy
 msgid "Save the contact to create new tickets."
-msgstr ""
+msgstr "Yeni bilet oluşturmak için kişiyi kaydedin."
 
 #. module: helpdesk_mail_plugin
 #. odoo-javascript
 #: code:addons/helpdesk_mail_plugin/static/src/to_translate/translations_gmail.xml:0
 #: code:addons/helpdesk_mail_plugin/static/src/to_translate/translations_outlook.xml:0
+#, fuzzy
 msgid "The Contact needs to exist to create Ticket."
-msgstr ""
+msgstr "Bilet oluşturmak için Kişinin var olması gerekir."
 
 #. module: helpdesk_mail_plugin
 #: model:ir.actions.act_window,name:helpdesk_mail_plugin.helpdesk_ticket_action_form_edit
+#, fuzzy
 msgid "Ticket: redirect to form in edit mode"
-msgstr ""
+msgstr "Bilet: düzenleme modunda forma yönlendirme"
 
 #. module: helpdesk_mail_plugin
 #. odoo-javascript
@@ -89,11 +99,13 @@ msgstr "Biletler"
 #. module: helpdesk_mail_plugin
 #. odoo-javascript
 #: code:addons/helpdesk_mail_plugin/static/src/to_translate/translations_outlook.xml:0
+#, fuzzy
 msgid "Tickets (%(count)s)"
-msgstr ""
+msgstr "Biletler (%(count)s)"
 
 #. module: helpdesk_mail_plugin
 #. odoo-javascript
 #: code:addons/helpdesk_mail_plugin/static/src/to_translate/translations_gmail.xml:0
+#, fuzzy
 msgid "Tickets (%s)"
-msgstr ""
+msgstr "Biletler (%s)"

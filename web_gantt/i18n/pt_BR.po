@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:50+0000\n"
-"PO-Revision-Date: 2025-10-28 13:11+0000\n"
+"PO-Revision-Date: 2025-11-13 13:12+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/web_gantt/pt_BR/>\n"
@@ -47,25 +47,25 @@ msgstr "%sh"
 #. module: web_gantt
 #: model:ir.model,name:web_gantt.model_ir_actions_act_window_view
 msgid "Action Window View"
-msgstr ""
+msgstr "Exibição da janela de ação"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer_controls.xml:0
 msgid "Activate dense mode"
-msgstr ""
+msgstr "Ativar o modo denso"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer_controls.xml:0
 msgid "Activate sparse mode"
-msgstr ""
+msgstr "Ativar o modo esparso"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_scale_selector.xml:0
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #. module: web_gantt
 #: model:ir.model,name:web_gantt.model_base
@@ -76,7 +76,7 @@ msgstr "Base"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_controller.js:0
 msgid "Bye-bye, record!"
-msgstr ""
+msgstr "Tchau, registro!"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -100,13 +100,13 @@ msgstr "Dia"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_controller.js:0
 msgid "Delete"
-msgstr ""
+msgstr "Excluir"
 
 #. module: web_gantt
 #: model:ir.model.fields,field_description:web_gantt.field_ir_actions_act_window_view__display_name
 #: model:ir.model.fields,field_description:web_gantt.field_ir_ui_view__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Exibir nome"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -118,7 +118,7 @@ msgstr "Editar"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
 msgid "Ending date cannot be before the starting date"
-msgstr ""
+msgstr "A data final não pode ser anterior à data inicial"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -130,25 +130,25 @@ msgstr "Expandir linhas"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
 msgid "Failed to undo reschedule"
-msgstr ""
+msgstr "Falha ao desfazer o reagendamento"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer_controls.xml:0
 msgid "Focus Today"
-msgstr ""
+msgstr "Foco em Hoje"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_scale_selector.xml:0
 msgid "From"
-msgstr ""
+msgstr "De"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer_controls.js:0
 msgid "From: %(from_date)s to: %(to_date)s"
-msgstr ""
+msgstr "De: %(from_date)s Até: %(to_date)s"
 
 #. module: web_gantt
 #: model:ir.model.fields.selection,name:web_gantt.selection__ir_actions_act_window_view__view_mode__gantt

@@ -8,13 +8,14 @@
 # Abe Manyo, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Abe Manyo (abem)" <abem@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-31 02:40+0000\n"
-"Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
+"PO-Revision-Date: 2025-11-13 13:12+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "timesheet_grid/id/>\n"
 "Language: id\n"
@@ -569,7 +570,7 @@ msgstr "Karyawan harus dilink ke user Anda untuk mencatat waktu."
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_account_analytic_line
 msgid "Analytic Line"
-msgstr ""
+msgstr "Baris Analitik"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_allow
@@ -627,7 +628,7 @@ msgstr "Konfirmasi Waktu yang Dihabiska"
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_hr_timesheet_stop_timer_confirmation_wizard
 msgid "Confirm timesheet creation when stop timer"
-msgstr ""
+msgstr "Konfirmasi pembuatan timesheet saat timer dihentikan"
 
 #. module: timesheet_grid
 #: model_terms:web_tour.tour,rainbow_man_message:timesheet_grid.timesheet_tour
@@ -718,6 +719,8 @@ msgid ""
 "Difference between the allocated %(uom)s (%(allocated_hours)s) and the %"
 "(uom)s spent (%(worked_hours)s) on the project"
 msgstr ""
+"Perbedaan antara yang dialokasi %(uom)s (%(allocated_hours)s) dan %(uom)s "
+"yang digunakan (%(worked_hours)s) pada project"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -726,6 +729,8 @@ msgid ""
 "Difference between the allocated %(uom)s (%(allocated_hours)s) and the %"
 "(uom)s spent (%(worked_hours)s) on the task"
 msgstr ""
+"Perbedaan antara yang dialokasi %(uom)s (%(allocated_hours)s) dan %(uom)s "
+"yang digunakan (%(worked_hours)s) pada task"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -829,11 +834,13 @@ msgid ""
 "Keep track of your working hours by project every day and bill your "
 "customers for that time."
 msgstr ""
+"Tetap lacak jam kerja Anda berdasarkan project setiap hari dan tagih waktu "
+"tersebut ke pelanggan Anda."
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_previous_week
 msgid "Last Period"
-msgstr ""
+msgstr "Periode Terakhir"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__write_uid
@@ -876,12 +883,12 @@ msgstr "Luncurkan <b>timer</b> untuk memulai kegiatan baru."
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timesheet_calendar_my_timesheets/timesheet_calendar_my_timesheets_side_panel.xml:0
 msgid "Legend"
-msgstr ""
+msgstr "Legenda"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.hr_timesheet_stop_timer_confirmation_wizard_view_form
 msgid "Log Time"
-msgstr ""
+msgstr "Log Waktu"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_merge_wizard_view_form
@@ -926,6 +933,9 @@ msgid ""
 "timesheet drafts in the original project. Although they won't be visible "
 "here, you can still edit them using the Timesheets app."
 msgstr ""
+"Menggerakkan task ini ke project tanpa bantuan timesheet akan menyimpan "
+"draft timesheet di project asal. Walau mereka tidak akan terlihat di sana, "
+"Anda masih dapat mengedit mereka menggunakan app Timesheet."
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
@@ -950,13 +960,13 @@ msgstr "Kelompok ku"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_stop_timer_confirmation_wizard__timesheet_name
 msgid "Name"
-msgstr ""
+msgstr "Nama"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timesheet_grid/timesheet_grid_renderer.js:0
 msgid "No timesheets found. Let's create one!"
-msgstr ""
+msgstr "Tidak ada timesheet yang ditemukan. Ayo buat baru!"
 
 #. module: timesheet_grid
 #: model_terms:ir.actions.act_window,help:timesheet_grid.timesheet_grid_to_validate_action
@@ -999,7 +1009,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
 msgid "Open Form"
-msgstr ""
+msgstr "Buka Formulir"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -1049,7 +1059,7 @@ msgstr "Reset ke draft"
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.hr_timesheet_stop_timer_confirmation_wizard_view_form
 msgid "Resume Timer"
-msgstr ""
+msgstr "Lanjutkan Timer"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__timesheet_rounding
@@ -1103,7 +1113,7 @@ msgstr ""
 #: code:addons/timesheet_grid/static/src/components/grid_timesheet_timer_header/grid_timesheet_timer_header.xml:0
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "Shift"
-msgstr ""
+msgstr "Shift"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1207,13 +1217,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/timesheet_grid/models/project_project.py:0
 msgid "This Progress Bar is not implemented."
-msgstr ""
+msgstr "Progress Bar ini tidak diimplementasi."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/project_task.py:0
 msgid "This project isn't expected to have task during this period."
-msgstr ""
+msgstr "Project ini tidak diharapkan untuk memiliki task selama periode ini."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1222,6 +1232,8 @@ msgid ""
 "This user isn't expected to have any projects assigned during this period "
 "because they don't have any running contract."
 msgstr ""
+"User ini tidak seharusnya memiliki penugasan project apa pun selama periode "
+"ini karena mereka tidak memiliki kontrak yang berlangsung."
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
@@ -1259,7 +1271,7 @@ msgstr "Timesheet Grid mixin"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_project_task__timesheet_unit_amount
 msgid "Timesheet Unit Amount"
-msgstr ""
+msgstr "Jumlah Unit Timesheet"
 
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.timesheet_reminder_ir_actions_server
@@ -1290,6 +1302,8 @@ msgid ""
 "Timesheets before the %(date)s (included) have been validated, and can no "
 "longer be deleted."
 msgstr ""
+"Timesheet sebelum %(date)s (termasuk) telah divalidasi, dan tidak dapat "
+"dihapus lagi"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1298,6 +1312,8 @@ msgid ""
 "Timesheets before the %(date)s (included) have been validated, and can no "
 "longer be modified."
 msgstr ""
+"Timesheeet sebelum %(date)s (termasuk) telah divalidasi, dan tidak dapat "
+"dimodifikasi lagi."
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
@@ -1427,7 +1443,7 @@ msgstr "Baris divalidasi"
 #. odoo-python
 #: code:addons/timesheet_grid/models/project_task.py:0
 msgid "Warning"
-msgstr ""
+msgstr "Peringatan"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid
@@ -1454,7 +1470,7 @@ msgstr ""
 #: code:addons/timesheet_grid/models/hr_employee.py:0
 #: code:addons/timesheet_grid/models/res_users.py:0
 msgid "You are not allowed to see timesheets."
-msgstr ""
+msgstr "Anda tidak diizinkan untuk melihat timesheet."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1480,7 +1496,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
 msgid "You can't encode numbers with more than six digits."
-msgstr ""
+msgstr "Anda tidak dapat encode angka yang memiliki lebih dari 6 angka.."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1505,6 +1521,8 @@ msgid ""
 "You cannot delete a validated entry. Please contact your manager or your "
 "timesheet approver."
 msgstr ""
+"Anda tidak dapat menghapus entri yang divalidasi. Silakan hubungi manajer "
+"atau penyetuju timesheet Anda."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1530,6 +1548,10 @@ msgid ""
 "employees who are not part of your team or are not in a state that can be "
 "validated. This may be due to the fact that they are dated in the future."
 msgstr ""
+"Anda tidak dapat memvalidasi timesheet yang dipilih karena mereka baik "
+"berasal ke karyawan yang bukan bagian dari tim Anda atau tidak dalam status "
+"yang dapat divalidasi. Ini mungkin oleh karena mereka memiliki tanggal di "
+"masa depan."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1538,6 +1560,9 @@ msgid ""
 "Your timesheet entry is missing a project. Please either group the Grid view "
 "by project or enter your timesheets by adding a line via the Form view."
 msgstr ""
+"Entri timesheet Anda kurang project. Mohon kelompokkan tampilan Grid "
+"berdasarkan project atau masukkan timesheet Anda dengan menambahkan baris "
+"melalui tampilan Form."
 
 #. module: timesheet_grid
 #: model:ir.model.fields.selection,name:timesheet_grid.selection__res_company__timesheet_mail_employee_interval__months
@@ -1555,7 +1580,7 @@ msgstr "setelah akhir minggu"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "and click on"
-msgstr ""
+msgstr "dan klik pada"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
@@ -1573,13 +1598,13 @@ msgstr "min"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/grid_timesheet_timer_header/grid_timesheet_timer_header.xml:0
 msgid "or"
-msgstr ""
+msgstr "atau"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "or click on"
-msgstr ""
+msgstr "atau klik pada"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -1593,7 +1618,7 @@ msgstr "untuk menambahkan"
 #: code:addons/timesheet_grid/static/src/components/grid_timesheet_timer_header/grid_timesheet_timer_header.xml:0
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "to launch the timer"
-msgstr ""
+msgstr "untuk meluncurkan timer"
 
 #~ msgid "Analytic Account"
 #~ msgstr "Akun Analitik"

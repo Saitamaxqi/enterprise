@@ -3,13 +3,15 @@
 # * hr_recruitment_reports
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# DeepL <noreply-mt-deepl@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-09-18 02:43+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-11-12 15:06+0000\n"
+"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "hr_recruitment_reports/tr/>\n"
 "Language: tr\n"
@@ -42,8 +44,9 @@ msgstr "Adayın İsmi"
 #. module: hr_recruitment_reports
 #: model:ir.actions.act_window,name:hr_recruitment_reports.recruitment_report_action
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_reports.recruitment_report_view_pivot
+#, fuzzy
 msgid "Application Analysis"
-msgstr ""
+msgstr "Uygulama Analizi"
 
 #. module: hr_recruitment_reports
 #: model:ir.model.fields,field_description:hr_recruitment_reports.field_hr_recruitment_report__create_date
@@ -54,7 +57,7 @@ msgstr "Başvuru Tarihi"
 #. module: hr_recruitment_reports
 #: model:ir.model.fields,field_description:hr_recruitment_reports.field_hr_recruitment_report__count
 msgid "Applications"
-msgstr ""
+msgstr "Başvurular"
 
 #. module: hr_recruitment_reports
 #: model:ir.model.fields.selection,name:hr_recruitment_reports.selection__hr_recruitment_stage_report__state__archived
@@ -64,8 +67,9 @@ msgstr "Arşivlendi"
 
 #. module: hr_recruitment_reports
 #: model:ir.model.fields,field_description:hr_recruitment_reports.field_hr_recruitment_stage_report__days_in_stage
+#, fuzzy
 msgid "Average Days in Stage"
-msgstr ""
+msgstr "Aşamadaki Ortalama Günler"
 
 #. module: hr_recruitment_reports
 #: model:ir.model.fields,field_description:hr_recruitment_reports.field_hr_recruitment_report__company_id
@@ -114,8 +118,9 @@ msgstr "İşe Alım Oranı"
 #: model:ir.actions.act_window,name:hr_recruitment_reports.recruitment_stage_report_action
 #: model:ir.ui.menu,name:hr_recruitment_reports.hr_applicant_stage_report_menu
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_reports.recruitment_stage_report_view_cohort
+#, fuzzy
 msgid "Hiring Velocity"
-msgstr ""
+msgstr "İşe Alım Hızı"
 
 #. module: hr_recruitment_reports
 #. odoo-python
@@ -151,10 +156,13 @@ msgstr "İş Pozisyonu"
 #. module: hr_recruitment_reports
 #: model_terms:ir.actions.act_window,help:hr_recruitment_reports.recruitment_stage_report_action
 #: model_terms:ir.actions.act_window,help:hr_recruitment_reports.recruitment_stage_report_job_action
+#, fuzzy
 msgid ""
 "Keep an eye on the stages of your recruitment process and prevent any "
 "bottleneck."
 msgstr ""
+"İşe alım sürecinizin aşamalarını takip edin ve herhangi bir darboğazı "
+"önleyin."
 
 #. module: hr_recruitment_reports
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_reports.recruitment_report_view_search
@@ -270,8 +278,11 @@ msgstr "Takım Performansı"
 
 #. module: hr_recruitment_reports
 #: model_terms:ir.actions.act_window,help:hr_recruitment_reports.recruitment_report_team_action
+#, fuzzy
 msgid "This report allows you to compare recruiters and their performances."
 msgstr ""
+"Bu rapor, işe alım uzmanlarını ve performanslarını karşılaştırmanıza olanak "
+"tanır."
 
 #. module: hr_recruitment_reports
 #: model_terms:ir.actions.act_window,help:hr_recruitment_reports.recruitment_report_source_action

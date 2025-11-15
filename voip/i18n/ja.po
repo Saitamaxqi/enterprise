@@ -7,13 +7,14 @@
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Junko Augias (juau)" <juau@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-28 02:41+0000\n"
-"Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
+"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"PO-Revision-Date: 2025-11-15 12:50+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/voip/ja/"
 ">\n"
 "Language: ja\n"
@@ -102,7 +103,7 @@ msgstr "電話を受ける"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "要アクション"
 
 #. module: voip
 #. odoo-javascript
@@ -135,17 +136,17 @@ msgstr "通話キューに追加"
 #. module: voip
 #: model:res.groups,name:voip.group_voip_admin
 msgid "Administrator"
-msgstr ""
+msgstr "管理者"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__ask
 msgid "Always Ask"
-msgstr ""
+msgstr "毎回確認"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__ask
 msgid "Always ask before calling"
-msgstr ""
+msgstr "通話する前に必ず確認する"
 
 #. module: voip
 #. odoo-javascript
@@ -185,7 +186,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid "An error occurred while attempting to answer the incoming call."
-msgstr ""
+msgstr "着信に応答しようとした際にエラーが発生しました。"
 
 #. module: voip
 #. odoo-javascript
@@ -199,12 +200,12 @@ msgstr "本当にこの活動を削除しますか？復元することはでき
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/transfer_confirmation.xml:0
 msgid "Ask First"
-msgstr ""
+msgstr "先に確認する"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "添付ファイル数"
 
 #. module: voip
 #. odoo-javascript
@@ -216,7 +217,7 @@ msgstr "処理可能"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__avatar_128
 msgid "Avatar 128"
-msgstr ""
+msgstr "アバター 128"
 
 #. module: voip
 #. odoo-javascript
@@ -432,7 +433,7 @@ msgstr ""
 #. module: voip
 #: model:ir.ui.menu,name:voip.menu_voip_call_configuration
 msgid "Configuration"
-msgstr ""
+msgstr "設定"
 
 #. module: voip
 #. odoo-javascript
@@ -493,19 +494,15 @@ msgid "Contacts with a phone number will be shown here."
 msgstr "電話番号のある連絡先はここに表示されます"
 
 #. module: voip
+#: model:ir.model,name:voip.model_res_country
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_id
 msgid "Country"
-msgstr ""
-
-#. module: voip
-#: model:ir.model,name:voip.model_voip_country_code_mixin
-msgid "Country Code Mixin"
-msgstr "国コードMixin"
+msgstr "国"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_flag_url
 msgid "Country Flag"
-msgstr ""
+msgstr "国旗"
 
 #. module: voip
 #: model:ir.model,website_form_label:voip.model_res_partner
@@ -562,7 +559,7 @@ msgstr "デモ"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.xml:0
 msgid "Demo Mode"
-msgstr ""
+msgstr "デモモード"
 
 #. module: voip
 #. odoo-javascript
@@ -584,10 +581,11 @@ msgstr "方向"
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy__disabled
 msgid "Disabled"
-msgstr ""
+msgstr "無効にします"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__display_name
+#: model:ir.model.fields,field_description:voip.field_res_country__display_name
 #: model:ir.model.fields,field_description:voip.field_res_partner__display_name
 #: model:ir.model.fields,field_description:voip.field_res_users__display_name
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__display_name
@@ -716,7 +714,7 @@ msgstr ""
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "External"
-msgstr ""
+msgstr "外部"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__external_device_number
@@ -743,17 +741,17 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "フォロワー"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "フォロワー (取引先)"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy__always
 msgid "Force for all users"
-msgstr ""
+msgstr "すべてのユーザに強制"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy_option__always
@@ -770,7 +768,7 @@ msgstr "通話を終了"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "メッセージあり"
 
 #. module: voip
 #. odoo-javascript
@@ -787,7 +785,7 @@ msgstr ""
 #. module: voip
 #: model:ir.actions.act_window,name:voip.voip_call_action_history
 msgid "History"
-msgstr ""
+msgstr "履歴"
 
 #. module: voip
 #. odoo-javascript
@@ -808,6 +806,7 @@ msgstr "携帯電話での通話方法"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__id
+#: model:ir.model.fields,field_description:voip.field_res_country__id
 #: model:ir.model.fields,field_description:voip.field_res_partner__id
 #: model:ir.model.fields,field_description:voip.field_res_users__id
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__id
@@ -821,13 +820,13 @@ msgstr "ID"
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "チェックした場合は、新しいメッセージに注意が必要です。"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_has_error
 #: model:ir.model.fields,help:voip.field_voip_call__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "選択されている場合、一部のメッセージで配信エラーが発生しています。"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__do_not_disturb_until_dt
@@ -837,7 +836,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__image_1920
 msgid "Image"
-msgstr ""
+msgstr "画像"
 
 #. module: voip
 #. odoo-javascript
@@ -880,12 +879,12 @@ msgstr "インプットデバイス選択"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Internal"
-msgstr ""
+msgstr "内部"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "フォロー中"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__is_within_same_company
@@ -918,7 +917,7 @@ msgstr "キーパッド"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Last 7 Days"
-msgstr ""
+msgstr "過去7日"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__last_seen_phone_call
@@ -956,7 +955,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_main_attachment_id
 msgid "Main Attachment"
-msgstr ""
+msgstr "主要添付"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_config_settings_view_form
@@ -968,12 +967,12 @@ msgstr "プロバイダー管理"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "メッセージ配信エラー"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "メッセージ"
 
 #. module: voip
 #. odoo-javascript
@@ -1083,22 +1082,22 @@ msgstr "ここに表示するものはありません 😔"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "アクション数"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "エラー数"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "対応が必要なメッセージ数"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "配信エラーが発生したメッセージ数"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__voip
@@ -1108,7 +1107,7 @@ msgstr ""
 #. module: voip
 #: model:res.groups,name:voip.group_voip_officer
 msgid "Officer"
-msgstr ""
+msgstr "オフィサー"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
@@ -1183,6 +1182,11 @@ msgid "Phone"
 msgstr "電話"
 
 #. module: voip
+#: model:ir.model,name:voip.model_voip_country_code_mixin
+msgid "Phone Country Mixin"
+msgstr ""
+
+#. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__phone_number
 msgid "Phone Number"
 msgstr "電話番号"
@@ -1190,7 +1194,7 @@ msgstr "電話番号"
 #. module: voip
 #: model:ir.model,name:voip.model_voip_call
 msgid "Phone call"
-msgstr ""
+msgstr "電話"
 
 #. module: voip
 #. odoo-javascript
@@ -1252,17 +1256,17 @@ msgstr "%(user)sのプロフィール写真"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Provider"
-msgstr ""
+msgstr "プロバイダー"
 
 #. module: voip
 #: model:ir.ui.menu,name:voip.voip_provider_view_inner_menu
 msgid "Providers"
-msgstr ""
+msgstr "プロバイダー"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "評価"
 
 #. module: voip
 #: model_terms:ir.actions.act_window,help:voip.action_voip_provider_view
@@ -1285,7 +1289,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/in_call_view.js:0
 msgid "Record"
-msgstr ""
+msgstr "レコード"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_provider_view_form
@@ -1298,7 +1302,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "Recording"
-msgstr ""
+msgstr "記録"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__recording_policy
@@ -1372,7 +1376,7 @@ msgstr "呼出中…"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "SMS送信エラー"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_config_settings_view_form
@@ -1399,7 +1403,7 @@ msgstr "検索…"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Secret"
-msgstr ""
+msgstr "シークレット"
 
 #. module: voip
 #. odoo-javascript
@@ -1490,7 +1494,7 @@ msgstr "ステータス"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/in_call_view.js:0
 msgid "Stop"
-msgstr ""
+msgstr "停止"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__terminated
@@ -1661,7 +1665,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Unknown"
-msgstr ""
+msgstr "不明"
 
 #. module: voip
 #. odoo-javascript
@@ -1678,7 +1682,7 @@ msgstr "再度有効化するまで"
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__country_flag_url
 msgid "Url of static flag image"
-msgstr ""
+msgstr "静的フラグ画像のURL"
 
 #. module: voip
 #. odoo-javascript
@@ -1709,7 +1713,7 @@ msgstr "ユーザ設定"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Username"
-msgstr ""
+msgstr "ユーザ名"
 
 #. module: voip
 #: model:ir.model,name:voip.model_voip_queue_mixin
@@ -1810,12 +1814,12 @@ msgstr "ウェブソケット"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "ウェブサイトメッセージ"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "ウェブサイト通信履歴"
 
 #. module: voip
 #. odoo-javascript
@@ -1872,7 +1876,10 @@ msgstr ""
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
 msgid "e.g. Brandon Freeman"
-msgstr ""
+msgstr "例: Brandon Freeman"
+
+#~ msgid "Country Code Mixin"
+#~ msgstr "国コードMixin"
 
 #~ msgid "# of Cases"
 #~ msgstr "事例の数"

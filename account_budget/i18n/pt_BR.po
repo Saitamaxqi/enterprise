@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-28 13:11+0000\n"
+"PO-Revision-Date: 2025-11-13 17:15+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/account_budget/pt_BR/>\n"
@@ -55,12 +55,12 @@ msgstr "<span class=\"o_stat_text\">Relatório Orçamentário</span>"
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_line_pivot
 msgid "Achieved"
-msgstr ""
+msgstr "Alcançado"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__achieved_percentage
 msgid "Achieved (%)"
-msgstr ""
+msgstr "Atingido (%)"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__message_needaction
@@ -90,7 +90,7 @@ msgstr "Ícone do tipo de atividade"
 #. module: account_budget
 #: model:ir.model.fields,help:account_budget.field_budget_line__achieved_amount
 msgid "Amount Billed/Invoiced."
-msgstr ""
+msgstr "Valor cobrado/faturado."
 
 #. module: account_budget
 #: model:ir.model.fields,help:account_budget.field_budget_line__theoritical_amount
@@ -98,6 +98,8 @@ msgid ""
 "Amount supposed to be Billed/Invoiced, formula = (Budget Amount / Budget "
 "Days) x Budget Days Completed"
 msgstr ""
+"Valor que deve ser cobrado/faturado, fórmula = (Valor do orçamento / Dias do "
+"orçamento) x Dias do orçamento concluídos"
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_account_analytic_account
@@ -109,12 +111,12 @@ msgstr "Conta analítica"
 #. module: account_budget
 #: model:ir.ui.menu,name:account_budget.menu_act_budget_analytic_view
 msgid "Analytic Budget"
-msgstr ""
+msgstr "Orçamento analítico"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_split_wizard__analytical_plan_ids
 msgid "Analytic Plans"
-msgstr ""
+msgstr "Planos analíticos"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__message_attachment_count
@@ -124,12 +126,12 @@ msgstr "Total de anexos"
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
 msgid "Audit"
-msgstr ""
+msgstr "Auditoria"
 
 #. module: account_budget
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_analytic__budget_type__both
 msgid "Both"
-msgstr ""
+msgstr "Ambos"
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_budget_analytic
@@ -148,13 +150,13 @@ msgstr "Orçamento"
 #. odoo-python
 #: code:addons/account_budget/wizards/budget_split_wizard.py:0
 msgid "Budget %s"
-msgstr ""
+msgstr "Orçamento %s"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__budget_analytic_id
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__budget_analytic_id
 msgid "Budget Analytic"
-msgstr ""
+msgstr "Análise orçamentária"
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_budget_line

@@ -18,13 +18,14 @@
 # Ossi Mantylahti <ossi.mantylahti@obs-solutions.fi>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Saara Hakanen <sahak@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-30 09:57+0000\n"
-"Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 19:34+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/iot/fi/>"
 "\n"
 "Language: fi\n"
@@ -35,22 +36,31 @@ msgstr ""
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
+msgid "%s is currently restarting"
+msgstr ""
+
+#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid ""
 "<span class=\"spinner-border spinner-border-sm\"/>\n"
 "                    Searching for an IoT Box.\n"
 "                    <span id=\"discover_retry_countdown\" class=\"fw-bold\"/>"
 msgstr ""
+"<span class=\"spinner-border spinner-border-sm\"/>\n"
+"                    Etsitään IoT-boksia.\n"
+"                    <span id=\"discover_retry_countdown\" class=\"fw-bold\"/>"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "A fiscal data module has been connected. To use it,"
-msgstr ""
+msgstr "Fiskaalinen datamoduuli on yhdistetty. Jotta voit käyttää sitä,"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__must_install_fdm_module
 msgid "A fiscal data module is connected to this IoT Box"
-msgstr ""
+msgstr "Fiskaalinen datamoduuli on yhdistetty tähän IoT-boksiin"
 
 #. module: iot
 #: model:ir.model,name:iot.model_add_iot_box
@@ -60,23 +70,29 @@ msgstr "Ohjattu IoT-boxin lisääminen"
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_discovered_box__add_iot_box_wizard_id
 msgid "Add Iot Box Wizard"
-msgstr ""
+msgstr "Lisää ohjattu IoT-boksin toiminto"
 
 #. module: iot
 #: model:res.groups,name:iot.group_iot_admin
 msgid "Administrator"
+msgstr "Järjestelmävalvoja"
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
+msgid "All communication protocols are working properly."
 msgstr ""
 
 #. module: iot
 #: model:ir.model,name:iot.model_iot_discovered_box
 msgid "An IoT box that is in pairing mode"
-msgstr ""
+msgstr "IoT-boksin, joka on laiteparin muodostustilassa"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Are you sure you want to restart Odoo on the IoT box?"
-msgstr "Oletko varma, että haluat käynnistää Odoon uudelleen IoT-boxissa?"
+msgid "Are you sure you want to restart Odoo on the IoT Box?"
+msgstr ""
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__drivers_auto_update
@@ -111,6 +127,14 @@ msgstr ""
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid ""
+"Blackbox driver update required. Please restart your IoT Box to update the "
+"blackbox driver."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Blackbox is running and operational"
 msgstr ""
 
@@ -128,11 +152,6 @@ msgid "Bluetooth"
 msgstr "Bluetooth"
 
 #. module: iot
-#: model:ir.ui.menu,name:iot.iot_settings_menu_action
-msgid "Cache"
-msgstr ""
-
-#. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__camera
 msgid "Camera"
 msgstr "Kamera"
@@ -146,12 +165,18 @@ msgstr "Tarkista, onko laite edelleen kytketty"
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Check the lights"
-msgstr ""
+msgstr "Tarkista valot"
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "Click on the"
 msgstr "Napsauta"
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
+msgid "Communication protocol '%s' is not working properly."
+msgstr ""
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__company_id
@@ -162,7 +187,7 @@ msgstr "Yritys"
 #. module: iot
 #: model:ir.ui.menu,name:iot.view_iot_selected_printer_local_action
 msgid "Configuration"
-msgstr ""
+msgstr "Asetukset"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__add_iot_box__stage__connect
@@ -176,17 +201,17 @@ msgstr "Yhdistä"
 #. module: iot
 #: model:ir.actions.act_window,name:iot.action_add_iot_box
 msgid "Connect my IoT Box"
-msgstr ""
+msgstr "Yhdistä IoT-box"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connected_status__connected
 msgid "Connected"
-msgstr ""
+msgstr "Yhdistetty"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__connected_status
 msgid "Connected Status"
-msgstr ""
+msgstr "Yhdistämisen tila"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__connection
@@ -240,7 +265,7 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_kanban
 msgid "Device type is {{0}}"
-msgstr ""
+msgstr "Laitteen tyyppi on {{0}}"
 
 #. module: iot
 #: model:ir.actions.act_window,name:iot.iot_device_action
@@ -258,22 +283,22 @@ msgstr "Laitteet"
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Discard"
-msgstr ""
+msgstr "Hylkää"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connected_status__disconnected
 msgid "Disconnected"
-msgstr ""
+msgstr "Yhteys katkaistu"
 
 #. module: iot
 #: model:ir.actions.client,name:iot.action_discover_iot_boxes
 msgid "Discover IoT boxes"
-msgstr ""
+msgstr "Tutustu IoT-bokseihin"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__discovered_box_ids
 msgid "Discovered Box"
-msgstr ""
+msgstr "Boksi, johon tutustuttiin"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__display
@@ -283,7 +308,7 @@ msgstr "Näytä"
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__display_device_ids
 msgid "Display Device"
-msgstr ""
+msgstr "Näyttölaite"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__display_name
@@ -308,12 +333,12 @@ msgstr "Näytä URL"
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__do_not_ask_again
 msgid "Do not ask me again"
-msgstr ""
+msgstr "Älä kysy uudestaan"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Documentation"
-msgstr ""
+msgstr "Dokumentaatio"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__ip
@@ -323,43 +348,51 @@ msgstr "Verkkotunnuksen osoite"
 
 #. module: iot
 #. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
+msgid ""
+"Failed to check IoT Box network, check that it's connected to the Internet."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_download_logs.js:0
 msgid "Failed to download logs from %s"
-msgstr ""
+msgstr "Kirjausten lataaminen kohteesta %s epäonnistui"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Failed to initiate print"
-msgstr ""
+msgstr "Tulostuksen aloitus epäonnistui"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Failed to reach the IoT Box for device: %s"
-msgstr ""
+msgstr "Laitteen IoT-boksiin ei saatu yhteyttä: %s"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_reset_password.js:0
 msgid "Failed to reset %s password."
-msgstr ""
+msgstr "Salasanan vaihtaminen kohteelle %s epäonnistui."
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Failed to restart Odoo on %s"
+msgid "Failed to send the restart command to the IoT Box ('%s')"
 msgstr ""
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Finally, paste the pairing token below in the \"Server token\" field."
 msgstr ""
+"Lopuksi liitä parinmuodostustunnus alla olevaan \"Palvelintunnus\" -kenttään."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Find the IP address of your IoT Box then connect to the web homepage."
-msgstr ""
+msgstr "Etsi IoT-laitteesi IP-osoite ja yhdistä sen verkkosivulle."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
@@ -367,6 +400,7 @@ msgid ""
 "First, connect the IoT Box to internet, using an ethernet cable. Or, "
 "checkout the"
 msgstr ""
+"Yhdistä ensin IoT-boksi internetiin ethernet-kaapelilla. Voit myös katsoa"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__fiscal_data_module
@@ -406,17 +440,17 @@ msgstr ""
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__hdmi
 msgid "HDMI"
-msgstr ""
+msgstr "HDMI"
 
 #. module: iot
 #: model:ir.model,name:iot.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP-reititys"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "Homepage"
-msgstr ""
+msgstr "Aloitussivullesi"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__id
@@ -450,6 +484,8 @@ msgid ""
 "If checked, this dialog won't appear the next time you print and the "
 "selected printers will be used automatically."
 msgstr ""
+"Jos valittuna, tämä dialogi ei tule näkyviin ensi kerralla, kun tulostat, ja "
+"valitut tulostimet valitaan automaattisesti."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
@@ -457,6 +493,8 @@ msgid ""
 "If your IoT Box has no access to the internet, you can pair it with your "
 "database using the pairing token."
 msgstr ""
+"Jos IoT-boksissa ei ole internet-yhteyttä, voit yhdistää sen tietokantaasi "
+"parinmuodostustunnuksella."
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__version
@@ -466,7 +504,7 @@ msgstr "Image-versio"
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Internet is connected"
-msgstr ""
+msgstr "Yhditetty internettiin"
 
 #. module: iot
 #. odoo-javascript
@@ -496,24 +534,31 @@ msgstr "IoT Box"
 #. odoo-python
 #: code:addons/iot/wizard/discovered_iot_box.py:0
 msgid "IoT Box %(serial_n)s %(pairing_code)s"
-msgstr ""
+msgstr "IoT-boksi %(serial_n)s %(pairing_code)s"
 
 #. module: iot
 #. odoo-python
 #: code:addons/iot/wizard/add_iot_box.py:0
 msgid "IoT Box %s found. Connecting..."
-msgstr ""
+msgstr "IoT-boksi %s löydettiin. Yhdistetään..."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
 msgid "IoT Box detected correctly."
-msgstr ""
+msgstr "IoT-boksi havaittu oikein."
 
 #. module: iot
 #. odoo-python
 #: code:addons/iot/wizard/add_iot_box.py:0
 #: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
 msgid "IoT Box found. Connecting..."
+msgstr "IoT-boksi löydettiin. Yhdistetään..."
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
+msgid ""
+"IoT Box local network is %(lan_quality)s and internet is %(wan_quality)s"
 msgstr ""
 
 #. module: iot
@@ -530,12 +575,12 @@ msgstr "IoT-laite"
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_ir_actions_report__device_ids
 msgid "IoT Devices"
-msgstr ""
+msgstr "IoT-laitteet"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__iot_box_to_connect
 msgid "Iot Box To Connect"
-msgstr ""
+msgstr "IoT-boksi, johon voidaan luoda yhteys"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__is_scanner
@@ -556,7 +601,7 @@ msgstr "Näppäimistön asettelu"
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__subtype__label_printer
 msgid "Label Printer"
-msgstr ""
+msgstr "Tarratulostin"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__write_uid
@@ -579,12 +624,6 @@ msgid "Last Updated on"
 msgstr "Viimeksi päivitetty"
 
 #. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Last restarting process hasn't finished yet"
-msgstr "Viimeinen uudelleenkäynnistysprosessi ei ole vielä päättynyt"
-
-#. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__layout
 msgid "Layout"
 msgstr "Ulkoasu"
@@ -592,17 +631,17 @@ msgstr "Ulkoasu"
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Make sure the IoT Box is powered on."
-msgstr ""
+msgstr "Varmista, että IoT-boksi on päällä."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Make sure the Network lights are on."
-msgstr ""
+msgstr "Varmista, että verkkovalo on päällä."
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__add_iot_box__stage__manual
 msgid "Manual"
-msgstr ""
+msgstr "Manuaalinen"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__manual_measurement
@@ -641,19 +680,19 @@ msgstr "Verkko"
 #. odoo-javascript
 #: code:addons/iot/static/src/backend/add_iot_box_form_controller.js:0
 msgid "New IoT Box connected!"
-msgstr ""
+msgstr "Uusi IoT Box kytketty!"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_reset_password.js:0
 msgid "New SSH password for %s"
-msgstr ""
+msgstr "Uusi SSH-salasana kohteelle %s"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "No IoT Box found"
-msgstr ""
+msgstr "IoT Boxia ei löytynyt"
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
@@ -670,30 +709,31 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/iot/static/src/select_printer_wizard.js:0
 msgid "No printer selected"
-msgstr ""
+msgstr "Tulostinta ei ole valittu"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/client_action/delete_local_storage.xml:0
 msgid "No report to display"
-msgstr ""
+msgstr "Ei näytettävää raporttia"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Note: It takes ~1 minute. After that, try to pair manually."
 msgstr ""
+"Huom: Tämä kestää noin 1 minuutin. Yritä sen jälkeen yhdistää manuaalisesti."
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__subtype__office_printer
 msgid "Office Printer"
-msgstr ""
+msgstr "Toimiston tulostin"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__add_iot_box__stage__pair_offline
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Offline Pairing"
-msgstr ""
+msgstr "Offline-parinmuodostus"
 
 #. module: iot
 #. odoo-python
@@ -703,6 +743,9 @@ msgid ""
 "To reset printers, go to the IoT App, Configuration tab, \"Reset Linked "
 "Printers\" and retry the operation."
 msgstr ""
+"Asiakirjan tulostukseen käytetty tulostin on poistettu.\n"
+"Nollataksesi tulostimet siirry IoT-sovellukseen, Kokoonpanoasetukset-"
+"välilehdelle, valitse \"Nollaa linkitetyt tulostimet\" ja yritä uudelleen."
 
 #. module: iot
 #. odoo-javascript
@@ -713,13 +756,13 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Optional: Plug a screen"
-msgstr ""
+msgstr "Valinnainen: Kytke näyttö"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Out of paper"
-msgstr ""
+msgstr "Paperi on loppunut"
 
 #. module: iot
 #. odoo-javascript
@@ -732,7 +775,7 @@ msgstr ""
 #: code:addons/iot/wizard/add_iot_box.py:0
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Pair an IoT Box offline"
-msgstr ""
+msgstr "Yhdistä IoT-boksi offline-tilassa"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__pairing_code
@@ -743,13 +786,13 @@ msgstr "Pariliitoskoodi"
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Pairing code received from a printer or screen"
-msgstr ""
+msgstr "Tulostimelta tai näytöltä saatu parinmuodostuskoodi"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Paper is low"
-msgstr ""
+msgstr "Paperi on vähissä"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__payment
@@ -763,30 +806,24 @@ msgid "Please activate the Vat Signing Card with PIN."
 msgstr ""
 
 #. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Please wait"
-msgstr "Odota"
-
-#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Plug a screen or a printer to get a status."
-msgstr ""
+msgstr "Kytke näyttö tai tulostin saadaksesi tiedon tilasta."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Power is on"
-msgstr ""
+msgstr "Virta on päällä"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Power the box"
-msgstr ""
+msgstr "Kytke boksiin virta"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_select_printers_wizard
 msgid "Print"
-msgstr ""
+msgstr "Tulosta"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__printer
@@ -797,24 +834,24 @@ msgstr "Tulostin"
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Printer is not ready"
-msgstr ""
+msgstr "Tulostin ei ole valmis"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Printer is unreachable"
-msgstr ""
+msgstr "Tulostimeen ei saada yhteyttä"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_select_printers_wizard
 msgid "Printers"
-msgstr ""
+msgstr "Tulostimet"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Printing timed out"
-msgstr ""
+msgstr "Tulostus aikakatkaistiin"
 
 #. module: iot
 #: model:ir.model,name:iot.model_publisher_warranty_contract
@@ -824,7 +861,7 @@ msgstr "Kustantajan takuusopimus IoT-laatikolle"
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__subtype__receipt_printer
 msgid "Receipt Printer"
-msgstr ""
+msgstr "Kuittitulostin"
 
 #. module: iot
 #. odoo-javascript
@@ -860,6 +897,11 @@ msgid "Report xml"
 msgstr "Reportin XML"
 
 #. module: iot
+#: model:ir.ui.menu,name:iot.iot_settings_menu_action
+msgid "Reporting"
+msgstr "Raportointi"
+
+#. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__report_ids
 msgid "Reports"
 msgstr "Raportit"
@@ -867,54 +909,36 @@ msgstr "Raportit"
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_form
 msgid "Reports to Auto-Print"
-msgstr ""
+msgstr "Raportit automaattitulostukseen"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/client_action/delete_local_storage.xml:0
 msgid "Reports with linked printers"
-msgstr ""
+msgstr "Raportit linkitetyillä tulostimilla"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/client_action/delete_local_storage.xml:0
 #: model:ir.ui.menu,name:iot.iot_clear_selected_devices
 msgid "Reset Linked Printers"
-msgstr ""
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Restart Failed"
-msgstr "Uudelleenkäynnistys epäonnistui"
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Restart finished"
-msgstr "Uudelleenkäynnistys valmis"
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Restarting"
-msgstr "Uudelleenkäynnistys"
+msgstr "Nollaa linkitetyt tulostimet"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/backend/no_iot_box_found_form_controller.js:0
 msgid "Retrying in "
-msgstr ""
+msgstr "Yritetään uudelleen "
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__ssl_certificate_end_date
 msgid "SSL Certificate End Date"
-msgstr ""
+msgstr "SSL-varmenteen päättymispäivä"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_select_printers_wizard
 msgid "Sales Details"
-msgstr ""
+msgstr "Myynnin yksityiskohdat"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__scale
@@ -925,35 +949,35 @@ msgstr "Skaala"
 #. odoo-python
 #: code:addons/iot/wizard/add_iot_box.py:0
 msgid "Searching for an IoT Box..."
-msgstr ""
+msgstr "Etsitään IoT-boksia..."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_select_box_to_connect
 msgid "Select IoT Box to connect"
-msgstr ""
+msgstr "Valitse IoT-boksi yhdistettävä"
 
 #. module: iot
 #. odoo-python
 #: code:addons/iot/models/ir_actions_report.py:0
-msgid "Select Printers"
+msgid "Select Printers for %s"
 msgstr ""
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/select_printer_wizard.js:0
 msgid "Select at least one printer"
-msgstr ""
+msgstr "Valitse vähintään yksi tulostin"
 
 #. module: iot
 #: model:ir.model,name:iot.model_select_printers_wizard
 msgid "Selection of printers"
-msgstr ""
+msgstr "Tulostimien valinta"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/iot_report_action.js:0
 msgid "Sending document to printer %s..."
-msgstr ""
+msgstr "Lähetetään asiakirjaa tulostimeen %s..."
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__serial
@@ -964,7 +988,7 @@ msgstr "Sarjanumero"
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__serial_number
 #: model:ir.model.fields,field_description:iot.field_iot_discovered_box__serial_number
 msgid "Serial Number"
-msgstr ""
+msgstr "Sarjanumero"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
@@ -972,33 +996,35 @@ msgid ""
 "Setup in progress, should take maximum 1 minute...\n"
 "                    <span class=\"spinner-border spinner-border-sm\"/>"
 msgstr ""
+"Määritys käynnissä, kestää enintään 1 minuutin...\n"
+"                       <span class=\"spinner-border spinner-border-sm\"/>"
 
 #. module: iot
 #. odoo-python
 #: code:addons/iot/wizard/add_iot_box.py:0
 msgid "Several IoT's detected"
-msgstr ""
+msgstr "Useita IoT-laitteita havaittu"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__stage
 msgid "Stage"
-msgstr ""
+msgstr "Vaihe"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Standard Pairing"
-msgstr ""
+msgstr "Vakioparinmuodostus"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__add_iot_box__stage__start
 msgid "Start"
-msgstr ""
+msgstr "Aloitus"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/iot_report_action.js:0
 msgid "Started printing operation on printer %s..."
-msgstr ""
+msgstr "Tulostus aloitettu tulostimella %s..."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
@@ -1008,60 +1034,63 @@ msgstr "Tila"
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__subtype
 msgid "Subtype"
-msgstr ""
+msgstr "Alityyppi"
 
 #. module: iot
 #: model:ir.model.fields,help:iot.field_iot_device__subtype
 msgid "Subtype of device."
-msgstr ""
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Success"
-msgstr "Onnistuminen"
+msgstr "Laitteen alatyyppi."
 
 #. module: iot
 #: model:ir.model,name:iot.model_ir_config_parameter
 msgid "System Parameter"
-msgstr ""
+msgstr "Järjestelmäparametri"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "Technical Information"
-msgstr ""
+msgstr "Tekniset tiedot"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_form
 msgid "Test"
-msgstr ""
+msgstr "Testi"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/backend/iot_device_form.js:0
 msgid "Test page printed"
+msgstr "Testisivu tulostettu"
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
+msgid "Testing communication with IoT Box and network quality, please wait..."
 msgstr ""
 
 #. module: iot
 #: model:ir.model,name:iot.model_iot_channel
 msgid "The Websocket IoT Channel"
+msgstr "Websocket IoT -kanava"
+
+#. module: iot
+#. odoo-python
+#: code:addons/iot/models/ir_actions_report.py:0
+msgid ""
+"The report you are trying to print requires an IoT Box to be printed.\n"
+"Make sure you linked the report '%s' to the corresponding IoT printer device."
 msgstr ""
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Then click on \"Configure\" under \"Odoo database connected\" section."
 msgstr ""
+"Klikkaa sen jälkeen \"Määritä\" kohdassa \"Yhdistetty Odoo-tietokanta\"."
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_device_action
 msgid "There is no device connected to your IoT Boxes"
 msgstr "IoT-laatikoihin ei ole liitetty laitetta"
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-msgid "Timed out"
-msgstr "Aika loppui"
 
 #. module: iot
 #. odoo-javascript
@@ -1110,7 +1139,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Unknown printer error occurred"
-msgstr ""
+msgstr "Tapahtui tuntematon tulostinvirhe"
 
 #. module: iot
 #. odoo-javascript
@@ -1127,17 +1156,17 @@ msgstr ""
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__unsupported
 msgid "Unsupported"
-msgstr ""
+msgstr "Ei tuettu"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Use Pairing Code"
-msgstr ""
+msgstr "Käytä parinmuodostuskoodia"
 
 #. module: iot
 #: model:res.groups,name:iot.group_iot_user
 msgid "User"
-msgstr ""
+msgstr "Käyttäjä"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__variant
@@ -1159,7 +1188,7 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "Visible to all"
-msgstr ""
+msgstr "Kaikkien nähtävissä"
 
 #. module: iot
 #: model:ir.model.fields,help:iot.field_ir_actions_report__device_ids
@@ -1173,7 +1202,7 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_select_box_to_connect
 msgid "Which one do you want to connect?<br/><br/>"
-msgstr ""
+msgstr "Mihin haluat yhdistää?<br/><br/>"
 
 #. module: iot
 #. odoo-javascript
@@ -1185,7 +1214,7 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "app."
-msgstr ""
+msgstr "sovellus."
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
@@ -1195,22 +1224,22 @@ msgstr "yhdistä"
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_kanban
 msgid "connection_type"
-msgstr ""
+msgstr "connection_type"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_kanban
 msgid "device-icon"
-msgstr ""
+msgstr "device-icon"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
 msgid "documentation"
-msgstr ""
+msgstr "dokumentointi"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
 msgid "e.g. ABDE0123"
-msgstr ""
+msgstr "esim. ABDE0123"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
@@ -1220,11 +1249,15 @@ msgid ""
 "screen (via micro HDMI cable) to get the pairing code.<br/>\n"
 "                <br/>"
 msgstr ""
+"Wi-Fiä varten.<br/>\n"
+"                Yhdistä sitten IoT-boksi tulostimeen (USB-kaapelilla) tai "
+"näyttöön (micro HDMI -kaapelilla) saadaksesi pariliitoksen koodin.<br/>\n"
+"                <br/>"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "install the Fiscal Data Module"
-msgstr ""
+msgstr "asenna fiskaalinen datamoduuli"
 
 #. module: iot
 #. odoo-javascript
@@ -1236,12 +1269,36 @@ msgstr ""
 #. module: iot
 #: model:ir.actions.client,name:iot.action_iot_delete_linked_devices_menu
 msgid "reset.linked.printers"
-msgstr ""
+msgstr "reset.linked.printers"
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "to add an IoT Box."
 msgstr "lisätäksesi IoT-boxin."
+
+#~ msgid "Are you sure you want to restart Odoo on the IoT box?"
+#~ msgstr "Oletko varma, että haluat käynnistää Odoon uudelleen IoT-boxissa?"
+
+#~ msgid "Last restarting process hasn't finished yet"
+#~ msgstr "Viimeinen uudelleenkäynnistysprosessi ei ole vielä päättynyt"
+
+#~ msgid "Please wait"
+#~ msgstr "Odota"
+
+#~ msgid "Restart Failed"
+#~ msgstr "Uudelleenkäynnistys epäonnistui"
+
+#~ msgid "Restart finished"
+#~ msgstr "Uudelleenkäynnistys valmis"
+
+#~ msgid "Restarting"
+#~ msgstr "Uudelleenkäynnistys"
+
+#~ msgid "Success"
+#~ msgstr "Onnistuminen"
+
+#~ msgid "Timed out"
+#~ msgstr "Aika loppui"
 
 #~ msgid "Last Sent Value"
 #~ msgstr "Viimeksi lähetetty arvo"

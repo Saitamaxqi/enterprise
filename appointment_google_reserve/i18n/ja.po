@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-31 08:35+0000\n"
+"PO-Revision-Date: 2025-11-11 09:09+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "appointment_google_reserve/ja/>\n"
@@ -58,7 +58,7 @@ msgstr ""
 msgid ""
 "<span class=\"fa fa-check fa-fw me-1\"/>Your Google Reserve Synchronization "
 "is active."
-msgstr "<span class=\"fa fa-check fa-fw me-1\"/>Google Reserve の同期は有効です。"
+msgstr "<span class=\"fa fa-check fa-fw me-1\"/>Google予約の同期は有効です。"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
@@ -100,57 +100,57 @@ msgstr "アポイントメント：Google予約サービス用に空き状況を
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__appointment_type_ids
 msgid "Appointments"
-msgstr ""
+msgstr "予約"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_type__is_auto_assign
 msgid "Assign automatically"
-msgstr ""
+msgstr "自動で割当"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "添付数"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__phone_blacklisted
 msgid "Blacklisted Phone is Phone"
-msgstr ""
+msgstr "ブラックリストされた電話は固定電話"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__business_category
 msgid "Business Category"
-msgstr ""
+msgstr "ビジネスカテゴリ"
 
 #. module: appointment_google_reserve
 #: model:ir.model,name:appointment_google_reserve.model_calendar_event
 msgid "Calendar Event"
-msgstr ""
+msgstr "カレンダーイベント"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_appointment_type__google_reserve_merchant_id
 msgid "Configure your company data for Google Reserve"
-msgstr ""
+msgstr "Google予約サービス用に自社情報を設定してください"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "作成者"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__create_date
 msgid "Created on"
-msgstr ""
+msgstr "作成日"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid "Disable Google Reserve"
-msgstr ""
+msgstr "Google予約を無効にする"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid "Discard"
-msgstr ""
+msgstr "破棄"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_resource__display_name
@@ -159,65 +159,66 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__display_name
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_resource_calendar_leaves__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "表示名"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_type__google_reserve_enable
 msgid "Enable Google Booking"
-msgstr ""
+msgstr "Google予約を有効にする"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__phone_sanitized
 msgid ""
 "Field used to store sanitized phone number. Helps speeding up searches and "
 "comparisons."
-msgstr ""
+msgstr "サニタイズされた電話番号を保存するためのフィールド。検索や比較のスピードアッ"
+"プに役立ちます。"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "フォロワー"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "フォロワー（パートナー）"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_calendar_event__is_google_reserve
 msgid "From Google Reserve"
-msgstr ""
+msgstr "Google予約から"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_type__google_reserve_pending_sync
 msgid "Google Booking Pending Synchronization"
-msgstr ""
+msgstr "Google予約: 同期待ち"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid "Google Bookings"
-msgstr ""
+msgstr "Google予約一覧"
 
 #. module: appointment_google_reserve
 #: model:ir.ui.menu,name:appointment_google_reserve.menu_appointment_google_reserve_merchants
 msgid "Google Reserve"
-msgstr ""
+msgstr "Google予約"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_type__google_reserve_access_token
 msgid "Google Reserve Access Token"
-msgstr ""
+msgstr "Google予約アクセストークン"
 
 #. module: appointment_google_reserve
 #: model:ir.model,name:appointment_google_reserve.model_google_reserve_merchant
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_type__google_reserve_merchant_id
 msgid "Google Reserve Merchant"
-msgstr ""
+msgstr "Google予約加盟店"
 
 #. module: appointment_google_reserve
 #: model:ir.actions.act_window,name:appointment_google_reserve.google_reserve_merchant_action
 msgid "Google Reserve Merchants"
-msgstr ""
+msgstr "Google予約加盟店"
 
 #. module: appointment_google_reserve
 #. odoo-python
@@ -225,24 +226,27 @@ msgstr ""
 msgid ""
 "Google Reserve requires a complete address.Including a Country, a City, a "
 "Postal Code and a Street"
-msgstr ""
+msgstr "Google予約を利用するには、国、都市、郵便番号、通り名を含む完全な住所が必要で"
+"す"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "メッセージあり"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid ""
 "Hold a second — are you sure you want to stop showing on Google Reserve? "
 "Changes can take up to 24 hours to take effect."
-msgstr ""
+msgstr "ちょっとお待ちください — "
+"Google予約の掲載を停止してもよろしいですか?変更が反映されるまで最大24時間かか"
+"る場合があります。"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid "I'm ready, synchronize!"
-msgstr ""
+msgstr "準備完了、同期します!"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_resource__id
@@ -251,25 +255,26 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__id
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_resource_calendar_leaves__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "チェックされている場合は、新しいメッセージに注意が必要です。"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_has_error
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "チェックした場合、一部のメッセージで配信エラーが発生しています。"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__phone_sanitized_blacklisted
 msgid ""
 "If the sanitized phone number is on the blacklist, the contact won't receive "
 "mass mailing sms anymore, from any list"
-msgstr ""
+msgstr "サニタイズされた電話番号がブラックリストに登録されている場合、その連絡先は、"
+"どのリストからも、一括送信のSMSを受信できなくなります"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__phone_blacklisted
@@ -278,61 +283,65 @@ msgid ""
 "distinguish which number is blacklisted             when there is both a "
 "mobile and phone field in a model."
 msgstr ""
+"ブラックリストに登録されたサニタイズされた電話番号が電話番号であるかどうかを"
+"示します。モデル内に携帯電話フィールドと電話フィールドの両方がある場合に、"
+"　　　"
+"どちらの番号がブラックリストに登録されているかを区別するのに役立ちます。"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "フォロー中"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "最後の更新担当者："
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "最終更新日："
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__name
 msgid "Merchant Name"
-msgstr ""
+msgstr "加盟店名"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "メッセージ配信エラー"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "メッセージ"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid "Not yet"
-msgstr ""
+msgstr "未実行"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "アクションの数"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "エラー数"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "対応が必要なメッセージ数"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "配信エラーが発生したメッセージ数"
 
 #. module: appointment_google_reserve
 #. odoo-python
@@ -340,33 +349,33 @@ msgstr ""
 msgid ""
 "Only Appointment Managers can enable or disable the Google Reserve "
 "Integration"
-msgstr ""
+msgstr "Googleで予約の連携を有効または無効にできるのは、予約マネジャーのみです"
 
 #. module: appointment_google_reserve
 #. odoo-python
 #: code:addons/appointment_google_reserve/models/appointment_type.py:0
 msgid "Only Appointment Managers can enable the Google Reserve Integration"
-msgstr ""
+msgstr "Google予約の連携を有効にできるのは、予約マネジャーのみです"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__phone
 msgid "Phone"
-msgstr ""
+msgstr "電話"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__phone_sanitized_blacklisted
 msgid "Phone Blacklisted"
-msgstr ""
+msgstr "ブラックリストに登録された電話番号"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__phone_mobile_search
 msgid "Phone Number"
-msgstr ""
+msgstr "電話番号"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "評価"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
@@ -374,65 +383,68 @@ msgid ""
 "Ready to synchronize your Appointment Type with Google Reserve? Make sure "
 "your setup is complete — changes may take up to 24 hours to appear once live."
 msgstr ""
+"アポイントメントタイプを "
+"Google予約と同期する準備はできていますか？設定がすべて完了していることをご確"
+"認ください。反映には、公開後最大で 24 時間かかる場合があります。"
 
 #. module: appointment_google_reserve
 #: model:ir.model,name:appointment_google_reserve.model_resource_calendar_leaves
 msgid "Resource Time Off Detail"
-msgstr ""
+msgstr "リソースの休止詳細"
 
 #. module: appointment_google_reserve
 #: model:appointment.type,name:appointment_google_reserve.appointment_type_restaurant
 msgid "Rest'Odoo"
-msgstr ""
+msgstr "Odooレストラン"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "SMS配信エラー"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__phone_sanitized
 msgid "Sanitized Number"
-msgstr ""
+msgstr "サニタイズされた数"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid "Stop syncing"
-msgstr ""
+msgstr "同期を停止"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid "Synchronize with Google Reserve"
-msgstr ""
+msgstr "Google予約と同期"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__phone
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__website_url
 msgid "Used by Google to properly match merchants and partners, recommended."
-msgstr ""
+msgstr "Googleが加盟店と取引先を正確に照合するために使用します。推奨設定です。"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__business_category
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__location_id
 msgid "Used by Google to try to match your physical address to your business."
-msgstr ""
+msgstr "Googleがあなたのビジネスと所在地住所を照合するために使用します。"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "ウェブサイトメッセージ"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__website_url
 msgid "Website URL"
-msgstr ""
+msgstr "ウェブサイトURL"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "ウェブサイトコミュニケーション履歴"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.google_reserve_merchant_view_form
 msgid "e.g Restaurant"
-msgstr ""
+msgstr "例：レストラン"

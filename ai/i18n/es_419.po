@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-08 02:40+0000\n"
+"POT-Creation-Date: 2025-11-07 18:42+0000\n"
+"PO-Revision-Date: 2025-11-11 23:46+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/ai/es_419/>\n"
@@ -1373,7 +1373,7 @@ msgstr "Última actualización el"
 
 #. module: ai
 #. odoo-javascript
-#: code:addons/ai/static/src/web/systray_action.js:0
+#: code:addons/ai/static/src/ai_chat_launcher_service.js:0
 msgid "Log Note"
 msgstr "Registrar una nota"
 
@@ -1469,11 +1469,11 @@ msgstr "No se encontraron URL válidas para procesar."
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
 msgid ""
-"No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, and "
+"No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, CSV, and "
 "OpenDocument files are allowed."
 msgstr ""
-"No se encontraron archivos válidos para cargar. Solo los archivos PDF, Word, "
-"PowerPoint, Excel, de texto y OpenDocument son compatibles."
+"No hay ningún archivo válido para subir. Solo los archivos PDF, Word, "
+"PowerPoint, Excel, Texto, CSV y OpenDocument son compatibles."
 
 #. module: ai
 #. odoo-javascript
@@ -1617,7 +1617,7 @@ msgstr "Selecciona un registro"
 
 #. module: ai
 #. odoo-javascript
-#: code:addons/ai/static/src/web/systray_action.js:0
+#: code:addons/ai/static/src/ai_chat_launcher_service.js:0
 msgid "Send Message"
 msgstr "Enviar mensaje"
 
@@ -1670,11 +1670,11 @@ msgstr ""
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
 msgid ""
 "Some files have invalid formats and were skipped: %s. Only PDF, Word, "
-"PowerPoint, Excel, Text, and OpenDocument files are allowed."
+"PowerPoint, Excel, Text, CSV, and OpenDocument files are allowed."
 msgstr ""
-"Algunos archivos están en un formato que no es válido y se omitieron: %s. "
-"Solo los archivos PDF, Word, PowerPoint, Excel, de texto y OpenDocument son "
-"compatibles."
+"Algunos archivos tienen formatos que no son válidos, por lo que se omitieron:"
+" %s. Solo los archivos PDF, Word, PowerPoint, Excel, Texto, CSV y "
+"OpenDocument son compatibles."
 
 #. module: ai
 #. odoo-javascript
@@ -2070,3 +2070,18 @@ msgstr "ejecutado."
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "fa-hashtag"
 msgstr "fa-hashtag"
+
+#~ msgid ""
+#~ "No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, and "
+#~ "OpenDocument files are allowed."
+#~ msgstr ""
+#~ "No se encontraron archivos válidos para cargar. Solo los archivos PDF, "
+#~ "Word, PowerPoint, Excel, de texto y OpenDocument son compatibles."
+
+#~ msgid ""
+#~ "Some files have invalid formats and were skipped: %s. Only PDF, Word, "
+#~ "PowerPoint, Excel, Text, and OpenDocument files are allowed."
+#~ msgstr ""
+#~ "Algunos archivos están en un formato que no es válido y se omitieron: %s. "
+#~ "Solo los archivos PDF, Word, PowerPoint, Excel, de texto y OpenDocument "
+#~ "son compatibles."

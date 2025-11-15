@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-28 13:11+0000\n"
+"PO-Revision-Date: 2025-11-13 13:11+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/hr_referral/pt_BR/>\n"
@@ -64,11 +64,14 @@ msgid ""
 "If you know someone who would be a great fit for this position, please share "
 "this link with them:"
 msgstr ""
+".\n"
+"Se você conhece alguém que seria ideal para esta vaga, compartilhe este link "
+"com essa pessoa:"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.referral_email_body_template
 msgid "/ Job Offers"
-msgstr ""
+msgstr "/Ofertas de emprego"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_applicant_employee_referral_kanban
@@ -82,6 +85,9 @@ msgid ""
 "            <br/>\n"
 "            Thanks!"
 msgstr ""
+"<br/>\n"
+"            <br/>\n"
+"            Agradecemos!"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
@@ -92,6 +98,11 @@ msgid ""
 "                                        <span title=\"Send by Mail\">Send "
 "Email</span>"
 msgstr ""
+"<i class=\"fa fa-2x fa-envelope-o\" role=\"img\" aria-label=\"Send by Mail\""
+"/>\n"
+"                                        <br/>\n"
+"                                        <span title=\"Send by Mail\">Enviar "
+"e-mail</span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
@@ -101,6 +112,10 @@ msgid ""
 "                                        <span title=\"More info\">Job Page</"
 "span>"
 msgstr ""
+"<i class=\"fa fa-2x fa-globe\" role=\"img\" aria-label=\"Job Page\"/>\n"
+"                                        <br/>\n"
+"                                        <span title=\"More info\">Página da "
+"vaga</span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
@@ -110,6 +125,10 @@ msgid ""
 "                                        <span title=\"Send by SMS\">Send "
 "SMS</span>"
 msgstr ""
+"<i class=\"fa fa-2x fa-mobile\" role=\"img\" aria-label=\"Send by SMS\"/>\n"
+"                                        <br/>\n"
+"                                        <span title=\"Send by SMS\">Enviar "
+"SMS</span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_applicant_employee_referral_kanban
@@ -160,6 +179,10 @@ msgid ""
 "facebook\" role=\"img\" aria-label=\"Share on facebook\"/>\n"
 "                                        </span>"
 msgstr ""
+"<span title=\"Share on Facebook\">\n"
+"                                            <i class=\"fa fa-2x fa-facebook\""
+" role=\"img\" aria-label=\"Share on facebook\"/>\n"
+"                                        </span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
@@ -169,6 +192,10 @@ msgid ""
 "linkedin\" role=\"img\" aria-label=\"Share on linkedin\"/>\n"
 "                                        </span>"
 msgstr ""
+"<span title=\"Share on Linkedin\">\n"
+"                                            <i class=\"fa fa-2x fa-linkedin\""
+" role=\"img\" aria-label=\"Share on linkedin\"/>\n"
+"                                        </span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
@@ -178,6 +205,10 @@ msgid ""
 "role=\"img\" aria-label=\"Share on twitter\"/>\n"
 "                                        </span>"
 msgstr ""
+"<span title=\"Share on Twitter\">\n"
+"                                            <i class=\"fa fa-2x fa-twitter\" "
+"role=\"img\" aria-label=\"Share on twitter\"/>\n"
+"                                        </span>"
 
 #. module: hr_referral
 #. odoo-python

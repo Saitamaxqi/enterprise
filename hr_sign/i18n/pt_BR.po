@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-10-14 10:45+0000\n"
+"PO-Revision-Date: 2025-11-13 17:15+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/hr_sign/pt_BR/>\n"
@@ -57,12 +57,12 @@ msgstr "<span class=\"o_stat_text\">Solicitações de assinatura</span>"
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_mail_activity_plan_template
 msgid "Activity plan template"
-msgstr ""
+msgstr "Modelo de plano de atividade"
 
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_mail_activity_schedule
 msgid "Activity schedule plan Wizard"
-msgstr ""
+msgstr "Assistente de planejamento de atividade"
 
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
@@ -77,7 +77,7 @@ msgstr "Anexo"
 #. module: hr_sign
 #: model:sign.template,redirect_url_text:hr_sign.template_sign_termination
 msgid "Close"
-msgstr ""
+msgstr "Encerrar"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__version_id
@@ -102,7 +102,7 @@ msgstr "Criado em"
 #. module: hr_sign
 #: model:sign.item.role,name:hr_sign.sign_item_role_default
 msgid "Customer"
-msgstr ""
+msgstr "Cliente"
 
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
@@ -149,6 +149,11 @@ msgid ""
 "                - If the selected email is not defined, the available one "
 "will be used."
 msgstr ""
+"E-mail usado para enviar a solicitação de assinatura.\n"
+"                - Trabalho usa o e-mail definido em \"e-mail de trabalho\"\n"
+"                - Privado usa o e-mail definido em Informações privadas\n"
+"                - Se o e-mail selecionado não estiver definido, será usado o "
+"e-mail disponível."
 
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_hr_employee

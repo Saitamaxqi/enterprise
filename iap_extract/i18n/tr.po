@@ -3,13 +3,15 @@
 # * iap_extract
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# DeepL <noreply-mt-deepl@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-09-18 02:47+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-11-13 10:23+0000\n"
+"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "iap_extract/tr/>\n"
 "Language: tr\n"
@@ -21,6 +23,7 @@ msgstr ""
 
 #. module: iap_extract
 #: model:mail.template,body_html:iap_extract.iap_extract_no_credit
+#, fuzzy
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "    <p>Dear,<br/></p>\n"
@@ -30,6 +33,13 @@ msgid ""
 "    <p>Odoo S.A.</p>\n"
 "</div>"
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p>Canım,<br/></p>\n"
+"   <p>IAP OCR hesabınızda artık alacak yok.<br/>\n"
+"    IAP OCR hesabınızı ayarlar sayfasından şarj edebilirsiniz.</p>\n"
+"    <p>Saygılarımla,<br/></p>\n"
+"   <p>Odoo S.A.</p>\n"
+"</div>"
 
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__message_needaction
@@ -40,10 +50,13 @@ msgstr "Aksiyon Gerekiyor"
 #. module: iap_extract
 #. odoo-javascript
 #: code:addons/iap_extract/static/src/components/status_header/status.xml:0
+#, fuzzy
 msgid ""
 "All fields will be automatically populated by Artificial Intelligence, it "
 "might take 5 seconds."
 msgstr ""
+"Tüm alanlar Yapay Zeka tarafından otomatik olarak doldurulacaktır, bu işlem "
+"5 saniye sürebilir."
 
 #. module: iap_extract
 #. odoo-python
@@ -71,13 +84,16 @@ msgstr "Ek Sayısı"
 
 #. module: iap_extract
 #: model:ir.model,name:iap_extract.model_extract_mixin
+#, fuzzy
 msgid "Base class to extract data from documents"
-msgstr ""
+msgstr "Belgelerden veri ayıklamak için temel sınıf"
 
 #. module: iap_extract
 #: model:ir.model,name:iap_extract.model_extract_mixin_with_words
+#, fuzzy
 msgid "Base class to extract data from documents with OCRed words saved"
 msgstr ""
+"Kaydedilmiş OCR sözcükleri ile belgelerden veri ayıklamak için temel sınıf"
 
 #. module: iap_extract
 #. odoo-javascript
@@ -103,34 +119,40 @@ msgstr "Akış Tamamlandı"
 
 #. module: iap_extract
 #: model:iap.service,description:iap_extract.iap_service_ocr
+#, fuzzy
 msgid ""
 "Digitize your scanned or PDF vendor bills, expenses and resumes with OCR and "
 "Artificial Intelligence."
 msgstr ""
+"Taranmış veya PDF satıcı faturalarınızı, harcamalarınızı ve özgeçmişlerinizi "
+"OCR ve Yapay Zeka ile dijitalleştirin."
 
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__display_name
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "İsim Göster"
 
 #. module: iap_extract
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
+#, fuzzy
 msgid "Document is being digitized"
-msgstr ""
+msgstr "Belge dijitalleştiriliyor"
 
 #. module: iap_extract
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
+#, fuzzy
 msgid "Document sent for digitization"
-msgstr ""
+msgstr "Dijitalleştirme için gönderilen belge"
 
 #. module: iap_extract
 #. odoo-javascript
 #: code:addons/iap_extract/static/src/components/status_header/status.xml:0
+#, fuzzy
 msgid "Document successfully parsed. Please refresh."
-msgstr ""
+msgstr "Belge başarıyla ayrıştırıldı. Lütfen yenileyin."
 
 #. module: iap_extract
 #: model:iap.service,unit_name:iap_extract.iap_service_ocr
@@ -140,8 +162,9 @@ msgstr "Belgeler"
 #. module: iap_extract
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
+#, fuzzy
 msgid "Documents sent for digitization"
-msgstr ""
+msgstr "Dijitalleştirme için gönderilen belgeler"
 
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__extract_error_message
@@ -152,7 +175,7 @@ msgstr "Hata Mesajı"
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__extract_attachment_id
 msgid "Extract Attachment"
-msgstr ""
+msgstr "Ekleri Ayıkla"
 
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__extract_state_processed
@@ -174,18 +197,21 @@ msgstr "Çıktı durumu"
 
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__extracted_dates
+#, fuzzy
 msgid "Extracted Dates"
-msgstr ""
+msgstr "Çıkarılan Tarihler"
 
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__extracted_numbers
+#, fuzzy
 msgid "Extracted Numbers"
-msgstr ""
+msgstr "Çıkarılan Sayılar"
 
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__extracted_words
+#, fuzzy
 msgid "Extracted Words"
-msgstr ""
+msgstr "Çıkarılan Kelimeler"
 
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__message_follower_ids
@@ -208,14 +234,15 @@ msgstr "Mesaj Var"
 #. module: iap_extract
 #: model:mail.template,name:iap_extract.iap_extract_no_credit
 #: model:mail.template,subject:iap_extract.iap_extract_no_credit
+#, fuzzy
 msgid "IAP Extract Notification"
-msgstr ""
+msgstr "IAP Ekstresi Bildirimi"
 
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__id
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__extract_document_uuid
@@ -238,14 +265,16 @@ msgstr "İşaretliyse, bazı mesajlar gönderi hatası içermektedir."
 #. module: iap_extract
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
+#, fuzzy
 msgid "Invalid PDF (Conversion error)"
-msgstr ""
+msgstr "Geçersiz PDF (Dönüştürme hatası)"
 
 #. module: iap_extract
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
+#, fuzzy
 msgid "Invalid PDF (Unable to get page count)"
-msgstr ""
+msgstr "Geçersiz PDF (Sayfa sayısı alınamıyor)"
 
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__message_is_follower
@@ -300,8 +329,9 @@ msgstr "Yetersiz kredi"
 #. module: iap_extract
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
+#, fuzzy
 msgid "Not enough credits for data extraction"
-msgstr ""
+msgstr "Veri çıkarımı için yeterli alacak yok"
 
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__message_needaction_counter
@@ -360,16 +390,21 @@ msgstr "Sunucu kullanılamıyor. Lütfen daha sonra tekrar deneyin"
 #. module: iap_extract
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
+#, fuzzy
 msgid "Some documents were skipped as they were already digitized"
-msgstr ""
+msgstr "Bazı belgeler zaten dijitalleştirildiği için atlandı"
 
 #. module: iap_extract
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
+#, fuzzy
 msgid ""
 "The 'invoice_ocr' IAP account token is invalid. Please delete it to let Odoo "
 "generate a new one or fill it with a valid token."
 msgstr ""
+"'invoice_ocr' IAP hesap belirteci geçersiz. Odoo'nun yeni bir tane "
+"oluşturmasına izin vermek için lütfen silin veya geçerli bir belirteçle "
+"doldurun."
 
 #. module: iap_extract
 #. odoo-python
@@ -380,14 +415,16 @@ msgstr "Doküman bulunamadı"
 #. module: iap_extract
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
+#, fuzzy
 msgid "The document has been rejected because it is too small"
-msgstr ""
+msgstr "Belge çok küçük olduğu için reddedildi"
 
 #. module: iap_extract
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
+#, fuzzy
 msgid "The selected documents are already digitized"
-msgstr ""
+msgstr "Seçilen belgeler halihazırda dijitalleştirilmiştir"
 
 #. module: iap_extract
 #: model:ir.model.fields.selection,name:iap_extract.selection__account_bank_statement__extract_state__to_validate
@@ -409,7 +446,7 @@ msgstr "Desteklenmeyen görüntü formatı"
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
 msgid "Version is unsupported"
-msgstr ""
+msgstr "Desteklenmeyen sürüm"
 
 #. module: iap_extract
 #: model:ir.model.fields.selection,name:iap_extract.selection__account_bank_statement__extract_state__waiting_extraction
@@ -434,8 +471,9 @@ msgstr "Doğrulama Bekleniyor"
 #. module: iap_extract
 #. odoo-javascript
 #: code:addons/iap_extract/static/src/components/status_header/status.xml:0
+#, fuzzy
 msgid "You don't have enough credit to extract data from your document."
-msgstr ""
+msgstr "Belgenizden veri çıkarmak için yeterli alacak yok."
 
 #. module: iap_extract
 #. odoo-python
@@ -447,8 +485,9 @@ msgstr "PDF dosyanız bir şifre ile korunuyor. OCR ondan veri çıkaramıyor"
 #. module: iap_extract
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
+#, fuzzy
 msgid "Your document contains too many pages"
-msgstr ""
+msgstr "Belgeniz çok fazla sayfa içeriyor"
 
 #. module: iap_extract
 #: model:ir.model.fields.selection,name:iap_extract.selection__account_bank_statement__extract_state__extract_not_ready

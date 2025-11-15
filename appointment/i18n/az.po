@@ -3,19 +3,22 @@
 # * appointment
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-08 18:44+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-10 08:24+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Azerbaijani <https://translate.odoo.com/projects/odoo-19/"
+"appointment/az/>\n"
 "Language: az\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
@@ -38,7 +41,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__appointment_count
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__appointment_count
 msgid "# Appointments"
-msgstr ""
+msgstr "# Görüşlər"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__appointment_count_request
@@ -65,7 +68,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__suggested_staff_user_count
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__staff_user_count
 msgid "# Staff Users"
-msgstr ""
+msgstr "# İşçi istifadəçilərinin sayı"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__appointment_count_upcoming
@@ -76,7 +79,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment/models/calendar_event.py:0
 msgid "%(appointment_name)s with %(partner_name)s"
-msgstr ""
+msgstr "%(appointment_name)s ilə %(partner_name)s"
 
 #. module: appointment
 #. odoo-python
@@ -103,13 +106,13 @@ msgstr ""
 #: code:addons/appointment/models/appointment_resource.py:0
 #: code:addons/appointment/models/appointment_type.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (surət)"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/models/appointment_type.py:0
 msgid "%s - Let's meet"
-msgstr ""
+msgstr "%s - Gəl görüşək"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form_gantt_booking
@@ -123,6 +126,8 @@ msgid ""
 ".stgrey0{fill:#E3E3E3}\n"
 "                .stgrey1{fill:#F2F2F2}"
 msgstr ""
+".stgrey0{fill:#E3E3E3}\n"
+"                .stgrey1{fill:#F2F2F2}"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_kanban
@@ -516,7 +521,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "<i class=\"fa fa-check-circle text-success me-3\"/>Appointment Scheduled!"
-msgstr ""
+msgstr "<i class=\"fa fa-check-circle text-success me-3\"/>Görüş təyin edildi!"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_gantt_kanban_popover
@@ -541,7 +546,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
 msgid "<i class=\"fa fa-info-circle\" title=\"Info\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-info-circle\" title=\"Info\"/>"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -708,7 +713,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "<span> hours</span>"
-msgstr ""
+msgstr "<span> saatlar</span>"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_form
@@ -723,7 +728,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "<span>Online</span>"
-msgstr ""
+msgstr "<span>Onlayn</span>"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -781,6 +786,7 @@ msgstr ""
 msgid ""
 "A list of slots information is needed to create a custom appointment type"
 msgstr ""
+"Fərdi görüş növü yaratmaq üçün slot məlumatlarının siyahısı tələb olunur"
 
 #. module: appointment
 #. odoo-python
@@ -800,12 +806,12 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__access_token
 msgid "Access Token"
-msgstr ""
+msgstr "Giriş Tokeni"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Lazımi Hərəkət"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_booking_line__active
@@ -813,27 +819,27 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__active
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__active
 msgid "Active"
-msgstr ""
+msgstr "Aktiv"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "Fəaliyyətlər"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Faəliyyət istisnaetmə İşarəsi"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Fəaliyyət Statusu"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Fəaliyyət Növü ikonu"
 
 #. module: appointment
 #. odoo-javascript
@@ -853,12 +859,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_meeting_user
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated_card
 msgid "Add a function here..."
-msgstr ""
+msgstr "Funksiyanı buraya əlavə edin..."
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Add a line"
-msgstr ""
+msgstr "Sətir əlavə edin"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_meeting_user
@@ -875,7 +881,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
 msgid "Add an intro message here..."
-msgstr ""
+msgstr "İntro mesajını buraya əlavə edin..."
 
 #. module: appointment
 #: model:ir.model,name:appointment.model_appointment_manage_leaves
@@ -885,25 +891,25 @@ msgstr ""
 #. module: appointment
 #: model:res.groups,name:appointment.group_appointment_manager
 msgid "Administrator"
-msgstr ""
+msgstr "Administrator"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/controllers/portal.py:0
 msgid "All"
-msgstr ""
+msgstr "BÜTÜN"
 
 #. module: appointment
 #: model:ir.actions.act_window,name:appointment.calendar_event_action_report_all
 msgid "All Appointments"
-msgstr ""
+msgstr "Bütün Təyinatlar"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/models/appointment_type.py:0
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__allday
 msgid "All day"
-msgstr ""
+msgstr "Bütün gün"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -923,30 +929,32 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__country_ids
 msgid "Allowed Countries"
-msgstr ""
+msgstr "İcazə verilmiş ölkələr"
 
 #. module: appointment
 #: model:ir.model.constraint,message:appointment.constraint_appointment_answer_input_value_check
 msgid "An answer input must either have a text value or a predefined answer."
 msgstr ""
+"Bir cavab daxil etmək üçün ya mətn dəyəri ya da öncədən təyin edilmiş bir "
+"cavab olmalıdır."
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/controllers/calendar_view.py:0
 msgid "An appointment type is needed to get the link."
-msgstr ""
+msgstr "Link əldə etmək üçün görüş təyin etmək lazımdır."
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/models/appointment_slot.py:0
 msgid "An unique type slot should have a start and end datetime"
-msgstr ""
+msgstr "Bir unikal tipli slotun başlama və bitmə tarixi olmalıdır"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer__name
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_answer_view_form
 msgid "Answer"
-msgstr ""
+msgstr "Cavab"
 
 #. module: appointment
 #: model:ir.actions.act_window,name:appointment.appointment_answer_input_action
@@ -956,12 +964,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_list
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Answer Breakdown"
-msgstr ""
+msgstr "Cavabın Təsnifi"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_answer_input_view_form
 msgid "Answer Input"
-msgstr ""
+msgstr "Cavab Daxil Et"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer_input__question_type
@@ -974,7 +982,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Answers"
-msgstr ""
+msgstr "Cavablar"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_invite__resources_resource_choice__all_assigned_resources
@@ -994,24 +1002,24 @@ msgstr ""
 #: model:res.groups.privilege,name:appointment.res_groups_privilege_appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_search
 msgid "Appointment"
-msgstr ""
+msgstr "Görüş"
 
 #. module: appointment
 #: model:ir.model,name:appointment.model_appointment_answer_input
 msgid "Appointment Answer Inputs"
-msgstr ""
+msgstr "Təyinat Cavab Girişləri"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__appointment_answer_input_ids
 msgid "Appointment Answers"
-msgstr ""
+msgstr "Təyinat Cavabları"
 
 #. module: appointment
 #: model:mail.message.subtype,description:appointment.mt_calendar_event_booked
 #: model:mail.message.subtype,name:appointment.mt_appointment_type_booked
 #: model:mail.message.subtype,name:appointment.mt_calendar_event_booked
 msgid "Appointment Booked"
-msgstr ""
+msgstr "Görüş təyin edildi"
 
 #. module: appointment
 #: model:ir.model,name:appointment.model_appointment_booking_line
@@ -1023,63 +1031,63 @@ msgstr ""
 #: model:mail.message.subtype,name:appointment.mt_appointment_type_canceled
 #: model:mail.message.subtype,name:appointment.mt_calendar_event_canceled
 msgid "Appointment Canceled"
-msgstr ""
+msgstr "Görüş ləğv edildi"
 
 #. module: appointment
 #: model:mail.template,subject:appointment.appointment_canceled_mail_template
 msgid "Appointment Canceled: {{ object.appointment_type_id.name }}"
-msgstr ""
+msgstr "Görüş ləğv edildi: {{ object.appointment_type_id.name }}"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__appointment_duration_formatted
 msgid "Appointment Duration Formatted "
-msgstr ""
+msgstr "Formatlandırılmış Görüş Müddəti "
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__appointment_duration_formatted
 msgid "Appointment Duration formatted in words"
-msgstr ""
+msgstr "Görüş müddəti sözlərə çevrilmiş şəkildə"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/models/appointment_type.py:0
 msgid "Appointment Duration should be higher than 0.00."
-msgstr ""
+msgstr "Görüş müddəti 0.00-dan yüksək olmalıdır."
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__appointment_invite_id
 msgid "Appointment Invitation"
-msgstr ""
+msgstr "Görüşə dəvət"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_search
 msgid "Appointment Invitation Links"
-msgstr ""
+msgstr "Görüş üçün dəvət linki"
 
 #. module: appointment
 #: model:ir.model,name:appointment.model_appointment_invite
 msgid "Appointment Invite"
-msgstr ""
+msgstr "Görüşə Dəvət et"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__meeting_ids
 msgid "Appointment Meetings"
-msgstr ""
+msgstr "İclasların təyin edilməsi"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.portal_my_appointments
 msgid "Appointment Name"
-msgstr ""
+msgstr "Görüşün adı"
 
 #. module: appointment
 #: model:ir.model,name:appointment.model_appointment_answer
 msgid "Appointment Question Answers"
-msgstr ""
+msgstr "Görüş Suallarının Cavabları"
 
 #. module: appointment
 #: model:ir.model,name:appointment.model_appointment_question
 msgid "Appointment Questions"
-msgstr ""
+msgstr "Görüşün sualları"
 
 #. module: appointment
 #: model:ir.model,name:appointment.model_appointment_resource
@@ -1115,7 +1123,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__name
 msgid "Appointment Title"
-msgstr ""
+msgstr "Görüşün Başlığı"
 
 #. module: appointment
 #: model:ir.model,name:appointment.model_appointment_type
@@ -1126,14 +1134,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_tree
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_search
 msgid "Appointment Type"
-msgstr ""
+msgstr "Görüş Növü"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__appointment_type_ids
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__appointment_type_ids
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "Appointment Types"
-msgstr ""
+msgstr "Görüşün Növləri"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_booking_line__appointment_user_id
@@ -1161,12 +1169,12 @@ msgstr ""
 #. module: appointment
 #: model:mail.template,name:appointment.appointment_booked_mail_template
 msgid "Appointment: Appointment Booked"
-msgstr ""
+msgstr "Təyinat: Görüş Təyin Edildi"
 
 #. module: appointment
 #: model:mail.template,name:appointment.appointment_canceled_mail_template
 msgid "Appointment: Appointment Canceled"
-msgstr ""
+msgstr "Görüş: Təyinat Ləğv Edildi"
 
 #. module: appointment
 #: model:mail.template,name:appointment.attendee_invitation_mail_template
@@ -1194,12 +1202,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.portal_my_home_appointment
 #: model_terms:ir.ui.view,arch_db:appointment.portal_my_home_menu_appointment
 msgid "Appointments"
-msgstr ""
+msgstr "Təyinatlar"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.portal_my_appointments
 msgid "Appointments by"
-msgstr ""
+msgstr "Görüşlər —"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
@@ -1211,7 +1219,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Archived"
-msgstr ""
+msgstr "Arxivləndi"
 
 #. module: appointment
 #: model_terms:ir.actions.act_window,help:appointment.appointment_question_action
@@ -1227,29 +1235,29 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__resources_choice
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
 msgid "Assign to"
-msgstr ""
+msgstr "Təyin et"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__assignment_method
 msgid "Assignment"
-msgstr ""
+msgstr "Təyinat"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/models/appointment_slot.py:0
 msgid ""
 "At least one slot duration is shorter than the meeting duration (%s hours)"
-msgstr ""
+msgstr "Ən azı bir slot müddəti görüşün müddətindən qısadır (%s saat)"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Qoşma Sayı"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__partner_ids
 msgid "Attendees"
-msgstr ""
+msgstr "İştirakçılar"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__auto_confirm
@@ -1273,12 +1281,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__slot_ids
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Availabilities"
-msgstr ""
+msgstr "Mövcudluqlar"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__answer_ids
 msgid "Available Answers"
-msgstr ""
+msgstr "Mövcud Cavablar"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_resource_view_search
@@ -1293,7 +1301,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__avatar_1920
 msgid "Avatar"
-msgstr ""
+msgstr "avatar"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__avatar_1024
@@ -1318,7 +1326,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__image_1920
 msgid "Background Image"
-msgstr ""
+msgstr "Arxa Fon Şəkli"
 
 #. module: appointment
 #. odoo-javascript
@@ -1329,7 +1337,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__base_book_url
 msgid "Base Link URL"
-msgstr ""
+msgstr "Base Link URL"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__schedule_based_on
@@ -1355,7 +1363,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__calendar_event_ids
 msgid "Booked Appointments"
-msgstr ""
+msgstr "Rezerv edilmiş görüşlər"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
@@ -1425,13 +1433,13 @@ msgstr ""
 #. module: appointment
 #: model:ir.model,name:appointment.model_calendar_attendee
 msgid "Calendar Attendee Information"
-msgstr ""
+msgstr "Təqvim iştirakçısı haqqında məlumat"
 
 #. module: appointment
 #: model:ir.model,name:appointment.model_calendar_event
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer_input__calendar_event_id
 msgid "Calendar Event"
-msgstr ""
+msgstr "Təqvim Tədbiri"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category__anytime
@@ -1448,12 +1456,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_manage_leaves_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Ləğv edin"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__min_cancellation_hours
 msgid "Cancel Before (hours)"
-msgstr ""
+msgstr "Əvvəlcədən ləğv etmə (saat)"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -1475,12 +1483,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_search_booking
 msgid "Cancelled"
-msgstr ""
+msgstr "Ləğv olundu"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__capacity
 msgid "Capacity"
-msgstr ""
+msgstr "Həcm"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__manual_confirmation_percentage
@@ -1517,7 +1525,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__category
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "Category"
-msgstr ""
+msgstr "Kateqoriya"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
@@ -1527,12 +1535,12 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_question__question_type__checkbox
 msgid "Checkboxes (multiple answers)"
-msgstr ""
+msgstr "Checkboxes (çoxlu cavablar)"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Checked in"
-msgstr ""
+msgstr "Qeydiyyatdan keçib"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__calendar_event__appointment_status__attended
@@ -1559,24 +1567,24 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment/models/calendar_event.py:0
 msgid "Click here"
-msgstr ""
+msgstr "Buraya kliklə"
 
 #. module: appointment
 #. odoo-javascript
 #: code:addons/appointment/static/src/components/appointment_template_picker_dialog/appointment_template_picker_dialog.xml:0
 #: code:addons/appointment/static/src/xml/appointment_no_slot.xml:0
 msgid "Close"
-msgstr ""
+msgstr "Bağlayın"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Communication"
-msgstr ""
+msgstr "Kommunikasiya"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__company_id
 msgid "Company"
-msgstr ""
+msgstr "Şirkət"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__disable_save_button
@@ -1586,7 +1594,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.ui.menu,name:appointment.appointment_menu_config
 msgid "Configuration"
-msgstr ""
+msgstr "Konfiqurasiya"
 
 #. module: appointment
 #. odoo-javascript
@@ -1594,7 +1602,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_kanban
 msgid "Configure"
-msgstr ""
+msgstr "Konfiqurasiya edin"
 
 #. module: appointment
 #: model_terms:ir.actions.act_window,help:appointment.appointment_invite_action
@@ -1609,17 +1617,17 @@ msgstr ""
 #: code:addons/appointment/static/src/xml/appointment_resources.xml:0
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Confirm"
-msgstr ""
+msgstr "Təsdiq edin"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_form
 msgid "Confirm Appointment"
-msgstr ""
+msgstr "Görüşü təsdiq edin"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_confirmation
 msgid "Confirmation Message"
-msgstr ""
+msgstr "Təsdiq Mesajı"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -1629,13 +1637,13 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "Confirmed"
-msgstr ""
+msgstr "Təsdiq olundu"
 
 #. module: appointment
 #. odoo-javascript
 #: code:addons/appointment/static/src/components/appointment_sync_button/appointment_sync_button.xml:0
 msgid "Connect"
-msgstr ""
+msgstr "Quraşdır"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__connectors_displayed
@@ -1645,13 +1653,13 @@ msgstr ""
 #. module: appointment
 #: model:ir.model,name:appointment.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/controllers/appointment.py:0
 msgid "Contact Details"
-msgstr ""
+msgstr "Əlaqə Məlumatları"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointments_list_layout
@@ -1662,7 +1670,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/appointment/static/src/views/appointment_calendar/appointment_calendar_controller.js:0
 msgid "Copied!"
-msgstr ""
+msgstr "Kopyalandı!"
 
 #. module: appointment
 #. odoo-javascript
@@ -1670,7 +1678,7 @@ msgstr ""
 #: code:addons/appointment/static/src/views/appointment_calendar/appointment_calendar_controller.xml:0
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "Copy Link"
-msgstr ""
+msgstr "Linki kopyalayın"
 
 #. module: appointment
 #. odoo-javascript
@@ -1736,7 +1744,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__create_uid
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Tərəfindən yaradılıb"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer__create_date
@@ -1749,7 +1757,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__create_date
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Tarixdə yaradıldı"
 
 #. module: appointment
 #. odoo-javascript
@@ -1761,7 +1769,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer_input__partner_id
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_answer_input_view_search
 msgid "Customer"
-msgstr ""
+msgstr "Müştəri"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
@@ -1775,7 +1783,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__select_first__date
 #: model_terms:ir.ui.view,arch_db:appointment.portal_my_appointments
 msgid "Date"
-msgstr ""
+msgstr "Tarix"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_progress_bar
@@ -1791,12 +1799,12 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_manage_leaves_view_form
 msgid "Dates"
-msgstr ""
+msgstr "Tarixlər"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "Declined"
-msgstr ""
+msgstr "İmtina edildi"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_search
@@ -1812,7 +1820,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment/models/appointment_type.py:0
 msgid "Default slots cannot be applied to the %s appointment type category."
-msgstr ""
+msgstr "Defolt slotlar %s görüş növü kateqoriyasına tətbiq edilə bilməz."
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_slot__slot_type
@@ -1833,7 +1841,7 @@ msgstr ""
 #. module: appointment
 #: model:appointment.type,name:appointment.appointment_type_dental_care
 msgid "Dental Care"
-msgstr ""
+msgstr "Diş müayinəsi"
 
 #. module: appointment
 #. odoo-python
@@ -1846,7 +1854,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_resource_view_form
 msgid "Description"
-msgstr ""
+msgstr "Təsvir"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__destination_resource_ids
@@ -1866,6 +1874,8 @@ msgid ""
 "Determine if the slot englobe the whole day, mainly used for unique slot "
 "type"
 msgstr ""
+"Bütün günü əhatə edən slot müəyyən edin, əsasən unikal slot növü üçün "
+"istifadə olunur"
 
 #. module: appointment
 #. odoo-javascript
@@ -1874,7 +1884,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form_insert_link
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "Discard"
-msgstr ""
+msgstr "Ləğv edin"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer__display_name
@@ -1892,7 +1902,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_ir_http__display_name
 #: model:ir.model.fields,field_description:appointment.field_res_partner__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Göstəriləcək Ad"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__show_avatars
@@ -1928,13 +1938,13 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_question__question_type__select
 msgid "Dropdown (one answer)"
-msgstr ""
+msgstr "Açılan siyahı (bir cavab)"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__duration
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__appointment_duration
 msgid "Duration"
-msgstr ""
+msgstr "Müddət"
 
 #. module: appointment
 #: model_terms:appointment.type,message_intro:appointment.appointment_type_tennis_court
@@ -1955,7 +1965,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_manage_leaves__leave_end_dt
 msgid "End Date"
-msgstr ""
+msgstr "Bitmə Tarixi"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__end_datetime
@@ -1965,22 +1975,22 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_slot__end_datetime
 msgid "End datetime for unique slot type management"
-msgstr ""
+msgstr "Unikal slot tipi idarəetməsi üçün bitiş tarixi"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__end_hour
 msgid "Ending Hour"
-msgstr ""
+msgstr "Bitiş saatı"
 
 #. module: appointment
 #: model:ir.model,name:appointment.model_calendar_alarm
 msgid "Event Alarm"
-msgstr ""
+msgstr "Hadisə Xəbərdarlığı"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Every"
-msgstr ""
+msgstr "Hər şey"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__extra_comment
@@ -1990,7 +2000,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form_custom_share
 msgid "Extra Message on Confirmation"
-msgstr ""
+msgstr "Təsdiq üzrə əlavə mesaj"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
@@ -2000,12 +2010,12 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_confirmation
 msgid "Extra information provided once the appointment is booked."
-msgstr ""
+msgstr "Əlavə məlumatlar görüş təyin edildikdən sonra verilir."
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category_slot_scheduling__flexible
 msgid "Flexible"
-msgstr ""
+msgstr "Çevik"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category__custom
@@ -2021,17 +2031,17 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "İzləyicilər"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "İzləyicilər (Tərəfdaşlar)"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Gözəl şriftli ikon, məsələn fa-tapşırıqlar"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
@@ -2041,13 +2051,13 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__5
 msgid "Friday"
-msgstr ""
+msgstr "Cümə günü"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__start_datetime
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "From"
-msgstr ""
+msgstr "Başlama Tarixi"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_form
@@ -2058,7 +2068,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/appointment/static/src/views/appointment_calendar/appointment_calendar_controller.xml:0
 msgid "Get Share Link"
-msgstr ""
+msgstr "Paylaşmaq üçün linki əldə edin."
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_invite__suggested_staff_user_ids
@@ -2066,11 +2076,13 @@ msgid ""
 "Get the users linked to the appointment type selected to apply a domain on "
 "the users that can be selected"
 msgstr ""
+"Domeni seçə biləcəyiniz istifadəçilərə tətbiq etmək üçün seçilmiş görüş növü "
+"ilə əlaqəli istifadəçiləri əldə edin"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "Google Agenda"
-msgstr ""
+msgstr "Google Təqvim"
 
 #. module: appointment
 #. odoo-python
@@ -2086,12 +2098,12 @@ msgstr ""
 #. module: appointment
 #: model:ir.model,name:appointment.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP Marşrutizasiyası"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Mesajı Var"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__hide_duration
@@ -2126,17 +2138,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_ir_http__id
 #: model:ir.model.fields,field_description:appointment.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Simvol"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "İstisna fəaliyyəti göstərən simvol."
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__identical_config_id
@@ -2146,13 +2158,13 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "İşarələnibsə, yeni mesajlara baxmalısınız."
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_has_error
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Yoxlanılıbsa, bəzi mesajların çatdırılmasında xəta var."
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -2172,6 +2184,8 @@ msgid ""
 "If empty, all users are considered to be available.\n"
 "If set, only the selected users will be taken into account for this slot."
 msgstr ""
+"Boşdursa, bütün istifadəçilər əlçatan sayılır.\n"
+"Quraşdırılarsa, bu slot üçün yalnız seçilmiş istifadəçilər hesablanacaq."
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_resource__resource_calendar_id
@@ -2199,6 +2213,8 @@ msgid ""
 "If the active field is set to False, it will allow you to hide the resource "
 "record without removing it."
 msgstr ""
+"Aktiv sahə Yanlış olaraq təyin edilibsə, sizə ehtiyat qeydini silmədən "
+"gizlətməyə icazə veriləcək."
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_booking_line__active
@@ -2206,35 +2222,37 @@ msgid ""
 "If the active field is set to false, it will allow you to hide the event "
 "alarm information without removing it."
 msgstr ""
+"Aktiv sahə Yanlış olaraq təyin edilibsə, sizə tədbir barədə zəngli saatı "
+"silmədən gizlətməyə icazə veriləcək."
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__image_1920
 msgid "Image"
-msgstr ""
+msgstr "Şəkil"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__image_1024
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__image_1024
 msgid "Image 1024"
-msgstr ""
+msgstr "Şəkil 1024"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__image_128
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__image_128
 msgid "Image 128"
-msgstr ""
+msgstr "Şəkil 128"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__image_256
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__image_256
 msgid "Image 256"
-msgstr ""
+msgstr "Şəkil 256"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__image_512
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__image_512
 msgid "Image 512"
-msgstr ""
+msgstr "Şəkil 512"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_question__is_default
@@ -2245,12 +2263,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/appointment/static/src/appointment_plugin.js:0
 msgid "Insert Appointment Link"
-msgstr ""
+msgstr "Görüş linkini daxil edin"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form_insert_link
 msgid "Insert link"
-msgstr ""
+msgstr "Link Daxil Et"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_invite__identical_config_id
@@ -2261,7 +2279,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_intro
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form_custom_share
 msgid "Introduction Message"
-msgstr ""
+msgstr "Təqdimat Mesajı"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -2279,7 +2297,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__appointment_invite_ids
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_tree
 msgid "Invitation Links"
-msgstr ""
+msgstr "Dəvət linkləri"
 
 #. module: appointment
 #: model:mail.template,description:appointment.attendee_invitation_mail_template
@@ -2299,12 +2317,12 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "İzləyicidir"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__is_published
 msgid "Is Published"
-msgstr ""
+msgstr "Paylaşılıb"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__is_reusable
@@ -2322,6 +2340,8 @@ msgid ""
 "Keep empty to allow visitors from any country, otherwise you only allow "
 "visitors from selected countries"
 msgstr ""
+"Hər hansı bir ölkədən olan ziyarətçilərə icazə vermək üçün boş saxlayın, əks "
+"halda yalnız seçilmiş ölkələrdən olan ziyarətçilərə icazə verirsiniz"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer__write_uid
@@ -2334,7 +2354,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__write_uid
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Son Yeniləyən"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer__write_date
@@ -2347,7 +2367,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__write_date
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Son Yenilənmə tarixi"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__allow_guests
@@ -2375,7 +2395,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
 msgid "Link"
-msgstr ""
+msgstr "Bağlantı"
 
 #. module: appointment
 #. odoo-javascript
@@ -2386,12 +2406,12 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
 msgid "Link Generator"
-msgstr ""
+msgstr "Link Yaradıcı"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__book_url
 msgid "Link URL"
-msgstr ""
+msgstr "Link URL"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__book_url_params
@@ -2403,7 +2423,7 @@ msgstr ""
 #: code:addons/appointment/static/src/components/appointment_invite/appointment_invite_copy_close.js:0
 #: code:addons/appointment/static/src/components/appointment_quick_share_button/appointment_quick_share_button.js:0
 msgid "Link copied to clipboard!"
-msgstr ""
+msgstr "Link buferə kopyalandı!"
 
 #. module: appointment
 #. odoo-javascript
@@ -2424,17 +2444,17 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__location_id
 msgid "Location"
-msgstr ""
+msgstr "Məkan"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__location
 msgid "Location formatted"
-msgstr ""
+msgstr "Yer formatlandı"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__location
 msgid "Location formatted for one line uses"
-msgstr ""
+msgstr "Məkan bir sətirdə istifadə üçün formatlaşdırılmışdır"
 
 #. module: appointment
 #. odoo-javascript
@@ -2459,7 +2479,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Mandatory"
-msgstr ""
+msgstr "Tələb olunur"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__question_required
@@ -2469,18 +2489,18 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_invite__resources_choice__current_user
 msgid "Me"
-msgstr ""
+msgstr "Mən"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/models/templates/appointment_type.py:0
 msgid "Meeting"
-msgstr ""
+msgstr "Görüş"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__name
 msgid "Meeting Subject"
-msgstr ""
+msgstr "Görüşün Mövzusu"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_meeting_details
@@ -2501,37 +2521,37 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_kanban
 msgid "Meetings"
-msgstr ""
+msgstr "Görüşlər"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Mesajın Çatdırılmasında xəta"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Mesajlar"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__1
 msgid "Monday"
-msgstr ""
+msgstr "Bazar ertəsi"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_question__question_type__text
 msgid "Multi-line text"
-msgstr ""
+msgstr "Çox sətirli mətn"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Mənim Fəaliyyətlərimin Son Tarixi"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "My Appointments"
-msgstr ""
+msgstr "Görüşlərim"
 
 #. module: appointment
 #. odoo-javascript
@@ -2547,14 +2567,14 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_search
 msgid "My Links"
-msgstr ""
+msgstr "Linklərim"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/controllers/portal.py:0
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__name
 msgid "Name"
-msgstr ""
+msgstr "Ad"
 
 #. module: appointment
 #. odoo-python
@@ -2565,27 +2585,27 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_alarm__default_for_new_appointment_type
 msgid "New Appointments Default"
-msgstr ""
+msgstr "Yeni Görüşlər Defolt"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr ""
+msgstr "Növbəti Fəaliyyət Təqvimi Tədbiri"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Növbəti Fəaliyyətin Son Tarixi"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "Növbəti Fəaliyyət Xülasəsi"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "Yeni Fəaliyyət Növü"
 
 #. module: appointment
 #: model_terms:ir.actions.act_window,help:appointment.appointment_answer_input_action
@@ -2621,13 +2641,13 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__appointment_type_info_msg
 msgid "No User Assigned Message"
-msgstr ""
+msgstr "İstifadəçiyə təyin olunmuş mesaj yoxdur"
 
 #. module: appointment
 #: model_terms:ir.actions.act_window,help:appointment.calendar_event_action_appointment_reporting
 #: model_terms:ir.actions.act_window,help:appointment.calendar_event_action_report_all
 msgid "No data yet!"
-msgstr ""
+msgstr "Hələ məlumat yoxdur!"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
@@ -2640,7 +2660,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form_custom_share
 msgid "None"
-msgstr ""
+msgstr "Heçbiri"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_search
@@ -2650,27 +2670,27 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_calendar_event__alarm_ids
 msgid "Notifications sent to all attendees to remind of the meeting."
-msgstr ""
+msgstr "Bütün iştirakçılara görüşü xatırladan bildirişlər göndərilib."
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Hərəkətlərin sayı"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Xətaların sayı"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Əməliyyat tələb edən mesajların sayı"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Çatdırılma xətası olan mesajların sayı"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
@@ -2691,7 +2711,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__slot_type__unique
 msgid "One Shot"
-msgstr ""
+msgstr "Bir Dəfə"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -2704,6 +2724,8 @@ msgstr ""
 msgid ""
 "Only letters, numbers, underscores and dashes are allowed in your links."
 msgstr ""
+"Sizin linklərinizdə yalnız hərflər, rəqəmlər, alt xətt və tirelər  icazə "
+"verilir."
 
 #. module: appointment
 #. odoo-python
@@ -2712,12 +2734,15 @@ msgid ""
 "Only letters, numbers, underscores and dashes are allowed in your links. You"
 " need to adapt %s."
 msgstr ""
+"Sizin linklərinizdə yalnız hərflər, rəqəmlər, alt xətt və tirelər icazə "
+"verilir. Uyğunlaşmağınız lazımdır%s."
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/models/appointment_type.py:0
 msgid "Only one anytime appointment type is allowed for a specific user."
 msgstr ""
+"İstənilən vaxt müəyyən istifadəçi üçün yalnız bir görüş növünə icazə verilir."
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
@@ -2749,29 +2774,29 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Options"
-msgstr ""
+msgstr "Opsionlar"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__user_id
 msgid "Organizer"
-msgstr ""
+msgstr "Təşkilatçı"
 
 #. module: appointment
 #. odoo-javascript
 #: code:addons/appointment/static/src/xml/appointment_no_slot.xml:0
 msgid "Our first availability is"
-msgstr ""
+msgstr "İlk uyğunluğumuz"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "Outlook"
-msgstr ""
+msgstr "Outlook"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/controllers/portal.py:0
 msgid "Past"
-msgstr ""
+msgstr "Keçmiş"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__appointment_booker_id
@@ -2781,7 +2806,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_question__question_type__phone
 msgid "Phone Number"
-msgstr ""
+msgstr "Telefon nömrəsi"
 
 #. module: appointment
 #: model:appointment.question,name:appointment.appointment_question_phone
@@ -2797,12 +2822,12 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__placeholder
 msgid "Placeholder"
-msgstr ""
+msgstr "Yertutucu"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
 msgid "Please, select another date."
-msgstr ""
+msgstr "Zəhmət olmasa, başqa bir tarix seçin."
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__suggested_resource_ids
@@ -2812,12 +2837,12 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__suggested_staff_user_ids
 msgid "Possible users"
-msgstr ""
+msgstr "Mümkün olan istifadəçilər"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Preview"
-msgstr ""
+msgstr "İlkin Baxış"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer__question_id
@@ -2826,7 +2851,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_answer_input_view_search
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
 msgid "Question"
-msgstr ""
+msgstr "Sual"
 
 #. module: appointment
 #: model:ir.actions.act_window,name:appointment.appointment_question_action
@@ -2837,7 +2862,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Questions"
-msgstr ""
+msgstr "Suallar"
 
 #. module: appointment
 #. odoo-python
@@ -2848,12 +2873,12 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_question__question_type__radio
 msgid "Radio (one answer)"
-msgstr ""
+msgstr "Radio (bir cavab)"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Qiymətləndirmələr"
 
 #. module: appointment
 #. odoo-javascript
@@ -2864,46 +2889,46 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_manage_leaves__reason
 msgid "Reason"
-msgstr ""
+msgstr "Səbəb"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__redirect_url
 msgid "Redirect URL"
-msgstr ""
+msgstr "Yönləndirmə URL"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__slot_type__recurring
 msgid "Regular"
-msgstr ""
+msgstr "Daimi"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__reminder_ids
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__alarm_ids
 #: model:ir.ui.menu,name:appointment.menu_appointment_reminders
 msgid "Reminders"
-msgstr ""
+msgstr "Xatırlatmalar"
 
 #. module: appointment
 #: model:ir.ui.menu,name:appointment.menu_appointment_reporting
 #: model:ir.ui.menu,name:appointment.reporting_menu_calendar
 msgid "Reporting"
-msgstr ""
+msgstr "Hesabatlıq"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__calendar_event__appointment_status__request
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Request"
-msgstr ""
+msgstr "Sorğu"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_search_booking
 msgid "Requests"
-msgstr ""
+msgstr "Sorğular"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__resource_id
 msgid "Resource"
-msgstr ""
+msgstr "Resurs"
 
 #. module: appointment
 #. odoo-python
@@ -2937,7 +2962,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form_gantt_booking
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_gantt_booking_resource
 msgid "Resources"
-msgstr ""
+msgstr "Resurslar"
 
 #. module: appointment
 #: model:ir.ui.menu,name:appointment.menu_appointment_schedule_resource_booking
@@ -2958,12 +2983,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment/controllers/portal.py:0
 msgid "Responsible"
-msgstr ""
+msgstr "Məsul"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_user_id
 msgid "Responsible User"
-msgstr ""
+msgstr "Məsul İstifadəçi"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_tree
@@ -2983,7 +3008,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__restrict_to_user_ids
 msgid "Restrict to Users"
-msgstr ""
+msgstr "İstifadəçiləri məhdudlaşdırın"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_search
@@ -2999,12 +3024,12 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "SMS-in Çatdırılmasında xəta"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__6
 msgid "Saturday"
-msgstr ""
+msgstr "Şənbə günü"
 
 #. module: appointment
 #. odoo-javascript
@@ -3022,7 +3047,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__category_slot_scheduling
 #: model:ir.ui.menu,name:appointment.menu_appointment_schedule_resources
 msgid "Schedule"
-msgstr ""
+msgstr "Qrafik"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__schedule_based_on
@@ -3040,17 +3065,17 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/appointment/static/src/appointment_plugin.js:0
 msgid "Schedule an Appointment"
-msgstr ""
+msgstr "Görüşü təyin etmək"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__min_schedule_hours
 msgid "Schedule before (hours)"
-msgstr ""
+msgstr "Əvvəlcədən planlaşdır (saat)"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__max_schedule_days
 msgid "Schedule not after (days)"
-msgstr ""
+msgstr "Əvvələ qədər planlaşdır (gün)"
 
 #. module: appointment
 #: model_terms:appointment.type,message_intro:appointment.appointment_type_dental_care
@@ -3063,25 +3088,25 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment/controllers/portal.py:0
 msgid "Search in All"
-msgstr ""
+msgstr "Hamısında Axtarın"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/controllers/portal.py:0
 msgid "Search in Description"
-msgstr ""
+msgstr "Açıqlamada axtarış edin."
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/controllers/portal.py:0
 msgid "Search in Name"
-msgstr ""
+msgstr "Adında axtarış edin"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/controllers/portal.py:0
 msgid "Search in Responsible"
-msgstr ""
+msgstr "Məsul şəxslərdə axtarış edin"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
@@ -3122,22 +3147,22 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer_input__value_answer_id
 msgid "Selected Answer"
-msgstr ""
+msgstr "Seçilmiş Cavab"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__appointment_type_count
 msgid "Selected Appointments Count"
-msgstr ""
+msgstr "Seçilmiş Görüşlərin Sayı"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_answer_input_view_search
 msgid "Selection Questions"
-msgstr ""
+msgstr "Seçilmiş Suallar"
 
 #. module: appointment
 #: model:mail.template,description:appointment.appointment_canceled_mail_template
 msgid "Sent to all attendees when an appointment is cancelled"
-msgstr ""
+msgstr "Görüş ləğv edildikdə bütün iştirakçılara göndərilir"
 
 #. module: appointment
 #: model:mail.template,description:appointment.appointment_booked_mail_template
@@ -3150,7 +3175,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__sequence
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Ardıcıllıq"
 
 #. module: appointment
 #. odoo-javascript
@@ -3160,7 +3185,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_tree
 msgid "Share"
-msgstr ""
+msgstr "Paylaşın"
 
 #. module: appointment
 #. odoo-javascript
@@ -3179,19 +3204,19 @@ msgstr ""
 #: code:addons/appointment/static/src/views/appointment_calendar/appointment_calendar_controller.js:0
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form_custom_share
 msgid "Share Availabilities"
-msgstr ""
+msgstr "Uyğun vaxtlarınızı paylaşın"
 
 #. module: appointment
 #. odoo-javascript
 #: code:addons/appointment/static/src/views/appointment_calendar/appointment_calendar_controller.js:0
 msgid "Share Link"
-msgstr ""
+msgstr "Keçidi paylaşın"
 
 #. module: appointment
 #: model:ir.actions.act_window,name:appointment.appointment_invite_action
 #: model:ir.actions.act_window,name:appointment.appointment_invite_action_stat
 msgid "Share Links"
-msgstr ""
+msgstr "Keçidləri Paylaşın"
 
 #. module: appointment
 #. odoo-javascript
@@ -3214,32 +3239,32 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__short_code
 msgid "Short Code"
-msgstr ""
+msgstr "Qısa Kod"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__short_code_format_warning
 msgid "Short Code Format Warning"
-msgstr ""
+msgstr "Qısa Kod Formatı Xəbərdarlığı"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__short_code_unique_warning
 msgid "Short Code Unique Warning"
-msgstr ""
+msgstr "Qısa Kod Unikal Xəbərdarlıq"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_form
 msgid "Sign in"
-msgstr ""
+msgstr "Daxil ol"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_question__question_type__char
 msgid "Single line text"
-msgstr ""
+msgstr "Tək sətirli mətn"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__slot_type
 msgid "Slot type"
-msgstr ""
+msgstr "Slot tipi"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -3249,7 +3274,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_intro
 msgid "Small description of the appointment type."
-msgstr ""
+msgstr "Görüş növünün kiçik təsviri."
 
 #. module: appointment
 #. odoo-python
@@ -3261,7 +3286,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/appointment/static/src/xml/appointment_no_slot.xml:0
 msgid "Sorry,"
-msgstr ""
+msgstr "Bağışlayın,"
 
 #. module: appointment
 #. odoo-javascript
@@ -3279,13 +3304,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/appointment/static/src/xml/appointment_no_slot.xml:0
 msgid "Sorry, we have no availability for an appointment."
-msgstr ""
+msgstr "Bağışlayın, görüş üçün boş yerimiz yoxdur."
 
 #. module: appointment
 #. odoo-javascript
 #: code:addons/appointment/static/src/xml/appointment_no_slot.xml:0
 msgid "Sorry, we have no more slots available for this month."
-msgstr ""
+msgstr "Bağışlayın, bu ay üçün boş yerimiz yoxdur."
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__source_resource_ids
@@ -3306,7 +3331,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_invite__resources_choice__specific_resources
 msgid "Specific Users"
-msgstr ""
+msgstr "Xüsusi İstifadəçilər"
 
 #. module: appointment
 #: model:ir.actions.act_window,name:appointment.calendar_event_action_view_bookings_users
@@ -3318,7 +3343,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_manage_leaves__leave_start_dt
 msgid "Start Date"
-msgstr ""
+msgstr "Başlanğıc Tarixi"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__start_datetime
@@ -3329,6 +3354,8 @@ msgstr ""
 #: model:ir.model.fields,help:appointment.field_appointment_booking_line__event_start
 msgid "Start date of an event, without time for full days events"
 msgstr ""
+"Tam gün fəaliyyətləri üçün olan vaxt istisna olmaqla, fəaliyyət vaxtını "
+"başlat"
 
 #. module: appointment
 #. odoo-python
@@ -3339,12 +3366,12 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_slot__start_datetime
 msgid "Start datetime for unique slot type management"
-msgstr ""
+msgstr "Unikal slot növlərini idarə etmək üçün başlanğıc tarixi və vaxtı"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__start_hour
 msgid "Starting Hour"
-msgstr ""
+msgstr "Başlama saatı"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__slot_creation_interval
@@ -3363,7 +3390,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_search_booking
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_tree_booking
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__activity_state
@@ -3373,31 +3400,37 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Fəaliyyətlərə əsaslanan status\n"
+"Gecikmiş: Gözlənilən tarixdən keçib\n"
+"Bu gün: Fəaliyyət tarixi bu gündür\n"
+"Planlaşdırılıb: Gələcək fəaliyyətlər."
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_booking_line__event_stop
 msgid "Stop date of an event, without time for full days events"
 msgstr ""
+"Tam gün  fəaliyyətləri üçün olan  vaxt istisna olmaqla, fəaliyyətin tarixini "
+"dayandır"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_tree_booking
 msgid "Subject"
-msgstr ""
+msgstr "Mövzu"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__answer_input_ids
 msgid "Submitted Answers"
-msgstr ""
+msgstr "Təqdim edilmiş Cavablar"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__7
 msgid "Sunday"
-msgstr ""
+msgstr "Bazar günü"
 
 #. module: appointment
 #: model:appointment.question,name:appointment.appointment_type_dental_care_question_1
 msgid "Symptoms"
-msgstr ""
+msgstr "Simptomlar"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -3408,7 +3441,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment/models/templates/appointment_type.py:0
 msgid "Table"
-msgstr ""
+msgstr "Cədvəl"
 
 #. module: appointment
 #. odoo-python
@@ -3430,17 +3463,17 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer_input__value_text_box
 msgid "Text Answer"
-msgstr ""
+msgstr "Mətn cavabı"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_answer_input_view_search
 msgid "Text Questions"
-msgstr ""
+msgstr "Mətn sualları"
 
 #. module: appointment
 #: model:ir.model.constraint,message:appointment.constraint_appointment_invite_short_code_uniq
 msgid "The URL is already taken, please pick another code."
-msgstr ""
+msgstr "URL artıq götürülüb, başqa kod seçin."
 
 #. module: appointment
 #: model:ir.model.constraint,message:appointment.constraint_appointment_type_check_manual_confirmation_percentage
@@ -3463,7 +3496,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.constraint,message:appointment.constraint_appointment_slot_check_start_and_end_hour
 msgid "The end time must be later than the start time."
-msgstr ""
+msgstr "Bitiş vaxtı başlama vaxtından sonra olmalıdır."
 
 #. module: appointment
 #. odoo-python
@@ -3483,7 +3516,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment/controllers/portal.py:0
 msgid "The field '%s' does not exist in the targeted model"
-msgstr ""
+msgstr "Məqsədəuyğun modeldə '%s' sahəsi mövcud deyil"
 
 #. module: appointment
 #. odoo-python
@@ -3495,13 +3528,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment/models/appointment_invite.py:0
 msgid "The following appointment type(s) have no staff assigned: %s."
-msgstr ""
+msgstr "Aşağıdakı görüş növ(lər)i üzrə üzvlər təyin edilməyib: %s."
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/models/appointment_question.py:0
 msgid "The following question(s) do not have any selectable answers : %s"
-msgstr ""
+msgstr "Aşağıdakı sual(lar)ın seçilə bilən cavabı yoxdur: %s"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__max_bookings
@@ -3538,7 +3571,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/appointment/static/src/xml/appointment_no_slot.xml:0
 msgid "Their first availability is"
-msgstr ""
+msgstr "Uyğun olduqları ilk vaxt"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointments_list_layout
@@ -3548,7 +3581,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.portal_my_appointments
 msgid "There is no appointment linked to your account."
-msgstr ""
+msgstr "Hesabınıza bağlı heç bir görüş yoxdur."
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_resource__shareable
@@ -3563,6 +3596,7 @@ msgid ""
 "This appointment type has no availabilities because it does not have any "
 "opening hours configured"
 msgstr ""
+"Bu görüş növü mövcud deyil, çünki konfiqurasiya edilmiş iş saatları yoxdur"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
@@ -3582,7 +3616,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
 msgid ""
 "This appointment type has no availabilities because it has no staff assigned"
-msgstr ""
+msgstr "Bu görüş növü mövcud deyil, çünki ona təyin edilmiş işçi heyəti yoxdur"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
@@ -3590,6 +3624,8 @@ msgid ""
 "This appointment type has no availabilities because it has no staff assigned"
 " and does not have any opening hours configured"
 msgstr ""
+"Bu görüş növü mövcud deyil, çünki onun təyin olunmuş işçi heyəti və ya "
+"konfiqurasiya edilmiş saatları yoxdur"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_resource__tz
@@ -3597,11 +3633,13 @@ msgid ""
 "This field is used in order to define in which timezone the resources will "
 "work."
 msgstr ""
+"Bu sahə resursların hansı vaxt müddətində fəaliyyət göstərəcəyini müəyyən "
+"etmək üçün istifadə olunur."
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_edit_in_backend
 msgid "This is a preview of the customer appointment form."
-msgstr ""
+msgstr "Bu, müştəri görüş formasının ön baxışıdır."
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
@@ -3616,30 +3654,30 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__4
 msgid "Thursday"
-msgstr ""
+msgstr "Cümə axşamı"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__tz
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__appointment_tz
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "Timezone"
-msgstr ""
+msgstr "Saat qurşağı"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__appointment_tz
 msgid "Timezone where appointment take place"
-msgstr ""
+msgstr "Görüşün baş tutacağı saat qurşağı"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
 msgid "Timezone:"
-msgstr ""
+msgstr "Saat qurşağı:"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__end_datetime
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "To"
-msgstr ""
+msgstr "Bitmə Tarixi"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -3654,7 +3692,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__access_token
 msgid "Token"
-msgstr ""
+msgstr "Token"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__max_bookings
@@ -3685,38 +3723,38 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.portal_my_appointments
 msgid "Total:"
-msgstr ""
+msgstr "Cəmi:"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__2
 msgid "Tuesday"
-msgstr ""
+msgstr "Çərşənbə axşamı"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Type"
-msgstr ""
+msgstr "Tip"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Qeyddəki istisna fəaliyyət növü."
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "Uncertain"
-msgstr ""
+msgstr "Qeyri-müəyyən"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Until (max)"
-msgstr ""
+msgstr "(maksimuma) qədər"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/controllers/portal.py:0
 msgid "Upcoming"
-msgstr ""
+msgstr "Qarşıdan gələn"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_res_partner__upcoming_appointment_ids
@@ -3733,7 +3771,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_calendar_alarm__default_for_new_appointment_type
 msgid "Use as default for new Appointment Types"
-msgstr ""
+msgstr "Yeni Görüş Növləri üçün defolt olaraq istifadə edin"
 
 #. module: appointment
 #: model_terms:ir.actions.act_window,help:appointment.calendar_event_action_appointment_reporting
@@ -3761,7 +3799,7 @@ msgstr ""
 #. module: appointment
 #: model:res.groups,name:appointment.group_appointment_user
 msgid "User"
-msgstr ""
+msgstr "İstifadəçi"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__select_first__user_resource
@@ -3778,7 +3816,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__staff_user_ids
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__schedule_based_on__users
 msgid "Users"
-msgstr ""
+msgstr "İstifadəçilər"
 
 #. module: appointment
 #. odoo-python
@@ -3804,27 +3842,27 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Veb sayt Mesajları"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Veb saytın kommunikasiya tarixçəsi"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__3
 msgid "Wednesday"
-msgstr ""
+msgstr "Çərşənbə günü"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__weekday
 msgid "Week Day"
-msgstr ""
+msgstr "Həftə günü"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category_slot_scheduling__weekly
 msgid "Weekly"
-msgstr ""
+msgstr "Həftəlik"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category__recurring
@@ -3847,7 +3885,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.staff_user_select
 msgid "With"
-msgstr ""
+msgstr "Kimlə"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -3862,7 +3900,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__resource_calendar_id
 msgid "Working Hours"
-msgstr ""
+msgstr "İş Saatları"
 
 #. module: appointment
 #. odoo-javascript
@@ -3906,7 +3944,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "at"
-msgstr ""
+msgstr "də"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -3927,19 +3965,21 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form_custom_share
 msgid "e.g. \"During this meeting, we will...\""
-msgstr ""
+msgstr "məsələn \"Bu görüş zamanı, biz...\""
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form_custom_share
 msgid "e.g. \"Technical Demo\""
-msgstr ""
+msgstr "məsələn \"Texniki Demo\""
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form_custom_share
 msgid "e.g. \"Thank you for your trust, we look forward to meeting you!\""
 msgstr ""
+"məsələn, \"Güvəninizə görə təşəkkür edirik, sizinlə görüşməyi səbirsizliklə "
+"gözləyirik!\""
 
 #. module: appointment
 #: model:appointment.question,placeholder:appointment.appointment_question_phone
@@ -3954,7 +3994,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_form
 msgid "e.g. John Smith"
-msgstr ""
+msgstr "məs. Con Smit"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_resource_view_form
@@ -3997,13 +4037,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/appointment/static/src/xml/appointment_no_slot.xml:0
 msgid "has no availability for an appointment."
-msgstr ""
+msgstr "görüş üçün boş yer yoxdur."
 
 #. module: appointment
 #. odoo-javascript
 #: code:addons/appointment/static/src/xml/appointment_no_slot.xml:0
 msgid "has no more slots available for this month."
-msgstr ""
+msgstr "bu ay üçün artıq boş yer yoxdur."
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -4028,7 +4068,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "or"
-msgstr ""
+msgstr "və yaxud"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_meeting_details
@@ -4071,7 +4111,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/appointment/static/src/xml/appointment_slots.xml:0
 msgid "to"
-msgstr ""
+msgstr "etmək"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -4081,7 +4121,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.portal_my_appointments
 msgid "with"
-msgstr ""
+msgstr "ilə"
 
 #. module: appointment
 #: model:mail.template,subject:appointment.appointment_booked_mail_template

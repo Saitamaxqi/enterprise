@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-31 08:28+0000\n"
+"PO-Revision-Date: 2025-11-14 07:46+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "sale_subscription/ja/>\n"
@@ -98,7 +98,9 @@ msgstr "%s日"
 msgid ""
 "(*) These recurring products are discounted according to the prorated period "
 "from %(start)s to %(end)s"
-msgstr ""
+msgstr "(*) "
+"これらの定期プロダクトは、以下の期間に応じて値引が適用されます:%(start)sから%"
+"(end)s"
 
 #. module: sale_subscription
 #. odoo-python
@@ -106,7 +108,9 @@ msgstr ""
 msgid ""
 "(*) These recurring products are entirely discounted as the next period has "
 "not been invoiced yet."
-msgstr ""
+msgstr "(*) "
+"これらの定期プロダクトは、次期の顧客請求書がまだ発行されていないため、全額割"
+"引されています。"
 
 #. module: sale_subscription
 #. odoo-python
@@ -114,12 +118,14 @@ msgstr ""
 msgid ""
 "(*) These recurring products are surcharged according to the prorated period "
 "from %(start)s to %(end)s"
-msgstr ""
+msgstr "(*) "
+"これらの定期プロダクトは、以下の期間に応じて割増料金が適用されます:%(start)s"
+"から%(end)s"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_portal_content
 msgid "(Change Plan)"
-msgstr ""
+msgstr "(プランを変更)"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_portal_content
@@ -127,17 +133,19 @@ msgid ""
 ")\n"
 "                        <br/>"
 msgstr ""
+")\n"
+"                        <br/>"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.report_saleorder_document
 msgid "- Until"
-msgstr ""
+msgstr "- 終了日"
 
 #. module: sale_subscription
 #. odoo-python
 #: code:addons/sale_subscription/models/sale_order.py:0
 msgid "- You delivered %(delivered)s %(name)s and invoiced %(invoiced)s"
-msgstr ""
+msgstr "- %(delivered)s %(name)s を配送し、%(invoiced)s を請求しました"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.invoice_warning_message
@@ -146,6 +154,10 @@ msgid ""
 "             Any new delivered quantity during this period for the following "
 "product(s) may never be invoiced:"
 msgstr ""
+".\n"
+"             "
+"この期間中に納品された以下のプロダクトについては、請求されない可能性がありま"
+"す:"
 
 #. module: sale_subscription
 #. odoo-python
@@ -157,28 +169,28 @@ msgstr "1ヶ月"
 #. odoo-python
 #: code:addons/sale_subscription/models/sale_subscription_plan.py:0
 msgid "1 Week"
-msgstr ""
+msgstr "1週間"
 
 #. module: sale_subscription
 #. odoo-python
 #: code:addons/sale_subscription/models/sale_subscription_plan.py:0
 msgid "1 Year"
-msgstr ""
+msgstr "1 年"
 
 #. module: sale_subscription
 #: model:sale.subscription.plan,name:sale_subscription.subscription_plan_6_month
 msgid "6 Months"
-msgstr ""
+msgstr "6か月"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_portal_sidebar
 msgid "<b>Payment Method</b>"
-msgstr ""
+msgstr "<b>支払方法</b>"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.view_sale_advance_payment_inv_sale_subscription
 msgid "<b>Subscriptions</b><br/>"
-msgstr ""
+msgstr "<b>サブスクリプション</b><br/>"
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.mail_template_subscription_alert
@@ -219,6 +231,42 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"background:#F0F0F0;color:#515166;padding:10px 0px;font-"
+"family:Arial,Helvetica,sans-serif;font-size:14px;\">\n"
+"                <table style=\"width:600px;margin:5px auto;\">\n"
+"                    <tbody>\n"
+"                        <tr><td t-if="
+"\"not object.company_id.uses_default_logo\">\n"
+"                            <a href=\"/\"><img t-attf-src="
+"\"/logo.png?company={{ object.company_id.id }}\" style=\"vertical-"
+"align:baseline;max-width:100px;\"/></a>\n"
+"                        </td><td style=\"text-align:right;vertical-"
+"align:middle;\">\n"
+"                                サブスクリプション更新\n"
+"                        </td></tr>\n"
+"                    </tbody>\n"
+"                </table>\n"
+"                <table style="
+"\"width:600px;margin:0px auto;background:white;border:1px solid #e1e1e1;\">\n"
+"                    <tbody>\n"
+"                        <tr><td style=\"padding:15px 20px 10px 20px;\">\n"
+"                            <p> <t t-out=\"object.partner_id.name or ''\""
+">Brandon Freeman</t>様、</p>\n"
+"                            <p>お客様のサブスクリプション <strong t-out="
+"\"object.name or ''\">Office Cleaning Service\"</strong> "
+"についてご連絡です。</p>\n"
+"                            "
+"<p>更新するには以下のリンクをクリックして下さい。</p>\n"
+"                            <p>宜しくお願い致します。</p>\n"
+"                        </td></tr>\n"
+"                        <tr data-o-mail-quote-container=\"1\"><td style="
+"\"padding:15px 20px 10px 20px;\" t-out=\"object.user_id.signature or ''\" "
+"data-o-mail-quote=\"1\">--<br data-o-mail-quote=\"1\"/>Mitchell "
+"Admin</td></tr>\n"
+"                    </tbody>\n"
+"                </table>\n"
+"            </div>\n"
+"        "
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.mail_template_subscription_rating
@@ -428,7 +476,7 @@ msgstr ""
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_portal_sidebar
 msgid "<i class=\"fa fa-download me-1\"/> Download"
-msgstr ""
+msgstr "<i class=\"fa fa-download me-1\"/> ダウンロード"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_portal_content
@@ -438,12 +486,12 @@ msgstr "<i class=\"fa fa-fw fa-check\"/>進行中"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_portal_content
 msgid "<i class=\"fa fa-fw fa-check\"/> Paused"
-msgstr ""
+msgstr "<i class=\"fa fa-fw fa-check\"/>一時停止中"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_portal_content
 msgid "<i class=\"fa fa-fw fa-check\"/> Renewed"
-msgstr ""
+msgstr "<i class=\"fa fa-fw fa-check\"/> 更新済"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_portal_content
@@ -3564,7 +3612,7 @@ msgstr "ステート変更"
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__state
 #: model_terms:ir.ui.view,arch_db:sale_subscription.portal_my_subscriptions
 msgid "Status"
-msgstr "状態"
+msgstr "ステータス"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_change_customer_view_form

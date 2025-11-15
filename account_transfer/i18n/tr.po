@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_auto_transfer
+# * account_auto_transfer
 #
 # Translators:
 # Güven YILMAZ <guvenyilmaz@outlook.com.tr>, 2022
@@ -14,20 +14,23 @@
 # Murat Kaplan <muratk@projetgrup.com>, 2022
 # Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2022
 # Yedigen, 2022
-#
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# DeepL <noreply-mt-deepl@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Yedigen, 2022\n"
-"Language-Team: Turkish (https://app.transifex.com/odoo/teams/41243/tr/)\n"
+"PO-Revision-Date: 2025-11-12 14:54+0000\n"
+"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
+"account_transfer/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
@@ -37,25 +40,28 @@ msgstr "<span> -></span>"
 #. module: account_transfer
 #. odoo-python
 #: code:addons/account_transfer/models/transfer_model_line.py:0
+#, fuzzy
 msgid "A destination account must be set on each line."
-msgstr ""
+msgstr "Her hatta bir hedef hesap ayarlanmalıdır."
 
 #. module: account_transfer
 #: model:ir.model.fields,help:account_transfer.field_account_transfer_model__conditions
+#, fuzzy
 msgid ""
 "A domain to filter the accounts from which the resulting entry will transfer "
 "amounts."
 msgstr ""
+"Sonuç girişinin tutarları aktaracağı hesapları filtrelemek için bir alan adı."
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Account"
-msgstr ""
+msgstr "Hesap"
 
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_chart_template
 msgid "Account Chart Template"
-msgstr ""
+msgstr "Hesap Planı Şablonu"
 
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_transfer_model
@@ -69,24 +75,25 @@ msgstr "Hesap Yansıtma Model Satırı"
 
 #. module: account_transfer
 #: model:ir.actions.server,name:account_transfer.ir_cron_auto_transfer_ir_actions_server
+#, fuzzy
 msgid "Account transfers: Compute transfer entries"
-msgstr ""
+msgstr "Hesap transferleri: Transfer girişlerini hesaplayın"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Accounts"
-msgstr ""
+msgstr "Hesaplar"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__active
 msgid "Active"
-msgstr ""
+msgstr "Etkin"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_search
 msgid "Archived"
-msgstr ""
+msgstr "Arşivlendi"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__company_id
@@ -106,7 +113,7 @@ msgstr "Yansıtmayı Hesapla"
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__conditions
 msgid "Conditions"
-msgstr ""
+msgstr "Koşullar"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__create_uid
@@ -128,7 +135,7 @@ msgstr "Açıklama"
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Destination"
-msgstr ""
+msgstr "Hedef"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__account_id
@@ -168,7 +175,7 @@ msgstr "Görünüm Adı"
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Enable"
-msgstr ""
+msgstr "Etkinleştir"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__frequency
@@ -187,8 +194,9 @@ msgstr "Oluşturulan Hareketler"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__has_draft_moves
+#, fuzzy
 msgid "Has Draft Moves"
-msgstr ""
+msgstr "Taslak Hareketleri Var"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_chart_template__id
@@ -203,19 +211,20 @@ msgstr "ID"
 #. module: account_transfer
 #. odoo-python
 #: code:addons/account_transfer/demo/account_demo.py:0
+#, fuzzy
 msgid "IFRS Transfers"
-msgstr ""
+msgstr "UFRS Transferleri"
 
 #. module: account_transfer
 #. odoo-python
 #: code:addons/account_transfer/demo/account_demo.py:0
 msgid "IFRS rent expense transfer"
-msgstr ""
+msgstr "UFRS kira gideri aktarımı"
 
 #. module: account_transfer
 #: model:ir.model.fields.selection,name:account_transfer.selection__account_transfer_model__state__in_progress
 msgid "In Progress"
-msgstr ""
+msgstr "İşlemde"
 
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_journal
@@ -231,12 +240,12 @@ msgstr "Yevmiye Kaydı"
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Yevmiye Kalemi"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Keep Original"
-msgstr ""
+msgstr "Orijinali Sakla"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__write_uid
@@ -311,17 +320,23 @@ msgstr "Dönem"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
+#, fuzzy
 msgid ""
 "Puts the transfer model in a state in which it will automatically recompute "
 "its draft entries' values every day."
 msgstr ""
+"Transfer modelini, taslak girişlerinin değerlerini her gün otomatik olarak "
+"yeniden hesaplayacağı bir duruma getirir."
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
+#, fuzzy
 msgid ""
 "Puts the transfer model in a state in which it will not automatically "
 "recompute its draft entries' values every day."
 msgstr ""
+"Transfer modelini, taslak girişlerinin değerlerini her gün otomatik olarak "
+"yeniden hesaplamayacağı bir duruma getirir."
 
 #. module: account_transfer
 #: model:ir.model.fields.selection,name:account_transfer.selection__account_transfer_model__frequency__quarter
@@ -331,7 +346,7 @@ msgstr "Üç Aylık"
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Rate (%)"
-msgstr ""
+msgstr "Oran (%)"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__sequence
@@ -357,7 +372,7 @@ msgstr "Bitiş Tarihi"
 #. odoo-python
 #: code:addons/account_transfer/models/transfer_model.py:0
 msgid "The total percentage (%s) should be less or equal to 100!"
-msgstr ""
+msgstr "Toplam yüzde (%s) değeri 100'e eşit veya daha küçük olmalıdır!"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__total_percent
@@ -367,14 +382,16 @@ msgstr "Toplam Yüzde"
 #. module: account_transfer
 #. odoo-python
 #: code:addons/account_transfer/models/transfer_model.py:0
+#, fuzzy
 msgid "Transfer (%(percent)s%% from %(account)s)"
-msgstr ""
+msgstr "Transfer (%(percent)s%% %(account)s adresinden )"
 
 #. module: account_transfer
 #. odoo-python
 #: code:addons/account_transfer/models/transfer_model.py:0
+#, fuzzy
 msgid "Transfer (-%(percent)s%% to %(account)s)"
-msgstr ""
+msgstr "Transfer (-%(percent)s%% - %(account)s)"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__transfer_model_id
@@ -397,38 +414,43 @@ msgstr "Yıllık"
 #. odoo-python
 #: code:addons/account_transfer/demo/account_demo.py:0
 msgid "Yearly liabilites auto transfers"
-msgstr ""
+msgstr "Yıllık yükümlülüklerin otomatik aktarımı"
 
 #. module: account_transfer
 #. odoo-python
 #: code:addons/account_transfer/models/transfer_model.py:0
+#, fuzzy
 msgid ""
 "You cannot delete a transfer model that has draft moves attached ('%s'). "
 "Please delete them before deleting this transfer."
 msgstr ""
+"Ekli taslak hareketleri olan bir transfer modelini silemezsiniz ('%s'). "
+"Lütfen bu transferi silmeden önce onları silin."
 
 #. module: account_transfer
 #. odoo-python
 #: code:addons/account_transfer/models/transfer_model.py:0
+#, fuzzy
 msgid ""
 "You cannot delete a transfer model that has posted moves attached ('%s')."
-msgstr ""
+msgstr "Eklenmiş hareketleri olan bir transfer modelini silemezsiniz ('%s')."
 
 #. module: account_transfer
 #. odoo-python
 #: code:addons/account_transfer/models/account_move_line.py:0
+#, fuzzy
 msgid "You cannot set Tax on computed Transfer's entries."
-msgstr ""
+msgstr "Hesaplanan Transfer girişleri için Vergi ayarlayamazsınız."
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "e.g. Monthly Expense Transfer"
-msgstr ""
+msgstr "örn. Aylık Gider Aktarımı"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "forever"
-msgstr ""
+msgstr "herzaman"
 
 #~ msgid "Activate"
 #~ msgstr "Etkinleştir"

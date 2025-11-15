@@ -7,13 +7,14 @@
 # Martin Trigaux, 2022
 # Thi Huong Nguyen, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Thi Huong Nguyen (thng)" <thng@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-15 23:08+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-11-11 23:44+0000\n"
+"Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "industry_fsm/vi/>\n"
 "Language: vi\n"
@@ -70,6 +71,7 @@ msgstr ""
 
 #. module: industry_fsm
 #: model:mail.template,body_html:industry_fsm.mail_template_data_intervention_details
+#, fuzzy
 msgid ""
 "<div>\n"
 "    <t t-set=\"date_begin\" t-"
@@ -101,6 +103,34 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<div>\n"
+"    <t t-set=\"date_begin\" t-value=\"format_datetime("
+"object.planned_date_begin, tz=object.partner_id.tz, "
+"lang_code=object.partner_id.lang)\"/>\n"
+"\n"
+"    <t t-set=\"date_end\" t-value=\"format_datetime(object.date_deadline, "
+"tz=object.partner_id.tz, lang_code=object.partner_id.lang)\"/>\n"
+"\n"
+"    Kính gửi <t t-out=\"object.partner_id.name or 'customer'\">quý "
+"khách</t>,.<br/><br/>\n"
+"    <t t-if=\"date_begin and date_end\">\n"
+"        Cuộc xử lý <t t-out=\"object.name or ''\">Bảo dưỡng lò hơi</t> của "
+"quý khách đã được lên lịch vào <t t-out=\"date_begin or ''\">05/31/2021 "
+"12:30:00</t> đến <t t-out=\"date_end or ''\">05/31/2021 14:30:00</t>.\n"
+"    </t>\n"
+"    <t t-else=\"\">\n"
+"        Cuộc xử lý <t t-out=\"object.name or ''\">Bảo dưỡng lò hơi</t> của "
+"quý khách đã được lên lịch.\n"
+"    </t>\n"
+"    <br/><br/>\n"
+"    Trân trọng,\n"
+"    <t t-if=\"user.signature\" data-o-mail-quote-container=\"1\">\n"
+"        <br/>\n"
+"        <div data-o-mail-quote=\"1\">--<br data-o-mail-quote=\"1\"/><t t-out="
+"\"user.signature or ''\" data-o-mail-quote=\"1\">Mitchell Admin</t></div>\n"
+"    </t>\n"
+"</div>\n"
+"        "
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.portal_task_sign_button
@@ -1378,6 +1408,7 @@ msgstr "Tin nhắn chưa đọc"
 
 #. module: industry_fsm
 #: model:ir.model.fields,help:industry_fsm.field_project_task__display_name
+#, fuzzy
 msgid ""
 "Use these keywords in the title to set new tasks:\n"
 "\n"
@@ -1391,6 +1422,17 @@ msgid ""
 "        Make sure to use the right format and order e.g. Improve the "
 "configuration screen 5h #feature #v16 @Mitchell !"
 msgstr ""
+"Sử dụng các từ khóa sau trong tiêu đề để tạo nhiệm vụ mới:\n"
+"\n"
+"        30h Phân bổ 30 giờ cho nhiệm vụ\n"
+"        #tags Gắn thẻ cho nhiệm vụ\n"
+"        @user Giao nhiệm vụ cho người dùng\n"
+"        ! Đặt mức ưu tiên trung bình cho nhiệm vụ\n"
+"        !! Đặt mức ưu tiên cao cho nhiệm vụ\n"
+"        !!! Đặt mức ưu tiên khẩn cấp cho nhiệm vụ\n"
+"\n"
+"        Đảm bảo sử dụng đúng định dạng và thứ tự. Ví dụ: Cải thiện màn hình "
+"cấu hình 5h #feature #v16 @Mitchell !"
 
 #. module: industry_fsm
 #: model:res.groups,name:industry_fsm.group_fsm_user

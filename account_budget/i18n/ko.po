@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-13 14:59+0000\n"
+"PO-Revision-Date: 2025-11-12 06:08+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "account_budget/ko/>\n"
@@ -56,7 +56,7 @@ msgstr "달성"
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__achieved_percentage
 msgid "Achieved (%)"
-msgstr ""
+msgstr "달성 (%)"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__message_needaction
@@ -86,7 +86,7 @@ msgstr "활동 유형 아이콘"
 #. module: account_budget
 #: model:ir.model.fields,help:account_budget.field_budget_line__achieved_amount
 msgid "Amount Billed/Invoiced."
-msgstr ""
+msgstr "청구받은 금액 및 청구된 금액입니다."
 
 #. module: account_budget
 #: model:ir.model.fields,help:account_budget.field_budget_line__theoritical_amount
@@ -104,13 +104,14 @@ msgstr "분석 계정"
 
 #. module: account_budget
 #: model:ir.ui.menu,name:account_budget.menu_act_budget_analytic_view
+#, fuzzy
 msgid "Analytic Budget"
-msgstr ""
+msgstr "분석 예산"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_split_wizard__analytical_plan_ids
 msgid "Analytic Plans"
-msgstr ""
+msgstr "분석 계획"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__message_attachment_count
@@ -144,13 +145,13 @@ msgstr "예산"
 #. odoo-python
 #: code:addons/account_budget/wizards/budget_split_wizard.py:0
 msgid "Budget %s"
-msgstr ""
+msgstr "예산 %s"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__budget_analytic_id
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__budget_analytic_id
 msgid "Budget Analytic"
-msgstr ""
+msgstr "예산 분석"
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_budget_line
@@ -190,7 +191,7 @@ msgstr "예산명"
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_tree
 msgid "Budget Report"
-msgstr ""
+msgstr "예산 보고서"
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_budget_split_wizard
@@ -205,7 +206,7 @@ msgstr "예산 상태"
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__budget_type
 msgid "Budget Type"
-msgstr ""
+msgstr "예산 유형"
 
 #. module: account_budget
 #. odoo-python
@@ -374,7 +375,7 @@ msgstr "생성"
 #: model:ir.actions.act_window,name:account_budget.budget_split_wizard_action
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_split_wizard_form_view
 msgid "Generate Budget"
-msgstr ""
+msgstr "예산 생성"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__has_message
@@ -468,7 +469,7 @@ msgstr "월"
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_search
 msgid "My Activities"
-msgstr ""
+msgstr "내 활동"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__my_activity_date_deadline
@@ -479,7 +480,7 @@ msgstr "내 활동 마감일"
 #. odoo-python
 #: code:addons/account_budget/models/budget_analytic.py:0
 msgid "New revision"
-msgstr ""
+msgstr "신규 변경 버전"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__activity_calendar_event_id
@@ -535,7 +536,7 @@ msgstr "열기"
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
 msgid "Open Budget"
-msgstr ""
+msgstr "예산 열기"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_split_wizard__period
@@ -552,7 +553,7 @@ msgstr "실제 금액"
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__account_id
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__account_id
 msgid "Project Account"
-msgstr ""
+msgstr "프로젝트 계정"
 
 #. module: account_budget
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_split_wizard__period__quarter
@@ -597,7 +598,7 @@ msgstr "개정됨"
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__parent_id
 msgid "Revision Of"
-msgstr ""
+msgstr "개정 사항"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__children_ids
@@ -665,7 +666,7 @@ msgstr "이론적"
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__theoritical_percentage
 msgid "Theoretical (%)"
-msgstr ""
+msgstr "이론적 (%)"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_search
@@ -675,12 +676,12 @@ msgstr "오늘 활동"
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_tree
 msgid "Total Achieved"
-msgstr ""
+msgstr "전체 실적"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_tree
 msgid "Total Budget"
-msgstr ""
+msgstr "전체 예산"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__line_type

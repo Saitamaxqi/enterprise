@@ -8,13 +8,15 @@
 # Murat Durmuş <muratd@projetgrup.com>, 2022
 # Murat Kaplan <muratk@projetgrup.com>, 2022
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# DeepL <noreply-mt-deepl@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.5alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-15 21:11+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-11-12 15:00+0000\n"
+"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "website_helpdesk_slides/tr/>\n"
 "Language: tr\n"
@@ -27,8 +29,9 @@ msgstr ""
 #. module: website_helpdesk_slides
 #. odoo-python
 #: code:addons/website_helpdesk_slides/models/slide_channel.py:0
+#, fuzzy
 msgid "%(name)s's Helpdesk Teams"
-msgstr ""
+msgstr "%(name)s'in Yardım Masası Ekipleri"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.channel_search_result
@@ -38,18 +41,20 @@ msgstr ", tarafından"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.channel_search_result
+#, fuzzy
 msgid "<i class=\"fa fa-2x fa-mortar-board\" title=\"eLearning Course\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-2x fa-mortar-board\" title=\"eLearning Course\"/>"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.search_result
+#, fuzzy
 msgid "<i class=\"fa fa-2x fa-mortar-board\" title=\"eLearning\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-2x fa-mortar-board\" title=\"eLearning\"/>"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.view_slide_channel_form_inherit_website_helpdesk_slides
 msgid "<span class=\"o_stat_text\">Helpdesk Teams</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Helpdesk Ekipleri</span>"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.search_result
@@ -75,24 +80,29 @@ msgstr "Kurslar"
 
 #. module: website_helpdesk_slides
 #: model:ir.model.fields,help:website_helpdesk_slides.field_helpdesk_team__website_slide_channel_ids
+#, fuzzy
 msgid ""
 "Customers will see only the content from chosen courses in the help center. "
 "If you want all courses to be accessible, just leave the field empty. "
 "Alternatively, you can make courses private to restrict this feature to "
 "internal users."
 msgstr ""
+"Müşteriler yardım merkezinde yalnızca seçilen kursların içeriğini "
+"görecektir. Tüm kursların erişilebilir olmasını istiyorsanız alanı boş "
+"bırakın. Alternatif olarak, bu özelliği dahili kullanıcılarla kısıtlamak "
+"için kursları özel yapabilirsiniz."
 
 #. module: website_helpdesk_slides
 #: model:ir.model.fields,field_description:website_helpdesk_slides.field_helpdesk_team__display_name
 #: model:ir.model.fields,field_description:website_helpdesk_slides.field_slide_channel__display_name
 #: model:ir.model.fields,field_description:website_helpdesk_slides.field_slide_slide__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "İsim Göster"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.channel_search_result
 msgid "Documents"
-msgstr ""
+msgstr "Belgeler"
 
 #. module: website_helpdesk_slides
 #: model:ir.model,name:website_helpdesk_slides.model_helpdesk_team
@@ -102,27 +112,31 @@ msgstr "Destek Ekibi"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.channel_search_result
+#, fuzzy
 msgid ""
 "Hours to Complete\n"
 "                    |"
 msgstr ""
+"Tamamlamak için Saatler\n"
+"                    |"
 
 #. module: website_helpdesk_slides
 #: model:ir.model.fields,field_description:website_helpdesk_slides.field_helpdesk_team__id
 #: model:ir.model.fields,field_description:website_helpdesk_slides.field_slide_channel__id
 #: model:ir.model.fields,field_description:website_helpdesk_slides.field_slide_slide__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.channel_search_result
 msgid "Lessons"
-msgstr ""
+msgstr "Dersler"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.knowledge_base_slides_card
+#, fuzzy
 msgid "Level up your skills with our training videos and tutorials"
-msgstr ""
+msgstr "Eğitim videolarımız ve öğreticilerimizle becerilerinizi geliştirin"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.search_result
@@ -145,12 +159,12 @@ msgstr ""
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.knowledge_base_slides_card
 msgid "Most popular"
-msgstr ""
+msgstr "En popüler"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.knowledge_base_slides_card
 msgid "Quick Links"
-msgstr ""
+msgstr "Hızlı Bağlantılar"
 
 #. module: website_helpdesk_slides
 #: model:ir.model,name:website_helpdesk_slides.model_slide_slide
@@ -159,15 +173,19 @@ msgstr "Slaytlar"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.knowledge_base_slides_card
+#, fuzzy
 msgid "Take courses"
-msgstr ""
+msgstr "Kurslara katılın"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.search_result
+#, fuzzy
 msgid ""
 "Views\n"
 "                    |"
 msgstr ""
+"Görünümler\n"
+"                    |"
 
 #~ msgid "Reviews"
 #~ msgstr "Şartlar"

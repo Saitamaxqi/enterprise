@@ -3,13 +3,14 @@
 # * appointment_google_reserve
 #
 # "Abe Manyo (abem)" <abem@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-31 07:19+0000\n"
-"Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
+"PO-Revision-Date: 2025-11-13 17:16+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "appointment_google_reserve/id/>\n"
 "Language: id\n"
@@ -86,17 +87,17 @@ msgstr "Tindakan Diperlukan"
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__location_id
 msgid "Address"
-msgstr ""
+msgstr "Alamat"
 
 #. module: appointment_google_reserve
 #: model:ir.model,name:appointment_google_reserve.model_appointment_resource
 msgid "Appointment Resource"
-msgstr ""
+msgstr "Sumber Daya Appointment"
 
 #. module: appointment_google_reserve
 #: model:ir.model,name:appointment_google_reserve.model_appointment_type
 msgid "Appointment Type"
-msgstr ""
+msgstr "Jenis Appointment"
 
 #. module: appointment_google_reserve
 #: model:ir.actions.server,name:appointment_google_reserve.ir_cron_iap_google_reserve_availabilities_ir_actions_server
@@ -106,7 +107,7 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__appointment_type_ids
 msgid "Appointments"
-msgstr ""
+msgstr "Appointment"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_type__is_auto_assign
@@ -121,7 +122,7 @@ msgstr "Hitungan Lampiran"
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__phone_blacklisted
 msgid "Blacklisted Phone is Phone"
-msgstr ""
+msgstr "Nomor yang di-blacklist adalah Telepon"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__business_category
@@ -131,7 +132,7 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model,name:appointment_google_reserve.model_calendar_event
 msgid "Calendar Event"
-msgstr ""
+msgstr "Acara Kalender"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_appointment_type__google_reserve_merchant_id
@@ -141,12 +142,12 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Dibuat oleh"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Dibuat pada"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
@@ -156,7 +157,7 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid "Discard"
-msgstr ""
+msgstr "Buang"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_resource__display_name
@@ -178,16 +179,18 @@ msgid ""
 "Field used to store sanitized phone number. Helps speeding up searches and "
 "comparisons."
 msgstr ""
+"Field digunakan untuk menyimpan nomor telepon yang dibersihkan. Membantu "
+"mempercepat pencarian dan perbandingan"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Follower"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Follower (Mitra)"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_calendar_event__is_google_reserve
@@ -232,11 +235,13 @@ msgid ""
 "Google Reserve requires a complete address.Including a Country, a City, a "
 "Postal Code and a Street"
 msgstr ""
+"Google Reserve memerlukan alamat lengkap. Termasuk Negara, Kota, Kode Pos "
+"dan Jalan"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Memiliki Pesan"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
@@ -262,13 +267,13 @@ msgstr "ID"
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Jika dicentang, pesan baru memerlukan penanganan dan perhatian Anda."
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_has_error
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Jika dicentang, beberapa pesan mempunyai kesalahan dalam pengiriman."
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__phone_sanitized_blacklisted
@@ -276,6 +281,8 @@ msgid ""
 "If the sanitized phone number is on the blacklist, the contact won't receive "
 "mass mailing sms anymore, from any list"
 msgstr ""
+"Bila nomor telepon yang dibersihkan dalam blacklist, kontak tidak akan "
+"enerima email massal sms lagi, dari daftar apapun"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__phone_blacklisted
@@ -284,21 +291,24 @@ msgid ""
 "distinguish which number is blacklisted             when there is both a "
 "mobile and phone field in a model."
 msgstr ""
+"Indikasikan bila nomor telepon yang dibersihkan adalah nomor telepon. "
+"Membantu membedakkan nomor mana yang di-black list             saat ada "
+"masing-masing field mobile dan telepon di model."
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Adalah Follower"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Terakhir Diperbarui oleh"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Terakhir Diperbarui pada"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__name
@@ -308,12 +318,12 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Kesalahan Pengiriman Pesan"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Pesan"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
@@ -323,22 +333,22 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Jumlah Tindakan"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Jumlah error"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Jumlah pesan yang membutuhkan action"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Jumlah pesan dengan error pengiriman"
 
 #. module: appointment_google_reserve
 #. odoo-python
@@ -347,32 +357,34 @@ msgid ""
 "Only Appointment Managers can enable or disable the Google Reserve "
 "Integration"
 msgstr ""
+"Hanya Manajer Appointment dapat mengaktifkan atau menonaktifkan Integrasi "
+"Google Reserve"
 
 #. module: appointment_google_reserve
 #. odoo-python
 #: code:addons/appointment_google_reserve/models/appointment_type.py:0
 msgid "Only Appointment Managers can enable the Google Reserve Integration"
-msgstr ""
+msgstr "Hanya Manajer Appointment dapat mengaktifkan Integrasi Google Reserve"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__phone
 msgid "Phone"
-msgstr ""
+msgstr "Telepon"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__phone_sanitized_blacklisted
 msgid "Phone Blacklisted"
-msgstr ""
+msgstr "Telepon Diblacklist"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__phone_mobile_search
 msgid "Phone Number"
-msgstr ""
+msgstr "Nomor Telepon"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Rating"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
@@ -384,7 +396,7 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model,name:appointment_google_reserve.model_resource_calendar_leaves
 msgid "Resource Time Off Detail"
-msgstr ""
+msgstr "Detail Sumber Daya Cuti"
 
 #. module: appointment_google_reserve
 #: model:appointment.type,name:appointment_google_reserve.appointment_type_restaurant
@@ -394,12 +406,12 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Kesalahan Pengiriman SMS`"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__phone_sanitized
 msgid "Sanitized Number"
-msgstr ""
+msgstr "Nomor Dibersihkan"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
@@ -426,17 +438,17 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Pesan situs"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__website_url
 msgid "Website URL"
-msgstr ""
+msgstr "URL Websi8te"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Sejarah komunikasi situs"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.google_reserve_merchant_view_form

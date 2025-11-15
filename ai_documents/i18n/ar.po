@@ -1,25 +1,30 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* ai_documents
+# * ai_documents
 #
+# Mohammad Abdulmoneim <abdu@odoo.com>, 2025.
+# "Malaz Siddig Elsayed Abuidris (msea)" <msea@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-09-11 14:26+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: \n"
+"PO-Revision-Date: 2025-11-12 08:52+0000\n"
+"Last-Translator: \"Malaz Siddig Elsayed Abuidris (msea)\" <msea@odoo.com>\n"
+"Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
+"ai_documents/ar/>\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: ai_documents
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
 msgid "<strong class=\"mt-3\">What actions can the AI take?</strong>"
-msgstr ""
+msgstr "<strong class=\"mt-3\">ما الذي يستطيع الذكاء الصناعي فعله؟</strong>"
 
 #. module: ai_documents
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
@@ -28,28 +33,31 @@ msgid ""
 "                            What do you want the AI to do?\n"
 "                        </strong>"
 msgstr ""
+"<strong>\n"
+"                            ما الذي ترغب في أن يقوم به الذكاء الاصطناعي؟\n"
+"                        </strong>"
 
 #. module: ai_documents
 #: model:ir.actions.server,name:ai_documents.ir_cron_ai_documents_sort_ir_actions_server
 msgid "AI Documents: Sort documents with AI"
-msgstr ""
+msgstr "مستندات الذكاء الاصطناعي: فرز المستندات باستخدام الذكاء الاصطناعي"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__ai_sort_prompt
 #: model:ir.model.fields,field_description:ai_documents.field_documents_document__ai_sort_prompt
 msgid "AI Folder Sort Prompt"
-msgstr ""
+msgstr "توجيه فرز المجلدات باستخدام الذكاء الاصطناعي"
 
 #. module: ai_documents
 #: model:ir.actions.act_window,name:ai_documents.ai_documents_sort_action
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
 msgid "AI Sort"
-msgstr ""
+msgstr "الفرز باستخدام الذكاء الاصطناعي"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_documents_document__ai_sortable
 msgid "AI Sortable"
-msgstr ""
+msgstr "يمكن فرزه باستخدام الذكاء الاصطناعي"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_documents_document__ai_to_sort
@@ -158,7 +166,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai_documents.field_documents_document__display_name
 #: model:ir.model.fields,field_description:ai_documents.field_ir_actions_server__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "اسم العرض"
 
 #. module: ai_documents
 #: model:ir.model,name:ai_documents.model_documents_document
@@ -195,7 +203,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai_documents.field_documents_document__id
 #: model:ir.model.fields,field_description:ai_documents.field_ir_actions_server__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: ai_documents
 #. odoo-python

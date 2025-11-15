@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-31 08:52+0000\n"
+"PO-Revision-Date: 2025-11-06 07:13+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "account_asset/id/>\n"
@@ -62,13 +62,13 @@ msgstr "%(months)s b"
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "%(move_line)s (%(current)s of %(total)s)"
-msgstr ""
+msgstr "%(move_line)s (%(current)s dari %(total)s)"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_assets_report.py:0
 msgid "%(years)s y"
-msgstr ""
+msgstr "%(years)s t"
 
 #. module: account_asset
 #. odoo-python
@@ -96,7 +96,7 @@ msgstr "%s: Depresiasi"
 #. odoo-python
 #: code:addons/account_asset/models/account_assets_report.py:0
 msgid "(No %s)"
-msgstr ""
+msgstr "(Tanpa %s)"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
@@ -116,6 +116,9 @@ msgid ""
 "> %(extra_text)s Future entries will be recomputed to depreciate the asset "
 "following the changes."
 msgstr ""
+"Entri depresiasi akan dipost pada dan termasuk tanggal %(date)s. <br/> "
+"%(extra_text)s Entri-entri masa depan akan dihitung ulang untuk melakukan "
+"depresiasi ke aset mengikuti perubahannya."
 
 #. module: account_asset
 #. odoo-python
@@ -125,6 +128,8 @@ msgid ""
 "A disposal entry will be posted on the %(account_type)s account <b>%"
 "(account)s</b>."
 msgstr ""
+"Entri depresiasi akan dipost pada dan termasuk tanggal %(date)s.<br/> Entri "
+"penghapusan akan dipost pada akun %(account_type)s <b>%(account)s</b>."
 
 #. module: account_asset
 #. odoo-python
@@ -134,6 +139,9 @@ msgid ""
 "A second entry will neutralize the original income and post the  outcome of "
 "this sale on account <b>%(account)s</b>."
 msgstr ""
+"Entri depresiasi akan dipost pada dan termasuk tanggal %(date)s. <br/> Entri "
+"kedua akan menetralisir pendapatan awal dan posting  hasil penjualan ini di "
+"akun <b>%(account)s</b>."
 
 #. module: account_asset
 #. odoo-python
@@ -157,7 +165,7 @@ msgstr "Dokumen yang di-link ke pergerakan ini telah dihapus: %s"
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "A gross increase has been created: %(link)s"
-msgstr ""
+msgstr "Pendapatan kotor telah dibuat: %(link)s"
 
 #. module: account_asset
 #. odoo-python
@@ -311,7 +319,7 @@ msgstr "Semua baris harus dari akun yang sama"
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "All the lines should be from the same company"
-msgstr ""
+msgstr "Semua baris-baris harus dari perusahaan yang sama"
 
 #. module: account_asset
 #. odoo-python
@@ -476,7 +484,7 @@ msgstr "Aktiva telah dibuat"
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "Asset created from invoice: %s"
-msgstr ""
+msgstr "Aset dibuat dari faktur: %s"
 
 #. module: account_asset
 #. odoo-python
@@ -886,13 +894,13 @@ msgstr "Board depresiasi dimofidikasi %s"
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "Depreciation entry %(name)s posted (%(value)s)"
-msgstr ""
+msgstr "Entri yang didepresiasi %(name)s dipost (%(value)s)"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "Depreciation entry %(name)s reversed (%(value)s)"
-msgstr ""
+msgstr "Entri didepresiasi %(name)s diputar balik (%(value)s)"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__display_account_asset_id
@@ -1010,7 +1018,7 @@ msgstr "Akun Aktiva Tetap"
 #. odoo-python
 #: code:addons/account_asset/models/account_return.py:0
 msgid "Fixed Assets"
-msgstr ""
+msgstr "Aset-Aset Tetap"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__message_follower_ids
@@ -1085,19 +1093,19 @@ msgstr "Kelompokkan Berdasarkan Akun"
 #. odoo-javascript
 #: code:addons/account_asset/static/src/components/depreciation_schedule/groupby.xml:0
 msgid "Group By Asset Group"
-msgstr ""
+msgstr "Kelompokkan Oleh Kelompok Aset"
 
 #. module: account_asset
 #. odoo-javascript
 #: code:addons/account_asset/static/src/components/depreciation_schedule/groupby.xml:0
 msgid "Group by Account"
-msgstr ""
+msgstr "Kelompokkan berdasarkan Akun"
 
 #. module: account_asset
 #. odoo-javascript
 #: code:addons/account_asset/static/src/components/depreciation_schedule/groupby.xml:0
 msgid "Group by Asset Group"
-msgstr ""
+msgstr "Kelompokkan berdasarkan Kelompok Aset"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__has_message
@@ -1224,7 +1232,7 @@ msgstr "Item Jurnal"
 msgid ""
 "Journal Items of %(account)s should have a label in order to generate an "
 "asset"
-msgstr ""
+msgstr "Item Jurnal %(account)s harus memiliki label agar dapat membuat aset"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__write_uid
@@ -1432,7 +1440,7 @@ msgstr "Tidak"
 #. odoo-javascript
 #: code:addons/account_asset/static/src/components/depreciation_schedule/groupby.xml:0
 msgid "No Grouping"
-msgstr ""
+msgstr "Tidak Ada Pengelompokkan"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__prorata_computation_type__none
@@ -1522,6 +1530,9 @@ msgid ""
 "recorded for this period. Ensure assets are properly registered for "
 "automatic depreciation calculation."
 msgstr ""
+"Odoo mengelola depresiasi untuk aset tetap Anda. Tidak ada depresiasi yang "
+"direkam untuk periode ini. Pastikan aset secara tepat didaftarkan untuk "
+"perhitungan depresiasi otomatis."
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__state__paused
@@ -1572,7 +1583,7 @@ msgstr "Induk"
 #: code:addons/account_asset/models/account_asset.py:0
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
 msgid "Parent Asset"
-msgstr ""
+msgstr "Aset Induk"
 
 #. module: account_asset
 #. odoo-python
@@ -1737,7 +1748,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "Some fields are missing %s"
-msgstr ""
+msgstr "Beberapa field hilang %s"
 
 #. module: account_asset
 #. odoo-python
@@ -1843,6 +1854,9 @@ msgid ""
 "Purchase's value (%(purchase_value)s). Please make sure this is what you "
 "want."
 msgstr ""
+"Jumlah yang Anda masukkan (%(entered_amount)s) tidak cocok dengan value "
+"Pembelian Terkait (%(purchase_value)s). Silakan pastikan ini yang Anda "
+"inginkan."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_asset_modify__asset_id
@@ -2059,6 +2073,8 @@ msgstr "Tahun"
 #: code:addons/account_asset/static/src/views/fields/properties/properties_field.js:0
 msgid "You can add Property fields only on Assets with an Asset Model set."
 msgstr ""
+"Anda dapat menambahkan field-field Properti hanya di Aset dengan Aset Model "
+"yang ditetapkan."
 
 #. module: account_asset
 #. odoo-python
@@ -2074,7 +2090,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "You can't re-evaluate the asset before the lock date."
-msgstr ""
+msgstr "Anda tidak dapat mengevaluasi ulang aset sebelum tanggal kunci."
 
 #. module: account_asset
 #. odoo-python
@@ -2082,6 +2098,8 @@ msgstr ""
 msgid ""
 "You cannot add or remove bills when the asset is already running or closed."
 msgstr ""
+"Anda tidak dapat menambahkan atau menghapus tagihan saat aset sudah berjalan "
+"atau ditutup."
 
 #. module: account_asset
 #. odoo-python
@@ -2133,7 +2151,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "You cannot dispose of an asset before the lock date."
-msgstr ""
+msgstr "Anda tidak dapat menghapus aset sebelum tanggal kunci."
 
 #. module: account_asset
 #. odoo-python
@@ -2155,7 +2173,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "You cannot select the same account as the Depreciation Account"
-msgstr ""
+msgstr "Anda tidak dapat memilih akun yang sama sebagai Akun Depresiasi"
 
 #. module: account_asset
 #. odoo-python
@@ -2278,13 +2296,13 @@ msgstr "entri"
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "gain"
-msgstr ""
+msgstr "laba"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "gain/loss"
-msgstr ""
+msgstr "laba/rugi"
 
 #. module: account_asset
 #. odoo-python
@@ -2296,7 +2314,7 @@ msgstr "journal_id"
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "loss"
-msgstr ""
+msgstr "rugi"
 
 #. module: account_asset
 #. odoo-python
@@ -2326,7 +2344,7 @@ msgstr "method_progress_factor"
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "modify"
-msgstr ""
+msgstr "modifikasi"
 
 #. module: account_asset
 #. odoo-python
@@ -2338,7 +2356,7 @@ msgstr "original_value"
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "pause"
-msgstr ""
+msgstr "pause"
 
 #. module: account_asset
 #. odoo-python
@@ -2362,7 +2380,7 @@ msgstr "salvage_value"
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "sell"
-msgstr ""
+msgstr "jual"
 
 #~ msgid " (%s of %s)"
 #~ msgstr " (%s dari %s)"

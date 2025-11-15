@@ -3,32 +3,35 @@
 # * spreadsheet_dashboard_crm
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-10-08 18:49+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-15 12:56+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Azerbaijani <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_crm/az/>\n"
 "Language: az\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 msgid " days"
-msgstr ""
+msgstr " gün"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "# Leads"
-msgstr ""
+msgstr "# Lidlər"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -59,21 +62,21 @@ msgstr ""
 #. module: spreadsheet_dashboard_crm
 #: model:spreadsheet.dashboard.group,name:spreadsheet_dashboard_crm.spreadsheet_dashboard_group_crm
 msgid "CRM"
-msgstr ""
+msgstr "CRM"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Campaign"
-msgstr ""
+msgstr "Kampaniya"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "City"
-msgstr ""
+msgstr "Şəhər"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -94,7 +97,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Closed"
-msgstr ""
+msgstr "Bağlandı"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -117,14 +120,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Country"
-msgstr ""
+msgstr "Ölkə"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Current"
-msgstr ""
+msgstr "Cari"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -138,7 +141,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Days to Assign"
-msgstr ""
+msgstr "Təyin ediləcək Günlər"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -166,14 +169,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Expected"
-msgstr ""
+msgstr "Ehtimal edilən"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Expected Closing"
-msgstr ""
+msgstr "Gözlənilən Bağlanış"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -203,7 +206,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_crm.dashboard_leads
 msgid "Leads"
-msgstr ""
+msgstr "Hədəf Müştərilər"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -217,7 +220,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Lost Reason"
-msgstr ""
+msgstr "İtirmə səbəbi"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -226,13 +229,13 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Medium"
-msgstr ""
+msgstr "Reklam Vasitəsi"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "New"
-msgstr ""
+msgstr "Yeni"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -245,7 +248,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Opportunity"
-msgstr ""
+msgstr "Fürsət"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -259,12 +262,12 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 msgid "Period"
-msgstr ""
+msgstr "Müddət"
 
 #. module: spreadsheet_dashboard_crm
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_crm.dashboard_pipeline
 msgid "Pipeline"
-msgstr ""
+msgstr "Məlumat bazası"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -283,7 +286,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Previous"
-msgstr ""
+msgstr "Əvvəlki"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -296,13 +299,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Proposition"
-msgstr ""
+msgstr "Təklif"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Qualified"
-msgstr ""
+msgstr "Uyğundur"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -311,13 +314,13 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Revenue"
-msgstr ""
+msgstr "Gəlir"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Sales"
-msgstr ""
+msgstr "Satışlar"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -326,7 +329,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Sales Team"
-msgstr ""
+msgstr "Satış Komandası"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -335,7 +338,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Salesperson"
-msgstr ""
+msgstr "Satıcı"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -344,14 +347,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Source"
-msgstr ""
+msgstr "Mənbə"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Stage"
-msgstr ""
+msgstr "Mərhələ"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -364,13 +367,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Tag"
-msgstr ""
+msgstr "Etiket"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 msgid "Tags"
-msgstr ""
+msgstr "Etiketlər"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -398,7 +401,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Top Countries"
-msgstr ""
+msgstr "Ən yaxşı Ölkələr"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -414,7 +417,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Top Mediums"
-msgstr ""
+msgstr "Ən yaxşı Mediumlar"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -429,7 +432,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Top Sales Teams"
-msgstr ""
+msgstr "Ən yaxşı Satış Komandaları"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -438,7 +441,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Top Salespeople"
-msgstr ""
+msgstr "Ən yaxşı Satış Personelləri"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -446,7 +449,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Top Sources"
-msgstr ""
+msgstr "Ən yaxşı Mənbələr"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -480,7 +483,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Won"
-msgstr ""
+msgstr "Qazandın"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -503,7 +506,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "since last period"
-msgstr ""
+msgstr "son dövrdən bu yana"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript

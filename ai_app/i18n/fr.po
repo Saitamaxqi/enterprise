@@ -3,13 +3,14 @@
 # * ai_app
 #
 # "Cécile Collart (cco)" <cco@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-23 14:00+0000\n"
-"Last-Translator: \"Cécile Collart (cco)\" <cco@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 20:05+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/ai_app/fr/"
 ">\n"
 "Language: fr\n"
@@ -42,11 +43,9 @@ msgstr ""
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_form
 msgid ""
-"<span class=\"text-muted\" invisible=\"not is_system_default or "
-"focused_models\">All Models</span>"
+"<span class=\"text-muted\" invisible=\"(not is_system_default or "
+"focused_models) and interface_key != 'systray_ai_button'\">All Models</span>"
 msgstr ""
-"<span class=\"text-muted\" invisible="
-"\"not is_system_default or focused_models\">Tous les modèles</span>"
 
 #. module: ai_app
 #: model:ir.ui.menu,name:ai_app.ai_menu_root
@@ -89,7 +88,7 @@ msgstr "Tous les modèles"
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_kanban
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_search
 msgid "Archived"
-msgstr ""
+msgstr "Archivé"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_form
@@ -190,7 +189,7 @@ msgstr "Réessayer"
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_form
 msgid "Rule Name"
-msgstr ""
+msgstr "Nom de la règle"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_form
@@ -281,7 +280,7 @@ msgstr "par ex. : Obtenez des conseils pour augmenter vos ventes"
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_form
 msgid "e.g. SDR Advisor"
-msgstr ""
+msgstr "ex. Conseiller DTS"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_form
@@ -290,3 +289,10 @@ msgid ""
 msgstr ""
 "par ex. : vous êtes un opérateur de support, vous pouvez répondre aux "
 "questions liées à ..."
+
+#~ msgid ""
+#~ "<span class=\"text-muted\" invisible=\"not is_system_default or "
+#~ "focused_models\">All Models</span>"
+#~ msgstr ""
+#~ "<span class=\"text-muted\" invisible=\"not is_system_default or "
+#~ "focused_models\">Tous les modèles</span>"

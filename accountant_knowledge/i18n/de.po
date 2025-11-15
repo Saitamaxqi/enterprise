@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-27 12:45+0000\n"
+"PO-Revision-Date: 2025-11-14 15:26+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "accountant_knowledge/de/>\n"
@@ -783,7 +783,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Favorable Opinion with Comments"
-msgstr ""
+msgstr "Positive Meining mit Kommentaren"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -972,6 +972,9 @@ msgid ""
 "impact on the key items of the current period, unless such information is "
 "impracticable to obtain."
 msgstr ""
+"Wenn die Änderung <strong>prospektiv</strong> angewendet wurde, beschreiben "
+"Sie deren Auswirkungen auf die wichtigsten Posten des aktuellen Zeitraums, "
+"es sei denn, diese Informationen sind nicht beschaffbar."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -980,6 +983,9 @@ msgid ""
 "items from prior periods that have been restated in accordance with the new "
 "method."
 msgstr ""
+"Wenn die Änderung <strong>rückwirkend</strong> angewendet wurde, sind die "
+"wesentlichen Posten aus früheren Zeiträumen darzustellen, die gemäß der "
+"neuen Methode angepasst wurden."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
@@ -987,6 +993,9 @@ msgid ""
 "If this is the first year the company holds inventories, specify the "
 "valuation method used and provide a breakdown of the products concerned."
 msgstr ""
+"Sollte dies das erste Jahr sein, in dem das Unternehmen Vorräte führt, geben "
+"Sie die verwendete Bewertungsmethode an und legen Sie eine Aufschlüsselung "
+"der betreffenden Produkte vor."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
@@ -995,39 +1004,44 @@ msgid ""
 "work performed for {{ company name }} for the period from {{ start of "
 "period }} to {{ end of period }}"
 msgstr ""
+"In Übereinstimmung mit den Bedingungen unseres Auftrags haben wir eine "
+"Zusammenfassung der für {{ company name }} im Zeitraum von {{ start of "
+"period }} bis {{ end of period }} durchgeführten Arbeiten erstellt."
 
 #. module: accountant_knowledge
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/components/export_audit_report_to_pdf_dialog/export_audit_report_to_pdf_dialog.xml:0
 msgid "Include PDF Files"
-msgstr ""
+msgstr "PDF-Dateien einfügen"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Include any explanations or justifications as needed."
-msgstr ""
+msgstr "Fügen Sie gegebenenfalls Erläuterungen oder Begründungen hinzu."
 
 #. module: accountant_knowledge
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/components/export_audit_report_to_pdf_dialog/export_audit_report_to_pdf_dialog.xml:0
 msgid "Include child articles"
-msgstr ""
+msgstr "Untergeordnete Artikel einfügen"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_income_statement
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "Income Statement"
-msgstr ""
+msgstr "Gewinn- und Verlustrechnung"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
 msgid "Independence of accounting periods."
-msgstr ""
+msgstr "Unabhängigkeit der Buchhaltungszeiträume."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 msgid "Indicate and justify the voluntary accounting policy change."
 msgstr ""
+"Geben Sie die freiwillige Änderung der Rechnungslegungsgrundsätze an und "
+"begründen Sie diese."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
@@ -1036,6 +1050,10 @@ msgid ""
 "Include acquisitions, disposals, cancellations, and the reason for holding "
 "these shares (e.g. employee plans, market operations)."
 msgstr ""
+"Geben Sie die Anzahl und den Wert der Aktien an, die das Unternehmen im "
+"Laufe des Jahres gehalten hat. Berücksichtigen Sie dabei auch Käufe, "
+"Verkäufe, Stornierungen und den Grund für das Halten dieser Aktien (z. B. "
+"Mitarbeiterpläne, Marktvorgänge)."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
@@ -1043,16 +1061,18 @@ msgid ""
 "Indicate the total book value of inventories as well as the book value by "
 "relevant categories."
 msgstr ""
+"Geben Sie den Gesamtbuchwert der Vorräte sowie den Buchwert nach relevanten "
+"Kategorien an."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "Information on Specific Nature Operations"
-msgstr ""
+msgstr "Informationen zu spezifischen Naturmaßnahmen"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_knowledge_article__inherited_audit_report_id
 msgid "Inherited Audit Report"
-msgstr ""
+msgstr "Geerbter Prüfungsbericht"
 
 #. module: accountant_knowledge
 #. odoo-javascript
@@ -1064,7 +1084,7 @@ msgstr "In Artikel einfügen"
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Intangible and Tangible Assets"
-msgstr ""
+msgstr "Immaterielle und materielle Vermögenswerte"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -1074,6 +1094,11 @@ msgid ""
 "use. This valuation is net of any trade discounts, rebates, or settlement "
 "discounts obtained."
 msgstr ""
+"Immaterielle Vermögenswerte werden zu ihren Anschaffungs- oder "
+"Herstellungskosten bewertet, einschließlich aller Aufwendungen, die "
+"erforderlich sind, um diese Vermögenswerte für ihre beabsichtigte Nutzung "
+"vorzubereiten. Diese Bewertung erfolgt abzüglich aller erhaltenen "
+"Handelsrabatte, Preisnachlässe oder Abrechnungsrabatte."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -1336,17 +1361,19 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "Please specify the method used to calculate inventory write-downs."
 msgstr ""
+"Geben Sie an, welche Methode zur Berechnung der Bestandsabschreibungen "
+"verwendet wird."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
 msgid "Post-Closing Events"
-msgstr ""
+msgstr "Ereignisse nach Abschluss"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_preamble
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
 msgid "Preamble"
-msgstr ""
+msgstr "Präambel"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -1354,31 +1381,33 @@ msgid ""
 "Present the main items of prior period's financial statements that have been "
 "restated to correct the error."
 msgstr ""
+"Geben Sie die wichtigsten Posten der Jahresabschlüsse des vorangegangenen "
+"Zeitraums an, die zur Korrektur des Fehlers angepasst wurden."
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_kanban
 msgid "Print"
-msgstr ""
+msgstr "Drucken"
 
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
 msgid "Print your Report"
-msgstr ""
+msgstr "Bericht drucken"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
 msgid "Pro rata recognition"
-msgstr ""
+msgstr "Anteilige Anerkennung"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_profit_and_loss
 msgid "Profit and Loss"
-msgstr ""
+msgstr "Gewinn und Verlust"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_additional_information
 msgid "Provide any additional information necessary here..."
-msgstr ""
+msgstr "Geben Sie hier alle erforderlichen Zusatzinformationen an..."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -1386,12 +1415,16 @@ msgid ""
 "Provide details of any significant off-balance-sheet transactions or "
 "commitments not recorded in the financial statements"
 msgstr ""
+"Geben Sie Einzelheiten zu wesentlichen außerbilanziellen Geschäften oder "
+"Verpflichtungen an, die nicht in den Jahresabschlüssen ausgewiesen sind"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 msgid ""
 "Provide details on loan issuance costs and any loan redemption premiums."
 msgstr ""
+"Machen Sie genaue Angaben zu den Kosten der Kreditvergabe und zu etwaigen "
+"Kreditrückzahlungsprämien."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
@@ -1746,6 +1779,9 @@ msgid ""
 "The full report will be included in the final document. Feel free to tailor "
 "the result using filters and options from the report."
 msgstr ""
+"Der vollständige Bericht wird in das Abschlussdokument aufgenommen. Sie "
+"können das Ergebnis mithilfe von Filtern und Optionen aus dem Bericht "
+"individuell anpassen."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -1874,12 +1910,12 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Valuation of stock options granted during the year<br>"
-msgstr ""
+msgstr "Bewertung der im Laufe des Jahres gewährten Aktienoptionen<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 msgid "Voluntary Change in Accounting Policy"
-msgstr ""
+msgstr "Freiwillige Änderung der Rechnungslegungsgrundsätze"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation

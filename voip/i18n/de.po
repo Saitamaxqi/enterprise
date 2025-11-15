@@ -9,13 +9,14 @@
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Larissa Manderfeld (lman)" <lman@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-27 14:40+0000\n"
-"Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
+"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"PO-Revision-Date: 2025-11-15 11:28+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/voip/de/>"
 "\n"
 "Language: de\n"
@@ -505,14 +506,10 @@ msgid "Contacts with a phone number will be shown here."
 msgstr "Kontakte mit Telefonnummern werden hier angezeigt."
 
 #. module: voip
+#: model:ir.model,name:voip.model_res_country
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_id
 msgid "Country"
 msgstr "Land"
-
-#. module: voip
-#: model:ir.model,name:voip.model_voip_country_code_mixin
-msgid "Country Code Mixin"
-msgstr "Mixin für Ländercode"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_flag_url
@@ -600,6 +597,7 @@ msgstr "Deaktiviert"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__display_name
+#: model:ir.model.fields,field_description:voip.field_res_country__display_name
 #: model:ir.model.fields,field_description:voip.field_res_partner__display_name
 #: model:ir.model.fields,field_description:voip.field_res_users__display_name
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__display_name
@@ -824,6 +822,7 @@ msgstr "Wie Anrufe auf Handy tätigen"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__id
+#: model:ir.model.fields,field_description:voip.field_res_country__id
 #: model:ir.model.fields,field_description:voip.field_res_partner__id
 #: model:ir.model.fields,field_description:voip.field_res_users__id
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__id
@@ -1205,6 +1204,11 @@ msgstr ""
 #: model:ir.ui.menu,name:voip.menu_voip_root
 msgid "Phone"
 msgstr "Telefon"
+
+#. module: voip
+#: model:ir.model,name:voip.model_voip_country_code_mixin
+msgid "Phone Country Mixin"
+msgstr "Mixin für Ländervorwahl"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__phone_number
@@ -1935,6 +1939,9 @@ msgstr "kann die Anrufseinstellungen sehen, melden und verwalten."
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
 msgid "e.g. Brandon Freeman"
 msgstr "z. B. Brandon Freeman"
+
+#~ msgid "Country Code Mixin"
+#~ msgstr "Mixin für Ländercode"
 
 #~ msgid "# of Cases"
 #~ msgstr "Fälle"

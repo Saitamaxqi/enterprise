@@ -11,12 +11,13 @@
 # Foldi Robert <foldirobert@nexterp.ro>, 2023
 # Martin Trigaux, 2023
 # Cuciureanu Larisa <larisa.cuciureanu@nexterp.ro>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-23 13:57+0000\n"
+"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"PO-Revision-Date: 2025-11-10 09:37+0000\n"
 "Last-Translator: Cuciureanu Larisa <larisa.cuciureanu@nexterp.ro>\n"
 "Language-Team: Romanian <https://translate.odoo.com/projects/odoo-19/"
 "account_accountant/ro/>\n"
@@ -47,6 +48,7 @@ msgid "%(display_name_html)s will be reduced by %(amount)s."
 msgstr "%(display_name_html)s va fi redus cu %(amount)s."
 
 #. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid ") doesn't match the specified ending balance."
 msgstr ") nu corespunde soldului final specificat."
@@ -92,8 +94,8 @@ msgid ""
 "<span class=\"oe_inline o_form_label mx-3\" invisible=\"reco_currency_id == "
 "company_currency_id\"> in </span>"
 msgstr ""
-"<span class=\"oe_inline o_form_label mx-3\" invisible="
-"\"reco_currency_id == company_currency_id\"> în </span>"
+"<span class=\"oe_inline o_form_label mx-3\" invisible=\"reco_currency_id == "
+"company_currency_id\"> în </span>"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_reconcile_wizard
@@ -101,8 +103,8 @@ msgid ""
 "<span class=\"oe_inline o_form_label mx-3\" "
 "invisible=\"single_currency_mode\"> in </span>"
 msgstr ""
-"<span class=\"oe_inline o_form_label mx-3\" invisible="
-"\"single_currency_mode\"> în </span>"
+"<span class=\"oe_inline o_form_label mx-3\" "
+"invisible=\"single_currency_mode\"> în </span>"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
@@ -113,8 +115,8 @@ msgid ""
 "i>\n"
 "                                        </span>"
 msgstr ""
-"<span class=\"text-danger o_form_label\" invisible="
-"\"hard_lock_date == current_hard_lock_date\">\n"
+"<span class=\"text-danger o_form_label\" invisible=\"hard_lock_date == "
+"current_hard_lock_date\">\n"
 "                                            <i>Această modificare este "
 "ireversibilă</i>\n"
 "                                        </span>"
@@ -132,8 +134,8 @@ msgstr ""
 "<span class=\"text-muted o_form_label\" invisible=\"not "
 "min_fiscalyear_lock_date_exception_for_me_id                                                  "
 "or not min_fiscalyear_lock_date_exception_for_everyone_id\">\n"
-"                                      <span style=\"white-space: pre\">; "
-"</span>\n"
+"                                      <span style=\"white-space: pre\">; </"
+"span>\n"
 "                                </span>"
 
 #. module: account_accountant
@@ -149,8 +151,8 @@ msgstr ""
 "<span class=\"text-muted o_form_label\" invisible=\"not "
 "min_purchase_lock_date_exception_for_me_id                                                  "
 "or not min_purchase_lock_date_exception_for_everyone_id\">\n"
-"                                      <span style=\"white-space: pre\">; "
-"</span>\n"
+"                                      <span style=\"white-space: pre\">; </"
+"span>\n"
 "                                </span>"
 
 #. module: account_accountant
@@ -166,8 +168,8 @@ msgstr ""
 "<span class=\"text-muted o_form_label\" invisible=\"not "
 "min_sale_lock_date_exception_for_me_id                                                  "
 "or not min_sale_lock_date_exception_for_everyone_id\">\n"
-"                                      <span style=\"white-space: pre\">; "
-"</span>\n"
+"                                      <span style=\"white-space: pre\">; </"
+"span>\n"
 "                                </span>"
 
 #. module: account_accountant
@@ -183,8 +185,8 @@ msgstr ""
 "<span class=\"text-muted o_form_label\" invisible=\"not "
 "min_tax_lock_date_exception_for_me_id                                                  "
 "or not min_tax_lock_date_exception_for_everyone_id\">\n"
-"                                      <span style=\"white-space: pre\">; "
-"</span>\n"
+"                                      <span style=\"white-space: pre\">; </"
+"span>\n"
 "                                </span>"
 
 #. module: account_accountant
@@ -197,8 +199,8 @@ msgid ""
 "i>\n"
 "                                </span>"
 msgstr ""
-"<span class=\"text-muted\" invisible="
-"\"min_fiscalyear_lock_date_exception_for_me_id or "
+"<span class=\"text-muted\" "
+"invisible=\"min_fiscalyear_lock_date_exception_for_me_id or "
 "min_fiscalyear_lock_date_exception_for_everyone_id\">\n"
 "                                    <i class=\"ms-2\">dar permiteți "
 "excepții</i>\n"
@@ -248,8 +250,8 @@ msgid ""
 "Invoices</b> menu\n"
 "        </span>"
 msgstr ""
-"<span><strong><b>Felicitări!</b> Ai parcurs toți pașii acestui tur.</strong>"
-"\n"
+"<span><strong><b>Felicitări!</b> Ai parcurs toți pașii acestui tur.</"
+"strong>\n"
 "            <br>Vezi cum să gestionezi facturile clienților în meniul "
 "<b>Clienți/Facturi</b>\n"
 "        </span>"
@@ -402,8 +404,13 @@ msgstr "Valoare în moneda companiei"
 msgid ""
 "An entry will transfer %(amount)s from %(from_account)s to %(to_account)s."
 msgstr ""
-"O înregistrare va transfera %(amount)s din %(from_account)s în "
-"%(to_account)s."
+"O înregistrare va transfera %(amount)s din %(from_account)s în %"
+"(to_account)s."
+
+#. module: account_accountant
+#: model:ir.model,name:account_accountant.model_analytic_mixin
+msgid "Analytic Mixin"
+msgstr "Mixin analitic"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__use_anglo_saxon
@@ -538,6 +545,7 @@ msgstr "Potrivire bancă"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_bank_statement
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "Bank Statement"
 msgstr "Extras bancă"
@@ -755,7 +763,6 @@ msgid "Cron Last Check"
 msgstr "Ultima verificare Cron"
 
 #. module: account_accountant
-#: model:ir.model,name:account_accountant.model_res_currency
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_reconcile_tree
 msgid "Currency"
 msgstr "Moneda"
@@ -810,6 +817,12 @@ msgstr "Zile"
 #: code:addons/account_accountant/models/account_move.py:0
 msgid "Deferral of %s"
 msgstr "Amânarea %s"
+
+#. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_move_form_inherit
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_tree
+msgid "Deferred Date"
+msgstr "Dată amânată"
 
 #. module: account_accountant
 #. odoo-python
@@ -953,12 +966,11 @@ msgstr "Afișează permisiunea pentru parțiale"
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_model_line__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_account_tax__display_name
+#: model:ir.model.fields,field_description:account_accountant.field_analytic_mixin__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_digest_digest__display_name
-#: model:ir.model.fields,field_description:account_accountant.field_ir_model__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_ir_ui_menu__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_res_company__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__display_name
-#: model:ir.model.fields,field_description:account_accountant.field_res_currency__display_name
 msgid "Display Name"
 msgstr "Nume afișat"
 
@@ -1223,12 +1235,11 @@ msgstr "Are mesaj"
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_model_line__id
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__id
 #: model:ir.model.fields,field_description:account_accountant.field_account_tax__id
+#: model:ir.model.fields,field_description:account_accountant.field_analytic_mixin__id
 #: model:ir.model.fields,field_description:account_accountant.field_digest_digest__id
-#: model:ir.model.fields,field_description:account_accountant.field_ir_model__id
 #: model:ir.model.fields,field_description:account_accountant.field_ir_ui_menu__id
 #: model:ir.model.fields,field_description:account_accountant.field_res_company__id
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__id
-#: model:ir.model.fields,field_description:account_accountant.field_res_currency__id
 msgid "ID"
 msgstr "ID"
 
@@ -1647,11 +1658,6 @@ msgid "Miscellaneous Journal"
 msgstr "Jurnal diverse"
 
 #. module: account_accountant
-#: model:ir.model,name:account_accountant.model_ir_model
-msgid "Models"
-msgstr "Modele"
-
-#. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__res_company__deferred_expense_amount_computation_method__month
 #: model:ir.model.fields.selection,name:account_accountant.selection__res_company__deferred_revenue_amount_computation_method__month
 msgid "Months"
@@ -1965,7 +1971,6 @@ msgstr "De încasat"
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_auto_reconcile_wizard
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_list_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_reconcile_wizard
-#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_payment_tree
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_reconcile_tree
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_tree
@@ -2279,8 +2284,8 @@ msgid ""
 "overriden by the following date : %(replacement_date)s"
 msgstr ""
 "Data pe care ați setat-o încalcă data de blocare a uneia dintre "
-"înregistrările dvs. Va fi suprascrisă cu următoarea dată: "
-"%(replacement_date)s"
+"înregistrările dvs. Va fi suprascrisă cu următoarea dată: %"
+"(replacement_date)s"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_bank_statement_line__deferred_move_ids
@@ -2341,11 +2346,13 @@ msgstr ""
 "(sau singura) între paranteze, de exemplu: BRT: ([\\d,.]+)."
 
 #. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "The running balance ("
 msgstr "Soldul curent ("
 
 #. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid ""
 "The starting balance doesn't match the ending balance of the previous "
@@ -2364,6 +2371,7 @@ msgstr ""
 "furnizorului pe baza etichetei liniei."
 
 #. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "There are one or more"
 msgstr "Există una sau mai multe"
@@ -2459,6 +2467,7 @@ msgstr "Tranzacție"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.account_journal_dashboard_kanban_view
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_tree
 msgid "Transactions"
@@ -2507,7 +2516,8 @@ msgstr "Încarcă facturi"
 #. odoo-python
 #: code:addons/account_accountant/models/account_bank_statement.py:0
 msgid "Validated entries can only be changed by your accountant."
-msgstr "Înregistrările validate pot fi modificate doar de către contabilul dvs."
+msgstr ""
+"Înregistrările validate pot fi modificate doar de către contabilul dvs."
 
 #. module: account_accountant
 #. odoo-javascript
@@ -2661,8 +2671,8 @@ msgstr "Poate doriți să înregistrați o %(btn_start)splată parțială%(btn_e
 msgid ""
 "You might want to set the invoice as %(btn_start)sfully paid%(btn_end)s."
 msgstr ""
-"Poate doriți să setați factura ca fiind %(btn_start)splătită "
-"integral%(btn_end)s."
+"Poate doriți să setați factura ca fiind %(btn_start)splătită integral%"
+"(btn_end)s."
 
 #. module: account_accountant
 #. odoo-python
@@ -2719,6 +2729,7 @@ msgid "id"
 msgstr "id"
 
 #. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "invalid statement(s)"
 msgstr "extras(e) invalid(e)"
@@ -2732,6 +2743,9 @@ msgstr "monedă secundară"
 #: model_terms:ir.ui.view,arch_db:account_accountant.account_journal_dashboard_kanban_view
 msgid "to reconcile"
 msgstr "de reconciliat"
+
+#~ msgid "Models"
+#~ msgstr "Modele"
 
 #~ msgid ""
 #~ "%(display_name_html)s with an open amount of %(open_amount)s will be "

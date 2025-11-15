@@ -13,12 +13,13 @@
 # Jolien De Paepe, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Manon Rondou (ronm)" <ronm@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-30 09:57+0000\n"
+"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"PO-Revision-Date: 2025-11-14 09:51+0000\n"
 "Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "account_accountant/fr/>\n"
@@ -49,6 +50,7 @@ msgid "%(display_name_html)s will be reduced by %(amount)s."
 msgstr "%(display_name_html)s sera réduit de %(amount)s."
 
 #. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid ") doesn't match the specified ending balance."
 msgstr ") ne correspond pas au solde final spécifié."
@@ -218,8 +220,8 @@ msgid ""
 msgstr ""
 "<span class=\"text-muted\" invisible=\"min_tax_lock_date_exception_for_me_id "
 "or min_tax_lock_date_exception_for_everyone_id\">\n"
-"                                    <i class=\"ms-2\">après une clôture "
-"TVA</i>\n"
+"                                    <i class=\"ms-2\">après une clôture TVA</"
+"i>\n"
 "                                </span>"
 
 #. module: account_accountant
@@ -408,6 +410,11 @@ msgstr ""
 "Une écriture transférera %(amount)s de %(from_account)s vers %(to_account)s."
 
 #. module: account_accountant
+#: model:ir.model,name:account_accountant.model_analytic_mixin
+msgid "Analytic Mixin"
+msgstr "Mixin analytique"
+
+#. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__use_anglo_saxon
 msgid "Anglo-Saxon Accounting"
 msgstr "Comptabilité anglo-saxone"
@@ -541,6 +548,7 @@ msgstr "Réconciliation bancaire"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_bank_statement
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "Bank Statement"
 msgstr "Relevé bancaire"
@@ -761,7 +769,6 @@ msgid "Cron Last Check"
 msgstr "Dernière vérification du Cron"
 
 #. module: account_accountant
-#: model:ir.model,name:account_accountant.model_res_currency
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_reconcile_tree
 msgid "Currency"
 msgstr "Devise"
@@ -816,6 +823,12 @@ msgstr "Jours"
 #: code:addons/account_accountant/models/account_move.py:0
 msgid "Deferral of %s"
 msgstr "Report de %s"
+
+#. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_move_form_inherit
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_tree
+msgid "Deferred Date"
+msgstr "Date de report"
 
 #. module: account_accountant
 #. odoo-python
@@ -959,12 +972,11 @@ msgstr "Afficher l’autorisation de lettrage partiel"
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_model_line__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_account_tax__display_name
+#: model:ir.model.fields,field_description:account_accountant.field_analytic_mixin__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_digest_digest__display_name
-#: model:ir.model.fields,field_description:account_accountant.field_ir_model__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_ir_ui_menu__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_res_company__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__display_name
-#: model:ir.model.fields,field_description:account_accountant.field_res_currency__display_name
 msgid "Display Name"
 msgstr "Nom d'affichage"
 
@@ -1229,12 +1241,11 @@ msgstr "A un message"
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_model_line__id
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__id
 #: model:ir.model.fields,field_description:account_accountant.field_account_tax__id
+#: model:ir.model.fields,field_description:account_accountant.field_analytic_mixin__id
 #: model:ir.model.fields,field_description:account_accountant.field_digest_digest__id
-#: model:ir.model.fields,field_description:account_accountant.field_ir_model__id
 #: model:ir.model.fields,field_description:account_accountant.field_ir_ui_menu__id
 #: model:ir.model.fields,field_description:account_accountant.field_res_company__id
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__id
-#: model:ir.model.fields,field_description:account_accountant.field_res_currency__id
 msgid "ID"
 msgstr "ID"
 
@@ -1274,8 +1285,8 @@ msgid ""
 "Incorrect fiscal year date: day is out of range for month. Month: %(month)s; "
 "Day: %(day)s"
 msgstr ""
-"Date d'exercice incorrecte : le jour est en dehors de la plage du mois. Mois "
-": %(month)s; Jour : %(day)s"
+"Date d'exercice incorrecte : le jour est en dehors de la plage du mois. "
+"Mois : %(month)s; Jour : %(day)s"
 
 #. module: account_accountant
 #. odoo-python
@@ -1656,11 +1667,6 @@ msgid "Miscellaneous Journal"
 msgstr "Journal divers"
 
 #. module: account_accountant
-#: model:ir.model,name:account_accountant.model_ir_model
-msgid "Models"
-msgstr "Modèles"
-
-#. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__res_company__deferred_expense_amount_computation_method__month
 #: model:ir.model.fields.selection,name:account_accountant.selection__res_company__deferred_revenue_amount_computation_method__month
 msgid "Months"
@@ -1868,7 +1874,7 @@ msgstr "Partenaires"
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.xml:0
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_move_line_reconcile_search
 msgid "Payable"
-msgstr "Payable"
+msgstr "Fournisseur"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_payment_form_inherit_account_accountant
@@ -1977,7 +1983,6 @@ msgstr "Client"
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_auto_reconcile_wizard
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_list_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_reconcile_wizard
-#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_payment_tree
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_reconcile_tree
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_tree
@@ -2337,8 +2342,8 @@ msgstr ""
 "L'expression régulière pour capturer le montant correspondant semble être "
 "mal formatée.\n"
 "Veuillez vous assurer que la partie de l'expression régulière capturant le "
-"montant (entre parenthèses) ne peut pas capturer une valeur vide ("
-"généralement à cause d’une mauvaise utilisation de ? ou *) ou une valeur "
+"montant (entre parenthèses) ne peut pas capturer une valeur vide "
+"(généralement à cause d’une mauvaise utilisation de ? ou *) ou une valeur "
 "sans chiffre. Par exemple : BRT: ([\\d,.]+)."
 
 #. module: account_accountant
@@ -2353,15 +2358,17 @@ msgstr ""
 "L'expression régulière pour capturer le montant correspondant semble être "
 "mal formatée.\n"
 "Veuillez vous assurer que la partie de l'expression régulière capturant le "
-"montant est la première (ou la seule) entre parenthèses, par exemple : BRT: ("
-"[\\d,.]+)."
+"montant est la première (ou la seule) entre parenthèses, par exemple : BRT: "
+"([\\d,.]+)."
 
 #. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "The running balance ("
 msgstr "Le solde courant ("
 
 #. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid ""
 "The starting balance doesn't match the ending balance of the previous "
@@ -2380,6 +2387,7 @@ msgstr ""
 "fournisseur sur la base du libellé de la ligne"
 
 #. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "There are one or more"
 msgstr "Il y a un(e) ou plusieurs"
@@ -2476,6 +2484,7 @@ msgstr "Transaction"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.account_journal_dashboard_kanban_view
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_tree
 msgid "Transactions"
@@ -2609,8 +2618,8 @@ msgid ""
 "You cannot change the account for a deferred line in %(move_name)s if it has "
 "already been deferred."
 msgstr ""
-"Vous ne pouvez pas modifier le compte d'une ligne de report dans %(move_name)"
-"s si elle a déjà été reportée."
+"Vous ne pouvez pas modifier le compte d'une ligne de report dans %"
+"(move_name)s si elle a déjà été reportée."
 
 #. module: account_accountant
 #. odoo-python
@@ -2667,8 +2676,8 @@ msgid ""
 "You might want to make a %(btn_start)spartial reconciliation%(btn_end)s "
 "instead."
 msgstr ""
-"Vous pourriez vouloir faire une %(btn_start)sréconciliation "
-"partielle%(btn_end)s à la place."
+"Vous pourriez vouloir faire une %(btn_start)sréconciliation partielle%"
+"(btn_end)s à la place."
 
 #. module: account_accountant
 #. odoo-python
@@ -2742,6 +2751,7 @@ msgid "id"
 msgstr "id"
 
 #. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "invalid statement(s)"
 msgstr "relevé(s) invalide(s)"
@@ -2755,6 +2765,9 @@ msgstr "devise secondaire"
 #: model_terms:ir.ui.view,arch_db:account_accountant.account_journal_dashboard_kanban_view
 msgid "to reconcile"
 msgstr "à réconcilier"
+
+#~ msgid "Models"
+#~ msgstr "Modèles"
 
 #~ msgid ""
 #~ "\n"

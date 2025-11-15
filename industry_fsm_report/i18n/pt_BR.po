@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-10-07 02:40+0000\n"
+"PO-Revision-Date: 2025-11-14 11:44+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/industry_fsm_report/pt_BR/>\n"
@@ -164,7 +164,7 @@ msgstr "Instalação e manutenção do dispositivo"
 #. module: industry_fsm_report
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.worksheet_template_view_form_footer_design_button
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #. module: industry_fsm_report
 #: model:ir.model.fields,field_description:industry_fsm_report.field_base_document_layout__display_name
@@ -180,13 +180,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_3_ir_model_fields_3
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_4_ir_model_fields_3
 msgid "Display Name"
-msgstr ""
+msgstr "Exibir nome"
 
 #. module: industry_fsm_report
 #. odoo-python
 #: code:addons/industry_fsm_report/models/project_task.py:0
 msgid "Explore Worksheets Using an Example Template"
-msgstr ""
+msgstr "Explore planilhas de trabalho usando um modelo de exemplo"
 
 #. module: industry_fsm_report
 #. odoo-javascript
@@ -200,6 +200,8 @@ msgid ""
 "Give it a try using one of our example templates. You can remove them at any "
 "time."
 msgstr ""
+"Experimente usar um de nossos modelos de exemplo. Você pode removê-los a "
+"qualquer momento."
 
 #. module: industry_fsm_report
 #. odoo-javascript

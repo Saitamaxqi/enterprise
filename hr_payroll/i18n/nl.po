@@ -5,16 +5,17 @@
 # Translators:
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2022
 # Martin Trigaux, 2022
-# Erwin van der Ploeg <erwin@odooexperts.nl>, 2023
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2023, 2025.
 # Jolien De Paepe, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Bren Driesen <brdri@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-28 16:59+0000\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-14 15:22+0000\n"
 "Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/hr_payroll/"
 "nl/>\n"
@@ -40,6 +41,16 @@ msgid ""
 "planning. (requires Planning app)\n"
 "    "
 msgstr ""
+"\n"
+"        Bepaalt de bron voor het genereren van werkboekingen\n"
+"\n"
+"        Werkschema: Werkboekingen worden gegenereerd voor onderstaande "
+"werkuren.\n"
+"        Aanwezigheden: Werkboekingen worden gegenereerd op basis van de "
+"aanwezigheden van werknemers (Aanwezigheden-app vereist)\n"
+"        Planning: Werkboekingen worden gegenereerd op basis van de planning "
+"van werknemers planning (Planning-app vereist)\n"
+"    "
 
 #. module: hr_payroll
 #. odoo-python
@@ -64,26 +75,28 @@ msgstr "%(display_name)s %(duration_type)s"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payslip_correction_wizard.py:0
+#, fuzzy
 msgid "%(employee)s Correction %(date)s"
-msgstr ""
+msgstr "%(employee)s Correctie %(date)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payslip_correction_wizard.py:0
+#, fuzzy
 msgid "%(employee)s Correction %(date_start)s - %(date_end)s"
-msgstr ""
+msgstr "%(employee)s Correctie %(date_start)s - %(date_end)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payslip_correction_wizard.py:0
 msgid "%(employee)s Revert %(date)s"
-msgstr ""
+msgstr "%(employee)s %(date)s terugdraaien"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payslip_correction_wizard.py:0
 msgid "%(employee)s Revert %(date_start)s - %(date_end)s"
-msgstr ""
+msgstr "%(employee)s %(date_start)s - %(date_end)s terugdraaien"
 
 #. module: hr_payroll
 #. odoo-python
@@ -198,14 +211,15 @@ msgstr "2e semester van %s"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_index_wizard.py:0
+#, fuzzy
 msgid "<b>The following employee records will be modified:</b><br>"
-msgstr ""
+msgstr "<b>De volgende werknemersrecords worden gewijzigd:</b><br>"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_index_wizard.py:0
 msgid "<br><b>Modified on Versions:</b><br>"
-msgstr ""
+msgstr "<br><b>Gewijzigd in versies:</b><br>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -213,6 +227,8 @@ msgid ""
 "<code>categories</code>: dict containing the computed salary rule categories "
 "(sum of amount of all rules belonging to that category)."
 msgstr ""
+"<code>categories</code>: dict met de berekende salarisregelcategorieën (som "
+"van het bedrag van alle regels die tot die categorie behoren)."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -223,7 +239,7 @@ msgstr "<code>employee</code>: hr.employee object"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "<code>inputs</code>: dict containing the computed inputs."
-msgstr ""
+msgstr "<code>inputs</code>: dict met de berekende inputs."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -237,11 +253,13 @@ msgid ""
 "<code>result</code>: boolean True if the rule should be calculated, False "
 "otherwise"
 msgstr ""
+"<code>result</code>: booleaanse True als de regel moet worden berekend, "
+"anders False"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "<code>result</code>: float, base amount of the rule"
-msgstr ""
+msgstr "<code>result</code>: decimaal getal, basisbedrag van de regel"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -255,6 +273,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "<code>result_qty</code>: float, quantity, which defaults to 1."
 msgstr ""
+"<code>result_qty</code>: decimaal getal, hoeveelheid, die standaard 1 is."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -262,6 +281,8 @@ msgid ""
 "<code>result_rate</code>: float, rate between -100.0 and 100.0, which "
 "defaults to 100.0 (%)."
 msgstr ""
+"<code>result_rate</code>: decimaal getal, waarde tussen -100,0 en 100,0. "
+"Standaard 100,0 (%)."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -285,7 +306,7 @@ msgstr "<code>version</code>: hr.version object"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "<code>worked_days</code>: dict containing the computed worked days"
-msgstr ""
+msgstr "<code>worked_days</code>: dict met de berekende gewerkte dagen"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_form
@@ -293,8 +314,8 @@ msgid ""
 "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
 "title=\"Arrow\"/>"
 msgstr ""
-"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Pijlicoon\" title="
-"\"Pijl\"/>"
+"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Pijlicoon\" "
+"title=\"Pijl\"/>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -390,8 +411,8 @@ msgstr ""
 "<span invisible=\"schedule_pay != 'annually'\">/ jaar</span>\n"
 "                <span invisible=\"schedule_pay != 'semi-annually'\">/ half "
 "jaar</span>\n"
-"                <span invisible=\"schedule_pay != 'quarterly'\">/ "
-"kwartaal</span>\n"
+"                <span invisible=\"schedule_pay != 'quarterly'\">/ kwartaal</"
+"span>\n"
 "                <span invisible=\"schedule_pay != 'bi-monthly'\">/ twee "
 "maanden</span>\n"
 "                <span invisible=\"schedule_pay != 'semi-monthly'\">/ halve "
@@ -403,8 +424,9 @@ msgstr ""
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "<span> Available variables: </span>"
-msgstr ""
+msgstr "<span> Beschikbare variabelen: </span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_template_view_form
@@ -429,8 +451,9 @@ msgstr ""
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "<span>Output:</span>"
-msgstr ""
+msgstr "<span>Output:</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
@@ -582,13 +605,13 @@ msgid ""
 "</tbody></table>\n"
 "            "
 msgstr ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
-"\"width:100%; margin:0px auto;\"><tbody>\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; "
+"margin:0px auto;\"><tbody>\n"
 "    <tr><td valign=\"top\" style=\"text-align: left; font-size: 14px;\">\n"
 "        Beste <t t-esc=\"object.employee_id.name\"/>, er staat een nieuwe "
 "loonstrook voor je klaar.<br/><br/>\n"
-"        Je kan het pdf-bestand terugvinden in je werknemersportaal.<br/><br/>"
-"\n"
+"        Je kan het pdf-bestand terugvinden in je werknemersportaal.<br/><br/"
+">\n"
 "        Nog een fijne dag gewenst,<br/>\n"
 "        Het hr-team\n"
 "    </td></tr>\n"
@@ -743,8 +766,9 @@ msgstr "Beheerder"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_index__affected_version_ids
+#, fuzzy
 msgid "Affected Version"
-msgstr ""
+msgstr "Betreffende versie"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -760,8 +784,9 @@ msgstr "Alle structuren"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid "Allocated amounts are less than the net salary."
-msgstr ""
+msgstr "Toegewezen bedragen zijn lager dan het nettoloon."
 
 #. module: hr_payroll
 #. odoo-python
@@ -807,6 +832,12 @@ msgid "Amount Type"
 msgstr "Bedragsoort"
 
 #. module: hr_payroll
+#: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
+#: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
+msgid "Amount to be paid to"
+msgstr ""
+
+#. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "Amount to pay"
@@ -833,8 +864,8 @@ msgid ""
 "            on a specific period of time, grouped by Department.<br><br>"
 msgstr ""
 "Een headcount-rapport geeft het aantal lopende contracten<br>\n"
-"            binnen een specifieke periode weer, gegroepeerd per "
-"afdeling.<br><br>"
+"            binnen een specifieke periode weer, gegroepeerd per afdeling."
+"<br><br>"
 
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_payroll_employee_declaration_unique_employee_sheet
@@ -922,6 +953,8 @@ msgid ""
 "Are you sure you want to revert this payslip? This will create a negative of "
 "this payslip."
 msgstr ""
+"Weet je zeker dat je deze loonstrook wil terugdraaien? Hierdoor wordt een "
+"negatieve versie van deze loonstrook aangemaakt."
 
 #. module: hr_payroll
 #: model:hr.payslip.input.type,name:hr_payroll.input_assignment_salary
@@ -1420,7 +1453,7 @@ msgstr "Contractsoort"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__contract_wage
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__contract_wage
 msgid "Contract Wage"
-msgstr ""
+msgstr "Contractloon"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
@@ -1761,12 +1794,6 @@ msgid "Days"
 msgstr "Dagen"
 
 #. module: hr_payroll
-#. odoo-python
-#: code:addons/hr_payroll/models/hr_payslip.py:0
-msgid "Debug Payslip"
-msgstr "Debug loonstrook"
-
-#. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__12
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__12
 msgid "December"
@@ -2000,6 +2027,7 @@ msgid "Domain"
 msgstr "Domein"
 
 #. module: hr_payroll
+#: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__validated
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_run__state__02_close
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_work_days_view_search_report
@@ -2366,19 +2394,19 @@ msgstr "De einddatum mag niet eerder zijn dan de startdatum."
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__contract_date_end
 #: model:ir.model.fields,help:hr_payroll.field_hr_version__contract_date_end
 msgid "End date of the contract (if it's a fixed-term contract)."
-msgstr ""
+msgstr "Einddatum van het contract (het is een vaste termijn contract)."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__trial_date_end
 #: model:ir.model.fields,help:hr_payroll.field_hr_version__trial_date_end
 msgid "End date of the trial period (if there is one)."
-msgstr ""
+msgstr "Einddatum van de proefperiode (als die er is)."
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__trial_date_end
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__trial_date_end
 msgid "End of Trial Period"
-msgstr ""
+msgstr "Einde van proefperiode"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__error
@@ -2511,7 +2539,7 @@ msgstr "Font awesome icoon bijv. fa-tasks"
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_line__amount_percentage
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__amount_percentage
 msgid "For example, enter 50.0 to apply a percentage of 50%"
-msgstr "Tik bijvoorbeeld 50,0 in om een percentage van 50% toe te passen"
+msgstr "Voer bijvoorbeeld 50,0 in om een percentage van 50% toe te passen"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_res_config_settings__module_l10n_fr_hr_payroll
@@ -2618,7 +2646,7 @@ msgstr "Heeft loonstrook gedaan"
 #: code:addons/hr_payroll/static/src/components/status_bubble/status_bubble.js:0
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_run__has_error
 msgid "Has Error"
-msgstr ""
+msgstr "Heeft een fout"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
@@ -2650,7 +2678,7 @@ msgstr "Heeft soortgelijke aanpassing"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__has_similar_attachment_warning
 msgid "Has Similar Attachment Warning"
-msgstr "Waarschuwing heeft soorgelijke aanpassing"
+msgstr "Waarschuwing heeft soortgelijke aanpassing"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__has_total_amount
@@ -2855,7 +2883,7 @@ msgstr "Afbeelding 128"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "Indefinite"
-msgstr ""
+msgstr "Onbepaald"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__indented
@@ -2912,7 +2940,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
 msgid "Input Type"
-msgstr ""
+msgstr "Invoertype"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
@@ -2958,7 +2986,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__is_current
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__is_current
 msgid "Is Current"
-msgstr ""
+msgstr "Is huidig"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__message_is_follower
@@ -2977,13 +3005,13 @@ msgstr "Is voltijds"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__is_future
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__is_future
 msgid "Is Future"
-msgstr ""
+msgstr "Is toekomst"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__is_in_contract
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__is_in_contract
 msgid "Is In Contract"
-msgstr ""
+msgstr "Is in contract"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_worked_days__is_paid
@@ -2994,7 +3022,7 @@ msgstr "Is betaald"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__is_past
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__is_past
 msgid "Is Past"
-msgstr ""
+msgstr "Is verleden"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__is_refund_payslip
@@ -3004,7 +3032,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__is_refunded
 msgid "Is Refunded"
-msgstr ""
+msgstr "Wordt geretourneerd"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_register
@@ -3059,8 +3087,8 @@ msgid ""
 msgstr ""
 "Het wordt gebruikt bij de berekening van percentage en vast bedrag. Bijv. "
 "bij een regel voor maaltijdcheques met een vast bedrag van 1 € per gewerkte "
-"dag kan het aantal worden gedefinieerd als worked_days['WORK100']"
-".number_of_days."
+"dag kan het aantal worden gedefinieerd als "
+"worked_days['WORK100'].number_of_days."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_input__amount
@@ -3100,7 +3128,7 @@ msgstr "Functie"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
 msgid "Job Position:"
-msgstr ""
+msgstr "Functie:"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__job_id
@@ -3311,7 +3339,7 @@ msgstr "Model voor het afdrukken van hr.payslip.line gegroepeerd op register"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_rule__input_unit__monetary
 msgid "Monetary"
-msgstr ""
+msgstr "Monetair"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -3573,7 +3601,7 @@ msgstr "Niet-ingezetene"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "None"
-msgstr ""
+msgstr "Geen"
 
 #. module: hr_payroll
 #. odoo-python
@@ -4499,7 +4527,7 @@ msgstr "Beoordelingen"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_run__state__01_ready
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
 msgid "Ready"
-msgstr ""
+msgstr "Gereed"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
@@ -4532,7 +4560,7 @@ msgstr "Een nieuwe betaling van %s geregistreerd."
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_payrun
 msgid "Records"
-msgstr ""
+msgstr "Records"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
@@ -4604,7 +4632,7 @@ msgstr "Resterend bedrag"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__remaining_time
 msgid "Remaining Time"
-msgstr ""
+msgstr "Resterende uren"
 
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_salary_attachment_check_remaining_amount
@@ -4624,7 +4652,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 msgid "Remove"
-msgstr ""
+msgstr "Verwijderen"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -4684,12 +4712,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Revert"
-msgstr "Keer terug"
+msgstr "Terugdraaien"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_correction_wizard_form
 msgid "Revert only"
-msgstr ""
+msgstr "Enkel terugdraaien"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_type__round_days_type
@@ -4776,7 +4804,7 @@ msgstr "Loon"
 #: model:ir.model,name:hr_payroll.model_hr_salary_attachment
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
 msgid "Salary Adjustment"
-msgstr ""
+msgstr "Loonaanpassing"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__salary_attachment_count
@@ -4994,7 +5022,7 @@ msgstr "Zoek structuurtype"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_section
 msgid "Section"
-msgstr ""
+msgstr "Sectie"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -5111,7 +5139,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
 msgid "Split"
-msgstr ""
+msgstr "Splitsen"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
@@ -5179,14 +5207,14 @@ msgid ""
 "camera fa-2\" aria-hidden=\"true\" contenteditable=\"false\">​</i>"
 msgstr ""
 "Wil je nog meer informatie? Hier vind je een video die je verder helpt <i "
-"class=\"fa fa-video-camera fa-2\" aria-hidden=\"true\" contenteditable="
-"\"false\"></i>"
+"class=\"fa fa-video-camera fa-2\" aria-hidden=\"true\" "
+"contenteditable=\"false\"></i>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
 msgid "Stop"
-msgstr ""
+msgstr "Stop"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule_section__struct_ids
@@ -5354,7 +5382,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 msgid "The default working hours are set in configuration."
-msgstr ""
+msgstr "De standaard werktijden worden ingesteld in de configuratie."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5629,7 +5657,7 @@ msgstr "Weergave van totale bedrag"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_run__total_employer_cost
 msgid "Total Employer Cost"
-msgstr ""
+msgstr "Totale werkgeverskost"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -5704,7 +5732,7 @@ msgstr "Onverwacht verlof"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_unit
 msgid "Unit"
-msgstr ""
+msgstr "Eenheid"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5747,7 +5775,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_tree
 msgid "Until"
-msgstr ""
+msgstr "T/m"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5817,7 +5845,6 @@ msgstr "Editie bevestigen"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state__validated
-#: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__validated
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_report__state__validated
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_report
@@ -5856,7 +5883,7 @@ msgstr "Voor iedereen zichtbaar"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__wage
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__wage
 msgid "Wage"
-msgstr ""
+msgstr "Salaris"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__wage_on_payroll
@@ -5886,7 +5913,7 @@ msgstr "Wachten"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__warning
 msgid "Warning"
-msgstr ""
+msgstr "Waarschuwing"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_dashboard_warning__color
@@ -5896,7 +5923,7 @@ msgstr "Kleur waarschuwing"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__warning_count
 msgid "Warning Count"
-msgstr ""
+msgstr "Aantal waarschuwingen"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5933,8 +5960,8 @@ msgid ""
 msgstr ""
 "Kijk uit voor gaten in %(employee_name)s's kalender\n"
 "\n"
-"Vul de ontbrekende werkboekingen aan van "
-"%(employee_name)s:%(time_intervals_str)s \n"
+"Vul de ontbrekende werkboekingen aan van %(employee_name)s:%"
+"(time_intervals_str)s \n"
 "\n"
 "Ontbrekende werkboekingen zijn als de Bermudadriehoek voor loonstrookjes. "
 "Laten we voorkomen dat de verdiensten van je collega's in het nietd "
@@ -6072,7 +6099,7 @@ msgstr "Bron werkboekingen"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__work_entry_source_calendar_invalid
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__work_entry_source_calendar_invalid
 msgid "Work Entry Source Calendar Invalid"
-msgstr ""
+msgstr "Kalender bron werkinvoer ongeldig"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_worked_days_line__work_entry_type_id
@@ -6182,8 +6209,8 @@ msgid ""
 "Wrong rule parameter value for %(rule_parameter_name)s at date %(date)s.\n"
 "%(error)s"
 msgstr ""
-"Verkeerde waarde van regelparameter voor %(rule_parameter_name)s op datum "
-"%(date)s.\n"
+"Verkeerde waarde van regelparameter voor %(rule_parameter_name)s op datum %"
+"(date)s.\n"
 "%(error)s"
 
 #. module: hr_payroll
@@ -6528,6 +6555,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
 msgid "👆See the Menu there, on the top?"
 msgstr "👆 Zie je het menu hierboven?"
+
+#~ msgid "Debug Payslip"
+#~ msgstr "Debug loonstrook"
 
 #~ msgid "# Payslip"
 #~ msgstr "# Loonstrook"

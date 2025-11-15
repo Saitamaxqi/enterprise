@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-27 02:41+0000\n"
+"PO-Revision-Date: 2025-11-13 09:24+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "account_asset/ja/>\n"
@@ -286,7 +286,7 @@ msgstr "例外の活動を示す装飾"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__activity_state
 msgid "Activity State"
-msgstr "活動状態"
+msgstr "活動ステータス"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__activity_type_icon
@@ -1761,7 +1761,7 @@ msgstr "最初の減価償却費の按分計算に使用した期間の起算日
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__state
 msgid "Status"
-msgstr "状態"
+msgstr "ステータス"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__activity_state
@@ -2105,7 +2105,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "You cannot delete a document that is in %s state."
-msgstr "%s状態中の文書を削除できません。"
+msgstr "%sステータス中の文書を削除できません。"
 
 #. module: account_asset
 #. odoo-python
@@ -2129,7 +2129,7 @@ msgstr "ロック期日前に資産を処分することはできません。"
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "You cannot reset to draft an entry related to a posted asset"
-msgstr "記帳済資産と関連している仕訳をドラフト状態にリセットできません"
+msgstr "記帳済資産と関連している仕訳をドラフトステータスにリセットできません"
 
 #. module: account_asset
 #. odoo-python

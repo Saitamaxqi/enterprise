@@ -3,13 +3,15 @@
 # * industry_fsm_sale
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# DeepL <noreply-mt-deepl@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-09-18 02:45+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-11-12 15:06+0000\n"
+"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "industry_fsm_sale/tr/>\n"
 "Language: tr\n"
@@ -75,10 +77,13 @@ msgstr ""
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_view_form_inherit
+#, fuzzy
 msgid ""
 "<span invisible=\"not allow_material\" class=\"text-muted\">Hide prices on "
 "customer report</span>"
 msgstr ""
+"<span invisible=\"not allow_material\" class=\"text-muted\">Müşteri "
+"raporunda fiyatları gizleme</span>"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_view_form_inherit
@@ -173,8 +178,9 @@ msgstr "Analitik Satırı"
 #. module: industry_fsm_sale
 #. odoo-javascript
 #: code:addons/industry_fsm_sale/static/src/components/product_catalog/kanban_controller.xml:0
+#, fuzzy
 msgid "Back to Task"
-msgstr ""
+msgstr "Göreve Geri Dön"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_project__allow_billable
@@ -226,7 +232,7 @@ msgstr "Fatura Oluştur"
 #. module: industry_fsm_sale
 #: model:ir.model,website_form_label:industry_fsm_sale.model_project_task
 msgid "Create a Task"
-msgstr ""
+msgstr "Bir Görev Oluştur"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_view_form_inherit
@@ -261,7 +267,7 @@ msgstr "Varsayılan Hizmet"
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_order__display_name
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_order_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "İsim Göster"
 
 #. module: industry_fsm_sale
 #. odoo-python
@@ -292,8 +298,9 @@ msgstr "Tamamı Faturalanan"
 #. module: industry_fsm_sale
 #. odoo-javascript
 #: code:addons/industry_fsm_sale/static/src/js/tours/industry_fsm_sale_tour.js:0
+#, fuzzy
 msgid "Go back to your <b>task</b>."
-msgstr ""
+msgstr "<b>görevinize geri dönün</b>."
 
 #. module: industry_fsm_sale
 #. odoo-javascript
@@ -303,8 +310,9 @@ msgstr "Field Service <b>görevinize</b> geri dönün."
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_project__hide_price
+#, fuzzy
 msgid "Hide price on customer report and portal"
-msgstr ""
+msgstr "Müşteri raporunda ve portalda fiyat gizleme"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_account_analytic_line__id
@@ -318,7 +326,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_order__id
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_order_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,help:industry_fsm_sale.field_project_task__under_warranty
@@ -562,8 +570,9 @@ msgstr "Hizmet"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_order__task_id
+#, fuzzy
 msgid "Source Task"
-msgstr ""
+msgstr "Kaynak Görevi"
 
 #. module: industry_fsm_sale
 #: model:ir.model,name:industry_fsm_sale.model_project_task
@@ -668,6 +677,7 @@ msgstr "<b>Ürün listenizde</b> gezinmek için içerik haritalarını kullanın
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,help:industry_fsm_sale.field_project_task__display_name
+#, fuzzy
 msgid ""
 "Use these keywords in the title to set new tasks:\n"
 "\n"
@@ -681,6 +691,17 @@ msgid ""
 "        Make sure to use the right format and order e.g. Improve the "
 "configuration screen 5h #feature #v16 @Mitchell !"
 msgstr ""
+"Yeni görevler belirlemek için başlıkta bu anahtar kelimeleri kullanın:\n"
+"\n"
+"        30h Göreve 30 saat ayırın\n"
+"        #tags Görevdeki etiketleri ayarlayın\n"
+"        kullanıcı Görevi bir kullanıcıya atayın\n"
+"        ! Görevi orta öncelikli olarak ayarlayın\n"
+"        !! Görevi yüksek öncelikli olarak ayarlayın\n"
+"        !!! Görevi acil bir öncelik olarak belirleyin\n"
+"\n"
+"        Doğru formatı ve sırayı kullandığınızdan emin olun, örneğin "
+"Yapılandırma ekranını iyileştirin 5h #özellik #v16 @Mitchell !"
 
 #. module: industry_fsm_sale
 #. odoo-javascript

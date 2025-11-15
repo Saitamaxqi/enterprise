@@ -3,13 +3,14 @@
 # * delivery_iot
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-09-18 02:45+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:43+0000\n"
+"PO-Revision-Date: 2025-11-08 20:02+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Spanish <https://translate.odoo.com/projects/odoo-19/"
 "delivery_iot/es/>\n"
 "Language: es\n"
@@ -61,6 +62,7 @@ msgstr "Conectar balanza"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_iot_device__display_name
+#: model:ir.model.fields,field_description:delivery_iot.field_ir_actions_report__display_name
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_picking_type__display_name
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__display_name
@@ -84,6 +86,7 @@ msgstr "¿Cómo conectar balanzas?"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_iot_device__id
+#: model:ir.model.fields,field_description:delivery_iot.field_ir_actions_report__id
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_picking__id
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_picking_type__id
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__id
@@ -175,6 +178,21 @@ msgstr ""
 #: code:addons/delivery_iot/static/src/field_many2one_iot_scale.xml:0
 msgid "Read weight"
 msgstr "Leer el peso"
+
+#. module: delivery_iot
+#: model:ir.model,name:delivery_iot.model_ir_actions_report
+msgid "Report Action"
+msgstr "Acción de informe"
+
+#. module: delivery_iot
+#: model:ir.ui.menu,name:delivery_iot.iot_cached_printers_section
+msgid "Reporting"
+msgstr "Informes"
+
+#. module: delivery_iot
+#: model:ir.ui.menu,name:delivery_iot.iot_cached_printers_action
+msgid "Reset Linked Printers"
+msgstr "Restablecer impresoras vinculadas"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__iot_device_id

@@ -7,13 +7,15 @@
 # Nancy Momoland <thanhnguyen.icsc@gmail.com>, 2023
 # Thi Huong Nguyen, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Thi Huong Nguyen (thng)" <thng@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-15 23:07+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 19:50+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/sign/"
 "vi/>\n"
 "Language: vi\n"
@@ -604,7 +606,7 @@ msgstr "Thêm"
 #. odoo-javascript
 #: code:addons/sign/static/src/fields/many2many_binary_field/many2many_binary_field.xml:0
 msgid "Add Attachment"
-msgstr ""
+msgstr "Thêm tệp tin đính kèm"
 
 #. module: sign
 #. odoo-javascript
@@ -723,7 +725,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sign.field_sign_item_role__assign_to
 #: model_terms:ir.ui.view,arch_db:sign.sign_item_role_view_form
 msgid "Assign to"
-msgstr ""
+msgstr "Phân công cho"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__start_sign
@@ -734,7 +736,7 @@ msgstr "Ít nhất một người ký tên đã ký tài liệu."
 #. odoo-javascript
 #: code:addons/sign/static/src/fields/many2many_binary_field/many2many_binary_field.xml:0
 msgid "Attach"
-msgstr ""
+msgstr "Đính kèm"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_document__attachment_id
@@ -826,7 +828,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sign/static/src/editor/plugins/signature.js:0
 msgid "Basic Bloc"
-msgstr ""
+msgstr "Khối cơ bản"
 
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_log__request_state__sent
@@ -1012,7 +1014,7 @@ msgstr "Mã màu"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "Communication"
-msgstr ""
+msgstr "Thông tin trao đổi"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_request
@@ -1099,6 +1101,11 @@ msgstr "Xin chúc mừng! Chữ ký của bạn đã sẵn sàng để được 
 #: model_terms:web_tour.tour,rainbow_man_message:sign.sign_tour
 msgid "Congratulations, you signed your first document!"
 msgstr "Xin chúc mừng! Bạn đã ký tài liệu đầu tiên!"
+
+#. module: sign
+#: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
+msgid "Connected as"
+msgstr ""
 
 #. module: sign
 #: model:ir.model,name:sign.model_res_partner
@@ -1320,7 +1327,7 @@ msgstr "Gửi mã một lần qua SMS để xác minh danh tính người ký kh
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__send_channel
 msgid "Delivery Method"
-msgstr ""
+msgstr "Phương thức giao hàng"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
@@ -2055,7 +2062,7 @@ msgstr "Chữ ký nháy"
 #. odoo-javascript
 #: code:addons/sign/static/src/editor/plugins/signature.js:0
 msgid "Insert your signature"
-msgstr ""
+msgstr "Chèn chữ ký của bạn"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
@@ -2099,7 +2106,7 @@ msgstr "Là người dùng ký tên"
 
 #. module: sign
 #. odoo-python
-#: code:addons/sign/models/sign_document.py:0
+#: code:addons/sign/utils/pdf_handling.py:0
 msgid ""
 "It seems that we're not able to process one of the uploaded pdf. It is "
 "either encrypted, or encoded in a format we do not support."
@@ -2270,7 +2277,7 @@ msgstr "Nhật ký"
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_item_type__field_size__long_text
 msgid "Long Text"
-msgstr ""
+msgstr "Văn bản dài"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_log__longitude
@@ -2348,7 +2355,7 @@ msgstr "Mô hình"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_template__model_name
 msgid "Model Name"
-msgstr ""
+msgstr "Tên mô hình"
 
 #. module: sign
 #. odoo-javascript
@@ -2446,7 +2453,7 @@ msgstr "Tên tệp"
 #. odoo-javascript
 #: code:addons/sign/static/src/js/tours/sign.js:0
 msgid "Nearly there, keep going!"
-msgstr ""
+msgstr "Sắp xong rồi! Hãy làm tiếp nào!"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__need_my_signature
@@ -2609,6 +2616,11 @@ msgstr ""
 "            "
 
 #. module: sign
+#: model_terms:ir.ui.view,arch_db:sign.signer_status_wrapper
+msgid "On"
+msgstr "Bật"
+
+#. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
 msgid "One can weighs 15 g"
 msgstr "Một lon nặng 15 g"
@@ -2697,7 +2709,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_item_view_tree
 msgid "Page"
-msgstr ""
+msgstr "Trang"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container
@@ -2876,12 +2888,12 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__res_ids
 msgid "Related Document IDs"
-msgstr ""
+msgstr "ID tài liệu liên quan"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__model
 msgid "Related Document Model"
-msgstr ""
+msgstr "Mô hình tài liệu liên quan"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__reminder
@@ -3051,7 +3063,7 @@ msgstr "Lưu"
 #. odoo-javascript
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_action.js:0
 msgid "Save & close"
-msgstr ""
+msgstr "Lưu & đóng"
 
 #. module: sign
 #. odoo-javascript
@@ -3074,12 +3086,12 @@ msgstr "Đã lưu"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
 msgid "Schedule"
-msgstr ""
+msgstr "Lịch trình"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__scheduled_date
 msgid "Scheduled Date"
-msgstr ""
+msgstr "Ngày đã lên lịch"
 
 #. module: sign
 #. odoo-python
@@ -4553,7 +4565,7 @@ msgstr "Có hiệu lực đến"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "Valid for"
-msgstr ""
+msgstr "Hợp lệ cho"
 
 #. module: sign
 #. odoo-javascript
@@ -4901,7 +4913,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__body
 msgid "body"
-msgstr ""
+msgstr "cơ thể"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container
@@ -4923,7 +4935,7 @@ msgstr "nhấp vào đây để huỷ."
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "days"
-msgstr ""
+msgstr "ngày"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_form
@@ -5144,6 +5156,11 @@ msgstr "tree"
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container_pdf
 msgid "trees"
 msgstr "cây"
+
+#. module: sign
+#: model_terms:ir.ui.view,arch_db:sign.signer_status_wrapper
+msgid "via"
+msgstr ""
 
 #. module: sign
 #. odoo-javascript

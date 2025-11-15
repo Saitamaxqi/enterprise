@@ -3,13 +3,15 @@
 # * sale_planning
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# DeepL <noreply-mt-deepl@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-09-18 02:47+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:46+0000\n"
+"PO-Revision-Date: 2025-11-12 15:07+0000\n"
+"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "sale_planning/tr/>\n"
 "Language: tr\n"
@@ -21,11 +23,13 @@ msgstr ""
 
 #. module: sale_planning
 #: model_terms:ir.ui.view,arch_db:sale_planning.planning_shift_ics_description_inherit
+#, fuzzy
 msgid "<b>Sales Order Item:</b>"
-msgstr ""
+msgstr "<b>Satış Siparişi Kalemi:</b>"
 
 #. module: sale_planning
 #: model_terms:ir.ui.view,arch_db:sale_planning.planning_slot_view_form_inherit_sale_planning
+#, fuzzy
 msgid ""
 "<span class=\"fa fa-exclamation-triangle text-warning\" title=\"The sales "
 "order associated with this shift has been cancelled. We recommend either "
@@ -33,6 +37,11 @@ msgid ""
 "cancellation of the sales order.\" invisible=\"sale_order_state != "
 "'cancel'\"/>"
 msgstr ""
+"<span class=\"fa fa-exclamation-triangle text-warning\" title=\"The sales "
+"order associated with this shift has been cancelled. We recommend either "
+"updating the sales order item or unscheduling this shift in line with the "
+"cancellation of the sales order.\" invisible=\"sale_order_state != 'cancel'\""
+"/>"
 
 #. module: sale_planning
 #: model_terms:ir.ui.view,arch_db:sale_planning.view_order_form_inherit_sale_planning
@@ -46,24 +55,37 @@ msgstr "<span class=\"o_stat_text\">Satış Siparişi</span>"
 
 #. module: sale_planning
 #: model_terms:ir.ui.view,arch_db:sale_planning.view_order_form_inherit_sale_planning
+#, fuzzy
 msgid "<span class=\"o_stat_text\">To Plan</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Planlamak için</span>"
 
 #. module: sale_planning
 #: model_terms:ir.ui.view,arch_db:sale_planning.product_template_form_view_invoice_policy_inherit_sale_planning
+#, fuzzy
 msgid ""
 "<span invisible=\"not planning_enabled\" class=\"oe_inline me-2\">\n"
 "                        as\n"
 "                    </span>"
 msgstr ""
+"<span invisible=\"not planning_enabled\" class=\"oe_inline me-2\">\n"
+"                        olarak\n"
+"                   </span>"
 
 #. module: sale_planning
 #. odoo-javascript
 #: code:addons/sale_planning/static/src/views/planning_hooks.js:0
+#, fuzzy
 msgid ""
 "All open shifts and sales orders have already been assigned, or there are no "
 "resources available to take them at this time."
 msgstr ""
+"Tüm açık vardiyalar ve satış siparişleri zaten atanmıştır veya şu anda "
+"bunları almak için mevcut kaynak yoktur."
+
+#. module: sale_planning
+#: model_terms:ir.ui.view,arch_db:sale_planning.planning_slot_view_tree_inherit_sale_planning
+msgid "Allocated Hours"
+msgstr "Tahsis Edilen Saatler"
 
 #. module: sale_planning
 #: model:ir.model.fields,field_description:sale_planning.field_planning_slot__allocated_hours
@@ -99,7 +121,7 @@ msgstr "Geliştirici (Plan hizmetleri)"
 #: model:ir.model.fields,field_description:sale_planning.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:sale_planning.field_uom_uom__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "İsim Göster"
 
 #. module: sale_planning
 #: model:ir.model.fields,field_description:sale_planning.field_planning_slot__end_datetime
@@ -125,7 +147,7 @@ msgstr "Saat"
 #: model:ir.model.fields,field_description:sale_planning.field_sale_order_line__id
 #: model:ir.model.fields,field_description:sale_planning.field_uom_uom__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: sale_planning
 #: model:product.template,name:sale_planning.technical_maintainance_product_product_template
@@ -141,6 +163,7 @@ msgstr "BT teknisyeni"
 #: model:ir.model.fields,help:sale_planning.field_planning_slot__sale_line_plannable
 #: model:ir.model.fields,help:sale_planning.field_product_product__planning_enabled
 #: model:ir.model.fields,help:sale_planning.field_product_template__planning_enabled
+#, fuzzy
 msgid ""
 "If enabled, a shift will automatically be generated for the selected role "
 "when confirming the Sales Order.                 With the 'auto plan' "
@@ -150,6 +173,14 @@ msgid ""
 "planned.                 You can also manually schedule open shifts for your "
 "Sales Order or assign them to any employee you prefer."
 msgstr ""
+"Etkinleştirilirse, Satış Siparişi onaylanırken seçilen rol için otomatik "
+"olarak bir vardiya oluşturulur.                 'Otomatik planlama' özelliği "
+"ile, bu hizmeti içeren Satış Siparişleri için yalnızca bu role sahip "
+"çalışanlara otomatik olarak vardiya atanacaktır.                 Sistem, "
+"çalışanın müsaitlik durumunu ve planlanacak kalan süreyi dikkate "
+"alacaktır.                 Satış Siparişi için açık vardiyaları manuel "
+"olarak da planlayabilir veya tercih ettiğiniz herhangi bir çalışana "
+"atayabilirsiniz."
 
 #. module: sale_planning
 #: model_terms:ir.ui.view,arch_db:sale_planning.planning_slot_view_search_inherit_sale_planning
@@ -168,22 +199,27 @@ msgstr "Faturalandırılamaz"
 
 #. module: sale_planning
 #: model:ir.model.constraint,message:sale_planning.constraint_planning_slot_check_datetimes_set_or_plannable_slot
+#, fuzzy
 msgid ""
 "Only slots linked to a Sales Order with a plannable service can be "
 "unscheduled."
 msgstr ""
+"Yalnızca planlanabilir bir hizmete sahip bir Satış Siparişi'ne bağlı yuvalar "
+"planlanmamış olabilir."
 
 #. module: sale_planning
 #. odoo-javascript
 #: code:addons/sale_planning/static/src/views/planning_hooks.js:0
+#, fuzzy
 msgid "Open shifts and sales orders assigned"
-msgstr ""
+msgstr "Açık vardiyalar ve verilen satış siparişleri"
 
 #. module: sale_planning
 #. odoo-javascript
 #: code:addons/sale_planning/static/src/views/planning_hooks.js:0
+#, fuzzy
 msgid "Open shifts and sales orders unscheduled"
-msgstr ""
+msgstr "Açık vardiyalar ve planlanmamış satış siparişleri"
 
 #. module: sale_planning
 #: model_terms:product.template,description:sale_planning.developer_product_product_template
@@ -199,8 +235,9 @@ msgstr "Hizmetleri Planla"
 
 #. module: sale_planning
 #: model_terms:ir.ui.view,arch_db:sale_planning.product_template_form_view_invoice_policy_inherit_sale_planning
+#, fuzzy
 msgid "Plan shifts for your orders for employees who have this role."
-msgstr ""
+msgstr "Bu role sahip çalışanlar için siparişleriniz için vardiyalar planlayın."
 
 #. module: sale_planning
 #. odoo-python
@@ -237,7 +274,7 @@ msgstr "Ürün"
 #. module: sale_planning
 #: model:ir.model,name:sale_planning.model_uom_uom
 msgid "Product Unit of Measure"
-msgstr ""
+msgstr "Ürün Ölçü Birimi"
 
 #. module: sale_planning
 #: model:ir.model.fields,field_description:sale_planning.field_planning_analysis_report__role_product_ids
@@ -263,8 +300,9 @@ msgstr "Satış Sipariş Satırı"
 
 #. module: sale_planning
 #: model_terms:ir.ui.view,arch_db:sale_planning.planning_shift_ics_description_inherit
+#, fuzzy
 msgid "Sales Order Item:"
-msgstr ""
+msgstr "Satış Siparişi Kalemi:"
 
 #. module: sale_planning
 #: model:ir.model,name:sale_planning.model_sale_order_line
@@ -273,8 +311,9 @@ msgstr "Satış Sipariş Satırı"
 
 #. module: sale_planning
 #: model:ir.model.fields,field_description:sale_planning.field_planning_slot__sale_order_state
+#, fuzzy
 msgid "Sales Order State"
-msgstr ""
+msgstr "Satış Siparişi Durumu"
 
 #. module: sale_planning
 #: model:ir.model.fields,help:sale_planning.field_planning_slot__sale_line_id
@@ -319,22 +358,26 @@ msgstr "Dinlenin. Elimizden gelenin en iyisini yapacağız."
 #. module: sale_planning
 #. odoo-javascript
 #: code:addons/sale_planning/static/src/views/sale_planning_gantt/sale_planning_gantt_renderer.js:0
+#, fuzzy
 msgid ""
 "There are no hours left to plan, or there are no resources available at the "
 "time."
-msgstr ""
+msgstr "Planlama yapmak için saat kalmamıştır veya o anda mevcut kaynak yoktur."
 
 #. module: sale_planning
 #. odoo-javascript
 #: code:addons/sale_planning/static/src/views/sale_planning_gantt/sale_planning_gantt_renderer.js:0
+#, fuzzy
 msgid "There are no sales order items to plan."
-msgstr ""
+msgstr "Planlanacak satış siparişi kalemi yoktur."
 
 #. module: sale_planning
 #. odoo-python
 #: code:addons/sale_planning/models/planning_slot.py:0
+#, fuzzy
 msgid "This Sale Order Item doesn't have a target value of planned hours."
 msgstr ""
+"Bu Satış Siparişi Kaleminin planlanan saatler için bir hedef değeri yok."
 
 #. module: sale_planning
 #. odoo-javascript
@@ -364,22 +407,28 @@ msgstr "İş Planlayıcısı"
 #. module: sale_planning
 #. odoo-python
 #: code:addons/sale_planning/models/planning_slot.py:0
+#, fuzzy
 msgid "You are attempting to create a slot for a cancelled sales order."
-msgstr ""
+msgstr "İptal edilen bir satış siparişi için yuva oluşturmaya çalışıyorsunuz."
 
 #. module: sale_planning
 #. odoo-python
 #: code:addons/sale_planning/models/sale_order.py:0
+#, fuzzy
 msgid ""
 "You cannot update the company for sales order %(order_name)s as it's linked "
 "to shifts in another company.\n"
 "Please transfer shifts %(slots_names)s to the destination company first."
 msgstr ""
+"Başka bir şirketteki vardiyalara bağlı olduğu için %(order_name)s satış "
+"siparişi için şirketi güncelleyemezsiniz.\n"
+"Lütfen önce vardiyaları %(slots_names)s hedef şirkete aktarın."
 
 #. module: sale_planning
 #: model_terms:ir.ui.view,arch_db:sale_planning.planning_role_view_tree_inherit_sale_planning
+#, fuzzy
 msgid "e.g. Cleaning Services"
-msgstr ""
+msgstr "örn. temizlik hizmetleri"
 
 #. module: sale_planning
 #: model_terms:ir.ui.view,arch_db:sale_planning.product_template_form_view_invoice_policy_inherit_sale_planning
@@ -395,5 +444,6 @@ msgstr "kalan"
 #. module: sale_planning
 #. odoo-python
 #: code:addons/sale_planning/models/sale_order.py:0
+#, fuzzy
 msgid "role_id"
-msgstr ""
+msgstr "role_id"

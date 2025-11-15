@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-10-14 10:45+0000\n"
+"PO-Revision-Date: 2025-11-13 17:16+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/sale_stock_renting/pt_BR/>\n"
@@ -62,16 +62,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.res_config_settings_inherit_view_form
 msgid "Activate to use stock deliveries and receipts for rental orders"
 msgstr ""
+"Ativar para usar entregas e recebimentos de estoque para pedidos de aluguel"
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.stock_lot_kanban_allocation
 msgid "Add Serial Number"
-msgstr ""
+msgstr "Adicionar número de série"
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.sale_order_line_form_lot_allocation
 msgid "Add a line"
-msgstr ""
+msgstr "Adicionar uma linha"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,help:sale_stock_renting.field_res_company__padding_time
@@ -88,12 +89,14 @@ msgid ""
 "Amount of time (in hours) during which a product is considered "
 "unavailableprior to renting (preparation time)."
 msgstr ""
+"Quantidade de tempo (em horas) durante o qual um produto é considerado "
+"indisponível antes da locação (tempo de preparação)."
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.sale_order_line_form_lot_allocation
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.stock_lot_kanban_allocation
 msgid "Auto assign"
-msgstr ""
+msgstr "Atribuir automaticamente"
 
 #. module: sale_stock_renting
 #. odoo-javascript
@@ -109,7 +112,7 @@ msgstr "Disponível"
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__available_reserved_lots
 msgid "Available Reserved Lots"
-msgstr ""
+msgstr "Lotes reservados disponíveis"
 
 #. module: sale_stock_renting
 #. odoo-javascript
@@ -150,7 +153,7 @@ msgstr "Margem de tempo padrão"
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse_orderpoint__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Exibir nome"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,help:sale_stock_renting.field_rental_order_wizard_line__tracking
@@ -187,7 +190,7 @@ msgstr "Tem linhas de produtos rastreados"
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse_orderpoint__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard_line__is_product_storable

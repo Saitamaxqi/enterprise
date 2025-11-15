@@ -14,13 +14,14 @@
 # Aleš Fiala <f.ales1@seznam.cz>, 2023
 # Jiří Podhorecký, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-15 11:59+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 19:33+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/hr_payroll/"
 "cs/>\n"
 "Language: cs\n"
@@ -46,6 +47,16 @@ msgid ""
 "planning. (requires Planning app)\n"
 "    "
 msgstr ""
+"\n"
+"        Definuje zdroj pro generování pracovních záznamů\n"
+"\n"
+"        Pracovní plán: Pracovní záznamy budou generovány z pracovní doby "
+"níže.\n"
+"        Docházka: Pracovní záznamy budou generovány z  docházky zaměstnance. "
+"(vyžaduje aplikaci Docházka)\n"
+"        Plánování: Pracovní záznamy budou generovány z plánování "
+"zaměstnance. (vyžaduje aplikaci Plánování)\n"
+"    "
 
 #. module: hr_payroll
 #. odoo-python
@@ -124,7 +135,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "%(start_date_string)s and %(end_date_string)s"
-msgstr ""
+msgstr "%(start_date_string)s a %(end_date_string)s"
 
 #. module: hr_payroll
 #. odoo-python
@@ -138,7 +149,7 @@ msgstr ""
 #: code:addons/hr_payroll/models/hr_salary_rule.py:0
 #: code:addons/hr_payroll/models/hr_salary_rule_category.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (kopie)"
 
 #. module: hr_payroll
 #: model:ir.actions.report,print_report_name:hr_payroll.action_report_light_payslip
@@ -165,7 +176,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.contribution_register
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #. module: hr_payroll
 #: model:hr.payroll.structure,name:hr_payroll.structure_003
@@ -288,6 +299,8 @@ msgid ""
 "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
 "title=\"Arrow\"/>"
 msgstr ""
+"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" title="
+"\"Arrow\"/>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -297,7 +310,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 msgid "<span class=\"mx-2\">/</span>"
-msgstr ""
+msgstr "<span class=\"mx-2\">/</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -403,7 +416,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<span>Total</span>"
-msgstr ""
+msgstr "<span>Součet</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
@@ -606,7 +619,7 @@ msgstr "Aktivity"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
 msgid "Activities of"
-msgstr ""
+msgstr "Aktivity"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__activity_exception_decoration
@@ -629,7 +642,7 @@ msgstr "Ikona typu aktivity"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
 msgid "Activity type"
-msgstr ""
+msgstr "Typ aktivity"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
@@ -668,7 +681,7 @@ msgstr "Přidat interní poznámku..."
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payrun_card/more_info/payrun_more_info.xml:0
 msgid "Additional Information"
-msgstr ""
+msgstr "Dodatečné informace"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_edit_payslip_lines_wizard__ytd_computation
@@ -755,6 +768,12 @@ msgid "Amount Type"
 msgstr "Typ částky"
 
 #. module: hr_payroll
+#: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
+#: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
+msgid "Amount to be paid to"
+msgstr ""
+
+#. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "Amount to pay"
@@ -831,7 +850,7 @@ msgstr "Přibližné datum ukončení."
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__4
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__4
 msgid "April"
-msgstr ""
+msgstr "Duben"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_dashboard_warning_view_form
@@ -910,7 +929,7 @@ msgstr "Docházka"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__8
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__8
 msgid "August"
-msgstr ""
+msgstr "Srpen"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
@@ -948,19 +967,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/views/payslip_run_version_list/hr_version_list_controller.xml:0
 msgid "Back"
-msgstr ""
+msgstr "Zpět"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Bank Accounts"
-msgstr ""
+msgstr "Bankovní účty"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "Bank account"
-msgstr ""
+msgstr "Bankovní účet"
 
 #. module: hr_payroll
 #: model:hr.salary.rule.category,name:hr_payroll.BASIC
@@ -1000,7 +1019,7 @@ msgstr "Belgie mezd"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__bold
 msgid "Bold"
-msgstr ""
+msgstr "Tučný"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payroll_payment_report_wizard__export_format__csv
@@ -1024,7 +1043,7 @@ msgstr "Zrušit"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state__cancel
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__cancel
 msgid "Canceled"
-msgstr ""
+msgstr "Zrušeno"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
@@ -1094,7 +1113,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_rule__input_unit__boolean
 msgid "Checkbox"
-msgstr ""
+msgstr "Zaškrtávací pole"
 
 #. module: hr_payroll
 #: model:hr.payslip.input.type,name:hr_payroll.input_child_support
@@ -1183,7 +1202,7 @@ msgstr "Zavřít"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_attachment__state__close
 msgid "Closed"
-msgstr ""
+msgstr "Uzavřeno"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_type__round_days_type__half-up
@@ -1210,7 +1229,7 @@ msgstr "Kód"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_working_rate__color
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__color
 msgid "Color"
-msgstr ""
+msgstr "Barva"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_res_company
@@ -1251,7 +1270,7 @@ msgstr "Výpočet"
 #: code:addons/hr_payroll/static/src/components/payrun_card/payrun_card.xml:0
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
 msgid "Compute"
-msgstr ""
+msgstr "Vypočítat"
 
 #. module: hr_payroll
 #: model:ir.actions.server,name:hr_payroll.action_hr_payroll_compute_payroll
@@ -1316,7 +1335,7 @@ msgstr "Konflikty"
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/views/payslip_run_form/hr_payslip_run_form.xml:0
 msgid "Continue"
-msgstr ""
+msgstr "Pokračovat"
 
 #. module: hr_payroll
 #. odoo-python
@@ -1331,7 +1350,7 @@ msgstr "Smlouva"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__contract_date_end
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__contract_date_end
 msgid "Contract End Date"
-msgstr ""
+msgstr "Datum ukončení smlouvy"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
@@ -1342,7 +1361,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__contract_date_start
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__contract_date_start
 msgid "Contract Start Date"
-msgstr ""
+msgstr "Počáteční datum smlouvy"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__contract_type_id
@@ -1355,7 +1374,7 @@ msgstr "Typ smlouvy"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__contract_wage
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__contract_wage
 msgid "Contract Wage"
-msgstr ""
+msgstr "Smluvní mzda"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
@@ -1459,7 +1478,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Create Payment Report"
-msgstr ""
+msgstr "Vytvořit výkaz platby"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
@@ -1474,7 +1493,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_mixin__create_uid
 msgid "Create Uid"
-msgstr ""
+msgstr "Vytvořit Uid"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_hr_payslip_run
@@ -1500,17 +1519,17 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_salary_rule_form
 msgid "Create a new salary rule"
-msgstr ""
+msgstr "Vytvořit nové platové pravidlo"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_rule_parameter_action
 msgid "Create a new salary rule parameter"
-msgstr ""
+msgstr "Vytvořit nový parametr platového pravidla"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_view_hr_payroll_structure_list_form
 msgid "Create a new salary structure"
-msgstr ""
+msgstr "Vytvořit novou platovou strukturu"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -1586,7 +1605,7 @@ msgstr "Vytvořeno dne"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_declaration_mixin_view_list
 msgid "Creation date"
-msgstr ""
+msgstr "Datum vytvoření"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__credit_note
@@ -1612,7 +1631,7 @@ msgstr "Měna"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_rule_parameter_view_tree
 msgid "Current Value"
-msgstr ""
+msgstr "Aktuální hodnota"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_rule_parameter__current_value_one_line
@@ -1650,7 +1669,7 @@ msgstr "Datum"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__date_end
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__date_end
 msgid "Date End"
-msgstr ""
+msgstr "Konečné datum"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__date_start
@@ -1691,16 +1710,10 @@ msgid "Days"
 msgstr "Dny"
 
 #. module: hr_payroll
-#. odoo-python
-#: code:addons/hr_payroll/models/hr_payslip.py:0
-msgid "Debug Payslip"
-msgstr ""
-
-#. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__12
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__12
 msgid "December"
-msgstr ""
+msgstr "Prosinec"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_declaration_mixin_view_list
@@ -1739,7 +1752,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_default_value
 msgid "Default Value"
-msgstr ""
+msgstr "Výchozí hodnota"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -1783,7 +1796,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 msgid "Delete"
-msgstr ""
+msgstr "Smazat"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__department_id
@@ -1804,7 +1817,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_filter_payrun
 msgid "Departure"
-msgstr ""
+msgstr "Odchod"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__dependent_input_id
@@ -1840,7 +1853,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__disabled
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__disabled
 msgid "Disabled"
-msgstr ""
+msgstr "Vypnuto"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -1857,7 +1870,7 @@ msgstr "Zrušit"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "Display"
-msgstr ""
+msgstr "Zobrazit"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__display_name
@@ -1924,9 +1937,10 @@ msgstr "Dokument"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_rule__condition_select__domain
 msgid "Domain"
-msgstr ""
+msgstr "Doména"
 
 #. module: hr_payroll
+#: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__validated
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_run__state__02_close
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_work_days_view_search_report
@@ -1973,7 +1987,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__duration_type
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_search
 msgid "Duration"
-msgstr ""
+msgstr "Trvání"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
@@ -2033,7 +2047,7 @@ msgstr "Vydání linií výplatní pásky na výplatní páske"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_payrun
 msgid "Effective Date"
-msgstr ""
+msgstr "Datum účinnosti"
 
 #. module: hr_payroll
 #. odoo-python
@@ -2113,7 +2127,7 @@ msgstr "Funkce zaměstnance"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "Employee Information"
-msgstr ""
+msgstr "Informace o zaměstnanci"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.action_hr_payslip_new
@@ -2147,7 +2161,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__employee_type
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_line_search
 msgid "Employee Type"
-msgstr ""
+msgstr "Typ zaměstnance"
 
 #. module: hr_payroll
 #. odoo-python
@@ -2170,7 +2184,7 @@ msgstr "Hodinová hrubá mzda zaměstnance."
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__wage
 #: model:ir.model.fields,help:hr_payroll.field_hr_version__wage
 msgid "Employee's monthly gross wage."
-msgstr ""
+msgstr "Hrubá měsíční mzda zaměstnance."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -2266,7 +2280,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_payrun
 msgid "End"
-msgstr ""
+msgstr "Konec"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__date_end
@@ -2282,19 +2296,19 @@ msgstr "Datum ukončení nesmí být před datem zahájení."
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__contract_date_end
 #: model:ir.model.fields,help:hr_payroll.field_hr_version__contract_date_end
 msgid "End date of the contract (if it's a fixed-term contract)."
-msgstr ""
+msgstr "Datum ukončení smlouvy (pokud je to smlouva na dobu určitou)."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__trial_date_end
 #: model:ir.model.fields,help:hr_payroll.field_hr_version__trial_date_end
 msgid "End date of the trial period (if there is one)."
-msgstr ""
+msgstr "Datum ukončení zkušební doby (pokud existuje)."
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__trial_date_end
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__trial_date_end
 msgid "End of Trial Period"
-msgstr ""
+msgstr "Konec zkušební doby"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__error
@@ -2332,7 +2346,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_employee_mixin__export_id
 msgid "Export"
-msgstr ""
+msgstr "Export"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_run__payment_report
@@ -2379,7 +2393,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__2
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__2
 msgid "February"
-msgstr ""
+msgstr "Únor"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -2531,7 +2545,7 @@ msgstr ""
 #: code:addons/hr_payroll/static/src/components/status_bubble/status_bubble.js:0
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_run__has_error
 msgid "Has Error"
-msgstr ""
+msgstr "Má chybu"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
@@ -2581,7 +2595,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_tree
 msgid "Headcount"
-msgstr ""
+msgstr "Počet zaměstnanců"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_headcount_line
@@ -2619,7 +2633,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_rule_parameter_view_form
 msgid "History"
-msgstr ""
+msgstr "Historie"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__hourly_wage
@@ -2633,7 +2647,7 @@ msgstr "Hodinová mzda"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Hours"
-msgstr ""
+msgstr "Hodiny"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
@@ -2823,7 +2837,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
 msgid "Input Type"
-msgstr ""
+msgstr "Typ vstupu"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
@@ -2915,7 +2929,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__is_refunded
 msgid "Is Refunded"
-msgstr ""
+msgstr "Je refundováno"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_register
@@ -2959,7 +2973,7 @@ msgstr ""
 #: code:addons/hr_payroll/static/src/components/status_bubble/status_bubble.xml:0
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__issues
 msgid "Issues"
-msgstr ""
+msgstr "Problémy"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__quantity
@@ -2980,18 +2994,18 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__italic
 msgid "Italic"
-msgstr ""
+msgstr "Kurzíva"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__1
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__1
 msgid "January"
-msgstr ""
+msgstr "Leden"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_line_search
 msgid "Job"
-msgstr ""
+msgstr "Práce"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__job_id
@@ -3003,24 +3017,24 @@ msgstr "Pracovní pozice"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
 msgid "Job Position:"
-msgstr ""
+msgstr "Pracovní pozice"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__job_id
 msgid "Job Title"
-msgstr ""
+msgstr "Název pozice"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__7
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__7
 msgid "July"
-msgstr ""
+msgstr "Červenec"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__6
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__6
 msgid "June"
-msgstr ""
+msgstr "Červen"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__keep_wrong_version
@@ -3115,12 +3129,12 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_attachment__duration_type__limited
 msgid "Limited"
-msgstr ""
+msgstr "Limitováno"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount__line_ids
 msgid "Line"
-msgstr ""
+msgstr "Řádek"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_line_form
@@ -3150,7 +3164,7 @@ msgstr "Hlavní příloha"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__3
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__3
 msgid "March"
-msgstr ""
+msgstr "Březen"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
@@ -3174,7 +3188,7 @@ msgstr "Označit jako zaplacené"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__5
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__5
 msgid "May"
-msgstr ""
+msgstr "Květen"
 
 #. module: hr_payroll
 #: model:hr.salary.rule,name:hr_payroll.hr_salary_rule_meal_voucher
@@ -3214,7 +3228,7 @@ msgstr "Model pro tisk hr.payslip.line seskupený podle registru"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_rule__input_unit__monetary
 msgid "Monetary"
-msgstr ""
+msgstr "Měnové"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -3276,7 +3290,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
 msgid "Name:"
-msgstr ""
+msgstr "Název:"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__negative_net_to_report_amount
@@ -3363,7 +3377,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_filter_payrun
 msgid "Newly Hired"
-msgstr ""
+msgstr "Nově přijat"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__activity_calendar_event_id
@@ -3476,7 +3490,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "None"
-msgstr ""
+msgstr "Žádné"
 
 #. module: hr_payroll
 #. odoo-python
@@ -3517,7 +3531,7 @@ msgstr "Nic k vidění"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__11
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__11
 msgid "November"
-msgstr ""
+msgstr "Listopad"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__message_needaction_counter
@@ -3561,7 +3575,7 @@ msgstr ""
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_run__message_needaction_counter
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_attachment__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Počet zpráv, které vyžadují vaši pozornost"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip__message_has_error_counter
@@ -3584,7 +3598,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__10
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__10
 msgid "October"
-msgstr ""
+msgstr "Říjen"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -3678,7 +3692,7 @@ msgstr "Další informace"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "Other Information"
-msgstr ""
+msgstr "Jiné informace"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_rule__amount_select__input
@@ -3711,7 +3725,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_employee_declaration__pdf_file
 msgid "PDF File"
-msgstr ""
+msgstr "PDF soubor"
 
 #. module: hr_payroll
 #. odoo-python
@@ -3843,7 +3857,7 @@ msgstr "Název výplatní pásky"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_payment_report_wizard__effective_date
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__paid_date
 msgid "Payment Date"
-msgstr ""
+msgstr "Datum platby"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_payment_report_wizard__effective_date
@@ -4288,7 +4302,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "Preview"
-msgstr ""
+msgstr "Náhled"
 
 #. module: hr_payroll
 #. odoo-python
@@ -4373,7 +4387,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_working_rate__rate
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "Rate"
-msgstr ""
+msgstr "Kurz"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_line__rate
@@ -4392,7 +4406,7 @@ msgstr "Hodnocení"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_run__state__01_ready
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
 msgid "Ready"
-msgstr ""
+msgstr "Připraveno"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
@@ -4426,7 +4440,7 @@ msgstr "Byla zaznamenána nová platba ve výši %s."
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_payrun
 msgid "Records"
-msgstr ""
+msgstr "Záznamy"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
@@ -4458,7 +4472,7 @@ msgstr "Vrácení peněz: %(payslip)s"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_search
 msgid "Refunds"
-msgstr ""
+msgstr "Dopropisy přijaté"
 
 #. module: hr_payroll
 #: model:hr.payroll.structure,name:hr_payroll.structure_002
@@ -4518,7 +4532,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 msgid "Remove"
-msgstr ""
+msgstr "Odebrat"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -4578,7 +4592,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Revert"
-msgstr ""
+msgstr "Vracení do původního stavu"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_correction_wizard_form
@@ -4819,7 +4833,7 @@ msgstr "Platové struktury"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 msgid "Save"
-msgstr ""
+msgstr "Uložit"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure__schedule_pay
@@ -4888,7 +4902,7 @@ msgstr "Typ struktury vyhledávání"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_section
 msgid "Section"
-msgstr ""
+msgstr "Sekce"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -4896,7 +4910,7 @@ msgstr ""
 #: code:addons/hr_payroll/static/src/views/payslip_list/hr_payslip_list_controller.xml:0
 #: code:addons/hr_payroll/static/src/views/payslip_run_version_list/hr_version_list_controller.xml:0
 msgid "Select"
-msgstr ""
+msgstr "Vybrat"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.action_payroll_hr_version_list_view_payrun
@@ -4927,7 +4941,7 @@ msgstr "Odesláno zaměstnanci, aby je informoval o nové výplatní pásce"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__9
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__9
 msgid "September"
-msgstr ""
+msgstr "Září"
 
 #. module: hr_payroll
 #. odoo-python
@@ -4999,7 +5013,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
 msgid "Split"
-msgstr ""
+msgstr "Rozdělit"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
@@ -5015,7 +5029,7 @@ msgstr "Standartní kalendář"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_payrun
 msgid "Start"
-msgstr ""
+msgstr "Začít"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__date_start
@@ -5071,7 +5085,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
 msgid "Stop"
-msgstr ""
+msgstr "Zastavit"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule_section__struct_ids
@@ -5154,7 +5168,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure__report_id
 msgid "Template"
-msgstr ""
+msgstr "Předloha"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip__country_code
@@ -5232,7 +5246,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 msgid "The default working hours are set in configuration."
-msgstr ""
+msgstr "Výchozí pracovní doba je nastavena v konfiguraci."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5325,7 +5339,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_payroll_headcount_date_range
 msgid "The start date must be anterior to the end date."
-msgstr ""
+msgstr "Počáteční datum musí být dříve než koncové datum."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -5424,7 +5438,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_edit_payslip_lines_wizard.py:0
 msgid "This payslip has been manually edited by %(user)s."
-msgstr ""
+msgstr "Tuto výplatní pásku ručně upravil uživatel %(user)s."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5450,12 +5464,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/dashboard_empty_screen/dashboard_empty_screen.xml:0
 msgid "Time Off"
-msgstr ""
+msgstr "Volno"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__title
 msgid "Title"
-msgstr ""
+msgstr "Název"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount__date_to
@@ -5563,7 +5577,7 @@ msgstr "Typ výjimečné aktivity na záznamu."
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__underline
 msgid "Underline"
-msgstr ""
+msgstr "Podtržení"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_type__is_unforeseen
@@ -5573,7 +5587,7 @@ msgstr "Nepředvídaná absence"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_unit
 msgid "Unit"
-msgstr ""
+msgstr "Jednotka"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5584,7 +5598,7 @@ msgstr "Neznámý stav"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_attachment__duration_type__unlimited
 msgid "Unlimited"
-msgstr ""
+msgstr "Neomezený"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_work_entry_type_view_form_inherit
@@ -5616,7 +5630,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_tree
 msgid "Until"
-msgstr ""
+msgstr "Konec"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5687,7 +5701,6 @@ msgstr "Ověření vydání"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state__validated
-#: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__validated
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_report__state__validated
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_report
@@ -5699,7 +5712,7 @@ msgstr "Potvrzeno"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_employee_mixin__version_ids
 msgid "Version"
-msgstr ""
+msgstr "Verze"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__version_names
@@ -5720,13 +5733,13 @@ msgstr "Verze"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_form
 msgid "Visible to all"
-msgstr ""
+msgstr "Viditelné pro všechny"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__wage
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__wage
 msgid "Wage"
-msgstr ""
+msgstr "Mzda"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__wage_on_payroll
@@ -5745,7 +5758,7 @@ msgstr "Typ mzdy"
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_index_wizard.py:0
 msgid "Wage indexed by %(percentage).2f%% on %(date)s"
-msgstr ""
+msgstr "Mzda indexovaná o %(percentage).2f%% dne %(date)s"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
@@ -5756,7 +5769,7 @@ msgstr "Čekající"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__warning
 msgid "Warning"
-msgstr ""
+msgstr "Varování"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_dashboard_warning__color
@@ -5905,7 +5918,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_employee_mixin__work_entry_ids
 msgid "Work Entry"
-msgstr ""
+msgstr "Pracovní záznam"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_work_entry_export_employee_mixin
@@ -5993,7 +6006,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__resource_calendar_id
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__resource_calendar_id
 msgid "Working Hours"
-msgstr ""
+msgstr "Pracovní doba"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_headcount_working_rate
@@ -6079,7 +6092,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_declaration_mixin__year
 msgid "Year"
-msgstr ""
+msgstr "Rok"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_lines_wizard__ytd_computation
@@ -6258,7 +6271,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
 msgid "end in"
-msgstr ""
+msgstr "končí za"
 
 #. module: hr_payroll
 #. odoo-python
@@ -6269,7 +6282,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
 msgid "from"
-msgstr ""
+msgstr "od"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -6310,13 +6323,13 @@ msgstr ""
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "id"
-msgstr ""
+msgstr "id"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payrun_card/payrun_card.xml:0
 msgid "net"
-msgstr ""
+msgstr "síť"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
@@ -6345,7 +6358,7 @@ msgstr "výsledek bude ovlivněn proměnnou"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
 msgid "until"
-msgstr ""
+msgstr "do"
 
 #. module: hr_payroll
 #. odoo-javascript

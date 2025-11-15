@@ -3,13 +3,14 @@
 # * hr_expense_stripe
 #
 # "Anastasiia Koroleva (koan)" <koan@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-30 13:42+0000\n"
-"Last-Translator: \"Anastasiia Koroleva (koan)\" <koan@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:42+0000\n"
+"PO-Revision-Date: 2025-11-08 20:11+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
 "hr_expense_stripe/ru/>\n"
 "Language: ru\n"
@@ -27,6 +28,14 @@ msgid "(Fetching...)"
 msgstr "(Загрузка...)"
 
 #. module: hr_expense_stripe
+#: model_terms:ir.ui.view,arch_db:hr_expense_stripe.res_config_settings_view_form
+msgid ""
+"<i class=\"fa fa-warning ms-1 text-warning\"/>\n"
+"                                <span class=\"text-warning\"> Stripe issuing "
+"is not yet supported for your localization.</span>"
+msgstr ""
+
+#. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_kanban
 msgid ""
 "<span class=\"card_cvc w-50 text-end stripe_card_text_sm\" invisible=\"state "
@@ -34,8 +43,8 @@ msgid ""
 "                                                        ****\n"
 "                                                    </span>"
 msgstr ""
-"<span class=\"card_cvc w-50 text-end stripe_card_text_sm\" invisible="
-"\"state in ('draft', 'pending')\">\n"
+"<span class=\"card_cvc w-50 text-end stripe_card_text_sm\" invisible=\"state "
+"in ('draft', 'pending')\">\n"
 "                                                        ****\n"
 "                                                    </span>"
 
@@ -47,7 +56,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
 msgid "<span class=\"o_stat_text\">Employee</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Сотрудник</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_view_form_inherits_stripe
@@ -61,9 +70,9 @@ msgid ""
 "triangle text-danger pb-2\" title=\"Entered digits don't match the last 4 "
 "digits of the card.\"/>"
 msgstr ""
-"<span invisible=\"not show_warning_wrong_last_4\" class="
-"\"fa fa-exclamation-triangle text-danger pb-2\" title="
-"\"Введенные цифры не совпадают с последними 4 цифрами карты.\"/>"
+"<span invisible=\"not show_warning_wrong_last_4\" class=\"fa fa-exclamation-"
+"triangle text-danger pb-2\" title=\"Введенные цифры не совпадают с "
+"последними 4 цифрами карты.\"/>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.account_journal_dashboard_kanban_view_inherit_expense_stripe
@@ -91,8 +100,8 @@ msgid ""
 "<strong>Top up your Stripe Issuing account to ensure your balance covers "
 "upcoming expenses.</strong>"
 msgstr ""
-"<strong>Пополните баланс Stripe Issuing, чтобы покрыть предстоящие "
-"расходы.</strong>"
+"<strong>Пополните баланс Stripe Issuing, чтобы покрыть предстоящие расходы.</"
+"strong>"
 
 #. module: hr_expense_stripe
 #: model:mail.template,body_html:hr_expense_stripe.email_template_hr_expense_stripe_card_canceled
@@ -207,11 +216,11 @@ msgid ""
 msgstr ""
 "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
 "16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
-"color: #454748; width: 100%; border-collapse:separate;\"><tr><td align=\""
-"center\">\n"
-"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
-"\"590\" style=\"padding: 16px; background-color: white; color: #454748; "
-"border-collapse:separate;\">\n"
+"color: #454748; width: 100%; border-collapse:separate;\"><tr><td "
+"align=\"center\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
+"width=\"590\" style=\"padding: 16px; background-color: white; color: "
+"#454748; border-collapse:separate;\">\n"
 "            <tbody>\n"
 "            <!-- HEADER -->\n"
 "            <tr>\n"
@@ -223,14 +232,14 @@ msgstr ""
 "                    <t t-set=\"company\" t-value=\"object.company_id\"/>\n"
 "                    <span style=\"font-size: 10px;\">Уведомление об отправке "
 "карты</span><br/>\n"
-"                    <span style=\"font-size: 20px; font-weight: bold;\""
-">Отправка вашей карты отменена</span>\n"
+"                    <span style=\"font-size: 20px; font-weight: bold;"
+"\">Отправка вашей карты отменена</span>\n"
 "                    </td></tr>\n"
-"                    <tr><td valign=\"middle\" align=\"right\" t-if="
-"\"not company.uses_default_logo\">\n"
+"                    <tr><td valign=\"middle\" align=\"right\" t-if=\"not "
+"company.uses_default_logo\">\n"
 "                    <img t-attf-src=\"/logo.png?company={{ company.id }}\" "
-"style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt="
-"\"company.name\"/>\n"
+"style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-"
+"alt=\"company.name\"/>\n"
 "                    </td></tr>\n"
 "                    <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
 "                    <hr width=\"100%\" style=\"background-"
@@ -247,9 +256,8 @@ msgstr ""
 "width=\"590\" style=\"min-width: 590px; background-color: white; padding: "
 "0px 8px 0px 8px; border-collapse:separate;\">\n"
 "                    <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
-"                    Здравствуйте, <t t-out="
-"\"ctx.get('recipient_name', object.user_id.name)\">[имя держателя карты]"
-"</t>!<br/><br/>\n"
+"                    Здравствуйте, <t t-out=\"ctx.get('recipient_name', "
+"object.user_id.name)\">[имя держателя карты]</t>!<br/><br/>\n"
 "                    Сообщаем вам, что отправка вашей карты была отменена.<br/"
 ">\n"
 "                    Если вы все еще хотите получить карту, пожалуйста, "
@@ -276,21 +284,21 @@ msgstr ""
 "                    <tr><td valign=\"middle\" align=\"left\">\n"
 "                        <t t-out=\"company.name or ''\">YourCompany</t>\n"
 "                    </td></tr>\n"
-"                    <tr><td valign=\"middle\" align=\"left\" style="
-"\"opacity: 0.7;\">\n"
+"                    <tr><td valign=\"middle\" align=\"left\" "
+"style=\"opacity: 0.7;\">\n"
 "                    <t t-if=\"company.phone\">\n"
 "                        <t t-out=\"company.phone or ''\">+1 650-123-4567</t> "
 "|\n"
 "                    </t>\n"
 "                    <t t-if=\"company.email\">\n"
 "                        <a t-attf-href=\"'mailto:%s' % {{ company.email }}\" "
-"style=\"text-decoration:none; color: #454748;\" t-out=\"company.email or ''\""
-">info@yourcompany.com</a> |\n"
+"style=\"text-decoration:none; color: #454748;\" t-out=\"company.email or "
+"''\">info@yourcompany.com</a> |\n"
 "                    </t>\n"
 "                    <t t-if=\"company.website\">\n"
-"                        <a t-attf-href=\"'%s' % {{ company.website }}\" style"
-"=\"text-decoration:none; color: #454748;\" t-out=\"company.website or ''\""
-">http://www.example.com</a>\n"
+"                        <a t-attf-href=\"'%s' % {{ company.website }}\" "
+"style=\"text-decoration:none; color: #454748;\" t-out=\"company.website or "
+"''\">http://www.example.com</a>\n"
 "                    </t>\n"
 "                    </td></tr>\n"
 "                </table>\n"
@@ -301,13 +309,13 @@ msgstr ""
 "            </td></tr>\n"
 "            <!-- POWERED BY -->\n"
 "            <tr><td align=\"center\" style=\"min-width: 590px;\">\n"
-"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
-"\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; "
-"padding: 8px; border-collapse:separate;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
+"width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: "
+"#454748; padding: 8px; border-collapse:separate;\">\n"
 "            <tr><td style=\"text-align: center; font-size: 13px;\">\n"
-"                Работает на базе <a target=\"_blank\" href="
-"\"https://www.odoo.com?utm_source=db&amp;utm_medium=mail\" t-attf-style="
-"\"color: {{company.email_secondary_color or '#875A7B'}};\">Odoo</a>\n"
+"                Работает на базе <a target=\"_blank\" href=\"https://"
+"www.odoo.com?utm_source=db&amp;utm_medium=mail\" t-attf-style=\"color: "
+"{{company.email_secondary_color or '#875A7B'}};\">Odoo</a>\n"
 "            </td></tr>\n"
 "            </table>\n"
 "            </td></tr>\n"
@@ -550,11 +558,11 @@ msgid ""
 msgstr ""
 "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
 "16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
-"color: #454748; width: 100%; border-collapse:separate;\"><tr><td align=\""
-"center\">\n"
-"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
-"\"590\" style=\"padding: 16px; background-color: white; color: #454748; "
-"border-collapse:separate;\">\n"
+"color: #454748; width: 100%; border-collapse:separate;\"><tr><td "
+"align=\"center\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
+"width=\"590\" style=\"padding: 16px; background-color: white; color: "
+"#454748; border-collapse:separate;\">\n"
 "            <tbody>\n"
 "            <!-- HEADER -->\n"
 "            <tr>\n"
@@ -569,11 +577,11 @@ msgstr ""
 "                    <span style=\"font-size: 20px; font-weight: bold;\">Ваша "
 "карта отправлена</span>\n"
 "                    </td></tr>\n"
-"                    <tr><td valign=\"middle\" align=\"right\" t-if="
-"\"not company.uses_default_logo\">\n"
+"                    <tr><td valign=\"middle\" align=\"right\" t-if=\"not "
+"company.uses_default_logo\">\n"
 "                    <img t-attf-src=\"/logo.png?company={{ company.id }}\" "
-"style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt="
-"\"company.name\"/>\n"
+"style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-"
+"alt=\"company.name\"/>\n"
 "                    </td></tr>\n"
 "                    <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
 "                    <hr width=\"100%\" style=\"background-"
@@ -590,28 +598,27 @@ msgstr ""
 "width=\"590\" style=\"min-width: 590px; background-color: white; padding: "
 "0px 8px 0px 8px; border-collapse:separate;\">\n"
 "                    <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
-"                    Здравствуйте, <t t-out="
-"\"ctx.get('recipient_name', object.user_id.name)\">[имя держателя карты]"
-"</t>!<br/><br/>\n"
+"                    Здравствуйте, <t t-out=\"ctx.get('recipient_name', "
+"object.user_id.name)\">[имя держателя карты]</t>!<br/><br/>\n"
 "                    Ваша корпоративная карта уже в пути!<br/><br/>\n"
 "                    <t t-if=\"object.tracking_number\">\n"
-"                        <strong>Трек-номер:</strong> <t t-out="
-"\"object.tracking_number\">TRACK123</t><br/>\n"
+"                        <strong>Трек-номер:</strong> <t t-"
+"out=\"object.tracking_number\">TRACK123</t><br/>\n"
 "                    </t>\n"
 "                    <t t-if=\"object.tracking_url\">\n"
 "                        <strong>Отследить доставку:</strong>\n"
-"                        <a t-att-href=\"object.tracking_url\" style="
-"\"color: #875A7B; text-decoration: underline;\"><t t-out="
-"\"object.tracking_url\">[Ссылка]</t></a><br/>\n"
+"                        <a t-att-href=\"object.tracking_url\" style=\"color: "
+"#875A7B; text-decoration: underline;\"><t t-"
+"out=\"object.tracking_url\">[Ссылка]</t></a><br/>\n"
 "                    </t>\n"
 "                    <t t-if=\"ctx.get('shipping_estimated_delivery', '')\">\n"
 "                        <strong>Расчетное время прибытия:</strong>\n"
-"                        <t t-out="
-"\"ctx.get('shipping_estimated_delivery', '')\">[2025-12-24]</t><br/><br/>\n"
+"                        <t t-out=\"ctx.get('shipping_estimated_delivery', '')"
+"\">[2025-12-24]</t><br/><br/>\n"
 "                    </t>\n"
 "                    Чтобы активировать карту после получения:<br/><br/>\n"
-"                    1) Откройте <a t-attf-href="
-"\"{{ website_url }}/odoo/cards\">список ваших карт</a><br/>\n"
+"                    1) Откройте <a t-attf-href=\"{{ website_url }}/odoo/"
+"cards\">список ваших карт</a><br/>\n"
 "                    2) Выберите карту и следуйте инструкциям<br/><br/>\n"
 "                    С уважением,<br/>\n"
 "                    <t t-out=\"company.name or ''\">[Название компании]</t>\n"
@@ -633,21 +640,21 @@ msgstr ""
 "                    <tr><td valign=\"middle\" align=\"left\">\n"
 "                        <t t-out=\"company.name or ''\">YourCompany</t>\n"
 "                    </td></tr>\n"
-"                    <tr><td valign=\"middle\" align=\"left\" style="
-"\"opacity: 0.7;\">\n"
+"                    <tr><td valign=\"middle\" align=\"left\" "
+"style=\"opacity: 0.7;\">\n"
 "                    <t t-if=\"company.phone\">\n"
 "                        <t t-out=\"company.phone or ''\">+1 650-123-4567</t> "
 "|\n"
 "                    </t>\n"
 "                    <t t-if=\"company.email\">\n"
 "                        <a t-attf-href=\"'mailto:%s' % {{ company.email }}\" "
-"style=\"text-decoration:none; color: #454748;\" t-out=\"company.email or ''\""
-">info@yourcompany.com</a> |\n"
+"style=\"text-decoration:none; color: #454748;\" t-out=\"company.email or "
+"''\">info@yourcompany.com</a> |\n"
 "                    </t>\n"
 "                    <t t-if=\"company.website\">\n"
-"                        <a t-attf-href=\"'%s' % {{ company.website }}\" style"
-"=\"text-decoration:none; color: #454748;\" t-out=\"company.website or ''\""
-">http://www.example.com</a>\n"
+"                        <a t-attf-href=\"'%s' % {{ company.website }}\" "
+"style=\"text-decoration:none; color: #454748;\" t-out=\"company.website or "
+"''\">http://www.example.com</a>\n"
 "                    </t>\n"
 "                    </td></tr>\n"
 "                </table>\n"
@@ -658,13 +665,13 @@ msgstr ""
 "            </td></tr>\n"
 "            <!-- POWERED BY -->\n"
 "            <tr><td align=\"center\" style=\"min-width: 590px;\">\n"
-"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
-"\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; "
-"padding: 8px; border-collapse:separate;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
+"width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: "
+"#454748; padding: 8px; border-collapse:separate;\">\n"
 "            <tr><td style=\"text-align: center; font-size: 13px;\">\n"
-"                Работает на базе <a target=\"_blank\" href="
-"\"https://www.odoo.com?utm_source=db&amp;utm_medium=mail\" t-attf-style="
-"\"color: {{company.email_secondary_color or '#875A7B'}};\">Odoo</a>\n"
+"                Работает на базе <a target=\"_blank\" href=\"https://"
+"www.odoo.com?utm_source=db&amp;utm_medium=mail\" t-attf-style=\"color: "
+"{{company.email_secondary_color or '#875A7B'}};\">Odoo</a>\n"
 "            </td></tr>\n"
 "            </table>\n"
 "            </td></tr>\n"
@@ -702,7 +709,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_account_chart_template
 msgid "Account Chart Template"
-msgstr ""
+msgstr "Шаблон плана счетов"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -724,7 +731,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_needaction
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Требуются действия"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_receive_wizard_form
@@ -761,12 +768,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__spending_policy_interval__all_time
 msgid "All Time"
-msgstr ""
+msgstr "За все время"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_list
 msgid "All countries"
-msgstr ""
+msgstr "Все страны"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_list
@@ -851,7 +858,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_attachment_count
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Количество вложений"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.auto_body_repair_shops
@@ -916,7 +923,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr ""
+msgstr "Строка банковской выписки"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__statement_description
@@ -995,7 +1002,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.bowling_alleys
 msgid "Bowling Alleys"
-msgstr ""
+msgstr "Боулинг-центры"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.bus_lines
@@ -1105,7 +1112,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__card_number_public
 msgid "Card Number"
-msgstr ""
+msgstr "Номер карты"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -1172,7 +1179,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.js:0
 msgid "Cardholder Name"
-msgstr ""
+msgstr "Имя держателя карты"
 
 #. module: hr_expense_stripe
 #: model:mail.message.subtype,name:hr_expense_stripe.mt_stripe_card_received
@@ -1311,7 +1318,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_mcc_stripe_tag__color
 msgid "Color Index"
-msgstr ""
+msgstr "Цветовой индекс"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.commercial_equipment
@@ -1349,7 +1356,7 @@ msgstr "Компания"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__company_country_id
 msgid "Company Country"
-msgstr ""
+msgstr "Страна компании"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__company_partner_id
@@ -1395,7 +1402,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Параметры конфигурации"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.res_config_settings_view_form
@@ -1416,7 +1423,7 @@ msgstr "Подключить"
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.construction_materials
 msgid "Construction Materials"
-msgstr ""
+msgstr "Строительные материалы"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.consulting_public_relations
@@ -1500,7 +1507,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__create_uid
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_mcc_stripe_tag__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Создано:"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__create_date
@@ -1510,7 +1517,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__create_date
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_mcc_stripe_tag__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Дата создания:"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.credit_reporting_agencies
@@ -1556,7 +1563,7 @@ msgstr "Доставлено"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__delivery_address_id
 msgid "Delivery Address"
-msgstr ""
+msgstr "Адрес доставки"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.dentists_orthodontists
@@ -1686,7 +1693,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_users__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Display Name"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.doctors
@@ -1815,7 +1822,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__employee_name
 msgid "Employee Name"
-msgstr ""
+msgstr "ФИО сотрудника"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.employment_temp_agencies
@@ -1878,7 +1885,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_hr_expense_split
 msgid "Expense Split"
-msgstr ""
+msgstr "Распределение расходов"
 
 #. module: hr_expense_stripe
 #: model:ir.actions.server,name:hr_expense_stripe.hr_expense_stripe_issuing_status_cron_ir_actions_server
@@ -1908,7 +1915,7 @@ msgstr "Расходы"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__expenses_count
 msgid "Expenses Count"
-msgstr ""
+msgstr "Количество расходов"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
@@ -1918,7 +1925,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__expiration
 msgid "Expiration Date"
-msgstr ""
+msgstr "Дата окончания"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.exterminating_services
@@ -1936,7 +1943,8 @@ msgstr "Не удалось получить параметры инициали
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
 msgid ""
 "Failed to update card from Stripe. You are trying to update the wrong card."
-msgstr "Не удалось обновить карту из Stripe. Вы пытаетесь обновить не ту карту."
+msgstr ""
+"Не удалось обновить карту из Stripe. Вы пытаетесь обновить не ту карту."
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__shipping_status__failure
@@ -1971,7 +1979,7 @@ msgstr "Магазины каминов и аксессуаров"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__firstname
 msgid "First Name"
-msgstr ""
+msgstr "Имя"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.floor_covering_stores
@@ -1998,7 +2006,7 @@ msgstr "Наблюдатели"
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_partner_ids
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Подписчики"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_product_product__stripe_mcc_ids
@@ -2151,7 +2159,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__has_message
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Есть сообщение"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.health_and_beauty_spas
@@ -2347,7 +2355,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
 msgid "Invalid request sent to the Odoo IAP proxy server: %(reason)s"
-msgstr "На прокси-сервер Odoo IAP отправлен недействительный запрос: %(reason)s"
+msgstr ""
+"На прокси-сервер Odoo IAP отправлен недействительный запрос: %(reason)s"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense__is_card_expense
@@ -2363,7 +2372,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_is_follower
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Является подписчиком"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.jewelry_stores_watches_clocks_and_silverware_stores
@@ -2400,7 +2409,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__lastname
 msgid "Last Name"
-msgstr ""
+msgstr "Фамилия"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__write_uid
@@ -2410,7 +2419,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__write_uid
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_mcc_stripe_tag__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Последнее обновление:"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__write_date
@@ -2420,7 +2429,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__write_date
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_mcc_stripe_tag__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Дата последнего обновления:"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.laundries
@@ -2456,7 +2465,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__is_live_mode
 msgid "Live Mode"
-msgstr ""
+msgstr "Реальный режим"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__cancellation_reason__lost
@@ -2577,7 +2586,7 @@ msgstr "Коды продавцов, операции которых будут 
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_has_error
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Ошибка доставки сообщения"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_ids
@@ -2710,7 +2719,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_view_search
 msgid "My Team"
-msgstr ""
+msgstr "Моя команда"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_view_search
@@ -2805,25 +2814,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_needaction_counter
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Количество действий"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_has_error_counter
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Количество ошибок"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card__message_needaction_counter
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Количество сообщений, требующих действий"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card__message_has_error_counter
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Количество недоставленных сообщений"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.nurseries_lawn_and_garden_supply_stores
@@ -3006,12 +3015,12 @@ msgstr "Оплатить"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__payment_method_line_id
 msgid "Payment Method Line"
-msgstr ""
+msgstr "Строка метода платежа"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_account_payment_method_line
 msgid "Payment Methods"
-msgstr ""
+msgstr "Способы оплаты"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_account_payment
@@ -3038,7 +3047,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__phone_number
 msgid "Phone Number"
-msgstr ""
+msgstr "Номер телефона"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.photo_developing
@@ -3114,17 +3123,17 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_mcc_stripe_tag__product_name
 msgid "Product Name"
-msgstr ""
+msgstr "Название товара"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Вариация товара"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.professional_services
 msgid "Professional Services"
-msgstr ""
+msgstr "Профессиональные Услуги"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
@@ -3149,7 +3158,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__qr_code
 msgid "QR Code URL"
-msgstr ""
+msgstr "URL QR-кода"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.quick_copy_repro_and_blueprint
@@ -3254,7 +3263,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_has_sms_error
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Ошибка доставки СМС"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_cardholder_wizard_form
@@ -3265,7 +3274,7 @@ msgstr "Сохранить"
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_topup_wizard.py:0
 msgid "Scan me with your banking app."
-msgstr ""
+msgstr "Отсканируйте меня с помощью банковского приложения."
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.secretarial_support_services
@@ -3332,7 +3341,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__bic
 msgid "Sometimes called BIC or Swift."
-msgstr ""
+msgstr "Иногда называется BIC или SWIFT."
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.special_trade_services
@@ -3406,7 +3415,7 @@ msgstr "Улица"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__billing_street2
 msgid "Street 2"
-msgstr ""
+msgstr "улица 2"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_id
@@ -3610,6 +3619,12 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #. odoo-python
+#: code:addons/hr_expense_stripe/models/account_journal.py:0
+msgid "Stripe issuing is not supported for your localization"
+msgstr ""
+
+#. module: hr_expense_stripe
+#. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
 msgid ""
 "Stripe timed-out or encountered an error when communicating with the card "
@@ -3676,7 +3691,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.telecommunication_services
 msgid "Telecommunication Services"
-msgstr ""
+msgstr "Телекоммуникационные услуги"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.telegraph_services
@@ -3905,7 +3920,8 @@ msgstr "Адрес доставки должен быть указан пере�
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
 msgid ""
 "The delivery address must have a street, city, zip code and country set."
-msgstr "Адрес доставки должен содержать улицу, город, почтовый индекс и страну."
+msgstr ""
+"Адрес доставки должен содержать улицу, город, почтовый индекс и страну."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -3958,7 +3974,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_cardholder_wizard.py:0
 msgid "The phone number is invalid."
-msgstr ""
+msgstr "Номер телефона недействителен."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -3974,7 +3990,8 @@ msgstr "Маршрут «%(route)s» недоступен для вызова с
 msgid ""
 "The sms service is currently experiencing a lot of request. Please try again "
 "in a few minutes."
-msgstr "СМС-сервис временно перегружен. Попробуйте снова через несколько минут."
+msgstr ""
+"СМС-сервис временно перегружен. Попробуйте снова через несколько минут."
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
@@ -4116,7 +4133,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__tracking_url
 msgid "Tracking URL"
-msgstr ""
+msgstr "Отслеживание URL"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.trailer_parks_campgrounds
@@ -4291,7 +4308,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
 msgid "View Details"
-msgstr ""
+msgstr "Подробнее"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__phone_number
@@ -4375,13 +4392,13 @@ msgstr "Не удалось подключиться к прокси-серве�
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__website_message_ids
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Сообщения с вебсайта"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card__website_message_ids
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "История общений с сайта"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__spending_policy_interval__weekly
@@ -4555,7 +4572,8 @@ msgstr "Нельзя вручную редактировать поля безо
 #: model:ir.model.constraint,message:hr_expense_stripe.constraint_res_company_constraint_journal_stripe_activated
 msgid ""
 "You cannot remove the journal used by Stripe Issuing when it is activated"
-msgstr "Нельзя удалить журнал, используемый Stripe Issuing, если он активирован"
+msgstr ""
+"Нельзя удалить журнал, используемый Stripe Issuing, если он активирован"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4674,14 +4692,14 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__billing_zip
 msgid "Zip"
-msgstr ""
+msgstr "Почтовый индекс"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense.py:0
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
 msgid "id"
-msgstr ""
+msgstr "id"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_receive_wizard_form

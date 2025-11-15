@@ -8,13 +8,14 @@
 # Hein Myat Phone <heinmyatphone@outlook.com>, 2016
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Oakarmin Iron <oakarminiron@gmail.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-28 07:56+0000\n"
-"Last-Translator: Oakarmin Iron <oakarminiron@gmail.com>\n"
+"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"PO-Revision-Date: 2025-11-15 12:51+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Burmese <https://translate.odoo.com/projects/odoo-19/voip/my/>"
 "\n"
 "Language: my\n"
@@ -134,7 +135,7 @@ msgstr ""
 #. module: voip
 #: model:res.groups,name:voip.group_voip_admin
 msgid "Administrator"
-msgstr ""
+msgstr "အုပ်ချုပ်ရေးမှူး"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__ask
@@ -202,7 +203,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 #: code:addons/voip/static/src/softphone/dnd_selector.xml:0
 msgid "Available"
-msgstr ""
+msgstr "ရနိုင်သည်"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__avatar_128
@@ -214,7 +215,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/keypad.xml:0
 #: code:addons/voip/static/src/softphone/search_bar.xml:0
 msgid "Back"
-msgstr ""
+msgstr "နောက်သို့"
 
 #. module: voip
 #. odoo-javascript
@@ -399,7 +400,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__company_id
 msgid "Company"
-msgstr ""
+msgstr "ကုမ္ပဏီ"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_mail_activity__country_code_from_phone
@@ -416,14 +417,14 @@ msgstr ""
 #. module: voip
 #: model:ir.ui.menu,name:voip.menu_voip_call_configuration
 msgid "Configuration"
-msgstr ""
+msgstr "ပြင်ဆင်ရန်"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
 #: code:addons/voip/static/src/mobile/devise_selection_dialog.xml:0
 msgid "Confirm"
-msgstr ""
+msgstr "အတည်ပြုသည်"
 
 #. module: voip
 #. odoo-javascript
@@ -456,7 +457,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_tree_view
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Contact"
-msgstr ""
+msgstr "ဆက်သွယ်ရန်"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
@@ -468,7 +469,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Contacts"
-msgstr ""
+msgstr "အဆက်အသွယ်များ"
 
 #. module: voip
 #. odoo-javascript
@@ -477,14 +478,10 @@ msgid "Contacts with a phone number will be shown here."
 msgstr ""
 
 #. module: voip
+#: model:ir.model,name:voip.model_res_country
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_id
 msgid "Country"
-msgstr ""
-
-#. module: voip
-#: model:ir.model,name:voip.model_voip_country_code_mixin
-msgid "Country Code Mixin"
-msgstr ""
+msgstr "နိုင်ငံ"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_flag_url
@@ -524,7 +521,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_tree_view
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Date"
-msgstr ""
+msgstr "နေ့စွဲ"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__how_to_call_on_mobile
@@ -540,7 +537,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__mode__demo
 msgid "Demo"
-msgstr ""
+msgstr "ဒီမို"
 
 #. module: voip
 #. odoo-javascript
@@ -563,7 +560,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__direction
 msgid "Direction"
-msgstr ""
+msgstr "ဉီးတည်ရာ"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy__disabled
@@ -572,6 +569,7 @@ msgstr ""
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__display_name
+#: model:ir.model.fields,field_description:voip.field_res_country__display_name
 #: model:ir.model.fields,field_description:voip.field_res_partner__display_name
 #: model:ir.model.fields,field_description:voip.field_res_users__display_name
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__display_name
@@ -610,7 +608,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "Done"
-msgstr ""
+msgstr "ပြီးဆုံးသည်"
 
 #. module: voip
 #. odoo-javascript
@@ -639,24 +637,24 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__duration
 msgid "Duration"
-msgstr ""
+msgstr "ကြာချိန်"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "Edit"
-msgstr ""
+msgstr "ပြင်"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.xml:0
 msgid "Email"
-msgstr ""
+msgstr "အီးမေးလ်"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__end_date
 msgid "End Date"
-msgstr ""
+msgstr "ကုန်ဆုံးသော နေ့စွဲ"
 
 #. module: voip
 #. odoo-javascript
@@ -700,7 +698,7 @@ msgstr ""
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "External"
-msgstr ""
+msgstr "ပြင်ပ"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__external_device_number
@@ -724,7 +722,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "ဖော်လိုဝါများ"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_partner_ids
@@ -768,7 +766,7 @@ msgstr ""
 #. module: voip
 #: model:ir.actions.act_window,name:voip.voip_call_action_history
 msgid "History"
-msgstr ""
+msgstr "သမိုင်း"
 
 #. module: voip
 #. odoo-javascript
@@ -789,6 +787,7 @@ msgstr ""
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__id
+#: model:ir.model.fields,field_description:voip.field_res_country__id
 #: model:ir.model.fields,field_description:voip.field_res_partner__id
 #: model:ir.model.fields,field_description:voip.field_res_users__id
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__id
@@ -818,7 +817,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__image_1920
 msgid "Image"
-msgstr ""
+msgstr "ရုပ်ပုံ"
 
 #. module: voip
 #. odoo-javascript
@@ -861,7 +860,7 @@ msgstr ""
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Internal"
-msgstr ""
+msgstr "အတွင်းပိုင်း"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_is_follower
@@ -899,7 +898,7 @@ msgstr ""
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Last 7 Days"
-msgstr ""
+msgstr "နောက်ဆုံး ၇ ရက်"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__last_seen_phone_call
@@ -954,7 +953,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "မက်ဆေ့ဂျ်များ"
 
 #. module: voip
 #. odoo-javascript
@@ -1002,7 +1001,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/keypad.js:0
 #: model:ir.model.fields,field_description:voip.field_voip_provider__name
 msgid "Name"
-msgstr ""
+msgstr "အမည်"
 
 #. module: voip
 #: model_terms:ir.actions.act_window,help:voip.voip_call_view
@@ -1067,7 +1066,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "အယ်ရာ အရေအတွက်"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_needaction_counter
@@ -1107,7 +1106,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/history.js:0
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__ongoing
 msgid "Ongoing"
-msgstr ""
+msgstr "လုပ်ဆောင်ဆဲ"
 
 #. module: voip
 #. odoo-javascript
@@ -1159,6 +1158,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:voip.field_mail_activity__phone
 #: model:ir.ui.menu,name:voip.menu_voip_root
 msgid "Phone"
+msgstr "ဖုန်း"
+
+#. module: voip
+#: model:ir.model,name:voip.model_voip_country_code_mixin
+msgid "Phone Country Mixin"
 msgstr ""
 
 #. module: voip
@@ -1200,7 +1204,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Preferences"
-msgstr ""
+msgstr "စိတ်ကြိုက် အပြင်အဆင်"
 
 #. module: voip
 #. odoo-javascript
@@ -1229,7 +1233,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Provider"
-msgstr ""
+msgstr "ထောက်ပံ့သူ"
 
 #. module: voip
 #: model:ir.ui.menu,name:voip.voip_provider_view_inner_menu
@@ -1297,7 +1301,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__rejected
 msgid "Rejected"
-msgstr ""
+msgstr "ငြင်းဆိုသည်"
 
 #. module: voip
 #. odoo-javascript
@@ -1338,7 +1342,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__user_id
 msgid "Responsible"
-msgstr ""
+msgstr "တာဝန်ရှိသော"
 
 #. module: voip
 #. odoo-javascript
@@ -1446,19 +1450,19 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__start_date
 msgid "Start Date"
-msgstr ""
+msgstr "စတင်သောနေ့"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__state
 msgid "State"
-msgstr ""
+msgstr "ပြည်နယ်"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_tree_view
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_calendar
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Status"
-msgstr ""
+msgstr "အခြေအနေ"
 
 #. module: voip
 #. odoo-javascript
@@ -1592,7 +1596,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/history.js:0
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Today"
-msgstr ""
+msgstr "ယနေ့"
 
 #. module: voip
 #. odoo-javascript
@@ -1611,7 +1615,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 #: code:addons/voip/static/src/softphone/transfer_view.xml:0
 msgid "Transfer"
-msgstr ""
+msgstr "ရွှေ့ပြောင်းမှူ"
 
 #. module: voip
 #. odoo-javascript
@@ -1624,7 +1628,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Unknown"
-msgstr ""
+msgstr "မသိ"
 
 #. module: voip
 #. odoo-javascript
@@ -1661,7 +1665,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "User"
-msgstr ""
+msgstr "အသုံးပြုသူ"
 
 #. module: voip
 #: model:ir.model,name:voip.model_res_users_settings
@@ -1672,7 +1676,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Username"
-msgstr ""
+msgstr "အသုံးပြုသူအမည်"
 
 #. module: voip
 #: model:ir.model,name:voip.model_voip_queue_mixin
@@ -1791,7 +1795,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/history.js:0
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Yesterday"
-msgstr ""
+msgstr "မနေ့က"
 
 #. module: voip
 #. odoo-javascript

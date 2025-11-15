@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-27 02:41+0000\n"
+"PO-Revision-Date: 2025-11-14 07:46+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "account_budget/ja/>\n"
@@ -79,7 +79,7 @@ msgstr "例外の活動を示す装飾"
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__activity_state
 msgid "Activity State"
-msgstr "活動状態"
+msgstr "活動ステータス"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__activity_type_icon
@@ -89,14 +89,15 @@ msgstr "活動種別アイコン"
 #. module: account_budget
 #: model:ir.model.fields,help:account_budget.field_budget_line__achieved_amount
 msgid "Amount Billed/Invoiced."
-msgstr ""
+msgstr "仕入先請求/顧客請求済金額。"
 
 #. module: account_budget
 #: model:ir.model.fields,help:account_budget.field_budget_line__theoritical_amount
 msgid ""
 "Amount supposed to be Billed/Invoiced, formula = (Budget Amount / Budget "
 "Days) x Budget Days Completed"
-msgstr ""
+msgstr "仕入先請求/顧客請求予定の金額, 計算式 = (予算金額 / 予算日数) x "
+"完了済予算日数"
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_account_analytic_account
@@ -108,12 +109,12 @@ msgstr "分析勘定"
 #. module: account_budget
 #: model:ir.ui.menu,name:account_budget.menu_act_budget_analytic_view
 msgid "Analytic Budget"
-msgstr ""
+msgstr "分析予算"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_split_wizard__analytical_plan_ids
 msgid "Analytic Plans"
-msgstr ""
+msgstr "分析プラン"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__message_attachment_count
@@ -123,12 +124,12 @@ msgstr "添付数"
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
 msgid "Audit"
-msgstr ""
+msgstr "監査"
 
 #. module: account_budget
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_analytic__budget_type__both
 msgid "Both"
-msgstr ""
+msgstr "両方"
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_budget_analytic
@@ -147,13 +148,13 @@ msgstr "予算"
 #. odoo-python
 #: code:addons/account_budget/wizards/budget_split_wizard.py:0
 msgid "Budget %s"
-msgstr ""
+msgstr "予算%s"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__budget_analytic_id
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__budget_analytic_id
 msgid "Budget Analytic"
-msgstr ""
+msgstr "予算分析"
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_budget_line
@@ -193,12 +194,12 @@ msgstr "予算名"
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_tree
 msgid "Budget Report"
-msgstr ""
+msgstr "予算レポート"
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_budget_split_wizard
 msgid "Budget Split Wizard"
-msgstr ""
+msgstr "予算分割ウィザード"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__budget_analytic_state
@@ -208,19 +209,19 @@ msgstr "予算ステータス"
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__budget_type
 msgid "Budget Type"
-msgstr ""
+msgstr "予算タイプ"
 
 #. module: account_budget
 #. odoo-python
 #: code:addons/account_budget/models/budget_analytic.py:0
 msgid "Budget end date may not be before the starting date."
-msgstr ""
+msgstr "予算の終了日は開始日より前にはできません。"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__budget_amount
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
 msgid "Budgeted"
-msgstr ""
+msgstr "予算額"
 
 #. module: account_budget
 #. odoo-python
@@ -422,7 +423,7 @@ msgstr ""
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__is_above_budget
 msgid "Is Above Budget"
-msgstr "予算を上回っています"
+msgstr "予算超過"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__message_is_follower
@@ -637,7 +638,7 @@ msgstr "開始日"
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__state
 msgid "Status"
-msgstr "状態"
+msgstr "ステータス"
 
 #. module: account_budget
 #: model:ir.model.fields,help:account_budget.field_budget_analytic__activity_state

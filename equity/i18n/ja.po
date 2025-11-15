@@ -3,12 +3,13 @@
 # * equity
 #
 # "Junko Augias (juau)" <juau@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-31 08:09+0000\n"
+"POT-Creation-Date: 2025-11-07 18:40+0000\n"
+"PO-Revision-Date: 2025-11-14 07:46+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/equity/"
 "ja/>\n"
@@ -33,6 +34,18 @@ msgstr "共有数"
 
 #. module: equity
 #. odoo-python
+#: code:addons/equity/models/equity_valuation.py:0
+msgid "%(partner_name)s %(amount)s"
+msgstr "%(partner_name)s %(amount)s"
+
+#. module: equity
+#. odoo-python
+#: code:addons/equity/models/equity_ubo.py:0
+msgid "%(partner_name)s (%(holder_name)s)"
+msgstr "%(partner_name)s (%(holder_name)s)"
+
+#. module: equity
+#. odoo-python
 #: code:addons/equity/models/res_partner.py:0
 msgid "%(partner_name)s's Transactions"
 msgstr "%(partner_name)sの取引"
@@ -42,6 +55,12 @@ msgstr "%(partner_name)sの取引"
 #: code:addons/equity/models/res_partner.py:0
 msgid "%(partner_name)s's Valuations"
 msgstr "%(partner_name)sの評価"
+
+#. module: equity
+#. odoo-python
+#: code:addons/equity/models/equity_transaction.py:0
+msgid "%(transaction_type)s %(securities).2f %(class_name)s"
+msgstr "%(transaction_type)s %(securities).2f %(class_name)s"
 
 #. module: equity
 #. odoo-python
@@ -80,7 +99,7 @@ msgstr "(object._get_ubo_report_filename())"
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "/ Security"
-msgstr ""
+msgstr "/ セキュリティ"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -88,11 +107,13 @@ msgid ""
 "<br/>\n"
 "                                            Politically Exposed Person:"
 msgstr ""
+"<br/>\n"
+"                                            公的要人(PEP):"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "<br/> Nationality:"
-msgstr ""
+msgstr "<br/> 国籍:"
 
 #. module: equity
 #: model:mail.template,body_html:equity.equity_shareholder_email_template
@@ -114,6 +135,22 @@ msgid ""
 "                </div>\n"
 "            "
 msgstr ""
+"<div>\n"
+"                    <p><t t-out=\"ctx.get('holder_name')\"/>様<br/>\n"
+"                        平素はお世話になっております。以下のリンクから、最新"
+"の取引および評価情報をご確認いただけます: <br/>\n"
+"                        <a t-attf-href=\"/my/equity?"
+"access_token={{ctx.get('equity_access_token')}}\" class=\"btn btn-primary\">"
+"株式を表示</a> <br/> <br/>\n"
+"                        よろしくお願いいたします。\n"
+"                        <t t-if=\"user_id.signature\">\n"
+"                            <br/>--<br/>\n"
+"                            <t t-out=\"user_id.signature or ''\">Mitchell "
+"Admin</t>\n"
+"                        </t>\n"
+"                    </p>\n"
+"                </div>\n"
+"            "
 
 #. module: equity
 #: model:mail.template,body_html:equity.equity_ubo_form_email_template
@@ -138,6 +175,26 @@ msgid ""
 "                </div>\n"
 "            "
 msgstr ""
+"<div>\n"
+"                    <p><t t-out=\"object.name\"/>様<br/>\n"
+"                        平素はお世話になっております。法的義務に基づき、当社"
+"ではクライアント様の識別を行っております。\n"
+"                        そのため、<b><t t-out=\"user_id.company_id.name\"/></"
+"b>の資本または議決権の25%以上を直接的または間接的に保有・支配している自然人を"
+"報告する必要があります。 <br/> <br/>\n"
+"                        UBO情報のご記入をお願いいたします:<br/>\n"
+"                        <a t-attf-href=\"/my/ubo?"
+"{{object._get_equity_url_params()}}\" class=\"btn btn-primary\">Fill UBO</a> "
+"<br/> <br/>\n"
+"                        よろしくお願いいたします。\n"
+"                        <t t-if=\"user_id.signature\">\n"
+"                            <br/>--<br/>\n"
+"                            <t t-out=\"user_id.signature or ''\">Mitchell "
+"Admin</t>\n"
+"                        </t>\n"
+"                    </p>\n"
+"                </div>\n"
+"            "
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_help
@@ -145,6 +202,8 @@ msgid ""
 "<i class=\"fa fa-envelope ms-2 mt-1\" aria-label=\"Email Address\" "
 "title=\"Email Address\"/>"
 msgstr ""
+"<i class=\"fa fa-envelope ms-2 mt-1\" aria-label=\"Eメールアドレス\" "
+"title=\"Eメールアドレス\"/>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_help
@@ -152,6 +211,8 @@ msgid ""
 "<i class=\"fa fa-phone ms-2 mt-1\" aria-label=\"Phone Number\" title=\"Phone "
 "Number\"/>"
 msgstr ""
+"<i class=\"fa fa-phone ms-2 mt-1\" aria-label=\"電話番号\" title=\"電話番号"
+"\"/>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_kanban
@@ -159,6 +220,8 @@ msgid ""
 "<i title=\"To\" class=\"fa fa-fw fa-arrow-right mx-1\" "
 "invisible=\"transaction_type != 'exercise'\"/>"
 msgstr ""
+"<i title=\"To\" class=\"fa fa-fw fa-arrow-right mx-1\" "
+"invisible=\"transaction_type != 'exercise'\"/>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_kanban
@@ -166,16 +229,18 @@ msgid ""
 "<i title=\"To\" class=\"fa fa-fw fa-arrow-right mx-1\" "
 "invisible=\"transaction_type != 'transfer'\"/>"
 msgstr ""
+"<i title=\"To\" class=\"fa fa-fw fa-arrow-right mx-1\" "
+"invisible=\"transaction_type != '振替'\"/>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_view_partner_form
 msgid "<span class=\"o_stat_text\">Shareholders</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">株主</span>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_dashboard_res_partner
 msgid "<span class=\"text-muted\">Valuation</span>"
-msgstr ""
+msgstr "<span class=\"text-muted\">評価額</span>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_dashboard_res_partner
@@ -183,6 +248,7 @@ msgid ""
 "<span> Shareholder<span invisible=\"equity_shareholders_count == 1\">s</"
 "span></span>"
 msgstr ""
+"<span>株主<span invisible=\"equity_shareholders_count == 1\">s</span></span>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_dashboard_res_partner
@@ -190,26 +256,28 @@ msgid ""
 "<span> Transaction<span invisible=\"equity_transaction_count == 1\">s</"
 "span></span>"
 msgstr ""
+"<span> 取引<span invisible=\"equity_transaction_count == 1\"></span></span>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "<span>Missing supporting documents! Attach them in the chatter.</span>"
 msgstr ""
+"<span>関連ドキュメントが不足しています。チャターに添付してください。</span>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_security_class_form
 msgid "<span>per share</span>"
-msgstr ""
+msgstr "<span>1株あたり</span>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "<strong>Address:</strong>"
-msgstr ""
+msgstr "<strong>住所:</strong>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "<strong>Company Name:</strong>"
-msgstr ""
+msgstr "<strong>会社名:</strong>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -219,7 +287,7 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "<strong>Tax ID Number:</strong>"
-msgstr ""
+msgstr "<strong>納税登録番号:</strong>"
 
 #. module: equity
 #. odoo-javascript
@@ -257,7 +325,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__message_needaction
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "要アクション"
 
 #. module: equity
 #. odoo-javascript
@@ -277,7 +345,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__message_attachment_count
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "添付数"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__attachment_number
@@ -290,13 +358,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__attachment_ids
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__attachment_ids
 msgid "Attachments"
-msgstr ""
+msgstr "添付"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_valuation__event__audit
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_search
 msgid "Audit"
-msgstr ""
+msgstr "監査"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__auditor
@@ -352,12 +420,12 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "Buyer"
-msgstr ""
+msgstr "購入者"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__ceo
 msgid "CEO"
-msgstr ""
+msgstr "CEO"
 
 #. module: equity
 #. odoo-python
@@ -369,7 +437,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:equity.selection__equity_transaction__transaction_type__cancellation
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_search
 msgid "Cancellation"
-msgstr ""
+msgstr "取消"
 
 #. module: equity
 #. odoo-python
@@ -403,22 +471,23 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "Class"
-msgstr ""
+msgstr "クラス"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 msgid "Clear"
-msgstr ""
+msgstr "クリア"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__partner_id
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__partner_id
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__partner_id
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_search
+#: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_form
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_search
 msgid "Company"
-msgstr ""
+msgstr "会社"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__co_1
@@ -438,7 +507,7 @@ msgstr ""
 #. module: equity
 #: model:ir.ui.menu,name:equity.menu_equity_configuration
 msgid "Configuration"
-msgstr ""
+msgstr "設定"
 
 #. module: equity
 #. odoo-javascript
@@ -446,7 +515,7 @@ msgstr ""
 #: model:ir.model,name:equity.model_res_partner
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_help
 msgid "Contact"
-msgstr ""
+msgstr "連絡先"
 
 #. module: equity
 #. odoo-javascript
@@ -499,7 +568,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model,website_form_label:equity.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "顧客を作成する"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_security_class__create_uid
@@ -507,7 +576,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__create_uid
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "作成者"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_security_class__create_date
@@ -515,24 +584,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__create_date
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__create_date
 msgid "Created on"
-msgstr ""
+msgstr "作成日"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__equity_currency_id
 msgid "Currency"
-msgstr ""
+msgstr "通貨"
 
 #. module: equity
 #: model:ir.ui.menu,name:equity.menu_equity_dashboard
 msgid "Dashboard"
-msgstr ""
+msgstr "ダッシュボード"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__date
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__date
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
 msgid "Date"
-msgstr ""
+msgstr "日付"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -568,7 +637,7 @@ msgstr ""
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 #: code:addons/equity/static/src/components/ubo_form/holder_end_dialog.xml:0
 msgid "Discard"
-msgstr ""
+msgstr "破棄"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__display_name
@@ -578,7 +647,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__display_name
 #: model:ir.model.fields,field_description:equity.field_res_partner__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "表示名"
 
 #. module: equity
 #. odoo-javascript
@@ -615,7 +684,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_home_equity
 msgid "Equity"
-msgstr ""
+msgstr "資本"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_access_token
@@ -686,7 +755,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__event
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
 msgid "Event"
-msgstr ""
+msgstr "イベント"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -702,12 +771,12 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__expiration_date
 msgid "Expiration"
-msgstr ""
+msgstr "有効期限"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
 msgid "Expiration Date"
-msgstr ""
+msgstr "使用期限"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__expiration_diff
@@ -737,14 +806,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__message_follower_ids
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "フォロワー"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__message_partner_ids
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__message_partner_ids
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "フォロワー (取引先)"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -792,7 +861,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__has_message
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "メッセージあり"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__has_percentages
@@ -819,6 +888,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__holder_id
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__holder_id
+#: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_form
 msgid "Holder"
 msgstr ""
 
@@ -843,7 +913,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__id
 #: model:ir.model.fields,field_description:equity.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: equity
 #. odoo-javascript
@@ -857,7 +927,7 @@ msgstr ""
 #: model:ir.model.fields,help:equity.field_equity_ubo__message_needaction
 #: model:ir.model.fields,help:equity.field_equity_valuation__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "チェックした場合は、新しいメッセージに注意が必要です。"
 
 #. module: equity
 #: model:ir.model.fields,help:equity.field_equity_transaction__message_has_error
@@ -867,7 +937,7 @@ msgstr ""
 #: model:ir.model.fields,help:equity.field_equity_valuation__message_has_error
 #: model:ir.model.fields,help:equity.field_equity_valuation__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "選択されている場合、一部のメッセージで配信エラーが発生しています。"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -916,7 +986,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/equity/controllers/portal.py:0
 msgid "Invalid token"
-msgstr ""
+msgstr "無効なトークン"
 
 #. module: equity
 #. odoo-python
@@ -929,7 +999,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__message_is_follower
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "フォロー中"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_transaction__transaction_type__issuance
@@ -940,7 +1010,7 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "Job Position:"
-msgstr ""
+msgstr "職位："
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_security_class__write_uid
@@ -948,7 +1018,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__write_uid
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "最終更新者"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_security_class__write_date
@@ -956,13 +1026,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__write_date
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "最終更新日"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_legal_form
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_legal_form
 msgid "Legal Form"
-msgstr ""
+msgstr "法的形式"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -983,7 +1053,7 @@ msgstr ""
 #. module: equity
 #: model:res.groups,name:equity.group_equity_manager
 msgid "Manager"
-msgstr ""
+msgstr "マネジャー"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__managing_director
@@ -995,14 +1065,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__message_has_error
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "メッセージ配信エラー"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__message_ids
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__message_ids
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "メッセージ"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_search
@@ -1058,7 +1128,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_list
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #. module: equity
 #. odoo-javascript
@@ -1070,7 +1140,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 msgid "Nationality"
-msgstr ""
+msgstr "国籍"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -1088,13 +1158,13 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_help
 msgid "Need help?"
-msgstr ""
+msgstr "サポートが必要ですか?"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/cap_table/cap_table.xml:0
 msgid "New Transaction"
-msgstr ""
+msgstr "新規取引"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
@@ -1104,7 +1174,7 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "No"
-msgstr ""
+msgstr "いいえ"
 
 #. module: equity
 #. odoo-python
@@ -1131,36 +1201,37 @@ msgstr ""
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__notes
+#: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "Notes"
-msgstr ""
+msgstr "ノート"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__message_needaction_counter
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__message_needaction_counter
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "アクション数"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__message_has_error_counter
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__message_has_error_counter
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "エラー数"
 
 #. module: equity
 #: model:ir.model.fields,help:equity.field_equity_transaction__message_needaction_counter
 #: model:ir.model.fields,help:equity.field_equity_ubo__message_needaction_counter
 #: model:ir.model.fields,help:equity.field_equity_valuation__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "対応が必要なメッセージ数"
 
 #. module: equity
 #: model:ir.model.fields,help:equity.field_equity_transaction__message_has_error_counter
 #: model:ir.model.fields,help:equity.field_equity_ubo__message_has_error_counter
 #: model:ir.model.fields,help:equity.field_equity_valuation__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "配信エラーが発生したメッセージ数"
 
 #. module: equity
 #. odoo-python
@@ -1215,7 +1286,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_security_class__class_type__options
 msgid "Options"
-msgstr ""
+msgstr "オプション"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_search
@@ -1232,7 +1303,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__ownership
 #: model:ir.ui.menu,name:equity.menu_equity_ownership
 msgid "Ownership"
-msgstr ""
+msgstr "所有権"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__ubo_pep
@@ -1248,7 +1319,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__partner_id
 msgid "Partner"
-msgstr ""
+msgstr "取引先"
 
 #. module: equity
 #. odoo-javascript
@@ -1262,12 +1333,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
 msgid "Position"
-msgstr ""
+msgstr "位置"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "Price"
-msgstr ""
+msgstr "価格"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_list
@@ -1300,11 +1371,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__rating_ids
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "評価"
 
 #. module: equity
 #: model:ir.model.fields,help:equity.field_equity_transaction__subscriber_id
-msgid "Recipient of the shares/options of the transaction."
+msgid "Recipient of the securities of the transaction."
 msgstr ""
 
 #. module: equity
@@ -1322,7 +1393,7 @@ msgstr ""
 #. module: equity
 #: model:ir.ui.menu,name:equity.menu_equity_reporting
 msgid "Reporting"
-msgstr ""
+msgstr "レポーティング"
 
 #. module: equity
 #: model:ir.actions.act_window,name:equity.action_equity_request_ubo_form
@@ -1332,14 +1403,14 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__auth_rep_role
 msgid "Role"
-msgstr ""
+msgstr "役割"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__message_has_sms_error
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__message_has_sms_error
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "SMS送信エラー"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__secretary
@@ -1350,7 +1421,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__securities
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_equity
 msgid "Securities"
-msgstr ""
+msgstr "証券"
 
 #. module: equity
 #. odoo-python
@@ -1385,7 +1456,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__seller_id
 msgid "Seller"
-msgstr ""
+msgstr "売主"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__seller_name
@@ -1408,7 +1479,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/equity/static/src/components/cap_table/cap_table.xml:0
 msgid "Send"
-msgstr ""
+msgstr "送信"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
@@ -1423,7 +1494,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_security_class__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "シーケンス"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -1433,7 +1504,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_security_class__class_type__shares
 msgid "Shares"
-msgstr ""
+msgstr "共有"
 
 #. module: equity
 #. odoo-python
@@ -1455,7 +1526,7 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "Signature:"
-msgstr ""
+msgstr "署名："
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
@@ -1466,12 +1537,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
 msgid "Submit"
-msgstr ""
+msgstr "提出"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__subscriber_id
 msgid "Subscriber"
-msgstr ""
+msgstr "サブスク会員"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__subscriber_id_placeholder
@@ -1487,7 +1558,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 msgid "Supporting Document"
-msgstr ""
+msgstr "参考資料"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_submit
@@ -1564,13 +1635,13 @@ msgstr ""
 #: code:addons/equity/static/src/components/cap_table/cap_table.js:0
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__transfer_amount
 msgid "Total"
-msgstr ""
+msgstr "合計"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/controllers/portal.py:0
 msgid "Total Value"
-msgstr ""
+msgstr "合計金額"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_valuation__event__transaction
@@ -1578,7 +1649,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_form
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_search
 msgid "Transaction"
-msgstr ""
+msgstr "取引"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
@@ -1588,7 +1659,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__transaction_type
 msgid "Transaction Type"
-msgstr ""
+msgstr "トランザクションタイプ"
 
 #. module: equity
 #. odoo-javascript
@@ -1598,13 +1669,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_list
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_list
 msgid "Transactions"
-msgstr ""
+msgstr "取引"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_transaction__transaction_type__transfer
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_search
 msgid "Transfer"
-msgstr ""
+msgstr "転送"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__treasurer
@@ -1617,7 +1688,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__securities_type
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_list
 msgid "Type"
-msgstr ""
+msgstr "タイプ"
 
 #. module: equity
 #: model:ir.ui.menu,name:equity.menu_equity_ownership_ubos
@@ -1680,12 +1751,17 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/equity/static/src/components/cap_table/cap_table.js:0
 msgid "Unassigned"
-msgstr ""
+msgstr "未割当"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 msgid "Upload"
+msgstr "アップロード"
+
+#. module: equity
+#: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
+msgid "Upload Files"
 msgstr ""
 
 #. module: equity
@@ -1706,7 +1782,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__valuation
 #: model:ir.ui.menu,name:equity.menu_equity_reporting_valuation
 msgid "Valuation"
-msgstr ""
+msgstr "評価"
 
 #. module: equity
 #: model:ir.actions.act_window,name:equity.action_equity_valuation
@@ -1722,13 +1798,13 @@ msgstr ""
 #. module: equity
 #: model:res.groups,name:equity.group_equity_viewer
 msgid "Viewer"
-msgstr ""
+msgstr "ビューア"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__votes
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_security_class_form
 msgid "Votes"
-msgstr ""
+msgstr "投票"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_security_class__share_votes
@@ -1751,14 +1827,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__website_message_ids
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "ウェブサイトメッセージ"
 
 #. module: equity
 #: model:ir.model.fields,help:equity.field_equity_transaction__website_message_ids
 #: model:ir.model.fields,help:equity.field_equity_ubo__website_message_ids
 #: model:ir.model.fields,help:equity.field_equity_valuation__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "ウェブサイト通信履歴"
 
 #. module: equity
 #. odoo-javascript
@@ -1783,7 +1859,7 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "Yes"
-msgstr ""
+msgstr "はい"
 
 #. module: equity
 #. odoo-javascript
@@ -1803,7 +1879,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
 msgid "Your Name"
-msgstr ""
+msgstr "お名前"
 
 #. module: equity
 #. odoo-javascript
@@ -1867,13 +1943,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "day"
-msgstr ""
+msgstr "日"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "days"
-msgstr ""
+msgstr "日"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -1888,30 +1964,30 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "in"
-msgstr ""
+msgstr ":"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "month"
-msgstr ""
+msgstr "月"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "months"
-msgstr ""
+msgstr "か月"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "on"
-msgstr ""
+msgstr "on"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 msgid "or"
-msgstr ""
+msgstr "又は"
 
 #. module: equity
 #. odoo-javascript
@@ -1923,7 +1999,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "remaining"
-msgstr ""
+msgstr "残"
 
 #. module: equity
 #. odoo-python
@@ -1940,16 +2016,16 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "to"
-msgstr ""
+msgstr "to"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "year"
-msgstr ""
+msgstr "年"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "years"
-msgstr ""
+msgstr "年"

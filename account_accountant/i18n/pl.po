@@ -30,12 +30,13 @@
 # Martin Trigaux, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Marta (wacm)" <wacm@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-30 09:57+0000\n"
+"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"PO-Revision-Date: 2025-11-13 17:15+0000\n"
 "Last-Translator: \"Marta (wacm)\" <wacm@odoo.com>\n"
 "Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/"
 "account_accountant/pl/>\n"
@@ -43,8 +44,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
-"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
+"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
 "n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
@@ -52,13 +53,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_accountant/models/account_move.py:0
 msgid "%(display_name_html)s will be entirely paid by the transaction."
-msgstr "%(display_name_html)s będzie całkowicie opłacone przez transakcję."
+msgstr "%(display_name_html)s zostanie w całości opłacony przez transakcję."
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_move.py:0
 msgid "%(display_name_html)s will be fully reconciled by the transaction."
-msgstr "%(display_name_html)s będzie całkowicie uzgodniony przez transakcję."
+msgstr "%(display_name_html)s zostanie w pełni uzgodniony przez transakcję."
 
 #. module: account_accountant
 #. odoo-python
@@ -67,6 +68,7 @@ msgid "%(display_name_html)s will be reduced by %(amount)s."
 msgstr "%(display_name_html)s zostanie zredukowany o %(amount)s."
 
 #. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid ") doesn't match the specified ending balance."
 msgstr ") nie pasuje do określonego salda końcowego."
@@ -94,12 +96,12 @@ msgstr ""
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
 msgid "<i>Lock transactions up to specific dates, inclusive</i>"
-msgstr "<i>Zablokuj transakcje przed określona datą, włącznie</i>"
+msgstr "<i>Zablokuj transakcje przed określoną datą, włącznie</i>"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_form_inherit
 msgid "<span class=\"o_stat_text\">1 Bank Transaction</span>"
-msgstr "<span class=\"o_stat_text\">1 Transakcja bankowa</span>"
+msgstr "<span class=\"o_stat_text\">1 transakcja bankowa</span>"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_form_inherit
@@ -217,8 +219,8 @@ msgid ""
 "i>\n"
 "                                </span>"
 msgstr ""
-"<span class=\"text-muted\" invisible="
-"\"min_fiscalyear_lock_date_exception_for_me_id or "
+"<span class=\"text-muted\" "
+"invisible=\"min_fiscalyear_lock_date_exception_for_me_id or "
 "min_fiscalyear_lock_date_exception_for_everyone_id\">\n"
 "                                    <i class=\"ms-2\">ale pozwala na "
 "wyjątki</i>\n"
@@ -269,7 +271,7 @@ msgid ""
 "Invoices</b> menu\n"
 "        </span>"
 msgstr ""
-"<span><strong><b>Dobra robota!</b> Przeszedłeś przez wszystkie kroki tej "
+"<span><strong><b>Dobra robota!</b> Przeszedłeś przez wszystkie etapy tej "
 "wycieczki.</strong>\n"
 "            <br>Zobacz jak zarządzać fakturami swoich klientów w menu "
 "<b>Klienci/Faktury</b> \n"
@@ -286,9 +288,9 @@ msgid ""
 "A posted tax return closing entry exists after this tax lock date. You might "
 "want to reset the related tax return to non-submitted."
 msgstr ""
-"Po dacie blokady podatkowej istnieje zaksięgowana pozycja zamknięcia "
-"zeznania podatkowego. Możesz zresetować powiązane zeznanie podatkowe do "
-"statusu niezłożonego."
+"Zaksięgowany wpis zamknięcia zeznania podatkowego istnieje po tej dacie "
+"blokady podatkowej. Możesz chcieć zresetować powiązaną deklarację podatkową "
+"do statusu \"niezłożona\"."
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_account
@@ -355,7 +357,7 @@ msgstr "Wymagane działanie"
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/statement_line/statement_line.xml:0
 msgid "Activities"
-msgstr "Czynności"
+msgstr "Aktywności"
 
 #. module: account_accountant
 #. odoo-javascript
@@ -398,7 +400,7 @@ msgstr "Zezwalaj na częściowe"
 #: model:res.groups,name:account_accountant.group_fiscal_year
 msgid "Allow to define fiscal years of more or less than a year"
 msgstr ""
-"Umożliwienie definiowania lat podatkowych dłuższych lub krótszych niż rok"
+"Umożliwia zdefiniowanie lat podatkowych dłuższych lub krótszych niż rok"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__amount_currency
@@ -410,7 +412,7 @@ msgstr "Kwota"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_move_line_list_bank_rec_widget
 msgid "Amount Due"
-msgstr "Należność"
+msgstr "Należna kwota"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__amount
@@ -422,7 +424,12 @@ msgstr "Kwota w walucie spółki"
 #: code:addons/account_accountant/wizard/account_reconcile_wizard.py:0
 msgid ""
 "An entry will transfer %(amount)s from %(from_account)s to %(to_account)s."
-msgstr "Wpis przeniesie %(amount)s z %(from_account)s do %(to_account)s."
+msgstr "Wpis przeniesie %(amount)s z %(from_account)s na %(to_account)s."
+
+#. module: account_accountant
+#: model:ir.model,name:account_accountant.model_analytic_mixin
+msgid "Analytic Mixin"
+msgstr "Mixin analityczny"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__use_anglo_saxon
@@ -437,8 +444,9 @@ msgid ""
 "in accordance with its journal sequence. This lock date is irreversible and "
 "does not allow any exception."
 msgstr ""
-"Każdy wpis do tej daty włącznie zostanie opóźniony zgodnie z sekwencją jego "
-"dziennika. Ta data blokady jest nieodwracalna i nie pozwala na żadne wyjątki."
+"Każdy zapis do tej daty włącznie zostanie przełożony na późniejszy termin, "
+"zgodnie z sekwencją dziennika. Data blokady jest nieodwracalna i nie pozwala "
+"na żadne wyjątki."
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date__fiscalyear_lock_date
@@ -446,8 +454,8 @@ msgid ""
 "Any entry up to and including that date will be postponed to a later time, "
 "in accordance with its journal's sequence."
 msgstr ""
-"Każdy wpis do tej daty włącznie zostanie opóźniony zgodnie z sekwencją jego "
-"dziennika."
+"Każdy wpis do tej daty włącznie zostanie przełożony na późniejszy termin "
+"zgodnie z sekwencją w dzienniku."
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date__tax_lock_date
@@ -456,9 +464,9 @@ msgid ""
 "later time, in accordance with its journal's sequence. The tax lock date is "
 "automatically set when the tax closing entry is posted."
 msgstr ""
-"Każdy wpis z podatkami do tej daty włącznie zostanie przełożony na "
+"Każdy zapis z podatkami do tej daty włącznie zostanie przełożony na "
 "późniejszy termin, zgodnie z sekwencją dziennika. Data blokady podatkowej "
-"jest ustawiana automatycznie po zaksięgowaniu wpisu zamknięcia podatkowego."
+"jest ustawiana automatycznie po zaksięgowaniu zapisu zamknięcia podatkowego."
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date__purchase_lock_date
@@ -466,7 +474,7 @@ msgid ""
 "Any purchase entry prior to and including this date will be postponed to a "
 "later date, in accordance with its journal's sequence."
 msgstr ""
-"Każdy wpis zakupu przed tą datą włącznie zostanie przełożony na późniejszy "
+"Każdy zapis zakupu przed tą datą włącznie zostanie przełożony na późniejszy "
 "termin, zgodnie z sekwencją dziennika."
 
 #. module: account_accountant
@@ -475,7 +483,7 @@ msgid ""
 "Any sales entry prior to and including this date will be postponed to a "
 "later date, in accordance with its journal's sequence."
 msgstr ""
-"Każdy wpis sprzedażowy przed tą datą włącznie zostanie przełożony na "
+"Każdy zapis sprzedażowy przed tą datą włącznie zostanie przełożony na "
 "późniejszy termin, zgodnie z sekwencją dziennika."
 
 #. module: account_accountant
@@ -556,6 +564,7 @@ msgstr "Dopasowanie banku"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_bank_statement
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "Bank Statement"
 msgstr "Wyciąg bankowy"
@@ -613,7 +622,7 @@ msgstr "Zmiana daty blokady"
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/kanban_controller.xml:0
 msgid "Chatter"
-msgstr "Rozmowa"
+msgstr "Chatter"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_reconcile_wizard__to_check
@@ -624,7 +633,7 @@ msgstr "Sprawdź, jeśli nie jesteś pewien wszystkich informacji o kontrahencie
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/attachment_preview_list_view/attachment_preview_list_view.xml:0
 msgid "Choose a line to preview its attachments."
-msgstr "Wybierz linię, aby wyświetlić podgląd jej załączników."
+msgstr "Wybierz wiersz, aby wyświetlić podgląd jego załączników."
 
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__account_auto_reconcile_wizard__search_mode__zero_balance
@@ -773,7 +782,6 @@ msgid "Cron Last Check"
 msgstr "Cron ostatnia kontrola"
 
 #. module: account_accountant
-#: model:ir.model,name:account_accountant.model_res_currency
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_reconcile_tree
 msgid "Currency"
 msgstr "Waluta"
@@ -828,6 +836,12 @@ msgstr "Dni"
 #: code:addons/account_accountant/models/account_move.py:0
 msgid "Deferral of %s"
 msgstr "Odroczenie %s"
+
+#. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_move_form_inherit
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_tree
+msgid "Deferred Date"
+msgstr "Odroczona data"
 
 #. module: account_accountant
 #. odoo-python
@@ -971,12 +985,11 @@ msgstr "Zezwalaj na częściowe wyświetlanie"
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_model_line__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_account_tax__display_name
+#: model:ir.model.fields,field_description:account_accountant.field_analytic_mixin__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_digest_digest__display_name
-#: model:ir.model.fields,field_description:account_accountant.field_ir_model__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_ir_ui_menu__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_res_company__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__display_name
-#: model:ir.model.fields,field_description:account_accountant.field_res_currency__display_name
 msgid "Display Name"
 msgstr "Nazwa wyświetlana"
 
@@ -1237,12 +1250,11 @@ msgstr "Ma wiadomość"
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_model_line__id
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__id
 #: model:ir.model.fields,field_description:account_accountant.field_account_tax__id
+#: model:ir.model.fields,field_description:account_accountant.field_analytic_mixin__id
 #: model:ir.model.fields,field_description:account_accountant.field_digest_digest__id
-#: model:ir.model.fields,field_description:account_accountant.field_ir_model__id
 #: model:ir.model.fields,field_description:account_accountant.field_ir_ui_menu__id
 #: model:ir.model.fields,field_description:account_accountant.field_res_company__id
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__id
-#: model:ir.model.fields,field_description:account_accountant.field_res_currency__id
 msgid "ID"
 msgstr "ID"
 
@@ -1662,11 +1674,6 @@ msgid "Miscellaneous Journal"
 msgstr "Dziennik różnych wpisów"
 
 #. module: account_accountant
-#: model:ir.model,name:account_accountant.model_ir_model
-msgid "Models"
-msgstr "Modele"
-
-#. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__res_company__deferred_expense_amount_computation_method__month
 #: model:ir.model.fields.selection,name:account_accountant.selection__res_company__deferred_revenue_amount_computation_method__month
 msgid "Months"
@@ -1979,7 +1986,6 @@ msgstr "Należności"
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_auto_reconcile_wizard
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_list_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_reconcile_wizard
-#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_payment_tree
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_reconcile_tree
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_tree
@@ -2353,11 +2359,13 @@ msgstr ""
 "pierwsza (lub jedyna) w nawiasie, na przykład: BRT: ([\\d,.]+)."
 
 #. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "The running balance ("
 msgstr "Saldo bieżące ("
 
 #. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid ""
 "The starting balance doesn't match the ending balance of the previous "
@@ -2376,6 +2384,7 @@ msgstr ""
 "podstawie etykiety linii"
 
 #. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "There are one or more"
 msgstr "Istnieje jeden lub więcej"
@@ -2471,6 +2480,7 @@ msgstr "Transakcja"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.account_journal_dashboard_kanban_view
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_tree
 msgid "Transactions"
@@ -2731,6 +2741,7 @@ msgid "id"
 msgstr "id"
 
 #. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "invalid statement(s)"
 msgstr "nieprawidłowe wyciągi"
@@ -2744,6 +2755,9 @@ msgstr "druga waluta"
 #: model_terms:ir.ui.view,arch_db:account_accountant.account_journal_dashboard_kanban_view
 msgid "to reconcile"
 msgstr "do uzgodnienia"
+
+#~ msgid "Models"
+#~ msgstr "Modele"
 
 #~ msgid ""
 #~ "%(display_name_html)s with an open amount of %(open_amount)s will be "

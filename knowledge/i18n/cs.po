@@ -3,13 +3,14 @@
 # * knowledge
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-18 02:44+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-11-14 15:25+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/knowledge/"
 "cs/>\n"
 "Language: cs\n"
@@ -2306,7 +2307,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Add to Favorites"
-msgstr ""
+msgstr "Přidat k oblíbeným"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2798,7 +2799,7 @@ msgstr "Dostupné modely ✅"
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_member__article_member_avatar
 msgid "Avatar 128"
-msgstr ""
+msgstr "Avatar 128"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
@@ -3578,7 +3579,7 @@ msgstr "Zrušit"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/form_status_indicator/form_status_indicator.xml:0
 msgid "Discard all changes"
-msgstr ""
+msgstr "Zrušit všechny změny"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_ir_attachment__display_name
@@ -3849,7 +3850,7 @@ msgstr "Plná šířka"
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Future Activities"
-msgstr ""
+msgstr "Budoucí činnosti"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
@@ -4627,7 +4628,7 @@ msgstr "Naposledy upraveno dne"
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Late Activities"
-msgstr ""
+msgstr "Aktivity po termínu"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5411,7 +5412,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/mail/composer/composer_patch.js:0
 msgid "Post"
-msgstr ""
+msgstr "Zaúčtovat"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_post_mortem
@@ -5598,7 +5599,7 @@ msgstr "Obnovit"
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_release_note
 msgid "Release Notes"
-msgstr ""
+msgstr "Poznámky k vydání"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_release_note
@@ -5801,7 +5802,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/form_status_indicator/form_status_indicator.xml:0
 msgid "Save manually"
-msgstr ""
+msgstr "Uložit ručně"
 
 #. module: knowledge
 #. odoo-javascript
@@ -6239,7 +6240,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_description
 msgid "Template Description"
-msgstr ""
+msgstr "Popis šablony"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_template_view_search
@@ -6528,7 +6529,7 @@ msgstr "Pokud chcete být informováni, sledujte nás"
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Today Activities"
-msgstr ""
+msgstr "Dnešní aktivity"
 
 #. module: knowledge
 #. odoo-javascript

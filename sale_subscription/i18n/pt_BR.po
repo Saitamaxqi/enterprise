@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-27 10:55+0000\n"
+"PO-Revision-Date: 2025-11-14 11:44+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/sale_subscription/pt_BR/>\n"
@@ -58,43 +58,44 @@ msgstr "% contente"
 msgid ""
 "%(explanation)s, but the billing period has already been invoiced. %(record)s"
 msgstr ""
+"%(explanation)s, mas o período de faturamento já foi faturado. %(record)s"
 
 #. module: sale_subscription
 #. odoo-python
 #: code:addons/sale_subscription/models/product_pricelist_item.py:0
 msgid "%(price_details)s %(recurrence)s"
-msgstr ""
+msgstr "%(price_details)s %(recurrence)s"
 
 #. module: sale_subscription
 #. odoo-python
 #: code:addons/sale_subscription/models/sale_order_line.py:0
 msgid "%(start)s to %(next)s"
-msgstr ""
+msgstr "%(start)s até %(next)s"
 
 #. module: sale_subscription
 #. odoo-python
 #: code:addons/sale_subscription/models/sale_subscription_plan.py:0
 msgid "%s Months"
-msgstr ""
+msgstr "%s meses"
 
 #. module: sale_subscription
 #. odoo-python
 #: code:addons/sale_subscription/models/sale_subscription_plan.py:0
 msgid "%s Weeks"
-msgstr ""
+msgstr "%s semanas"
 
 #. module: sale_subscription
 #. odoo-python
 #: code:addons/sale_subscription/models/sale_subscription_plan.py:0
 msgid "%s Years"
-msgstr ""
+msgstr "%s anos"
 
 #. module: sale_subscription
 #. odoo-python
 #: code:addons/sale_subscription/models/sale_order_line.py:0
 #: code:addons/sale_subscription/models/sale_subscription_plan.py:0
 msgid "%s days"
-msgstr ""
+msgstr "%s dias"
 
 #. module: sale_subscription
 #. odoo-python
@@ -103,6 +104,8 @@ msgid ""
 "(*) These recurring products are discounted according to the prorated period "
 "from %(start)s to %(end)s"
 msgstr ""
+"(*) Esses produtos recorrentes recebem descontos de acordo com o período "
+"rateado de %(start)s até %(end)s"
 
 #. module: sale_subscription
 #. odoo-python
@@ -111,6 +114,8 @@ msgid ""
 "(*) These recurring products are entirely discounted as the next period has "
 "not been invoiced yet."
 msgstr ""
+"(*) Esses produtos recorrentes são totalmente descontados, pois o próximo "
+"período ainda não foi faturado."
 
 #. module: sale_subscription
 #. odoo-python
@@ -119,11 +124,13 @@ msgid ""
 "(*) These recurring products are surcharged according to the prorated period "
 "from %(start)s to %(end)s"
 msgstr ""
+"(*) Esses produtos recorrentes são sobretaxados de acordo com o período "
+"proporcional de %(start)s até %(end)s"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_portal_content
 msgid "(Change Plan)"
-msgstr ""
+msgstr "(Alterar plano)"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_portal_content
@@ -131,17 +138,19 @@ msgid ""
 ")\n"
 "                        <br/>"
 msgstr ""
+")\n"
+"                        <br/>"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.report_saleorder_document
 msgid "- Until"
-msgstr ""
+msgstr "Até"
 
 #. module: sale_subscription
 #. odoo-python
 #: code:addons/sale_subscription/models/sale_order.py:0
 msgid "- You delivered %(delivered)s %(name)s and invoiced %(invoiced)s"
-msgstr ""
+msgstr "- Você entregou %(delivered)s %(name)s e faturou %(invoiced)s"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.invoice_warning_message
@@ -150,6 +159,9 @@ msgid ""
 "             Any new delivered quantity during this period for the following "
 "product(s) may never be invoiced:"
 msgstr ""
+".\n"
+"             Novas quantidades do(s) seguinte(s) produto(s) entregues "
+"durante esse período nunca serão faturadas:"
 
 #. module: sale_subscription
 #. odoo-python
@@ -161,28 +173,28 @@ msgstr "1 mês"
 #. odoo-python
 #: code:addons/sale_subscription/models/sale_subscription_plan.py:0
 msgid "1 Week"
-msgstr ""
+msgstr "1 semana"
 
 #. module: sale_subscription
 #. odoo-python
 #: code:addons/sale_subscription/models/sale_subscription_plan.py:0
 msgid "1 Year"
-msgstr ""
+msgstr "1 ano"
 
 #. module: sale_subscription
 #: model:sale.subscription.plan,name:sale_subscription.subscription_plan_6_month
 msgid "6 Months"
-msgstr ""
+msgstr "6 meses"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_portal_sidebar
 msgid "<b>Payment Method</b>"
-msgstr ""
+msgstr "<b>Forma de pagamento</b>"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.view_sale_advance_payment_inv_sale_subscription
 msgid "<b>Subscriptions</b><br/>"
-msgstr ""
+msgstr "<b>Assinaturas</b><br/>"
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.mail_template_subscription_alert
@@ -332,7 +344,7 @@ msgstr ""
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_portal_sidebar
 msgid "<i class=\"fa fa-download me-1\"/> Download"
-msgstr ""
+msgstr "<i class=\"fa fa-download me-1\"/> Download"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_portal_content

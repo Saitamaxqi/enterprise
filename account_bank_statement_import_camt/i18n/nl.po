@@ -4,7 +4,7 @@
 #
 # Translators:
 # Martin Trigaux, 2022
-# Erwin van der Ploeg <erwin@odooexperts.nl>, 2023
+# Erwin van der Ploeg <erwin@odooexperts.nl>, 2023, 2025.
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Bren Driesen <brdri@odoo.com>, 2025.
 msgid ""
@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-23 08:31+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-11-14 09:51+0000\n"
+"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "account_bank_statement_import_camt/nl/>\n"
 "Language: nl\n"
@@ -1641,7 +1641,7 @@ msgstr "Koop verkoop terug"
 #. odoo-python
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Settlement"
-msgstr "Settlement"
+msgstr "Verrekening"
 
 #. module: account_bank_statement_import_camt
 #. odoo-python

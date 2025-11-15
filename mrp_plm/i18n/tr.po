@@ -26,13 +26,15 @@
 # Ediz Duman <neps1192@gmail.com>, 2023
 # Tugay Hatıl <tugayh@projetgrup.com>, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# DeepL <noreply-mt-deepl@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-15 21:10+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-11-12 14:58+0000\n"
+"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/mrp_plm/"
 "tr/>\n"
 "Language: tr\n"
@@ -91,13 +93,15 @@ msgstr ""
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_plm_production_form_view
+#, fuzzy
 msgid "<span class=\"o_stat_text\">ECO(S)</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">ECO(S)</span>"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+#, fuzzy
 msgid "<span class=\"o_stat_text\">Revision</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Revizyon</span>"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_defaults
@@ -111,8 +115,9 @@ msgstr ""
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
+#, fuzzy
 msgid "A user cannot be assigned more than once to the same stage"
-msgstr ""
+msgstr "Bir kullanıcı aynı aşamaya birden fazla kez atanamaz"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_needaction
@@ -179,17 +184,17 @@ msgstr "Rumuz Kontak Güvenliği"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_domain_id
 msgid "Alias Domain"
-msgstr ""
+msgstr "Alias Domain"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_domain
 msgid "Alias Domain Name"
-msgstr ""
+msgstr "Takma Alan Adı"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_full_name
 msgid "Alias Email"
-msgstr ""
+msgstr "Rumuz E-Posta"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_name
@@ -354,12 +359,13 @@ msgstr "BOM Genel Raporu"
 #. module: mrp_plm
 #: model:mrp.eco.type,name:mrp_plm.ecotype_bom_update
 msgid "BOM Updates"
-msgstr ""
+msgstr "BOM Güncellemeleri"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__upd_time_mode_batch
+#, fuzzy
 msgid "Batch count Change"
-msgstr ""
+msgstr "Parti sayısı Değişikliği"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_bom
@@ -410,13 +416,14 @@ msgstr "Aşamayı Engelleme"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__byproduct_id
+#, fuzzy
 msgid "BoM By-Product"
-msgstr ""
+msgstr "BoM Yan Ürünü"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__bom_line_id
 msgid "BoM Line"
-msgstr ""
+msgstr "BoM Satırı"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_rebase_ids
@@ -431,8 +438,9 @@ msgstr "BoM Revizyonu"
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_production.py:0
+#, fuzzy
 msgid "BoM Suggestions from %(mo_name)s"
-msgstr ""
+msgstr "BoM'dan Öneriler %(mo_name)s"
 
 #. module: mrp_plm
 #. odoo-javascript
@@ -448,13 +456,14 @@ msgstr "BoM:"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+#, fuzzy
 msgid "By-Product Changes"
-msgstr ""
+msgstr "Yan Ürün Değişiklikleri"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_bom_byproduct
 msgid "Byproduct"
-msgstr ""
+msgstr "Yan Ürün"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__user_can_approve
@@ -469,10 +478,11 @@ msgstr "Reddedebilir"
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_production.py:0
+#, fuzzy
 msgid ""
 "Cannot create an ECO if the Manufacturing Order doesn't use a Bill of "
 "Materials"
-msgstr ""
+msgstr "Üretim Emri bir ürün reçetesi kullanmıyorsa ECO oluşturulamaz"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_changes
@@ -529,13 +539,15 @@ msgstr "Firma"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+#, fuzzy
 msgid "Component Changes"
-msgstr ""
+msgstr "Bileşen Değişiklikleri"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+#, fuzzy
 msgid "Component Rebase"
-msgstr ""
+msgstr "Bileşen Yenileme"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_configuration
@@ -562,8 +574,9 @@ msgstr "Operasyonda Tüketilenler"
 
 #. module: mrp_plm
 #: model:ir.actions.server,name:mrp_plm.action_production_order_create_eco
+#, fuzzy
 msgid "Create ECO"
-msgstr ""
+msgstr "ECO Oluşturun"
 
 #. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_stage_action
@@ -719,13 +732,15 @@ msgstr "ECO BoM Değişiklikleri"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_change_ids_on_byproduct
+#, fuzzy
 msgid "ECO BoM Changes - By-Product"
-msgstr ""
+msgstr "ECO BoM Değişiklikleri - Yan Ürün"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_change_ids_on_line
+#, fuzzy
 msgid "ECO BoM Changes - Component"
-msgstr ""
+msgstr "ECO Yönetim Kurulu Değişiklikleri - Bileşen"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_bom_change
@@ -807,8 +822,9 @@ msgstr "ECO(lar)"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action_report
+#, fuzzy
 msgid "ECOs Analysis"
-msgstr ""
+msgstr "ECOs Analizi"
 
 #. module: mrp_plm
 #. odoo-python
@@ -824,8 +840,9 @@ msgstr "Eco BoM"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_production__eco_count
+#, fuzzy
 msgid "Eco Count"
-msgstr ""
+msgstr "Eko Sayım"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_routing_change
@@ -863,7 +880,7 @@ msgstr "E-posta cc"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_domain
 msgid "Email domain e.g. 'example.com' in 'odoo@example.com'"
-msgstr ""
+msgstr "E-posta alan adı, örneğin 'odoo@example.com' adresindeki 'example.com'"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__eco_id
@@ -1028,10 +1045,13 @@ msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__will_update_version
+#, fuzzy
 msgid ""
 "If unchecked, the version of the product/BoM will remain unchanged once the "
 "ECO is applied"
 msgstr ""
+"İşaretlenmezse, ECO uygulandıktan sonra ürünün/BoM'un sürümü değişmeden "
+"kalacaktır"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__image_128
@@ -1140,7 +1160,7 @@ msgstr "Son Bom"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_incoming_local
 msgid "Local-part based incoming detection"
-msgstr ""
+msgstr "Yerel bölüm bazlı gelen algılama"
 
 #. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_action
@@ -1168,12 +1188,12 @@ msgstr "Manuel Sürenin Değiştirilmesi"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_production
 msgid "Manufacturing Order"
-msgstr ""
+msgstr "Üretim Emri"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__production_id
 msgid "Manufacturing Orders"
-msgstr ""
+msgstr "Üretim Emirleri"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_master_data
@@ -1194,8 +1214,9 @@ msgstr "Mesajlar"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__upd_time_mode
+#, fuzzy
 msgid "Mode Change"
-msgstr ""
+msgstr "Mod Değişikliği"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_tag_view_search
@@ -1205,7 +1226,7 @@ msgstr "MRP ECO Etiketleri"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "My Activities"
-msgstr ""
+msgstr "Aktivitelerim"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__my_activity_date_deadline
@@ -1242,8 +1263,9 @@ msgstr "Yeni Malzeme Listesi"
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_production.py:0
+#, fuzzy
 msgid "New BoM from %(mo_name)s"
-msgstr ""
+msgstr "Yeni BoM'dan %(mo_name)s"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__current_bom_id
@@ -1333,7 +1355,7 @@ msgstr "Hata adedi"
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_needaction_counter
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Eylem gerektiren mesajların sayısı"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_has_error_counter
@@ -1348,13 +1370,15 @@ msgstr "Değişiklikler uygulandıktan sonra , ECOs bu aşamaya taşınacaktır.
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+#, fuzzy
 msgid "Open Component"
-msgstr ""
+msgstr "Açık Bileşen"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+#, fuzzy
 msgid "Open Operation"
-msgstr ""
+msgstr "Açık Operasyon"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__operation_name
@@ -1368,8 +1392,9 @@ msgstr "Operasyon Değişiklikleri"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__operation_id
+#, fuzzy
 msgid "Operation Id"
-msgstr ""
+msgstr "Operasyon Kimliği"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_force_thread_id
@@ -1389,13 +1414,15 @@ msgstr "Kaynak Eki"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_product_document__origin_res_model
+#, fuzzy
 msgid "Origin Model"
-msgstr ""
+msgstr "Köken Model"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_product_document__origin_res_name
+#, fuzzy
 msgid "Origin Name"
-msgstr ""
+msgstr "Köken Adı"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__legend_blocked
@@ -1495,8 +1522,9 @@ msgstr "Önceki ECO Değişiklikleri"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+#, fuzzy
 msgid "Previous Eco Component Changes"
-msgstr ""
+msgstr "Önceki Eko Bileşen Değişiklikleri"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__old_uom_id
@@ -1516,7 +1544,7 @@ msgstr "Öncelik"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Produced in Operation"
-msgstr ""
+msgstr "Operasyonda Üretilen"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_template
@@ -1529,7 +1557,7 @@ msgstr "Ürün"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_document
 msgid "Product Document"
-msgstr ""
+msgstr "Ürün Dokümanı"
 
 #. module: mrp_plm
 #. odoo-python
@@ -1540,12 +1568,12 @@ msgstr "Yalnızca Ürün"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Ürün Varyantı"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Production"
-msgstr ""
+msgstr "Üretim"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__active
@@ -1690,8 +1718,9 @@ msgstr "Uygulanan Değişikliği Göster"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+#, fuzzy
 msgid "Show all records whose next activity date is past"
-msgstr ""
+msgstr "Bir sonraki etkinlik tarihi geçmiş olan tüm kayıtları göster"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__stage_id
@@ -1742,8 +1771,9 @@ msgstr ""
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
+#, fuzzy
 msgid "Successfully Rebased!"
-msgstr ""
+msgstr "Başarıyla Yeniden Yüklendi!"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -1886,7 +1916,7 @@ msgstr "Geri Al"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__uom_change
 msgid "Unit"
-msgstr ""
+msgstr "Birim"
 
 #. module: mrp_plm
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco_bom_change__change_type__update
@@ -1896,8 +1926,9 @@ msgstr "Güncelle"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__will_update_version
+#, fuzzy
 msgid "Update Version"
-msgstr ""
+msgstr "Güncelleme Sürümü"
 
 #. module: mrp_plm
 #: model:res.groups,name:mrp_plm.group_plm_user
@@ -1917,7 +1948,7 @@ msgstr "Doğrulanmış"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_file_kanban_mrp_plm
 msgid "Variant"
-msgstr ""
+msgstr "Varyant"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__version
@@ -1929,8 +1960,9 @@ msgstr "Sürüm"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+#, fuzzy
 msgid "Visible to all"
-msgstr ""
+msgstr "Herkes tarafından görülebilir"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__nb_approvals
@@ -1962,7 +1994,7 @@ msgstr "İş Merkezi"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_routing_workcenter
 msgid "Work Center Usage"
-msgstr ""
+msgstr "İş Merkezi Kullanımı"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_workcenters
@@ -2002,7 +2034,7 @@ msgstr "Aşamayı değiştiremezsiniz, çünkü onaylar yine de gereklidir."
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_form
 msgid "alias"
-msgstr ""
+msgstr "rumuz"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -2017,24 +2049,25 @@ msgstr "Örn. Mühendislik Departmanı"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_form
 msgid "e.g. mycompany.com"
-msgstr ""
+msgstr "örn. sirketim.com"
 
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "product"
-msgstr ""
+msgstr "ürün"
 
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
+#, fuzzy
 msgid "res_model"
-msgstr ""
+msgstr "res_model"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "text-danger"
-msgstr ""
+msgstr "text-tehlike"
 
 #~ msgid "# ECOs in progress"
 #~ msgstr "# Devam Eden ECO(lar)s"

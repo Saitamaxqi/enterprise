@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:45+0000\n"
+"POT-Creation-Date: 2025-11-07 18:42+0000\n"
 "PO-Revision-Date: 2025-10-30 11:38+0000\n"
 "Last-Translator: \"Malaz Siddig Elsayed Abuidris (msea)\" <msea@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/ai/ar/>\n"
@@ -415,10 +415,10 @@ msgstr ""
 "            Returns CSV with pipe (|) delimiter:\n"
 "            ```\n"
 "            menu_id|model_name|context|domain|search_view\n"
-"            389|sale.order|{\"search_default_my_quotation\": "
-"1}|[]|<search><fields>...</fields></search>\n"
-"            172|account.move|{\"search_default_draft\": 1}|"
-"[[\"type\", \"=\", \"out_invoice\"]]|<search>...</search>\n"
+"            389|sale.order|{\"search_default_my_quotation\": 1}|[]|"
+"<search><fields>...</fields></search>\n"
+"            172|account.move|{\"search_default_draft\": 1}|[[\"type\", "
+"\"=\", \"out_invoice\"]]|<search>...</search>\n"
 "            ```\n"
 "\n"
 "            Key information:\n"
@@ -539,9 +539,9 @@ msgid ""
 "ai_tool_show_warning\" aria-hidden=\"true\" title=\"The AI will not be "
 "limited by the groups defined on tools\"/>"
 msgstr ""
-"<i class=\"fa fa-warning text-warning me-2\" invisible="
-"\"not ai_tool_show_warning\" aria-hidden=\"true\" title="
-"\"The AI will not be limited by the groups defined on tools\"/>"
+"<i class=\"fa fa-warning text-warning me-2\" invisible=\"not "
+"ai_tool_show_warning\" aria-hidden=\"true\" title=\"The AI will not be "
+"limited by the groups defined on tools\"/>"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
@@ -1343,7 +1343,7 @@ msgstr "آخر تحديث في"
 
 #. module: ai
 #. odoo-javascript
-#: code:addons/ai/static/src/web/systray_action.js:0
+#: code:addons/ai/static/src/ai_chat_launcher_service.js:0
 msgid "Log Note"
 msgstr "ملاحظة"
 
@@ -1437,11 +1437,9 @@ msgstr "لم يتم العثور على عناوين URL صالحة للمعال
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
 msgid ""
-"No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, and "
+"No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, CSV, and "
 "OpenDocument files are allowed."
 msgstr ""
-"لا توجد ملفات صالحة لرفعها. يُسمح فقط بالملفات بتنسيقات PDF و Word و "
-"PowerPoint و Excel و Text و OpenDocument."
 
 #. module: ai
 #. odoo-javascript
@@ -1585,7 +1583,7 @@ msgstr "قم بتحديد السجلات"
 
 #. module: ai
 #. odoo-javascript
-#: code:addons/ai/static/src/web/systray_action.js:0
+#: code:addons/ai/static/src/ai_chat_launcher_service.js:0
 msgid "Send Message"
 msgstr "إرسال رسالة"
 
@@ -1638,10 +1636,8 @@ msgstr ""
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
 msgid ""
 "Some files have invalid formats and were skipped: %s. Only PDF, Word, "
-"PowerPoint, Excel, Text, and OpenDocument files are allowed."
+"PowerPoint, Excel, Text, CSV, and OpenDocument files are allowed."
 msgstr ""
-"تحتوي بعض الملفات على تنسيقات غير صالحة وتم تخطيها: %s. لا يُسمح إلا بملفات "
-"PDF و Word و PowerPoint و Excel و Text و OpenDocument."
 
 #. module: ai
 #. odoo-javascript
@@ -1756,7 +1752,8 @@ msgstr "التوجيه الذي يتم إرساله إلى الذكاء الاص
 msgid ""
 "The type of the parameter '%(name)s' is incorrect. It should be '%"
 "(expected_param_type)s'."
-msgstr "نوع المعامل ’%(name)s‘ غير صحيح. يجب أن يكون ’%(expected_param_type)s‘."
+msgstr ""
+"نوع المعامل ’%(name)s‘ غير صحيح. يجب أن يكون ’%(expected_param_type)s‘."
 
 #. module: ai
 #. odoo-python
@@ -1765,8 +1762,8 @@ msgid ""
 "The value '%(value)s' of the parameter '%(name)s' doesn't match the expected "
 "pattern '%(expected_pattern)s'."
 msgstr ""
-"لا تتطابق قيمة ”%(value)s“ للمعامل ”%(name)s“ مع النمط المتوقع "
-"”%(expected_pattern)s“."
+"لا تتطابق قيمة ”%(value)s“ للمعامل ”%(name)s“ مع النمط المتوقع ”%"
+"(expected_pattern)s“."
 
 #. module: ai
 #. odoo-python
@@ -1814,8 +1811,8 @@ msgstr "العنوان"
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
 msgid "To return a result to the AI agent, do <code>ai['result'] = ...</code>"
 msgstr ""
-"لإرجاع نتيجة إلى وكيل الذكاء الاصطناعي، قم بما يلي: <code>ai[’result‘] = "
-"...</code>"
+"لإرجاع نتيجة إلى وكيل الذكاء الاصطناعي، قم بما يلي: <code>ai[’result‘] = ..."
+"</code>"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_ids
@@ -1877,8 +1874,8 @@ msgstr ""
 "(المناقشة)\n"
 "- 'أنشئ سجلاً': أنشئ سجلاً جديداً بقيم جديدة\n"
 "- 'تنفيذ الكود': سيتم تنفيذ كود بايثون\n"
-"- 'إرسال إشعارات Webhook': أرسل طلب منشور إلى النظام الخارجي، والذي يعرف أيضاً"
-" بـ Webhook\n"
+"- 'إرسال إشعارات Webhook': أرسل طلب منشور إلى النظام الخارجي، والذي يعرف "
+"أيضاً بـ Webhook\n"
 "- 'الإجراءات المتعددة': قم بتحديد إجراء يؤدي إلى تشغيل عدة إجراءات أخرى "
 "للخادم\n"
 
@@ -2030,3 +2027,17 @@ msgstr "تم تنفيذه."
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "fa-hashtag"
 msgstr "fa-hashtag"
+
+#~ msgid ""
+#~ "No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, and "
+#~ "OpenDocument files are allowed."
+#~ msgstr ""
+#~ "لا توجد ملفات صالحة لرفعها. يُسمح فقط بالملفات بتنسيقات PDF و Word و "
+#~ "PowerPoint و Excel و Text و OpenDocument."
+
+#~ msgid ""
+#~ "Some files have invalid formats and were skipped: %s. Only PDF, Word, "
+#~ "PowerPoint, Excel, Text, and OpenDocument files are allowed."
+#~ msgstr ""
+#~ "تحتوي بعض الملفات على تنسيقات غير صالحة وتم تخطيها: %s. لا يُسمح إلا "
+#~ "بملفات PDF و Word و PowerPoint و Excel و Text و OpenDocument."

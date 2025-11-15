@@ -4,13 +4,14 @@
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # "Cécile Collart (cco)" <cco@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-24 11:22+0000\n"
-"Last-Translator: \"Cécile Collart (cco)\" <cco@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:42+0000\n"
+"PO-Revision-Date: 2025-11-08 20:03+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/ai/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -371,13 +372,13 @@ msgstr "IA Embedding : Générer des embeddings"
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__name
 msgid "AI Prompt"
-msgstr ""
+msgstr "IA Prompt"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "AI Prompt Tools"
-msgstr ""
+msgstr "IA Outils de prompt"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_schema
@@ -506,7 +507,7 @@ msgstr "L'action \"%(action)s\" est terminée."
 #: model:ir.model.fields,field_description:ai.field_ai_agent__active
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__is_active
 msgid "Active"
-msgstr ""
+msgstr "Actif"
 
 #. module: ai
 #. odoo-python
@@ -804,7 +805,7 @@ msgstr "Dictez du texte ou enregistrez une réunion"
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.xml:0
 #: code:addons/ai/static/src/records_selector_popover/records_selector_popover.xml:0
 msgid "Discard"
-msgstr ""
+msgstr "Ignorer"
 
 #. module: ai
 #: model:ir.model,name:ai.model_discuss_channel
@@ -841,7 +842,7 @@ msgstr "Modifier"
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_prompt.xml:0
 msgid "Edit Field Prompt"
-msgstr ""
+msgstr "Modifier le prompt du champ"
 
 #. module: ai
 #. odoo-javascript
@@ -857,7 +858,7 @@ msgstr "Modèles d'e-mail"
 #. module: ai
 #: model:ir.model,name:ai.model_mail_thread
 msgid "Email Thread"
-msgstr ""
+msgstr "Discussion par e-mail"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__embedding_model
@@ -893,7 +894,7 @@ msgstr "Détails de l’erreur"
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__status__failed
 msgid "Failed"
-msgstr ""
+msgstr "Échec"
 
 #. module: ai
 #. odoo-python
@@ -1017,7 +1018,7 @@ msgstr "Insérer un prompt IA"
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_records_selector_plugin.js:0
 msgid "Insert records"
-msgstr ""
+msgstr "Insérer des enregistrements"
 
 #. module: ai
 #. odoo-javascript
@@ -1117,7 +1118,7 @@ msgstr "Mis à jour le"
 
 #. module: ai
 #. odoo-javascript
-#: code:addons/ai/static/src/web/systray_action.js:0
+#: code:addons/ai/static/src/ai_chat_launcher_service.js:0
 msgid "Log Note"
 msgstr "Note"
 
@@ -1146,7 +1147,7 @@ msgstr "Longueur max"
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__mimetype
 msgid "Mime Type"
-msgstr ""
+msgstr "Type de mime"
 
 #. module: ai
 #. odoo-python
@@ -1211,11 +1212,9 @@ msgstr "Aucune URL valide trouvée à traiter."
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
 msgid ""
-"No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, and "
+"No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, CSV, and "
 "OpenDocument files are allowed."
 msgstr ""
-"Aucun fichier valide à télécharger. Seuls les fichiers PDF, Word, "
-"PowerPoint, Excel, texte et OpenDocument sont autorisés."
 
 #. module: ai
 #. odoo-javascript
@@ -1303,13 +1302,13 @@ msgstr "Fournissez votre clé API pour vous connecter à votre compte"
 #. odoo-javascript
 #: code:addons/ai/static/src/records_selector_popover/records_selector_popover.xml:0
 msgid "Record"
-msgstr ""
+msgstr "Enregistrement"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_records_selector_plugin.js:0
 msgid "Records Selector"
-msgstr ""
+msgstr "Sélecteur d’enregistrements"
 
 #. module: ai
 #. odoo-javascript
@@ -1335,7 +1334,7 @@ msgstr "Réécrire le contenu"
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_composer__name
 msgid "Rule Name"
-msgstr ""
+msgstr "Nom de la règle"
 
 #. module: ai
 #. odoo-javascript
@@ -1357,7 +1356,7 @@ msgstr ""
 
 #. module: ai
 #. odoo-javascript
-#: code:addons/ai/static/src/web/systray_action.js:0
+#: code:addons/ai/static/src/ai_chat_launcher_service.js:0
 msgid "Send Message"
 msgstr "Envoyer le message"
 
@@ -1410,10 +1409,8 @@ msgstr ""
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
 msgid ""
 "Some files have invalid formats and were skipped: %s. Only PDF, Word, "
-"PowerPoint, Excel, Text, and OpenDocument files are allowed."
+"PowerPoint, Excel, Text, CSV, and OpenDocument files are allowed."
 msgstr ""
-"Certains fichiers ont un format invalide et ont été ignorés : %s. Seuls les "
-"fichiers PDF, Word, PowerPoint, Excel, texte et OpenDocument sont autorisés."
 
 #. module: ai
 #. odoo-javascript
@@ -1587,7 +1584,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_ids
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_ids
 msgid "Tools"
-msgstr ""
+msgstr "Outils"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__topic_ids
@@ -1614,7 +1611,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__state
 #: model:ir.model.fields,field_description:ai.field_ir_cron__state
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ir_actions_server__state
@@ -1633,12 +1630,29 @@ msgid ""
 "- 'Multi Actions': define an action that triggers several other server "
 "actions\n"
 msgstr ""
+"Type d'action serveur. Les valeurs suivantes sont disponibles :\n"
+"- 'Mettre à jour un enregistrement' : mettre à jours les valeurs d'un "
+"enregistrement\n"
+"- 'Créer une activité' : créer une activité (Discussion)\n"
+"- 'Envoyer un e-mail' : publier un message, une note ou envoyer un e-mail "
+"(Discussion)\n"
+"- 'Envoyer un SMS' : envoyer des SMS, les enregistrer dans les documents "
+"(SMS)\n"
+"- 'Ajouter/supprimer des abonnés' : ajouter ou supprimer des abonnés sur un "
+"enregistrement (Discussion)\n"
+"- 'Créer un enregistrement' : créer un nouvel enregistrement avec de "
+"nouvelles valeurs\n"
+"- 'Exécuter un code' : exécuter un bloc de code Python\n"
+"- 'Envoyer une notification Webhook' : envoyer une demande de PUBLICATION à "
+"un système externe, également connu sous le nom de Webhook\n"
+"- 'Multi-Action' : définir une action qui déclenche plusieurs autres actions "
+"serveur.\n"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__url
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__type__url
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #. module: ai
 #. odoo-python
@@ -1685,12 +1699,12 @@ msgstr "Utilisez ceci"
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
 msgid "Use your own ChatGPT account"
-msgstr ""
+msgstr "Utilisez votre propre compte ChatGPT"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
 msgid "Use your own Google Gemini account"
-msgstr ""
+msgstr "Utilisez votre propre compte Google Gemini"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__user_has_access
@@ -1701,7 +1715,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 msgid "User error"
-msgstr ""
+msgstr "Erreur d'utilisateur"
 
 #. module: ai
 #. odoo-javascript
@@ -1779,4 +1793,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "fa-hashtag"
-msgstr ""
+msgstr "fa-hashtag"
+
+#~ msgid ""
+#~ "No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, and "
+#~ "OpenDocument files are allowed."
+#~ msgstr ""
+#~ "Aucun fichier valide à télécharger. Seuls les fichiers PDF, Word, "
+#~ "PowerPoint, Excel, texte et OpenDocument sont autorisés."
+
+#~ msgid ""
+#~ "Some files have invalid formats and were skipped: %s. Only PDF, Word, "
+#~ "PowerPoint, Excel, Text, and OpenDocument files are allowed."
+#~ msgstr ""
+#~ "Certains fichiers ont un format invalide et ont été ignorés : %s. Seuls "
+#~ "les fichiers PDF, Word, PowerPoint, Excel, texte et OpenDocument sont "
+#~ "autorisés."

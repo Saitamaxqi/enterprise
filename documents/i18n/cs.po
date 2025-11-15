@@ -12,13 +12,14 @@
 # Aleš Fiala <f.ales1@seznam.cz>, 2023
 # Rastislav Brencic <rastislav.brencic@azet.sk>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-15 11:59+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 19:32+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/documents/"
 "cs/>\n"
 "Language: cs\n"
@@ -497,7 +498,7 @@ msgid ""
 "size: 13px;\">\n"
 "                                        <div>\n"
 "                                            Hello <t t-"
-"out=\"object.owner_id.name or ''\">OdooBot</t>,\n"
+"out=\"object.requestee_partner_id.name or ''\">OdooBot</t>,\n"
 "                                            <br/><br/>\n"
 "                                            <t t-"
 "out=\"object.create_uid.name or ''\">OdooBot</t> (<t t-"
@@ -665,7 +666,7 @@ msgid ""
 "size: 13px;\">\n"
 "                                        <div>\n"
 "                                            Hello <t t-"
-"out=\"object.owner_id.name or ''\">OdooBot</t>,\n"
+"out=\"object.requestee_partner_id.name or ''\">OdooBot</t>,\n"
 "                                            <br/><br/>\n"
 "                                            This is a friendly reminder to "
 "upload your requested document:\n"
@@ -1086,7 +1087,7 @@ msgstr "Dodatečné dokumenty, ke kterým máte přístup."
 #. module: documents
 #: model:documents.document,name:documents.document_internal_folder
 msgid "Admin"
-msgstr ""
+msgstr "Admin"
 
 #. module: documents
 #: model:res.groups,name:documents.group_documents_manager
@@ -1380,7 +1381,7 @@ msgstr "Vyberte záznam, který chcete propojit"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/fields/documents_datetime/documents_datetime_field.xml:0
 msgid "Clear"
-msgstr ""
+msgstr "Vymazat"
 
 #. module: documents
 #. odoo-javascript
@@ -1414,7 +1415,7 @@ msgstr "Kliknutím na křížek <b>opustíte náhled</b>."
 #. odoo-javascript
 #: code:addons/documents/static/src/views/kanban/documents_kanban_record.xml:0
 msgid "Click to select"
-msgstr ""
+msgstr "Klikněte pro výběr"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__thumbnail_status__client_generated
@@ -1485,7 +1486,7 @@ msgstr "Konfigurace"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Confirm"
-msgstr ""
+msgstr "Potvrdit"
 
 #. module: documents
 #. odoo-python
@@ -1677,7 +1678,7 @@ msgstr "Prodleva smazání (dny)"
 #: code:addons/documents/static/src/views/fields/documents_user_folder_id_char/documents_user_folder_id_char.js:0
 #: model:ir.model.fields,field_description:documents.field_documents_operation__destination
 msgid "Destination"
-msgstr ""
+msgstr "Cíl"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__access_internal
@@ -1708,7 +1709,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/list/action_widget/documents_list_action_item_details.js:0
 msgid "Details"
-msgstr ""
+msgstr "Podrobnosti"
 
 #. module: documents
 #. odoo-javascript
@@ -2626,7 +2627,7 @@ msgstr "Faktura-DPH_2018_0007.pdf"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__is_deleted
 msgid "Is Deleted"
-msgstr ""
+msgstr "Je smazáno"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__is_editable_attachment
@@ -2984,7 +2985,7 @@ msgstr "Více"
 #: code:addons/documents/static/src/views/documents_controller_mixin.js:0
 #: model:ir.model.fields.selection,name:documents.selection__documents_operation__operation__move
 msgid "Move"
-msgstr ""
+msgstr "Záznam"
 
 #. module: documents
 #. odoo-javascript
@@ -3148,7 +3149,7 @@ msgstr "Typ další aktivity"
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #. module: documents
 #. odoo-javascript
@@ -3365,7 +3366,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__operation
 msgid "Operation"
-msgstr ""
+msgstr "Úkon"
 
 #. module: documents
 #. odoo-python
@@ -3423,7 +3424,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__user_folder_id
 msgid "Parent"
-msgstr ""
+msgstr "Nadřazená"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__parent_path
@@ -3487,7 +3488,7 @@ msgstr "Hodnocení"
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_readonly
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__is_readonly
 msgid "Readonly"
-msgstr ""
+msgstr "Pouze ke čtení"
 
 #. module: documents
 #. odoo-python
@@ -3515,7 +3516,7 @@ msgstr "Záznam"
 #. module: documents
 #: model:documents.document,name:documents.document_registrations_folder
 msgid "Registrations"
-msgstr ""
+msgstr "Registrace"
 
 #. module: documents
 #. odoo-javascript
@@ -3687,7 +3688,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/fields/documents_user_folder_id_char/documents_search_panel_user_folder_id.xml:0
 msgid "Search..."
-msgstr ""
+msgstr "Hledat..."
 
 #. module: documents
 #. odoo-javascript
@@ -3865,7 +3866,7 @@ msgstr "Sdílený"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
 msgid "Shared with"
-msgstr ""
+msgstr "Sdíleno s"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
@@ -3912,7 +3913,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_single
 msgid "Single"
-msgstr ""
+msgstr "Svobodný"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_file
@@ -3922,7 +3923,7 @@ msgstr "Velikost:"
 #. module: documents
 #: model:documents.document,name:documents.document_finance_social_folder
 msgid "Social"
-msgstr ""
+msgstr "Sociální"
 
 #. module: documents
 #. odoo-python
@@ -4058,7 +4059,7 @@ msgstr "Štítky"
 #. module: documents
 #: model:documents.document,name:documents.document_finance_taxes_folder
 msgid "Taxes"
-msgstr ""
+msgstr "Daně"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_tag__tooltip
@@ -4317,7 +4318,7 @@ msgstr "Koš"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.res_config_settings_view_form
 msgid "Trash Management"
-msgstr ""
+msgstr "Trash Management"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_document__is_editable_attachment
@@ -4515,7 +4516,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Yes"
-msgstr ""
+msgstr "Ano"
 
 #. module: documents
 #. odoo-javascript
@@ -4808,7 +4809,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/editor/plugins/add_documents_attachment_plugin.js:0
 msgid "file"
-msgstr ""
+msgstr "soubor"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page
@@ -4878,13 +4879,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "none"
-msgstr ""
+msgstr "žádný"
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/ir_actions_server.py:0
 msgid "parent_id"
-msgstr ""
+msgstr "parent_id"
 
 #. module: documents
 #: model:documents.document,name:documents.documents_image_people_document
@@ -4922,7 +4923,7 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
 msgid "to"
-msgstr ""
+msgstr "k"
 
 #. module: documents
 #. odoo-javascript

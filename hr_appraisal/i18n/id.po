@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-31 07:19+0000\n"
+"PO-Revision-Date: 2025-11-14 02:13+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "hr_appraisal/id/>\n"
@@ -825,7 +825,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_appraisal/models/hr_appraisal_goal.py:0
 msgid "A goal template already exist for this goal."
-msgstr ""
+msgstr "Templat tujuan sudah tersedia untuk tujuan ini."
 
 #. module: hr_appraisal
 #: model:ir.model.constraint,message:hr_appraisal.constraint_hr_appraisal_goal_tag_name_uniq
@@ -892,7 +892,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/list/hr_employee_selection_list/hr_employee_selection_list_view.xml:0
 msgid "Add Goals to Employees"
-msgstr ""
+msgstr "Tambahkan Goals ke Karyawan"
 
 #. module: hr_appraisal
 #: model_terms:ir.actions.act_window,help:hr_appraisal.hr_appraisal_config_templates_action
@@ -968,7 +968,7 @@ msgstr "Catatan Penilaian Appraisal"
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.js:0
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_campaign_wizard_view_form
 msgid "Appraisal Campaign"
-msgstr ""
+msgstr "Kampanye Appraisal"
 
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_hr_appraisal_campaign_wizard
@@ -1064,18 +1064,20 @@ msgid ""
 "Appraisal for %(appraisal_title)s should be using template \"%"
 "(template_name)s\" instead of \"%(wrong_template_name)s\""
 msgstr ""
+"Appraisal untuk %(appraisal_title)s harusnya menggunakan "
+"\"%(template_name)s\" alih-alih \"%(wrong_template_name)s\""
 
 #. module: hr_appraisal
 #. odoo-python
 #: code:addons/hr_appraisal/models/hr_appraisal.py:0
 msgid "Appraisal for %(employee)s on %(date)s"
-msgstr ""
+msgstr "Appraisal untuk %(employee)s di %(date)s"
 
 #. module: hr_appraisal
 #. odoo-python
 #: code:addons/hr_appraisal/models/hr_appraisal.py:0
 msgid "Appraisal for %s to fill"
-msgstr ""
+msgstr "Appraisal untuk %s untuk diisi"
 
 #. module: hr_appraisal
 #. odoo-python
@@ -1087,7 +1089,7 @@ msgstr "Appraisal untuk %s"
 #. odoo-python
 #: code:addons/hr_appraisal/models/hr_appraisal.py:0
 msgid "Appraisal to fill"
-msgstr ""
+msgstr "Appraisal untuk diisi"
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.hr_appraisal_action_from_department
@@ -1137,6 +1139,8 @@ msgid ""
 "Appraisals won't be created for the following employees because they don't "
 "have a manager: %(employees)s"
 msgstr ""
+"Appraisal tidak akan dibuat untuk karyawan-karyawan berikut karena mereka "
+"tidak memiliki manager: %(employees)s"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
@@ -1231,7 +1235,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/components/goal_template_delete_confirmation_dialog/goal_template_delete_confirmation_dialog.js:0
 msgid "Bye-bye, record!"
-msgstr ""
+msgstr "Bye-bye, record!"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_request_appraisal__can_edit_body
@@ -1328,7 +1332,7 @@ msgstr "Konten"
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/list/goal_template_library_list/goal_template_library_list_view.xml:0
 msgid "Continue"
-msgstr ""
+msgstr "Lanjutkan"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_res_company__duration_first_appraisal
@@ -1444,7 +1448,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/components/goal_template_delete_confirmation_dialog/goal_template_delete_confirmation_dialog.js:0
 msgid "Delete with children"
-msgstr ""
+msgstr "Hapus beserta anak-anaknya"
 
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_hr_department
@@ -1483,7 +1487,7 @@ msgstr "Deskripsi"
 #: code:addons/hr_appraisal/static/src/views/list/hr_employee_selection_list/hr_employee_selection_list_view.xml:0
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_campaign_wizard_view_form
 msgid "Discard"
-msgstr ""
+msgstr "Buang"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__display_name
@@ -1597,7 +1601,7 @@ msgstr ""
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.js:0
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_campaign_wizard__employee_ids
 msgid "Employees"
-msgstr ""
+msgstr "Karyawan"
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.action_hr_appraisal_note
@@ -1878,7 +1882,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.xml:0
 msgid "Keep track of how your employees are doing..."
-msgstr ""
+msgstr "Tetap lacak bagaimana kinerja karyawan Anda..."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_request_appraisal__lang
@@ -1962,7 +1966,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.xml:0
 msgid "Load sample data"
-msgstr ""
+msgstr "Muat data sampel"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_manager_feedback_template:hr_appraisal.hr_appraisal_default_template
@@ -2054,7 +2058,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/components/cog_menu/multiple_appraisals_cog_menu.xml:0
 msgid "Multiple Appraisals"
-msgstr ""
+msgstr "Lebih Dari Satu Appraisal"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
@@ -2105,13 +2109,13 @@ msgstr "Butuh perkembangan"
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.xml:0
 msgid "New Employee"
-msgstr ""
+msgstr "Karyawan Baru"
 
 #. module: hr_appraisal
 #. odoo-python
 #: code:addons/hr_appraisal/models/hr_employee.py:0
 msgid "New and Pending Appraisals"
-msgstr ""
+msgstr "Appraisal Baru dan Pending"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__activity_calendar_event_id
@@ -2153,25 +2157,25 @@ msgstr "Tanggal penilaian berikutnya"
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.xml:0
 msgid "No Appraisals found!"
-msgstr ""
+msgstr "Tidak ada Appraisal yang ditemukan!"
 
 #. module: hr_appraisal
 #. odoo-python
 #: code:addons/hr_appraisal/wizard/hr_appraisal_campaign_wizard.py:0
 msgid "No employees have the tag %(category_name)s"
-msgstr ""
+msgstr "Tidak ada karyawan dengan tag %(category_name)s"
 
 #. module: hr_appraisal
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.xml:0
 msgid "No employees to assess yet!"
-msgstr ""
+msgstr "Belum ada karyawan untuk dinilai!"
 
 #. module: hr_appraisal
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/components/goal_template_delete_confirmation_dialog/goal_template_delete_confirmation_dialog.js:0
 msgid "No, keep it"
-msgstr ""
+msgstr "Tidak, tetap simpan"
 
 #. module: hr_appraisal
 #. odoo-python
@@ -2239,14 +2243,14 @@ msgstr "Jumlah Appraisal yang Sedang Berlangsung"
 #. odoo-python
 #: code:addons/hr_appraisal/models/hr_appraisal.py:0
 msgid "Oops! You can only delete draft appraisals."
-msgstr ""
+msgstr "Oops! Anda hanya dapat menghapus draft appraisal."
 
 #. module: hr_appraisal
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/kanban/goal_kanban/goal_kanban_view.xml:0
 #: code:addons/hr_appraisal/static/src/views/list/goal_list/goal_list_view.xml:0
 msgid "Open Library"
-msgstr ""
+msgstr "Buka Pustaka"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_yearly_template
@@ -2309,6 +2313,8 @@ msgid ""
 "Please set a final rating to validate these appraisals:\n"
 "- %s"
 msgstr ""
+"Silakan tetapkan rating final untuk memvalidasi appraisal berikut:\n"
+"- %s"
 
 #. module: hr_appraisal
 #. odoo-python
@@ -2320,7 +2326,7 @@ msgstr "Appraisal Sebelumnya"
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/component/print_menu.xml:0
 msgid "Print"
-msgstr ""
+msgstr "Cetak"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__note
@@ -2401,7 +2407,7 @@ msgstr "Nama pengguna terkait untuk sumber daya untuk mengelola aksesnya."
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/fields/appraisal_remaining_days.js:0
 msgid "Remaining Days"
-msgstr ""
+msgstr "Hari-Hari Tersisa"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_request_appraisal__render_model
@@ -2460,7 +2466,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/helper/goal_helper_static_actions/goal_helper_static_actions.js:0
 msgid "Save as template"
-msgstr ""
+msgstr "Simpan sebagai templat"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_campaign_wizard_view_form
@@ -2471,7 +2477,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.xml:0
 msgid "Schedule Appraisals"
-msgstr ""
+msgstr "Jadwalkan Appraisal"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
@@ -2492,13 +2498,13 @@ msgstr "Cari penilaian"
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/list/goal_template_library_list/goal_template_library_list_view.xml:0
 msgid "Select"
-msgstr ""
+msgstr "Pilih"
 
 #. module: hr_appraisal
 #. odoo-python
 #: code:addons/hr_appraisal/models/hr_appraisal_goal.py:0
 msgid "Select Employees"
-msgstr ""
+msgstr "Pilih Karyawan"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
@@ -2658,6 +2664,8 @@ msgid ""
 "Template %(template_name)s is necessary for appraisal requests and may not "
 "be removed."
 msgstr ""
+"Templat %(template_name)s diperlukan untuk permintaan appraisal dan tidak "
+"dapat dihapus."
 
 #. module: hr_appraisal
 #. odoo-python
@@ -2673,7 +2681,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_appraisal/models/hr_appraisal.py:0
 msgid "The \"Manager Feedback Published\" cannot be changed by an employee."
-msgstr ""
+msgstr "\"Feedback Manager Dipublikasi\" tidak dapat diubah oleh karyawan."
 
 #. module: hr_appraisal
 #. odoo-python
@@ -2692,7 +2700,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_appraisal/wizard/hr_appraisal_campaign_wizard.py:0
 msgid "The company %(company_name)s doesn't have employees"
-msgstr ""
+msgstr "Perusahaan %(company_name)s tidak memiliki karyawan"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_employee__next_appraisal_date
@@ -2707,7 +2715,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_appraisal/wizard/hr_appraisal_campaign_wizard.py:0
 msgid "The department %(department_name)s doesn't have employees"
-msgstr ""
+msgstr "Departemen %(department_name)s tidak memiliki karyawan"
 
 #. module: hr_appraisal
 #: model:ir.model.constraint,message:hr_appraisal.constraint_res_company_positif_number_months
@@ -2721,6 +2729,8 @@ msgid ""
 "The employee %(employee)s arrived %(months)s months ago. The appraisal is "
 "created and you can fill it here."
 msgstr ""
+"Karyawan %(employee)s masuk %(months)s bulan lalu. Appraisal dibuat dan Anda "
+"dapat mengisinya di sini."
 
 #. module: hr_appraisal
 #. odoo-python
@@ -2746,6 +2756,8 @@ msgid ""
 "(employees)s. The existing appraisals will be used instead of creating new "
 "ones."
 msgstr ""
+"Karyawan-karyawan berikut sudah memiiliki appraisal pada %(appraisal_date)s: "
+"%(employees)s. Appraisal yang tersedia akan digunakan alih-alih membuat baru."
 
 #. module: hr_appraisal
 #. odoo-python
@@ -2754,6 +2766,8 @@ msgid ""
 "The last appraisal of %(employee)s was %(months)s months ago. The appraisal "
 "is created and you can fill it here."
 msgstr ""
+"Appraisal terakhir %(employee)s adalah %(months)s bulan lalu. Appraisal "
+"dibuat dan Anda dapat mengisinya di sini."
 
 #. module: hr_appraisal
 #. odoo-python
@@ -2914,6 +2928,8 @@ msgstr ""
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.xml:0
 msgid "Would you like to test with sample data or create your own employees?"
 msgstr ""
+"Apakah Anda ingin menguji dengan data sampel atau membuat karyawan Anda "
+"sendiri?"
 
 #. module: hr_appraisal
 #. odoo-python
@@ -2922,6 +2938,8 @@ msgid ""
 "You arrived %s months ago. Your appraisal is created and you can fill it "
 "here."
 msgstr ""
+"Anda masuk %s bulan lalu. Appraisal Anda dibuat dan Anda dapat mengisinya di "
+"sini."
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_template_view_form
@@ -2934,6 +2952,8 @@ msgstr ""
 msgid ""
 "You cannot delete an employee who is a goal's manager, archive it instead."
 msgstr ""
+"Anda tidak dapat menghapus karyawan yang merupakan manajer goal, Anda dapat "
+"mengarsipnya."
 
 #. module: hr_appraisal
 #. odoo-python
@@ -2942,12 +2962,16 @@ msgid ""
 "You cannot duplicate at the same time a goal and one of its children.\n"
 "Duplicating a goal will also duplicate its children."
 msgstr ""
+"Anda tidak dapat menduplikasi di waktu yang sama goal dan salah satu anaknya."
+"\n"
+"Menduplikasi goal juga akan menduplikasi anak-anaknya."
 
 #. module: hr_appraisal
 #. odoo-python
 #: code:addons/hr_appraisal/models/hr_employee.py:0
 msgid "You cannot set 'Next Appraisal Date' in the past."
 msgstr ""
+"Anda tidak dapat menetapkan 'Tanggal Appraisal Berikutnya' di masa lalu."
 
 #. module: hr_appraisal
 #. odoo-python
@@ -2962,6 +2986,8 @@ msgid ""
 "Your last appraisal was %s months ago. Your appraisal is created and you can "
 "fill it here."
 msgstr ""
+"Appraisal terakhir Anda adalah %s bulan lalu. Appraisal Anda dibuat dan Anda "
+"dapat mengisinya di sini."
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_template_form

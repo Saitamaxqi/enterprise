@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-27 10:55+0000\n"
+"PO-Revision-Date: 2025-11-14 11:44+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/pos_iot/pt_BR/>\n"
@@ -50,12 +50,12 @@ msgstr "Acesse"
 #: model:ir.model.fields,field_description:pos_iot.field_iot_box__associated_pos_config_ids
 #: model:ir.model.fields,field_description:pos_iot.field_iot_device__associated_pos_config_ids
 msgid "Associated PoS"
-msgstr ""
+msgstr "PDV associado"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Automated Setup"
-msgstr ""
+msgstr "Configuração automatizada"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
@@ -110,13 +110,13 @@ msgstr "A configuração do terminal de pagamento falhou"
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_auto_config_pos_iot
 msgid "Configure Automatically IoT Box In PoS"
-msgstr ""
+msgstr "Configurar automaticamente a IoT Box no PDV"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/backend/add_iot_box_form_controller.js:0
 msgid "Connect to a Point of Sale"
-msgstr ""
+msgstr "Conectar-se a um Ponto de Venda"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -133,17 +133,17 @@ msgstr "Conexão ao terminal falhou"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Continue"
-msgstr ""
+msgstr "Continuar"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Criado por"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Criado em"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
@@ -154,7 +154,7 @@ msgstr "Tela do cliente"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__display_name
@@ -166,7 +166,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_iot.field_pos_session__display_name
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Exibir nome"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iface_electronic_scale

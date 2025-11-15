@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-24 02:06+0000\n"
+"PO-Revision-Date: 2025-11-13 09:24+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "accountant_knowledge/ko/>\n"
@@ -66,7 +66,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
 msgid "<strong>Additional Information</strong><br>"
-msgstr ""
+msgstr "<strong>추가 정보</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -110,7 +110,7 @@ msgstr "<strong>국내</strong><br>"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "<strong>Entry Cost</strong><br>"
-msgstr ""
+msgstr "<strong>참가비</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -120,7 +120,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "<strong>Intangible Assets</strong>"
-msgstr ""
+msgstr "<strong>무형자산</strong>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
@@ -155,7 +155,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "<strong>Net Value</strong><br>"
-msgstr ""
+msgstr "<strong>순액</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
@@ -183,7 +183,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "<strong>Share Capital</strong><br>"
-msgstr ""
+msgstr "<strong>자본금</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -221,7 +221,7 @@ msgstr ""
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_additional_information
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_additional_information
 msgid "Additional Information"
-msgstr ""
+msgstr "추가 정보"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -236,12 +236,12 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 msgid "Aged Payable"
-msgstr ""
+msgstr "장기 미지급금"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 msgid "Aged Receivable"
-msgstr ""
+msgstr "장기 미수금"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
@@ -261,7 +261,7 @@ msgstr "부록"
 #. module: accountant_knowledge
 #: model:ir.ui.menu,name:accountant_knowledge.menu_action_accountant_audit_report
 msgid "Annual Report"
-msgstr ""
+msgstr "연간 보고서"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__knowledge_article_id
@@ -288,7 +288,7 @@ msgstr ""
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_asset_information
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 msgid "Asset Information"
-msgstr ""
+msgstr "자산 정보"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
@@ -311,7 +311,7 @@ msgstr "인증"
 #: model:ir.model.fields,field_description:accountant_knowledge.field_knowledge_article__audit_report_id
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_audit_report
 msgid "Audit Report"
-msgstr ""
+msgstr "감사 보고서"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__knowledge_template_article_id
@@ -322,17 +322,17 @@ msgstr ""
 #. module: accountant_knowledge
 #: model:ir.actions.act_window,name:accountant_knowledge.action_audit_report
 msgid "Audit Reports"
-msgstr ""
+msgstr "감사 보고서"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_form
 msgid "Audit Template"
-msgstr ""
+msgstr "감사 템플릿"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_balance_sheet
 msgid "Balance Sheet"
-msgstr ""
+msgstr "재무상태표"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
@@ -377,7 +377,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_cash_flow_statement
 msgid "Cash-Flow Statement"
-msgstr ""
+msgstr "현금흐름표"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -433,7 +433,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_contextual_information
 msgid "Contextual Information"
-msgstr ""
+msgstr "상황적인 정보"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -481,12 +481,12 @@ msgstr "날짜"
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "Deferred Expenses"
-msgstr ""
+msgstr "이연 비용"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "Deferred Revenues"
-msgstr ""
+msgstr "이연 수익"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_kanban
@@ -496,12 +496,12 @@ msgstr "삭제"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Depreciation Period"
-msgstr ""
+msgstr "감가상각 기간"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Depreciation Schedule"
-msgstr ""
+msgstr "감가상각명세서"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
@@ -599,7 +599,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/components/export_audit_report_to_pdf_dialog/export_audit_report_to_pdf_dialog.xml:0
 msgid "Download PDF"
-msgstr ""
+msgstr "PDF 다운로드"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields.selection,name:accountant_knowledge.selection__audit_report__status__draft
@@ -650,7 +650,7 @@ msgstr "직원<br>"
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__end_date
 msgid "End Date"
-msgstr ""
+msgstr "종료일"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,help:accountant_knowledge.field_audit_report__end_date
@@ -661,7 +661,7 @@ msgstr ""
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_entity_information
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "Entity Information"
-msgstr ""
+msgstr "기관 정보"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -679,7 +679,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "Exceptional Expenses<br>"
-msgstr ""
+msgstr "특수 경비<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
@@ -690,12 +690,12 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "Exceptional Income<br>"
-msgstr ""
+msgstr "특수 소득<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
 msgid "Expense Recognition"
-msgstr ""
+msgstr "비용 인식"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
@@ -719,7 +719,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Finance Lease"
-msgstr ""
+msgstr "금융 리스"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -735,13 +735,13 @@ msgstr ""
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_financial_position
 msgid "Financial Position"
-msgstr ""
+msgstr "재정 상태"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid "Financial Resources"
-msgstr ""
+msgstr "재정 자원"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
@@ -829,7 +829,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
 msgid "Going concern;"
-msgstr ""
+msgstr "계속기업;"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__id
@@ -841,7 +841,7 @@ msgstr "ID"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "Identification Number:"
-msgstr ""
+msgstr "ID 번호:"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -918,7 +918,7 @@ msgstr ""
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_income_statement
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "Income Statement"
-msgstr ""
+msgstr "손익계산서"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
@@ -991,17 +991,17 @@ msgstr ""
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "Inventory Overview"
-msgstr ""
+msgstr "재고 관리 현황"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "Inventory Valuation"
-msgstr ""
+msgstr "재고 가치 평가"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_journal_audit
 msgid "Journal Audit"
-msgstr ""
+msgstr "회계 장부 감사"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
@@ -1011,7 +1011,7 @@ msgstr "근거:"
 #. module: accountant_knowledge
 #: model:ir.model,name:accountant_knowledge.model_knowledge_article
 msgid "Knowledge Article"
-msgstr ""
+msgstr "지식 센터 기사"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -1032,7 +1032,7 @@ msgstr ""
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Liabilities Information"
-msgstr ""
+msgstr "부채 정보"
 
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
@@ -1085,7 +1085,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_search
 msgid "My Reports"
-msgstr ""
+msgstr "내 보고서"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
@@ -1110,12 +1110,12 @@ msgstr ""
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
 msgid "Non-Standard Transaction"
-msgstr ""
+msgstr "비표준 거래"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
 msgid "Non-Standard Transactions"
-msgstr ""
+msgstr "비표준 거래"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
@@ -1192,7 +1192,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 msgid "Partner Ledger"
-msgstr ""
+msgstr "협력사 관리 장부"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -1219,7 +1219,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
 msgid "Post-Closing Events"
-msgstr ""
+msgstr "마감 후 작업"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_preamble
@@ -1242,7 +1242,7 @@ msgstr "인쇄"
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
 msgid "Print your Report"
-msgstr ""
+msgstr "보고서 인쇄하기"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
@@ -1294,7 +1294,7 @@ msgstr "조항"
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
 msgid "R&D cost"
-msgstr ""
+msgstr "R&D 비용"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -1321,12 +1321,12 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "Registered Office:"
-msgstr ""
+msgstr "등록 사무소:"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
 msgid "Related-Party Transactions"
-msgstr ""
+msgstr "관련 당사자 거래"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
@@ -1346,12 +1346,12 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid "Repayable Advances"
-msgstr ""
+msgstr "상환 가능 선급금"
 
 #. module: accountant_knowledge
 #: model:ir.model,name:accountant_knowledge.model_ir_actions_report
 msgid "Report Action"
-msgstr ""
+msgstr "보고서 작업"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
@@ -1398,7 +1398,7 @@ msgstr "저장"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Self-Held Shares"
-msgstr ""
+msgstr "자사주 보유"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_kanban
@@ -1413,17 +1413,17 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Share Capital"
-msgstr ""
+msgstr "발행 주식"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Shares Issues<br>"
-msgstr ""
+msgstr "주식 발행<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Shares Redeemed/Cancelled<br>"
-msgstr ""
+msgstr "환매 주식/소멸 주식<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
@@ -1446,7 +1446,7 @@ msgstr "서명"
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_significant_events
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
 msgid "Significant Events"
-msgstr ""
+msgstr "주요 사건"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -1470,12 +1470,12 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "Standard Cost"
-msgstr ""
+msgstr "표준 비용"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__start_date
 msgid "Start Date"
-msgstr ""
+msgstr "시작일"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,help:accountant_knowledge.field_audit_report__start_date
@@ -1505,7 +1505,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "Subsidiary Details"
-msgstr ""
+msgstr "자회사 세부 정보"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_subventions
@@ -1517,7 +1517,7 @@ msgstr "보조금"
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_supporting_documents
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_supporting_documents
 msgid "Supporting Documents"
-msgstr ""
+msgstr "증빙 서류"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -1538,13 +1538,13 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
 msgid "Tax Credits"
-msgstr ""
+msgstr "세액 공제"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_tax_package
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_tax_package
 msgid "Tax Package"
-msgstr ""
+msgstr "조세 패키지"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_taxation
@@ -1729,7 +1729,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Unqualified Attestation"
-msgstr ""
+msgstr "감사 적정 의견"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management

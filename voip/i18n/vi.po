@@ -8,13 +8,14 @@
 # Thi Huong Nguyen, 2023
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-15 23:05+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"PO-Revision-Date: 2025-11-15 12:52+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/voip/"
 "vi/>\n"
 "Language: vi\n"
@@ -71,7 +72,7 @@ msgstr "2 nữa…"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
 msgid "<i class=\"fa fa-fw me-1 fa-phone text-primary\" title=\"Phone\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-fw me-1 fa-phone text-primary\" title=\"Điện thoại\"/>"
 
 #. module: voip
 #. odoo-javascript
@@ -103,7 +104,7 @@ msgstr "Chấp nhận cuộc gọi"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Tác vụ cần thiết"
 
 #. module: voip
 #. odoo-javascript
@@ -136,7 +137,7 @@ msgstr "Thêm vào dòng đợi gọi"
 #. module: voip
 #: model:res.groups,name:voip.group_voip_admin
 msgid "Administrator"
-msgstr ""
+msgstr "Quản trị viên"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__ask
@@ -207,7 +208,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Số lượng khấu trừ"
 
 #. module: voip
 #. odoo-javascript
@@ -219,7 +220,7 @@ msgstr "Có hàng"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__avatar_128
 msgid "Avatar 128"
-msgstr ""
+msgstr "Hình đại diện 128"
 
 #. module: voip
 #. odoo-javascript
@@ -435,7 +436,7 @@ msgstr ""
 #. module: voip
 #: model:ir.ui.menu,name:voip.menu_voip_call_configuration
 msgid "Configuration"
-msgstr ""
+msgstr "Cấu hình"
 
 #. module: voip
 #. odoo-javascript
@@ -496,19 +497,15 @@ msgid "Contacts with a phone number will be shown here."
 msgstr "Liên hệ có số điện thoại sẽ được hiển thị ở đây."
 
 #. module: voip
+#: model:ir.model,name:voip.model_res_country
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_id
 msgid "Country"
-msgstr ""
-
-#. module: voip
-#: model:ir.model,name:voip.model_voip_country_code_mixin
-msgid "Country Code Mixin"
-msgstr "Mixin mã quốc gia"
+msgstr "Quốc gia"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_flag_url
 msgid "Country Flag"
-msgstr ""
+msgstr "Lá cờ Tổ quốc"
 
 #. module: voip
 #: model:ir.model,website_form_label:voip.model_res_partner
@@ -565,7 +562,7 @@ msgstr "Demo"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.xml:0
 msgid "Demo Mode"
-msgstr ""
+msgstr "Chế độ demo"
 
 #. module: voip
 #. odoo-javascript
@@ -587,10 +584,11 @@ msgstr "Hướng"
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy__disabled
 msgid "Disabled"
-msgstr ""
+msgstr "Vô hiệu hoá"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__display_name
+#: model:ir.model.fields,field_description:voip.field_res_country__display_name
 #: model:ir.model.fields,field_description:voip.field_res_partner__display_name
 #: model:ir.model.fields,field_description:voip.field_res_users__display_name
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__display_name
@@ -719,7 +717,7 @@ msgstr ""
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "External"
-msgstr ""
+msgstr "Bên ngoài"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__external_device_number
@@ -746,12 +744,12 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Người theo dõi"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Người theo dõi (Đối tác)"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy__always
@@ -773,7 +771,7 @@ msgstr "Gác máy"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Có tin nhắn"
 
 #. module: voip
 #. odoo-javascript
@@ -790,7 +788,7 @@ msgstr ""
 #. module: voip
 #: model:ir.actions.act_window,name:voip.voip_call_action_history
 msgid "History"
-msgstr ""
+msgstr "Lịch sử"
 
 #. module: voip
 #. odoo-javascript
@@ -811,6 +809,7 @@ msgstr "Cách thực hiện cuộc gọi trên thiết bị di động"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__id
+#: model:ir.model.fields,field_description:voip.field_res_country__id
 #: model:ir.model.fields,field_description:voip.field_res_partner__id
 #: model:ir.model.fields,field_description:voip.field_res_users__id
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__id
@@ -824,13 +823,13 @@ msgstr "ID"
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Nếu chọn, bạn cần chú ý tới các tin nhắn mới."
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_has_error
 #: model:ir.model.fields,help:voip.field_voip_call__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Nếu chọn, một số tin nhắn sẽ có lỗi gửi."
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__do_not_disturb_until_dt
@@ -840,7 +839,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__image_1920
 msgid "Image"
-msgstr ""
+msgstr "Hình ảnh"
 
 #. module: voip
 #. odoo-javascript
@@ -883,12 +882,12 @@ msgstr "Lựa chọn thiết bị đầu vào"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Internal"
-msgstr ""
+msgstr "Nội bộ"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Là người theo dõi"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__is_within_same_company
@@ -921,7 +920,7 @@ msgstr "Bàn phím"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Last 7 Days"
-msgstr ""
+msgstr "7 ngày qua"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__last_seen_phone_call
@@ -959,7 +958,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_main_attachment_id
 msgid "Main Attachment"
-msgstr ""
+msgstr "Tệp đính kèm chính"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_config_settings_view_form
@@ -971,12 +970,12 @@ msgstr "Quản lý nhà cung cấp"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Lỗi gửi tin nhắn"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Tin nhắn"
 
 #. module: voip
 #. odoo-javascript
@@ -1084,22 +1083,22 @@ msgstr "Không có gì ở đây 😔"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Số lượng Thao tác"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Số lỗi"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Số lượng tin nhắn yêu cầu hành động"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Số lượng thông báo chứa lỗi gửi"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__voip
@@ -1109,7 +1108,7 @@ msgstr ""
 #. module: voip
 #: model:res.groups,name:voip.group_voip_officer
 msgid "Officer"
-msgstr ""
+msgstr "Người phụ trách"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
@@ -1185,6 +1184,11 @@ msgid "Phone"
 msgstr "Điện thoại"
 
 #. module: voip
+#: model:ir.model,name:voip.model_voip_country_code_mixin
+msgid "Phone Country Mixin"
+msgstr ""
+
+#. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__phone_number
 msgid "Phone Number"
 msgstr "Số điện thoại"
@@ -1254,17 +1258,17 @@ msgstr "Ảnh đại diện của %(user)s"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Provider"
-msgstr ""
+msgstr "Nhà cung cấp"
 
 #. module: voip
 #: model:ir.ui.menu,name:voip.voip_provider_view_inner_menu
 msgid "Providers"
-msgstr ""
+msgstr "Nhà cung cấp"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Đánh giá"
 
 #. module: voip
 #: model_terms:ir.actions.act_window,help:voip.action_voip_provider_view
@@ -1287,7 +1291,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/in_call_view.js:0
 msgid "Record"
-msgstr ""
+msgstr "Bản ghi"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_provider_view_form
@@ -1300,7 +1304,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "Recording"
-msgstr ""
+msgstr "Ghi nhận"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__recording_policy
@@ -1374,7 +1378,7 @@ msgstr "Đang đổ chuông…"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Lỗi gửi SMS"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_config_settings_view_form
@@ -1401,7 +1405,7 @@ msgstr "Tìm kiếm…"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Secret"
-msgstr ""
+msgstr "Secret"
 
 #. module: voip
 #. odoo-javascript
@@ -1492,7 +1496,7 @@ msgstr "Trạng thái"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/in_call_view.js:0
 msgid "Stop"
-msgstr ""
+msgstr "Ngừng"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__terminated
@@ -1666,7 +1670,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Unknown"
-msgstr ""
+msgstr "Không xác định"
 
 #. module: voip
 #. odoo-javascript
@@ -1683,7 +1687,7 @@ msgstr "Cho đến khi tôi bật lại"
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__country_flag_url
 msgid "Url of static flag image"
-msgstr ""
+msgstr "Url của hình ảnh cờ tĩnh"
 
 #. module: voip
 #. odoo-javascript
@@ -1714,7 +1718,7 @@ msgstr "Cài đặt người dùng"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Username"
-msgstr ""
+msgstr "Tên đăng nhập"
 
 #. module: voip
 #: model:ir.model,name:voip.model_voip_queue_mixin
@@ -1815,12 +1819,12 @@ msgstr "WebSocket"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Thông báo trên trang web"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Lịch sử trao đổi qua trang web"
 
 #. module: voip
 #. odoo-javascript
@@ -1881,7 +1885,10 @@ msgstr ""
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
 msgid "e.g. Brandon Freeman"
-msgstr ""
+msgstr "VD: Brandon Freeman"
+
+#~ msgid "Country Code Mixin"
+#~ msgstr "Mixin mã quốc gia"
 
 #~ msgid "# of Cases"
 #~ msgstr "# Trường hợp"

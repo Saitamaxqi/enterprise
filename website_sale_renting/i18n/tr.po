@@ -3,13 +3,15 @@
 # * website_sale_renting
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# DeepL <noreply-mt-deepl@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:50+0000\n"
-"PO-Revision-Date: 2025-09-18 02:46+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-11-12 15:03+0000\n"
+"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "website_sale_renting/tr/>\n"
 "Language: tr\n"
@@ -22,6 +24,7 @@ msgstr ""
 #. module: website_sale_renting
 #. odoo-python
 #: code:addons/website_sale_renting/models/sale_order.py:0
+#, fuzzy
 msgid ""
 "\n"
 "                Your rental duration was too short. Unfortunately, we do not "
@@ -29,10 +32,16 @@ msgid ""
 "                rentals that last less than %(duration)s %(unit)s.\n"
 "            "
 msgstr ""
+"\n"
+"                Kiralama süreniz çok kısaydı. Ne yazık ki, işlem yapmıyoruz\n"
+"                %(duration)s %(unit)s adresinden daha kısa süren kiralamalar."
+"\n"
+"            "
 
 #. module: website_sale_renting
 #. odoo-python
 #: code:addons/website_sale_renting/models/sale_order.py:0
+#, fuzzy
 msgid ""
 "\n"
 "                Your rental product had invalid date of pickup (%"
@@ -40,10 +49,16 @@ msgid ""
 "                Unfortunately, we do not process pickups on that weekday.\n"
 "            "
 msgstr ""
+"\n"
+"                Kiraladığınız ürünün teslim alma tarihi geçersizdi "
+"(%(start_date)s).\n"
+"                Ne yazık ki, hafta içi o gün teslim alma işlemi yapmıyoruz.\n"
+"            "
 
 #. module: website_sale_renting
 #. odoo-python
 #: code:addons/website_sale_renting/models/sale_order.py:0
+#, fuzzy
 msgid ""
 "\n"
 "                Your rental product had invalid date of return (%"
@@ -51,10 +66,16 @@ msgid ""
 "                Unfortunately, we do not process returns on that weekday.\n"
 "            "
 msgstr ""
+"\n"
+"                Kiraladığınız ürünün iade tarihi geçersizdi (%(end_date)s).\n"
+"                Ne yazık ki, hafta içi iade işlemlerini gerçekleştiremiyoruz."
+"\n"
+"            "
 
 #. module: website_sale_renting
 #. odoo-python
 #: code:addons/website_sale_renting/models/sale_order.py:0
+#, fuzzy
 msgid ""
 "\n"
 "                Your rental product had invalid dates of pickup (%"
@@ -64,10 +85,18 @@ msgid ""
 "                returns on those weekdays.\n"
 "            "
 msgstr ""
+"\n"
+"                Kiralık ürününüzün geçersiz teslim alma tarihleri vardı "
+"(%(start_date)s) ve\n"
+"                iade (%(end_date)s). Ne yazık ki, teslim alma veya iade "
+"işlemi yapmıyoruz.\n"
+"                o hafta içi günlerde geri döner.\n"
+"            "
 
 #. module: website_sale_renting
 #. odoo-python
 #: code:addons/website_sale_renting/models/sale_order.py:0
+#, fuzzy
 msgid ""
 "\n"
 "            Some of your rental products (%(product)s) cannot be rented "
@@ -77,117 +106,153 @@ msgid ""
 "            inconvenience.\n"
 "        "
 msgstr ""
+"\n"
+"            Kiralık ürünlerinizden bazıları (%(product)s) aşağıdaki "
+"durumlarda kiralanamaz\n"
+"            seçilen dönem ve sepetiniz güncellenmelidir. Bunun için üzgünüz\n"
+"            Rahatsızlık.\n"
+"        "
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
+#, fuzzy
 msgid "(%s days)."
-msgstr ""
+msgstr "(%s days)."
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
+#, fuzzy
 msgid "(%s hours)."
-msgstr ""
+msgstr "(%s saat)."
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
+#, fuzzy
 msgid "(%s months)."
-msgstr ""
+msgstr "(%s ay)."
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
+#, fuzzy
 msgid "(%s weeks)."
-msgstr ""
+msgstr "(%s hafta)."
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.o_wsale_offcanvas
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products_collapsible
+#, fuzzy
 msgid "<b>Rental Period</b>"
-msgstr ""
+msgstr "<b>Kiralama Süresi</b>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_product
+#, fuzzy
 msgid ""
 "<i class=\"fa fa-warning\" role=\"img\" aria-label=\"Warning\"/>\n"
 "                            <span name=\"renting_warning_message\"/>"
 msgstr ""
+"<i class=\"fa fa-warning\" role=\"img\" aria-label=\"Warning\"/>\n"
+"                            <span name=\"renting_warning_message\"/>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.cart
+#, fuzzy
 msgid ""
 "<i class=\"fa fa-warning\" role=\"img\" aria-label=\"Warning\"/>\n"
 "                        <span name=\"renting_warning_message\"/>"
 msgstr ""
+"<i class=\"fa fa-warning\" role=\"img\" aria-label=\"Warning\"/>\n"
+"                        <span name=\"renting_warning_message\"/>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.s_rental_search
+#, fuzzy
 msgid ""
 "<i class=\"fa fa-warning\" role=\"img\" aria-label=\"Warning\"/>\n"
 "                    <span name=\"renting_warning_message\"/>"
 msgstr ""
+"<i class=\"fa fa-warning\" role=\"img\" aria-label=\"Warning\"/>\n"
+"                    <span name=\"renting_warning_message\"/>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.datepicker
+#, fuzzy
 msgid ""
 "<i class=\"fa fa-warning\" role=\"img\" aria-label=\"Warning\"/>\n"
 "                <span name=\"renting_warning_message\"/>"
 msgstr ""
+"<i class=\"fa fa-warning\" role=\"img\" aria-label=\"Warning\"/>\n"
+"                <span name=\"renting_warning_message\"/>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.o_wsale_offcanvas
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products
+#, fuzzy
 msgid ""
 "<small class=\"mx-auto\"><b>Clear Rental Period</b></small>\n"
 "                                <i class=\"oi oi-close\" role=\"img\"/>"
 msgstr ""
+"<small class=\"mx-auto\"><b>Net Kiralama Süresi</b></small>\n"
+"                               <i class=\"oi oi-close\" role=\"img\"/>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_search_result_price
+#, fuzzy
 msgid "<small>from</small>"
-msgstr ""
+msgstr "<small>itibaren</small>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_search_result_price
+#, fuzzy
 msgid "<small>per</small>"
-msgstr ""
+msgstr "<small>başına</small>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.s_rental_search
+#, fuzzy
 msgid ""
 "<span class=\"d-md-none me-2\">Search period</span>\n"
 "                                <i class=\"oi oi-search\" role=\"img\"/>"
 msgstr ""
+"<span class=\"d-md-none me-2\">Arama dönemi</span>\n"
+"                                <i class=\"oi oi-search\" role=\"img\"/>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.suggested_products_list
+#, fuzzy
 msgid "<span class=\"ps-1\">per</span>"
-msgstr ""
+msgstr "<span class=\"ps-1\">başına</span>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.price_dynamic_filter_template_product_product
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_products_price
+#, fuzzy
 msgid "<span>/</span>"
-msgstr ""
+msgstr "<span>/</span>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products_item
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_products_price
+#, fuzzy
 msgid "<span>per</span>"
-msgstr ""
+msgstr "<span>başına</span>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_product
+#, fuzzy
 msgid "<strong class=\"attribute_name\">Pricing</strong>"
-msgstr ""
+msgstr "<strong class=\"attribute_name\">Fiyatlandırma</strong>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_product
+#, fuzzy
 msgid "<strong>Rental Period</strong>"
-msgstr ""
+msgstr "<strong>Kiralama Süresi</strong>"
 
 #. module: website_sale_renting
 #. odoo-javascript
@@ -198,8 +263,9 @@ msgstr "Tümü"
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/plugins/rental_search_option.xml:0
+#, fuzzy
 msgid "Attribute Filter"
-msgstr ""
+msgstr "Öznitelik Filtresi"
 
 #. module: website_sale_renting
 #: model:ir.model,name:website_sale_renting.model_res_company
@@ -224,8 +290,9 @@ msgstr "Gün"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.res_config_settings_view_form
+#, fuzzy
 msgid "Days during which pickup and return are not possible."
-msgstr ""
+msgstr "Teslim alma ve iade işlemlerinin mümkün olmadığı günler."
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_product_pricelist__display_name
@@ -237,7 +304,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_sale_renting.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:website_sale_renting.field_website__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "İsim Göster"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.cart
@@ -260,8 +327,9 @@ msgstr "Başlama"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.o_wsale_offcanvas
+#, fuzzy
 msgid "Go to your cart"
-msgstr ""
+msgstr "Sepetinize gidin"
 
 #. module: website_sale_renting
 #. odoo-javascript
@@ -284,29 +352,33 @@ msgstr "Saat"
 #: model:ir.model.fields,field_description:website_sale_renting.field_sale_order_line__id
 #: model:ir.model.fields,field_description:website_sale_renting.field_website__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_company__renting_minimal_time_duration
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_config_settings__renting_minimal_time_duration
+#, fuzzy
 msgid "Minimal Rental Duration"
-msgstr ""
+msgstr "Minimum Kiralama Süresi"
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_company__renting_minimal_time_unit
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_config_settings__renting_minimal_time_unit
+#, fuzzy
 msgid "Minimal Rental Duration Unit"
-msgstr ""
+msgstr "Asgari Kiralama Süresi Birimi"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.res_config_settings_view_form
+#, fuzzy
 msgid "Minimal duration between pickup and return."
-msgstr ""
+msgstr "Teslim alma ve iade arasında minimum süre."
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.res_config_settings_view_form
+#, fuzzy
 msgid "Minimal time of rental"
-msgstr ""
+msgstr "Minimum kiralama süresi"
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_company__renting_forbidden_mon
@@ -328,8 +400,9 @@ msgstr "Lütfen teslim tarihinden sonraki bir dönüş tarihi seçin."
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
+#, fuzzy
 msgid "Please select a rental period."
-msgstr ""
+msgstr "Lütfen bir kiralama dönemi seçin."
 
 #. module: website_sale_renting
 #: model:ir.model,name:website_sale_renting.model_product_pricelist
@@ -348,34 +421,40 @@ msgstr "Ürün Varyantı"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.res_config_settings_view_form
+#, fuzzy
 msgid "Rent Online"
-msgstr ""
+msgstr "Online Kiralama"
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/plugins/product_page_list_option.xml:0
+#, fuzzy
 msgid "Rental Date"
-msgstr ""
+msgstr "Kiralama Tarihi"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.cart_summary_total
+#, fuzzy
 msgid "Rental Period"
-msgstr ""
+msgstr "Kiralama Süresi"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.accordion_rental_item
+#, fuzzy
 msgid "Rental Pricing"
-msgstr ""
+msgstr "Kiralama Fiyatlandırması"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.snippets
+#, fuzzy
 msgid "Rental Search"
-msgstr ""
+msgstr "Kiralık Arama"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.cart
+#, fuzzy
 msgid "Rental period"
-msgstr ""
+msgstr "Kiralama süresi"
 
 #. module: website_sale_renting
 #: model:ir.model,name:website_sale_renting.model_sale_order
@@ -396,16 +475,20 @@ msgstr "Cumartesi"
 #. module: website_sale_renting
 #: model:ir.model.fields,help:website_sale_renting.field_res_config_settings__tz
 #: model:ir.model.fields,help:website_sale_renting.field_website__tz
+#, fuzzy
 msgid "Select your website timezone here."
-msgstr ""
+msgstr "Web sitenizin saat dilimini buradan seçin."
 
 #. module: website_sale_renting
 #. odoo-python
 #: code:addons/website_sale_renting/models/sale_order.py:0
+#, fuzzy
 msgid ""
 "Some of your rental products cannot be rented during the selected period and "
 "your cart must be updated. We're sorry for the inconvenience."
 msgstr ""
+"Bazı kiralık ürünleriniz seçilen süre boyunca kiralanamaz ve sepetinizin "
+"güncellenmesi gerekir. Verdiğimiz rahatsızlıktan dolayı özür dileriz."
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.cart
@@ -424,41 +507,51 @@ msgstr "Pazar"
 #. module: website_sale_renting
 #. odoo-python
 #: code:addons/website_sale_renting/models/sale_order.py:0
+#, fuzzy
 msgid ""
 "The new period is not valid for some products of your cart. Your changes on "
 "the rental period are not taken into account."
 msgstr ""
+"Yeni dönem sepetinizdeki bazı ürünler için geçerli değildir. Kiralama "
+"süresinde yaptığınız değişiklikler dikkate alınmaz."
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.o_wsale_offcanvas
+#, fuzzy
 msgid "The period must be the same for all the products in your cart."
-msgstr ""
+msgstr "Süre, sepetinizdeki tüm ürünler için aynı olmalıdır."
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_product
+#, fuzzy
 msgid ""
 "The period must be the same for all the products in your cart. Go to your "
 "cart to change it or create different orders."
 msgstr ""
+"Süre, sepetinizdeki tüm ürünler için aynı olmalıdır. Değiştirmek veya farklı "
+"siparişler oluşturmak için sepetinize gidin."
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
+#, fuzzy
 msgid "The pickup date cannot be in the past."
-msgstr ""
+msgstr "Teslim alma tarihi geçmişte olamaz."
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
+#, fuzzy
 msgid "The rental lasts less than the minimal rental duration %s"
-msgstr ""
+msgstr "Kiralamanın asgari kiralama süresinden daha kısa sürmesi %s"
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
+#, fuzzy
 msgid "The return date should be after the pickup date."
-msgstr ""
+msgstr "İade tarihi teslim alma tarihinden sonra olmalıdır."
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_company__renting_forbidden_thu
@@ -476,8 +569,9 @@ msgstr "Saat Dilimi"
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/plugins/rental_search_option.xml:0
+#, fuzzy
 msgid "Timing"
-msgstr ""
+msgstr "Zamanlama"
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_company__renting_forbidden_tue
@@ -487,8 +581,9 @@ msgstr "Salı"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.res_config_settings_view_form
+#, fuzzy
 msgid "Unavailability days"
-msgstr ""
+msgstr "Kullanılamayan günler"
 
 #. module: website_sale_renting
 #: model:ir.model,name:website_sale_renting.model_website
@@ -509,26 +604,30 @@ msgstr "Hafta"
 #. module: website_sale_renting
 #. odoo-python
 #: code:addons/website_sale_renting/models/sale_order.py:0
+#, fuzzy
 msgid "You cannot mix different rental periods in the same order."
-msgstr ""
+msgstr "Farklı kiralama dönemlerini aynı sırada karıştıramazsınız."
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
+#, fuzzy
 msgid "You cannot pick up your rental on that day of the week."
-msgstr ""
+msgstr "Haftanın o günü kiralamanızı teslim alamazsınız."
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
+#, fuzzy
 msgid "You cannot return your rental on that day of the week."
-msgstr ""
+msgstr "Haftanın o gününde kiralamanızı iade edemezsiniz."
 
 #. module: website_sale_renting
 #. odoo-python
 #: code:addons/website_sale_renting/models/sale_order.py:0
+#, fuzzy
 msgid "Your rental product cannot be pickedup in the past."
-msgstr ""
+msgstr "Kiralık ürününüz geçmişte teslim alınamaz."
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products_item
@@ -538,5 +637,6 @@ msgstr "kimden"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.o_wsale_offcanvas
+#, fuzzy
 msgid "to change it or create different orders."
-msgstr ""
+msgstr "değiştirmek veya farklı siparişler oluşturmak için."

@@ -9,12 +9,13 @@
 # Ryoko Tsuda <ryoko@quartile.co>, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Junko Augias (juau)" <juau@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-27 02:41+0000\n"
+"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"PO-Revision-Date: 2025-11-14 07:46+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/sign/ja/"
 ">\n"
@@ -215,7 +216,7 @@ msgstr "<b>ドキュメント:</b>"
 #. odoo-javascript
 #: code:addons/sign/static/src/js/tours/sign.js:0
 msgid "<b>Drag & drop \"Signature\"</b> into the bottom of the document."
-msgstr ""
+msgstr "<b>「署名」</b>をドキュメントの一番下にドラッグ＆ドロップします。"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -582,7 +583,7 @@ msgstr "活動記録"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__activity_state
 msgid "Activity State"
-msgstr "活動状態"
+msgstr "活動ステータス"
 
 #. module: sign
 #: model:ir.model,name:sign.model_mail_activity_type
@@ -610,7 +611,7 @@ msgstr "追加"
 #. odoo-javascript
 #: code:addons/sign/static/src/fields/many2many_binary_field/many2many_binary_field.xml:0
 msgid "Add Attachment"
-msgstr ""
+msgstr "添付を追加"
 
 #. module: sign
 #. odoo-javascript
@@ -729,7 +730,7 @@ msgstr "この署名依頼を本当に取消しますか?"
 #: model:ir.model.fields,field_description:sign.field_sign_item_role__assign_to
 #: model_terms:ir.ui.view,arch_db:sign.sign_item_role_view_form
 msgid "Assign to"
-msgstr ""
+msgstr "担当者"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__start_sign
@@ -740,7 +741,7 @@ msgstr "少なくとも1人の署名者がドキュメントに署名しまし�
 #. odoo-javascript
 #: code:addons/sign/static/src/fields/many2many_binary_field/many2many_binary_field.xml:0
 msgid "Attach"
-msgstr ""
+msgstr "添付"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_document__attachment_id
@@ -831,7 +832,7 @@ msgstr "様々なウェブサイトに基づいた比較です:"
 #. odoo-javascript
 #: code:addons/sign/static/src/editor/plugins/signature.js:0
 msgid "Basic Bloc"
-msgstr ""
+msgstr "ベーシックブロック"
 
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_log__request_state__sent
@@ -1019,7 +1020,7 @@ msgstr "カラーインデクス"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "Communication"
-msgstr ""
+msgstr "通信"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_request
@@ -1106,6 +1107,11 @@ msgstr "おめでとうございます。あなたの署名を提出する用意
 #: model_terms:web_tour.tour,rainbow_man_message:sign.sign_tour
 msgid "Congratulations, you signed your first document!"
 msgstr "おめでとうございます。初めてのドキュメントに署名しました！"
+
+#. module: sign
+#: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
+msgid "Connected as"
+msgstr ""
 
 #. module: sign
 #: model:ir.model,name:sign.model_res_partner
@@ -1329,7 +1335,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__send_channel
 msgid "Delivery Method"
-msgstr ""
+msgstr "配送方法"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
@@ -2064,7 +2070,7 @@ msgstr "イニシャル"
 #. odoo-javascript
 #: code:addons/sign/static/src/editor/plugins/signature.js:0
 msgid "Insert your signature"
-msgstr ""
+msgstr "自分の署名を挿入"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
@@ -2108,7 +2114,7 @@ msgstr "ユーザ署名者"
 
 #. module: sign
 #. odoo-python
-#: code:addons/sign/models/sign_document.py:0
+#: code:addons/sign/utils/pdf_handling.py:0
 msgid ""
 "It seems that we're not able to process one of the uploaded pdf. It is "
 "either encrypted, or encoded in a format we do not support."
@@ -2279,7 +2285,7 @@ msgstr "ログ"
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_item_type__field_size__long_text
 msgid "Long Text"
-msgstr ""
+msgstr "長いテキスト"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_log__longitude
@@ -2356,7 +2362,7 @@ msgstr "モデル"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_template__model_name
 msgid "Model Name"
-msgstr ""
+msgstr "モデル名"
 
 #. module: sign
 #. odoo-javascript
@@ -2454,7 +2460,7 @@ msgstr "ファイル名"
 #. odoo-javascript
 #: code:addons/sign/static/src/js/tours/sign.js:0
 msgid "Nearly there, keep going!"
-msgstr ""
+msgstr "あと少しです、続けましょう！"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__need_my_signature
@@ -2616,6 +2622,11 @@ msgstr ""
 "            "
 
 #. module: sign
+#: model_terms:ir.ui.view,arch_db:sign.signer_status_wrapper
+msgid "On"
+msgstr "On"
+
+#. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
 msgid "One can weighs 15 g"
 msgstr "１缶は15g"
@@ -2701,7 +2712,7 @@ msgstr "PDFファイルが破損しています。別のファイルを使用し
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_item_view_tree
 msgid "Page"
-msgstr ""
+msgstr "ページ"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container
@@ -2879,12 +2890,12 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__res_ids
 msgid "Related Document IDs"
-msgstr ""
+msgstr "関連ドキュメントID"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__model
 msgid "Related Document Model"
-msgstr ""
+msgstr "関連ドキュメントモデル"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__reminder
@@ -3077,12 +3088,12 @@ msgstr "保存しました"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
 msgid "Schedule"
-msgstr ""
+msgstr "スケジュール"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__scheduled_date
 msgid "Scheduled Date"
-msgstr ""
+msgstr "予定日"
 
 #. module: sign
 #. odoo-python
@@ -3854,7 +3865,7 @@ msgstr "アクション記録上の依頼ステータス"
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_requests
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_tree
 msgid "Status"
-msgstr "状態"
+msgstr "ステータス"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__activity_state
@@ -4369,7 +4380,7 @@ msgstr "本日の活動"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item__transaction_id
 msgid "Transaction"
-msgstr "取引明細書"
+msgstr "取引"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.deleted_sign_request
@@ -4547,7 +4558,7 @@ msgstr "有効期限日"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "Valid for"
-msgstr ""
+msgstr "次に有効:"
 
 #. module: sign
 #. odoo-javascript
@@ -4887,7 +4898,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__body
 msgid "body"
-msgstr ""
+msgstr "体"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container
@@ -4909,7 +4920,7 @@ msgstr "ここをクリックしてキャンセルします。"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "days"
-msgstr ""
+msgstr "日"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_form
@@ -5130,6 +5141,11 @@ msgstr "木"
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container_pdf
 msgid "trees"
 msgstr "木"
+
+#. module: sign
+#: model_terms:ir.ui.view,arch_db:sign.signer_status_wrapper
+msgid "via"
+msgstr ""
 
 #. module: sign
 #. odoo-javascript

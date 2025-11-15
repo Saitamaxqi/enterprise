@@ -21,13 +21,14 @@
 # Birgit Vijar, 2023
 # Leaanika Randmets, 2023
 # Birgit Vijar <birgit@avalah.ee>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-31 13:05+0000\n"
-"Last-Translator: Birgit Vijar <birgit@avalah.ee>\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 20:24+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Estonian <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll/et/>\n"
 "Language: et\n"
@@ -319,8 +320,8 @@ msgid ""
 "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
 "title=\"Arrow\"/>"
 msgstr ""
-"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" title="
-"\"Arrow\"/>"
+"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
+"title=\"Arrow\"/>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -339,8 +340,8 @@ msgid ""
 "<span class=\"o_small-fs\">This dashboard is the headquarter of the Payroll "
 "app, from here, you'll have a quick overview on everything.</span>"
 msgstr ""
-"<span class=\"o_small-fs\">Siit töölaualt leiate kõik palgaarvestuse "
-"kohta.</span>"
+"<span class=\"o_small-fs\">Siit töölaualt leiate kõik palgaarvestuse kohta.</"
+"span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -415,8 +416,8 @@ msgstr ""
 "<span invisible=\"schedule_pay != 'annually'\">/ year</span>\n"
 "                <span invisible=\"schedule_pay != 'semi-annually'\">/ pool-"
 "aasta</span>\n"
-"                <span invisible=\"schedule_pay != 'quarterly'\">/ "
-"kvartal</span>\n"
+"                <span invisible=\"schedule_pay != 'quarterly'\">/ kvartal</"
+"span>\n"
 "                <span invisible=\"schedule_pay != 'bi-monthly'\">/ kaks "
 "kuud</span>\n"
 "                <span invisible=\"schedule_pay != 'semi-monthly'\">/ pool "
@@ -607,11 +608,11 @@ msgid ""
 "</tbody></table>\n"
 "            "
 msgstr ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
-"\"width:100%; margin:0px auto;\"><tbody>\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; "
+"margin:0px auto;\"><tbody>\n"
 "    <tr><td valign=\"top\" style=\"text-align: left; font-size: 14px;\">\n"
-"         <t t-esc=\"object.employee_id.name\"/>, Manusest leiate "
-"palgalipiku.<br/><br/>\n"
+"         <t t-esc=\"object.employee_id.name\"/>, Manusest leiate palgalipiku."
+"<br/><br/>\n"
 "        PDF leiate ka töötaja portaalist.<br/><br/>\n"
 "        Heade soovidega<br/>\n"
 "        Raamatupidaja\n"
@@ -829,6 +830,12 @@ msgstr "Muu sisestatud summa"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__amount_select
 msgid "Amount Type"
 msgstr "Arvutuse liik"
+
+#. module: hr_payroll
+#: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
+#: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
+msgid "Amount to be paid to"
+msgstr ""
 
 #. module: hr_payroll
 #. odoo-python
@@ -1161,8 +1168,8 @@ msgid ""
 "Check if the value of the salary adjustment must be taken into account as "
 "negative (-X)"
 msgstr ""
-"Kontrolli, kas palgamuudatuse väärtust tuleb arvestada negatiivse summana "
-"(-X)"
+"Kontrolli, kas palgamuudatuse väärtust tuleb arvestada negatiivse summana (-"
+"X)"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -1773,12 +1780,6 @@ msgid "Days"
 msgstr "päev(a)"
 
 #. module: hr_payroll
-#. odoo-python
-#: code:addons/hr_payroll/models/hr_payslip.py:0
-msgid "Debug Payslip"
-msgstr ""
-
-#. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__12
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__12
 msgid "December"
@@ -1792,7 +1793,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_employee_declaration__res_id
 msgid "Declaration Model Id"
-msgstr ""
+msgstr "Deklaratsiooni mudeli ID"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_employee_declaration__res_model
@@ -1888,7 +1889,7 @@ msgstr "Osakond:"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_filter_payrun
 msgid "Departure"
-msgstr ""
+msgstr "Töölt lahkumine"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__dependent_input_id
@@ -1924,7 +1925,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__disabled
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__disabled
 msgid "Disabled"
-msgstr ""
+msgstr "Mustand"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -2011,6 +2012,7 @@ msgid "Domain"
 msgstr "Domeen"
 
 #. module: hr_payroll
+#: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__validated
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_run__state__02_close
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_work_days_view_search_report
@@ -2680,8 +2682,8 @@ msgstr "Töötajate arvu rida"
 #: code:addons/hr_payroll/models/hr_payroll_headcount.py:0
 msgid "Headcount for %(company_name)s from %(date_from)s to %(date_to)s"
 msgstr ""
-"Töötajate arv %(company_name)s kuupäevast %(date_from)s kuupäevani "
-"%(date_to)s"
+"Töötajate arv %(company_name)s kuupäevast %(date_from)s kuupäevani %"
+"(date_to)s"
 
 #. module: hr_payroll
 #. odoo-python
@@ -3069,7 +3071,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__italic
 msgid "Italic"
-msgstr ""
+msgstr "Kaldkiri"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__1
@@ -3227,7 +3229,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__paid
 msgid "Made Payment Order? "
-msgstr ""
+msgstr "Kas tegid maksekorralduse? "
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__message_main_attachment_id
@@ -3302,7 +3304,7 @@ msgstr "Model for Printing hr.payslip.line grouped by register"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_rule__input_unit__monetary
 msgid "Monetary"
-msgstr ""
+msgstr "Rahaline"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -3666,7 +3668,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__occurrences
 msgid "Occurrences"
-msgstr ""
+msgstr "Esinemised"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__10
@@ -4024,12 +4026,12 @@ msgstr "Palgaarvestuse töölaua hoiatusteated"
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_declaration_mixin
 msgid "Payroll Declaration Mixin"
-msgstr ""
+msgstr "Palgaarvestuse deklaratsioon"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_employee_declaration
 msgid "Payroll Employee Declaration"
-msgstr ""
+msgstr "Töötaja palgaarvestuse deklaratsioon"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_headcount
@@ -4370,7 +4372,7 @@ msgstr "Töögraafik"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_work_entry_export_mixin_form_view
 msgid "Populate"
-msgstr ""
+msgstr "Täida"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -4452,7 +4454,7 @@ msgstr "Pdf-i järjekorras"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payroll_employee_declaration__state__pdf_to_generate
 msgid "Queued PDF generation"
-msgstr ""
+msgstr "Loomise ootel PDF-id"
 
 #. module: hr_payroll
 #. odoo-python
@@ -4511,7 +4513,7 @@ msgstr "Salvestati uus makse %s."
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_payrun
 msgid "Records"
-msgstr ""
+msgstr "Kirjed"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
@@ -4543,7 +4545,7 @@ msgstr "Tagasimakse: %(payslip)s"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_search
 msgid "Refunds"
-msgstr ""
+msgstr "Tagasimaksed"
 
 #. module: hr_payroll
 #: model:hr.payroll.structure,name:hr_payroll.structure_002
@@ -4568,7 +4570,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__related_payslip_ids
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Related Payslips"
-msgstr ""
+msgstr "Seotud palgalehed"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__related_payslip_count
@@ -4583,7 +4585,7 @@ msgstr "Järelejäänud summa"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__remaining_time
 msgid "Remaining Time"
-msgstr ""
+msgstr "Järelejäänud aeg"
 
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_salary_attachment_check_remaining_amount
@@ -4603,7 +4605,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 msgid "Remove"
-msgstr ""
+msgstr "Eemalda"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -4626,7 +4628,7 @@ msgstr "Aruanne"
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "Report Date"
-msgstr ""
+msgstr "Aruande kuupäev"
 
 #. module: hr_payroll
 #: model:ir.ui.menu,name:hr_payroll.menu_hr_payroll_report
@@ -4655,7 +4657,7 @@ msgstr "Vastutav kasutaja"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
 msgid "Restart"
-msgstr ""
+msgstr "Taaskäivita"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -4663,7 +4665,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Revert"
-msgstr ""
+msgstr "Taasta"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_correction_wizard_form
@@ -4904,7 +4906,7 @@ msgstr "Palgastruktuurid"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 msgid "Save"
-msgstr ""
+msgstr "Salvesta"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure__schedule_pay
@@ -4915,7 +4917,7 @@ msgstr "Maksete regulaarsus"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_employee_declaration_view_search
 msgid "Search Declarations"
-msgstr ""
+msgstr "Otsi deklaratsioone"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_line_search
@@ -4973,7 +4975,7 @@ msgstr "Otsi struktuuritüüpi"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_section
 msgid "Section"
-msgstr ""
+msgstr "Sektsioon"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -5012,7 +5014,7 @@ msgstr "On saadetud töötajale, et teatada uuest palgalehest."
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__9
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__9
 msgid "September"
-msgstr ""
+msgstr "September"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5068,7 +5070,7 @@ msgstr ""
 msgid ""
 "Some work entries are in conflict. Please resolve the conflicts before "
 "exporting."
-msgstr ""
+msgstr "Mõned töökanded on konfliktis. Palun lahenda need enne eksportimist."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5084,7 +5086,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
 msgid "Split"
-msgstr ""
+msgstr "Poolita"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
@@ -5100,7 +5102,7 @@ msgstr "Standard kalender"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_payrun
 msgid "Start"
-msgstr ""
+msgstr "Alusta"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__date_start
@@ -5156,7 +5158,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
 msgid "Stop"
-msgstr ""
+msgstr "Peata"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule_section__struct_ids
@@ -5234,12 +5236,12 @@ msgstr ""
 #: model:hr.salary.rule,name:hr_payroll.hr_payroll_structure_worker_001_gross_salary_rule
 #: model:hr.salary.rule.category,name:hr_payroll.GROSS
 msgid "Taxable Salary"
-msgstr ""
+msgstr "Maksustatav töötasu"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure__report_id
 msgid "Template"
-msgstr ""
+msgstr "Mall"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip__country_code
@@ -5317,14 +5319,14 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 msgid "The default working hours are set in configuration."
-msgstr ""
+msgstr "Tööaeg on vaikimisi määratud seadetes."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid ""
 "The duration of the payslip is not accurate according to the structure type."
-msgstr ""
+msgstr "Palgalehe periood ei vasta struktuuri tüübile."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_correction_wizard__employee_id
@@ -5393,7 +5395,7 @@ msgstr "Palgalipikud peaksid olema olekus Mustand või Ootel."
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/views/payslip_list/hr_payslip_list_controller.js:0
 msgid "The payslips(s) are now added to the batch"
-msgstr ""
+msgstr "Palgaleht on lisatud koondisse"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5407,12 +5409,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "The selected payslips should be linked to the same batch"
-msgstr ""
+msgstr "Valitud palgalipikud peaksid olema samal koondpalgalehel."
 
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_payroll_headcount_date_range
 msgid "The start date must be anterior to the end date."
-msgstr ""
+msgstr "Alguskuupäev peab olema enne lõpukuupäeva."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -5441,7 +5443,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_declaration_mixin.py:0
 msgid "There is no declaration to generate for the given period"
-msgstr ""
+msgstr "Valitud perioodil deklaratsioon puudub."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5454,7 +5456,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "There should be at least one payslip to generate the file."
-msgstr ""
+msgstr "Faili loomiseks peab olema vähemalt üks palgalipik."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5536,12 +5538,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/dashboard_empty_screen/dashboard_empty_screen.xml:0
 msgid "Time Off"
-msgstr ""
+msgstr "Puudumised"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__title
 msgid "Title"
-msgstr ""
+msgstr "Tiitel"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount__date_to
@@ -5649,7 +5651,7 @@ msgstr "Kirjel oleva erandtegevuse tüüp."
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__underline
 msgid "Underline"
-msgstr ""
+msgstr "Allajoonitud"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_type__is_unforeseen
@@ -5659,7 +5661,7 @@ msgstr "Ettenägematu puudumine"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_unit
 msgid "Unit"
-msgstr ""
+msgstr "Ühik"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5670,7 +5672,7 @@ msgstr "Tundmatu riik"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_attachment__duration_type__unlimited
 msgid "Unlimited"
-msgstr ""
+msgstr "Piiramatu"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_work_entry_type_view_form_inherit
@@ -5702,7 +5704,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_tree
 msgid "Until"
-msgstr ""
+msgstr "Kuni"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5773,7 +5775,6 @@ msgstr "Validate Edition"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state__validated
-#: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__validated
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_report__state__validated
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_report
@@ -5785,7 +5786,7 @@ msgstr "Kinnitatud"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_employee_mixin__version_ids
 msgid "Version"
-msgstr ""
+msgstr "Versioon"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__version_names
@@ -5806,13 +5807,13 @@ msgstr "Versioonid"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_form
 msgid "Visible to all"
-msgstr ""
+msgstr "Nähtav kõigile"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__wage
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__wage
 msgid "Wage"
-msgstr ""
+msgstr "Töötasu"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__wage_on_payroll
@@ -5831,7 +5832,7 @@ msgstr "Palgatüüp"
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_index_wizard.py:0
 msgid "Wage indexed by %(percentage).2f%% on %(date)s"
-msgstr ""
+msgstr "Wage indexed by %(percentage).2f%% on %(date)s"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
@@ -5842,12 +5843,12 @@ msgstr "Ootel"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__warning
 msgid "Warning"
-msgstr ""
+msgstr "Hoiatus"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_dashboard_warning__color
 msgid "Warning Color"
-msgstr ""
+msgstr "Hoiatusvärv"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__warning_count
@@ -5909,13 +5910,13 @@ msgstr "Veebilehe suhtluse ajalugu"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Week %(week_number)s of %(year)s"
-msgstr ""
+msgstr "%(week_number)s nädal %(year)s aastal"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Weeks %(week)s and %(week1)s of %(year)s"
-msgstr ""
+msgstr "%(week)s ja %(week1)s nädalad %(year)s aastal"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__title
@@ -5970,7 +5971,7 @@ msgstr "Töö sissekannete analüüsiraport"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_work_entry_export_mixin.py:0
 msgid "Work Entries Export"
-msgstr ""
+msgstr "Töökannete eksport"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -5986,17 +5987,17 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_work_entry_export_mixin.py:0
 msgid "Work Entries for %(employee)s"
-msgstr ""
+msgstr "Töökanded %(employee)s"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_employee_mixin__work_entry_ids
 msgid "Work Entry"
-msgstr ""
+msgstr "Töö sissekanded"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_work_entry_export_employee_mixin
 msgid "Work Entry Export Employee"
-msgstr ""
+msgstr "Töötaja töökande eksport"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_work_entry_export_mixin
@@ -6027,7 +6028,7 @@ msgstr "Töö sissekande tüüp"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
 msgid "Work Permit Expiration Notice Period"
-msgstr ""
+msgstr "Tööloa aegumiskuupäev"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_structure_type__default_work_entry_type_id
@@ -6079,14 +6080,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__resource_calendar_id
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__resource_calendar_id
 msgid "Working Hours"
-msgstr ""
+msgstr "Tööaeg"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_headcount_working_rate
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__working_rate_ids
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_line_search
 msgid "Working Rate"
-msgstr ""
+msgstr "Tööaja määr"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_report__work_entry_source__calendar
@@ -6124,6 +6125,8 @@ msgid ""
 "Wrong rule parameter value for %(rule_parameter_name)s at date %(date)s.\n"
 "%(error)s"
 msgstr ""
+"Vale palgareegli parameeter %(rule_parameter_name)s kuupäeval %(date)s.\n"
+"%(error)s"
 
 #. module: hr_payroll
 #. odoo-python
@@ -6165,7 +6168,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_declaration_mixin__year
 msgid "Year"
-msgstr ""
+msgstr "Aasta"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_lines_wizard__ytd_computation
@@ -6229,6 +6232,8 @@ msgid ""
 "You cannot delete %s as it is used in another module but you can archive it "
 "instead."
 msgstr ""
+"Ei ole võimalik kustutada %s kuna see on kasutusel teises moodulis. Proovi "
+"arhiveerimist."
 
 #. module: hr_payroll
 #. odoo-python
@@ -6261,12 +6266,14 @@ msgstr ""
 #: code:addons/hr_payroll/models/hr_work_entry_export_mixin.py:0
 msgid "You must be logged in a %(country_code)s company to use this feature"
 msgstr ""
+"Pead olema sisse logitud %(country_code)s ettevõttes, et seda funktsiooni "
+"kasutada."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_declaration_mixin.py:0
 msgid "You must be logged in a %s company to use this feature"
-msgstr ""
+msgstr "Pead olema sisse logitud %s ettevõttes, et seda funktsiooni kasutada."
 
 #. module: hr_payroll
 #. odoo-python
@@ -6307,7 +6314,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_type_view_form
 msgid "e.g. Child Support"
-msgstr ""
+msgstr "nt lapsetoetus"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_structure_type_view_form
@@ -6317,7 +6324,7 @@ msgstr "nt. Töötaja"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_dashboard_warning_view_form
 msgid "e.g. Employee Without Contracts"
-msgstr ""
+msgstr "nt töötaja ilma lepinguta"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -6354,7 +6361,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
 msgid "from"
-msgstr ""
+msgstr "Lähtekoht"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -6378,7 +6385,7 @@ msgstr ""
 #: code:addons/hr_payroll/models/hr_payroll_headcount.py:0
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__headcount_id
 msgid "headcount_id"
-msgstr ""
+msgstr "headcount_id"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -6395,13 +6402,13 @@ msgstr ""
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "id"
-msgstr ""
+msgstr "id"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payrun_card/payrun_card.xml:0
 msgid "net"
-msgstr ""
+msgstr "net"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
@@ -6430,7 +6437,7 @@ msgstr "tulemus mõjutab muutujat"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
 msgid "until"
-msgstr ""
+msgstr "kuni"
 
 #. module: hr_payroll
 #. odoo-javascript

@@ -4,13 +4,14 @@
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Junko Augias (juau)" <juau@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-21 06:30+0000\n"
-"Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 20:08+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/esg/ja/>"
 "\n"
 "Language: ja\n"
@@ -843,7 +844,7 @@ msgstr "ESG 排出量ボタンを表示"
 #. module: esg
 #: model:account.account,name:esg.account_expense
 msgid "Expense"
-msgstr ""
+msgstr "費用"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_follower_ids
@@ -1609,7 +1610,7 @@ msgstr "SMS送信エラー"
 #. module: esg
 #: model:account.account,name:esg.account_salary
 msgid "Salary"
-msgstr ""
+msgstr "給与"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__scope
@@ -1620,6 +1621,8 @@ msgstr "スコープ"
 
 #. module: esg
 #. odoo-javascript
+#. odoo-python
+#: code:addons/esg/controllers/esg_dashboard.py:0
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Scope 1"
 msgstr "スコープ 1"
@@ -1632,6 +1635,8 @@ msgstr "スコープ 1: 直接"
 
 #. module: esg
 #. odoo-javascript
+#. odoo-python
+#: code:addons/esg/controllers/esg_dashboard.py:0
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Scope 2"
 msgstr "スコープ 2"
@@ -1644,6 +1649,8 @@ msgstr "スコープ 2: 間接"
 
 #. module: esg
 #. odoo-javascript
+#. odoo-python
+#: code:addons/esg/controllers/esg_dashboard.py:0
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Scope 3"
 msgstr "スコープ 3"
@@ -1952,7 +1959,7 @@ msgstr "不確実性: 非常に高 (> 50%)"
 #. odoo-python
 #: code:addons/esg/models/account_account.py:0
 msgid "Warning"
-msgstr ""
+msgstr "警告"
 
 #. module: esg
 #. odoo-javascript

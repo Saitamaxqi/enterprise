@@ -9,13 +9,14 @@
 # Jolien De Paepe, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Bren Driesen <brdri@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-23 08:32+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 19:47+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "sale_renting/nl/>\n"
 "Language: nl\n"
@@ -131,10 +132,10 @@ msgid ""
 "== 0\">and </span>"
 msgstr ""
 "<span invisible=\"duration_days != 1\"> dag </span>\n"
-"                    <span invisible=\"duration_days in [0,1]\"> dagen </span>"
-"\n"
-"                    <span invisible="
-"\"duration_days == 0 or remaining_hours == 0\">en </span>"
+"                    <span invisible=\"duration_days in [0,1]\"> dagen </"
+"span>\n"
+"                    <span invisible=\"duration_days == 0 or remaining_hours "
+"== 0\">en </span>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
@@ -144,8 +145,8 @@ msgid ""
 "span>"
 msgstr ""
 "<span invisible=\"remaining_hours != 1\"> uur </span>\n"
-"                    <span invisible=\"remaining_hours in [0,1]\"> uren "
-"</span>"
+"                    <span invisible=\"remaining_hours in [0,1]\"> uren </"
+"span>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
@@ -161,8 +162,8 @@ msgstr ""
 #: model_terms:web_tour.tour,rainbow_man_message:sale_renting.rental_tour
 msgid "<span><b>Good job!</b> You went through all steps of this tour.</span>"
 msgstr ""
-"<span><b>Goed gedaan!</b> Je hebt alle stappen van deze tour "
-"doorlopen.</span>"
+"<span><b>Goed gedaan!</b> Je hebt alle stappen van deze tour doorlopen.</"
+"span>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
@@ -341,7 +342,7 @@ msgstr "Bevestigde orders"
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__country_id
 msgid "Country"
-msgstr ""
+msgstr "Land"
 
 #. module: sale_renting
 #: model:ir.actions.act_window,name:sale_renting.action_create_rental_order
@@ -960,6 +961,7 @@ msgstr "Printer"
 #: model:ir.model,name:sale_renting.model_product_template
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__product_id
 #: model:ir.model.fields,field_description:sale_renting.field_res_company__extra_product
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__product_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__product_id
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
@@ -974,7 +976,6 @@ msgid "Product A"
 msgstr "Product A"
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__categ_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__categ_id
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule

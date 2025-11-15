@@ -3,13 +3,15 @@
 # * esg
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Abe Manyo (abem)" <abem@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-15 23:05+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 20:08+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/esg/"
 "id/>\n"
 "Language: id\n"
@@ -382,6 +384,12 @@ msgid ""
 "account.\n"
 "Are you sure you want to continue?"
 msgstr ""
+"Mengubah tipe akun menjadi apa pun selain %(valid_account_type_names)s akan "
+"reset semua faktor-faktor emisi terhubung ke item-item jurnal yang "
+"menggunakan akun ini.\n"
+"Sebagai tambahan, ini akan menghapus semua baris ESG yang terhubung akun "
+"tersebut.\n"
+"Apakah Anda yakin ingin melanjutkan?"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__child_ids
@@ -846,7 +854,7 @@ msgstr "Esg Tombol Tunjukkan Emisi"
 #. module: esg
 #: model:account.account,name:esg.account_expense
 msgid "Expense"
-msgstr ""
+msgstr "Pengeluaran"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_follower_ids
@@ -1614,7 +1622,7 @@ msgstr "Error Pengiriman SMS"
 #. module: esg
 #: model:account.account,name:esg.account_salary
 msgid "Salary"
-msgstr ""
+msgstr "Gaji"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__scope
@@ -1625,6 +1633,8 @@ msgstr "Lingkup"
 
 #. module: esg
 #. odoo-javascript
+#. odoo-python
+#: code:addons/esg/controllers/esg_dashboard.py:0
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Scope 1"
 msgstr "Scope 1"
@@ -1637,6 +1647,8 @@ msgstr "Scope 1: Langsung"
 
 #. module: esg
 #. odoo-javascript
+#. odoo-python
+#: code:addons/esg/controllers/esg_dashboard.py:0
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Scope 2"
 msgstr "Scope 2"
@@ -1649,6 +1661,8 @@ msgstr "Scope 2: Tidak Langsung"
 
 #. module: esg
 #. odoo-javascript
+#. odoo-python
+#: code:addons/esg/controllers/esg_dashboard.py:0
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Scope 3"
 msgstr "Scope 3"
@@ -1744,13 +1758,13 @@ msgstr "Sulfur Heksafluorida (SF₆) (t)"
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
 msgid "The IPCC server did not return any file to import the data."
-msgstr ""
+msgstr "Server IPCC tidak mengembalikkan file apa pun untuk mengimpor data."
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_assignation_line.py:0
 msgid "The account type must be of type %(valid_account_type_names)s."
-msgstr ""
+msgstr "Tipe akun harus merupakan tipe %(valid_account_type_names)s."
 
 #. module: esg
 #: model:ir.model.constraint,message:esg.constraint_esg_assignation_line_at_least_one_field_filled
@@ -1956,7 +1970,7 @@ msgstr "Ketidakpastian yang Sangat Tinggi (>50%)"
 #. odoo-python
 #: code:addons/esg/models/account_account.py:0
 msgid "Warning"
-msgstr ""
+msgstr "Peringatan"
 
 #. module: esg
 #. odoo-javascript
@@ -1989,6 +2003,8 @@ msgid ""
 "You can only create accounts of type %(valid_account_type_names)s in the ESG "
 "module, as emission factors can only be linked to expense or asset accounts."
 msgstr ""
+"Anda hanya dapat membuat akun tipe %(valid_account_type_names)s di modul "
+"ESG, karena faktor emisi hanya dapat terhubung ke akun pengeluaran atau aset."
 
 #. module: esg
 #. odoo-python
@@ -2000,7 +2016,7 @@ msgstr "Anda tidak dapat menghapus database ADEME."
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
 msgid "You can't delete the IPCC database."
-msgstr ""
+msgstr "Anda tidak dapat menghapus database IPCC."
 
 #. module: esg
 #. odoo-python

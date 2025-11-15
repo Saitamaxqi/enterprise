@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-28 13:11+0000\n"
+"PO-Revision-Date: 2025-11-13 17:15+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/mrp_mps/pt_BR/>\n"
@@ -45,7 +45,7 @@ msgstr "%(year)s"
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_bom_form_view_inherit_mps
 msgid "<span>Schedules</span>"
-msgstr ""
+msgstr "<span>Cronogramas</span>"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -70,7 +70,7 @@ msgstr "Demanda real"
 #. odoo-python
 #: code:addons/mrp_mps/models/mrp_mps.py:0
 msgid "Actual Demand %(product)s %(date)s (%(date_start)s - %(date_end)s)"
-msgstr ""
+msgstr "Demanda real %(product)s %(date)s (%(date_start)s - %(date_end)s)"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -98,7 +98,7 @@ msgstr "Reposição real"
 #: code:addons/mrp_mps/models/mrp_mps.py:0
 msgid ""
 "Actual Replenishment %(product)s %(date)s (%(date_start)s - %(date_end)s)"
-msgstr ""
+msgstr "Reposição real %(product)s %(date)s (%(date_start)s - %(date_end)s)"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -110,12 +110,12 @@ msgstr "Adicionar um produto"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__allowed_route_ids
 msgid "Allowed Route"
-msgstr ""
+msgstr "Rota permitida"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
 msgid "Apply"
-msgstr ""
+msgstr "Aplicar"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -132,12 +132,12 @@ msgstr "Tem certeza de que deseja excluir este registro?"
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_production_schedule__replenish_trigger__automated
 msgid "Automatic"
-msgstr ""
+msgstr "Automático"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_search_view
 msgid "Automatically Replenished"
-msgstr ""
+msgstr "Reposto automaticamente"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -148,12 +148,12 @@ msgstr "Disponível para promessa (ATP)"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__based_on_readonly
 msgid "Based On Readonly"
-msgstr ""
+msgstr "Baseado em Readonly"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__based_on
 msgid "Based on"
-msgstr ""
+msgstr "Com base em"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_mrp_bom

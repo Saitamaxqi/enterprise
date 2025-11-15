@@ -3,13 +3,14 @@
 # * hr_expense_stripe_demo
 #
 # "Kwanghee Park (kwpa)" <kwpa@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-24 02:06+0000\n"
-"Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
+"PO-Revision-Date: 2025-11-08 20:18+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "hr_expense_stripe_demo/ko/>\n"
 "Language: ko\n"
@@ -27,12 +28,12 @@ msgstr ""
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__atm_fee
 msgid "Atm Fee"
-msgstr ""
+msgstr "ATM 수수료"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__authorization_method
 msgid "Authorization Method"
-msgstr ""
+msgstr "인증 수단"
 
 #. module: hr_expense_stripe_demo
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe_demo.hr_expense_stripe_test_shipping_wizard_form
@@ -42,7 +43,7 @@ msgstr "취소"
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__capture_surcharge
 msgid "Capture Surcharge"
-msgstr ""
+msgstr "매입 추가 요금"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__capture
@@ -63,7 +64,7 @@ msgstr "카드"
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__cashback_amount
 msgid "Cashback Amount"
-msgstr ""
+msgstr "캐시백 금액"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields.selection,name:hr_expense_stripe_demo.selection__hr_expense_stripe_test_purchase_wizard__authorization_method__chip
@@ -149,13 +150,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__write_uid
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_shipping_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "최근 갱신한 사람"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__write_date
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_shipping_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "최근 갱신 일자"
 
 #. module: hr_expense_stripe_demo
 #. odoo-python
@@ -191,12 +192,12 @@ msgstr ""
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__merchant_country_id
 msgid "Merchant Country"
-msgstr ""
+msgstr "판매자 소속 국가"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__merchant_name
 msgid "Merchant Name"
-msgstr ""
+msgstr "판매자 이름"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_shipping_wizard__new_shipping_status
@@ -211,7 +212,7 @@ msgstr "온라인"
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_shipping_wizard__card_shipping_status
 msgid "Shipping Status"
-msgstr ""
+msgstr "배송 상태"
 
 #. module: hr_expense_stripe_demo
 #. odoo-python
@@ -223,18 +224,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe_demo.hr_expense_stripe_test_purchase_wizard
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe_demo.view_hr_expense_stripe_card_form_inherit_demo
 msgid "Simulate Purchase"
-msgstr ""
+msgstr "구매 시뮬레이션"
 
 #. module: hr_expense_stripe_demo
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe_demo.hr_expense_stripe_test_shipping_wizard_form
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe_demo.view_hr_expense_stripe_card_form_inherit_demo
 msgid "Simulate Shipping"
-msgstr ""
+msgstr "배송 시뮬레이션"
 
 #. module: hr_expense_stripe_demo
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe_demo.hr_expense_stripe_topup_wizard_inherit_demo
 msgid "Simulate Topup"
-msgstr ""
+msgstr "충전 시뮬레이션"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__force_capture
@@ -244,7 +245,7 @@ msgstr ""
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__card_currency_id
 msgid "Stripe Currency"
-msgstr ""
+msgstr "Stripe 통화"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model,name:hr_expense_stripe_demo.model_hr_expense_stripe_topup_wizard

@@ -6,15 +6,16 @@
 # Martin Trigaux, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-16 13:39+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
-"Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/voip/ar/"
-">\n"
+"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"PO-Revision-Date: 2025-11-15 11:28+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/voip/ar/>"
+"\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -71,6 +72,7 @@ msgstr "2 آخرون…"
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
 msgid "<i class=\"fa fa-fw me-1 fa-phone text-primary\" title=\"Phone\"/>"
 msgstr ""
+"<i class=\"fa fa-fw me-1 fa-phone text-primary\" title=\"رقم الهاتف \"/>"
 
 #. module: voip
 #. odoo-javascript
@@ -102,7 +104,7 @@ msgstr "قبول المكالمة"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "يتطلب اتخاذ إجراء"
 
 #. module: voip
 #. odoo-javascript
@@ -135,7 +137,7 @@ msgstr "إضافة إلى قائمة انتظار الاتصالات"
 #. module: voip
 #: model:res.groups,name:voip.group_voip_admin
 msgid "Administrator"
-msgstr ""
+msgstr "المدير"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__ask
@@ -205,7 +207,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "عدد المرفقات"
 
 #. module: voip
 #. odoo-javascript
@@ -217,7 +219,7 @@ msgstr "متاح"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__avatar_128
 msgid "Avatar 128"
-msgstr ""
+msgstr "الصورة الرمزية 128"
 
 #. module: voip
 #. odoo-javascript
@@ -433,7 +435,7 @@ msgstr ""
 #. module: voip
 #: model:ir.ui.menu,name:voip.menu_voip_call_configuration
 msgid "Configuration"
-msgstr ""
+msgstr "التهيئة"
 
 #. module: voip
 #. odoo-javascript
@@ -494,19 +496,15 @@ msgid "Contacts with a phone number will be shown here."
 msgstr "سيتم إظهار جهات الاتصال التي لها أرقام هواتف هنا."
 
 #. module: voip
+#: model:ir.model,name:voip.model_res_country
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_id
 msgid "Country"
-msgstr ""
-
-#. module: voip
-#: model:ir.model,name:voip.model_voip_country_code_mixin
-msgid "Country Code Mixin"
-msgstr "Mixin رمز الدولة"
+msgstr "الدولة"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_flag_url
 msgid "Country Flag"
-msgstr ""
+msgstr "علم الدولة"
 
 #. module: voip
 #: model:ir.model,website_form_label:voip.model_res_partner
@@ -563,7 +561,7 @@ msgstr "النسخة التجريبية"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.xml:0
 msgid "Demo Mode"
-msgstr ""
+msgstr "وضع العرض التوضيحي"
 
 #. module: voip
 #. odoo-javascript
@@ -585,10 +583,11 @@ msgstr "الاتجاه"
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy__disabled
 msgid "Disabled"
-msgstr ""
+msgstr "معطل"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__display_name
+#: model:ir.model.fields,field_description:voip.field_res_country__display_name
 #: model:ir.model.fields,field_description:voip.field_res_partner__display_name
 #: model:ir.model.fields,field_description:voip.field_res_users__display_name
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__display_name
@@ -717,7 +716,7 @@ msgstr ""
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "External"
-msgstr ""
+msgstr "خارجي"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__external_device_number
@@ -744,12 +743,12 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "المتابعين"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "المتابعين (الشركاء)"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy__always
@@ -771,7 +770,7 @@ msgstr "إنهاء المكالمة"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "يحتوي على رسالة"
 
 #. module: voip
 #. odoo-javascript
@@ -788,7 +787,7 @@ msgstr ""
 #. module: voip
 #: model:ir.actions.act_window,name:voip.voip_call_action_history
 msgid "History"
-msgstr ""
+msgstr "السجل"
 
 #. module: voip
 #. odoo-javascript
@@ -809,6 +808,7 @@ msgstr "كيفية الاتصال عن طريق الهاتف المحمول"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__id
+#: model:ir.model.fields,field_description:voip.field_res_country__id
 #: model:ir.model.fields,field_description:voip.field_res_partner__id
 #: model:ir.model.fields,field_description:voip.field_res_users__id
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__id
@@ -822,13 +822,13 @@ msgstr "المُعرف"
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "إذا كان محددًا، فهناك رسائل جديدة عليك رؤيتها."
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_has_error
 #: model:ir.model.fields,help:voip.field_voip_call__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "إذا كان محددًا، فقد حدث خطأ في تسليم بعض الرسائل."
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__do_not_disturb_until_dt
@@ -838,7 +838,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__image_1920
 msgid "Image"
-msgstr ""
+msgstr "صورة"
 
 #. module: voip
 #. odoo-javascript
@@ -881,12 +881,12 @@ msgstr "اختيار جهاز الإدخال"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Internal"
-msgstr ""
+msgstr "داخلي"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "متابع"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__is_within_same_company
@@ -919,7 +919,7 @@ msgstr "لوحة مفاتيح"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Last 7 Days"
-msgstr ""
+msgstr "آخر 7 أيام"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__last_seen_phone_call
@@ -957,7 +957,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_main_attachment_id
 msgid "Main Attachment"
-msgstr ""
+msgstr "المرفق الرئيسي"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_config_settings_view_form
@@ -969,12 +969,12 @@ msgstr "إدارة المزودين"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "خطأ في تسليم الرسالة"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "الرسائل"
 
 #. module: voip
 #. odoo-javascript
@@ -1084,22 +1084,22 @@ msgstr "لا شيء لرؤيته هنا 😔"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "عدد الإجراءات"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "عدد الاخطاء"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "عدد الرسائل التي تتطلب اتخاذ إجراء"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "عدد الرسائل التي بها خطأ في التسليم"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__voip
@@ -1109,7 +1109,7 @@ msgstr ""
 #. module: voip
 #: model:res.groups,name:voip.group_voip_officer
 msgid "Officer"
-msgstr ""
+msgstr "موظف"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
@@ -1184,6 +1184,11 @@ msgid "Phone"
 msgstr "رقم الهاتف"
 
 #. module: voip
+#: model:ir.model,name:voip.model_voip_country_code_mixin
+msgid "Phone Country Mixin"
+msgstr ""
+
+#. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__phone_number
 msgid "Phone Number"
 msgstr "رقم الهاتف"
@@ -1253,17 +1258,17 @@ msgstr "صورة الملف التعريفي لـ %(user)s"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Provider"
-msgstr ""
+msgstr "المزود"
 
 #. module: voip
 #: model:ir.ui.menu,name:voip.voip_provider_view_inner_menu
 msgid "Providers"
-msgstr ""
+msgstr "المزودون"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "التقييمات"
 
 #. module: voip
 #: model_terms:ir.actions.act_window,help:voip.action_voip_provider_view
@@ -1286,7 +1291,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/in_call_view.js:0
 msgid "Record"
-msgstr ""
+msgstr "السجل"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_provider_view_form
@@ -1299,7 +1304,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "Recording"
-msgstr ""
+msgstr "تسجيل"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__recording_policy
@@ -1373,7 +1378,7 @@ msgstr "يرن…"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "خطأ في تسليم الرسائل النصية القصيرة"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_config_settings_view_form
@@ -1400,7 +1405,7 @@ msgstr "جاري البحث…"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Secret"
-msgstr ""
+msgstr "سر"
 
 #. module: voip
 #. odoo-javascript
@@ -1491,7 +1496,7 @@ msgstr "الحالة"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/in_call_view.js:0
 msgid "Stop"
-msgstr ""
+msgstr "إيقاف"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__terminated
@@ -1661,7 +1666,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Unknown"
-msgstr ""
+msgstr "غير معروف"
 
 #. module: voip
 #. odoo-javascript
@@ -1678,7 +1683,7 @@ msgstr "حتى أقوم بتشغيله مجدداً"
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__country_flag_url
 msgid "Url of static flag image"
-msgstr ""
+msgstr "رابط URL لصورة علم ثابت"
 
 #. module: voip
 #. odoo-javascript
@@ -1709,7 +1714,7 @@ msgstr "إعدادات المستخدم"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Username"
-msgstr ""
+msgstr "اسم المستخدم"
 
 #. module: voip
 #: model:ir.model,name:voip.model_voip_queue_mixin
@@ -1810,12 +1815,12 @@ msgstr "WebSocket"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "رسائل الموقع الإلكتروني"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "سجل تواصل الموقع الإلكتروني"
 
 #. module: voip
 #. odoo-javascript
@@ -1874,7 +1879,10 @@ msgstr ""
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
 msgid "e.g. Brandon Freeman"
-msgstr ""
+msgstr "مثال: براندن فريمان"
+
+#~ msgid "Country Code Mixin"
+#~ msgstr "Mixin رمز الدولة"
 
 #~ msgid "# of Cases"
 #~ msgstr "عدد الحالات"

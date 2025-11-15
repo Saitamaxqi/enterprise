@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-31 08:23+0000\n"
+"PO-Revision-Date: 2025-11-13 09:24+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "account_sepa_direct_debit/ja/>\n"
@@ -56,7 +56,7 @@ msgid ""
 msgstr ""
 ".\n"
 "                                "
-"この委任情報が、親コンタクト向けのものではないことを確認してください。"
+"この同意書情報が、親連絡先向けのものではないことを確認してください。"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.view_batch_payment_form_inherit
@@ -125,11 +125,42 @@ msgid ""
 "                </div>\n"
 "            "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">"
+"\n"
+"                        <t t-out=\"object.partner_id.display_name or ''\""
+">Azure Interior</t>様\n"
+"                        <br/>\n"
+"                        <br/>\n"
+"                        "
+"お世話になっております。以下は、口座振替(SEPA)を承認するための署名用の同意書"
+"です。\n"
+"                        <t t-out=\"object.company_id.display_name or ''\""
+">YourCompany</t>\n"
+"                        "
+"が、お客様の銀行口座からの引き落としを実行できるよう、銀行に対して指示を送る"
+"ことを許可するものです。 \n"
+"                        <t t-out=\"object.company_id.display_name or ''\""
+">YourCompany</t>からの指示に基づいて処理されます。\n"
+"                        "
+"ご不明な点がございましたら、お気軽にお問い合わせください。\n"
+"                        <br/>\n"
+"                        宜しくお願いいたします。\n"
+"                        <t t-if=\"not is_html_empty(user.signature)\" data-o"
+"-mail-quote-container=\"1\">\n"
+"                            <br/><br/>\n"
+"                            <div data-o-mail-quote=\"1\">--<br data-o-mail-"
+"quote=\"1\"/><t t-out=\"user.signature\" data-o-mail-quote=\"1\">Mitchell "
+"Admin</t></div>\n"
+"                        </t>\n"
+"                    </p>\n"
+"                </div>\n"
+"            "
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
 msgid "<span> day(s)</span>"
-msgstr ""
+msgstr "<span>日</span>"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -164,7 +195,7 @@ msgstr "<strong>IBAN:</strong>"
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "<strong>Mandate identifier:</strong>"
-msgstr "<strong>委任識別子:</strong>"
+msgstr "<strong>同意書識別子:</strong>"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -317,6 +348,133 @@ msgid ""
 "</table>\n"
 "            "
 msgstr ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
+"16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
+"color: #454748; width: 100%; border-collapse:separate;\"><tr><td align=\""
+"center\">\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style="
+"\"padding: 16px; background-color: white; color: #454748; border-"
+"collapse:separate;\">\n"
+"<tbody>\n"
+"    <!-- HEADER -->\n"
+"    <tr>\n"
+"        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
+"\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px "
+"0px 8px; border-collapse:separate;\">\n"
+"                <tr><td valign=\"middle\">\n"
+"                    <t t-set=\"company\" t-value=\"object.company_id\"/>\n"
+"                    <span style=\"font-size: 10px;\">口座振替支払通知</span><"
+"br/>\n"
+"                </td></tr>\n"
+"                <tr><td valign=\"middle\" align=\"right\" t-if="
+"\"not company.uses_default_logo\">\n"
+"                    <img t-attf-src=\"/logo.png?company={{ company.id }}\" "
+"style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt="
+"\"company.name\"/>\n"
+"                </td></tr>\n"
+"                <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
+"                    <hr width=\"100%\" style=\"background-"
+"color:rgb(204,204,204);border:medium none;clear:both;display:block;font-"
+"size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;\"/>\n"
+"                </td></tr>\n"
+"            </table>\n"
+"        </td>\n"
+"    </tr>\n"
+"\n"
+"    <!-- CONTENT -->\n"
+"    <tr>\n"
+"        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
+"\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px "
+"0px 8px; border-collapse:separate;\">\n"
+"                <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
+"                    <t t-out=\"object.partner_id.name or ''\">Azure "
+"Interior</t>様<br/>\n"
+"                    <br/>\n"
+"                    口座振替支払\n"
+"                    <span style=\"font-weight:bold;\" t-out=\"format_amount("
+"object.amount, object.currency_id) or ''\">$ 0.00</span>\n"
+"                    依頼がお客様の銀行宛に送信されます。<br/>\n"
+"                    お客様の口座:末尾番号 <t t-out="
+"\"ctx.get('iban_last_4') or ''\">1234</t> より\n"
+"                    <span style=\"font-weight:bold;\" t-out=\""
+"format_date(ctx.get('collection_date'))\">2020-04-18</span>"
+"または数日中に自動的に\n"
+"                    口座引き落としされます。<br/>\n"
+"                    残高のご確認をお願い致します。<br/>\n"
+"                    <br/>\n"
+"                    <t t-if="
+"\"ctx.get('creditor_iban') or ctx.get('mandate_ref')\">\n"
+"                        加盟店データ:<br/>\n"
+"                        <ul>\n"
+"                            <t t-if=\"ctx.get('creditor_iban')\">\n"
+"                                <li>IBAN: <t t-out="
+"\"ctx['creditor_iban'] or ''\">NO 93 8601 1117947</t></li>\n"
+"                            </t>\n"
+"                            <t t-if=\"ctx.get('mandate_ref')\">\n"
+"                                <li>SEPA口座振替同意書参照番号: <t t-out="
+"\"ctx['mandate_ref'] or ''\"/></li>\n"
+"                            </t>\n"
+"                        </ul>\n"
+"                    </t>\n"
+"                    <br/>\n"
+"                    ご質問がございましたらお問合せ下さい。\n"
+"                </td></tr>\n"
+"                <tr><td style=\"text-align:center;\">\n"
+"                    <hr width=\"100%\" style=\"background-"
+"color:rgb(204,204,204);border:medium none;clear:both;display:block;font-"
+"size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                </td></tr>\n"
+"            </table>\n"
+"        </td>\n"
+"    </tr>\n"
+"    <!-- FOOTER -->\n"
+"    <tr>\n"
+"        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
+"\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; "
+"padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                <tr><td valign=\"middle\" align=\"left\">\n"
+"                    <t t-out=\"company.name or ''\">YourCompany</t>\n"
+"                </td></tr>\n"
+"                <tr><td valign=\"middle\" align=\"left\" style="
+"\"opacity: 0.7;\">\n"
+"                    <t t-if=\"company.phone\">\n"
+"                        <t t-out=\"company.phone or ''\">+1 650-123-4567</t> "
+"|\n"
+"                    </t>\n"
+"                    <t t-if=\"company.email\">\n"
+"                        <a t-attf-href=\"'mailto:%s' % {{ company.email }}\" "
+"style=\"text-decoration:none; color: #454748;\" t-out=\"company.email or ''\""
+">info@yourcompany.com</a> |\n"
+"                    </t>\n"
+"                    <t t-if=\"company.website\">\n"
+"                        <a t-attf-href=\"'%s' % {{ company.website }}\" style"
+"=\"text-decoration:none; color: #454748;\" t-out=\"company.website or ''\""
+">http://www.example.com</a>\n"
+"                    </t>\n"
+"                </td></tr>\n"
+"            </table>\n"
+"        </td>\n"
+"    </tr>\n"
+"</tbody>\n"
+"</table>\n"
+"</td></tr>\n"
+"<!-- POWERED BY -->\n"
+"<tr><td align=\"center\" style=\"min-width: 590px;\">\n"
+"    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" "
+"style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding:"
+" 8px; border-collapse:separate;\">\n"
+"      <tr><td style=\"text-align: center; font-size: 13px;\">\n"
+"        Powered by <a target=\"_blank\" href="
+"\"https://www.odoo.com?utm_source=db&amp;utm_medium=mail\" style="
+"\"color: #875A7B;\">Odoo</a>\n"
+"      </td></tr>\n"
+"    </table>\n"
+"</td></tr>\n"
+"</table>\n"
+"            "
 
 #. module: account_sepa_direct_debit
 #: model:mail.template,body_html:account_sepa_direct_debit.email_template_sdd_mandate_expiring
@@ -426,6 +584,110 @@ msgid ""
 "                </table>\n"
 "            "
 msgstr ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
+"16px; background-color: #FFFFFF; font-family:Verdana, Arial,sans-serif; "
+"color: #454748; width: 100%; border-collapse:separate;\">\n"
+"                    <tr>\n"
+"                        <td align=\"center\">\n"
+"                            <table border=\"0\" cellpadding=\"0\" "
+"cellspacing=\"0\" width=\"590\" style=\"padding: 16px; background-color: "
+"#FFFFFF; color: #454748; border-collapse:separate;\">\n"
+"                                <tbody>\n"
+"                                    <!-- CONTENT -->\n"
+"                                    <tr>\n"
+"                                        <td align=\"center\" style=\"min-"
+"width: 590px;\">\n"
+"                                            <table border=\"0\" cellpadding="
+"\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-"
+"color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                                <tr>\n"
+"                                                    <td valign=\"top\" style"
+"=\"font-size: 13px;\">\n"
+"                                                        <div>\n"
+"                                                            "
+"いつもご利用いただきありがとうございます。<br/><br/>\n"
+"                                                            "
+"SEPA口座振替同意書は<span t-out="
+"\"format_date(object._get_expiry_date_per_mandate()[object])\""
+">2020-04-18</span><br/>に自動的に失効する予定です。\n"
+"                                                            "
+"この失効の理由として考えられるのは、以下のいずれかです:\n"
+"                                                            <ul>\n"
+"                                                                <li>\n"
+"                                                                    "
+"同意書の署名時に設定された有効期限に達したため\n"
+"                                                                </li>\n"
+"                                                                <li>\n"
+"                                                                    "
+"最後にこの同意書が使用されてから36か月以上が経過したため\n"
+"                                                                </li>\n"
+"                                                            </ul>\n"
+"                                                            <div style="
+"\"margin: 16px 0px 16px 0px;\">\n"
+"                                                                <a t-attf-"
+"href=\"{{ website_url }}/odoo/sdd-mandates/{{ object.id }}\" style"
+"=\"background-color: #4caf50; padding: 8px 16px 8px 16px; text-decoration: "
+"none; color: #fff; border-radius: 5px; font-size:13px;\">\n"
+"                                                                    "
+"同意書を確認する\n"
+"                                                                </a>\n"
+"                                                            </div>\n"
+"                                                            "
+"セキュリティに関するご注意: "
+"リンク先のドメインが次のURLであることをご確認ください: <b><a t-att-href="
+"\"object.get_base_url()\" t-out=\"object.get_base_url() or ''\">\n"
+"                                                            "
+"https://yourcompany.odoo.com</a></b>\n"
+"                                                        </div>\n"
+"                                                    </td>\n"
+"                                                </tr>\n"
+"                                                <tr>\n"
+"                                                    <td style=\"text-"
+"align:center;\">\n"
+"                                                        <hr width=\"100%\" "
+"style=\"background-color:rgb(204,204,204);border:medium "
+"none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; "
+"margin: 16px 0px 16px 0px;\"/>\n"
+"                                                    </td>\n"
+"                                                </tr>\n"
+"                                            </table>\n"
+"                                        </td>\n"
+"                                    </tr>\n"
+"                                </tbody>\n"
+"                            </table>\n"
+"                        </td>\n"
+"                    </tr>\n"
+"                    <!-- POWERED BY -->\n"
+"                    <tr>\n"
+"                        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                            <table border=\"0\" cellpadding=\"0\" "
+"cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: "
+"#F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
+"                                <tr>\n"
+"                                    <td style=\"text-align: center; font-"
+"size: 13px;\">\n"
+"                                        Powered by <a target=\"_blank\" href="
+"\"https://www.odoo.com?utm_source=db&amp;utm_medium=auth\" style="
+"\"color: #875A7B;\">Odoo</a>\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                            <table border=\"0\" cellpadding=\"0\" "
+"cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; color: #454748; "
+"padding: 8px; border-collapse:separate;\">\n"
+"                                <tr>\n"
+"                                    <td style=\"text-align: center; font-"
+"size: 11px;\">\n"
+"                                        "
+"追伸:本メールは、Odoo会計システムより自動送信されています。SEPA口座振替同意書"
+"が自動的に失効することをお知らせするものです。\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                        </td>\n"
+"                    </tr>\n"
+"                </table>\n"
+"            "
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -433,20 +695,22 @@ msgstr ""
 msgid ""
 "A SEPA direct debit version should be selected to generate the addresses in "
 "the export file."
-msgstr ""
+msgstr "エクスポートファイルのアドレスを生成するには、SEPA口座振替バージョンを選択す"
+"る必要があります。"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_payment.py:0
 msgid ""
 "A SEPA direct debit version should be selected to generate the export file."
-msgstr ""
+msgstr "エクスポートファイルを生成するには、SEPA口座振替バージョンを選択する必要があ"
+"ります。"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "A customer account is required to validate a SEPA Direct Debit mandate."
-msgstr ""
+msgstr "SEPA口座振替同意書を検証するには顧客口座が必要です。"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.actions.act_window,help:account_sepa_direct_debit.account_sepa_direct_debit_mandate_tree_act
@@ -486,7 +750,7 @@ msgstr "例外の活動を示す装飾"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__activity_state
 msgid "Activity State"
-msgstr "活動状態"
+msgstr "活動ステータス"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__activity_type_icon
@@ -573,7 +837,7 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "By signing this mandate form, you authorise (A)"
-msgstr "この委任状に署名することにより、あなたは（A）を承認します。"
+msgstr "この同意書に署名することにより、あなたは（A）を承認します。"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields.selection,name:account_sepa_direct_debit.selection__account_batch_payment__sdd_scheme__core
@@ -638,7 +902,7 @@ msgstr "会社"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__company_id
 msgid "Company for whose invoices the mandate can be used."
-msgstr "委任状を利用できる請求書発行会社。"
+msgstr "同意書を利用できる請求書発行会社。"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model,name:account_sepa_direct_debit.model_res_config_settings
@@ -658,7 +922,7 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_account_payment__sdd_mandate_usable
 msgid "Could a SDD mandate be used?"
-msgstr "SDD委任状は利用できますか？"
+msgstr "SDD同意書は利用できますか？"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model,website_form_label:account_sepa_direct_debit.model_res_partner
@@ -711,13 +975,13 @@ msgstr "顧客"
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
 msgid "Customer mandate"
-msgstr "顧客委任状"
+msgstr "顧客同意書"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__partner_id
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate_send__partner_id
 msgid "Customer whose payments are to be managed by this mandate."
-msgstr "この委任状により支払いを管理する顧客。"
+msgstr "この同意書により支払いを管理する顧客。"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -727,14 +991,14 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__start_date
 msgid "Date from which the mandate can be used (inclusive)."
-msgstr "委任状が使用可能となる日付（当日を含む）"
+msgstr "同意書が使用可能となる日付（当日を含む）"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__end_date
 msgid ""
 "Date until which the mandate can be used. It will automatically be closed "
 "after this date."
-msgstr "委任状を使用できる期限。この日を過ぎると自動的に締切られます。"
+msgstr "同意書を使用できる期限。この日を過ぎると自動的に締切られます。"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_account_batch_payment__sdd_required_collection_date
@@ -853,7 +1117,7 @@ msgstr "終了日"
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_res_partner__sdd_mandate_ids
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_res_users__sdd_mandate_ids
 msgid "Every mandate belonging to this partner."
-msgstr "この取引先に属する全ての委任状"
+msgstr "この取引先に属する全ての同意書"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__expiration_warning_already_sent
@@ -1004,17 +1268,17 @@ msgstr "支払済請求書"
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.view_account_invoice_filter
 msgid "Invoices matching a valid SEPA Direct Debit Mandate"
-msgstr "有効な口座振替委任状に一致する請求書"
+msgstr "有効な口座振替同意書に一致する請求書"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__paid_invoice_ids
 msgid "Invoices paid using this mandate."
-msgstr "この委任状を使って支払われる請求書"
+msgstr "この同意書を使って支払われる請求書"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
 msgid "Invoices paid with this mandate."
-msgstr "この委任状によって支払われる請求書"
+msgstr "この同意書によって支払われる請求書"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_send__is_mail_template_editor
@@ -1071,17 +1335,17 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model:ir.actions.report,name:account_sepa_direct_debit.sdd_mandate_form_report_main
 msgid "Mandate form"
-msgstr "以下からの委任状："
+msgstr "以下からの同意書："
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.constraint,message:account_sepa_direct_debit.constraint_sdd_mandate_name_unique
 msgid "Mandate identifier must be unique! Please choose another one."
-msgstr "委任状識別子は一意である必要があります！別のものを選択して下さい。"
+msgstr "同意書識別子は一意である必要があります！別のものを選択して下さい。"
 
 #. module: account_sepa_direct_debit
 #: model:ir.actions.server,name:account_sepa_direct_debit.sdd_mandate_state_cron_ir_actions_server
 msgid "Mandate state updater"
-msgstr "委任状ステータスアップデーター"
+msgstr "同意書ステータスアップデーター"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -1152,7 +1416,7 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__paid_invoices_nber
 msgid "Number of invoices paid with this mandate."
-msgstr "この委任状によって支払われる請求書の数"
+msgstr "この同意書によって支払われる請求書の数"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__message_needaction_counter
@@ -1192,13 +1456,12 @@ msgstr ""
 msgid ""
 "Once this invoice has been paid with Direct Debit, contains the mandate that "
 "allowed the payment."
-msgstr ""
-"この請求書が口座振替で支払われると、支払いを許可した委任状が含まれます。"
+msgstr "この請求書が口座振替で支払われると、支払いを許可した同意書が含まれます。"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__one_off
 msgid "One-off Mandate"
-msgstr "一回限りの委任状"
+msgstr "一回限りの同意書"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1223,7 +1486,7 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_account_payment_form
 msgid "Oops! No valid SEPA mandate for this customer."
-msgstr "！！この顧客に有効なSEPA委任状がありません。"
+msgstr "！！この顧客に有効なSEPA同意書がありません。"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1240,7 +1503,7 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sdd_res_partner_view
 msgid "Open this partner's mandates"
-msgstr "この取引先の委任状を開く"
+msgstr "この取引先の同意書を開く"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate_send__lang
@@ -1255,7 +1518,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_account_payment_form
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_account_payment_with_mandates_tree
 msgid "Originating SEPA mandate"
-msgstr "SEPA委任状を作成する"
+msgstr "SEPA同意書を作成する"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1387,7 +1650,7 @@ msgstr "キャンセル済"
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_view_account_payment_search
 msgid "Revoked SDD Mandate"
-msgstr "キャンセル済SDD委任状"
+msgstr "キャンセル済SDD同意書"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -1414,7 +1677,7 @@ msgstr "SDD CORE"
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.view_account_invoice_filter
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.view_account_move_line_payment_filter
 msgid "SDD Mandate"
-msgstr "SDD委任状"
+msgstr "SDD同意書"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model,name:account_sepa_direct_debit.model_sdd_mandate_send
@@ -1443,12 +1706,12 @@ msgstr "SDD債権者識別子"
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "SDD scheme is set on the customer mandate."
-msgstr "顧客委任状にSDDスキームが設定されました"
+msgstr "顧客同意書にSDDスキームが設定されました"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "SEPA Business-to-Business Direct Debit Mandate"
-msgstr "SEPA Business-to-Business口座振替委任状"
+msgstr "SEPA Business-to-Business口座振替同意書"
 
 #. module: account_sepa_direct_debit
 #: model:account.payment.method,name:account_sepa_direct_debit.payment_method_sdd
@@ -1463,12 +1726,12 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "SEPA Direct Debit Mandate"
-msgstr "SEPAダイレクトデビットマンデート"
+msgstr "SEPA口座振替同意書"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_account_journal__debit_sepa_pain_version
 msgid "SEPA Direct Debit Pain Version"
-msgstr ""
+msgstr "SEPA口座振替Painバージョン"
 
 #. module: account_sepa_direct_debit
 #: model:mail.template,name:account_sepa_direct_debit.email_template_sdd_new_mandate
@@ -1493,8 +1756,7 @@ msgstr ""
 msgid ""
 "SEPA Direct Debit scheme only accepts IBAN account numbers. Please select an "
 "IBAN-compliant debtor account for this mandate."
-msgstr ""
-"SEPA口座振替スキームはIBAN口座番号のみを受け付けています。この委任状にはIBAN"
+msgstr "SEPA口座振替スキームはIBAN口座番号のみを受け付けています。この同意書にはIBAN"
 "に準拠した債務者口座を選択して下さい。"
 
 #. module: account_sepa_direct_debit
@@ -1547,14 +1809,14 @@ msgstr "SMS送信エラー"
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_account_bank_statement_line__sdd_has_usable_mandate
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_account_move__sdd_has_usable_mandate
 msgid "Sdd Has Usable Mandate"
-msgstr "SDDに利用可能な委任状があります"
+msgstr "SDDに利用可能な同意書があります"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_account_payment__sdd_mandate_id
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_res_partner__sdd_mandate_ids
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_res_users__sdd_mandate_ids
 msgid "Sdd Mandate"
-msgstr "SDD委任状"
+msgstr "SDD同意書"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1590,7 +1852,7 @@ msgstr ""
 msgid ""
 "Some draft payments could not be posted because of the lack of any active "
 "mandate."
-msgstr "有効な委任状がないため、計上できなかった手形支払があります。"
+msgstr "有効な同意書がないため、計上できなかった手形支払があります。"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1652,9 +1914,8 @@ msgstr ""
 msgid ""
 "The SEPA Direct Debit mandate associated to the payment has been revoked and "
 "cannot be used anymore."
-msgstr ""
-"支払いに関連付けられたSEPA口座振替の委任状は撤回され、これ以上使用できませ"
-"ん。"
+msgstr "支払いに関連付けられたSEPA口座振替の同意書は撤回され、これ以上使用できません"
+"。"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1707,7 +1968,7 @@ msgstr "指定された債務者識別子が、SEPA規則による35文字の制
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid ""
 "The end date of the mandate must be posterior or equal to its start date."
-msgstr "委任状の終了日は、その開始日以降である必要があります。"
+msgstr "同意書の終了日は、その開始日以降である必要があります。"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -1732,8 +1993,7 @@ msgstr ""
 msgid ""
 "The payment must be linked to a SEPA Direct Debit mandate in order to "
 "generate a Direct Debit XML."
-msgstr ""
-"口座振替XMLを作成するには、支払いをSEPA口座振替委任状にリンクする必要がありま"
+msgstr "口座振替XMLを作成するには、支払いをSEPA口座振替同意書にリンクする必要がありま"
 "す。"
 
 #. module: account_sepa_direct_debit
@@ -1744,7 +2004,7 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__name
 msgid "The unique identifier of this mandate."
-msgstr "この委任状特有の識別子"
+msgstr "この同意書特有の識別子"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.view_batch_payment_form_inherit
@@ -1768,7 +2028,7 @@ msgid ""
 "but you are entitled to request your bank not to debit your account up until "
 "the day on which the payment is due."
 msgstr ""
-"この委任状は、企業間取引のみを対象としています。口座から引き落とされた後に銀"
+"この同意書は、企業間取引のみを対象としています。口座から引き落とされた後に銀"
 "行から払い戻しを受ける権利はありませんが、支払期日まで口座から引き落とさない"
 "よう銀行に要求する権利はあります。"
 
@@ -1778,8 +2038,7 @@ msgstr ""
 msgid ""
 "To solve that, you should create a mandate for each of the involved "
 "customers, valid at the moment of the payment date."
-msgstr ""
-"これを解決するには、関係する顧客ごとに、支払日の時点で有効な委任状を作成する"
+msgstr "これを解決するには、関係する顧客ごとに、支払日の時点で有効な同意書を作成する"
 "必要があります。"
 
 #. module: account_sepa_direct_debit
@@ -1789,7 +2048,7 @@ msgid ""
 "will automatically go from 'active' to 'closed' after its first use in "
 "payment if this option is set.\n"
 msgstr ""
-"この委任状が1つの取引にのみ使用できる場合にのみTrue。このオプションが設定され"
+"この同意書が1つの取引にのみ使用できる場合にのみTrue。このオプションが設定され"
 "ている場合、支払いに初めて使用された後、自動的に「有効」から「締切」になりま"
 "す。\n"
 
@@ -1818,7 +2077,7 @@ msgstr ""
 #: code:addons/account_sepa_direct_debit/models/account_payment.py:0
 msgid ""
 "Trying to register a payment on a mandate belonging to a different partner."
-msgstr "別のパートナーが所有する委任状に支払いを登録しようとしています。"
+msgstr "別のパートナーが所有する同意書に支払いを登録しようとしています。"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__activity_exception_decoration
@@ -1881,7 +2140,7 @@ msgstr ""
 msgid ""
 "You cannot delete a bank account linked to an active SEPA Direct Debit "
 "mandate."
-msgstr "有効なSEPA口座振替委任状にリンクされている銀行口座は削除できません。"
+msgstr "有効なSEPA口座振替同意書にリンクされている銀行口座は削除できません。"
 
 #. module: account_sepa_direct_debit
 #. odoo-python

@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-10-28 08:51+0000\n"
+"PO-Revision-Date: 2025-11-13 11:17+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/mrp_maintenance/pt_BR/>\n"
@@ -43,47 +43,49 @@ msgstr "Ação necessária"
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "Atividades"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Decoração de exceção de atividade"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Status da atividade"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Ícone do tipo de atividade"
 
 #. module: mrp_maintenance
 #: model_terms:ir.actions.act_window,help:mrp_maintenance.mrp_workcenter_request_action_from_workcenter
 msgid "Add a new maintenance request"
-msgstr ""
+msgstr "Adicione uma nova solicitação de manutenção"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request__recurring_leaves_count
 msgid "Additional Leaves to Plan Ahead"
-msgstr ""
+msgstr "Licenças adicionais para planejar"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Número de anexos"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request__block_workcenter
 msgid "Block Workcenter"
-msgstr ""
+msgstr "Bloquear centro de trabalho"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_request__recurring_leaves_count
 msgid "Block the workcenter for this many time slots in the future in advance."
 msgstr ""
+"Bloquear o centro de trabalho por esse número de intervalos de tempo no "
+"futuro com antecedência."
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request__company_id
@@ -99,7 +101,7 @@ msgstr "Calculado como última data de falha + TMEF"
 #. module: mrp_maintenance
 #: model_terms:ir.actions.act_window,help:mrp_maintenance.maintenance_workcenter_action
 msgid "Create a new work center"
-msgstr ""
+msgstr "Criar novo centro de trabalho"
 
 #. module: mrp_maintenance
 #: model:maintenance.equipment,name:mrp_maintenance.equipment_furniture1
@@ -109,7 +111,7 @@ msgstr "Serra de corte transversal: 8 ppi."
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__maintenance_open_count
 msgid "Current Maintenance"
-msgstr ""
+msgstr "Manutenção atual"
 
 #. module: mrp_maintenance
 #: model_terms:ir.ui.view,arch_db:mrp_maintenance.maintenance_request_view_form_inherit_mrp
@@ -124,7 +126,7 @@ msgstr "Cancelar"
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__display_name
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workorder__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Exibir nome"
 
 #. module: mrp_maintenance
 #: model:maintenance.equipment,name:mrp_maintenance.equipment_furniture3
@@ -134,7 +136,7 @@ msgstr "Máquina de perfuração"
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__effective_date
 msgid "Effective Date"
-msgstr ""
+msgstr "Data efetiva"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request__equipment_id

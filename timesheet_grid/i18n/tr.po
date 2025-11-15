@@ -17,13 +17,15 @@
 # Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2023
 # Tugay Hatıl <tugayh@projetgrup.com>, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# DeepL <noreply-mt-deepl@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-15 21:11+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-11-12 15:01+0000\n"
+"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "timesheet_grid/tr/>\n"
 "Language: tr\n"
@@ -40,11 +42,13 @@ msgstr "<i class=\"fa fa-play text-success\" title=\"Timer is Running\"/>"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
+#, fuzzy
 msgid "<span class=\"col-auto ms-2\">min</span>"
-msgstr ""
+msgstr "<span class=\"col-auto ms-2\">min</span>"
 
 #. module: timesheet_grid
 #: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_user
+#, fuzzy
 msgid ""
 "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
 "16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
@@ -175,9 +179,148 @@ msgid ""
 "</table>\n"
 "            "
 msgstr ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
+"16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
+"color: #454748; width: 100%; border-collapse:separate;\"><tr><td align=\""
+"center\">\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style="
+"\"padding: 16px; background-color: white; color: #454748; border-"
+"collapse:separate;\">\n"
+"<tbody>\n"
+"    <!-- HEADER -->\n"
+"   <tr>\n"
+"        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"           <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
+"\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px "
+"0px 8px; border-collapse:separate;\">\n"
+"                <tr><td valign=\"middle\">\n"
+"                    <span style=\"font-size: 10px;\">Çalışma "
+"Çizelgeleriniz</span><br/>\n"
+"                   <span style=\"font-size: 20px; font-weight: bold;"
+"\" t-out=\"object.name or ''\">Abigail Peterson</span>\n"
+"                </td><td valign=\"middle\" align=\"right\" t-if="
+"\"not object.company_id.uses_default_logo\">\n"
+"                    <img t-attf-src="
+"\"/logo.png?company={{ object.company_id.id }}\" style="
+"\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt="
+"\"object.company_id.name\"/>\n"
+"               </td></tr>\n"
+"               <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
+"                 <hr width=\"100%\" style=\"background-"
+"color:rgb(204,204,204);border:medium none;clear:both;display:block;font-"
+"size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                </td></tr>\n"
+"            </table>\n"
+"       </td>\n"
+"    </tr>\n"
+"   <!-- CONTENT -->\n"
+"    <tr>\n"
+"       <td align=\"center\" style=\"min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
+"\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px "
+"0px 8px; border-collapse:separate;\">\n"
+"               <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
+"                   <t t-set=\"timesheet_hours\" t-value="
+"\"ctx.get('timesheet_hours', 0)\"/>\n"
+"                    <t t-set=\"working_hours\" t-value="
+"\"ctx.get('working_hours', 0)\"/>\n"
+"                   <div>\n"
+"                        Merhaba <t t-out=\"object.name or ''\">Abigail "
+"Peterson</t>,<br/><br/>\n"
+"                        Bu, aşağıdaki dönem için saatlerinizi kaydetmek için "
+"dostça bir hatırlatmadır: <t t-out=\"ctx.get('date_start') or ''\">05/05/"
+"2021</t> <i class=\"fa fa-long-arrow-right\"/> <t t-out="
+"\"ctx.get('date_stop') or ''\"> 05/06/2021</t>.\n"
+"                        Şu an için, <t t-if=\"timesheet_hours != 0\">sadece</"
+"t> <t t-out=\"'%d' %int(timesheet_hours)\">%i nt(timesheet_hours)"
+"\">2</t><t t-if=\"timesheet_hours % 1 != 0\" t-out="
+"\"':%02d' % (round(timesheet_hours % 1 * 60))\">%02d ' % (round("
+"timesheet_hours % 1 * 60))\">:30</t> saat üzerinde <t t-out=\"'%d' "
+"%int(working_hours)\">%int(working_hours)\">8</t><t t-if="
+"\"working_hours % 1 != 0\" t-out="
+"\"':%02d' % (round(working_hours % 1 * 60))\">%02d ' % (round(working_hours "
+"% 1 * 60))\">:30</t> istedi.<br/>\n"
+"                        <div t-if=\"ctx.get('action_url')\" style="
+"\"margin: 16px 0px 16px 0px;\">\n"
+"                           <a t-att-href=\"ctx.get('action_url')\" t-attf-"
+"style=\"background-color: {{object.company_id.email_secondary_color or "
+"'#875A7B'}};; padding: 8px 16px 8px 16px; text-decoration: none; color: {{"
+"object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; "
+"font-size: 13px;\">{{object.company_id.email_primary_color or '#FFFFFF'}} "
+"border-radius: 5px; font-size: 13px;\">Çalışma çizelgelerinizi doldurun</a>\n"
+"                        </div>\n"
+"                       <br/>Teşekkür ederim,<br/>\n"
+"                        <t t-if=\"user.signature\" data-o-mail-quote-"
+"container=\"1\">\n"
+"                           <div data-o-mail-quote=\"1\">--<br data-o-mail-"
+"quote=\"1\"/><t t-out=\"user.signature or ''\" data-o-mail-quote=\"1\""
+">Mitchell Admin</t></div>\n"
+"                       </t>\n"
+"                    </div>\n"
+"               </td></tr>\n"
+"               <tr><td style=\"text-align:center;\">\n"
+"                   <hr width=\"100%\" style=\"background-"
+"color:rgb(204,204,204);border:medium none;clear:both;display:block;font-"
+"size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                </td></tr>\n"
+"            </table>\n"
+"       </td>\n"
+"    </tr>\n"
+"   <!-- FOOTER -->\n"
+"    <tr>\n"
+"       <td align=\"center\" style=\"min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
+"\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; "
+"padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"               <tr><td valign=\"middle\" align=\"left\">\n"
+"                   <t t-out=\"object.company_id.name or ''\">YourCompany</t>"
+"\n"
+"                </td></tr>\n"
+"                <tr> <td valign=\"middle\" align=\"left\" style="
+"\"opacity: 0.7;\">\n"
+"                    <t t-out=\"object.company_id.phone or ''\"> +1 "
+"650-123-4567</t>\n"
+"                    <t t-if=\"object.company_id.email\">\n"
+"                        | <a t-attf-href="
+"\"'mailto:%s' % {{ object.company_id.email }}\" style=\"text-decoration:none;"
+" color: #454748;\" t-out=\"object.company_id.email or ''"
+"\">% {{ object.company_id.email }}\" style=\"text-decoration:none; color: "
+"#454748;\" t-out=\"object.company_id.email or ''\">info@yourcompany.com</a>\n"
+"                    </t>\n"
+"                   <t t-if=\"object.company_id.website\">\n"
+"                        | <a t-attf-href="
+"\"'%s' % {{ object.company_id.website }}\" style=\"text-decoration:none; "
+"color: #454748;\" t-out=\"object.company_id.website or ''"
+"\">% {{ object.company_id.website }}\" style=\"text-decoration:none; color: "
+"#454748;\" t-out=\"object.company_id.website or ''\""
+">http://www.example.com</a>\n"
+"                    </t>\n"
+"               </td></tr>\n"
+"           </table>\n"
+"        </td>\n"
+"   </tr>\n"
+"</tbody>\n"
+"</table>\n"
+"</td></tr>\n"
+"<!-- POWERED BY -->\n"
+"<tr><td align=\"center\" style=\"min-width: 590px;\">\n"
+"   <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" "
+"style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding:"
+" 8px; border-collapse:separate;\">\n"
+"      <tr><td style=\"text-align: center; font-size: 13px;\">\n"
+"        Tarafından desteklenmektedir <a target=\"_blank\" href="
+"\"https://www.odoo.com?utm_source=db&amp;utm_medium=mail\" t-attf-style="
+"\"color: {{object.company_id.email_secondary_color or '#875A7B'}};\">Odoo</a>"
+"\n"
+"      </td></tr>\n"
+"    </table>\n"
+"</td></tr>\n"
+"</table>\n"
+"            "
 
 #. module: timesheet_grid
 #: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder
+#, fuzzy
 msgid ""
 "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
 "16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
@@ -298,12 +441,138 @@ msgid ""
 "</table>\n"
 "            "
 msgstr ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
+"16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
+"color: #454748; width: 100%; border-collapse:separate;\"><tr><td align=\""
+"center\">\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style="
+"\"padding: 16px; background-color: white; color: #454748; border-"
+"collapse:separate;\">\n"
+"<tbody>\n"
+"    <!-- HEADER -->\n"
+"   <tr>\n"
+"        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"           <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
+"\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px "
+"0px 8px; border-collapse:separate;\">\n"
+"                <tr><td valign=\"middle\">\n"
+"                    <span style=\"font-size: 10px;\">Çalışma "
+"Çizelgeleriniz</span><br/>\n"
+"                   <span style=\"font-size: 20px; font-weight: bold;"
+"\" t-out=\"object.name or ''\">Abigail Peterson</span>\n"
+"                </td><td valign=\"middle\" align=\"right\" t-if="
+"\"not object.company_id.uses_default_logo\">\n"
+"                    <img t-attf-src="
+"\"/logo.png?company={{ object.company_id.id }}\" style="
+"\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt="
+"\"object.company_id.name\"/>\n"
+"               </td></tr>\n"
+"               <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
+"               <hr width=\"100%\" style=\"background-"
+"color:rgb(204,204,204);border:medium none;clear:both;display:block;font-"
+"size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                </td></tr>\n"
+"            </table>\n"
+"       </td>\n"
+"    </tr>\n"
+"   <!-- CONTENT -->\n"
+"    <tr>\n"
+"       <td align=\"center\" style=\"min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
+"\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px "
+"0px 8px; border-collapse:separate;\">\n"
+"               <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
+"                   <div>\n"
+"                        Merhaba <t t-out=\"object.name or ''\">Abigail "
+"Peterson</t>,<br/><br/>\n"
+"                        Bu, ekibinizin aşağıdaki dönem için çalışma "
+"çizelgelerini onaylamanız için dostça bir hatırlatmadır: <t t-out="
+"\"ctx.get('date_start') or ''\">05/05/2021</t> - <t t-out="
+"\"ctx.get('date_stop') or ''\">06/05/2021</t>.<br/>\n"
+"                        <div t-if=\"ctx.get('action_url')\" style="
+"\"margin: 16px 0px 16px 0px;\">\n"
+"                           <a t-att-href=\"ctx.get('action_url')\" t-attf-"
+"style=\"background-color: {{object.company_id.email_secondary_color or "
+"'#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{"
+"object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; "
+"font-size: 13px;\">{{object.company_id.email_primary_color or '#FFFFFF'}} "
+"border-radius: 5px; font-size: 13px;\">Çalışma Çizelgelerini Doğrulayın</a>\n"
+"                        </div>\n"
+"                       <br/>Teşekkür ederim,<br/>\n"
+"                        <t t-if=\"user.signature\" data-o-mail-quote-"
+"container=\"1\">\n"
+"                           <div data-o-mail-quote=\"1\">--<br data-o-mail-"
+"quote=\"1\"/><t t-out=\"user.signature or ''\" data-o-mail-quote=\"1\""
+">Mitchell Admin</t></div>\n"
+"                       </t>\n"
+"                    </div>\n"
+"               </td></tr>\n"
+"               <tr><td style=\"text-align:center;\">\n"
+"                   <hr width=\"100%\" style=\"background-"
+"color:rgb(204,204,204);border:medium none;clear:both;display:block;font-"
+"size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                </td></tr>\n"
+"            </table>\n"
+"       </td>\n"
+"    </tr>\n"
+"   <!-- FOOTER -->\n"
+"    <tr>\n"
+"       <td align=\"center\" style=\"min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
+"\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; "
+"padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"               <tr><td valign=\"middle\" align=\"left\">\n"
+"                   <t t-out=\"object.company_id.name or ''\">YourCompany</t>"
+"\n"
+"                </td></tr>\n"
+"                <tr> <td valign=\"middle\" align=\"left\" style="
+"\"opacity: 0.7;\">\n"
+"                    <t t-out=\"object.company_id.phone or ''\"> +1 "
+"650-123-4567</t>\n"
+"                    <t t-if=\"object.company_id.email\">\n"
+"                        | <a t-attf-href="
+"\"'mailto:%s' % {{ object.company_id.email }}\" style=\"text-decoration:none;"
+" color: #454748;\" t-out=\"object.company_id.email or ''"
+"\">% {{ object.company_id.email }}\" style=\"text-decoration:none; color: "
+"#454748;\" t-out=\"object.company_id.email or ''\">info@yourcompany.com</a>\n"
+"                    </t>\n"
+"                   <t t-if=\"object.company_id.website\">\n"
+"                        | <a t-attf-href="
+"\"'%s' % {{ object.company_id.website }}\" style=\"text-decoration:none; "
+"color: #454748;\" t-out=\"object.company_id.website or ''"
+"\">% {{ object.company_id.website }}\" style=\"text-decoration:none; color: "
+"#454748;\" t-out=\"object.company_id.website or ''\""
+">http://www.example.com</a>\n"
+"                    </t>\n"
+"               </td></tr>\n"
+"           </table>\n"
+"        </td>\n"
+"   </tr>\n"
+"</tbody>\n"
+"</table>\n"
+"</td></tr>\n"
+"<!-- POWERED BY -->\n"
+"<tr><td align=\"center\" style=\"min-width: 590px;\">\n"
+"   <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" "
+"style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding:"
+" 8px; border-collapse:separate;\">\n"
+"      <tr><td style=\"text-align: center; font-size: 13px;\">\n"
+"        Tarafından desteklenmektedir <a target=\"_blank\" href="
+"\"https://www.odoo.com?utm_source=db&amp;utm_medium=mail\" t-attf-style="
+"\"color: {{object.company_id.email_secondary_color or '#875A7B'}};\">Odoo</a>"
+"\n"
+"      </td></tr>\n"
+"    </table>\n"
+"</td></tr>\n"
+"</table>\n"
+"            "
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
+#, fuzzy
 msgid "A timer is running in another company."
-msgstr ""
+msgstr "Başka bir şirkette bir zamanlayıcı çalışıyor."
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_all_timesheets
@@ -325,7 +594,7 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_account_analytic_line
 msgid "Analytic Line"
-msgstr ""
+msgstr "Analitik Satırı"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_allow
@@ -334,8 +603,9 @@ msgstr "Onaylayıcı Hatırlatma"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_interval
+#, fuzzy
 msgid "Approver Reminder Frequency"
-msgstr ""
+msgstr "Onaylayıcı Hatırlatma Sıklığı"
 
 #. module: timesheet_grid
 #: model_terms:ir.actions.act_window,help:timesheet_grid.timesheet_grid_to_validate_action
@@ -351,8 +621,10 @@ msgstr ""
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
+#, fuzzy
 msgid "Click on the cell to set the number of hours you spent on this project."
 msgstr ""
+"Bu proje için harcadığınız saat sayısını ayarlamak için hücreye tıklayın."
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_res_company
@@ -366,10 +638,13 @@ msgstr "Yapılandırma Ayarları"
 
 #. module: timesheet_grid
 #: model:mail.template,description:timesheet_grid.mail_template_timesheet_reminder
+#, fuzzy
 msgid ""
 "Configure reminders in timesheet settings to remind approvers to validate "
 "timesheets"
 msgstr ""
+"Onaylayanlara çalışma çizelgelerini doğrulamalarını hatırlatmak için çalışma "
+"çizelgesi ayarlarında hatırlatıcılar yapılandırın"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -379,8 +654,9 @@ msgstr "Harcanan Zamanı Onayla"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_hr_timesheet_stop_timer_confirmation_wizard
+#, fuzzy
 msgid "Confirm timesheet creation when stop timer"
-msgstr ""
+msgstr "Zamanlayıcıyı durdurduğunuzda Çalışma Çizelgeleri oluşturmayı onaylayın"
 
 #. module: timesheet_grid
 #: model_terms:web_tour.tour,rainbow_man_message:timesheet_grid.timesheet_tour
@@ -390,7 +666,7 @@ msgstr "Tebrikler, artık bir Çalışma Çizelgesi ustasısınız."
 #. module: timesheet_grid
 #: model:ir.model,website_form_label:timesheet_grid.model_project_task
 msgid "Create a Task"
-msgstr ""
+msgstr "Bir Görev Oluştur"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__create_uid
@@ -407,8 +683,9 @@ msgstr "Oluşturuldu"
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timer_timesheet_grid/timer_timesheet_grid_renderer.xml:0
+#, fuzzy
 msgid "Daily overtime"
-msgstr ""
+msgstr "Günlük fazla mesai"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__date
@@ -424,8 +701,9 @@ msgstr "Gün"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_delay
+#, fuzzy
 msgid "Days to Remind Approver"
-msgstr ""
+msgstr "Onaylayana Hatırlatılacak Günler"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_user_delay
@@ -467,32 +745,42 @@ msgstr "Açıklama"
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_overtime_indication/timesheet_overtime_indication.js:0
+#, fuzzy
 msgid ""
 "Difference between the allocated %(uom)s (%(allocated_hours)s) and the %"
 "(uom)s spent (%(worked_hours)s) on the project"
 msgstr ""
+"Tahsis edilen %(uom)s (%(allocated_hours)s) ile proje için harcanan %(uom)s "
+"(%(worked_hours)s) arasındaki fark"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_overtime_indication/timesheet_overtime_indication.js:0
+#, fuzzy
 msgid ""
 "Difference between the allocated %(uom)s (%(allocated_hours)s) and the %"
 "(uom)s spent (%(worked_hours)s) on the task"
 msgstr ""
+"Tahsis edilen %(uom)s (%(allocated_hours)s) ile görev için harcanan %(uom)s "
+"(%(worked_hours)s) arasındaki fark"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/employee_overtime_indication/employee_overtime_indication.xml:0
+#, fuzzy
 msgid ""
 "Difference between the number of hours recorded and the number of hours the "
 "employee was supposed to work according to his contract"
 msgstr ""
+"Kaydedilen saat sayısı ile çalışanın sözleşmesine göre çalışması gereken "
+"saat sayısı arasındaki fark"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_overtime_indication/timesheet_overtime_indication.js:0
+#, fuzzy
 msgid "Difference between the time allocated and the time recorded"
-msgstr ""
+msgstr "Tahsis edilen süre ile kaydedilen süre arasındaki fark"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -576,15 +864,19 @@ msgstr "ID"
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timesheet_grid/timesheet_grid_renderer.js:0
+#, fuzzy
 msgid ""
 "Keep track of your working hours by project every day and bill your "
 "customers for that time."
 msgstr ""
+"Her gün projeye göre çalışma saatlerinizi takip edin ve müşterilerinize bu "
+"süre için fatura kesin."
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_previous_week
+#, fuzzy
 msgid "Last Period"
-msgstr ""
+msgstr "Son Dönem"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__write_uid
@@ -627,12 +919,13 @@ msgstr "Yeni bir aktivite başlatmak için <b>zamanlayıcıyı</b> başlatın."
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timesheet_calendar_my_timesheets/timesheet_calendar_my_timesheets_side_panel.xml:0
 msgid "Legend"
-msgstr ""
+msgstr "Gösterge"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.hr_timesheet_stop_timer_confirmation_wizard_view_form
+#, fuzzy
 msgid "Log Time"
-msgstr ""
+msgstr "Günlük Süresi"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_merge_wizard_view_form
@@ -672,11 +965,16 @@ msgstr "Ay"
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/project_task.py:0
+#, fuzzy
 msgid ""
 "Moving this task to a project without timesheet support will retain "
 "timesheet drafts in the original project. Although they won't be visible "
 "here, you can still edit them using the Timesheets app."
 msgstr ""
+"Bu görevi çalışma çizelgesi desteği olmayan bir proje yönetimine taşımak, "
+"orijinal proje yönetiminin çalışma çizelgesi taslaklarını koruyacaktır. "
+"Burada görünmeyecek olsalar da Çalışma Çizelgeleri uygulamasını kullanarak "
+"bunları düzenleyebilirsiniz."
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
@@ -701,13 +999,14 @@ msgstr "Takımım"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_stop_timer_confirmation_wizard__timesheet_name
 msgid "Name"
-msgstr ""
+msgstr "Adı"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timesheet_grid/timesheet_grid_renderer.js:0
+#, fuzzy
 msgid "No timesheets found. Let's create one!"
-msgstr ""
+msgstr "Çalışma Çizelgeleri bulunamadı. Hadi bir tane oluşturalım!"
 
 #. module: timesheet_grid
 #: model_terms:ir.actions.act_window,help:timesheet_grid.timesheet_grid_to_validate_action
@@ -749,8 +1048,9 @@ msgstr ""
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
+#, fuzzy
 msgid "Open Form"
-msgstr ""
+msgstr "Açık Form"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -799,8 +1099,9 @@ msgstr "Taslağa Ayarla"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.hr_timesheet_stop_timer_confirmation_wizard_view_form
+#, fuzzy
 msgid "Resume Timer"
-msgstr ""
+msgstr "Zamanlayıcıya Devam Et"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__timesheet_rounding
@@ -854,7 +1155,7 @@ msgstr ""
 #: code:addons/timesheet_grid/static/src/components/grid_timesheet_timer_header/grid_timesheet_timer_header.xml:0
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "Shift"
-msgstr ""
+msgstr "Vardiya"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -959,26 +1260,31 @@ msgstr ""
 #. odoo-python
 #: code:addons/timesheet_grid/models/project_project.py:0
 msgid "This Progress Bar is not implemented."
-msgstr ""
+msgstr "Bu İlerleme Çubuğu uygulanmadı."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/project_task.py:0
+#, fuzzy
 msgid "This project isn't expected to have task during this period."
-msgstr ""
+msgstr "Bu proje yönetiminin bu süre zarfında görev alması beklenmemektedir."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/project_project.py:0
+#, fuzzy
 msgid ""
 "This user isn't expected to have any projects assigned during this period "
 "because they don't have any running contract."
 msgstr ""
+"Bu kullanıcıya bu dönemde herhangi bir proje atanması beklenmez çünkü devam "
+"eden bir sözleşmesi yoktur."
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
+#, fuzzy
 msgid "Time Rounding"
-msgstr ""
+msgstr "Zaman Yuvarlama"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_stop_timer_confirmation_wizard__time_spent
@@ -1010,13 +1316,15 @@ msgstr "Çalışma Çizelgesi Grid karışımı"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_project_task__timesheet_unit_amount
+#, fuzzy
 msgid "Timesheet Unit Amount"
-msgstr ""
+msgstr "Çalışma Çizelgeleri Birim Tutarı"
 
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.timesheet_reminder_ir_actions_server
+#, fuzzy
 msgid "Timesheet: Approvers Email Reminder"
-msgstr ""
+msgstr "Çalışma Çizelgeleri: Onaylayanlar E-posta Hatırlatıcısı"
 
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.timesheet_reminder_user_ir_actions_server
@@ -1038,18 +1346,24 @@ msgstr "Çalışma Çizelgeleri Analiz Raporu"
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
+#, fuzzy
 msgid ""
 "Timesheets before the %(date)s (included) have been validated, and can no "
 "longer be deleted."
 msgstr ""
+"%(date)s (dahil) adresinden önceki Çalışma Çizelgeleri onaylanmıştır ve "
+"artık silinemez."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
+#, fuzzy
 msgid ""
 "Timesheets before the %(date)s (included) have been validated, and can no "
 "longer be modified."
 msgstr ""
+"%(date)s (dahil) adresinden önceki Çalışma Çizelgeleri onaylanmıştır ve "
+"artık değiştirilemez."
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
@@ -1076,13 +1390,15 @@ msgstr "Doğrulanacak Çalışma Çizelgeleri"
 
 #. module: timesheet_grid
 #: model:mail.template,name:timesheet_grid.mail_template_timesheet_reminder
+#, fuzzy
 msgid "Timesheets: Approver Reminder"
-msgstr ""
+msgstr "Çalışma Çizelgeleri: Onaylayan Hatırlatıcısı"
 
 #. module: timesheet_grid
 #: model:mail.template,name:timesheet_grid.mail_template_timesheet_reminder_user
+#, fuzzy
 msgid "Timesheets: Employee Reminder"
-msgstr ""
+msgstr "Çalışma Çizelgeleri: Çalışan Hatırlatma"
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate
@@ -1098,6 +1414,7 @@ msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_project_task__display_name
+#, fuzzy
 msgid ""
 "Use these keywords in the title to set new tasks:\n"
 "\n"
@@ -1111,6 +1428,17 @@ msgid ""
 "        Make sure to use the right format and order e.g. Improve the "
 "configuration screen 5h #feature #v16 @Mitchell !"
 msgstr ""
+"Yeni görevler belirlemek için başlıkta bu anahtar kelimeleri kullanın:\n"
+"\n"
+"        30h Göreve 30 saat ayırın\n"
+"        #tags Görevdeki etiketleri ayarlayın\n"
+"        kullanıcı Görevi bir kullanıcıya atayın\n"
+"        ! Görevi orta öncelikli olarak ayarlayın\n"
+"        !! Görevi yüksek öncelikli olarak ayarlayın\n"
+"        !!! Görevi acil bir öncelik olarak belirleyin\n"
+"\n"
+"        Doğru formatı ve sırayı kullandığınızdan emin olun, örneğin "
+"Yapılandırma ekranını iyileştirin 5h #özellik #v16 @Mitchell !"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_res_users
@@ -1170,7 +1498,7 @@ msgstr "Doğrulanmış satırlar"
 #. odoo-python
 #: code:addons/timesheet_grid/models/project_task.py:0
 msgid "Warning"
-msgstr ""
+msgstr "Uyarı"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid
@@ -1182,8 +1510,9 @@ msgstr "Hafta"
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timer_timesheet_grid/timer_timesheet_grid_renderer.xml:0
+#, fuzzy
 msgid "Weekly overtime"
-msgstr ""
+msgstr "Haftalık fazla mesai"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line__user_can_validate
@@ -1197,7 +1526,7 @@ msgstr ""
 #: code:addons/timesheet_grid/models/hr_employee.py:0
 #: code:addons/timesheet_grid/models/res_users.py:0
 msgid "You are not allowed to see timesheets."
-msgstr ""
+msgstr "Çalışma çizelgelerini görmenize izin yok."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1223,8 +1552,9 @@ msgstr ""
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
+#, fuzzy
 msgid "You can't encode numbers with more than six digits."
-msgstr ""
+msgstr "Altıdan fazla basamaklı sayıları kodlayamazsınız."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1245,10 +1575,13 @@ msgstr ""
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
+#, fuzzy
 msgid ""
 "You cannot delete a validated entry. Please contact your manager or your "
 "timesheet approver."
 msgstr ""
+"Onaylanmış bir girişi silemezsiniz. Lütfen yöneticinize veya çalışma "
+"çizelgesi onaylayıcınıza başvurun."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1269,19 +1602,27 @@ msgstr "Zamanlayıcıyı doğrulanmış çalışma çizelgelerinde kullanamazsı
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
+#, fuzzy
 msgid ""
 "You cannot validate the selected timesheets as they either belong to "
 "employees who are not part of your team or are not in a state that can be "
 "validated. This may be due to the fact that they are dated in the future."
 msgstr ""
+"Seçilen çalışma çizelgelerini doğrulayamazsınız çünkü bunlar ya ekibinizin "
+"bir parçası olmayan çalışanlara aittir ya da doğrulanabilecek durumda "
+"değildir. Bunun nedeni gelecek tarihli olmaları olabilir."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
+#, fuzzy
 msgid ""
 "Your timesheet entry is missing a project. Please either group the Grid view "
 "by project or enter your timesheets by adding a line via the Form view."
 msgstr ""
+"Çalışma Çizelgeleri girişinizde bir proje eksik. Lütfen ya Izgara görünümünü "
+"projeye göre gruplandırın ya da Form görünümü üzerinden bir satır ekleyerek "
+"Çalışma Çizelgelerinizi girin."
 
 #. module: timesheet_grid
 #: model:ir.model.fields.selection,name:timesheet_grid.selection__res_company__timesheet_mail_employee_interval__months
@@ -1298,8 +1639,9 @@ msgstr "haftanın bitiminden sonra"
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
+#, fuzzy
 msgid "and click on"
-msgstr ""
+msgstr "ve üzerine tıklayın"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
@@ -1317,13 +1659,14 @@ msgstr "dak"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/grid_timesheet_timer_header/grid_timesheet_timer_header.xml:0
 msgid "or"
-msgstr ""
+msgstr "veya"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
+#, fuzzy
 msgid "or click on"
-msgstr ""
+msgstr "veya üzerine tıklayın"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -1336,8 +1679,9 @@ msgstr "ekle"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/grid_timesheet_timer_header/grid_timesheet_timer_header.xml:0
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
+#, fuzzy
 msgid "to launch the timer"
-msgstr ""
+msgstr "zamanlayıcıyı başlatmak için"
 
 #~ msgid "%s Spent"
 #~ msgstr "%s Harcanan"

@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-10-31 08:22+0000\n"
+"PO-Revision-Date: 2025-11-14 07:46+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "mrp_maintenance/ja/>\n"
@@ -76,12 +76,12 @@ msgstr "添付数"
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request__block_workcenter
 msgid "Block Workcenter"
-msgstr ""
+msgstr "作業区のブロック"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_request__recurring_leaves_count
 msgid "Block the workcenter for this many time slots in the future in advance."
-msgstr ""
+msgstr "作業区を、あらかじめこの数だけ先の時間枠にブロックしておきます。"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request__company_id
@@ -97,7 +97,7 @@ msgstr "最終の故障日付＋MBTF（平均故障間隔）として計算済"
 #. module: mrp_maintenance
 #: model_terms:ir.actions.act_window,help:mrp_maintenance.maintenance_workcenter_action
 msgid "Create a new work center"
-msgstr ""
+msgstr "新規作業区を作成"
 
 #. module: mrp_maintenance
 #: model:maintenance.equipment,name:mrp_maintenance.equipment_furniture1
@@ -107,7 +107,7 @@ msgstr "横引きのこ：1インチあたり8枚歯"
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__maintenance_open_count
 msgid "Current Maintenance"
-msgstr ""
+msgstr "現在の保守作業"
 
 #. module: mrp_maintenance
 #: model_terms:ir.ui.view,arch_db:mrp_maintenance.maintenance_request_view_form_inherit_mrp
@@ -122,7 +122,7 @@ msgstr "破棄"
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__display_name
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workorder__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "表示名"
 
 #. module: mrp_maintenance
 #: model:maintenance.equipment,name:mrp_maintenance.equipment_furniture3
@@ -132,7 +132,7 @@ msgstr "ボール盤"
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__effective_date
 msgid "Effective Date"
-msgstr ""
+msgstr "有効日"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request__equipment_id
@@ -171,22 +171,22 @@ msgstr "予想平均故障間隔"
 #: model_terms:ir.actions.act_window,help:mrp_maintenance.mrp_workcenter_request_action_from_workcenter
 msgid ""
 "Follow the process of the request and communicate with the collaborator."
-msgstr ""
+msgstr "依頼プロセスに従って協力者とコミュニケーションします。"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "フォロワー"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "フォロワー（パートナー）"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_mrp_workcenter__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Font awesomeのアイコン 例. fa-tasks"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request__maintenance_for

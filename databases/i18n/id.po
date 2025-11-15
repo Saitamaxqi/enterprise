@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-10 20:15+0000\n"
-"PO-Revision-Date: 2025-10-31 07:19+0000\n"
+"PO-Revision-Date: 2025-11-06 09:03+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "databases/id/>\n"
@@ -85,7 +85,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "An error occurred: %s"
-msgstr ""
+msgstr "Terjadi error: %s"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.databases_manage_users_wizard_view_form
@@ -215,6 +215,8 @@ msgid ""
 "Database synchronization is running in the background. You will be notified "
 "upon completion."
 msgstr ""
+"Sinkronisasi database berjalan di latar belakang. Anda akan dinotifikasi "
+"setelah selesai."
 
 #. module: databases
 #: model:ir.actions.act_window,name:databases.action_view_databases_all
@@ -265,7 +267,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/databases/static/src/views/databases_project_list/databases_project_list_renderer.js:0
 msgid "Draft entries in journal %(journal_name)s"
-msgstr ""
+msgstr "Entri-entri draft di jurnal %(journal_name)s"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__error_message
@@ -281,36 +283,38 @@ msgid ""
 "Error while connecting to %(url)s: We are missing the database name, the api"
 " login or the api key\n"
 msgstr ""
+"Error selagi menghubungi %(url)s: Kami kurang nama database, api login atau "
+"api key\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "Error while creating users on %(dbname)s: %(message)s\n"
-msgstr ""
+msgstr "Error selagi membuat user di %(dbname)s: %(message)s\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
 msgid "Error while getting KPIs from %(dbname)s: %(message)s\n"
-msgstr ""
+msgstr "Error selagi mengambil KPI dari %(dbname)s: %(message)s\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
 msgid "Error while getting users from %(dbname)s: %(message)s\n"
-msgstr ""
+msgstr "Error selagi mengambil user dari %(dbname)s: %(message)s\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
 msgid "Error while listing databases from %(dbname)s: %(message)s\n"
-msgstr ""
+msgstr "Error selagi listing database dari %(dbname)s: %(message)s\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "Error while removing users from %(dbname)s: %(message)s\n"
-msgstr ""
+msgstr "Error selagi menghapus user dari %(dbname)s: %(message)s\n"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__everywhere_user_ids
@@ -387,7 +391,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "Invitation is done"
-msgstr ""
+msgstr "Undangan selesai"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.databases_manage_users_wizard_view_form
@@ -536,7 +540,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/databases/static/src/views/databases_project_list/databases_project_list_renderer.js:0
 msgid "Planned activities of type %(return_name)s"
-msgstr ""
+msgstr "Kegiatan-kegiatan terencana dari tipe %(return_name)s"
 
 #. module: databases
 #: model:ir.model,name:databases.model_project_project
@@ -611,12 +615,13 @@ msgid ""
 "Select the users you want to invite to the %(nb_databases)s selected "
 "databases."
 msgstr ""
+"Pilih user-user yang Anda ingin undang ke database terpilih %(nb_databases)s."
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "Select the users you want to invite to the database %(database_name)s."
-msgstr ""
+msgstr "Pilih user-user yang Anda ingin undang ke database %(database_name)s."
 
 #. module: databases
 #. odoo-python
@@ -625,13 +630,15 @@ msgid ""
 "Select the users you want to remove from the %(nb_databases)s selected "
 "databases."
 msgstr ""
+"Pilih user-user yang Anda ingin hapus dari database terpilih "
+"%(nb_databases)s."
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid ""
 "Select the users you want to remove from the database %(database_name)s."
-msgstr ""
+msgstr "Pilih user-user yang Anda ingin hapus dari database %(database_name)s."
 
 #. module: databases
 #: model:ir.actions.act_window,name:databases.action_databases_configuration
@@ -659,14 +666,14 @@ msgstr ""
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
 msgid "Synchronization done successfully!"
-msgstr ""
+msgstr "Sinkronisasi sukses dilakukan!"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/models/project_project.py:0
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
 msgid "Synchronization of %d databases"
-msgstr ""
+msgstr "Sinkronisasi database %d"
 
 #. module: databases
 #: model:ir.actions.server,name:databases.action_synchronize_database
@@ -698,7 +705,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/databases/static/src/views/databases_project_list/databases_project_list_renderer.js:0
 msgid "Tax return %(return_name)s"
-msgstr ""
+msgstr "SPP %(return_name)s"
 
 #. module: databases
 #. odoo-python
@@ -707,18 +714,22 @@ msgid ""
 "The database %(url)s is registered as a saas database in odoo.com. As it "
 "seems to be configured we have left it as is.\n"
 msgstr ""
+"Database %(url)s didaftarkan sebagai database saas di odoo.com Karena "
+"sepertinya sudah dikonfigurasi kami membiarkannya.\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "These users were successfully invited to %(nb_databases)s databases."
 msgstr ""
+"User-user tersebut sukses diundang ke database-database %(nb_databases)s."
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "These users were successfully removed from %(nb_databases)s databases."
 msgstr ""
+"User-user tersebut sukses dihapus dari database-database %(nb_databases)s."
 
 #. module: databases
 #: model:ir.model.constraint,message:databases.constraint_project_project_database_url_required
@@ -745,7 +756,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "User removal is done"
-msgstr ""
+msgstr "Penghapusan user selesai"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list

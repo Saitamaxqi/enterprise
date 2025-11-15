@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-14 00:34+0000\n"
+"PO-Revision-Date: 2025-11-12 06:08+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "account_asset/ko/>\n"
@@ -43,19 +43,19 @@ msgstr "# 발행된 감가상각 항목"
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "%(asset)s: Disposal"
-msgstr ""
+msgstr "%(asset)s: 처분"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "%(asset)s: Sale"
-msgstr ""
+msgstr "%(asset)s: 판매"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_assets_report.py:0
 msgid "%(months)s m"
-msgstr ""
+msgstr "%(months)s월"
 
 #. module: account_asset
 #. odoo-python
@@ -67,13 +67,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/models/account_assets_report.py:0
 msgid "%(years)s y"
-msgstr ""
+msgstr "%(years)s년"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (복사)"
 
 #. module: account_asset
 #. odoo-python
@@ -94,7 +94,7 @@ msgstr "%s: 감가상각"
 #. odoo-python
 #: code:addons/account_asset/models/account_assets_report.py:0
 msgid "(No %s)"
-msgstr ""
+msgstr "(%s 해당 없음)"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
@@ -237,7 +237,7 @@ msgstr "회계 보고서"
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_return
 msgid "Accounting Return"
-msgstr ""
+msgstr "회계 보고서"
 
 #. module: account_asset
 #. odoo-python
@@ -390,7 +390,7 @@ msgstr "자산 상대 계정"
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_group_form_view
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_group_list_view
 msgid "Asset Group"
-msgstr ""
+msgstr "자산 그룹"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_bank_statement_line__asset_id_display_name
@@ -692,7 +692,7 @@ msgstr ""
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__country_code
 msgid "Country Code"
-msgstr ""
+msgstr "국가 코드"
 
 #. module: account_asset
 #: model:ir.actions.server,name:account_asset.action_account_aml_to_asset
@@ -992,7 +992,7 @@ msgstr "고정자산 계정"
 #. odoo-python
 #: code:addons/account_asset/models/account_return.py:0
 msgid "Fixed Assets"
-msgstr ""
+msgstr "고정자산"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__message_follower_ids
@@ -1236,7 +1236,7 @@ msgstr "선형"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__linked_assets_ids
 msgid "Linked Assets"
-msgstr ""
+msgstr "연결된 자산"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__asset_modify__gain_or_loss__loss
@@ -1288,7 +1288,7 @@ msgstr "모델"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__asset_properties_definition
 msgid "Model Properties"
-msgstr ""
+msgstr "모델 속성"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_modify_form
@@ -1345,7 +1345,7 @@ msgstr ""
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_search
 msgid "My Activities"
-msgstr ""
+msgstr "내 활동"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__my_activity_date_deadline
@@ -1360,7 +1360,7 @@ msgstr "이름"
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_move__asset_move_type__negative_revaluation
 msgid "Negative revaluation"
-msgstr ""
+msgstr "마이너스 자산 재평가"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__net_gain_on_sale
@@ -1412,7 +1412,7 @@ msgstr "아니오"
 #. odoo-javascript
 #: code:addons/account_asset/static/src/components/depreciation_schedule/groupby.xml:0
 msgid "No Grouping"
-msgstr ""
+msgstr "그룹화 없음"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__prorata_computation_type__none
@@ -1548,7 +1548,7 @@ msgstr "상위"
 #: code:addons/account_asset/models/account_asset.py:0
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
 msgid "Parent Asset"
-msgstr ""
+msgstr "상위 자산"
 
 #. module: account_asset
 #. odoo-python
@@ -1570,7 +1570,7 @@ msgstr "기간"
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_move__asset_move_type__positive_revaluation
 msgid "Positive revaluation"
-msgstr ""
+msgstr "자산 재평가"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form

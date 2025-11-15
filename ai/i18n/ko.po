@@ -4,12 +4,13 @@
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Kwanghee Park (kwpa)" <kwpa@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-24 02:06+0000\n"
+"POT-Creation-Date: 2025-11-07 18:42+0000\n"
+"PO-Revision-Date: 2025-11-13 07:37+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/ai/ko/>\n"
 "Language: ko\n"
@@ -378,7 +379,7 @@ msgstr "AI"
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_action_prompt
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_action_prompt
 msgid "AI Action Prompt"
-msgstr ""
+msgstr "AI 작업 프롬프트"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_agent
@@ -388,7 +389,7 @@ msgstr "AI 상담원"
 #. module: ai
 #: model:ir.model,name:ai.model_ai_agent_source
 msgid "AI Agent Source"
-msgstr ""
+msgstr "AI 에이전트 출처"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_cron_process_sources_ir_actions_server
@@ -414,7 +415,7 @@ msgstr "AI 프롬프트"
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "AI Prompt Tools"
-msgstr ""
+msgstr "AI 프롬프트 도구"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_schema
@@ -426,7 +427,7 @@ msgstr "AI 스키마"
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_description
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_description
 msgid "AI Tool Description"
-msgstr ""
+msgstr "AI 도구 설명"
 
 #. module: ai
 #. odoo-javascript
@@ -572,7 +573,7 @@ msgstr "소스 추가"
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
 msgid "Add a Link"
-msgstr ""
+msgstr "링크 추가"
 
 #. module: ai
 #. odoo-javascript
@@ -875,7 +876,7 @@ msgstr "편집"
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_prompt.xml:0
 msgid "Edit Field Prompt"
-msgstr ""
+msgstr "필드 편집 프롬프트"
 
 #. module: ai
 #. odoo-javascript
@@ -1039,7 +1040,7 @@ msgstr "삽입"
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "Insert a field"
-msgstr ""
+msgstr "필드 삽입"
 
 #. module: ai
 #. odoo-javascript
@@ -1146,7 +1147,7 @@ msgstr "최근 갱신 일자"
 
 #. module: ai
 #. odoo-javascript
-#: code:addons/ai/static/src/web/systray_action.js:0
+#: code:addons/ai/static/src/ai_chat_launcher_service.js:0
 msgid "Log Note"
 msgstr "로그 기록"
 
@@ -1240,7 +1241,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
 msgid ""
-"No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, and "
+"No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, CSV, and "
 "OpenDocument files are allowed."
 msgstr ""
 
@@ -1374,7 +1375,7 @@ msgstr "저장"
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_prompt.xml:0
 msgid "Save & Generate"
-msgstr ""
+msgstr "저장 및 생성"
 
 #. module: ai
 #. odoo-javascript
@@ -1384,7 +1385,7 @@ msgstr ""
 
 #. module: ai
 #. odoo-javascript
-#: code:addons/ai/static/src/web/systray_action.js:0
+#: code:addons/ai/static/src/ai_chat_launcher_service.js:0
 msgid "Send Message"
 msgstr "메시지 보내기"
 
@@ -1409,7 +1410,7 @@ msgstr "서버 작업"
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.xml:0
 msgid "Share by email"
-msgstr ""
+msgstr "이메일로 공유하기"
 
 #. module: ai
 #. odoo-javascript
@@ -1435,7 +1436,7 @@ msgstr ""
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
 msgid ""
 "Some files have invalid formats and were skipped: %s. Only PDF, Word, "
-"PowerPoint, Excel, Text, and OpenDocument files are allowed."
+"PowerPoint, Excel, Text, CSV, and OpenDocument files are allowed."
 msgstr ""
 
 #. module: ai
@@ -1662,8 +1663,8 @@ msgstr ""
 "레코드에 팔로워를 추가하거나 제거합니다. (토론)\n"
 "- '레코드 만들기': 새로운 값으로 새 레코드를 생성합니다.\n"
 "- '코드 실행': 실행할 파이썬 코드 블록입니다.\n"
-"- '웹훅 알림 보내기': 웹훅이라고도 하는 외부 시스템으로 POST 요청을 보냅니다."
-"\n"
+"- '웹훅 알림 보내기': 웹훅이라고도 하는 외부 시스템으로 POST 요청을 보냅니"
+"다.\n"
 "- '다중 작업 실행': 여러 다른 서버 작업을 트리거하는 작업을 정의합니다.\n"
 
 #. module: ai
@@ -1694,13 +1695,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/utils/llm_api_service.py:0
 msgid "Unsupported provider '%s'"
-msgstr ""
+msgstr "지원되지 않는 업체 '%s'"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
 msgid "Upload a File"
-msgstr ""
+msgstr "파일 업로드"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__use_in_ai
@@ -1733,7 +1734,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 msgid "User error"
-msgstr ""
+msgstr "사용자 오류"
 
 #. module: ai
 #. odoo-javascript
@@ -1757,7 +1758,7 @@ msgstr "음성 스크립트"
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__mail_composer
 msgid "Write an email"
-msgstr ""
+msgstr "이메일 작성"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__html_field_record

@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-23 08:31+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-11-14 09:51+0000\n"
+"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/pos_iot/nl/"
 ">\n"
 "Language: nl\n"
@@ -119,7 +119,7 @@ msgstr "Verbinden met een kassa"
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/utils/printer/iot_printer.js:0
 msgid "Connection to IoT Box failed"
-msgstr "Verbinding met de IOT Box mislukt"
+msgstr "Verbinding met IoT Box mislukt"
 
 #. module: pos_iot
 #. odoo-javascript

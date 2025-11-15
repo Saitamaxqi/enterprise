@@ -3,13 +3,14 @@
 # * esg_project
 #
 # Oakarmin Iron <oakarminiron@gmail.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-10-28 07:57+0000\n"
-"Last-Translator: Oakarmin Iron <oakarminiron@gmail.com>\n"
+"PO-Revision-Date: 2025-11-08 20:00+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Burmese <https://translate.odoo.com/projects/odoo-19/"
 "esg_project/my/>\n"
 "Language: my\n"
@@ -106,7 +107,7 @@ msgstr ""
 #. module: esg_project
 #: model:ir.model.fields,field_description:esg_project.field_project_project__id
 msgid "ID"
-msgstr ""
+msgstr "နံပါတ်"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_4
@@ -154,7 +155,7 @@ msgstr ""
 #. module: esg_project
 #: model:ir.model,name:esg_project.model_project_project
 msgid "Project"
-msgstr ""
+msgstr "ပရောဂျက်"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_3
@@ -169,13 +170,13 @@ msgstr ""
 #. module: esg_project
 #: model:project.project,label_tasks:esg_project.esg_project_project_0
 msgid "Tasks"
-msgstr ""
+msgstr "တာဝန်များ"
 
 #. module: esg_project
 #. odoo-javascript
 #: code:addons/esg_project/static/src/components/esg_dashboard/esg_project_initiatives_box/esg_project_initiatives_box.xml:0
 msgid "Total"
-msgstr ""
+msgstr "စုစုပေါင်း"
 
 #. module: esg_project
 #. odoo-python

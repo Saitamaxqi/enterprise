@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-31 07:19+0000\n"
+"PO-Revision-Date: 2025-11-06 07:13+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "account_sepa_direct_debit/id/>\n"
@@ -434,19 +434,20 @@ msgid ""
 "A SEPA direct debit version should be selected to generate the addresses in "
 "the export file."
 msgstr ""
+"Versi SEPA direct debit harus dipilih untuk membuat alamat di file ekspor."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_payment.py:0
 msgid ""
 "A SEPA direct debit version should be selected to generate the export file."
-msgstr ""
+msgstr "Versi SEPA direct debit harus dipilh untuk membuat file ekspor."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "A customer account is required to validate a SEPA Direct Debit mandate."
-msgstr ""
+msgstr "Akun pelanggan diperlukan untuk memvalidasi mandat SEPA Direct Debit."
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.actions.act_window,help:account_sepa_direct_debit.account_sepa_direct_debit_mandate_tree_act
@@ -608,7 +609,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/wizard/sdd_mandate_send.py:0
 msgid "Check Partner(s) Email(s)"
-msgstr ""
+msgstr "Periksa Email Partner"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
@@ -893,25 +894,25 @@ msgstr "Referensi gratis mengidentifikasikan debtor dalam perusahaan Anda."
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Go to journal"
-msgstr ""
+msgstr "Kunjungi jurnal"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Go to mandates"
-msgstr ""
+msgstr "Pergi ke mandat"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Go to payments"
-msgstr ""
+msgstr "Pergi ke pembayaran"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Go to settings"
-msgstr ""
+msgstr "Pergi ke pengaturan"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_payment_register_form_inherit_account_sepa_direct_debit
@@ -1217,12 +1218,14 @@ msgid ""
 "select a journal associated to one or add an IBAN bank account to the "
 "current journal"
 msgstr ""
+"Hanya nomor akun IBAN dapat menerima pembayaran SEPA Direct Debit. Silakan "
+"pilih jurnal terkait satu atau tambahkan akun bank IBAN ke jurnal saat ini"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "Only mandates in draft state can be deleted."
-msgstr ""
+msgstr "Hanya mandat-mandat dalam status draft dapat dihapus."
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_payment_register_form_inherit_account_sepa_direct_debit
@@ -1238,13 +1241,13 @@ msgstr "Oops! Tidak ada mandat SEPA yang valid untuk pelanggan ini."
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "Open customer"
-msgstr ""
+msgstr "Buka pelanggan"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "Open customers"
-msgstr ""
+msgstr "Buka pelanggan-pelanggan"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sdd_res_partner_view
@@ -1291,13 +1294,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/wizard/sdd_mandate_send.py:0
 msgid "Partner should have an email address."
-msgstr ""
+msgstr "Partner harus memiliki alamat email."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "Partner's Parent"
-msgstr ""
+msgstr "Induk Partner"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model,name:account_sepa_direct_debit.model_account_payment_register
@@ -1335,7 +1338,7 @@ msgstr "Pembayaran untuk Dikumpulkan"
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Payments without mandate"
-msgstr ""
+msgstr "Pembayaran tanpa mandat"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_report_invoice_document
@@ -1357,7 +1360,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Problematic mandates"
-msgstr ""
+msgstr "Mandat-mandat bermasalah"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__rating_ids
@@ -1527,7 +1530,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "SEPA direct debit stateless customer"
-msgstr ""
+msgstr "SEPA direct debit stateless customer"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1537,6 +1540,9 @@ msgid ""
 "days to allow enough time for the customer to check that their account is "
 "adequately funded."
 msgstr ""
+"Regulasi SEPA menetapkan periode pra-notifikasi minimal ke minimal %s hari "
+"untuk memungkinkan waktu yang mencukupi agar pelanggan dapat memeriksa bahwa "
+"akun mereka memiliki dana mencukupi."
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -1570,13 +1576,13 @@ msgstr "Mandat SDD"
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_payment.py:0
 msgid "Select a SEPA Direct Debit version before generating the XML."
-msgstr ""
+msgstr "Pilih versi SEPA Direct Debit sebelum membuat XML."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "Send"
-msgstr ""
+msgstr "Kirim"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
@@ -1608,13 +1614,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Some payments are linked to an inactive mandate."
-msgstr ""
+msgstr "Beberapa pembayaran terhubung ke mandat yang tidak aktif."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Some payments are not linked to any mandate."
-msgstr ""
+msgstr "Beberapa pembayaran tidak terhubung ke mandat apa pun."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__start_date
@@ -1677,6 +1683,10 @@ msgid ""
 "the mandate is already known by them.\n"
 "The minimum collection date must be %(date)s."
 msgstr ""
+"Bank harus diinformasikan setidaknya %(min_days_new)s hari terlebih dahulu "
+"untuk pengumpulan terkait mandat baru dan %(min_days)s hari terlebih dahulu "
+"saat mandat sudah diketahui bank.\n"
+"Tanggal pengumpulan minimal harus %(date)s."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1688,7 +1698,7 @@ msgstr "Pengidentifikasi creditor melebihi panjang maksimal yaitu 35 karakter."
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "The customer must have a country"
-msgstr ""
+msgstr "Pelanggan harus memiliki negara"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1697,6 +1707,7 @@ msgid ""
 "The debtor and creditor city name is a compulsary information when "
 "generating the SDD XML."
 msgstr ""
+"Nama kota debtor dan creditor adalah informasi wajib saat membuat SDD XML."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1704,7 +1715,7 @@ msgstr ""
 msgid ""
 "The debtor and creditor country is a compulsary information when generating "
 "the SDD XML."
-msgstr ""
+msgstr "Negara debtor dan creditor adalah informasi wajib saat membuat SDD XML."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1844,7 +1855,7 @@ msgstr "Jenis dari aktivitas pengecualian pada rekaman data."
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "Under B2B SDD Scheme, the customer must be a company."
-msgstr ""
+msgstr "Di bawah Skema B2B SDD, pelanggan harus memiliki perusahaan."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields.selection,name:account_sepa_direct_debit.selection__account_journal__debit_sepa_pain_version__pain_008_001_08
@@ -1865,7 +1876,7 @@ msgstr "Masa Berlaku"
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/wizard/sdd_mandate_send.py:0
 msgid "View Partner(s)"
-msgstr ""
+msgstr "Lihat Partner"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_send__warnings
@@ -1889,6 +1900,8 @@ msgid ""
 "You can't pay any of the selected invoices using the SEPA Direct Debit "
 "method, as no valid mandate is available"
 msgstr ""
+"Anda tidak dapat membayar faktur terpilih apa pun menggunakan metode SEPA "
+"Direct Debit, karena tidak ada mandat valid yang tersedia"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1909,6 +1922,10 @@ msgid ""
 "(prenot_days)s days.\n"
 "The minimum required date should be %(minimum_date)s."
 msgstr ""
+"Anda tidak dapat membuat file Direct Debit SEPA dengan tanggal pengumpulan "
+"yang diperlukan yang sebelum tanggal pengiriman + periode pra-notifikasi "
+"minimal %(prenot_days)s hari.\n"
+"Tanggal minimal yang diperlukan harus %(minimum_date)s."
 
 #. module: account_sepa_direct_debit
 #. odoo-python

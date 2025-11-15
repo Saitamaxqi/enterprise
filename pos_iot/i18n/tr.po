@@ -16,13 +16,15 @@
 # Umur Akın <umura@projetgrup.com>, 2022
 # Halil, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# DeepL <noreply-mt-deepl@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-15 21:09+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-11-12 14:57+0000\n"
+"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/pos_iot/"
 "tr/>\n"
 "Language: tr\n"
@@ -35,7 +37,7 @@ msgstr ""
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Accept payments with a Six payment terminal"
-msgstr ""
+msgstr "Six ödeme terminali ile ödemeleri kabul edin"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
@@ -57,13 +59,15 @@ msgstr "Şunlara erişin"
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__pos_config_ids
 #: model:ir.model.fields,field_description:pos_iot.field_iot_box__associated_pos_config_ids
 #: model:ir.model.fields,field_description:pos_iot.field_iot_device__associated_pos_config_ids
+#, fuzzy
 msgid "Associated PoS"
-msgstr ""
+msgstr "İlişkili PoS"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
+#, fuzzy
 msgid "Automated Setup"
-msgstr ""
+msgstr "Otomatik Kurulum"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
@@ -116,14 +120,16 @@ msgstr "Ödeme terminalinin yapılandırması başarısız oldu"
 
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_auto_config_pos_iot
+#, fuzzy
 msgid "Configure Automatically IoT Box In PoS"
-msgstr ""
+msgstr "Satış Noktasında IoT Kutusunu Otomatik Olarak Yapılandırma"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/backend/add_iot_box_form_controller.js:0
+#, fuzzy
 msgid "Connect to a Point of Sale"
-msgstr ""
+msgstr "Bir Satış Noktasına Bağlanın"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -140,17 +146,17 @@ msgstr "Terminal bağlantısı başarısız oldu"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Continue"
-msgstr ""
+msgstr "Devam edin"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Tarafından oluşturuldu"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Oluşturuldu"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
@@ -161,7 +167,7 @@ msgstr "Müşteri Ekranı"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Discard"
-msgstr ""
+msgstr "Sil"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__display_name
@@ -173,7 +179,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_iot.field_pos_session__display_name
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "İsim Göster"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iface_electronic_scale
@@ -214,12 +220,12 @@ msgstr "Yalnızca Firefox: Güvenlik İstisnasını Onayla’ya tıklayın"
 #: model:ir.model.fields,field_description:pos_iot.field_pos_session__id
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_iot_device
 msgid "IOT Device"
-msgstr ""
+msgstr "IOT Cihazı"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_printer__device_identifier
@@ -272,13 +278,14 @@ msgstr "Ingenico Ödeme Terminali"
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_iot_box
 msgid "IoT Box"
-msgstr ""
+msgstr "IoT Kutusu"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/components/navbar/navbar.xml:0
+#, fuzzy
 msgid "IoT Box Connected"
-msgstr ""
+msgstr "IoT Kutusu Bağlandı"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -299,13 +306,15 @@ msgstr "IoT Cihazları"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__iot_box_id
+#, fuzzy
 msgid "Iot Box"
-msgstr ""
+msgstr "Iot Kutusu"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__iot_box_identifier
+#, fuzzy
 msgid "Iot Box Identifier"
-msgstr ""
+msgstr "Iot Kutusu Tanımlayıcı"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iot_device_ids
@@ -315,23 +324,23 @@ msgstr "IoT Cihazı"
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Son Güncelleyen"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Son Güncelleme"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog.xml:0
 msgid "Network Error"
-msgstr ""
+msgstr "Ağ Sorunu"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "None"
-msgstr ""
+msgstr "Hiçbiri"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__payment_terminal_device_ids
@@ -342,7 +351,7 @@ msgstr "Ödeme Terminali Cihazı"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Payment method"
-msgstr ""
+msgstr "Ödeme Yöntemi"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -391,13 +400,14 @@ msgstr "Proxy ile Yazdır"
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/utils/printer/iot_printer.js:0
 msgid "Printing failed"
-msgstr ""
+msgstr "Yazdırma başarısız oldu"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/utils/printer/iot_printer.js:0
+#, fuzzy
 msgid "Printing warning"
-msgstr ""
+msgstr "Baskı uyarısı"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_printer__proxy_ip
@@ -408,7 +418,7 @@ msgstr "Proxy IP Adresi"
 #. odoo-python
 #: code:addons/pos_iot/models/pos_printer.py:0
 msgid "Proxy IP cannot be empty."
-msgstr ""
+msgstr "Proxy IP boş olamaz"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
@@ -424,17 +434,17 @@ msgstr "Proxy üzerinden tara"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 msgid "Scanner"
-msgstr ""
+msgstr "Tarayıcı"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Six"
-msgstr ""
+msgstr "Six"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__module_pos_iot_six
 msgid "Six Payment Terminal"
-msgstr ""
+msgstr "Six Ödeme Terminali"
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_pos_printer__proxy_ip
@@ -444,6 +454,7 @@ msgstr "Yazıcının donanım proxy'sinin IP Adresi veya ana bilgisayar adı"
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/utils/printer/iot_printer.js:0
+#, fuzzy
 msgid ""
 "The IoT Box is connected, but the receipt printer isn't. In order to "
 "continue, ensure your printer is connected:\n"
@@ -452,30 +463,45 @@ msgid ""
 "printer\n"
 "2/ for network printers, ensure the printer is connected to the internet."
 msgstr ""
+"IoT Kutusu bağlı, ancak makbuz yazıcısı bağlı değil. Devam etmek için "
+"yazıcınızın bağlı olduğundan emin olun:\n"
+"\n"
+"1/ USB yazıcılar için, IoT Kutusu ile makbuz yazıcısı arasındaki kabloyu "
+"kontrol edin\n"
+"2/ ağ yazıcıları için, yazıcının internete bağlı olduğundan emin olun."
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__module_pos_iot_ingenico
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
+#, fuzzy
 msgid ""
 "The transactions are processed by Ingenico via an IoT box. Setup your "
 "terminal on the related payment method."
 msgstr ""
+"İşlemler Ingenico tarafından bir IoT kutusu aracılığıyla işlenir. "
+"Terminalinizi ilgili ödeme yöntemine göre ayarlayın."
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__module_pos_iot_six
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
+#, fuzzy
 msgid ""
 "The transactions are processed by Six via an IoT box. Setup your terminal on "
 "the related payment method."
 msgstr ""
+"İşlemler Six tarafından bir IoT kutusu aracılığıyla gerçekleştirilir. "
+"Terminalinizi ilgili ödeme yöntemine göre ayarlayın."
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__module_pos_iot_worldline
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
+#, fuzzy
 msgid ""
 "The transactions are processed by Worldline via an IoT box. Setup your "
 "terminal on the related payment method."
 msgstr ""
+"İşlemler Worldline tarafından bir IoT kutusu aracılığıyla işlenir. "
+"Terminalinizi ilgili ödeme yöntemi üzerine kurun."
 
 #. module: pos_iot
 #. odoo-javascript
@@ -486,7 +512,7 @@ msgstr "İşlem devam ediyor"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Worldline (BENELUX)"
-msgstr ""
+msgstr "Worldline (BENELUX)"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__module_pos_iot_worldline
@@ -502,6 +528,7 @@ msgstr "POS yapılandırmanızda bir ödeme terminali seçmeniz gerekir."
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/utils/printer/iot_printer.js:0
+#, fuzzy
 msgid ""
 "Your IoT box is registered, but your browser could not reach it.\n"
 "Ensure it is powered on and connected to the network.\n"
@@ -509,12 +536,17 @@ msgid ""
 "If you have just paired the IoT box, you may be experiencing a DNS issue.\n"
 "If you wait for some time the problem may resolve itself."
 msgstr ""
+"IoT kutunuz kaydedildi, ancak tarayıcınız ona ulaşamadı.\n"
+"Gücünün açık ve ağa bağlı olduğundan emin olun.\n"
+"\n"
+"IoT kutusunu yeni eşleştirdiyseniz, bir DNS sorunu yaşıyor olabilirsiniz.\n"
+"Bir süre beklerseniz sorun kendiliğinden çözülebilir."
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "none"
-msgstr ""
+msgstr "hiçbiri"
 
 #~ msgid "Action identifier:"
 #~ msgstr "Eylem tanımlayıcısı:"

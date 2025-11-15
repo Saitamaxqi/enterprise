@@ -24,13 +24,15 @@
 # Ediz Duman <neps1192@gmail.com>, 2022
 # Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# DeepL <noreply-mt-deepl@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-15 21:10+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-12 14:59+0000\n"
+"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll/tr/>\n"
 "Language: tr\n"
@@ -55,6 +57,16 @@ msgid ""
 "planning. (requires Planning app)\n"
 "    "
 msgstr ""
+"\n"
+"        Puantaj Kayıtları oluşturma kaynağını tanımlar\n"
+"\n"
+"        Çalışma Programı: Puantaj Kayıtları aşağıdaki çalışma saatlerinden "
+"oluşturulacaktır.\n"
+"        Katılımlar: Puantaj Kayıtları, çalışanın katılımlarından "
+"oluşturulacaktır. (Katılım uygulaması gerektirir)\n"
+"        Planlama: Puantaj Kayıtları çalışanın planlamasından "
+"oluşturulacaktır. (Planlama uygulaması gerektirir)\n"
+"    "
 
 #. module: hr_payroll
 #. odoo-python
@@ -72,42 +84,48 @@ msgstr "# Ücret Bordroları"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
+#, fuzzy
 msgid "%(display_name)s %(duration_type)s"
-msgstr ""
+msgstr "%(display_name)s %(duration_type)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payslip_correction_wizard.py:0
+#, fuzzy
 msgid "%(employee)s Correction %(date)s"
-msgstr ""
+msgstr "%(employee)s Düzeltme %(date)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payslip_correction_wizard.py:0
+#, fuzzy
 msgid "%(employee)s Correction %(date_start)s - %(date_end)s"
-msgstr ""
+msgstr "%(employee)s Düzeltme %(date_start)s - %(date_end)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payslip_correction_wizard.py:0
+#, fuzzy
 msgid "%(employee)s Revert %(date)s"
-msgstr ""
+msgstr "%(employee)s Geri Dön %(date)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payslip_correction_wizard.py:0
+#, fuzzy
 msgid "%(employee)s Revert %(date_start)s - %(date_end)s"
-msgstr ""
+msgstr "%(employee)s Geri dön %(date_start)s - %(date_end)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_declaration_mixin.py:0
 msgid "%(employee_name)s-declaration-%(year)s"
-msgstr ""
+msgstr "%(employee_name)s-beyan-%(year)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_rule.py:0
+#, fuzzy
 msgid ""
 "%(error_type)s\n"
 "- Employee: %(employee)s\n"
@@ -116,30 +134,38 @@ msgid ""
 "- Salary rule: %(name)s (%(code)s)\n"
 "- Error: %(error_message)s"
 msgstr ""
+"%(error_type)s\n"
+"- Çalışan: %(employee)s\n"
+"- Versiyon: %(version)s\n"
+"- Maaş bordrosu: %(payslip)s\n"
+"- Maaş kuralı: %(name)s (%(code)s)\n"
+"- Hata: %(error_message)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
+#, fuzzy
 msgid "%(months)s months"
-msgstr ""
+msgstr "%(months)s aylar"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_headcount.py:0
 msgid "%(rate)s Hours/week"
-msgstr ""
+msgstr "%(rate)s Saat/hafta"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "%(start_date_string)s and %(end_date_string)s"
-msgstr ""
+msgstr "%(start_date_string)s ve %(end_date_string)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
+#, fuzzy
 msgid "%(years)s years"
-msgstr ""
+msgstr "%(years)s yıllar"
 
 #. module: hr_payroll
 #. odoo-python
@@ -147,7 +173,7 @@ msgstr ""
 #: code:addons/hr_payroll/models/hr_salary_rule.py:0
 #: code:addons/hr_payroll/models/hr_salary_rule_category.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (kopya)"
 
 #. module: hr_payroll
 #: model:ir.actions.report,print_report_name:hr_payroll.action_report_light_payslip
@@ -163,6 +189,7 @@ msgstr "(%s Maaş bordroları)"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip__state
+#, fuzzy
 msgid ""
 "* When the payslip is created the status is 'Draft'\n"
 "                \n"
@@ -170,16 +197,22 @@ msgid ""
 "                \n"
 "* When the user cancels a payslip, the status is 'Canceled'."
 msgstr ""
+"* Maaş bordrosu oluşturulduğunda durum 'Taslak' olur\n"
+"                \n"
+"Maaş bordrosu onaylanırsa durum 'Bitti' olarak ayarlanır.\n"
+"                \n"
+"* Kullanıcı bir maaş bordrosunu iptal ettiğinde, durum 'İptal Edildi' olur."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.contribution_register
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #. module: hr_payroll
 #: model:hr.payroll.structure,name:hr_payroll.structure_003
+#, fuzzy
 msgid "13th month - End of the year bonus"
-msgstr ""
+msgstr "13. ay - Yıl sonu ikramiyesi"
 
 #. module: hr_payroll
 #: model:hr.salary.rule,name:hr_payroll.hr_salary_rule_13th_month_salary
@@ -195,7 +228,7 @@ msgstr "%s yılının 1. yarıyılı"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.contribution_register
 msgid "2023 Payroll"
-msgstr ""
+msgstr "2023 Bordro"
 
 #. module: hr_payroll
 #. odoo-python
@@ -206,90 +239,115 @@ msgstr "%s yılının 2. yarıyılı"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_index_wizard.py:0
+#, fuzzy
 msgid "<b>The following employee records will be modified:</b><br>"
-msgstr ""
+msgstr "<B>Aşağıdaki çalışan kayıtları değiştirilecektir:</B>"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_index_wizard.py:0
+#, fuzzy
 msgid "<br><b>Modified on Versions:</b><br>"
-msgstr ""
+msgstr "<br><b>Sürümlerde Değişiklik Yapıldı:</b><br>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid ""
 "<code>categories</code>: dict containing the computed salary rule categories "
 "(sum of amount of all rules belonging to that category)."
 msgstr ""
+"<code>kategoriler</code>: hesaplanan maaş kuralı kategorilerini içeren dict ("
+"o kategoriye ait tüm kuralların tutarının toplamı)."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "<code>employee</code>: hr.employee object"
-msgstr ""
+msgstr "<code>çalışan</code>: hr.employee nesnesi"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "<code>inputs</code>: dict containing the computed inputs."
-msgstr ""
+msgstr "<code>inputs</code>: hesaplanan girdileri içeren dict."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "<code>payslip</code>: hr.payslip object"
-msgstr ""
+msgstr "<code>payslip</code>: hr.payslip nesnesi"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid ""
 "<code>result</code>: boolean True if the rule should be calculated, False "
 "otherwise"
 msgstr ""
+"<code>result</code>: boolean Kural hesaplanmalıysa True, aksi halde False"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "<code>result</code>: float, base amount of the rule"
-msgstr ""
+msgstr "<code>result</code>: float, kuralın temel tutarı"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid ""
 "<code>result_name</code>: string, name of the line, which defaults to the "
 "name field of the salary rule (useful if the name depends or should depend "
 "on something computed in the rule)."
 msgstr ""
+"<code>result_name</code>: dize, maaş kuralının ad alanına varsayılan olarak "
+"gelen satır adı (ad, kuralda hesaplanan bir şeye bağlıysa veya bağlı olması "
+"gerekiyorsa kullanışlıdır)."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "<code>result_qty</code>: float, quantity, which defaults to 1."
-msgstr ""
+msgstr "<code>result_qty</code>: float, varsayılan olarak 1 olan miktar."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid ""
 "<code>result_rate</code>: float, rate between -100.0 and 100.0, which "
 "defaults to 100.0 (%)."
 msgstr ""
+"<code>result_rate</code>: float, -100.0 ile 100.0 arasında, varsayılan "
+"olarak 100.0 olan oran (%)."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid ""
 "<code>result_rules</code>: dict containing the rules amounts, quantities, "
 "rates and totals (previously computed)"
 msgstr ""
+"<code>result_rules</code>: kural tutarlarını, miktarlarını, oranlarını ve "
+"toplamlarını (önceden hesaplanmış) içeren dict"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "<code>total = result * result_rate / 100 * result_qty</code>"
-msgstr ""
+msgstr "<code>toplam = result * result_rate / 100 * result_qty</code>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "<code>version</code>: hr.version object"
-msgstr ""
+msgstr "<code>version</code>: hr.version nesnesi"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "<code>worked_days</code>: dict containing the computed worked days"
-msgstr ""
+msgstr "<code>worked_days</code>: hesaplanan çalışılan günleri içeren dict"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_form
@@ -297,23 +355,30 @@ msgid ""
 "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
 "title=\"Arrow\"/>"
 msgstr ""
+"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
+"title=\"Arrow\"/>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid "<span class=\"h1-fs\"><strong>Hello there,</strong></span>"
-msgstr ""
+msgstr "<span class=\"h1-fs\"><strong>Merhaba,</strong></span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 msgid "<span class=\"mx-2\">/</span>"
-msgstr ""
+msgstr "<span class=\"mx-2\">/</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid ""
 "<span class=\"o_small-fs\">This dashboard is the headquarter of the Payroll "
 "app, from here, you'll have a quick overview on everything.</span>"
 msgstr ""
+"<span class=\"o_small-fs\">Bu gösterge paneli Bordro uygulamasının "
+"merkezidir, buradan her şey hakkında hızlı bir genel bakışa sahip "
+"olacaksınız.</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -330,42 +395,50 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_declaration_mixin_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_work_entry_export_mixin_form_view
 msgid "<span class=\"o_stat_text\">Eligible Employees</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Hak Sahibi Çalışanlar</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_form
 msgid "<span class=\"o_stat_text\">Employees</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Çalışanlar</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
+#, fuzzy
 msgid ""
 "<span class=\"o_stat_text\">Payslips</span>\n"
 "                            <span class=\"o_stat_value\">New</span>"
 msgstr ""
+"<span class=\"o_stat_text\">Maaş Bordroları</span>\n"
+"                            <span class=\"o_stat_value\">Yeni</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_rule_parameter_view_form
+#, fuzzy
 msgid "<span class=\"o_stat_text\">Salary Rules</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Maaş Kuralları</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "<span invisible=\"input_unit != 'percentage'\">%</span>"
-msgstr ""
+msgstr "<span invisible=\"input_unit != 'percentage'\">%</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
+#, fuzzy
 msgid "<span invisible=\"is_quantity\">paid</span>"
-msgstr ""
+msgstr "<span invisible=\"is_quantity\">ödenmiş</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
+#, fuzzy
 msgid "<span invisible=\"not is_refund\" class=\"me-1\">-</span>"
-msgstr ""
+msgstr "<span invisible=\"not is_refund\" class=\"me-1\">-</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_template_view_form
+#, fuzzy
 msgid ""
 "<span invisible=\"schedule_pay != 'annually'\">/ year</span>\n"
 "                <span invisible=\"schedule_pay != 'semi-annually'\">/ half-"
@@ -381,11 +454,25 @@ msgid ""
 "                <span invisible=\"schedule_pay != 'weekly'\">/ week</span>\n"
 "                <span invisible=\"schedule_pay != 'daily'\">/ day</span>"
 msgstr ""
+"<span invisible=\"schedule_pay != 'annually'\">/ yıl</span>\n"
+"                <span invisible=\"schedule_pay != 'semi-annually'\">/ yarı "
+"yıl</span>\n"
+"                <span invisible=\"schedule_pay != 'quarterly'\">/ "
+"çeyrek</span>\n"
+"                <span invisible=\"schedule_pay != 'bi-monthly'\">/ iki "
+"ay</span>\n"
+"                <span invisible=\"schedule_pay != 'semi-monthly'\">/ yarım "
+"ay</span>\n"
+"                <span invisible=\"schedule_pay != 'bi-weekly'\">/ iki "
+"hafta</span>\n"
+"                <span invisible=\"schedule_pay != 'weekly'\">/ hafta</span>\n"
+"                <span invisible=\"schedule_pay != 'daily'\">/ gün</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "<span> Available variables: </span>"
-msgstr ""
+msgstr "<span> Mevcut değişkenler: </span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_template_view_form
@@ -410,113 +497,121 @@ msgstr ""
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "<span>Output:</span>"
-msgstr ""
+msgstr "<span>Çıktı:</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<span>Total</span>"
-msgstr ""
+msgstr "<span>Toplam</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
+#, fuzzy
 msgid "<span>Warn me </span>"
-msgstr ""
+msgstr "<span>Uyar beni. </span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
+#, fuzzy
 msgid "<span>days before end of contract.</span>"
-msgstr ""
+msgstr "<span>sözleşme bitiminden günler önce.</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
+#, fuzzy
 msgid "<span>days before expiration of the Work Permit.</span>"
-msgstr ""
+msgstr "<span>Çalışma İzninin sona ermesinden önceki günler.</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
+#, fuzzy
 msgid "<span>employer cost</span>"
-msgstr ""
+msgstr "<span>işveren maliyeti</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
+#, fuzzy
 msgid "<span>gross</span>"
-msgstr ""
+msgstr "<span>brüt</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
+#, fuzzy
 msgid "<span>net</span>"
-msgstr ""
+msgstr "<span>net</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Address:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Adres:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Children:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Alt Grup:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Computed On:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Hesaplanma Tarihi:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Contract Start Date:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Sözleşme Başlangıç Tarihi:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Contract Type:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Sözleşme Türü:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Department:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Departman:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Email:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">E-posta:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">ID:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Kimlik:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Job Position:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">İş Pozisyonu:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Marital Status:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Medeni Hali:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Name:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">İsim:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Pay Period:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Ödeme Dönemi:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Working Schedule:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Çalışma Programı:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid "<strong><span class=\"h3-fs\">Diving in</span></strong>"
-msgstr ""
+msgstr "<strong><span class=\"h3-fs\">Dalış</span></strong>"
 
 #. module: hr_payroll
 #: model_terms:web_tour.tour,rainbow_man_message:hr_payroll.payroll_tours
@@ -524,11 +619,14 @@ msgid ""
 "<strong>Congrats, Your first payslip is now finished. It's time for you to "
 "explore the Payroll app by yourself.</strong>"
 msgstr ""
+"<strong>Tebrikler, ilk maaş bordronuz hazır. Artık Bordro uygulamasını "
+"kendiniz keşfetme zamanı geldi.</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid "<strong>Navigation Basic </strong>🐣"
-msgstr ""
+msgstr "<strong>Navigasyon Temel </strong>🐣"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.contribution_register
@@ -543,7 +641,7 @@ msgstr "<strong>Toplam</strong>"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
 msgid "<strong>YTD</strong>"
-msgstr ""
+msgstr "<strong>Mevcut Yılın Başından Günümüze Kadar Olan Süre</strong>"
 
 #. module: hr_payroll
 #: model:mail.template,body_html:hr_payroll.mail_template_new_payslip
@@ -560,16 +658,32 @@ msgid ""
 "</tbody></table>\n"
 "            "
 msgstr ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; "
+"margin:0px auto;\"><tbody>\n"
+"    <tr><td valign=\"top\" style=\"text-align: left; font-size: 14px;\">\n"
+"        Sayın <t t-esc=\"object.employee_id.name\"/>, sizi bekleyen yeni bir "
+"maaş bordrosu mevcut.<br/><br/>\n"
+"        PDF doyasına çalışan portalınızdan ulaşabilirsiniz.<br/><br/>\n"
+"        İyi günler dileriz,<br/>\n"
+"        İK Ekibi\n"
+"    </td></tr>\n"
+"</tbody></table>\n"
+"            "
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_hr_payslip_run
+#, fuzzy
 msgid ""
 "A Pay Run is a batch of individual payslips processed together for a "
 "specific pay period, including wages, taxes, and deductions.<br><br>"
 msgstr ""
+"Ödeme Çalışması, ücretler, vergiler ve kesintiler dahil olmak üzere belirli "
+"bir ödeme dönemi için birlikte işlenen bireysel maaş bordroları "
+"grubudur.<br><br>"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_salary_attachment_action
+#, fuzzy
 msgid ""
 "A Salary Adjustment is a recurring amount of money defined on the\n"
 "                employee and used in every payslip on an amount of time."
@@ -577,6 +691,11 @@ msgid ""
 "                Ex. Money recovery, Child support, Assessment of salary, ..."
 "<br><br>"
 msgstr ""
+"Maaş Düzeltmesi, aşağıdaki belgelerde tanımlanan yinelenen bir para "
+"miktarıdır\n"
+"                Çalışan maaş bordrosunda belirli bir süre için kullanılır.\n"
+"                Örn. Paranın geri alınması, Çocuk nafakası, Maaşın "
+"değerlendirilmesi, ...<br><br>"
 
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_work_entry_type_is_unforeseen_is_leave
@@ -618,8 +737,9 @@ msgstr "Aktiviteler"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
+#, fuzzy
 msgid "Activities of"
-msgstr ""
+msgstr "Faaliyetleri"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__activity_exception_decoration
@@ -642,13 +762,14 @@ msgstr "Aktivite Türü İmgesi"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
 msgid "Activity type"
-msgstr ""
+msgstr "Aktivite  Türü"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
+#, fuzzy
 msgid "Add Inputs"
-msgstr ""
+msgstr "Girişleri Ekleyin"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -660,7 +781,7 @@ msgstr "Sözleşmeye bir <strong>isim</strong> ekleyin."
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Add a employee to your contract"
-msgstr ""
+msgstr "Sözleşmenize bir çalışan ekleyin"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_view_hr_payroll_structure_from_type
@@ -669,8 +790,9 @@ msgstr "Yeni bir ücret yapısı ekleyin"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
+#, fuzzy
 msgid "Add a salary adjustment"
-msgstr ""
+msgstr "Maaş ayarlaması ekleyin"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -681,7 +803,7 @@ msgstr "Bir iç not ekle..."
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payrun_card/more_info/payrun_more_info.xml:0
 msgid "Additional Information"
-msgstr ""
+msgstr "Ek Bilgi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_edit_payslip_lines_wizard__ytd_computation
@@ -691,11 +813,14 @@ msgid ""
 "Adds a column in the payslip that shows the accumulated amount paid for "
 "different rules during the year"
 msgstr ""
+"Maaş bordrosuna yıl boyunca farklı kurallar için ödenen toplam tutarı "
+"gösteren bir sütun ekler."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
+#, fuzzy
 msgid "Adjust payslip"
-msgstr ""
+msgstr "Maaş bordrosunu ayarlayın"
 
 #. module: hr_payroll
 #: model:res.groups,name:hr_payroll.group_hr_payroll_manager
@@ -704,8 +829,9 @@ msgstr "Yönetici"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_index__affected_version_ids
+#, fuzzy
 msgid "Affected Version"
-msgstr ""
+msgstr "Etkilenen Sürüm"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -715,20 +841,23 @@ msgstr "Tümü"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_form
+#, fuzzy
 msgid "All structures"
-msgstr ""
+msgstr "Tüm yapılar"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid "Allocated amounts are less than the net salary."
-msgstr ""
+msgstr "Tahsis edilen tutarlar net maaştan daha azdır."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid "Allocated amounts surpass the net salary."
-msgstr ""
+msgstr "Tahsis edilen tutarlar net maaşı aşar."
 
 #. module: hr_payroll
 #: model:hr.salary.rule.category,name:hr_payroll.ALW
@@ -759,7 +888,7 @@ msgstr "Tutar"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__amount_other_input_id
 msgid "Amount Other Input"
-msgstr ""
+msgstr "Diğer Girdi Tutarı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_line__amount_select
@@ -768,15 +897,22 @@ msgid "Amount Type"
 msgstr "Tutar Türü"
 
 #. module: hr_payroll
+#: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
+#: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
+#, fuzzy
+msgid "Amount to be paid to"
+msgstr "Ödenecek Tutar"
+
+#. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "Amount to pay"
-msgstr ""
+msgstr "Ödenecek tutar"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_attachment__monthly_amount
 msgid "Amount to pay each payslip."
-msgstr ""
+msgstr "Her bordroda ödenecek tutar."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_attachment__active_amount
@@ -784,23 +920,30 @@ msgid ""
 "Amount to pay for this payslip, Payslip Amount or less depending on the "
 "Remaining Amount."
 msgstr ""
+"Bu maaş bordrosu için ödenecek tutar; Maaş Bordrosu Tutarı kadar veya kalan "
+"tutara bağlı olarak bundan daha az olabilir."
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_payroll_headcount_action
+#, fuzzy
 msgid ""
 "An Headcount report will provide you the quantity of running contracts<br>\n"
 "            on a specific period of time, grouped by Department.<br><br>"
 msgstr ""
+"Personel Sayısı raporu size devam eden sözleşmelerin miktarını "
+"sağlayacaktır<br>\n"
+"            belirli bir zaman diliminde, Departman göre gruplandırılmıştır."
 
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_payroll_employee_declaration_unique_employee_sheet
 msgid "An employee can only have one declaration per sheet."
-msgstr ""
+msgstr "Bir çalışanın, her sayfa için yalnızca bir beyanı olabilir."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid "And voilà, it is that simple."
-msgstr ""
+msgstr "Ve işte, bu kadar basit."
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -825,8 +968,9 @@ msgstr "Bordro'da Görünsün"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__condition_domain
+#, fuzzy
 msgid "Applicability Domain"
-msgstr ""
+msgstr "Uygulanabilirlik Alanı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__condition_python
@@ -846,7 +990,7 @@ msgstr "Yaklaşık bitiş tarihi."
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__4
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__4
 msgid "April"
-msgstr ""
+msgstr "Nisan"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_dashboard_warning_view_form
@@ -872,10 +1016,13 @@ msgstr "Bu notu silmek istediğinizden emin misiniz? Tüm içerik kaybolacaktır
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
+#, fuzzy
 msgid ""
 "Are you sure you want to revert this payslip? This will create a negative of "
 "this payslip."
 msgstr ""
+"Bu maaş bordrosunu geri almak istediğinizden emin misiniz? Bu, bu maaş "
+"bordrosunun negatifini oluşturacaktır."
 
 #. module: hr_payroll
 #: model:hr.payslip.input.type,name:hr_payroll.input_assignment_salary
@@ -924,12 +1071,12 @@ msgstr "Katılımcılar"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__8
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__8
 msgid "August"
-msgstr ""
+msgstr "Ağustos"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "August 2023 Payslip"
-msgstr ""
+msgstr "Ağustos 2023 Maaş Bordrosu"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_input_type__struct_ids
@@ -940,7 +1087,7 @@ msgstr "Yapıda Mevcut Olma"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_input_type__available_in_attachments
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_type_view_search
 msgid "Available in attachments"
-msgstr ""
+msgstr "Eklerde Mevcut"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__avatar_1920
@@ -955,26 +1102,27 @@ msgstr "Avatar 128"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
+#, fuzzy
 msgid "BIC"
-msgstr ""
+msgstr "BIC"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/views/payslip_run_version_list/hr_version_list_controller.xml:0
 msgid "Back"
-msgstr ""
+msgstr "Geri"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Bank Accounts"
-msgstr ""
+msgstr "Banka Hesapları"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "Bank account"
-msgstr ""
+msgstr "Banka hesabı"
 
 #. module: hr_payroll
 #: model:hr.salary.rule.category,name:hr_payroll.BASIC
@@ -1001,10 +1149,13 @@ msgstr "Batch"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid ""
 "Batches - Groups of payslips with their progress state, to keep an eye on "
 "your latest pays."
 msgstr ""
+"Gruplar - En son ödemelerinize göz kulak olmak için ilerleme durumlarıyla "
+"birlikte maaş bordrosu grupları."
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_res_config_settings__module_l10n_be_hr_payroll
@@ -1014,12 +1165,12 @@ msgstr "Belçika Bordro"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__bold
 msgid "Bold"
-msgstr ""
+msgstr "Kalın"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payroll_payment_report_wizard__export_format__csv
 msgid "CSV"
-msgstr ""
+msgstr "CSV"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_line_form
@@ -1038,12 +1189,13 @@ msgstr "İptal"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state__cancel
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__cancel
 msgid "Canceled"
-msgstr ""
+msgstr "İptal Edildi"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
+#, fuzzy
 msgid "Canceled Slip"
-msgstr ""
+msgstr "İptal Edilen Slip"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_run__state__04_cancel
@@ -1055,14 +1207,16 @@ msgstr "İptal Edildi"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid "Cannot cancel a payslip that is validated."
-msgstr ""
+msgstr "Onaylanmış bir maaş bordrosu iptal edilemez."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_index_wizard.py:0
+#, fuzzy
 msgid "Cannot index a wage with a null or negative percentage."
-msgstr ""
+msgstr "Boş veya negatif yüzdeye sahip bir ücret endekslenemez."
 
 #. module: hr_payroll
 #. odoo-python
@@ -1090,10 +1244,13 @@ msgstr "Kategori"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_attachment__is_refund
+#, fuzzy
 msgid ""
 "Check if the value of the salary adjustment must be taken into account as "
 "negative (-X)"
 msgstr ""
+"Maaş ayarlamasının değerinin negatif (-X) olarak dikkate alınması gerekip "
+"gerekmediğini kontrol edin"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -1108,7 +1265,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_rule__input_unit__boolean
 msgid "Checkbox"
-msgstr ""
+msgstr "Onay Kutusu"
 
 #. module: hr_payroll
 #: model:hr.payslip.input.type,name:hr_payroll.input_child_support
@@ -1125,15 +1282,19 @@ msgstr "Alt"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
+#, fuzzy
 msgid "Choose a Payroll Localization Package"
-msgstr ""
+msgstr "Bir Bordro Yerelleştirme Paketi Seçin"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_correction_wizard__correction_choice
+#, fuzzy
 msgid ""
 "Choose whether to correct only the selected payslip or all payslips affected "
 "by the changes in this version."
 msgstr ""
+"Yalnızca seçilen maaş bordrosunun mu yoksa bu sürümdeki değişikliklerden "
+"etkilenen tüm maaş bordrolarının mı düzeltileceğini seçin."
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -1197,7 +1358,7 @@ msgstr "Kapat"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_attachment__state__close
 msgid "Closed"
-msgstr ""
+msgstr "Kapanmış"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_type__round_days_type__half-up
@@ -1224,7 +1385,7 @@ msgstr "Kod"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_working_rate__color
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__color
 msgid "Color"
-msgstr ""
+msgstr "Renk"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_res_company
@@ -1265,7 +1426,7 @@ msgstr "Hesaplama"
 #: code:addons/hr_payroll/static/src/components/payrun_card/payrun_card.xml:0
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
 msgid "Compute"
-msgstr ""
+msgstr "Hesapla"
 
 #. module: hr_payroll
 #: model:ir.actions.server,name:hr_payroll.action_hr_payroll_compute_payroll
@@ -1287,7 +1448,7 @@ msgstr "Koşul Bazında"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__condition_other_input_id
 msgid "Condition Other Input"
-msgstr ""
+msgstr "Koşul Diğer Girdi"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -1330,7 +1491,7 @@ msgstr "Tutarsızlıklar"
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/views/payslip_run_form/hr_payslip_run_form.xml:0
 msgid "Continue"
-msgstr ""
+msgstr "Devam edin"
 
 #. module: hr_payroll
 #. odoo-python
@@ -1345,18 +1506,18 @@ msgstr "Sözleşme"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__contract_date_end
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__contract_date_end
 msgid "Contract End Date"
-msgstr ""
+msgstr "Sözleşme Bitiş Tarihi"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
 msgid "Contract Expiration Notice Period"
-msgstr ""
+msgstr "Sözleşme Sona Erme Bildirim Süresi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__contract_date_start
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__contract_date_start
 msgid "Contract Start Date"
-msgstr ""
+msgstr "Sözleşme Başlama Tarihi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__contract_type_id
@@ -1369,12 +1530,12 @@ msgstr "Sözleşme Türü"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__contract_wage
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__contract_wage
 msgid "Contract Wage"
-msgstr ""
+msgstr "Sözleşme Ücreti"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "Contract Wage ("
-msgstr ""
+msgstr "Sözleşme Ücreti ("
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_index_form_view
@@ -1388,13 +1549,15 @@ msgstr "Sözleşmeler"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid "Contracts - What's the setup of your employees ?"
-msgstr ""
+msgstr "Sözleşmeler - Çalışanlarınızın düzeni nedir?"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__appears_on_employee_cost_dashboard
+#, fuzzy
 msgid "Contributes to Employer Cost"
-msgstr ""
+msgstr "İşveren Maliyetine Katkı Sağlar"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_register
@@ -1420,29 +1583,34 @@ msgstr "Gravie için Taşıma Ödeneği"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_correction_wizard__correction_choice__multi
+#, fuzzy
 msgid "Correct all affected payslips"
-msgstr ""
+msgstr "Etkilenen tüm maaş bordrolarını düzeltin"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_correction_wizard_form
+#, fuzzy
 msgid "Correct payslip"
-msgstr ""
+msgstr "Doğru maaş bordrosu"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_correction_wizard__correction_choice__single
+#, fuzzy
 msgid "Correct this payslip only"
-msgstr ""
+msgstr "Yalnızca bu maaş bordrosunu düzeltin"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_correction_wizard__correction_choice
+#, fuzzy
 msgid "Correction Choice"
-msgstr ""
+msgstr "Düzeltme Seçimi"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid "Correction: %(payslip)s"
-msgstr ""
+msgstr "Düzeltiyorum: %(payslip)s"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_dashboard_warning__country_id
@@ -1468,12 +1636,12 @@ msgstr "Ülke Kodu"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
 msgid "Create Individual Attachments"
-msgstr ""
+msgstr "Bireysel Ekler Oluştur"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Create Payment Report"
-msgstr ""
+msgstr "Ödeme Raporu Oluştur"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
@@ -1482,55 +1650,61 @@ msgstr "SEPA ödemesi oluşturun"
 
 #. module: hr_payroll
 #: model:ir.actions.server,name:hr_payroll.action_new_salary_attachment
+#, fuzzy
 msgid "Create Salary Adjustment"
-msgstr ""
+msgstr "Maaş Ayarlaması Oluşturun"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_mixin__create_uid
 msgid "Create Uid"
-msgstr ""
+msgstr "Kullanıcı Kimliği Oluştur"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_hr_payslip_run
+#, fuzzy
 msgid "Create a Pay Run"
-msgstr ""
+msgstr "Bir Ödeme Çalışması Oluşturun"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payslip_action_helper/payslip_action_helper.xml:0
+#, fuzzy
 msgid "Create a Payslip"
-msgstr ""
+msgstr "Maaş Bordrosu Oluşturma"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_salary_attachment_action
+#, fuzzy
 msgid "Create a Salary Adjustment"
-msgstr ""
+msgstr "Maaş Ayarlaması Oluşturma"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_hr_salary_rule_section
+#, fuzzy
 msgid "Create a new Salary Rule Section"
-msgstr ""
+msgstr "Yeni bir Maaş Kuralı Bölümü oluşturun"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_salary_rule_form
 msgid "Create a new salary rule"
-msgstr ""
+msgstr "Yeni bir maaş kuralı oluşturun"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_rule_parameter_action
 msgid "Create a new salary rule parameter"
-msgstr ""
+msgstr "Yeni bir maaş kuralı parametresi oluşturun"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_view_hr_payroll_structure_list_form
 msgid "Create a new salary structure"
-msgstr ""
+msgstr "Yeni bir maaş yapısı oluştur"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/dashboard_empty_screen/dashboard_empty_screen.xml:0
+#, fuzzy
 msgid "Create employees"
-msgstr ""
+msgstr "Çalışanlar oluşturun"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -1600,7 +1774,7 @@ msgstr "Oluşturuldu"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_declaration_mixin_view_list
 msgid "Creation date"
-msgstr ""
+msgstr "Oluşturma Tarihi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__credit_note
@@ -1626,12 +1800,13 @@ msgstr "Kur"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_rule_parameter_view_tree
 msgid "Current Value"
-msgstr ""
+msgstr "Güncel Değer"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_rule_parameter__current_value_one_line
+#, fuzzy
 msgid "Current Value (short)"
-msgstr ""
+msgstr "Mevcut Değer (kısa)"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_work_entry_report_view_search
@@ -1641,7 +1816,7 @@ msgstr "Geçerli ay"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount__is_name_custom
 msgid "Custom Name"
-msgstr ""
+msgstr "Özel İsim"
 
 #. module: hr_payroll
 #: model:ir.ui.menu,name:hr_payroll.menu_hr_payroll_dashboard_configuration
@@ -1664,7 +1839,7 @@ msgstr "Tarih"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__date_end
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__date_end
 msgid "Date End"
-msgstr ""
+msgstr "Bitiş Tarihi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__date_start
@@ -1674,8 +1849,9 @@ msgstr "Başlangıç Tarihi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_attachment__date_end
+#, fuzzy
 msgid "Date at which this assignment has been set as completed."
-msgstr ""
+msgstr "Bu ödevin tamamlanmış olarak belirlendiği tarih."
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_type__round_days__full
@@ -1685,7 +1861,7 @@ msgstr "Gün"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
 msgid "Day where the 'Year To Date' will be reset every year."
-msgstr ""
+msgstr "'Yıl Başından İtibaren'in her yıl sıfırlanacağı gün."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_res_company__ytd_reset_day
@@ -1696,6 +1872,9 @@ msgid ""
 "        If greater than the last day of a month, then the last day of the "
 "month will be selected instead."
 msgstr ""
+"Yılbaşında YTD'nin (Yıl Başından Bu Yana) sıfırlanacağı gün.\n"
+"        Eğer sıfır ya da negatifse, ayın ilk günü seçilir. Eğer ayın son "
+"gününden büyükse, ayın son günü seçilir."
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_report__number_of_days
@@ -1705,36 +1884,31 @@ msgid "Days"
 msgstr "Gün"
 
 #. module: hr_payroll
-#. odoo-python
-#: code:addons/hr_payroll/models/hr_payslip.py:0
-msgid "Debug Payslip"
-msgstr ""
-
-#. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__12
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__12
 msgid "December"
-msgstr ""
+msgstr "Aralık"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_declaration_mixin_view_list
+#, fuzzy
 msgid "Declaration Mixin"
-msgstr ""
+msgstr "Deklarasyon Karışımı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_employee_declaration__res_id
 msgid "Declaration Model Id"
-msgstr ""
+msgstr "Beyan Model Kimliği"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_employee_declaration__res_model
 msgid "Declaration Model Name"
-msgstr ""
+msgstr "Beyan Model Adı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_declaration_mixin__line_ids
 msgid "Declarations"
-msgstr ""
+msgstr "Tebligat"
 
 #. module: hr_payroll
 #: model:hr.payslip.input.type,name:hr_payroll.input_deduction
@@ -1747,13 +1921,14 @@ msgstr "Deduction"
 
 #. module: hr_payroll
 #: model:hr.payroll.structure,name:hr_payroll.default_structure
+#, fuzzy
 msgid "Default Structure Rules Set"
-msgstr ""
+msgstr "Varsayılan Yapı Kuralları Seti"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_default_value
 msgid "Default Value"
-msgstr ""
+msgstr "Öntanımlı Değer"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -1763,14 +1938,18 @@ msgstr "<strong>Maaş</strong> belirleyin."
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_hr_salary_rule_section
+#, fuzzy
 msgid ""
 "Define sections to organize salary rule inputs within payroll structures."
 msgstr ""
+"Bordro yapıları içinde maaş kuralı girdilerini düzenlemek için bölümler "
+"tanımlayın."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__condition_domain
+#, fuzzy
 msgid "Define the applicability rules for this rule."
-msgstr ""
+msgstr "Bu kural için uygulanabilirlik kurallarını tanımlayın."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_structure__schedule_pay
@@ -1797,7 +1976,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 msgid "Delete"
-msgstr ""
+msgstr "Sil"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__department_id
@@ -1813,22 +1992,24 @@ msgstr "Departman"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
 msgid "Department:"
-msgstr ""
+msgstr "Departman:"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_filter_payrun
 msgid "Departure"
-msgstr ""
+msgstr "Ayrılış"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__dependent_input_id
+#, fuzzy
 msgid "Dependent Salary Input"
-msgstr ""
+msgstr "Bağımlı Maaş Girdisi"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "Depends On"
-msgstr ""
+msgstr "Bağlı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_index__description
@@ -1847,14 +2028,15 @@ msgstr "Açıklama"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_tree
+#, fuzzy
 msgid "Detach the payslip from the pay run to send it to the Off-Cycle"
-msgstr ""
+msgstr "Maaş bordrosunu Off-Cycle'a göndermek için maaş bordrosundan ayırın"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__disabled
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__disabled
 msgid "Disabled"
-msgstr ""
+msgstr "Devre Dışı"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -1871,7 +2053,7 @@ msgstr "Sil"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "Display"
-msgstr ""
+msgstr "Ekran"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__display_name
@@ -1917,8 +2099,9 @@ msgstr "İsim Göster"
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/fields/actionable_warnings/actionable_warnings.js:0
+#, fuzzy
 msgid "Display first warning only"
-msgstr ""
+msgstr "Yalnızca ilk uyarıyı göster"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_work_entry_type_view_form_inherit
@@ -1938,9 +2121,10 @@ msgstr "Belge"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_rule__condition_select__domain
 msgid "Domain"
-msgstr ""
+msgstr "Alan Adı"
 
 #. module: hr_payroll
+#: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__validated
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_run__state__02_close
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_work_days_view_search_report
@@ -1949,8 +2133,9 @@ msgstr "Yapıldı"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
+#, fuzzy
 msgid "Done Pay Runs"
-msgstr ""
+msgstr "Tamamlanan Ödeme Çalışmaları"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
@@ -1980,25 +2165,27 @@ msgstr "Taslak Bordro"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid "Duplicate(s)"
-msgstr ""
+msgstr "Mükerrer(ler)"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__duration_type
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_search
 msgid "Duration"
-msgstr ""
+msgstr "Süre"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "Earnings"
-msgstr ""
+msgstr "Kazanç"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
+#, fuzzy
 msgid "Edit Individual Salary Adjustment"
-msgstr ""
+msgstr "Bireysel Maaş Ayarlamasını Düzenleme"
 
 #. module: hr_payroll
 #. odoo-python
@@ -2016,8 +2203,9 @@ msgstr "Bordro Hatlarını Düzenleme Sihirbazı"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
+#, fuzzy
 msgid "Edit Salary Adjustment"
-msgstr ""
+msgstr "Maaş Ayarlamasını Düzenle"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_edit_payslip_worked_days_line
@@ -2047,7 +2235,7 @@ msgstr "Maaş bordrosundaki Bordro Satırlarının Sürümü"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_payrun
 msgid "Effective Date"
-msgstr ""
+msgstr "Geçerlilik Tarihi"
 
 #. module: hr_payroll
 #. odoo-python
@@ -2056,12 +2244,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_mixin__eligible_employee_line_ids
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_work_entry_export_employee_mixin_list_view
 msgid "Eligible Employees"
-msgstr ""
+msgstr "Uygun Çalışanlar"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_mixin__eligible_employee_count
 msgid "Eligible Employees Count"
-msgstr ""
+msgstr "Hak Kazanan Çalışan Sayısı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__email_cc
@@ -2107,16 +2295,17 @@ msgstr "Personel Adedi"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid ""
 "Employee Count - How many contracts are running in the company at the "
 "moment ?"
-msgstr ""
+msgstr "Çalışan Sayısı - Şu anda şirkette kaç sözleşme yürütülüyor?"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_declaration_mixin.py:0
 msgid "Employee Declarations"
-msgstr ""
+msgstr "Çalışan Beyanları"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_employee_grade_form
@@ -2127,7 +2316,7 @@ msgstr "Çalışan İşlevi"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "Employee Information"
-msgstr ""
+msgstr "Çalışan Bilgileri"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.action_hr_payslip_new
@@ -2141,38 +2330,42 @@ msgstr "Personel Bordroları"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_input__version_id
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
+#, fuzzy
 msgid "Employee Record"
-msgstr ""
+msgstr "Çalışan Kaydı"
 
 #. module: hr_payroll
 #: model:ir.ui.menu,name:hr_payroll.hr_menu_versions
+#, fuzzy
 msgid "Employee Records"
-msgstr ""
+msgstr "Çalışan Kayıtları"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__registration_number
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__employee_reference
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_search
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
+#, fuzzy
 msgid "Employee Reference"
-msgstr ""
+msgstr "Çalışan Referansı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__employee_type
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_line_search
 msgid "Employee Type"
-msgstr ""
+msgstr "Personel Türü"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "Employee name"
-msgstr ""
+msgstr "Çalışan adı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_index__version_ids
+#, fuzzy
 msgid "Employee records"
-msgstr ""
+msgstr "Çalışan kayıtları"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__hourly_wage
@@ -2184,12 +2377,13 @@ msgstr "Personelin saatlik brüt ücreti."
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__wage
 #: model:ir.model.fields,help:hr_payroll.field_hr_version__wage
 msgid "Employee's monthly gross wage."
-msgstr ""
+msgstr "Personelin aylık brüt ücreti."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
+#, fuzzy
 msgid "Employee's record is not the latest version for this payslip period."
-msgstr ""
+msgstr "Çalışan'ın kaydı bu maaş bordrosu dönemi için en son sürüm değildir."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__resource_calendar_id
@@ -2201,6 +2395,11 @@ msgid ""
 "week.\n"
 "        "
 msgstr ""
+"Çalışanın çalışma programı.\n"
+"        Boş bırakıldığında çalışanın tamamen esnek bir çalışma programı "
+"olduğu kabul edilir ve bu sayede haftanın herhangi bir günü, herhangi bir "
+"zaman sınırlaması olmaksızın çalışabilir.\n"
+"        "
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -2244,12 +2443,12 @@ msgstr "Devam Eden Sözleşmesi Olmayan Çalışanlar"
 #. module: hr_payroll
 #: model:hr.payroll.dashboard.warning,name:hr_payroll.hr_payroll_dashboard_warning_nearly_expired_contracts
 msgid "Employees with running contracts coming to an end"
-msgstr ""
+msgstr "Sözleşmesi sona ermek üzere olan çalışanlar"
 
 #. module: hr_payroll
 #: model:hr.payroll.dashboard.warning,name:hr_payroll.hr_payroll_dashboard_warning_untrusted_bank_accounts
 msgid "Employees with untrusted Bank Account numbers"
-msgstr ""
+msgstr "Güvenilir olmayan banka hesap numarasına sahip çalışanlar"
 
 #. module: hr_payroll
 #. odoo-python
@@ -2260,15 +2459,19 @@ msgstr "İş Veren Maliyeti"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid ""
 "Employer Cost - Follow monthly or annually the amounts of each pay divided "
 "as you please."
 msgstr ""
+"İşveren Maliyeti - İstediğiniz şekilde bölünmüş her bir maaşın miktarını "
+"aylık veya yıllık olarak takip edin."
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_run__empty_payslips
+#, fuzzy
 msgid "Empty Payslips"
-msgstr ""
+msgstr "Boş Maaş Bordroları"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_structure__hide_basic_on_pdf
@@ -2276,11 +2479,13 @@ msgid ""
 "Enable this option if you don't want to display the Basic Salary on the "
 "printed pdf."
 msgstr ""
+"Basılı pdf'de Temel Maaşın görünmesini istemiyorsanız bu seçeneği "
+"etkinleştirin."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_payrun
 msgid "End"
-msgstr ""
+msgstr "Son"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__date_end
@@ -2296,19 +2501,19 @@ msgstr "Bitiş tarihi, başlangıç tarihinden önce olamaz."
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__contract_date_end
 #: model:ir.model.fields,help:hr_payroll.field_hr_version__contract_date_end
 msgid "End date of the contract (if it's a fixed-term contract)."
-msgstr ""
+msgstr "Sözleşmenin bitiş tarihi (belirli süreli sözleşme değilse)"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__trial_date_end
 #: model:ir.model.fields,help:hr_payroll.field_hr_version__trial_date_end
 msgid "End date of the trial period (if there is one)."
-msgstr ""
+msgstr "Deneme süresi bitiş tarihi (varsa)."
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__trial_date_end
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__trial_date_end
 msgid "End of Trial Period"
-msgstr ""
+msgstr "Deneme Süresi Bitiş Tarihi"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__error
@@ -2317,8 +2522,9 @@ msgstr "Hata"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__error_count
+#, fuzzy
 msgid "Error Count"
-msgstr ""
+msgstr "Hata Sayısı"
 
 #. module: hr_payroll
 #. odoo-python
@@ -2340,44 +2546,46 @@ msgstr "Nihai üçüncü parti Personelin maaş ödemeleri dahil."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "Explain when it's applicable..."
-msgstr ""
+msgstr "Ne zaman uygulanabilir olduğunu açıklayın..."
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_employee_mixin__export_id
 msgid "Export"
-msgstr ""
+msgstr "Dışa Aktar"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_run__payment_report
+#, fuzzy
 msgid "Export .csv file related to this pay run"
-msgstr ""
+msgstr "Bu ödeme çalıştırmasıyla ilgili .csv dosyasını dışa aktarın"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip__payment_report
 msgid "Export .csv file related to this payslip"
-msgstr ""
+msgstr "Bu maaş bordrosuyla ilgili .csv dosyasını dışa aktar"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_work_entry_export_mixin_form_view
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_work_entry_export_mixin_list_view
 msgid "Export Employee Work Entries"
-msgstr ""
+msgstr "Çalışan İş Girişlerini Dışa Aktar"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_mixin__export_file
 msgid "Export File"
-msgstr ""
+msgstr "Dosya Dışa Aktar"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_mixin__export_filename
 msgid "Export Filename"
-msgstr ""
+msgstr "Dışa Aktarma Dosya Adı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_payment_report_wizard__export_format
 msgid "Export Format"
-msgstr ""
+msgstr "Dışa Aktarma Formatı"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -2386,14 +2594,15 @@ msgstr "Maaş Bordrosunu Dışa Aktar"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
+#, fuzzy
 msgid "External Codes"
-msgstr ""
+msgstr "Harici Kodlar"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__2
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__2
 msgid "February"
-msgstr ""
+msgstr "Şubat"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -2412,7 +2621,7 @@ msgstr "Sabit Tutar"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payroll_structure_type__wage_type__monthly
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_version__wage_type__monthly
 msgid "Fixed Wage"
-msgstr ""
+msgstr "Sabit Ücret"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__message_follower_ids
@@ -2459,8 +2668,9 @@ msgstr "Başlama"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__full_time_required_hours
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__full_time_required_hours
+#, fuzzy
 msgid "Full Time Equivalent"
-msgstr ""
+msgstr "Tam Zaman Eşdeğeri"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -2477,19 +2687,20 @@ msgstr "Oluştur"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_work_entry_export_mixin_form_view
 msgid "Generate Export File"
-msgstr ""
+msgstr "Dışa Aktarma Dosyası Oluştur"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/backend_components/cog_menu/hr_payroll_generate_pdfs_cog_menu.xml:0
 msgid "Generate PDFs"
-msgstr ""
+msgstr "PDF Dosyaları Oluştur"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/hr_work_entries_gantt.xml:0
+#, fuzzy
 msgid "Generate Pay Run"
-msgstr ""
+msgstr "Ödeme Çalışması Oluştur"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -2503,12 +2714,13 @@ msgstr "Ücret Bordrolarını Oluştur"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payroll_employee_declaration__state__pdf_generated
 msgid "Generated PDF"
-msgstr ""
+msgstr "Oluşturulan PDF"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_run__gross_sum
+#, fuzzy
 msgid "Gross Sum"
-msgstr ""
+msgstr "Brüt Toplam"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__gross_wage
@@ -2518,7 +2730,7 @@ msgstr "Brüt ücret"
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_payment_report_wizard
 msgid "HR Payroll Payment Report Wizard"
-msgstr ""
+msgstr "İK Bordro Ödeme Raporu Sihirbazı"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_work_entry
@@ -2538,19 +2750,20 @@ msgstr "Yarım Gün"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__has_done_payslip
 msgid "Has Done Payslip"
-msgstr ""
+msgstr "Bordro Oluşturulmuş"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/status_bubble/status_bubble.js:0
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_run__has_error
 msgid "Has Error"
-msgstr ""
+msgstr "Hata Var"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
+#, fuzzy
 msgid "Has Issues"
-msgstr ""
+msgstr "Sorunları Var"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__has_message
@@ -2566,8 +2779,9 @@ msgstr "Bildirilecek Negatif Net Mevcut"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry__has_payslip
+#, fuzzy
 msgid "Has Payslip"
-msgstr ""
+msgstr "Maaş Bordrosu Var"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__has_similar_attachment
@@ -2586,8 +2800,9 @@ msgstr "Toplam Tutar Mevcut"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__has_wrong_data
+#, fuzzy
 msgid "Has Wrong Data"
-msgstr ""
+msgstr "Yanlış Verilere Sahip"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.hr_payroll_headcount_action
@@ -2595,45 +2810,46 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_tree
 msgid "Headcount"
-msgstr ""
+msgstr "Toplam sayı"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_headcount_line
 msgid "Headcount Line"
-msgstr ""
+msgstr "Kadrolu Çalışan Satırı"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_headcount.py:0
 msgid "Headcount for %(company_name)s from %(date_from)s to %(date_to)s"
 msgstr ""
+"%(date_from)s tarihi ile %(date_to)s tarihi arasındaki kadrolu çalışan sayısı"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_headcount.py:0
 msgid "Headcount for %(company_name)s on the %(date)s"
-msgstr ""
+msgstr "%(date)s tarihinde %(company_name)s şirketinde kadrolu çalışan sayısı"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_line_view_tree
 msgid "Headcount's Employees"
-msgstr ""
+msgstr "Kadrodaki Çalışanlar"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_headcount.py:0
 msgid "Headcount's employees"
-msgstr ""
+msgstr "Kadrodaki çalışanlar"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure__hide_basic_on_pdf
 msgid "Hide Basic On Pdf"
-msgstr ""
+msgstr "PDF'de Brütü Gizle"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_rule_parameter_view_form
 msgid "History"
-msgstr ""
+msgstr "Geçmiş"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__hourly_wage
@@ -2647,12 +2863,12 @@ msgstr "Saatlik Ücret"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Hours"
-msgstr ""
+msgstr "Saat"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "Hours / Week"
-msgstr ""
+msgstr "Ayda / Hafta"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__hours_per_week
@@ -2742,6 +2958,8 @@ msgid ""
 "If set, hide currency and consider the manual input as a quantity for every "
 "rule computation using this input."
 msgstr ""
+"Ayarlandığında, para birimini gizler ve bu girdiyi kullanan tüm kural "
+"hesaplamalarında manuel girişi miktar olarak değerlendirir."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__active
@@ -2756,15 +2974,17 @@ msgstr ""
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__disabled
 #: model:ir.model.fields,help:hr_payroll.field_hr_version__disabled
 msgid "If the employee is declared disabled by law"
-msgstr ""
+msgstr "Çalışan yasal olarak engelli ilan edildiyse"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__is_non_resident
 #: model:ir.model.fields,help:hr_payroll.field_hr_version__is_non_resident
+#, fuzzy
 msgid ""
 "If the employee is not a legal resident of the country where they are "
 "employed"
 msgstr ""
+"Çalışanın istihdam edildiği ülkede yasal olarak ikamet etmemesi durumunda"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__image_1920
@@ -2779,13 +2999,15 @@ msgstr "Görsel 128"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
+#, fuzzy
 msgid "Indefinite"
-msgstr ""
+msgstr "Belirsiz"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__indented
+#, fuzzy
 msgid "Indented"
-msgstr ""
+msgstr "Girintili"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.action_hr_payroll_index
@@ -2811,13 +3033,15 @@ msgstr "Bu ücret bordrosunun başka bir geri ödemeye sahip olduğunu gösterir
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_declaration_mixin_view_form
+#, fuzzy
 msgid "Individual Accounts"
-msgstr ""
+msgstr "Bireysel Hesaplar"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_index__informative_message
+#, fuzzy
 msgid "Informative Message"
-msgstr ""
+msgstr "Bilgilendirici Mesaj"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -2826,43 +3050,50 @@ msgstr "Veri Girişi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_description
+#, fuzzy
 msgid "Input Description"
-msgstr ""
+msgstr "Girdi Açıklaması"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_suffix
+#, fuzzy
 msgid "Input Suffix"
-msgstr ""
+msgstr "Giriş Soneki"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
 msgid "Input Type"
-msgstr ""
+msgstr "Girdi tipi"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
+#, fuzzy
 msgid "Input Type Code"
-msgstr ""
+msgstr "Giriş Tipi Kodu"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_usage_employee
+#, fuzzy
 msgid "Input Usage Employee"
-msgstr ""
+msgstr "Girdi Kullanımı Çalışan"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_usage_payslip
+#, fuzzy
 msgid "Input Usage Payslip"
-msgstr ""
+msgstr "Girdi Kullanım Maaş Bordrosu"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_used_in_definition
+#, fuzzy
 msgid "Input Used In Definition"
-msgstr ""
+msgstr "Tanımlamada Kullanılan Girdi"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "Input on"
-msgstr ""
+msgstr "Giriş açık"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__note
@@ -2876,14 +3107,16 @@ msgstr "İnternet Aboneliği Faturası"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__is_corrected
+#, fuzzy
 msgid "Is Corrected"
-msgstr ""
+msgstr "Düzeltildi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__is_current
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__is_current
+#, fuzzy
 msgid "Is Current"
-msgstr ""
+msgstr "Güncel mi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__message_is_follower
@@ -2901,14 +3134,16 @@ msgstr "Tam Zamanlı mı"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__is_future
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__is_future
+#, fuzzy
 msgid "Is Future"
-msgstr ""
+msgstr "Gelecek mi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__is_in_contract
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__is_in_contract
+#, fuzzy
 msgid "Is In Contract"
-msgstr ""
+msgstr "Sözleşmede Var"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_worked_days__is_paid
@@ -2918,18 +3153,20 @@ msgstr "Ödendi"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__is_past
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__is_past
+#, fuzzy
 msgid "Is Past"
-msgstr ""
+msgstr "Geçmiş"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__is_refund_payslip
+#, fuzzy
 msgid "Is Refund payslip"
-msgstr ""
+msgstr "Geri ödeme bordrosu"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__is_refunded
 msgid "Is Refunded"
-msgstr ""
+msgstr "İade Yapıldı"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_register
@@ -2953,27 +3190,29 @@ msgstr "Süre Hatalı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__is_wrong_version
+#, fuzzy
 msgid "Is Wrong Version"
-msgstr ""
+msgstr "Yanlış Versiyon"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_input_type__is_quantity
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__is_quantity
 msgid "Is quantity?"
-msgstr ""
+msgstr "Miktar mı?"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/status_bubble/status_bubble.js:0
+#, fuzzy
 msgid "Issue Count"
-msgstr ""
+msgstr "Sorun Sayısı"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/status_bubble/status_bubble.xml:0
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__issues
 msgid "Issues"
-msgstr ""
+msgstr "Sorunlar"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__quantity
@@ -2982,30 +3221,37 @@ msgid ""
 "Meal Voucher having fixed amount of 1€ per worked day can have its quantity "
 "defined in expression like worked_days['WORK100'].number_of_days."
 msgstr ""
+"Yüzde ve sabit tutar hesaplamalarında kullanılır. Örneğin, çalışılan gün "
+"başına 1 € sabit tutarlı Yemek Kuponu kuralının miktarı, "
+"çalışılan_günler[‘CALİSİLAN100’].gün_sayisi gibi bir ifadeyle tanımlanabilir."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_input__amount
+#, fuzzy
 msgid ""
 "It is used in computation. E.g. a rule for salesmen having 1%% commission of "
 "basic salary per product can defined in expression like: result = "
 "inputs['SALEURO'].amount * version.wage * 0.01."
 msgstr ""
+"Hesaplamada kullanılır. Örneğin, ürün başına temel maaşın 1%% komisyonuna "
+"sahip satışçılar için bir kural şu ifadede tanımlanabilir: result = inputs"
+"['SALEURO'].amount * version.wage * 0.01."
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__italic
 msgid "Italic"
-msgstr ""
+msgstr "Eğik"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__1
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__1
 msgid "January"
-msgstr ""
+msgstr "Ocak"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_line_search
 msgid "Job"
-msgstr ""
+msgstr "İş"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__job_id
@@ -3017,34 +3263,36 @@ msgstr "İş Pozisyonu"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
 msgid "Job Position:"
-msgstr ""
+msgstr "İş Pozisyonu:"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__job_id
 msgid "Job Title"
-msgstr ""
+msgstr "İş Ünvanı"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__7
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__7
 msgid "July"
-msgstr ""
+msgstr "Temmuz"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__6
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__6
 msgid "June"
-msgstr ""
+msgstr "Haziran"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__keep_wrong_version
+#, fuzzy
 msgid "Keep Wrong Version"
-msgstr ""
+msgstr "Yanlış Versiyonu Sakla"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
+#, fuzzy
 msgid "Keep it as is"
-msgstr ""
+msgstr "Olduğu gibi kalsın"
 
 #. module: hr_payroll
 #. odoo-python
@@ -3123,18 +3371,20 @@ msgstr "Son Güncelleme"
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/dashboard_empty_screen/dashboard_empty_screen.xml:0
+#, fuzzy
 msgid "Let's start by creating your first employees!"
-msgstr ""
+msgstr "İlk çalışanlarınızı oluşturarak başlayalım!"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_attachment__duration_type__limited
+#, fuzzy
 msgid "Limited"
-msgstr ""
+msgstr "Sınırlı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount__line_ids
 msgid "Line"
-msgstr ""
+msgstr "Satır"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_line_form
@@ -3164,7 +3414,7 @@ msgstr "Ana Ek"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__3
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__3
 msgid "March"
-msgstr ""
+msgstr "Mart"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
@@ -3176,8 +3426,9 @@ msgstr "Tamamlandı Olarak İşaretle"
 #: code:addons/hr_payroll/static/src/components/payrun_card/payrun_card.xml:0
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_tree
+#, fuzzy
 msgid "Mark as Paid"
-msgstr ""
+msgstr "Ödendi olarak işaretle"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -3188,7 +3439,7 @@ msgstr "Ödendi Olarak İşaretle"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__5
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__5
 msgid "May"
-msgstr ""
+msgstr "Mayıs"
 
 #. module: hr_payroll
 #: model:hr.salary.rule,name:hr_payroll.hr_salary_rule_meal_voucher
@@ -3212,8 +3463,9 @@ msgstr "Mesajlar"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid "Missing bank account on employee"
-msgstr ""
+msgstr "Çalışan üzerinde eksik banka hesabı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__mobile_invoice
@@ -3228,7 +3480,7 @@ msgstr "Yazdırma için model hr.payslip.line kayıt tarafından gruplandırılm
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_rule__input_unit__monetary
 msgid "Monetary"
-msgstr ""
+msgstr "Parasal Değeri"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -3238,18 +3490,21 @@ msgstr "Aylık"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__monthly_running_attachments
+#, fuzzy
 msgid "Monthly Running Attachments"
-msgstr ""
+msgstr "Aylık Çalışan Ekler"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_correction_wizard__is_multi_payslip
+#, fuzzy
 msgid "Multiple Payslips"
-msgstr ""
+msgstr "Çoklu Maaş Bordroları"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
+#, fuzzy
 msgid "Multiple employees are attached to this salary adjustment."
-msgstr ""
+msgstr "Bu maaş ayarlamasına birden fazla çalışan eklenmiştir."
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__my_activity_date_deadline
@@ -3290,7 +3545,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
 msgid "Name:"
-msgstr ""
+msgstr "Adı:"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__negative_net_to_report_amount
@@ -3316,7 +3571,7 @@ msgstr "Bildirilecek Negatif Net"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__is_refund
 msgid "Negative Value"
-msgstr ""
+msgstr "Negatif Değer"
 
 #. module: hr_payroll
 #: model:hr.salary.rule.category,name:hr_payroll.NET
@@ -3337,8 +3592,9 @@ msgstr "Net Maaş"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_run__net_sum
+#, fuzzy
 msgid "Net Sum"
-msgstr ""
+msgstr "Net Toplam"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__net_wage
@@ -3359,8 +3615,9 @@ msgstr "Yeni Personel"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.action_hr_payslip_run_create
+#, fuzzy
 msgid "New Pay Run"
-msgstr ""
+msgstr "Yeni Ödeme Koşusu"
 
 #. module: hr_payroll
 #. odoo-python
@@ -3371,13 +3628,14 @@ msgstr "Yeni Maaş Bordrosu"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
+#, fuzzy
 msgid "New Salary Adjustment"
-msgstr ""
+msgstr "Yeni Maaş Düzenlemesi"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_filter_payrun
 msgid "Newly Hired"
-msgstr ""
+msgstr "Yeni İşe Alınmış"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__activity_calendar_event_id
@@ -3406,29 +3664,34 @@ msgstr "Sonraki Aktivitie Türü"
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/dashboard/payslip_batch/payslip_batch.xml:0
+#, fuzzy
 msgid "No Batches Yet"
-msgstr ""
+msgstr "Henüz Parti Yok"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
+#, fuzzy
 msgid "No ID number on the employee"
-msgstr ""
+msgstr "Çalışanın üzerinde kimlik numarası yok"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_hr_payslip_run
+#, fuzzy
 msgid "No Pay Runs."
-msgstr ""
+msgstr "Ödeme yok."
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payslip_action_helper/payslip_action_helper.xml:0
+#, fuzzy
 msgid "No Payslips."
-msgstr ""
+msgstr "Maaş bordrosu yok."
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_payroll_hr_version_list_view_payrun
+#, fuzzy
 msgid "No Records."
-msgstr ""
+msgstr "Kayıt yok."
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_type__round_days__no
@@ -3437,8 +3700,9 @@ msgstr "Yuvarlama Yok"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_salary_attachment_action
+#, fuzzy
 msgid "No Salary Adjustment ?"
-msgstr ""
+msgstr "Maaş Ayarlaması Yok mu?"
 
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_employee_unique_registration_number
@@ -3448,38 +3712,46 @@ msgstr "Kayıt numaralarının kopyalanmasına izin verilmez"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_input_type__default_no_end_date
 msgid "No end date by default"
-msgstr ""
+msgstr "Varsayılan olarak bitiş tarihi yok"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payslip_action_helper/payslip_action_helper.xml:0
+#, fuzzy
 msgid "No payslips for this pay run."
-msgstr ""
+msgstr "Bu maaş dönemi için maaş bordrosu yok."
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_payroll_headcount_action
+#, fuzzy
 msgid "No previous headcounts have been found."
-msgstr ""
+msgstr "Daha önceki personel sayımlarına rastlanmamıştır."
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_payroll_hr_version_list_view_payrun
+#, fuzzy
 msgid ""
 "No record fit your period and salary structure type, please go back to "
 "select another period and/or\n"
 "                salary structure type."
 msgstr ""
+"Döneminize ve maaş yapısı türünüze uygun kayıt yok, lütfen başka bir dönem "
+"seçmek için geri dönün ve/veya\n"
+"                maaş yapısı türü."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_rule_parameter.py:0
 msgid "No rule parameter with code \"%(code)s\" was found for %(date)s"
 msgstr ""
+"%(date)s için \"%(code)s\" koduna sahip bir kural parametresi bulunamadı"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid "No running contract over payslip period"
-msgstr ""
+msgstr "Maaş bordrosu dönemi boyunca devam eden sözleşme yok"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__is_non_resident
@@ -3490,7 +3762,7 @@ msgstr "Yerleşik olmayan"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "None"
-msgstr ""
+msgstr "Hiçbiri"
 
 #. module: hr_payroll
 #. odoo-python
@@ -3503,10 +3775,13 @@ msgstr "Not"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid ""
 "Note - Create as many notes as you want, like this one, to keep track of all "
 "useful information !"
 msgstr ""
+"Not - Tüm yararlı bilgileri takip etmek için bunun gibi istediğiniz kadar "
+"not oluşturun!"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_rule_parameter_view_form
@@ -3531,7 +3806,7 @@ msgstr "Gösterilecek bir şey yok"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__11
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__11
 msgid "November"
-msgstr ""
+msgstr "Kasım"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__message_needaction_counter
@@ -3577,7 +3852,7 @@ msgstr ""
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_run__message_needaction_counter
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_attachment__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Eylem gerektiren mesajların sayısı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip__message_has_error_counter
@@ -3588,19 +3863,20 @@ msgstr "Teslimat hatası olan mesaj adedi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_attachment__occurrences
+#, fuzzy
 msgid "Number of times the salary adjustment will appear on the payslip."
-msgstr ""
+msgstr "Maaş ayarlamasının maaş bordrosunda kaç kez görüneceği."
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__occurrences
 msgid "Occurrences"
-msgstr ""
+msgstr "Karşılaşılan durumlar"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__10
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__10
 msgid "October"
-msgstr ""
+msgstr "Ekim"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -3608,8 +3884,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_tree
+#, fuzzy
 msgid "Off-Cycle"
-msgstr ""
+msgstr "Çevrim Dışı"
 
 #. module: hr_payroll
 #: model:res.groups,name:hr_payroll.group_hr_payroll_user
@@ -3648,43 +3925,55 @@ msgstr ""
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_search
+#, fuzzy
 msgid "One Shots"
-msgstr ""
+msgstr "Tek Çekim"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_attachment__duration_type__one
+#, fuzzy
 msgid "One Time"
-msgstr ""
+msgstr "Tek seferlik"
 
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_salary_attachment_check_monthly_amount
+#, fuzzy
 msgid ""
 "Oops! Let’s keep the payslip amount strictly positive. We want to deduct "
 "money from our employee’s payslip, not add to it!"
 msgstr ""
+"Oops! Maaş bordrosu tutarını kesinlikle pozitif tutalım. Çalışanımızın maaş "
+"bordrosundan para kesmek istiyoruz, ona para eklemek değil!"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid ""
 "Oops! Only draft and cancelled payslips can be deleted without causing any "
 "chaos. We can't take back our dedicated employees' hard-earned cash!"
 msgstr ""
+"Oops! Sadece taslak ve iptal edilen maaş bordroları herhangi bir kaosa neden "
+"olmadan silinebilir. Çalışanlarımızın zor kazandıkları paralarını geri "
+"alamayız!"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
+#, fuzzy
 msgid "Optional reason, or reference"
-msgstr ""
+msgstr "İsteğe bağlı neden veya referans"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid "Or a Smartclass dedicated to the app"
-msgstr ""
+msgstr "Veya uygulamaya adanmış bir Smartclass"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__origin_payslip_id
+#, fuzzy
 msgid "Origin Payslip"
-msgstr ""
+msgstr "Menşei Maaş Bordrosu"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -3694,7 +3983,7 @@ msgstr "Diğer Bilgiler"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "Other Information"
-msgstr ""
+msgstr "Diğer Bilgiler"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_rule__amount_select__input
@@ -3711,8 +4000,9 @@ msgstr "Diğer Girdi Satırı"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
+#, fuzzy
 msgid "Other Input Type"
-msgstr ""
+msgstr "Diğer Giriş Tipi"
 
 #. module: hr_payroll
 #: model:ir.ui.menu,name:hr_payroll.menu_hr_payslip_entry_type_view
@@ -3722,24 +4012,25 @@ msgstr "Diğer Girdi Türleri"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_declaration_mixin__pdf_error
 msgid "PDF Error Message"
-msgstr ""
+msgstr "PDF Hata Mesajı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_employee_declaration__pdf_file
 msgid "PDF File"
-msgstr ""
+msgstr "PDF dosyası"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_employee_declaration.py:0
 msgid "PDF generation started. It will be available shortly."
-msgstr ""
+msgstr "PDF oluşturma başlatıldı. Kısa süre içinde hazır olacaktır."
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/views/employee_declaration_list/hr_payroll_employee_declaration_list_controller.xml:0
+#, fuzzy
 msgid "PDFs"
-msgstr ""
+msgstr "PDF'ler"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state__paid
@@ -3760,13 +4051,15 @@ msgstr "Ödenen Tutar"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
+#, fuzzy
 msgid "Paid Pay Runs"
-msgstr ""
+msgstr "Ücretli Ödeme Çalışmaları"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
+#, fuzzy
 msgid "Paid Slip"
-msgstr ""
+msgstr "Ücretli Makbuz"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_rule_parameter_value__parameter_value
@@ -3787,7 +4080,7 @@ msgstr "İş Ortağı"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
 msgid "Pay Period:"
-msgstr ""
+msgstr "Ücret Dönemi:"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -3797,13 +4090,15 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
+#, fuzzy
 msgid "Pay Run"
-msgstr ""
+msgstr "Ödeme Koşusu"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.action_hr_payroll_open_pay_run
+#, fuzzy
 msgid "Pay Run Payslips"
-msgstr ""
+msgstr "Ödeme Çalıştırma Bordroları"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -3812,15 +4107,17 @@ msgstr ""
 #: model:ir.ui.menu,name:hr_payroll.menu_hr_payslip_run
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_calendar
+#, fuzzy
 msgid "Pay Runs"
-msgstr ""
+msgstr "Ödeme Koşuları"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__schedule_pay
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_run__schedule_pay
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__schedule_pay
+#, fuzzy
 msgid "Pay Schedule"
-msgstr ""
+msgstr "Ödeme Takvimi"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payslip
@@ -3835,8 +4132,9 @@ msgstr "Bordro"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__structure_id
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure_type__default_struct_id
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__structure_id
+#, fuzzy
 msgid "Pay Structure"
-msgstr ""
+msgstr "Ücret Yapısı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_worked_days_line__slip_id
@@ -3859,14 +4157,17 @@ msgstr "Ücret Bordrosu Adı"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_payment_report_wizard__effective_date
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__paid_date
 msgid "Payment Date"
-msgstr ""
+msgstr "Ödeme Tarihi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_payment_report_wizard__effective_date
+#, fuzzy
 msgid ""
 "Payment Entry Date: the banking day on which you intend the payslip batch to "
 "be settled."
 msgstr ""
+"Ödeme Giriş Tarihi: ödeme bordrosu grubunun ödenmesini istediğiniz "
+"bankacılık günü."
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -3876,36 +4177,39 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_payment_report_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
 msgid "Payment Report"
-msgstr ""
+msgstr "Ödeme Raporu"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
+#, fuzzy
 msgid "Payment Report - %(batch_name)s"
-msgstr ""
+msgstr "Ödeme Raporu - %(batch_name)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
+#, fuzzy
 msgid "Payment Report - %(dates)s - %(employee_name)s"
-msgstr ""
+msgstr "Ödeme Raporu - %(dates)s - %(employee_name)s"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__payment_report_date
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_run__payment_report_date
 msgid "Payment Report Date"
-msgstr ""
+msgstr "Ödeme Raporu Tarihi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__payment_report_filename
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_run__payment_report_filename
 msgid "Payment Report Filename"
-msgstr ""
+msgstr "Ödeme Raporu Dosya Adı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_run__payment_report_format
+#, fuzzy
 msgid "Payment Report Format"
-msgstr ""
+msgstr "Ödeme Raporu Formatı"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.open_payroll_modules
@@ -3943,27 +4247,27 @@ msgstr "Bordro Gösterge Paneli"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_dashboard_warning_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_dashboard_warning_view_tree
 msgid "Payroll Dashboard Warning"
-msgstr ""
+msgstr "Bordro Gösterge Paneli Uyarısı"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.action_hr_payroll_dashboard_warning
 msgid "Payroll Dashboard Warnings"
-msgstr ""
+msgstr "Bordro Gösterge Paneli Uyarıları"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_declaration_mixin
 msgid "Payroll Declaration Mixin"
-msgstr ""
+msgstr "Bordro Beyan Karışımı"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_employee_declaration
 msgid "Payroll Employee Declaration"
-msgstr ""
+msgstr "Bordro Personel Beyanı"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_headcount
 msgid "Payroll Headcount"
-msgstr ""
+msgstr "Bordro Kadrosu"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_note
@@ -3974,8 +4278,9 @@ msgstr "Bordro Notu"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__payroll_properties
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__payslip_properties
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__payroll_properties
+#, fuzzy
 msgid "Payroll Properties"
-msgstr ""
+msgstr "Bordro Özellikleri"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
@@ -3989,8 +4294,9 @@ msgstr "Bordro SEPA"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_salary_rule_section_list
+#, fuzzy
 msgid "Payroll Structure"
-msgstr ""
+msgstr "Bordro Yapısı"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payroll_structure_filter
@@ -4049,29 +4355,32 @@ msgstr "Bordroda 'Başlangıç Tarihi', 'Bitiş Tarihi'nden önce olmalıdır."
 #. module: hr_payroll
 #: model:ir.actions.report,name:hr_payroll.action_report_light_payslip
 msgid "Payslip (Light)"
-msgstr ""
+msgstr "Bordro (Hafif)"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__monthly_amount
 msgid "Payslip Amount"
-msgstr ""
+msgstr "Bordro Tutarı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__monthly_amount_display
+#, fuzzy
 msgid "Payslip Amount Display"
-msgstr ""
+msgstr "Maaş Bordrosu Tutar Gösterimi"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_correction_wizard_form
+#, fuzzy
 msgid "Payslip Correction"
-msgstr ""
+msgstr "Maaş Bordrosu Düzeltme"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payslip_correction_wizard
+#, fuzzy
 msgid "Payslip Correction Wizard"
-msgstr ""
+msgstr "Maaş Bordrosu Düzeltme Sihirbazı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__payslip_count
@@ -4106,7 +4415,7 @@ msgstr "Ücret Bordrosu Girdileri"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 msgid "Payslip Language"
-msgstr ""
+msgstr "Bordro Dili"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payslip_line
@@ -4130,13 +4439,15 @@ msgstr "Ücret Bordro Satırları"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_edit_payslip_lines_wizard.py:0
+#, fuzzy
 msgid "Payslip Lines Changes:"
-msgstr ""
+msgstr "Maaş Bordrosu Hatları Değişiyor:"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.hr_payslip_line_action_report
+#, fuzzy
 msgid "Payslip Lines Report"
-msgstr ""
+msgstr "Maaş Bordrosu Hatları Raporu"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure__payslip_name
@@ -4154,44 +4465,50 @@ msgstr "Ücret Bordrosu Diğer Giriş Türleri"
 
 #. module: hr_payroll
 #: model:ir.ui.menu,name:hr_payroll.menu_hr_payslip_input_action_report
+#, fuzzy
 msgid "Payslip Other Inputs"
-msgstr ""
+msgstr "Maaş Bordrosu Diğer Girdiler"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.hr_payslip_input_action_report
+#, fuzzy
 msgid "Payslip Other Inputs Report"
-msgstr ""
+msgstr "Maaş Bordrosu Diğer Girdiler Raporu"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "Payslip Period"
-msgstr ""
+msgstr "Bordro Dönemi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure__payslip_properties_definition
+#, fuzzy
 msgid "Payslip Properties Definition"
-msgstr ""
+msgstr "Maaş Bordrosu Özellikleri Tanımı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_payment_report_wizard__payslip_run_id
 msgid "Payslip Run"
-msgstr ""
+msgstr "Bordro İşlemi"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_work_days_view_search_report
+#, fuzzy
 msgid "Payslip Work Days"
-msgstr ""
+msgstr "Maaş Bordrosu Çalışma Günleri"
 
 #. module: hr_payroll
 #: model:ir.ui.menu,name:hr_payroll.menu_hr_payslip_work_days_action_report
+#, fuzzy
 msgid "Payslip Work Days Lines"
-msgstr ""
+msgstr "Maaş Bordrosu Çalışma Günleri Hatları"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.hr_payslip_work_days_action_report
+#, fuzzy
 msgid "Payslip Work Days Lines Report"
-msgstr ""
+msgstr "Maaş Bordrosu Çalışma Günleri Hatları Raporu"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payslip_worked_days
@@ -4219,8 +4536,9 @@ msgstr "Bordrolar"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid "Payslips - Show final results of the computation."
-msgstr ""
+msgstr "Bordrolar - Hesaplamanın nihai sonuçlarını gösterir."
 
 #. module: hr_payroll
 #: model:hr.payroll.dashboard.warning,name:hr_payroll.hr_payroll_dashboard_warning_payslips_previous_contract
@@ -4229,28 +4547,30 @@ msgstr "Önceki Sözleşmeye Göre Oluşturulan Maaş Bordroları"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_run__payslips_with_issues
+#, fuzzy
 msgid "Payslips With Issues"
-msgstr ""
+msgstr "Sorunlu Maaş Bordroları"
 
 #. module: hr_payroll
 #: model:hr.payroll.dashboard.warning,name:hr_payroll.hr_payroll_dashboard_warning_payslips_negative_net
 msgid "Payslips With Negative NET"
-msgstr ""
+msgstr "Net Tutarı Negatif Olan Bordrolar"
 
 #. module: hr_payroll
 #: model:hr.payroll.dashboard.warning,name:hr_payroll.hr_payroll_dashboard_warning_payslip_overdue
+#, fuzzy
 msgid "Payslips are overdue for payments"
-msgstr ""
+msgstr "Maaş bordrolarının ödeme süresi geçmiş"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_employee_declaration__pdf_filename
 msgid "Pdf Filename"
-msgstr ""
+msgstr "PDF Dosya Adı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_employee_declaration__pdf_to_generate
 msgid "Pdf To Generate"
-msgstr ""
+msgstr "Oluşturulacak PDF"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_index__percentage
@@ -4280,12 +4600,12 @@ msgstr "Dönem"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_mixin__period_start
 msgid "Period Start"
-msgstr ""
+msgstr "Dönem Başlangıcı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_mixin__period_stop
 msgid "Period Stop"
-msgstr ""
+msgstr "Dönem Bitişi"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -4299,12 +4619,12 @@ msgstr "Planlama"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_work_entry_export_mixin_form_view
 msgid "Populate"
-msgstr ""
+msgstr "Doldur"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "Preview"
-msgstr ""
+msgstr "Önizle"
 
 #. module: hr_payroll
 #. odoo-python
@@ -4371,7 +4691,7 @@ msgstr "Miktar/Oran"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Quarter %(quarter)s of %(year)s"
-msgstr ""
+msgstr "%(year)s yılının %(quarter)s. çeyreği"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__queued_for_pdf
@@ -4381,7 +4701,7 @@ msgstr "PDF Kuyruğuna Alındı"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payroll_employee_declaration__state__pdf_to_generate
 msgid "Queued PDF generation"
-msgstr ""
+msgstr "PDF oluşturma kuyruğa alındı"
 
 #. module: hr_payroll
 #. odoo-python
@@ -4389,7 +4709,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_working_rate__rate
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "Rate"
-msgstr ""
+msgstr "Oran"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_line__rate
@@ -4408,18 +4728,20 @@ msgstr "Değerlendirmeler"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_run__state__01_ready
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
 msgid "Ready"
-msgstr ""
+msgstr "Hazır"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
+#, fuzzy
 msgid "Ready Pay Runs"
-msgstr ""
+msgstr "Hazır Ödeme Çalışmaları"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/dashboard_empty_screen/dashboard_empty_screen.xml:0
+#, fuzzy
 msgid "Ready to simplify your payroll?"
-msgstr ""
+msgstr "Bordro'yu basitleştirmeye hazır mısınız?"
 
 #. module: hr_payroll
 #: model:ir.actions.server,name:hr_payroll.action_hr_payroll_recompute_whole_sheet
@@ -4442,7 +4764,7 @@ msgstr "%s tutarında yeni bir ödeme kaydedildi."
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_payrun
 msgid "Records"
-msgstr ""
+msgstr "Kayıtlar"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
@@ -4452,18 +4774,19 @@ msgstr "Referans"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_mixin__reference_month
 msgid "Reference Month"
-msgstr ""
+msgstr "Referans Ay"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_mixin__reference_year
 msgid "Reference Year"
-msgstr ""
+msgstr "Referans Yıl"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid "Refund Payslip"
-msgstr ""
+msgstr "İade Maaş Bordrosu"
 
 #. module: hr_payroll
 #. odoo-python
@@ -4474,12 +4797,13 @@ msgstr "İade: %(payslip)s"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_search
 msgid "Refunds"
-msgstr ""
+msgstr "İadeler"
 
 #. module: hr_payroll
 #: model:hr.payroll.structure,name:hr_payroll.structure_002
+#, fuzzy
 msgid "Regular Pay"
-msgstr ""
+msgstr "Düzenli Ödeme"
 
 #. module: hr_payroll
 #: model:hr.payslip.input.type,name:hr_payroll.input_reimbursement
@@ -4492,19 +4816,21 @@ msgstr "Geri Ödeme"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid "Related Payslip"
-msgstr ""
+msgstr "İlgili Maaş Bordrosu"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__related_payslip_ids
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Related Payslips"
-msgstr ""
+msgstr "İlgili Bordrolar"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__related_payslip_count
+#, fuzzy
 msgid "Related payslip count"
-msgstr ""
+msgstr "İlgili maaş bordrosu sayısı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__remaining_amount
@@ -4513,8 +4839,9 @@ msgstr "Kalan Tutar"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__remaining_time
+#, fuzzy
 msgid "Remaining Time"
-msgstr ""
+msgstr "Kalan Süre"
 
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_salary_attachment_check_remaining_amount
@@ -4528,25 +4855,27 @@ msgstr "Ödenecek kalan tutar."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_attachment__remaining_time
+#, fuzzy
 msgid "Remaining time to be paid."
-msgstr ""
+msgstr "Ödenecek kalan süre."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 msgid "Remove"
-msgstr ""
+msgstr "Kaldır"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Remove \"Conflicting\" filter"
-msgstr ""
+msgstr "\"Çakışan\" filtresini kaldır"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/status_bubble/status_bubble.js:0
+#, fuzzy
 msgid "Remove State"
-msgstr ""
+msgstr "Eyaleti Kaldır"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -4557,7 +4886,7 @@ msgstr "Form"
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "Report Date"
-msgstr ""
+msgstr "Rapor Tarihi"
 
 #. module: hr_payroll
 #: model:ir.ui.menu,name:hr_payroll.menu_hr_payroll_report
@@ -4567,14 +4896,15 @@ msgstr "Raporlama"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid "Reporting - All reports that you can need during the year."
-msgstr ""
+msgstr "Raporlama - Yıl boyunca ihtiyaç duyabileceğiniz tüm raporlar."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_work_entry_export_mixin.py:0
 msgid "Resolve Conflicts"
-msgstr ""
+msgstr "Çakışmaları Çözüme Ulaştır"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__activity_user_id
@@ -4585,8 +4915,9 @@ msgstr "Sorumlu Kullanıcı"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
+#, fuzzy
 msgid "Restart"
-msgstr ""
+msgstr "Yeniden Başlat"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -4594,12 +4925,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Revert"
-msgstr ""
+msgstr "Eski haline çevirin"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_correction_wizard_form
+#, fuzzy
 msgid "Revert only"
-msgstr ""
+msgstr "Yalnızca geri döndür"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_type__round_days_type
@@ -4640,8 +4972,9 @@ msgstr "Kural Parametreleri"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_rule.py:0
+#, fuzzy
 msgid "Rule category and structure should belong to the same country"
-msgstr ""
+msgstr "Kural kategorisi ve yapısı aynı ülkeye ait olmalıdır"
 
 #. module: hr_payroll
 #: model:ir.ui.menu,name:hr_payroll.menu_action_hr_salary_rule_form
@@ -4651,8 +4984,9 @@ msgstr "Kurallar"
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/dashboard_empty_screen/dashboard_empty_screen.xml:0
+#, fuzzy
 msgid "Run Payroll"
-msgstr ""
+msgstr "Bordro Çalıştır"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_attachment__state__open
@@ -4685,18 +5019,21 @@ msgstr "Ücret"
 #: model:ir.actions.act_window,name:hr_payroll.hr_salary_attachment_action_view_employee
 #: model:ir.model,name:hr_payroll.model_hr_salary_attachment
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
+#, fuzzy
 msgid "Salary Adjustment"
-msgstr ""
+msgstr "Maaş Ayarlaması"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__salary_attachment_count
+#, fuzzy
 msgid "Salary Adjustment Count"
-msgstr ""
+msgstr "Maaş Ayarlama Sayısı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__salary_attachment_count
+#, fuzzy
 msgid "Salary Adjustment count"
-msgstr ""
+msgstr "Maaş Ayarlama sayısı"
 
 #. module: hr_payroll
 #. odoo-python
@@ -4709,8 +5046,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_tree
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
+#, fuzzy
 msgid "Salary Adjustments"
-msgstr ""
+msgstr "Maaş Ayarlamaları"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_category_form
@@ -4724,23 +5062,27 @@ msgstr "Ücret Hesaplama"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_rule__condition_select__property_input
+#, fuzzy
 msgid "Salary Input"
-msgstr ""
+msgstr "Maaş Girdisi"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_salary_rule_section
+#, fuzzy
 msgid "Salary Input Section"
-msgstr ""
+msgstr "Maaş Giriş Bölümü"
 
 #. module: hr_payroll
 #: model:ir.ui.menu,name:hr_payroll.menu_hr_salary_rule_section
+#, fuzzy
 msgid "Salary Input Sections"
-msgstr ""
+msgstr "Maaş Giriş Bölümleri"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
+#, fuzzy
 msgid "Salary Inputs"
-msgstr ""
+msgstr "Maaş Girdileri"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_salary_rule
@@ -4765,8 +5107,9 @@ msgstr "Ücret Kural Kategorisi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_rule_parameter__salary_rule_count
+#, fuzzy
 msgid "Salary Rule Count"
-msgstr ""
+msgstr "Maaş Kuralı Sayısı"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_rule_parameter
@@ -4786,8 +5129,9 @@ msgstr "Ücret Kural Parametreleri"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.action_hr_salary_rule_section
+#, fuzzy
 msgid "Salary Rule Sections"
-msgstr ""
+msgstr "Maaş Kuralı Bölümleri"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.action_salary_rule_form
@@ -4835,7 +5179,7 @@ msgstr "Ücret Yapısı"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 msgid "Save"
-msgstr ""
+msgstr "Kaydet"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure__schedule_pay
@@ -4846,23 +5190,24 @@ msgstr "Ücret Ödeme Türü"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_employee_declaration_view_search
 msgid "Search Declarations"
-msgstr ""
+msgstr "Beyanları Ara"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_line_search
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_search
 msgid "Search Headcount"
-msgstr ""
+msgstr "Kadro Sayısını Ara"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
+#, fuzzy
 msgid "Search Pay Run"
-msgstr ""
+msgstr "Pay Run'ı arayın"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_dashboard_warning_view_search
 msgid "Search Payroll Dashboard Warning"
-msgstr ""
+msgstr "Bordro Panosu Uyarısını Ara"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_register
@@ -4873,13 +5218,15 @@ msgstr "Ücret Bordro Satırları Arama"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
+#, fuzzy
 msgid "Search Payslip Other Input"
-msgstr ""
+msgstr "Maaş Bordrosu Ara Diğer Girdiler"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_work_days_view_search_report
+#, fuzzy
 msgid "Search Payslip Work Days"
-msgstr ""
+msgstr "Maaş Bordrosu Çalışma Günlerini Ara"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
@@ -4888,8 +5235,9 @@ msgstr "Ücret Bordroları Arama"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_search
+#, fuzzy
 msgid "Search Salary Adjustment"
-msgstr ""
+msgstr "Arama Maaş Ayarlaması"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_rule_filter
@@ -4904,7 +5252,7 @@ msgstr "Yapı Türü Arama"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_section
 msgid "Section"
-msgstr ""
+msgstr "Bölüm"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -4912,27 +5260,31 @@ msgstr ""
 #: code:addons/hr_payroll/static/src/views/payslip_list/hr_payslip_list_controller.xml:0
 #: code:addons/hr_payroll/static/src/views/payslip_run_version_list/hr_version_list_controller.xml:0
 msgid "Select"
-msgstr ""
+msgstr "Seçme"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.action_payroll_hr_version_list_view_payrun
+#, fuzzy
 msgid "Select Employees"
-msgstr ""
+msgstr "Çalışanları Seçin"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_benefit_selector_list
+#, fuzzy
 msgid "Select your benefits"
-msgstr ""
+msgstr "Avantajlarınızı seçin"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_default_boolean
+#, fuzzy
 msgid "Selected by Default"
-msgstr ""
+msgstr "Varsayılan Olarak Seçili"
 
 #. module: hr_payroll
 #: model:ir.actions.server,name:hr_payroll.action_hr_payroll_remove_from_payrun
+#, fuzzy
 msgid "Send to Off-Cycle"
-msgstr ""
+msgstr "Off-Cycle'a Gönder"
 
 #. module: hr_payroll
 #: model:mail.template,description:hr_payroll.mail_template_new_payslip
@@ -4943,7 +5295,7 @@ msgstr "Yeni bordrosunu bildirmek için çalışana gönderildi"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__9
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__9
 msgid "September"
-msgstr ""
+msgstr "Eylül"
 
 #. module: hr_payroll
 #. odoo-python
@@ -4984,14 +5336,16 @@ msgstr "Ayarlar"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__show_schedule_pay
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__show_schedule_pay
+#, fuzzy
 msgid "Show Schedule Pay"
-msgstr ""
+msgstr "Gösteri Programı Ödemesi"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid "Similar payslips found"
-msgstr ""
+msgstr "Benzer maaş bordroları bulundu"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5000,27 +5354,32 @@ msgid ""
 "Some work entries are in conflict. Please resolve the conflicts before "
 "exporting."
 msgstr ""
+"Bazı iş girişlerinde çakışma mevcut. Lütden dışa aktarmadan önce söz konusu "
+"çakışmaları çözün."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip_run.py:0
+#, fuzzy
 msgid "Some work entries could not be validated. Time intervals to look for:%s"
-msgstr ""
+msgstr "Bazı iş girişleri doğrulanamadı. Aranacak zaman aralıkları:%s"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__space_above
+#, fuzzy
 msgid "Space Above"
-msgstr ""
+msgstr "Yukarıdaki Alan"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
 msgid "Split"
-msgstr ""
+msgstr "Böl"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
+#, fuzzy
 msgid "Split it in individual adjustment"
-msgstr ""
+msgstr "Bireysel ayarlamaya bölün"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__standard_calendar_id
@@ -5031,7 +5390,7 @@ msgstr "Standart Takvim"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_payrun
 msgid "Start"
-msgstr ""
+msgstr "Başla"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__date_start
@@ -5059,8 +5418,9 @@ msgstr "Durumu"
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/status_bubble/status_bubble.js:0
+#, fuzzy
 msgid "Status Bubble"
-msgstr ""
+msgstr "Durum Balonu"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip__activity_state
@@ -5078,21 +5438,26 @@ msgstr ""
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid ""
 "Still looking for more ? Here is a video to help you <i class=\"fa fa-video-"
 "camera fa-2\" aria-hidden=\"true\" contenteditable=\"false\">​</i>"
 msgstr ""
+"Hala daha fazlasını mı arıyorsunuz? İşte size yardımcı olacak bir video <i "
+"class=\"fa fa-video-camera fa-2\" aria-hidden=\"true\" contenteditable="
+"\"false\"></i>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
 msgid "Stop"
-msgstr ""
+msgstr "Durdur"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule_section__struct_ids
+#, fuzzy
 msgid "Struct"
-msgstr ""
+msgstr "Strüktür"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_line__struct_id
@@ -5136,8 +5501,9 @@ msgstr "Yapılar"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "Suffix (e.g. per km)"
-msgstr ""
+msgstr "Son ek (örn. km başına)"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__sum_worked_hours
@@ -5157,7 +5523,7 @@ msgstr "Toplam Gün Sayısı"
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_dashboard_warning__color
 msgid "Tag color. No color means black."
-msgstr ""
+msgstr "Etiket rengi. Renk yoksa siyah anlamına gelir."
 
 #. module: hr_payroll
 #: model:hr.salary.rule,name:hr_payroll.default_gross_salary_rule
@@ -5165,12 +5531,12 @@ msgstr ""
 #: model:hr.salary.rule,name:hr_payroll.hr_payroll_structure_worker_001_gross_salary_rule
 #: model:hr.salary.rule.category,name:hr_payroll.GROSS
 msgid "Taxable Salary"
-msgstr ""
+msgstr "Vergiye Tabi Ücret"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure__report_id
 msgid "Template"
-msgstr ""
+msgstr "Şablon"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip__country_code
@@ -5186,12 +5552,17 @@ msgstr ""
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payslip_action_helper/payslip_action_helper.xml:0
+#, fuzzy
 msgid ""
 "The Payslip is the computation of the pay based on a period of time for an "
 "employee.\n"
 "                        It computes the Net salary according to the Salary "
 "Rules you've defined in the configuration."
 msgstr ""
+"Maaş Bordrosu, bir çalışan için belirli bir süreye dayalı olarak maaşın "
+"hesaplanmasıdır.\n"
+"                        Yapılandırmada tanımladığınız Maaş Kurallarına göre "
+"Net maaşı hesaplar."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_work_entry_type__is_unforeseen
@@ -5209,6 +5580,9 @@ msgid ""
 "The YTD reset day must be a valid day of the month : since the current month "
 "is %(month)s, it should be between 1 and %(day)s."
 msgstr ""
+"Mevcut yılın başından günümüze kadar olan süre (YTD) sıfırlama günü, ayın "
+"geçerli bir günü olmalıdır: mevcut ay %(month)s olduğundan, 1 ile %(day)s "
+"arasında olmalıdır."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_edit_payslip_line__code
@@ -5241,15 +5615,18 @@ msgstr "Bu çalışılan günlerin ait olduğu sözleşme belirtilmelidir"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_index_form_view
+#, fuzzy
 msgid ""
 "The current employee records for each employee will be indexed. All "
 "posterior records corresponding to the same contract will also be indexed."
 msgstr ""
+"Her bir çalışan için mevcut çalışan kayıtları indekslenecektir. Aynı "
+"sözleşmeye karşılık gelen tüm sonraki kayıtlar da endekslenecektir."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 msgid "The default working hours are set in configuration."
-msgstr ""
+msgstr "Varsayılan çalışma saatleri yapılandırmada ayarlanır."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5260,34 +5637,44 @@ msgstr "Yapı türüne göre maaş bordrosunun süresi doğru değildir."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_correction_wizard__employee_id
+#, fuzzy
 msgid "The employee for whom the payslip correction is being made."
-msgstr ""
+msgstr "Maaş bordrosu düzeltmesi yapılan çalışan."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
+#, fuzzy
 msgid "The employee's data has been updated since this payslip was created."
 msgstr ""
+"Çalışanın verileri bu maaş bordrosu oluşturulduktan sonra güncellenmiştir."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid "The field is not valid:%s"
-msgstr ""
+msgstr "Alan geçerli değil:%s"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_declaration_mixin_view_form
+#, fuzzy
 msgid ""
 "The files won't be posted in the employee portal if you don't have the "
 "Documents app."
 msgstr ""
+"Belgeler uygulamasına sahip değilseniz dosyalar çalışan portalında "
+"yayınlanmayacaktır."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_work_entry_export_mixin.py:0
+#, fuzzy
 msgid ""
 "The following %(model_name)s are missing a %(field_name)s:\n"
 "    • %(names)s"
 msgstr ""
+"Aşağıdaki %(model_name)s adresinde bir %(field_name)s eksiktir:\n"
+"    - %(names)s"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5311,8 +5698,9 @@ msgstr ""
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid "The payslip's company doesn't match the batch's"
-msgstr ""
+msgstr "Maaş bordrosundaki şirket, partinin şirketiyle eşleşmiyor"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5329,31 +5717,36 @@ msgstr "Bordro(lar) gruba eklendi"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
+#, fuzzy
 msgid ""
 "The salary adjustment you're trying to remove is still running. You can’t "
 "delete unless you change it to completed or cancelled."
 msgstr ""
+"Kaldırmaya çalıştığınız maaş ayarlaması hala devam ediyor. Tamamlandı veya "
+"iptal edildi olarak değiştirmediğiniz sürece silemezsiniz."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "The selected payslips should be linked to the same batch"
-msgstr ""
+msgstr "Seçilen bordrolar aynı toplu işlem ile ilişkili olmalıdır"
 
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_payroll_headcount_date_range
 msgid "The start date must be anterior to the end date."
-msgstr ""
+msgstr "Başlangıç tarihi bitiş tarihinden önce olmalıdır."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "The total returned by the salary rule is calculated as:"
-msgstr ""
+msgstr "Maaş kuralı tarafından döndürülen toplam şu şekilde hesaplanır:"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_input__version_id
+#, fuzzy
 msgid "The version this input should be applied to"
-msgstr ""
+msgstr "Bu girdinin uygulanması gereken sürüm"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_work_entry_type__unpaid_structure_ids
@@ -5363,29 +5756,34 @@ msgstr "Bu çalışma girdisi, bordroda çalışana herhangi bir ödeme sağlama
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid ""
 "There are previous payslips with a negative amount for a total of %s to "
 "report."
 msgstr ""
+"Raporlanacak toplam %s için negatif tutarlı önceki maaş bordroları vardır."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_declaration_mixin.py:0
 msgid "There is no declaration to generate for the given period"
-msgstr ""
+msgstr "Verilen dönem için oluşturulacak herhangi bir beyan yok"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
+#, fuzzy
 msgid ""
 "There is no valid payslip (validated and net wage > 0) to generate the file."
 msgstr ""
+"Dosyayı oluşturmak için geçerli bir maaş bordrosu (onaylanmış ve net ücret > "
+"0) yoktur."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "There should be at least one payslip to generate the file."
-msgstr ""
+msgstr "Dosyayı oluşturmak için en az bir maaş bordrosu olmalıdır."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5396,8 +5794,9 @@ msgstr "Bu işlem, doğrulanmış maaş bordrolarında yasaktır."
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid "This action is restricted to payroll officers only."
-msgstr ""
+msgstr "Bu işlem sadece bordro memurlarıyla sınırlıdır."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_rule_parameter__code
@@ -5418,31 +5817,38 @@ msgstr ""
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid ""
 "This is a corrected payslip.\n"
 "Find the correction under this name: %(payslip)s"
 msgstr ""
+"Bu düzeltilmiş bir maaş bordrosudur.\n"
+"Düzeltmeyi bu isim altında bulabilirsiniz: %(payslip)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid ""
 "This is a refunded payslip.\n"
 "Find the refund under this name: %(payslip)s"
 msgstr ""
+"Bu iade edilmiş bir maaş bordrosudur.\n"
+"Bu isim altında geri ödemeyi bulun: %(payslip)s"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid ""
 "This is where you and your team will manage your <strong>Payroll</strong> ! "
 "🚀"
-msgstr ""
+msgstr "Burası sizin ve ekibinizin <strong>Bordro</strong>! 🚀"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_edit_payslip_lines_wizard.py:0
 msgid "This payslip has been manually edited by %(user)s."
-msgstr ""
+msgstr "Bu maaş bordrosu, %(user)s tarafından manuel olarak düzenlendi."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5459,21 +5865,24 @@ msgstr "Bu rapor, iş girişleriniz üzerinde analiz yapar."
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_work_entry.py:0
+#, fuzzy
 msgid ""
 "This work entry cannot be modified because it is already associated with a "
 "generated payslip."
 msgstr ""
+"Bu iş girişi değiştirilemez çünkü zaten oluşturulmuş bir maaş bordrosu ile "
+"ilişkilendirilmiştir."
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/dashboard_empty_screen/dashboard_empty_screen.xml:0
 msgid "Time Off"
-msgstr ""
+msgstr "İzin"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__title
 msgid "Title"
-msgstr ""
+msgstr "Başlık"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount__date_to
@@ -5512,13 +5921,15 @@ msgstr "Toplam Tutar"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__total_amount_display
+#, fuzzy
 msgid "Total Amount Display"
-msgstr ""
+msgstr "Toplam Tutar Göstergesi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_run__total_employer_cost
+#, fuzzy
 msgid "Total Employer Cost"
-msgstr ""
+msgstr "Toplam İşveren Maliyeti"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -5536,6 +5947,8 @@ msgid ""
 "Total amount must be strictly positive and greater than or equal to the "
 "payslip amount."
 msgstr ""
+"Toplam tutar kesinlikle pozitif olmalı ve maaş bordrosundaki tutardan büyük "
+"veya ona eşit olmalıdır."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_attachment__total_amount
@@ -5549,8 +5962,9 @@ msgstr "Toplam katılım ve izin saatleri (ücretli veya ücretsiz)"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid "Try the following 👇"
-msgstr ""
+msgstr "Aşağıdakileri deneyin 👇"
 
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_rule_parameter_unique_code
@@ -5581,7 +5995,7 @@ msgstr "Kayıtlardaki istisna etkinliğinin türü."
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__underline
 msgid "Underline"
-msgstr ""
+msgstr "Altı çizili"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_type__is_unforeseen
@@ -5591,7 +6005,7 @@ msgstr "Öngörülmeyen Devamsızlık"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_unit
 msgid "Unit"
-msgstr ""
+msgstr "Birim"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5602,7 +6016,7 @@ msgstr "Bilinmeyen Durum"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_attachment__duration_type__unlimited
 msgid "Unlimited"
-msgstr ""
+msgstr "Sınırsız"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_work_entry_type_view_form_inherit
@@ -5628,19 +6042,21 @@ msgstr "Yapı Türlerinde Ücretsiz (Ödenmeyen)"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_rule.py:0
+#, fuzzy
 msgid "Unsupported operator %s"
-msgstr ""
+msgstr "Desteklenmeyen operatör %s"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_tree
 msgid "Until"
-msgstr ""
+msgstr "Bitiş"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid "Untrusted bank accounts"
-msgstr ""
+msgstr "Güvenilmeyen banka hesapları"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_type__round_days_type__up
@@ -5662,8 +6078,9 @@ msgstr "Hesaplama sırasını düzenlemek için kullanın"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__appears_on_employee_cost_dashboard
+#, fuzzy
 msgid "Used to compute the employer cost of a payslip."
-msgstr ""
+msgstr "Maaş bordrosunun işveren maliyetini hesaplamak için kullanılır."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_line__appears_on_payslip
@@ -5673,8 +6090,9 @@ msgstr "Ücret bordrosu üzerinde ücret kuralı göstermek için kullanılır."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
+#, fuzzy
 msgid "User Language"
-msgstr ""
+msgstr "Kullanıcı Dili"
 
 #. module: hr_payroll
 #: model:res.groups,comment:hr_payroll.group_hr_payroll_user
@@ -5690,8 +6108,9 @@ msgstr "Kullanıcı, uygulamaya tam erişim hakkına sahiptir."
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_rule_parameter__valid_since
+#, fuzzy
 msgid "Valid Since"
-msgstr ""
+msgstr "O zamandan beri geçerli"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_tree
@@ -5705,7 +6124,6 @@ msgstr "Sürümü Doğrula"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state__validated
-#: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__validated
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_report__state__validated
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_report
@@ -5717,17 +6135,19 @@ msgstr "Doğrulanmış"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_employee_mixin__version_ids
 msgid "Version"
-msgstr ""
+msgstr "Sürüm"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__version_names
+#, fuzzy
 msgid "Version Names"
-msgstr ""
+msgstr "Sürüm Adları"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure__version_properties_definition
+#, fuzzy
 msgid "Version Properties Definition"
-msgstr ""
+msgstr "Sürüm Özellikleri Tanımı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_rule_parameter__parameter_version_ids
@@ -5737,19 +6157,20 @@ msgstr "Versiyon"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_form
+#, fuzzy
 msgid "Visible to all"
-msgstr ""
+msgstr "Herkes tarafından görülebilir"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__wage
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__wage
 msgid "Wage"
-msgstr ""
+msgstr "Ücret"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__wage_on_payroll
 msgid "Wage On Payroll"
-msgstr ""
+msgstr "Bordro Ücreti"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__wage_type
@@ -5763,7 +6184,7 @@ msgstr "Ücret Türü"
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_index_wizard.py:0
 msgid "Wage indexed by %(percentage).2f%% on %(date)s"
-msgstr ""
+msgstr "Ücret %(date)s tarihinde %(percentage).2f%%  oranında endekslenmiştir."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
@@ -5774,17 +6195,18 @@ msgstr "Bekleyen"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__warning
 msgid "Warning"
-msgstr ""
+msgstr "Uyarı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_dashboard_warning__color
 msgid "Warning Color"
-msgstr ""
+msgstr "Uyarı Rengi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__warning_count
+#, fuzzy
 msgid "Warning Count"
-msgstr ""
+msgstr "Uyarı Sayısı"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5801,9 +6223,11 @@ msgstr "Uyarılar"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid ""
 "Warnings - A set of clickable warnings that'll lead you to faulty records."
 msgstr ""
+"Uyarılar - Sizi hatalı kayıtlara yönlendirecek bir dizi tıklanabilir uyarı."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5817,6 +6241,13 @@ msgid ""
 "Missing work entries are like the Bermuda Triangle for paychecks. Let's keep "
 "your colleague's earnings from vanishing into thin air!"
 msgstr ""
+"%(employee_name)s adlı çalışanın takvimindeki boşluklara dikkat edin \n"
+"\n"
+"Lütfen %(employee_name)s adlı çalışanın eksik iş girişlerini tamamlayın:%"
+"(time_intervals_str)s \n"
+"\n"
+"Eksik iş girişleri, maaş çekleri için Bermuda Şeytan Üçgeni gibidir. Çalışma "
+"arkadaşlarınızın kazançlarının bir anda yok olmasını önleyelim!"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_work_entry_type__round_days_type
@@ -5851,10 +6282,13 @@ msgstr "%(year)s yılının %(week)s ve %(week1)s haftaları"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__title
+#, fuzzy
 msgid ""
 "When selected, this salary rule will only be displayed as a title with its "
 "description, without numeric values."
 msgstr ""
+"Seçildiğinde, bu maaş kuralı sayısal değerler olmadan yalnızca açıklamasıyla "
+"birlikte bir başlık olarak görüntülenecektir."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_work_entry_type__round_days
@@ -5882,8 +6316,9 @@ msgstr "Puantaj Kayıtları"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid "Work Entries - Which time did they work ?"
-msgstr ""
+msgstr "İş Girişleri - Hangi saatte çalıştılar?"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.hr_work_entry_report_action
@@ -5903,7 +6338,7 @@ msgstr "İş Girişleri Analiz Raporu"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_work_entry_export_mixin.py:0
 msgid "Work Entries Export"
-msgstr ""
+msgstr "Çalışma Girdilerini Dışa Aktar"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -5919,22 +6354,22 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_work_entry_export_mixin.py:0
 msgid "Work Entries for %(employee)s"
-msgstr ""
+msgstr "%(employee)s için iş girişleri"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_employee_mixin__work_entry_ids
 msgid "Work Entry"
-msgstr ""
+msgstr "Puantaj"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_work_entry_export_employee_mixin
 msgid "Work Entry Export Employee"
-msgstr ""
+msgstr "Çalışan İş Girişi Dışa Aktar"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_work_entry_export_mixin
 msgid "Work Entry Export Mixin"
-msgstr ""
+msgstr "İş Girişi Dışa Aktar Mixin"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__work_entry_source
@@ -5947,7 +6382,7 @@ msgstr "Puantaj Kaydı Kaynağı"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__work_entry_source_calendar_invalid
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__work_entry_source_calendar_invalid
 msgid "Work Entry Source Calendar Invalid"
-msgstr ""
+msgstr "İş girişi kaynak takvimi geçersiz"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_worked_days_line__work_entry_type_id
@@ -5960,7 +6395,7 @@ msgstr "Puantaj Kaydı Türü"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
 msgid "Work Permit Expiration Notice Period"
-msgstr ""
+msgstr "Çalışma İzni Bitişi için Bildirim Süresi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_structure_type__default_work_entry_type_id
@@ -5994,8 +6429,9 @@ msgstr "Çalışılan Gün Satırları"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_edit_payslip_lines_wizard.py:0
+#, fuzzy
 msgid "Worked Days lines Changes:"
-msgstr ""
+msgstr "Çalışılan Gün hatları Değişir:"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_structure__use_worked_day_lines
@@ -6006,21 +6442,22 @@ msgstr "Çalışılan günler ücret bordrolarında hesaplanmaz / gösterilmez."
 
 #. module: hr_payroll
 #: model:hr.payroll.structure,name:hr_payroll.structure_worker_001
+#, fuzzy
 msgid "Worker Pay"
-msgstr ""
+msgstr "İşçi Ücretleri"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__resource_calendar_id
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__resource_calendar_id
 msgid "Working Hours"
-msgstr ""
+msgstr "Çalışma Saatleri"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_headcount_working_rate
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__working_rate_ids
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_line_search
 msgid "Working Rate"
-msgstr ""
+msgstr "Çalışma Oranı"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_report__work_entry_source__calendar
@@ -6058,6 +6495,9 @@ msgid ""
 "Wrong rule parameter value for %(rule_parameter_name)s at date %(date)s.\n"
 "%(error)s"
 msgstr ""
+"%(date)s tarihinde %(rule_parameter_name)s için yanlış kural parametresi "
+"değeri.\n"
+"%(error)s"
 
 #. module: hr_payroll
 #. odoo-python
@@ -6067,6 +6507,9 @@ msgid ""
 "- Warning: %(warning)s\n"
 "- Error: %(error)s"
 msgstr ""
+"Yanlış uyarı hesaplama kodu tanımlanmış:\n"
+"- Uyarı: %(warning)s\n"
+"- Hata: %(error)s"
 
 #. module: hr_payroll
 #. odoo-python
@@ -6077,84 +6520,97 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_worked_days__ytd
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "YTD"
-msgstr ""
+msgstr "Mevcut Yılın Başından Günümüze Kadar Olan Süre"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
 msgid "YTD Reset Date"
-msgstr ""
+msgstr "Yılbaşından Bugüne Sıfırlama Tarihi"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_res_company__ytd_reset_day
 #: model:ir.model.fields,field_description:hr_payroll.field_res_config_settings__ytd_reset_day
 msgid "YTD Reset Day of the month"
-msgstr ""
+msgstr "Ayın Yılbaşından bugüne Sıfırlama Günü"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_res_company__ytd_reset_month
 #: model:ir.model.fields,field_description:hr_payroll.field_res_config_settings__ytd_reset_month
 msgid "YTD Reset Month"
-msgstr ""
+msgstr "Yılbaşından Bugüne Sıfırlama Ayı"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_declaration_mixin__year
 msgid "Year"
-msgstr ""
+msgstr "Yıl"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_lines_wizard__ytd_computation
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure__ytd_computation
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__ytd_computation
 msgid "Year to Date Computation"
-msgstr ""
+msgstr "Yılbaşından Bu Yana Hesaplama"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
+#, fuzzy
 msgid ""
 "You can only split a salary adjustment if it has more than one employee."
 msgstr ""
+"Bir maaş ayarlamasını yalnızca birden fazla çalışan varsa bölebilirsiniz."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
+#, fuzzy
 msgid "You can't confirm cancelled payslips."
-msgstr ""
+msgstr "İptal edilen maaş bordrolarını onaylayamazsınız."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip_run.py:0
+#, fuzzy
 msgid ""
 "You can't delete a pay run with payslips if they are not draft or cancelled."
 msgstr ""
+"Taslak veya iptal edilmemişlerse, maaş bordrolarıyla birlikte bir ödeme "
+"çalışmasını silemezsiniz."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_structure.py:0
+#, fuzzy
 msgid "You cannot add a Salary input without a section."
-msgstr ""
+msgstr "Bir bölüm olmadan Maaş girişi ekleyemezsiniz."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip_input_type.py:0
+#, fuzzy
 msgid ""
 "You cannot archive an input type if there exists a running salary adjustment "
 "of this type."
 msgstr ""
+"Bu türde devam eden bir maaş ayarlaması varsa bir girdi türünü "
+"arşivleyemezsiniz."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "You cannot cancel the payment if the payslip has not been paid."
-msgstr ""
+msgstr "Maaş bordrosu ödenmemişse ödemeyi iptal edemezsiniz."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_rule_category.py:0
+#, fuzzy
 msgid ""
 "You cannot change the country of category %s as it is used in existing "
 "Salary Rules"
 msgstr ""
+"%s kategorisinin ülkesini mevcut Maaş Kurallarında kullanıldığı gibi "
+"değiştiremezsiniz"
 
 #. module: hr_payroll
 #. odoo-python
@@ -6169,46 +6625,56 @@ msgstr ""
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
+#, fuzzy
 msgid "You cannot delete a salary adjustment that is linked to a payslip!"
-msgstr ""
+msgstr "Maaş bordrosuna bağlı bir maaş ayarlamasını silemezsiniz!"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_work_entry_type.py:0
 msgid "You cannot delete work entry type(s). Instead archive it."
-msgstr ""
+msgstr "Çalışma girişi tür(ler)ini silemezsiniz. Bunun yerine arşivleyin."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "You cannot record a payment on multi employees attachments."
-msgstr ""
+msgstr "Birden fazla çalışanın ekine ödeme kaydedemezsiniz."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip_run.py:0
+#, fuzzy
 msgid ""
 "You cannot reset a pay run to draft if some of the payslips have already "
 "been paid."
 msgstr ""
+"Maaş bordrolarından bazıları zaten ödenmişse, bir ödeme çalışmasını taslağa "
+"sıfırlayamazsınız."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_work_entry_export_mixin.py:0
 msgid "You must be logged in a %(country_code)s company to use this feature"
 msgstr ""
+"Bu özelliği kullanmak için bir %(country_code)s şirketi hesabına giriş "
+"yapmış olmanız gerekir"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_declaration_mixin.py:0
 msgid "You must be logged in a %s company to use this feature"
 msgstr ""
+"Bu özelliği kullanmak için bir %s şirketi hesabına giriş yapmış olmanız "
+"gerekir"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip_run.py:0
+#, fuzzy
 msgid "You must select employee(s) version(s) to generate payslip(s)."
 msgstr ""
+"Maaş bordro(ları) oluşturmak için çalışanın versiyon(lar)ını seçmelisiniz."
 
 #. module: hr_payroll
 #. odoo-python
@@ -6220,8 +6686,9 @@ msgstr ""
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip_run.py:0
+#, fuzzy
 msgid "You must set a start and end date for the Pay Run"
-msgstr ""
+msgstr "Ödeme Çalışması için bir başlangıç ve bitiş tarihi belirlemelisiniz"
 
 #. module: hr_payroll
 #. odoo-python
@@ -6233,18 +6700,19 @@ msgstr ""
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid "You'll be able to access all the steps of the payroll process"
-msgstr ""
+msgstr "Bordro sürecinin tüm adımlarına erişebileceksiniz"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_type__current_companies_country_codes
 msgid "country codes"
-msgstr ""
+msgstr "ülke kodları"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_type_view_form
 msgid "e.g. Child Support"
-msgstr ""
+msgstr "örn. Çocuk Yardımı"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_structure_type_view_form
@@ -6254,7 +6722,7 @@ msgstr "örn. Çalışan"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_dashboard_warning_view_form
 msgid "e.g. Employee Without Contracts"
-msgstr ""
+msgstr "örn. Sözleşmesiz Çalışan"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -6274,48 +6742,53 @@ msgstr "örn. Düzenli Ödeme"
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payrun_card/payrun_card.xml:0
+#, fuzzy
 msgid "employer cost"
-msgstr ""
+msgstr "işveren maliyeti"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
 msgid "end in"
-msgstr ""
+msgstr "şu tarihte sona erer"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
+#, fuzzy
 msgid "few days"
-msgstr ""
+msgstr "birkaç gün"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
 msgid "from"
-msgstr ""
+msgstr "kimden"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/dashboard_empty_screen/dashboard_empty_screen.xml:0
+#, fuzzy
 msgid "generates"
-msgstr ""
+msgstr "üretir"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payrun_card/payrun_card.xml:0
+#, fuzzy
 msgid "gross"
-msgstr ""
+msgstr "brüt"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_correction_wizard_form
+#, fuzzy
 msgid "have been affected by this version's changes."
-msgstr ""
+msgstr "bu sürümdeki değişikliklerden etkilenmiştir."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_headcount.py:0
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__headcount_id
 msgid "headcount_id"
-msgstr ""
+msgstr "kayıt_kimliği"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -6324,21 +6797,22 @@ msgstr "https://www.odoo.com/fr_FR/slides/slide/manage-payroll-1002"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid "https://www.odoo.com/fr_FR/slides/smartclass-payroll-348"
-msgstr ""
+msgstr "https://www.odoo.com/fr_FR/slides/smartclass-Bordro-348"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "id"
-msgstr ""
+msgstr "kimlik"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payrun_card/payrun_card.xml:0
 msgid "net"
-msgstr ""
+msgstr "net"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
@@ -6348,16 +6822,18 @@ msgstr "ile ilgili"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__done_date
+#, fuzzy
 msgid "payslip confirmation Date"
-msgstr ""
+msgstr "maaş bordrosu onay tarihi"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payrun_card/payrun_card.xml:0
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_correction_wizard_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
+#, fuzzy
 msgid "payslips"
-msgstr ""
+msgstr "maaş bordroları"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__amount_percentage_base
@@ -6367,13 +6843,14 @@ msgstr "sonuç bir değişkene etkilenecektir"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
 msgid "until"
-msgstr ""
+msgstr "a kadar"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/dashboard_empty_screen/dashboard_empty_screen.xml:0
+#, fuzzy
 msgid "used to"
-msgstr ""
+msgstr "için kullanılır"
 
 #. module: hr_payroll
 #: model:mail.template,subject:hr_payroll.mail_template_new_payslip
@@ -6382,8 +6859,12 @@ msgstr "{{ object.employee_id.name }}, sizin için yeni bir maaş bordrosu hazı
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
+#, fuzzy
 msgid "👆See the Menu there, on the top?"
-msgstr ""
+msgstr "👆Üstteki menüyü görüyor musun?"
+
+#~ msgid "Debug Payslip"
+#~ msgstr "Hata Ayıklama Maaş Bordrosu"
 
 #~ msgid "# Payslip"
 #~ msgstr "# Ücret Bordrosu"

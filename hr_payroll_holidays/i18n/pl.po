@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-21 14:24+0000\n"
+"PO-Revision-Date: 2025-11-07 13:51+0000\n"
 "Last-Translator: \"Marta (wacm)\" <wacm@odoo.com>\n"
 "Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll_holidays/pl/>\n"
@@ -90,7 +90,7 @@ msgstr "Nazwa wyświetlana"
 #. module: hr_payroll_holidays
 #: model:ir.model,name:hr_payroll_holidays.model_hr_employee
 msgid "Employee"
-msgstr ""
+msgstr "Pracownik"
 
 #. module: hr_payroll_holidays
 #: model:ir.model,name:hr_payroll_holidays.model_hr_version
@@ -124,7 +124,7 @@ msgstr "ID"
 #. module: hr_payroll_holidays
 #: model:ir.model.fields,field_description:hr_payroll_holidays.field_hr_employee__leave_ids
 msgid "Leave"
-msgstr ""
+msgstr "Urlop"
 
 #. module: hr_payroll_holidays
 #: model:mail.activity.type,name:hr_payroll_holidays.mail_activity_data_hr_leave_to_defer

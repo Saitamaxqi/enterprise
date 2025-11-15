@@ -5,13 +5,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Bren Driesen <brdri@odoo.com>, 2025.
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-15 16:33+0000\n"
-"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:42+0000\n"
+"PO-Revision-Date: 2025-11-08 20:04+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/ai/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -208,8 +209,8 @@ msgstr ""
 "gedetailleerd record bekijken, gegevens sorteren.\n"
 "\n"
 "            Belangrijkste functies:\n"
-"            - Meerdere filters op naam toepassen (vanuit menu's zoekweergave)"
-"\n"
+"            - Meerdere filters op naam toepassen (vanuit menu's "
+"zoekweergave)\n"
 "            - Records groeperen op beschikbare velden\n"
 "            - Zoeken binnen specifieke velden op tekst\n"
 "            - Records weergeven in een sorteerbare tabel\n"
@@ -727,7 +728,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__checksum
 msgid "Checksum/SHA1"
-msgstr ""
+msgstr "Checksum/SHA1"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__content
@@ -884,7 +885,7 @@ msgstr "Bewerken"
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_prompt.xml:0
 msgid "Edit Field Prompt"
-msgstr ""
+msgstr "Veldprompt bewerken"
 
 #. module: ai
 #. odoo-javascript
@@ -900,7 +901,7 @@ msgstr "E-mailsjablonen"
 #. module: ai
 #: model:ir.model,name:ai.model_mail_thread
 msgid "Email Thread"
-msgstr ""
+msgstr "E-mail discussie"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__embedding_model
@@ -948,7 +949,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "Field Selector"
-msgstr ""
+msgstr "Veldselector"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__type__binary
@@ -984,7 +985,7 @@ msgstr "Google AI API-sleutel"
 #. module: ai
 #: model:ir.model,name:ai.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP routing"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__has_embedding_generation_failed
@@ -1157,7 +1158,7 @@ msgstr "Laatst bijgewerkt op"
 
 #. module: ai
 #. odoo-javascript
-#: code:addons/ai/static/src/web/systray_action.js:0
+#: code:addons/ai/static/src/ai_chat_launcher_service.js:0
 msgid "Log Note"
 msgstr "Lognotitie"
 
@@ -1186,7 +1187,7 @@ msgstr "Maximumlengte"
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__mimetype
 msgid "Mime Type"
-msgstr ""
+msgstr "Mime Type"
 
 #. module: ai
 #. odoo-python
@@ -1253,11 +1254,9 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
 msgid ""
-"No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, and "
+"No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, CSV, and "
 "OpenDocument files are allowed."
 msgstr ""
-"Geen geldige bestanden om te uploaden. Alleen pfd-, Word-, PowerPoint-, "
-"Excel-, Tekst- en OpenDocument-bestanden zijn toegestaan."
 
 #. module: ai
 #. odoo-javascript
@@ -1351,7 +1350,7 @@ msgstr "Record"
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_records_selector_plugin.js:0
 msgid "Records Selector"
-msgstr ""
+msgstr "Records-selector"
 
 #. module: ai
 #. odoo-javascript
@@ -1399,7 +1398,7 @@ msgstr "Selecteer een record"
 
 #. module: ai
 #. odoo-javascript
-#: code:addons/ai/static/src/web/systray_action.js:0
+#: code:addons/ai/static/src/ai_chat_launcher_service.js:0
 msgid "Send Message"
 msgstr "Verstuur bericht"
 
@@ -1452,11 +1451,8 @@ msgstr ""
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
 msgid ""
 "Some files have invalid formats and were skipped: %s. Only PDF, Word, "
-"PowerPoint, Excel, Text, and OpenDocument files are allowed."
+"PowerPoint, Excel, Text, CSV, and OpenDocument files are allowed."
 msgstr ""
-"Sommige bestanden hebben ongeldige formaten en zijn overgeslagen: %s. Alleen "
-"pdf-, Word-, PowerPoint-, Excel-, Tekst- en OpenDocument-bestanden zijn "
-"toegestaan."
 
 #. module: ai
 #. odoo-javascript
@@ -1572,8 +1568,8 @@ msgid ""
 "The type of the parameter '%(name)s' is incorrect. It should be '%"
 "(expected_param_type)s'."
 msgstr ""
-"Het parametertype '%(name)s' is onjuist. Het moet zijn: "
-"'%(expected_param_type)s'."
+"Het parametertype '%(name)s' is onjuist. Het moet zijn: '%"
+"(expected_param_type)s'."
 
 #. module: ai
 #. odoo-python
@@ -1632,7 +1628,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_ids
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_ids
 msgid "Tools"
-msgstr ""
+msgstr "Tools"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__topic_ids
@@ -1659,7 +1655,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__state
 #: model:ir.model.fields,field_description:ai.field_ir_cron__state
 msgid "Type"
-msgstr ""
+msgstr "Soort"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ir_actions_server__state
@@ -1678,12 +1674,27 @@ msgid ""
 "- 'Multi Actions': define an action that triggers several other server "
 "actions\n"
 msgstr ""
+"Type van serveractie. De volgende waarden zijn beschikbaar:\n"
+"\n"
+"- 'Werk een record bij': werk de waarden van een record bij\n"
+"- 'Maak activiteit aan': maak een activiteit (Discuss)\n"
+"- 'Stuur e-mail': plaats een bericht, een notitie of stuur een e-mail "
+"(Discuss)\n"
+"- 'Stuur SMS': stuur een SMS, log ze op documenten (SMS)\n"
+"- 'Volgers toevoegen/verwijderen': voeg volgers toe of verwijder volgers van "
+"een record (Discuss)\n"
+"- 'Maak record aan': maak een nieuw record met nieuwe waarden\n"
+"- 'Voer code uit': een blok Python-code dat uitgevoerd zal worden\n"
+"- 'Stuur Webhook-melding': stuur een POST-verzoek naar een extern systeem, "
+"ook wel een Webhook genoemd\n"
+"- 'Meerdere acties': definieer een actie die verschillende andere "
+"serveracties triggert\n"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__url
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__type__url
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #. module: ai
 #. odoo-python
@@ -1730,12 +1741,12 @@ msgstr "Gebruik dit/deze"
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
 msgid "Use your own ChatGPT account"
-msgstr ""
+msgstr "Gebruik je eigen ChatGPT-account"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
 msgid "Use your own Google Gemini account"
-msgstr ""
+msgstr "Gebruik je eigen Google Gemini-account"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__user_has_access
@@ -1746,7 +1757,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 msgid "User error"
-msgstr ""
+msgstr "Gebruikersfout"
 
 #. module: ai
 #. odoo-javascript
@@ -1824,4 +1835,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "fa-hashtag"
-msgstr ""
+msgstr "fa-hashtag"
+
+#~ msgid ""
+#~ "No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, and "
+#~ "OpenDocument files are allowed."
+#~ msgstr ""
+#~ "Geen geldige bestanden om te uploaden. Alleen pfd-, Word-, PowerPoint-, "
+#~ "Excel-, Tekst- en OpenDocument-bestanden zijn toegestaan."
+
+#~ msgid ""
+#~ "Some files have invalid formats and were skipped: %s. Only PDF, Word, "
+#~ "PowerPoint, Excel, Text, and OpenDocument files are allowed."
+#~ msgstr ""
+#~ "Sommige bestanden hebben ongeldige formaten en zijn overgeslagen: %s. "
+#~ "Alleen pdf-, Word-, PowerPoint-, Excel-, Tekst- en OpenDocument-bestanden "
+#~ "zijn toegestaan."

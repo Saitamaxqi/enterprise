@@ -11,13 +11,14 @@
 # ZVI BLONDER <ZVIBLONDER@gmail.com>, 2022
 # Ha Ketem <haketem@gmail.com>, 2022
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-09-16 18:35+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-11-10 13:17+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Hebrew <https://translate.odoo.com/projects/odoo-19/"
 "social_push_notifications/he/>\n"
 "Language: he\n"
@@ -31,7 +32,7 @@ msgstr ""
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
 msgid "<span class=\"ps-2\">seconds</span>"
-msgstr ""
+msgstr "<span class=\"ps-2\">שניות</span>"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_marketing_campaign__social_post_ids
@@ -48,7 +49,7 @@ msgstr "אפשר"
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
 msgid "App ID"
-msgstr ""
+msgstr "שם משתמש"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
@@ -107,7 +108,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:social_push_notifications.field_res_config_settings__firebase_enable_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_website__firebase_enable_push_notifications
 msgid "Enable Web Push Notifications"
-msgstr ""
+msgstr "אפשר הודעות דחיפה באינטרנט"
 
 #. module: social_push_notifications
 #. odoo-python
@@ -121,7 +122,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_account__firebase_admin_key_file
 #: model:ir.model.fields,field_description:social_push_notifications.field_website__firebase_admin_key_file
 msgid "Firebase Admin Key File"
-msgstr ""
+msgstr "קובץ מפתח Admin Firebase"
 
 #. module: social_push_notifications
 #. odoo-python
@@ -134,21 +135,21 @@ msgstr ""
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_account__firebase_project_id
 #: model:ir.model.fields,field_description:social_push_notifications.field_website__firebase_project_id
 msgid "Firebase Project ID"
-msgstr ""
+msgstr "מזהה פרויקט Firebase"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_res_config_settings__firebase_push_certificate_key
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_account__firebase_push_certificate_key
 #: model:ir.model.fields,field_description:social_push_notifications.field_website__firebase_push_certificate_key
 msgid "Firebase Push Certificate Key"
-msgstr ""
+msgstr "מפתח אישור דחיפה של Firebase"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_res_config_settings__firebase_sender_id
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_account__firebase_sender_id
 #: model:ir.model.fields,field_description:social_push_notifications.field_website__firebase_sender_id
 msgid "Firebase Sender ID"
-msgstr ""
+msgstr "מזהה שולח של Firebase"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_res_config_settings__firebase_web_api_key
@@ -223,7 +224,7 @@ msgstr "סוג מדיה"
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.social_post_template_view_form
 msgid "Message"
-msgstr ""
+msgstr "הודעה"
 
 #. module: social_push_notifications
 #. odoo-python
@@ -237,7 +238,7 @@ msgstr "הודעה חדשה"
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_account__notification_request_delay
 #: model:ir.model.fields,field_description:social_push_notifications.field_website__notification_request_delay
 msgid "Notification Request Delay (seconds)"
-msgstr ""
+msgstr "עיכוב בקשת הודעה (שניות)"
 
 #. module: social_push_notifications
 #. odoo-javascript
@@ -246,26 +247,26 @@ msgstr ""
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_account__notification_request_icon
 #: model:ir.model.fields,field_description:social_push_notifications.field_website__notification_request_icon
 msgid "Notification Request Icon"
-msgstr ""
+msgstr "סמל בקשת הודעה"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_res_config_settings__notification_request_body
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_account__notification_request_body
 #: model:ir.model.fields,field_description:social_push_notifications.field_website__notification_request_body
 msgid "Notification Request Text"
-msgstr ""
+msgstr "טקסט בקשת הודעה"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_res_config_settings__notification_request_title
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_account__notification_request_title
 #: model:ir.model.fields,field_description:social_push_notifications.field_website__notification_request_title
 msgid "Notification Request Title"
-msgstr ""
+msgstr "כותרת בקשת ההודעה"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.social_post_template_view_form
 msgid "Notification Title"
-msgstr ""
+msgstr "כותרת הודעה"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.utm_campaign_view_form
@@ -325,7 +326,7 @@ msgstr ""
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.social_post_template_view_form
 msgid "Push Notification Options"
-msgstr ""
+msgstr "אפשרויות הודעות דחיפה"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_live_post__push_notification_title
@@ -347,7 +348,7 @@ msgstr "הודעות בדחיפה"
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_website_visitor__has_push_notifications
 msgid "Push Notifications Enabled"
-msgstr ""
+msgstr "הודעות דחיפה מופעלות"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post__push_notification_message
@@ -374,7 +375,7 @@ msgstr ""
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_website_visitor__push_subscription_ids
 msgid "Push Subscriptions"
-msgstr ""
+msgstr "דחיפת מנויים"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_live_post__push_notification_target_url
@@ -493,7 +494,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_account__firebase_use_own_account
 #: model:ir.model.fields,field_description:social_push_notifications.field_website__firebase_use_own_account
 msgid "Use your own Firebase account"
-msgstr ""
+msgstr "השתמש בחשבון Firebase משלך"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,help:social_push_notifications.field_social_media__media_type

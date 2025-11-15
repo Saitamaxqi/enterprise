@@ -3,13 +3,15 @@
 # * account_saft
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# DeepL <noreply-mt-deepl@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-09-18 02:40+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-11-12 15:01+0000\n"
+"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "account_saft/tr/>\n"
 "Language: tr\n"
@@ -28,7 +30,7 @@ msgstr "İlgili Kişi(leri) Tanımla"
 #. module: account_saft
 #: model:ir.model.fields,field_description:account_saft.field_account_general_ledger_report_handler__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "İsim Göster"
 
 #. module: account_saft
 #: model:ir.model,name:account_saft.model_account_general_ledger_report_handler
@@ -38,7 +40,7 @@ msgstr "Yevmiye Defteri Özel Yöneticisi"
 #. module: account_saft
 #: model:ir.model.fields,field_description:account_saft.field_account_general_ledger_report_handler__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_saft
 #. odoo-python
@@ -113,8 +115,9 @@ msgstr "şehir veya posta kodu"
 #. module: account_saft
 #. odoo-python
 #: code:addons/account_saft/models/account_general_ledger.py:0
+#, fuzzy
 msgid "the phone number"
-msgstr ""
+msgstr "telefon numarası"
 
 #. module: account_saft
 #. odoo-javascript

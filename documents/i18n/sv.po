@@ -17,13 +17,14 @@
 # Anders Wallenquist <anders.wallenquist@vertel.se>, 2022
 # Mikael Åkerberg <mikael.akerberg@mariaakerberg.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-16 21:22+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 19:34+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Swedish <https://translate.odoo.com/projects/odoo-19/"
 "documents/sv/>\n"
 "Language: sv\n"
@@ -500,7 +501,7 @@ msgid ""
 "size: 13px;\">\n"
 "                                        <div>\n"
 "                                            Hello <t t-"
-"out=\"object.owner_id.name or ''\">OdooBot</t>,\n"
+"out=\"object.requestee_partner_id.name or ''\">OdooBot</t>,\n"
 "                                            <br/><br/>\n"
 "                                            <t t-"
 "out=\"object.create_uid.name or ''\">OdooBot</t> (<t t-"
@@ -668,7 +669,7 @@ msgid ""
 "size: 13px;\">\n"
 "                                        <div>\n"
 "                                            Hello <t t-"
-"out=\"object.owner_id.name or ''\">OdooBot</t>,\n"
+"out=\"object.requestee_partner_id.name or ''\">OdooBot</t>,\n"
 "                                            <br/><br/>\n"
 "                                            This is a friendly reminder to "
 "upload your requested document:\n"
@@ -1089,7 +1090,7 @@ msgstr ""
 #. module: documents
 #: model:documents.document,name:documents.document_internal_folder
 msgid "Admin"
-msgstr ""
+msgstr "Administratör"
 
 #. module: documents
 #: model:res.groups,name:documents.group_documents_manager
@@ -1385,7 +1386,7 @@ msgstr "Välj en post att länka"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/fields/documents_datetime/documents_datetime_field.xml:0
 msgid "Clear"
-msgstr ""
+msgstr "Rensa"
 
 #. module: documents
 #. odoo-javascript
@@ -1419,7 +1420,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/kanban/documents_kanban_record.xml:0
 msgid "Click to select"
-msgstr ""
+msgstr "Klicka för att välja"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__thumbnail_status__client_generated
@@ -1490,7 +1491,7 @@ msgstr "Konfiguration"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Confirm"
-msgstr ""
+msgstr "Bekräfta"
 
 #. module: documents
 #. odoo-python
@@ -1535,7 +1536,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model,website_form_label:documents.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Skapa en kund"
 
 #. module: documents
 #: model_terms:ir.actions.act_window,help:documents.mail_activity_plan_action_document
@@ -1682,7 +1683,7 @@ msgstr ""
 #: code:addons/documents/static/src/views/fields/documents_user_folder_id_char/documents_user_folder_id_char.js:0
 #: model:ir.model.fields,field_description:documents.field_documents_operation__destination
 msgid "Destination"
-msgstr ""
+msgstr "Destination"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__access_internal
@@ -1713,7 +1714,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/list/action_widget/documents_list_action_item_details.js:0
 msgid "Details"
-msgstr ""
+msgstr "Detaljer"
 
 #. module: documents
 #. odoo-javascript
@@ -2319,7 +2320,7 @@ msgstr ""
 #: code:addons/documents/static/src/views/kanban/documents_kanban_renderer.xml:0
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
 msgid "Folders"
-msgstr ""
+msgstr "Mappar"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__message_follower_ids
@@ -2702,7 +2703,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model,name:documents.model_kpi_provider
 msgid "KPI Provider"
-msgstr ""
+msgstr "KPI leverantör"
 
 #. module: documents
 #. odoo-python
@@ -2802,7 +2803,7 @@ msgstr "Länk url"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/documents_model_mixin.js:0
 msgid "Link copied to clipboard!"
-msgstr ""
+msgstr "Länken kopierad till urklipp!"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_list_main
@@ -2961,7 +2962,7 @@ msgstr "Modeller"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_access_modified
 msgid "Modified"
-msgstr ""
+msgstr "Modifierad"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__create_activity_date_deadline_range_type__months
@@ -2981,7 +2982,7 @@ msgstr "Mer"
 #: code:addons/documents/static/src/views/documents_controller_mixin.js:0
 #: model:ir.model.fields.selection,name:documents.selection__documents_operation__operation__move
 msgid "Move"
-msgstr ""
+msgstr "Verifikat"
 
 #. module: documents
 #. odoo-javascript
@@ -3143,7 +3144,7 @@ msgstr "Nästa aktivitetstyp"
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "No"
-msgstr ""
+msgstr "Nej"
 
 #. module: documents
 #. odoo-javascript
@@ -3360,7 +3361,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__operation
 msgid "Operation"
-msgstr ""
+msgstr "Drift"
 
 #. module: documents
 #. odoo-python
@@ -3414,7 +3415,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__user_folder_id
 msgid "Parent"
-msgstr ""
+msgstr "Överordnad"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__parent_path
@@ -3476,7 +3477,7 @@ msgstr "Betyg"
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_readonly
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__is_readonly
 msgid "Readonly"
-msgstr ""
+msgstr "Skrivskyddad"
 
 #. module: documents
 #. odoo-python
@@ -3504,7 +3505,7 @@ msgstr "Post"
 #. module: documents
 #: model:documents.document,name:documents.document_registrations_folder
 msgid "Registrations"
-msgstr ""
+msgstr "Anmälan"
 
 #. module: documents
 #. odoo-javascript
@@ -3675,7 +3676,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/fields/documents_user_folder_id_char/documents_search_panel_user_folder_id.xml:0
 msgid "Search..."
-msgstr ""
+msgstr "Sök..."
 
 #. module: documents
 #. odoo-javascript
@@ -3851,7 +3852,7 @@ msgstr "Delad"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
 msgid "Shared with"
-msgstr ""
+msgstr "Delas med"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
@@ -3898,7 +3899,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_single
 msgid "Single"
-msgstr ""
+msgstr "Singel"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_file
@@ -3908,7 +3909,7 @@ msgstr "Storlek:"
 #. module: documents
 #: model:documents.document,name:documents.document_finance_social_folder
 msgid "Social"
-msgstr ""
+msgstr "Sociala"
 
 #. module: documents
 #. odoo-python
@@ -4044,7 +4045,7 @@ msgstr "Etiketter"
 #. module: documents
 #: model:documents.document,name:documents.document_finance_taxes_folder
 msgid "Taxes"
-msgstr ""
+msgstr "Moms"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_tag__tooltip
@@ -4501,7 +4502,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #. module: documents
 #. odoo-javascript
@@ -4777,7 +4778,7 @@ msgstr "t.ex. mittföretag.com"
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "edit"
-msgstr ""
+msgstr "redigera"
 
 #. module: documents
 #. odoo-python
@@ -4794,12 +4795,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/editor/plugins/add_documents_attachment_plugin.js:0
 msgid "file"
-msgstr ""
+msgstr "fil"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page
 msgid "files"
-msgstr ""
+msgstr "filer"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page
@@ -4864,7 +4865,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "none"
-msgstr ""
+msgstr "ingen"
 
 #. module: documents
 #. odoo-python
@@ -4908,7 +4909,7 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
 msgid "to"
-msgstr ""
+msgstr "till"
 
 #. module: documents
 #. odoo-javascript

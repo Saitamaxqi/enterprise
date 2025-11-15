@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-07 02:40+0000\n"
+"PO-Revision-Date: 2025-11-14 11:44+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/mrp_workorder/pt_BR/>\n"
@@ -160,7 +160,7 @@ msgstr "Adicionar nota de registro"
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_mrp_production_additional_workorder
 msgid "Additional Workorder"
-msgstr ""
+msgstr "Ordem de trabalho adicional"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_production_form_view
@@ -168,11 +168,13 @@ msgid ""
 "Additional instructions that can be created and visualised from both here "
 "and the shop floor interface."
 msgstr ""
+"Instruções adicionais que podem ser criadas e visualizadas tanto aqui quanto "
+"na interface do chão de fábrica."
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__all_employees_allowed
 msgid "All Employees Allowed"
-msgstr ""
+msgstr "Todos os funcionários permitidos"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__allow_producing_quantity_change

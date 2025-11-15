@@ -10,13 +10,15 @@
 # Murat Kaplan <muratk@projetgrup.com>, 2022
 # Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2022
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# DeepL <noreply-mt-deepl@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-09-15 21:04+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-11-12 14:55+0000\n"
+"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "documents_hr/tr/>\n"
 "Language: tr\n"
@@ -29,12 +31,12 @@ msgstr ""
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.documents_hr_portal_view
 msgid "<i class=\"fa fa-download fa-fw\"/> Download file"
-msgstr ""
+msgstr "<i class=\"fa fa-download fa-fw\"/> Dosyayı indirin"
 
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.res_config_settings_view_form
 msgid "<span class=\"o_form_label\">Default tags</span>"
-msgstr ""
+msgstr "<span class=\"o_form_label\">Varsayılan etiketler</span>"
 
 #. module: documents_hr
 #: model:documents.tag,name:documents_hr.documents_tag_absences
@@ -56,17 +58,23 @@ msgstr "Sertifikalar"
 #. module: documents_hr
 #: model:ir.model.fields,help:documents_hr.field_res_company__employee_subfolders
 #: model_terms:ir.ui.view,arch_db:documents_hr.res_config_settings_view_form
+#, fuzzy
 msgid ""
 "Comma separated list of folder names that need to be created under each "
 "employee folder."
 msgstr ""
+"Her çalışan klasörü altında oluşturulması gereken klasör adlarının virgülle "
+"ayrılmış listesi."
 
 #. module: documents_hr
 #: model:ir.model.fields,help:documents_hr.field_res_config_settings__employee_subfolders
+#, fuzzy
 msgid ""
 "Comma separated string of folder names that need to be created under each "
 "employee folder."
 msgstr ""
+"Her çalışan klasörü altında oluşturulması gereken klasör adlarının virgülle "
+"ayrılmış dizesi."
 
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_res_company
@@ -83,12 +91,12 @@ msgstr "Yapılandırma Ayarları"
 #: code:addons/documents_hr/models/hr_employee.py:0
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__documents_hr_contracts_tags
 msgid "Contracts"
-msgstr ""
+msgstr "Sözleşmeler"
 
 #. module: documents_hr
 #: model:documents.tag,name:documents_hr.documents_hr_tag_contracts
 msgid "Contracts (HR)"
-msgstr ""
+msgstr "Sözleşmeler (İK)"
 
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_documents_document__display_name
@@ -100,7 +108,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__display_name
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "İsim Göster"
 
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_documents_document
@@ -116,7 +124,7 @@ msgstr "Belge Sayısı"
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_documents_redirect
 msgid "Document Redirect"
-msgstr ""
+msgstr "Belge Yönlendirmesi"
 
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.hr_employee_public_view_form
@@ -127,7 +135,7 @@ msgstr "Belgeler"
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__documents_hr_contracts_tags
 msgid "Documents Hr Contracts Tags"
-msgstr ""
+msgstr "Belgeler İk Sözleşmeler Etiketler"
 
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__documents_hr_settings
@@ -137,7 +145,7 @@ msgstr "Belgeler İK Ayarları"
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.documents_hr_portal_view
 msgid "Download file"
-msgstr ""
+msgstr "Dosyayı İndir"
 
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_hr_employee
@@ -148,13 +156,14 @@ msgstr "Çalışan"
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_hr_version
 msgid "Employee Contract"
-msgstr ""
+msgstr "Personel Sözleşmesi"
 
 #. module: documents_hr
 #. odoo-python
 #: code:addons/documents_hr/models/res_company.py:0
+#, fuzzy
 msgid "Employees - %s"
-msgstr ""
+msgstr "Çalışanlar - %s"
 
 #. module: documents_hr
 #: model:documents.tag,name:documents_hr.documents_tag_employees
@@ -165,29 +174,34 @@ msgstr "Personelin Belgeleri"
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__documents_employee_folder_id
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__documents_employee_folder_id
 #: model_terms:ir.ui.view,arch_db:documents_hr.res_config_settings_view_form
+#, fuzzy
 msgid "Employees Folder"
-msgstr ""
+msgstr "Çalışan Klasörü"
 
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__employee_subfolders
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__employee_subfolders
+#, fuzzy
 msgid "Employees Subfolder"
-msgstr ""
+msgstr "Çalışan Alt Klasörü"
 
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.res_config_settings_view_form
+#, fuzzy
 msgid "Employees Subfolders"
-msgstr ""
+msgstr "Çalışan Alt Klasörleri"
 
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_hr_employee__hr_employee_contract_folder_id
+#, fuzzy
 msgid "HR Employee Contract Folder"
-msgstr ""
+msgstr "İK Çalışan Sözleşmesi Klasörü"
 
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_hr_employee__hr_employee_folder_id
+#, fuzzy
 msgid "HR Employee Folder"
-msgstr ""
+msgstr "İK Çalışan Klasörü"
 
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__documents_hr_settings
@@ -204,44 +218,46 @@ msgstr "İnsan Kaynakları"
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__id
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: documents_hr
 #. odoo-python
 #: code:addons/documents_hr/models/documents_document.py:0
+#, fuzzy
 msgid "Impossible to delete employee folder or employee 'Contract' folder"
-msgstr ""
+msgstr "Çalışan klasörünü veya çalışan 'Sözleşme' klasörünü silmek imkansız"
 
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.documents_hr_portal_view
 msgid "My documents"
-msgstr ""
+msgstr "Belgelerim"
 
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_hr_employee_public
 msgid "Public Employee"
-msgstr ""
+msgstr "Herkese Açık Personel"
 
 #. module: documents_hr
 #: model:documents.tag,name:documents_hr.document_tag_signature_request
 msgid "Signature Request"
-msgstr ""
+msgstr "İmza Talebi"
 
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.documents_hr_portal_view
 msgid "Size:"
-msgstr ""
+msgstr "Boy:"
 
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_documents_tag
 msgid "Tag"
-msgstr ""
+msgstr "Etiket"
 
 #. module: documents_hr
 #. odoo-python
 #: code:addons/documents_hr/models/hr_employee.py:0
+#, fuzzy
 msgid "You cannot access the employee's folder."
-msgstr ""
+msgstr "Çalışanın klasörüne erişemezsiniz."
 
 #. module: documents_hr
 #. odoo-python
@@ -250,22 +266,30 @@ msgid ""
 "You cannot delete this tag as it is used to link employee contracts and "
 "signatures."
 msgstr ""
+"Çalışan sözleşmelerini ve imzaları arasında bağlantı kurmak amacıyla "
+"kullanıldığından bu etiketi silemezsiniz."
 
 #. module: documents_hr
 #. odoo-python
 #: code:addons/documents_hr/models/hr_employee.py:0
+#, fuzzy
 msgid ""
 "You must configure the HR Employee folder in document settings to use "
 "Document's features."
 msgstr ""
+"Belge'nin özelliklerini kullanmak için belge ayarlarında İK Çalışan "
+"klasörünü yapılandırmanız gerekir."
 
 #. module: documents_hr
 #. odoo-python
 #: code:addons/documents_hr/models/hr_employee.py:0
+#, fuzzy
 msgid ""
 "You must have a contact linked to the employee in order to use Document's "
 "features."
 msgstr ""
+"Document'ın özelliklerini kullanabilmek için çalışana bağlı bir irtibat "
+"kişiniz olmalıdır."
 
 #~ msgid "Departure Wizard"
 #~ msgstr "Ayrılma Sihirbazı"

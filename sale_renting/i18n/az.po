@@ -3,19 +3,22 @@
 # * sale_renting
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-08 18:43+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 20:26+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Azerbaijani <https://translate.odoo.com/projects/odoo-19/"
+"sale_renting/az/>\n"
 "Language: az\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: sale_renting
 #. odoo-python
@@ -113,15 +116,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
 msgid ""
 "<span invisible=\"duration_days != 1\"> day </span>\n"
-"                    <span invisible=\"duration_days in [0,1]\"> days </span>\n"
-"                    <span invisible=\"duration_days == 0 or remaining_hours == 0\">and </span>"
+"                    <span invisible=\"duration_days in [0,1]\"> days </"
+"span>\n"
+"                    <span invisible=\"duration_days == 0 or remaining_hours "
+"== 0\">and </span>"
 msgstr ""
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
 msgid ""
 "<span invisible=\"remaining_hours != 1\"> hour </span>\n"
-"                    <span invisible=\"remaining_hours in [0,1]\"> hours </span>"
+"                    <span invisible=\"remaining_hours in [0,1]\"> hours </"
+"span>"
 msgstr ""
 
 #. module: sale_renting
@@ -137,12 +143,12 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:web_tour.tour,rainbow_man_message:sale_renting.rental_tour
 msgid "<span><b>Good job!</b> You went through all steps of this tour.</span>"
-msgstr ""
+msgstr "<span><b>Əla!</b> Bu turun bütün mərhələlərini keçdiniz.</span>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
 msgid "<strong class=\"d-block mt-3\">Shipping Address</strong>"
-msgstr ""
+msgstr "<strong class=\"d-block mt-3\">Çatdırılma Ünvanı</strong>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
@@ -178,7 +184,7 @@ msgstr ""
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__active
 msgid "Active"
-msgstr ""
+msgstr "Aktiv"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
@@ -225,13 +231,13 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_wizard_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Ləğv edin"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_order__rental_status__cancel
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_report__state__cancel
 msgid "Cancelled"
-msgstr ""
+msgstr "Ləğv olundu"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__pickup_time
@@ -275,7 +281,7 @@ msgstr ""
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Şirkətlər"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__company_id
@@ -283,17 +289,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Company"
-msgstr ""
+msgstr "Şirkət"
 
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Parametrləri Konfiqurasiya edin"
 
 #. module: sale_renting
 #: model:ir.ui.menu,name:sale_renting.menu_rental_config
 msgid "Configuration"
-msgstr ""
+msgstr "Konfiqurasiya"
 
 #. module: sale_renting
 #. odoo-javascript
@@ -311,12 +317,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Confirmed Orders"
-msgstr ""
+msgstr "Təsdiqlənmiş Sifarişlər"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__country_id
 msgid "Country"
-msgstr ""
+msgstr "Ölkə"
 
 #. module: sale_renting
 #: model:ir.actions.act_window,name:sale_renting.action_create_rental_order
@@ -366,7 +372,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__create_uid
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Tərəfindən yaradılıb"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__create_date
@@ -374,13 +380,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__create_date
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Tarixdə yaradıldı"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__currency_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Valyuta"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_product__product_pricing_ids
@@ -394,22 +400,22 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Customer"
-msgstr ""
+msgstr "Müştəri"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Customer Country"
-msgstr ""
+msgstr "Müştərinin Ölkəsi"
 
 #. module: sale_renting
 #: model:ir.ui.menu,name:sale_renting.menu_orders_customers
 msgid "Customers"
-msgstr ""
+msgstr "Müştərilər"
 
 #. module: sale_renting
 #: model:sale.temporal.recurrence,name:sale_renting.recurrence_daily
 msgid "Daily"
-msgstr ""
+msgstr "Gündəlik"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__price
@@ -442,19 +448,19 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Date"
-msgstr ""
+msgstr "Tarix"
 
 #. module: sale_renting
 #. odoo-python
 #: code:addons/sale_renting/models/sale_order_recurrence.py:0
 msgid "Day"
-msgstr ""
+msgstr "Gün"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__day
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__unit__day
 msgid "Days"
-msgstr ""
+msgstr "günlər"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
@@ -470,7 +476,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__description
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
 msgid "Description"
-msgstr ""
+msgstr "Təsvir"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricelist__display_name
@@ -486,7 +492,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__display_name
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Göstəriləcək Ad"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__displayed_unit
@@ -497,7 +503,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__duration
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
 msgid "Duration"
-msgstr ""
+msgstr "Müddət"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__name
@@ -508,7 +514,7 @@ msgstr ""
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order__duration_days
 msgid "Duration in days"
-msgstr ""
+msgstr "Müddət gün ilə"
 
 #. module: sale_renting
 #. odoo-javascript
@@ -592,7 +598,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__hour
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__unit__hour
 msgid "Hours"
-msgstr ""
+msgstr "Saatlar"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricelist__id
@@ -608,7 +614,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
@@ -618,7 +624,7 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
 msgid "Invoicing and Shipping Address:"
-msgstr ""
+msgstr "Faktura və Çatdırılma Ünvanı:"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__is_late
@@ -652,7 +658,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__write_uid
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Son Yeniləyən"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__write_date
@@ -660,13 +666,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__write_date
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Son Yenilənmə tarixi"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Late"
-msgstr ""
+msgstr "Son"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
@@ -713,29 +719,29 @@ msgstr ""
 #. odoo-python
 #: code:addons/sale_renting/models/sale_order_recurrence.py:0
 msgid "Month"
-msgstr ""
+msgstr "Ay"
 
 #. module: sale_renting
 #: model:sale.temporal.recurrence,name:sale_renting.recurrence_monthly
 msgid "Monthly"
-msgstr ""
+msgstr "Aylıq"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__month
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__unit__month
 msgid "Months"
-msgstr ""
+msgstr "Aylar"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "My Orders"
-msgstr ""
+msgstr "Mənim Sifarişlərim"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__name
 msgid "Name"
-msgstr ""
+msgstr "Ad"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order__next_action_date
@@ -761,12 +767,12 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.action_rental_report
 msgid "No data yet!"
-msgstr ""
+msgstr "Hələ məlumat yoxdur!"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_form_schedule
 msgid "Ok"
-msgstr ""
+msgstr "OK"
 
 #. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.rental_order_action
@@ -785,12 +791,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__order_id
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 msgid "Order"
-msgstr ""
+msgstr "Sifariş"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__order_id
 msgid "Order #"
-msgstr ""
+msgstr "Sifariş #"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__order_line_id
@@ -801,7 +807,7 @@ msgstr ""
 #: model:ir.ui.menu,name:sale_renting.rental_order_menu
 #: model:ir.ui.menu,name:sale_renting.rental_orders_all
 msgid "Orders"
-msgstr ""
+msgstr "Sifarişlər"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__overnight
@@ -824,13 +830,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_pricelist_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
 msgid "Period"
-msgstr ""
+msgstr "Müddət"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_temporal_recurrence_view_form
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_temporal_recurrence_view_tree
 msgid "Periodicity"
-msgstr ""
+msgstr "Dövrilik"
 
 #. module: sale_renting
 #: model:ir.actions.act_window,name:sale_renting.sale_temporal_recurrence_action
@@ -898,13 +904,13 @@ msgstr ""
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__price
 msgid "Price"
-msgstr ""
+msgstr "Qiymət"
 
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_product_pricelist
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__pricelist_id
 msgid "Pricelist"
-msgstr ""
+msgstr "Qiymət siyahısı"
 
 #. module: sale_renting
 #: model:ir.actions.act_window,name:sale_renting.product_pricing_action
@@ -915,7 +921,7 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
 msgid "Pricing"
-msgstr ""
+msgstr "Qiymətləndirmə"
 
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_product_pricing
@@ -925,19 +931,20 @@ msgstr ""
 #. module: sale_renting
 #: model:product.template,name:sale_renting.rental_product_3_template
 msgid "Printer"
-msgstr ""
+msgstr "Printer"
 
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_product_template
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__product_id
 #: model:ir.model.fields,field_description:sale_renting.field_res_company__extra_product
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__product_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__product_id
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Product"
-msgstr ""
+msgstr "Məhsul"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
@@ -945,24 +952,23 @@ msgid "Product A"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__categ_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__categ_id
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Product Category"
-msgstr ""
+msgstr "Məhsul Kateqoriyası"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__product_template_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__product_tmpl_id
 msgid "Product Template"
-msgstr ""
+msgstr "Məhsul Şablonu"
 
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_product_product
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__product_variant_ids
 msgid "Product Variant"
-msgstr ""
+msgstr "Məhsul Çeşidi"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
@@ -974,7 +980,7 @@ msgstr ""
 #: model:ir.ui.menu,name:sale_renting.menu_rental_products
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_pricelist_view
 msgid "Products"
-msgstr ""
+msgstr "Məhsullar"
 
 #. module: sale_renting
 #: model:product.template,name:sale_renting.rental_product_1_template
@@ -990,26 +996,26 @@ msgstr ""
 #. module: sale_renting
 #: model:sale.temporal.recurrence,name:sale_renting.recurrence_quarterly
 msgid "Quarterly"
-msgstr ""
+msgstr "Rüblük"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_order__rental_status__draft
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_report__state__draft
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
 msgid "Quotation"
-msgstr ""
+msgstr "Qiymət Təklifi"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_order__rental_status__sent
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_report__state__sent
 msgid "Quotation Sent"
-msgstr ""
+msgstr "Sitat Göndərilib"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Quotations"
-msgstr ""
+msgstr "Qiymət Təklifləri"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
@@ -1030,7 +1036,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
 msgid "Rental"
-msgstr ""
+msgstr "İcarə"
 
 #. module: sale_renting
 #: model:ir.actions.act_window,name:sale_renting.action_rental_report
@@ -1062,7 +1068,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:sale_renting.rental_order_today_pickup_action
 #: model:ir.actions.act_window,name:sale_renting.rental_order_today_return_action
 msgid "Rental Orders"
-msgstr ""
+msgstr "İcarı Sifarişləri"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_pricelist_view
@@ -1132,7 +1138,7 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 msgid "Rentals"
-msgstr ""
+msgstr "Sifarişlər"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__recurrence_id
@@ -1147,7 +1153,7 @@ msgstr ""
 #. module: sale_renting
 #: model:ir.ui.menu,name:sale_renting.menu_rental_reporting
 msgid "Reporting"
-msgstr ""
+msgstr "Hesabatlıq"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
@@ -1158,7 +1164,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__qty_reserved
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_order__rental_status__pickup
 msgid "Reserved"
-msgstr ""
+msgstr "Rezerv edilib"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__rental_order_wizard__status__return
@@ -1187,7 +1193,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
 msgid "Returned"
-msgstr ""
+msgstr "Qaytarıldı"
 
 #. module: sale_renting
 #. odoo-python
@@ -1204,19 +1210,19 @@ msgstr ""
 #: model:ir.model,name:sale_renting.model_sale_order
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_report__state__sale
 msgid "Sales Order"
-msgstr ""
+msgstr "Satış Sifarişi"
 
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Satış Sifarişi Sətri"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__team_id
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Sales Team"
-msgstr ""
+msgstr "Satış Komandası"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__user_id
@@ -1228,7 +1234,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Salesperson"
-msgstr ""
+msgstr "Satıcı"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
@@ -1244,7 +1250,7 @@ msgstr ""
 #. module: sale_renting
 #: model:ir.ui.menu,name:sale_renting.menu_rental_schedule
 msgid "Schedule"
-msgstr ""
+msgstr "Qrafik"
 
 #. module: sale_renting
 #: model:ir.actions.act_window,name:sale_renting.action_rental_order_schedule
@@ -1279,7 +1285,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:sale_renting.action_rental_config_settings
 #: model:ir.ui.menu,name:sale_renting.menu_rental_settings
 msgid "Settings"
-msgstr ""
+msgstr "Parametrlər"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_wizard_view_form
@@ -1289,7 +1295,7 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 msgid "State"
-msgstr ""
+msgstr "Dövlət"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__status
@@ -1297,7 +1303,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__state
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_rental_report_view_tree
@@ -1390,8 +1396,8 @@ msgstr ""
 #. module: sale_renting
 #: model:ir.model.fields,help:sale_renting.field_res_config_settings__extra_day
 msgid ""
-"This is the default extra cost per day set on newly created products.You can"
-" change this value for existing products directly on the product itself."
+"This is the default extra cost per day set on newly created products.You can "
+"change this value for existing products directly on the product itself."
 msgstr ""
 
 #. module: sale_renting
@@ -1440,14 +1446,14 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_tree
 msgid "Total Tax Included"
-msgstr ""
+msgstr "Ümumi Vergi Daxildir"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__product_uom_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__unit
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_temporal_recurrence_view_form
 msgid "Unit"
-msgstr ""
+msgstr "Vahid"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
@@ -1457,7 +1463,7 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_wizard_view_form
 msgid "Validate"
-msgstr ""
+msgstr "Təsdiqləyin"
 
 #. module: sale_renting
 #. odoo-python
@@ -1480,7 +1486,7 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_pricelist_view
 msgid "Variants"
-msgstr ""
+msgstr "Çeşidlər"
 
 #. module: sale_renting
 #. odoo-javascript
@@ -1494,41 +1500,41 @@ msgstr ""
 #. odoo-python
 #: code:addons/sale_renting/models/sale_order_recurrence.py:0
 msgid "Week"
-msgstr ""
+msgstr "Həftə"
 
 #. module: sale_renting
 #: model:sale.temporal.recurrence,name:sale_renting.recurrence_weekly
 msgid "Weekly"
-msgstr ""
+msgstr "Həftəlik"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__week
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__unit__week
 msgid "Weeks"
-msgstr ""
+msgstr "Həftələr"
 
 #. module: sale_renting
 #. odoo-python
 #: code:addons/sale_renting/models/sale_order_recurrence.py:0
 msgid "Year"
-msgstr ""
+msgstr "İL"
 
 #. module: sale_renting
 #: model:sale.temporal.recurrence,name:sale_renting.recurrence_yearly
 msgid "Yearly"
-msgstr ""
+msgstr "İllik"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__year
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__unit__year
 msgid "Years"
-msgstr ""
+msgstr "İllər"
 
 #. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.rental_product_template_action
 msgid ""
-"You can also create additional products or services to sell by checking *Can"
-" be Sold* in the product form (e.g. insurance)."
+"You can also create additional products or services to sell by checking *Can "
+"be Sold* in the product form (e.g. insurance)."
 msgstr ""
 
 #. module: sale_renting
@@ -1575,4 +1581,4 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
 msgid "hours"
-msgstr ""
+msgstr "saat"

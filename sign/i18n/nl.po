@@ -9,13 +9,14 @@
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2023, 2025.
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Bren Driesen <brdri@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-24 14:16+0000\n"
-"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>\n"
+"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"PO-Revision-Date: 2025-11-13 17:16+0000\n"
+"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/sign/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -371,8 +372,8 @@ msgid ""
 "<span class=\"fw-bold\">Cryptographic signature<i class=\"fa fa-building-o "
 "ms-1\"/></span>"
 msgstr ""
-"<span class=\"fw-bold\">Cryptografische handtekening<i class="
-"\"fa fa-building-o ms-1\"/></span>"
+"<span class=\"fw-bold\">Cryptografische handtekening<i class=\"fa fa-"
+"building-o ms-1\"/></span>"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
@@ -403,7 +404,8 @@ msgstr "<span class=\"text-muted\">Niet beschikbaar</span>"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
 msgid "<span class=\"text-nowrap\">Add certificate on each page</span>"
-msgstr "<span class=\"text-nowrap\">Certificaat toevoegen op elke pagina</span>"
+msgstr ""
+"<span class=\"text-nowrap\">Certificaat toevoegen op elke pagina</span>"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
@@ -1132,6 +1134,11 @@ msgstr "Gefeliciteerd, je handtekening is klaar om te worden ingediend!"
 #: model_terms:web_tour.tour,rainbow_man_message:sign.sign_tour
 msgid "Congratulations, you signed your first document!"
 msgstr "Gefeliciteerd, je hebt je eerste document ondertekend!"
+
+#. module: sign
+#: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
+msgid "Connected as"
+msgstr ""
 
 #. module: sign
 #: model:ir.model,name:sign.model_res_partner
@@ -2141,7 +2148,7 @@ msgstr "Is gebruiker ondertekenaar"
 
 #. module: sign
 #. odoo-python
-#: code:addons/sign/models/sign_document.py:0
+#: code:addons/sign/utils/pdf_handling.py:0
 msgid ""
 "It seems that we're not able to process one of the uploaded pdf. It is "
 "either encrypted, or encoded in a format we do not support."
@@ -2270,7 +2277,7 @@ msgstr "Gekoppelde activiteit"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__reference_doc
 msgid "Linked To"
-msgstr "Gelinkt aan"
+msgstr "Gekoppeld aan"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item_type__auto_field
@@ -2281,7 +2288,7 @@ msgstr "Gekoppeld veld"
 #: model:ir.model.fields,field_description:sign.field_sign_item_type__model_id
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__reference_doc
 msgid "Linked to"
-msgstr "Gelinkt aan"
+msgstr "Gekoppeld aan"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_log__log_date
@@ -2659,6 +2666,11 @@ msgstr ""
 "CRM, eCommerce, boekhouding, inventaris, verkooppunt,\n"
 "projectbeheer, enz.\n"
 "            "
+
+#. module: sign
+#: model_terms:ir.ui.view,arch_db:sign.signer_status_wrapper
+msgid "On"
+msgstr "Op"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -3193,7 +3205,7 @@ msgstr "Verzenden"
 #. odoo-javascript
 #: code:addons/sign/static/src/dialogs/sms_signer_dialog.xml:0
 msgid "Send SMS"
-msgstr "SMS verzenden"
+msgstr "Sms verzenden"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__signer_id
@@ -4285,8 +4297,8 @@ msgid ""
 "The template model %(t_name)s is incompatible with the signature fields %"
 "(model_name)s."
 msgstr ""
-"Sjabloonmodel %(t_name)s is niet compatibel met de ondertekenvelden "
-"%(model_name)s."
+"Sjabloonmodel %(t_name)s is niet compatibel met de ondertekenvelden %"
+"(model_name)s."
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -4759,8 +4771,8 @@ msgid ""
 "                Your refusal reason will be included to keep things clear "
 "and transparent for everyone."
 msgstr ""
-"We brengen de afzender, ondertekenaar en gekopieerde contacten op de hoogte."
-"\n"
+"We brengen de afzender, ondertekenaar en gekopieerde contacten op de "
+"hoogte.\n"
 "                Je afwijsreden wordt vermeld om het voor duidelijkheid en "
 "transparantie te zorgen."
 
@@ -5227,6 +5239,11 @@ msgstr "boom"
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container_pdf
 msgid "trees"
 msgstr "bomen"
+
+#. module: sign
+#: model_terms:ir.ui.view,arch_db:sign.signer_status_wrapper
+msgid "via"
+msgstr ""
 
 #. module: sign
 #. odoo-javascript

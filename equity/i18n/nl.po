@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-20 13:24+0000\n"
+"POT-Creation-Date: 2025-11-07 18:40+0000\n"
+"PO-Revision-Date: 2025-11-13 17:17+0000\n"
 "Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/equity/nl/>"
 "\n"
@@ -34,6 +34,18 @@ msgstr "# Aandelen"
 
 #. module: equity
 #. odoo-python
+#: code:addons/equity/models/equity_valuation.py:0
+msgid "%(partner_name)s %(amount)s"
+msgstr ""
+
+#. module: equity
+#. odoo-python
+#: code:addons/equity/models/equity_ubo.py:0
+msgid "%(partner_name)s (%(holder_name)s)"
+msgstr ""
+
+#. module: equity
+#. odoo-python
 #: code:addons/equity/models/res_partner.py:0
 msgid "%(partner_name)s's Transactions"
 msgstr "Transacties van %(partner_name)s"
@@ -43,6 +55,12 @@ msgstr "Transacties van %(partner_name)s"
 #: code:addons/equity/models/res_partner.py:0
 msgid "%(partner_name)s's Valuations"
 msgstr "Waarderingen van%(partner_name)s"
+
+#. module: equity
+#. odoo-python
+#: code:addons/equity/models/equity_transaction.py:0
+msgid "%(transaction_type)s %(securities).2f %(class_name)s"
+msgstr ""
 
 #. module: equity
 #. odoo-python
@@ -121,9 +139,9 @@ msgstr ""
 "                    <p> Hallo <t t-out=\"ctx.get('holder_name')\"/>,<br/>\n"
 "                        Je vindt je laatste transactie en waarderingen in de "
 "volgende link: <br/>\n"
-"                       <a t-attf-href="
-"\"/my/equity?access_token={{ctx.get('equity_access_token')}}\" class="
-"\"btn btn-primary\">Toon eigen vermogen</a> <br/> <br/>\n"
+"                       <a t-attf-href=\"/my/equity?"
+"access_token={{ctx.get('equity_access_token')}}\" class=\"btn btn-"
+"primary\">Toon eigen vermogen</a> <br/> <br/>\n"
 "                        Met vriendelijke groeten,\n"
 "                       <t t-if=\"user_id.signature\">\n"
 "                           <br/>--<br/>\n"
@@ -163,12 +181,12 @@ msgstr ""
 "cliënten te identificeren, moeten wij de natuurlijke personen rapporteren "
 "die, rechtstreeks of onrechtstreeks,\n"
 "                        minstens 25% van het kapitaal of de stemrechten "
-"bezitten of controleren van <b><t t-out=\"user_id.company_id.name\"/></b>. <"
-"br/> <br/>\n"
+"bezitten of controleren van <b><t t-out=\"user_id.company_id.name\"/></b>. "
+"<br/> <br/>\n"
 "                       Gelieve het UBO-formulier in te vullen:<br/>\n"
-"                        <a t-attf-href="
-"\"/my/ubo?{{object._get_equity_url_params()}}\" class=\"btn btn-primary\""
-">Fill UBO</a> <br/> <br/>\n"
+"                        <a t-attf-href=\"/my/ubo?"
+"{{object._get_equity_url_params()}}\" class=\"btn btn-primary\">Fill UBO</a> "
+"<br/> <br/>\n"
 "                        Bedankt,\n"
 "                        <t t-if=\"user_id.signature\">\n"
 "                            <br/>--<br/>\n"
@@ -185,8 +203,8 @@ msgid ""
 "<i class=\"fa fa-envelope ms-2 mt-1\" aria-label=\"Email Address\" "
 "title=\"Email Address\"/>"
 msgstr ""
-"<i class=\"fa fa-envelope ms-2 mt-1\" aria-label=\"E-mailadres\" title="
-"\"E-mailadres\"/>"
+"<i class=\"fa fa-envelope ms-2 mt-1\" aria-label=\"E-mailadres\" title=\"E-"
+"mailadres\"/>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_help
@@ -194,8 +212,8 @@ msgid ""
 "<i class=\"fa fa-phone ms-2 mt-1\" aria-label=\"Phone Number\" title=\"Phone "
 "Number\"/>"
 msgstr ""
-"<i class=\"fa fa-phone ms-2 mt-1\" aria-label=\"telefoonnummer\" title="
-"\"telefoonnummer\"/>"
+"<i class=\"fa fa-phone ms-2 mt-1\" aria-label=\"telefoonnummer\" "
+"title=\"telefoonnummer\"/>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_kanban
@@ -203,8 +221,8 @@ msgid ""
 "<i title=\"To\" class=\"fa fa-fw fa-arrow-right mx-1\" "
 "invisible=\"transaction_type != 'exercise'\"/>"
 msgstr ""
-"<i title=\"To\" class=\"fa fa-fw fa-arrow-right mx-1\" invisible="
-"\"transaction_type != 'exercise'\"/>"
+"<i title=\"To\" class=\"fa fa-fw fa-arrow-right mx-1\" "
+"invisible=\"transaction_type != 'exercise'\"/>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_kanban
@@ -212,8 +230,8 @@ msgid ""
 "<i title=\"To\" class=\"fa fa-fw fa-arrow-right mx-1\" "
 "invisible=\"transaction_type != 'transfer'\"/>"
 msgstr ""
-"<i title=\"To\" class=\"fa fa-fw fa-arrow-right mx-1\" invisible="
-"\"transaction_type != 'transfer'\"/>"
+"<i title=\"To\" class=\"fa fa-fw fa-arrow-right mx-1\" "
+"invisible=\"transaction_type != 'transfer'\"/>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_view_partner_form
@@ -231,8 +249,8 @@ msgid ""
 "<span> Shareholder<span invisible=\"equity_shareholders_count == 1\">s</"
 "span></span>"
 msgstr ""
-"<span><span invisible=\"equity_shareholders_count == 1\""
-">Aandeelhouders</span></span>"
+"<span><span invisible=\"equity_shareholders_count == 1\">Aandeelhouders</"
+"span></span>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_dashboard_res_partner
@@ -240,8 +258,8 @@ msgid ""
 "<span> Transaction<span invisible=\"equity_transaction_count == 1\">s</"
 "span></span>"
 msgstr ""
-"<span><span invisible=\"equity_transaction_count == 1\""
-">Transacties</span></span>"
+"<span><span invisible=\"equity_transaction_count == 1\">Transacties</span></"
+"span>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
@@ -293,7 +311,7 @@ msgstr ""
 "vastlegging van de lijst\n"
 "                            van derde equivalente landen voor een "
 "vereenvoudigd klantenonderzoek (artikel 37, § 2, eerste lid, 2° en 5°, van "
-"de wet AML);"
+"antiwitwaswet;"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -492,6 +510,7 @@ msgstr "Wissen"
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__partner_id
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__partner_id
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_search
+#: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_form
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_search
 msgid "Company"
 msgstr "Bedrijf"
@@ -625,8 +644,8 @@ msgid ""
 "Definitions: \"beneficial owners\", \"control\", \"shareholder holding 25% "
 "or more\", \"decision makers\""
 msgstr ""
-"Definities: \"uiteindelijke begunstigde\", \"zeggenschap\", "
-"\"aandeelhouder met 25% or meer\", \"besluitvormers\""
+"Definities: \"uiteindelijke begunstigde\", \"zeggenschap\", \"aandeelhouder "
+"met 25% or meer\", \"besluitvormers\""
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__destination_class_id
@@ -927,6 +946,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__holder_id
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__holder_id
+#: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_form
 msgid "Holder"
 msgstr "Houder"
 
@@ -1264,6 +1284,7 @@ msgstr "Nog geen waarderingen!"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__notes
+#: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "Notes"
 msgstr "Notities"
 
@@ -1447,8 +1468,8 @@ msgstr "Beoordelingen"
 
 #. module: equity
 #: model:ir.model.fields,help:equity.field_equity_transaction__subscriber_id
-msgid "Recipient of the shares/options of the transaction."
-msgstr "Ontvanger van de aandelen/opties van de transactie."
+msgid "Recipient of the securities of the transaction."
+msgstr ""
 
 #. module: equity
 #. odoo-javascript
@@ -1470,7 +1491,7 @@ msgstr "Rapportage"
 #. module: equity
 #: model:ir.actions.act_window,name:equity.action_equity_request_ubo_form
 msgid "Request UBO Form"
-msgstr "Aanvraagformulier UBO"
+msgstr "UBO-formulier aanvragen"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__auth_rep_role
@@ -1637,8 +1658,8 @@ msgstr "Ondersteunend document"
 msgid ""
 "Thank you for providing your Ultimate Beneficial Owner (UBO) information."
 msgstr ""
-"Bedankt voor het verstrekken van je Ultimate Beneficial Owner "
-"(UBO)-informatie."
+"Bedankt voor het verstrekken van je Ultimate Beneficial Owner (UBO)-"
+"informatie."
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
@@ -1648,8 +1669,8 @@ msgid ""
 "The \"Transaction Price\" total is not counting the prices of options "
 "issuance transactions because that is a strike price."
 msgstr ""
-"Het totaal '# Effecten' telt de 'Opties Uitoefening '-transacties niet mee ("
-"omdat die worden meegeteld op het moment van \"Opties Uitgifte\"). Het "
+"Het totaal '# Effecten' telt de 'Opties Uitoefening '-transacties niet mee "
+"(omdat die worden meegeteld op het moment van \"Opties Uitgifte\"). Het "
 "totaal \"Transactieprijs\" telt de prijzen van transacties voor de uitgifte "
 "van opties niet mee, omdat dat een uitoefenprijs is."
 
@@ -1853,6 +1874,11 @@ msgstr "Niet toegewezen"
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 msgid "Upload"
 msgstr "Uploaden"
+
+#. module: equity
+#: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
+msgid "Upload Files"
+msgstr ""
 
 #. module: equity
 #. odoo-python
@@ -2139,3 +2165,6 @@ msgstr "jaar"
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "years"
 msgstr "jaren"
+
+#~ msgid "Recipient of the shares/options of the transaction."
+#~ msgstr "Ontvanger van de aandelen/opties van de transactie."

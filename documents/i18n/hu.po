@@ -13,13 +13,14 @@
 # gezza <geza.nagy@oregional.hu>, 2023
 # Tamás Németh <ntomasz81@gmail.com>, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-30 02:40+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 19:33+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
 "documents/hu/>\n"
 "Language: hu\n"
@@ -494,7 +495,7 @@ msgid ""
 "size: 13px;\">\n"
 "                                        <div>\n"
 "                                            Hello <t t-"
-"out=\"object.owner_id.name or ''\">OdooBot</t>,\n"
+"out=\"object.requestee_partner_id.name or ''\">OdooBot</t>,\n"
 "                                            <br/><br/>\n"
 "                                            <t t-"
 "out=\"object.create_uid.name or ''\">OdooBot</t> (<t t-"
@@ -662,7 +663,7 @@ msgid ""
 "size: 13px;\">\n"
 "                                        <div>\n"
 "                                            Hello <t t-"
-"out=\"object.owner_id.name or ''\">OdooBot</t>,\n"
+"out=\"object.requestee_partner_id.name or ''\">OdooBot</t>,\n"
 "                                            <br/><br/>\n"
 "                                            This is a friendly reminder to "
 "upload your requested document:\n"
@@ -1083,7 +1084,7 @@ msgstr ""
 #. module: documents
 #: model:documents.document,name:documents.document_internal_folder
 msgid "Admin"
-msgstr ""
+msgstr "Admin"
 
 #. module: documents
 #: model:res.groups,name:documents.group_documents_manager
@@ -1341,7 +1342,7 @@ msgstr "Visszavonás"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_server_action_evaluation_type_field.js:0
 msgid "Change"
-msgstr ""
+msgstr "Megváltoztatni"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_access_tracking__changes
@@ -1373,7 +1374,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/fields/documents_datetime/documents_datetime_field.xml:0
 msgid "Clear"
-msgstr ""
+msgstr "Törlés"
 
 #. module: documents
 #. odoo-javascript
@@ -1405,7 +1406,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/kanban/documents_kanban_record.xml:0
 msgid "Click to select"
-msgstr ""
+msgstr "Kattintson a kiválasztáshoz"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__thumbnail_status__client_generated
@@ -1476,7 +1477,7 @@ msgstr "Konfiguráció"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Confirm"
-msgstr ""
+msgstr "Megerősítés"
 
 #. module: documents
 #. odoo-python
@@ -1668,7 +1669,7 @@ msgstr ""
 #: code:addons/documents/static/src/views/fields/documents_user_folder_id_char/documents_user_folder_id_char.js:0
 #: model:ir.model.fields,field_description:documents.field_documents_operation__destination
 msgid "Destination"
-msgstr ""
+msgstr "Cél"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__access_internal
@@ -1699,7 +1700,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/list/action_widget/documents_list_action_item_details.js:0
 msgid "Details"
-msgstr ""
+msgstr "Részletek"
 
 #. module: documents
 #. odoo-javascript
@@ -2351,7 +2352,7 @@ msgstr "Személyügy"
 #. module: documents
 #: model:ir.model,name:documents.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP irányítás"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__has_message
@@ -2781,18 +2782,18 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__url
 msgid "Link URL"
-msgstr ""
+msgstr "Hivatkozás URL"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/documents_model_mixin.js:0
 msgid "Link copied to clipboard!"
-msgstr ""
+msgstr "A hivatkozás a vágólapra másolva!"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_view_list_main
 msgid "Link to"
-msgstr ""
+msgstr "Hivatkozás erre"
 
 #. module: documents
 #. odoo-javascript
@@ -2966,7 +2967,7 @@ msgstr "Továbbiak"
 #: code:addons/documents/static/src/views/documents_controller_mixin.js:0
 #: model:ir.model.fields.selection,name:documents.selection__documents_operation__operation__move
 msgid "Move"
-msgstr ""
+msgstr "Mozgás"
 
 #. module: documents
 #. odoo-javascript
@@ -2984,7 +2985,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/documents_controller_mixin.js:0
 msgid "Move to Trash"
-msgstr ""
+msgstr "Áthelyezés a kukába"
 
 #. module: documents
 #. odoo-javascript
@@ -3128,7 +3129,7 @@ msgstr "Következő tevékenység típusa"
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "No"
-msgstr ""
+msgstr "Nem"
 
 #. module: documents
 #. odoo-javascript
@@ -3224,7 +3225,7 @@ msgstr "Nincsenek megosztott hivatkozások"
 #. odoo-javascript
 #: code:addons/documents/static/src/components/documents_details_panel/documents_details_panel.xml:0
 msgid "No tags"
-msgstr ""
+msgstr "Nincsenek címkék"
 
 #. module: documents
 #. odoo-javascript
@@ -3345,7 +3346,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__operation
 msgid "Operation"
-msgstr ""
+msgstr "Művelet"
 
 #. module: documents
 #. odoo-python
@@ -3399,7 +3400,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__user_folder_id
 msgid "Parent"
-msgstr ""
+msgstr "Szülő"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__parent_path
@@ -3461,7 +3462,7 @@ msgstr "Értékelések"
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_readonly
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__is_readonly
 msgid "Readonly"
-msgstr ""
+msgstr "Csak olvasható"
 
 #. module: documents
 #. odoo-python
@@ -3489,7 +3490,7 @@ msgstr "Bejegyzés"
 #. module: documents
 #: model:documents.document,name:documents.document_registrations_folder
 msgid "Registrations"
-msgstr ""
+msgstr "Regisztrációk"
 
 #. module: documents
 #. odoo-javascript
@@ -3660,7 +3661,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/fields/documents_user_folder_id_char/documents_search_panel_user_folder_id.xml:0
 msgid "Search..."
-msgstr ""
+msgstr "Keresés..."
 
 #. module: documents
 #. odoo-javascript
@@ -3883,7 +3884,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_single
 msgid "Single"
-msgstr ""
+msgstr "Egyedülálló"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_file
@@ -3893,7 +3894,7 @@ msgstr "Méret:"
 #. module: documents
 #: model:documents.document,name:documents.document_finance_social_folder
 msgid "Social"
-msgstr ""
+msgstr "Közösség"
 
 #. module: documents
 #. odoo-python
@@ -3992,7 +3993,7 @@ msgstr "Összefoglaló"
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Support"
-msgstr ""
+msgstr "Támogatás"
 
 #. module: documents
 #: model:res.groups,name:documents.group_documents_system
@@ -4029,7 +4030,7 @@ msgstr "Címkék"
 #. module: documents
 #: model:documents.document,name:documents.document_finance_taxes_folder
 msgid "Taxes"
-msgstr ""
+msgstr "Adók"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_tag__tooltip
@@ -4390,7 +4391,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents.field_ir_actions_server__usage
 #: model:ir.model.fields,field_description:documents.field_ir_cron__usage
 msgid "Usage"
-msgstr ""
+msgstr "Használat"
 
 #. module: documents
 #: model:ir.model,name:documents.model_res_users
@@ -4444,7 +4445,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/documents_model_mixin.js:0
 msgid "Warning"
-msgstr ""
+msgstr "Figyelmeztetés"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__website_message_ids
@@ -4479,7 +4480,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Yes"
-msgstr ""
+msgstr "Igen"
 
 #. module: documents
 #. odoo-javascript
@@ -4886,7 +4887,7 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
 msgid "to"
-msgstr ""
+msgstr "eddig"
 
 #. module: documents
 #. odoo-javascript

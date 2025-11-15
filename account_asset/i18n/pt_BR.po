@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-07 02:40+0000\n"
+"PO-Revision-Date: 2025-11-14 11:43+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/account_asset/pt_BR/>\n"
@@ -48,37 +48,37 @@ msgstr "Nº de lançamentos de depreciação realizados"
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "%(asset)s: Disposal"
-msgstr ""
+msgstr "%(asset)s: Alienação"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "%(asset)s: Sale"
-msgstr ""
+msgstr "%(asset)s: Venda"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_assets_report.py:0
 msgid "%(months)s m"
-msgstr ""
+msgstr "%(months)s m"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "%(move_line)s (%(current)s of %(total)s)"
-msgstr ""
+msgstr "%(move_line)s (%(current)s de %(total)s)"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_assets_report.py:0
 msgid "%(years)s y"
-msgstr ""
+msgstr "%(years)s a"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (cópia)"
 
 #. module: account_asset
 #. odoo-python
@@ -100,7 +100,7 @@ msgstr "%s: depreciação"
 #. odoo-python
 #: code:addons/account_asset/models/account_assets_report.py:0
 msgid "(No %s)"
-msgstr ""
+msgstr "(Nº %s)"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
@@ -110,7 +110,7 @@ msgstr "(inclusive"
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
 msgid "<span> per year</span>"
-msgstr ""
+msgstr "<span> por ano</span>"
 
 #. module: account_asset
 #. odoo-python
@@ -120,6 +120,9 @@ msgid ""
 "> %(extra_text)s Future entries will be recomputed to depreciate the asset "
 "following the changes."
 msgstr ""
+"Um lançamento de depreciação será registrado na data e incluindo a data "
+"%(date)s. <br/> %(extra_text)s Os lançamentos futuros serão recalculados "
+"para depreciar o ativo de acordo com as alterações."
 
 #. module: account_asset
 #. odoo-python
@@ -129,6 +132,9 @@ msgid ""
 "A disposal entry will be posted on the %(account_type)s account <b>%"
 "(account)s</b>."
 msgstr ""
+"Um lançamento de depreciação será realizado na data (incluindo a data) "
+"%(date)s.<br/> Um lançamento de cessão será feito na conta %(account_type)s "
+"<b>%(account)s</b>."
 
 #. module: account_asset
 #. odoo-python
@@ -138,6 +144,9 @@ msgid ""
 "A second entry will neutralize the original income and post the  outcome of "
 "this sale on account <b>%(account)s</b>."
 msgstr ""
+"Uma entrada de depreciação será lançada na data e inclusive na data "
+"%(date)s.<br/> Um segundo lançamento neutralizará a receita original e "
+"lançará o resultado dessa venda na conta <b>%(account)s</b> ."
 
 #. module: account_asset
 #. odoo-python
@@ -149,7 +158,7 @@ msgstr "Um lançamento de depreciação será feito na data (incluindo a data) %
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "A document linked to %(move_line_name)s has been deleted: %(link)s"
-msgstr ""
+msgstr "Um documento vinculado a %(move_line_name)s foi excluído: %(link)s"
 
 #. module: account_asset
 #. odoo-python
@@ -161,7 +170,7 @@ msgstr "Um documento vinculado a esta movimentação foi excluído: %s"
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "A gross increase has been created: %(link)s"
-msgstr ""
+msgstr "Foi criado um aumento bruto: %(link)s"
 
 #. module: account_asset
 #. odoo-python
@@ -170,6 +179,8 @@ msgid ""
 "A non deductible tax value of %(tax_value)s was added to %(name)s's initial "
 "value of %(purchase_value)s"
 msgstr ""
+"Um valor de imposto não dedutível de %(tax_value)s foi adicionado a %(name)s "
+"do valor inicial de %(purchase_value)s"
 
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_account
@@ -179,7 +190,7 @@ msgstr "Conta"
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_chart_template
 msgid "Account Chart Template"
-msgstr ""
+msgstr "Modelo de plano de conta"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__account_type

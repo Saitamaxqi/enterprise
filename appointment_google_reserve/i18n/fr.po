@@ -4,13 +4,14 @@
 #
 # "Manon Rondou (ronm)" <ronm@odoo.com>, 2025.
 # "Cécile Collart (cco)" <cco@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-24 11:22+0000\n"
-"Last-Translator: \"Cécile Collart (cco)\" <cco@odoo.com>\n"
+"PO-Revision-Date: 2025-11-13 17:16+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "appointment_google_reserve/fr/>\n"
 "Language: fr\n"
@@ -89,7 +90,7 @@ msgstr "Adresse"
 #. module: appointment_google_reserve
 #: model:ir.model,name:appointment_google_reserve.model_appointment_resource
 msgid "Appointment Resource"
-msgstr ""
+msgstr "Ressource du rendez-vous"
 
 #. module: appointment_google_reserve
 #: model:ir.model,name:appointment_google_reserve.model_appointment_type
@@ -121,7 +122,7 @@ msgstr "Nombre de pièces jointes"
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__phone_blacklisted
 msgid "Blacklisted Phone is Phone"
-msgstr ""
+msgstr "Le téléphone sur liste noire est fixe"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__business_category
@@ -156,7 +157,7 @@ msgstr "Désactiver 'Réserver avec Google'"
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid "Discard"
-msgstr ""
+msgstr "Ignorer"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_resource__display_name
@@ -184,12 +185,12 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Abonnés"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Abonnés (Partenaires)"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_calendar_event__is_google_reserve
@@ -240,7 +241,7 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "A un message"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
@@ -295,11 +296,14 @@ msgid ""
 "distinguish which number is blacklisted             when there is both a "
 "mobile and phone field in a model."
 msgstr ""
+"Indique si un numéro de téléphone nettoyé sur liste noire est un numéro "
+"fixe. Aide à distinguer quel numéro est sur liste noire lorsqu'il y a à la "
+"fois un champ de téléphone portable et de téléphone fixe sur un modèle."
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Est un abonné"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__write_uid
@@ -402,7 +406,7 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model,name:appointment_google_reserve.model_resource_calendar_leaves
 msgid "Resource Time Off Detail"
-msgstr ""
+msgstr "Détails des congés des ressources"
 
 #. module: appointment_google_reserve
 #: model:appointment.type,name:appointment_google_reserve.appointment_type_restaurant

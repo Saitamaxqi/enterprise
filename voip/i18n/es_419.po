@@ -5,13 +5,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 # "Patricia Gutiérrez (pagc)" <pagc@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-30 17:15+0000\n"
-"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
+"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"PO-Revision-Date: 2025-11-15 11:29+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/voip/es_419/>\n"
 "Language: es_419\n"
@@ -496,14 +497,10 @@ msgid "Contacts with a phone number will be shown here."
 msgstr "Los contactos con un número de teléfono aparecerán aquí."
 
 #. module: voip
+#: model:ir.model,name:voip.model_res_country
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_id
 msgid "Country"
 msgstr "País"
-
-#. module: voip
-#: model:ir.model,name:voip.model_voip_country_code_mixin
-msgid "Country Code Mixin"
-msgstr "Mixin del código del país"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_flag_url
@@ -591,6 +588,7 @@ msgstr "Desactivado"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__display_name
+#: model:ir.model.fields,field_description:voip.field_res_country__display_name
 #: model:ir.model.fields,field_description:voip.field_res_partner__display_name
 #: model:ir.model.fields,field_description:voip.field_res_users__display_name
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__display_name
@@ -815,6 +813,7 @@ msgstr "Cómo llamar desde un dispositivo móvil"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__id
+#: model:ir.model.fields,field_description:voip.field_res_country__id
 #: model:ir.model.fields,field_description:voip.field_res_partner__id
 #: model:ir.model.fields,field_description:voip.field_res_users__id
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__id
@@ -1197,6 +1196,11 @@ msgid "Phone"
 msgstr "Teléfono"
 
 #. module: voip
+#: model:ir.model,name:voip.model_voip_country_code_mixin
+msgid "Phone Country Mixin"
+msgstr "Mixin del teléfono del país"
+
+#. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__phone_number
 msgid "Phone Number"
 msgstr "Número de teléfono"
@@ -1393,7 +1397,7 @@ msgstr "Error en el envío del SMS"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_config_settings_view_form
 msgid "Schedule & make calls from your database"
-msgstr "Programe llamadas y marque desde su base de datos"
+msgstr "Programa llamadas y marca desde tu base de datos"
 
 #. module: voip
 #. odoo-javascript
@@ -1679,7 +1683,7 @@ msgstr "Hoy, %(time)s"
 #. odoo-javascript
 #: code:addons/voip/static/src/web/voip_systray_item.js:0
 msgid "Toggle Softphone"
-msgstr "Activar el Softphone"
+msgstr "Mostrar u ocultar el softphone"
 
 #. module: voip
 #. odoo-javascript
@@ -1914,3 +1918,6 @@ msgstr "puede ver, reportar y gestionar los ajustes de las llamadas."
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
 msgid "e.g. Brandon Freeman"
 msgstr "Por ejemplo, Francisco Pérez"
+
+#~ msgid "Country Code Mixin"
+#~ msgstr "Mixin del código del país"

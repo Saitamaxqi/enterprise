@@ -3,19 +3,22 @@
 # * appointment_hr_recruitment
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-08 18:45+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-15 12:56+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Azerbaijani <https://translate.odoo.com/projects/odoo-19/"
+"appointment_hr_recruitment/az/>\n"
 "Language: az\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: appointment_hr_recruitment
 #: model:mail.template,body_html:appointment_hr_recruitment.email_template_data_applicant_schedule_interview
@@ -40,7 +43,7 @@ msgstr ""
 #. module: appointment_hr_recruitment
 #: model:ir.model,name:appointment_hr_recruitment.model_hr_applicant
 msgid "Applicant"
-msgstr ""
+msgstr "Namizəd"
 
 #. module: appointment_hr_recruitment
 #: model:ir.model,website_form_label:appointment_hr_recruitment.model_hr_applicant
@@ -50,7 +53,7 @@ msgstr ""
 #. module: appointment_hr_recruitment
 #: model:ir.model,name:appointment_hr_recruitment.model_appointment_invite
 msgid "Appointment Invite"
-msgstr ""
+msgstr "Görüşə Dəvət et"
 
 #. module: appointment_hr_recruitment
 #: model:mail.template,subject:appointment_hr_recruitment.email_template_data_applicant_schedule_interview
@@ -58,18 +61,20 @@ msgid ""
 "Can we plan an interview together for your {{ (object.job_id.name + ' ') if "
 "object.job_id else '' }}application?"
 msgstr ""
+"{{ (object.job_id.name + ‘ ‘) if object.job_id else ‘’ }}müraciətiniz üçün "
+"birlikdə bir müsahibə planlaşdıra bilərikmi?"
 
 #. module: appointment_hr_recruitment
 #: model:ir.model.fields,field_description:appointment_hr_recruitment.field_appointment_invite__display_name
 #: model:ir.model.fields,field_description:appointment_hr_recruitment.field_hr_applicant__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Göstəriləcək Ad"
 
 #. module: appointment_hr_recruitment
 #: model:ir.model.fields,field_description:appointment_hr_recruitment.field_appointment_invite__id
 #: model:ir.model.fields,field_description:appointment_hr_recruitment.field_hr_applicant__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: appointment_hr_recruitment
 #: model:ir.model.fields,field_description:appointment_hr_recruitment.field_hr_applicant__interview_invite_code
@@ -79,12 +84,12 @@ msgstr ""
 #. module: appointment_hr_recruitment
 #: model:appointment.type,name:appointment_hr_recruitment.appointment_type_interviews
 msgid "Interviews availabilities"
-msgstr ""
+msgstr "Müsahibələrin mövcudluğu"
 
 #. module: appointment_hr_recruitment
 #: model:mail.template,name:appointment_hr_recruitment.email_template_data_applicant_schedule_interview
 msgid "Recruitment: Schedule interview"
-msgstr ""
+msgstr "İşə qəbul: Müsahibəni planlaşdırın"
 
 #. module: appointment_hr_recruitment
 #: model:mail.template,description:appointment_hr_recruitment.email_template_data_applicant_schedule_interview

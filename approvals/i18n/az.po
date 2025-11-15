@@ -3,25 +3,28 @@
 # * approvals
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-08 18:43+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"PO-Revision-Date: 2025-11-08 20:25+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Azerbaijani <https://translate.odoo.com/projects/odoo-19/"
+"approvals/az/>\n"
 "Language: az\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (surət)"
 
 #. module: approvals
 #: model:ir.actions.report,print_report_name:approvals.action_report_approval_request
@@ -54,13 +57,13 @@ msgid "<i class=\"fa fa-times text-danger me-1\"/>Refuse"
 msgstr ""
 
 #. module: approvals
-#: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
-msgid "<span class=\"fa fa-warning\" title=\"Invalid minimum approvals\"/>"
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "<span class=\"col-2 fw-bold\">Description:</span>"
 msgstr ""
 
 #. module: approvals
-#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
-msgid "<span class=\"fw-bold\">Description:</span>"
+#: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
+msgid "<span class=\"fa fa-warning\" title=\"Invalid minimum approvals\"/>"
 msgstr ""
 
 #. module: approvals
@@ -76,43 +79,43 @@ msgstr ""
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Lazımi Hərəkət"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__active
 #: model:ir.model.fields,field_description:approvals.field_approval_request__active
 msgid "Active"
-msgstr ""
+msgstr "Aktiv"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "Fəaliyyətlər"
 
 #. module: approvals
 #: model:ir.model,name:approvals.model_mail_activity
 msgid "Activity"
-msgstr ""
+msgstr "Fəaliyyət"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Faəliyyət istisnaetmə İşarəsi"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Fəaliyyət Statusu"
 
 #. module: approvals
 #: model:ir.model,name:approvals.model_mail_activity_type
 msgid "Activity Type"
-msgstr ""
+msgstr "Fəaliyyət növü"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Fəaliyyət Növü ikonu"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_category__has_product
@@ -123,7 +126,7 @@ msgstr ""
 #. module: approvals
 #: model:res.groups,name:approvals.group_approval_manager
 msgid "Administrator"
-msgstr ""
+msgstr "Administrator"
 
 #. module: approvals
 #: model:ir.actions.act_window,name:approvals.approval_request_action_all
@@ -143,12 +146,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals.field_approval_request__amount
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Amount"
-msgstr ""
+msgstr "Məbləğ"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
 msgid "Amount:"
-msgstr ""
+msgstr "Məbləğ:"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_category__has_reference
@@ -170,7 +173,7 @@ msgstr ""
 #. module: approvals
 #: model:mail.activity.type,name:approvals.mail_activity_data_approval
 msgid "Approval"
-msgstr ""
+msgstr "Təsdiq"
 
 #. module: approvals
 #: model:ir.actions.act_window,name:approvals.approval_category_action
@@ -224,7 +227,7 @@ msgstr ""
 #: model:ir.ui.menu,name:approvals.approvals_menu_root
 #: model:res.groups.privilege,name:approvals.res_groups_privilege_approvals
 msgid "Approvals"
-msgstr ""
+msgstr "Təsdiqləmələr"
 
 #. module: approvals
 #: model:ir.actions.act_window,name:approvals.approval_request_action_to_review
@@ -242,7 +245,7 @@ msgstr ""
 #: code:addons/approvals/static/src/web/approval.xml:0
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Approve"
-msgstr ""
+msgstr "Təsdiq et"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__approved
@@ -251,7 +254,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
 msgid "Approved"
-msgstr ""
+msgstr "Təsdiq olundu"
 
 #. module: approvals
 #: model:ir.model,name:approvals.model_approval_approver
@@ -301,7 +304,7 @@ msgstr ""
 #: code:addons/approvals/static/src/views/kanban/approvals_category_kanban_controller.js:0
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_kanban
 msgid "Archive"
-msgstr ""
+msgstr "Arxiv"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
@@ -310,13 +313,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 #: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "Archived"
-msgstr ""
+msgstr "Arxivləndi"
 
 #. module: approvals
 #. odoo-javascript
 #: code:addons/approvals/static/src/views/kanban/approvals_category_kanban_controller.js:0
 msgid "Are you sure that you want to archive this record?"
-msgstr ""
+msgstr "Bu rekordu arxivləşdirmək istədiyinizə əminsiniz?"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
@@ -326,17 +329,17 @@ msgstr ""
 #. module: approvals
 #: model:ir.model,name:approvals.model_ir_attachment
 msgid "Attachment"
-msgstr ""
+msgstr "Qoşma"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Qoşma Sayı"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__attachment_ids
 msgid "Attachments"
-msgstr ""
+msgstr "Qoşmalar"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__automated_sequence
@@ -372,7 +375,7 @@ msgstr ""
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__can_edit
 msgid "Can Edit"
-msgstr ""
+msgstr "Redaktə edə bilər"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__can_edit_user_id
@@ -383,14 +386,14 @@ msgstr ""
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__cancel
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Ləğv edin"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__request_status__cancel
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__user_status__cancel
 #: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "Canceled"
-msgstr ""
+msgstr "Ləğv olundu"
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_car_rental_application
@@ -401,7 +404,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals.field_approval_request__category_id
 #: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "Category"
-msgstr ""
+msgstr "Kateqoriya"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__category_approver
@@ -411,7 +414,7 @@ msgstr ""
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__sequence_code
 msgid "Code"
-msgstr ""
+msgstr "Kod"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__company_id
@@ -420,12 +423,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__company_id
 #: model:ir.model.fields,field_description:approvals.field_approval_request__company_id
 msgid "Company"
-msgstr ""
+msgstr "Şirkət"
 
 #. module: approvals
 #: model:ir.ui.menu,name:approvals.approvals_menu_config
 msgid "Configuration"
-msgstr ""
+msgstr "Konfiqurasiya"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_tree
@@ -436,12 +439,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals.field_approval_request__partner_id
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
 msgid "Contact:"
-msgstr ""
+msgstr "Əlaqə:"
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_contract_approval
@@ -451,7 +454,7 @@ msgstr ""
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.product_product_action
 msgid "Create a new product variant"
-msgstr ""
+msgstr "Yeni məhsul variantı yaradın"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__create_uid
@@ -460,7 +463,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__create_uid
 #: model:ir.model.fields,field_description:approvals.field_approval_request__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Tərəfindən yaradılıb"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__create_date
@@ -469,20 +472,20 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__create_date
 #: model:ir.model.fields,field_description:approvals.field_approval_request__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Tarixdə yaradıldı"
 
 #. module: approvals
 #: model:ir.actions.act_window,name:approvals.approval_category_action_new_request
 #: model:ir.ui.menu,name:approvals.approvals_category_menu_new
 msgid "Dashboard"
-msgstr ""
+msgstr "Şəxsi kabinet"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__date
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Date"
-msgstr ""
+msgstr "Tarix"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__date_confirmed
@@ -502,7 +505,7 @@ msgstr ""
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
 msgid "Date:"
-msgstr ""
+msgstr "Tarix:"
 
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.product_template_action
@@ -517,7 +520,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals.field_approval_request__reason
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Description"
-msgstr ""
+msgstr "Təsvir"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__display_name
@@ -529,19 +532,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals.field_mail_activity__display_name
 #: model:ir.model.fields,field_description:approvals.field_mail_activity_type__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Göstəriləcək Ad"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Document"
-msgstr ""
+msgstr "sənəd"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__requirer_document
 #: model:ir.model.fields,field_description:approvals.field_approval_request__requirer_document
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Documents"
-msgstr ""
+msgstr "Sənədlər"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
@@ -556,7 +559,7 @@ msgstr ""
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_kanban
 msgid "Edit"
-msgstr ""
+msgstr "Redaktə et"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__manager_approval
@@ -576,22 +579,22 @@ msgstr ""
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Fields"
-msgstr ""
+msgstr "Sahələr"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "İzləyicilər"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "İzləyicilər (Tərəfdaşlar)"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Gözəl şriftli ikon, məsələn fa-tapşırıqlar"
 
 #. module: approvals
 #: model:ir.actions.server,name:approvals.model_approval_request_approve_admin
@@ -601,7 +604,7 @@ msgstr ""
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "From:"
-msgstr ""
+msgstr "Başlama Tarixi:"
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_general_approval
@@ -640,7 +643,7 @@ msgstr ""
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Mesajı Var"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__has_payment_method
@@ -679,7 +682,8 @@ msgid ""
 "\n"
 "        Empty: do nothing\n"
 "        Is Approver: the employee's manager will be in the approver list\n"
-"        Is Required Approver: the employee's manager will be required to approve the request.\n"
+"        Is Required Approver: the employee's manager will be required to "
+"approve the request.\n"
 "    "
 msgstr ""
 
@@ -693,28 +697,28 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals.field_mail_activity__id
 #: model:ir.model.fields,field_description:approvals.field_mail_activity_type__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Simvol"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "İstisna fəaliyyəti göstərən simvol."
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "İşarələnibsə, yeni mesajlara baxmalısınız."
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__message_has_error
 #: model:ir.model.fields,help:approvals.field_approval_request__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Yoxlanılıbsa, bəzi mesajların çatdırılmasında xəta var."
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_category__automated_sequence
@@ -728,8 +732,8 @@ msgstr ""
 #: model:ir.model.fields,help:approvals.field_approval_category__approver_sequence
 #: model:ir.model.fields,help:approvals.field_approval_request__approver_sequence
 msgid ""
-"If checked, the approvers have to approve in sequence (one after the other)."
-" If Employee's Manager is selected as approver, they will be the first in "
+"If checked, the approvers have to approve in sequence (one after the other). "
+"If Employee's Manager is selected as approver, they will be the first in "
 "line."
 msgstr ""
 
@@ -737,7 +741,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals.field_approval_category__image
 #: model:ir.model.fields,field_description:approvals.field_approval_request__category_image
 msgid "Image"
-msgstr ""
+msgstr "Şəkil"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__invalid_minimum
@@ -757,7 +761,7 @@ msgstr ""
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "İzləyicidir"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__manager_approval__required
@@ -776,7 +780,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__write_uid
 #: model:ir.model.fields,field_description:approvals.field_approval_request__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Son Yeniləyən"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__write_date
@@ -785,7 +789,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__write_date
 #: model:ir.model.fields,field_description:approvals.field_approval_request__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Son Yenilənmə tarixi"
 
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action
@@ -798,12 +802,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_tree
 msgid "Location"
-msgstr ""
+msgstr "Məkan"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
 msgid "Location:"
-msgstr ""
+msgstr "Yerləşmə:"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
@@ -815,12 +819,12 @@ msgstr ""
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_main_attachment_id
 msgid "Main Attachment"
-msgstr ""
+msgstr "Əsas Əlavə"
 
 #. module: approvals
 #: model:ir.ui.menu,name:approvals.approvals_menu_manager
 msgid "Manager"
-msgstr ""
+msgstr "Menecer"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
@@ -830,12 +834,12 @@ msgstr ""
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Mesajın Çatdırılmasında xəta"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Mesajlar"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__approval_minimum
@@ -853,12 +857,12 @@ msgstr ""
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
 msgid "Mitchell Admin"
-msgstr ""
+msgstr "Mitchell Admin"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Mənim Fəaliyyətlərimin Son Tarixi"
 
 #. module: approvals
 #: model:ir.ui.menu,name:approvals.approvals_approval_menu
@@ -879,12 +883,12 @@ msgstr ""
 #: model:ir.actions.act_window,name:approvals.approval_request_action
 #: model:ir.ui.menu,name:approvals.approvals_request_menu_my
 msgid "My Requests"
-msgstr ""
+msgstr "Mənim İstəklərim"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__name
 msgid "Name"
-msgstr ""
+msgstr "Ad"
 
 #. module: approvals
 #. odoo-python
@@ -892,7 +896,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__new
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__user_status__new
 msgid "New"
-msgstr ""
+msgstr "Yeni"
 
 #. module: approvals
 #. odoo-javascript
@@ -904,22 +908,22 @@ msgstr ""
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr ""
+msgstr "Növbəti Fəaliyyət Təqvimi Tədbiri"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Növbəti Fəaliyyətin Son Tarixi"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "Növbəti Fəaliyyət Xülasəsi"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "Yeni Fəaliyyət Növü"
 
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action_all
@@ -940,7 +944,7 @@ msgstr ""
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.product_template_action
 msgid "No product found. Let's create one!"
-msgstr ""
+msgstr "Məhsul tapılmadı. Birini yaradaq."
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__has_amount__no
@@ -953,32 +957,32 @@ msgstr ""
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__has_quantity__no
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__has_reference__no
 msgid "None"
-msgstr ""
+msgstr "Heçbiri"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Hərəkətlərin sayı"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__attachment_number
 msgid "Number of Attachments"
-msgstr ""
+msgstr "Qoşmaların Sayı"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Xətaların sayı"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Əməliyyat tələb edən mesajların sayı"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Çatdırılma xətası olan mesajların sayı"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__request_to_validate_count
@@ -1007,17 +1011,17 @@ msgstr ""
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__has_reference__optional
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__requirer_document__optional
 msgid "Optional"
-msgstr ""
+msgstr "Seçimli"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Options"
-msgstr ""
+msgstr "Opsionlar"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Payment"
-msgstr ""
+msgstr "Ödəniş"
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_payment_application
@@ -1028,7 +1032,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Period"
-msgstr ""
+msgstr "Müddət"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
@@ -1038,22 +1042,22 @@ msgstr ""
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Print"
-msgstr ""
+msgstr "Çap edin"
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_procurement
 msgid "Procurement"
-msgstr ""
+msgstr "Stokun bərpası"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Product"
-msgstr ""
+msgstr "Məhsul"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
 msgid "Product Description"
-msgstr ""
+msgstr "Məhsul Təsviri"
 
 #. module: approvals
 #: model:ir.model,name:approvals.model_approval_product_line
@@ -1065,7 +1069,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:approvals.product_product_action
 #: model:ir.ui.menu,name:approvals.approvals_menu_product_variant
 msgid "Product Variants"
-msgstr ""
+msgstr "Məhsul Çeşidləri"
 
 #. module: approvals
 #: model:ir.actions.act_window,name:approvals.product_template_action
@@ -1078,12 +1082,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:approvals.approval_product_line_view_tree_independent
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Products"
-msgstr ""
+msgstr "Məhsullar"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__approval_properties
 msgid "Properties"
-msgstr ""
+msgstr "Xüsusiyyətlər"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__quantity
@@ -1091,18 +1095,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
 msgid "Quantity"
-msgstr ""
+msgstr "Miqdar"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Qiymətləndirmələr"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__reference
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Reference"
-msgstr ""
+msgstr "İstinad"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__sequence_id
@@ -1112,14 +1116,14 @@ msgstr ""
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
 msgid "Reference:"
-msgstr ""
+msgstr "İstinad:"
 
 #. module: approvals
 #. odoo-javascript
 #: code:addons/approvals/static/src/web/approval.xml:0
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Refuse"
-msgstr ""
+msgstr "İmtina"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__refused
@@ -1127,13 +1131,13 @@ msgstr ""
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__user_status__refused
 #: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "Refused"
-msgstr ""
+msgstr "İmtina edilib"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__request_id
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Request"
-msgstr ""
+msgstr "Sorğu"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
@@ -1176,24 +1180,24 @@ msgstr ""
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__has_reference__required
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__requirer_document__required
 msgid "Required"
-msgstr ""
+msgstr "Tələb edlib"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_user_id
 msgid "Responsible User"
-msgstr ""
+msgstr "Məsul İstifadəçi"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "SMS-in Çatdırılmasında xəta"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__sequence
 #: model:ir.model.fields,field_description:approvals.field_approval_category__sequence
 #: model:ir.model.fields,field_description:approvals.field_approval_category_approver__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Ardıcıllıq"
 
 #. module: approvals
 #. odoo-python
@@ -1217,7 +1221,7 @@ msgstr ""
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__status
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__activity_state
@@ -1227,6 +1231,10 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Fəaliyyətlərə əsaslanan status\n"
+"Gecikmiş: Gözlənilən tarixdən keçib\n"
+"Bu gün: Fəaliyyət tarixi bu gündür\n"
+"Planlaşdırılıb: Gələcək fəaliyyətlər."
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
@@ -1236,7 +1244,7 @@ msgstr ""
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Submit"
-msgstr ""
+msgstr "Təqdim edin"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__request_status__pending
@@ -1288,8 +1296,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid ""
-"The request created on %(create_date)s by %(request_owner)s has been "
-"refused."
+"The request created on %(create_date)s by %(request_owner)s has been refused."
 msgstr ""
 
 #. module: approvals
@@ -1335,7 +1342,7 @@ msgstr ""
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__pending
 msgid "To Approve"
-msgstr ""
+msgstr "Təsdiq etmək üçün"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_kanban
@@ -1345,34 +1352,34 @@ msgstr ""
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__request_status__new
 msgid "To Submit"
-msgstr ""
+msgstr "Təsdiq Etmək Üçün"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Qeyddəki istisna fəaliyyət növü."
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_kanban
 msgid "Unarchive"
-msgstr ""
+msgstr "Arxivdən çıxart"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__product_uom_id
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
 msgid "Unit"
-msgstr ""
+msgstr "Vahid"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
 msgid "Units"
-msgstr ""
+msgstr "Ədəd"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__user_id
 #: model:ir.model.fields,field_description:approvals.field_approval_category_approver__user_id
 msgid "User"
-msgstr ""
+msgstr "İstifadəçi"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__user_status
@@ -1382,23 +1389,23 @@ msgstr ""
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__user_ids
 msgid "Users"
-msgstr ""
+msgstr "İstifadəçilər"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__waiting
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__user_status__waiting
 msgid "Waiting"
-msgstr ""
+msgstr "Gözlənilir"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Veb sayt Mesajları"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Veb saytın kommunikasiya tarixçəsi"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
@@ -1461,6 +1468,9 @@ msgid ""
 "You must define a product for everything you sell or purchase,\n"
 "            whether it's a storable product, a consumable or a service."
 msgstr ""
+"Satdığınız və ya satın aldığınız hər şey üçün bir məhsul "
+"müəyyənləşdirməlisiniz,\n"
+"saxlana bilən məhsul, istehlak materialı və ya xidmət olsun."
 
 #. module: approvals
 #. odoo-python
@@ -1493,4 +1503,4 @@ msgstr ""
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "to:"
-msgstr ""
+msgstr "Bitmə Tarixi"

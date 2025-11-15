@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-10-24 02:05+0000\n"
+"PO-Revision-Date: 2025-11-12 06:08+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "documents_account/ko/>\n"
@@ -46,7 +46,7 @@ msgstr ""
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.account_move_view_form
 msgid "<span class=\"o_stat_text\">Documents</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">문서</span>"
 
 #. module: documents_account
 #: model:ir.model.constraint,message:documents_account.constraint_documents_account_folder_setting_journal_unique
@@ -62,12 +62,12 @@ msgstr "회계"
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__company_account_folder_id
 #: model:ir.model.fields,field_description:documents_account.field_res_company__account_folder_id
 msgid "Accounting Folder"
-msgstr ""
+msgstr "회계 폴더"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_account_report
 msgid "Accounting Report"
-msgstr ""
+msgstr "회계 보고서"
 
 #. module: documents_account
 #. odoo-javascript
@@ -85,7 +85,7 @@ msgstr "전체"
 #. odoo-python
 #: code:addons/documents_account/models/documents_document.py:0
 msgid "Annual Closing"
-msgstr ""
+msgstr "연도 마감"
 
 #. module: documents_account
 #. odoo-javascript
@@ -157,7 +157,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Close (Esc)"
-msgstr ""
+msgstr "닫기 (Esc)"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_res_company
@@ -189,7 +189,7 @@ msgstr "작성"
 #. odoo-python
 #: code:addons/documents_account/models/ir_actions_server.py:0
 msgid "Create %(model_name)s"
-msgstr ""
+msgstr "%(model_name)s 생성"
 
 #. module: documents_account
 #. odoo-python
@@ -259,12 +259,12 @@ msgstr "작성일자"
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_out_refund
 msgid "Credit Note"
-msgstr ""
+msgstr "신용장"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_out_invoice
 msgid "Customer Invoice"
-msgstr ""
+msgstr "고객용 청구서"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_journal__display_name
@@ -362,7 +362,7 @@ msgstr "생성된 문서"
 #: model:ir.model.fields,field_description:documents_account.field_account_bank_statement_line__has_documents
 #: model:ir.model.fields,field_description:documents_account.field_account_move__has_documents
 msgid "Has Documents"
-msgstr ""
+msgstr "문서 있음"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_document__has_embedded_pdf
@@ -502,7 +502,7 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_in_receipt
 msgid "Purchase Receipt"
-msgstr ""
+msgstr "구매 영수증"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_bank_statement_line__suspense_statement_line_id
@@ -519,13 +519,13 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_ir_actions_server
 msgid "Server Action"
-msgstr ""
+msgstr "서버 작업"
 
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Split PDF"
-msgstr ""
+msgstr "PDF 분할"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_reports_export_wizard__tag_ids
@@ -588,7 +588,7 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_in_invoice
 msgid "Vendor Bill"
-msgstr ""
+msgstr "공급업체 청구서"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_in_refund

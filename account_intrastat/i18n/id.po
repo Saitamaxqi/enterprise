@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-31 07:19+0000\n"
+"PO-Revision-Date: 2025-11-06 07:15+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "account_intrastat/id/>\n"
@@ -143,7 +143,7 @@ msgstr "Kode Komoditas"
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Commodity codes configuration"
-msgstr ""
+msgstr "Konfigurasi kode komoditas"
 
 #. module: account_intrastat
 #: model:ir.model,name:account_intrastat.model_res_company
@@ -215,18 +215,19 @@ msgstr "Nama Tampilan"
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Exclude any domestic or extra-EU sales from the Intrastat report."
 msgstr ""
+"Kecualikan penjualan domestik atau diluar-UE apa pun dari laporan Intrastat."
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Exclude sales made to private individuals from the listing."
-msgstr ""
+msgstr "Kecualikan penjualan yang dibuat ke individu pribadi dari listing."
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Exclude services from the report."
-msgstr ""
+msgstr "Kecualikan layanan dari laporan."
 
 #. module: account_intrastat
 #. odoo-javascript
@@ -348,7 +349,7 @@ msgstr "Intrastat Supplementary Unit Amount"
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Intrastat Thresholds"
-msgstr ""
+msgstr "Ambang Batas Intrastat"
 
 #. module: account_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_account_bank_statement_line__intrastat_transport_mode_id
@@ -380,6 +381,8 @@ msgid ""
 "Intrastat thresholds may change annually. Verify that your transactions "
 "exceed the threshold for reporting."
 msgstr ""
+"Ambang batas Intrastat mungkin diubah secara tahunan. Verifikasi bahwa "
+"transaksi Anda melampaui ambang batas untuk pelaporan."
 
 #. module: account_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.account_move_line_tree_view_account_intrastat_transaction_codes
@@ -446,19 +449,19 @@ msgstr "Produk hilang"
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Only business customers"
-msgstr ""
+msgstr "Hanya pelanggan-pelanggan bisnis"
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Only goods included"
-msgstr ""
+msgstr "Hanya termasuk barang-barang"
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Only intra-EU transactions"
-msgstr ""
+msgstr "Hanya transaksi intra-UE"
 
 #. module: account_intrastat
 #. odoo-javascript
@@ -616,7 +619,7 @@ msgstr "Jumlah supplementary unit per kuantitas produk."
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "The value of goods should be VAT exclusive."
-msgstr ""
+msgstr "Value dari barang harus sebelum PPN."
 
 #. module: account_intrastat
 #. odoo-javascript
@@ -658,13 +661,13 @@ msgstr "Berat produk belum didefinisikan."
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Unit of measure configuration"
-msgstr ""
+msgstr "Konfigurasi satuan ukuran"
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "VAT exclusive"
-msgstr ""
+msgstr "Sebelum PPN"
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_services_value
@@ -681,7 +684,7 @@ msgstr "Nilai Mata Uang"
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Verify that each good is assigned the right unit of measure."
-msgstr ""
+msgstr "Verifikasi bahwa setiap barang diberikan satuan ukuran yang tepat."
 
 #. module: account_intrastat
 #. odoo-python
@@ -690,6 +693,8 @@ msgid ""
 "Verify that each item has the appropriate code and description according to "
 "the CN (Combined Nomenclature) codes."
 msgstr ""
+"Verifikasi bawha setiap barang memiliki kode dan deskripsi yang tepat sesuai "
+"kode CN (Combined Nomenclature)."
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_weight
