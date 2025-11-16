@@ -1,21 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_ae_hr_payroll
+# * l10n_ae_hr_payroll
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 19:53+0000\n"
-"PO-Revision-Date: 2025-11-13 14:37+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-16 12:57+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_ae_hr_payroll/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_ae_hr_payroll
 #: model:ir.actions.report,print_report_name:l10n_ae_hr_payroll.action_report_payslip_ae
@@ -44,7 +47,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_employee_view_form
 msgid "<span>/ month</span>"
-msgstr ""
+msgstr "<span>/ شهر</span>"
 
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.report_payslip_ae
@@ -55,7 +58,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_employee_view_form
 msgid "<span>days</span>"
-msgstr ""
+msgstr "<span>أيام</span>"
 
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.report_payslip_ae
@@ -65,7 +68,7 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.report_payslip_ae
 msgid "<strong class=\"me-2\">Pay Period:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">فترة الدفع:</strong>"
 
 #. module: l10n_ae_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ae_hr_payroll.l10n_ae_input_advance_recovery
@@ -83,7 +86,7 @@ msgstr ""
 #: model:hr.payslip.input.type,name:l10n_ae_hr_payroll.l10n_ae_input_allowance
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.l10n_ae_uae_instant_pay_allowance
 msgid "Allowance"
-msgstr ""
+msgstr "البدل"
 
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_contract_template_view_form
@@ -131,12 +134,12 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.l10n_ae_hr_payroll_uae_employee_payroll_structure_assignment_of_salary_rule
 msgid "Assignment of Salary"
-msgstr ""
+msgstr "تعيين الراتب"
 
 #. module: l10n_ae_hr_payroll
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.l10n_ae_hr_payroll_uae_employee_payroll_structure_attachment_of_salary_rule
 msgid "Attachment of Salary"
-msgstr ""
+msgstr "مرفق الراتب"
 
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_employee_salary_certificate
@@ -146,18 +149,18 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.report_payslip_ae
 msgid "August 2023 Payslip"
-msgstr ""
+msgstr "كشوف مرتبات أغسطس 2023"
 
 #. module: l10n_ae_hr_payroll
 #: model:ir.model,name:l10n_ae_hr_payroll.model_res_bank
 msgid "Bank"
-msgstr ""
+msgstr "البنك"
 
 #. module: l10n_ae_hr_payroll
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.l10n_ae_hr_payroll_uae_employee_payroll_structure_basic_salary_rule
 #: model:ir.model.fields,field_description:l10n_ae_hr_payroll.field_hr_payslip__l10n_ae_basic_salary
 msgid "Basic Salary"
-msgstr ""
+msgstr "الراتب الأساسي"
 
 #. module: l10n_ae_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ae_hr_payroll.input_bonus_earnings
@@ -168,18 +171,18 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.l10n_ae_hr_payroll_uae_employee_payroll_structure_child_support
 msgid "Child Support"
-msgstr ""
+msgstr "دعم الطفل"
 
 #. module: l10n_ae_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ae_hr_payroll.l10n_ae_input_commission
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.l10n_ae_uae_instant_pay_commission
 msgid "Commission"
-msgstr ""
+msgstr "العمولة"
 
 #. module: l10n_ae_hr_payroll
 #: model:ir.model,name:l10n_ae_hr_payroll.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "الشركات"
 
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.res_config_settings_view_form
@@ -200,7 +203,7 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model:ir.model,name:l10n_ae_hr_payroll.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "تهيئة الإعدادات"
 
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.report_payslip_ae
@@ -210,7 +213,7 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ae_hr_payroll.l10n_ae_input_conveyance_allowance
 msgid "Conveyance Allowance"
-msgstr ""
+msgstr "بدل النقل"
 
 #. module: l10n_ae_hr_payroll
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.uae_salary_rule_conveyance_allowance
@@ -250,7 +253,7 @@ msgstr ""
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.l10n_ae_hr_payroll_uae_employee_payroll_structure_deduction_salary_rule
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.l10n_ae_uae_instant_pay_deduction
 msgid "Deduction"
-msgstr ""
+msgstr "الخصم"
 
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_employee_salary_certificate
@@ -269,22 +272,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ae_hr_payroll.field_res_company__display_name
 #: model:ir.model.fields,field_description:l10n_ae_hr_payroll.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "اسم العرض"
 
 #. module: l10n_ae_hr_payroll
 #: model:ir.model,name:l10n_ae_hr_payroll.model_hr_employee
 msgid "Employee"
-msgstr ""
+msgstr "الموظف"
 
 #. module: l10n_ae_hr_payroll
 #: model:ir.model,name:l10n_ae_hr_payroll.model_hr_version
 msgid "Employee Contract"
-msgstr ""
+msgstr "عقد الموظف"
 
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_employee_salary_certificate
 msgid "Employee Name"
-msgstr ""
+msgstr "اسم الموظف"
 
 #. module: l10n_ae_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ae_hr_payroll.field_hr_payroll_payment_report_wizard__l10n_ae_employer_narrative
@@ -312,17 +315,17 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.uae_end_of_service_provision_salary_rule
 msgid "End of Service Provision"
-msgstr ""
+msgstr "نهاية الخدمة"
 
 #. module: l10n_ae_hr_payroll
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.l10n_ae_hr_payroll_uae_employee_payroll_structure_expenses_reimbursement
 msgid "Expenses Reimbursement"
-msgstr ""
+msgstr "رد أموال النفقات"
 
 #. module: l10n_ae_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ae_hr_payroll.field_hr_payroll_payment_report_wizard__export_format
 msgid "Export Format"
-msgstr ""
+msgstr "صيغة الملف المصدر"
 
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.report_payslip_ae
@@ -332,7 +335,7 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.report_payslip_ae
 msgid "From"
-msgstr ""
+msgstr "من"
 
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_employee_salary_certificate
@@ -342,12 +345,12 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model:ir.model,name:l10n_ae_hr_payroll.model_hr_payroll_payment_report_wizard
 msgid "HR Payroll Payment Report Wizard"
-msgstr ""
+msgstr "معالج تقرير دفع المرتبات للموارد البشرية"
 
 #. module: l10n_ae_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ae_hr_payroll.field_hr_payslip__l10n_ae_hourly_wage
 msgid "Hourly Wage"
-msgstr ""
+msgstr "الأجر بالساعة"
 
 #. module: l10n_ae_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ae_hr_payroll.field_hr_payslip__l10n_ae_hours_worked
@@ -366,7 +369,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ae_hr_payroll.field_hr_employee__l10n_ae_housing_allowance
 #: model:ir.model.fields,field_description:l10n_ae_hr_payroll.field_hr_version__l10n_ae_housing_allowance
 msgid "Housing Allowance"
-msgstr ""
+msgstr "بدل السكن"
 
 #. module: l10n_ae_hr_payroll
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.uae_salary_rule_input_housing_allowance
@@ -385,7 +388,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ae_hr_payroll.field_res_company__id
 #: model:ir.model.fields,field_description:l10n_ae_hr_payroll.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "المُعرف"
 
 #. module: l10n_ae_hr_payroll
 #: model:ir.model.fields,help:l10n_ae_hr_payroll.field_hr_employee__l10n_ae_is_computed_based_on_daily_salary
@@ -426,7 +429,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_employee_view_form
 msgid "Leaves"
-msgstr ""
+msgstr "الإجازات"
 
 #. module: l10n_ae_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ae_hr_payroll.l10n_ae_input_loan_advance
@@ -474,13 +477,13 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_employee_salary_certificate
 msgid "Nationality"
-msgstr ""
+msgstr "الجنسية"
 
 #. module: l10n_ae_hr_payroll
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.l10n_ae_hr_payroll_uae_employee_payroll_structure_net_salary
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.l10n_ae_uae_instant_pay_net_salary
 msgid "Net Salary"
-msgstr ""
+msgstr "صافي المرتب"
 
 #. module: l10n_ae_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ae_hr_payroll.field_hr_employee__l10n_ae_number_of_leave_days
@@ -505,7 +508,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_employee_view_form
 msgid "Other"
-msgstr ""
+msgstr "غير ذلك"
 
 #. module: l10n_ae_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ae_hr_payroll.l10n_ae_input_other_allowance
@@ -543,12 +546,12 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.uae_out_of_contract_salary_rule
 msgid "Out of Contract"
-msgstr ""
+msgstr "خارج العقد"
 
 #. module: l10n_ae_hr_payroll
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.l10n_ae_regular_pay_overtime
 msgid "Overtime"
-msgstr ""
+msgstr "الوقت الإضافي"
 
 #. module: l10n_ae_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ae_hr_payroll.l10n_ae_input_overtime_allowance
@@ -568,17 +571,17 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_employee_salary_certificate
 msgid "Passport Number"
-msgstr ""
+msgstr "رقم جواز السفر"
 
 #. module: l10n_ae_hr_payroll
 #: model:ir.model,name:l10n_ae_hr_payroll.model_hr_payslip_run
 msgid "Pay Run"
-msgstr ""
+msgstr "تشغيل الدفع"
 
 #. module: l10n_ae_hr_payroll
 #: model:ir.model,name:l10n_ae_hr_payroll.model_hr_payslip
 msgid "Pay Slip"
-msgstr ""
+msgstr "إيصال الدفع"
 
 #. module: l10n_ae_hr_payroll
 #. odoo-python
@@ -600,7 +603,7 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.l10n_ae_hr_payroll_uae_employee_payroll_structure_reimbursement_salary_rule
 msgid "Reimbursement"
-msgstr ""
+msgstr "إعادة الأموال"
 
 #. module: l10n_ae_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ae_hr_payroll.field_res_company__l10n_ae_bank_account_id
@@ -645,7 +648,7 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model:ir.model,name:l10n_ae_hr_payroll.model_hr_payroll_structure_type
 msgid "Salary Structure Type"
-msgstr ""
+msgstr "نوع هيكل الراتب"
 
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_employee_salary_certificate
@@ -689,7 +692,7 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_employee_salary_certificate
 msgid "Start Date"
-msgstr ""
+msgstr "تاريخ البدء"
 
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_employee_salary_certificate
@@ -699,7 +702,7 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.l10n_ae_hr_payroll_uae_employee_payroll_structure_gross_salary_rule
 msgid "Taxable Salary"
-msgstr ""
+msgstr "راتب خاضع للضريبة"
 
 #. module: l10n_ae_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_employee_salary_certificate
@@ -726,7 +729,7 @@ msgstr ""
 #. module: l10n_ae_hr_payroll
 #: model:ir.model,name:l10n_ae_hr_payroll.model_hr_leave_type
 msgid "Time Off Type"
-msgstr ""
+msgstr "نوع الإجازة"
 
 #. module: l10n_ae_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ae_hr_payroll.field_hr_payslip__l10n_ae_total_paid_hours
@@ -749,14 +752,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ae_hr_payroll.hr_employee_view_form
 msgid "Transportation"
-msgstr ""
+msgstr "وسائل النقل"
 
 #. module: l10n_ae_hr_payroll
 #: model:hr.salary.rule,name:l10n_ae_hr_payroll.uae_transportation_allowance_salary_rule
 #: model:ir.model.fields,field_description:l10n_ae_hr_payroll.field_hr_employee__l10n_ae_transportation_allowance
 #: model:ir.model.fields,field_description:l10n_ae_hr_payroll.field_hr_version__l10n_ae_transportation_allowance
 msgid "Transportation Allowance"
-msgstr ""
+msgstr "بدل المواصلات"
 
 #. module: l10n_ae_hr_payroll
 #: model:ir.model.constraint,message:l10n_ae_hr_payroll.constraint_res_company_l10n_ae_unique_l10n_ae_employer_code

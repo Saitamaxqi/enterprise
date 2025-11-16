@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_at_pos
+# * l10n_at_pos
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 19:53+0000\n"
-"PO-Revision-Date: 2025-11-13 14:38+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-16 12:57+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: German <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_at_pos/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_at_pos
 #: model_terms:ir.ui.view,arch_db:l10n_at_pos.report_config_audit_template
@@ -29,12 +32,12 @@ msgstr ""
 #. module: l10n_at_pos
 #: model_terms:ir.ui.view,arch_db:l10n_at_pos.view_company_form
 msgid "API Key"
-msgstr ""
+msgstr "API-Schlüssel"
 
 #. module: l10n_at_pos
 #: model_terms:ir.ui.view,arch_db:l10n_at_pos.view_company_form
 msgid "API Secret"
-msgstr ""
+msgstr "API-Geheimnis"
 
 #. module: l10n_at_pos
 #: model_terms:ir.ui.view,arch_db:l10n_at_pos.view_company_form
@@ -49,7 +52,7 @@ msgstr ""
 #. module: l10n_at_pos
 #: model_terms:ir.ui.view,arch_db:l10n_at_pos.view_pos_fiskaly_details_wizard
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #. module: l10n_at_pos
 #: model:ir.model.fields,help:l10n_at_pos.field_pos_config__l10n_at_cash_regid
@@ -65,7 +68,7 @@ msgstr ""
 #. module: l10n_at_pos
 #: model:ir.model,name:l10n_at_pos.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Unternehmen"
 
 #. module: l10n_at_pos
 #: model_terms:ir.ui.view,arch_db:l10n_at_pos.report_config_audit_template
@@ -81,17 +84,17 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_at_pos/models/res_company.py:0
 msgid "Country"
-msgstr ""
+msgstr "Land"
 
 #. module: l10n_at_pos
 #: model:ir.model.fields,field_description:l10n_at_pos.field_pos_fiskaly_details_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Erstellt von"
 
 #. module: l10n_at_pos
 #: model:ir.model.fields,field_description:l10n_at_pos.field_pos_fiskaly_details_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Erstellt am"
 
 #. module: l10n_at_pos
 #: model:ir.actions.report,name:l10n_at_pos.fiskaly_register_report
@@ -108,7 +111,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/l10n_at_pos/static/src/app/components/popup/date_selection_popup/date_selection_popup.js:0
 msgid "DatePicker"
-msgstr ""
+msgstr "Terminplaner"
 
 #. module: l10n_at_pos
 #: model:ir.model.fields,field_description:l10n_at_pos.field_pos_config__display_name
@@ -118,7 +121,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_at_pos.field_report_l10n_at_pos_report_config_audit_template__display_name
 #: model:ir.model.fields,field_description:l10n_at_pos.field_res_company__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Name anzeigen"
 
 #. module: l10n_at_pos
 #: model_terms:ir.ui.view,arch_db:l10n_at_pos.view_company_form
@@ -133,7 +136,7 @@ msgstr ""
 #. module: l10n_at_pos
 #: model:ir.model.fields,field_description:l10n_at_pos.field_pos_fiskaly_details_wizard__end_date
 msgid "End Date"
-msgstr ""
+msgstr "Enddatum"
 
 #. module: l10n_at_pos
 #. odoo-python
@@ -184,7 +187,7 @@ msgstr ""
 #: model:ir.ui.menu,name:l10n_at_pos.pos_fiskaly_reports
 #: model_terms:ir.ui.view,arch_db:l10n_at_pos.view_company_form
 msgid "Fiskaly"
-msgstr ""
+msgstr "Fiskaly"
 
 #. module: l10n_at_pos
 #: model:ir.model.fields,field_description:l10n_at_pos.field_res_company__l10n_at_fiskaly_api_key
@@ -330,7 +333,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_at_pos.field_report_l10n_at_pos_report_config_audit_template__id
 #: model:ir.model.fields,field_description:l10n_at_pos.field_res_company__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_at_pos
 #: model_terms:ir.ui.view,arch_db:l10n_at_pos.view_company_form
@@ -342,18 +345,18 @@ msgstr ""
 #. module: l10n_at_pos
 #: model:ir.model.fields,field_description:l10n_at_pos.field_pos_fiskaly_details_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zuletzt aktualisiert von"
 
 #. module: l10n_at_pos
 #: model:ir.model.fields,field_description:l10n_at_pos.field_pos_fiskaly_details_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zuletzt aktualisiert am"
 
 #. module: l10n_at_pos
 #. odoo-javascript
 #: code:addons/l10n_at_pos/static/src/app/components/closing_receipt.xml:0
 msgid "Logo"
-msgstr ""
+msgstr "Logo"
 
 #. module: l10n_at_pos
 #: model:ir.model.fields,field_description:l10n_at_pos.field_res_company__l10n_at_is_odoo_managed_org
@@ -364,7 +367,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/l10n_at_pos/static/src/app/components/popup/date_selection_popup/date_selection_popup.xml:0
 msgid "Monthly"
-msgstr ""
+msgstr "Monatlich"
 
 #. module: l10n_at_pos
 #. odoo-javascript
@@ -422,22 +425,22 @@ msgstr ""
 #. module: l10n_at_pos
 #: model:ir.model.fields,field_description:l10n_at_pos.field_pos_fiskaly_details_wizard__pos_config_ids
 msgid "Point of Sale"
-msgstr ""
+msgstr "Kassensystem"
 
 #. module: l10n_at_pos
 #: model:ir.model,name:l10n_at_pos.model_pos_config
 msgid "Point of Sale Configuration"
-msgstr ""
+msgstr "Kassensystem-Konfiguration"
 
 #. module: l10n_at_pos
 #: model:ir.model,name:l10n_at_pos.model_pos_order
 msgid "Point of Sale Orders"
-msgstr ""
+msgstr "Kassenaufträge"
 
 #. module: l10n_at_pos
 #: model:ir.model,name:l10n_at_pos.model_pos_session
 msgid "Point of Sale Session"
-msgstr ""
+msgstr "Kassensitzung"
 
 #. module: l10n_at_pos
 #: model:ir.model,name:l10n_at_pos.model_pos_fiskaly_details_wizard
@@ -448,14 +451,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/l10n_at_pos/static/src/app/components/closing_receipt.xml:0
 msgid "Powered by Odoo"
-msgstr ""
+msgstr "Powered by Odoo"
 
 #. module: l10n_at_pos
 #. odoo-javascript
 #: code:addons/l10n_at_pos/static/src/app/components/popup/date_selection_popup/date_selection_popup.js:0
 #: model_terms:ir.ui.view,arch_db:l10n_at_pos.view_pos_fiskaly_details_wizard
 msgid "Print"
-msgstr ""
+msgstr "Drucken"
 
 #. module: l10n_at_pos
 #. odoo-javascript
@@ -473,7 +476,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/l10n_at_pos/static/src/overrirde/point_of_sale/components/order_receipt/order_receipt.xml:0
 msgid "QR Code"
-msgstr ""
+msgstr "QR-Code"
 
 #. module: l10n_at_pos
 #. odoo-javascript
@@ -500,18 +503,18 @@ msgstr ""
 #. module: l10n_at_pos
 #: model:ir.actions.server,name:l10n_at_pos.pos_order_sign_receipts
 msgid "Sign Order"
-msgstr ""
+msgstr "Auftrag unterzeichnen"
 
 #. module: l10n_at_pos
 #: model:ir.model.fields,field_description:l10n_at_pos.field_pos_fiskaly_details_wizard__start_date
 msgid "Start Date"
-msgstr ""
+msgstr "Startdatum"
 
 #. module: l10n_at_pos
 #. odoo-python
 #: code:addons/l10n_at_pos/models/res_company.py:0
 msgid "Street"
-msgstr ""
+msgstr "Straße"
 
 #. module: l10n_at_pos
 #: model:ir.model.fields,field_description:l10n_at_pos.field_res_company__l10n_at_pos_is_tax_exempted
@@ -522,7 +525,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/l10n_at_pos/static/src/app/components/closing_receipt.xml:0
 msgid "Tel:"
-msgstr ""
+msgstr "Tel.:"
 
 #. module: l10n_at_pos
 #: model:ir.model.fields,field_description:l10n_at_pos.field_res_company__l10n_at_pos_test_mode
@@ -533,13 +536,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_at_pos/models/res_company.py:0
 msgid "The VAT should not be empty"
-msgstr ""
+msgstr "Die USt. sollte nicht leer sein"
 
 #. module: l10n_at_pos
 #. odoo-python
 #: code:addons/l10n_at_pos/models/res_company.py:0
 msgid "The city should not be empty"
-msgstr ""
+msgstr "Die Stadt sollte nicht leer sein"
 
 #. module: l10n_at_pos
 #. odoo-python
@@ -559,19 +562,19 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_at_pos/models/res_company.py:0
 msgid "The name should be at least 3 characters long"
-msgstr ""
+msgstr "Der Name sollte mindestens aus 3 Zeichen bestehen."
 
 #. module: l10n_at_pos
 #. odoo-python
 #: code:addons/l10n_at_pos/models/res_company.py:0
 msgid "The street should not be empty"
-msgstr ""
+msgstr "Die Straße sollte nicht leer sein"
 
 #. module: l10n_at_pos
 #. odoo-python
 #: code:addons/l10n_at_pos/models/res_company.py:0
 msgid "The zip should not be empty"
-msgstr ""
+msgstr "Die PLZ sollte nicht leer sein"
 
 #. module: l10n_at_pos
 #. odoo-python
@@ -593,10 +596,10 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_at_pos/models/res_company.py:0
 msgid "VAT"
-msgstr ""
+msgstr "MEHRWERTSTEUER"
 
 #. module: l10n_at_pos
 #. odoo-javascript
 #: code:addons/l10n_at_pos/static/src/app/components/popup/date_selection_popup/date_selection_popup.xml:0
 msgid "Yearly"
-msgstr ""
+msgstr "Jährlich"
