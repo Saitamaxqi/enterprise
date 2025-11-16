@@ -203,6 +203,7 @@ class AccountJournal(models.Model):
                     "name": _("Original CodaBox SODA.xml"),
                     'type': 'binary',
                     'datas': soda_raw_b64,
+                    'company_id': self.company_id.id,
                 })
                 move = self.with_context(raise_no_imported_file=False)._l10n_be_parse_soda_file(attachment_soda, skip_wizard=True)
                 if move:
