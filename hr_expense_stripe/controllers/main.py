@@ -175,7 +175,7 @@ class StripeIssuingController(Controller):
         if authorization_id:
             existing_expenses = env['hr.expense'].search([('stripe_authorization_id', '=', authorization_id)])
         else:
-            existing_expenses = env['hr.expense']
+            existing_expenses = env['hr.expense'].search([('stripe_transaction_id', '=', tr_object['id'])])
 
         expense_authorization_id = existing_expenses.stripe_authorization_id
         expense_transaction_ids = {tr_id for tr_id in existing_expenses.mapped('stripe_transaction_id') if tr_id}
