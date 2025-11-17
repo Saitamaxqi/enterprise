@@ -293,3 +293,35 @@ class TestMrpAnalyticAccountHr(TestMrpAnalyticAccount):
         employee1_aa_line = mo.workorder_ids.employee_analytic_account_line_ids.filtered(lambda l: l.employee_id == self.employee1)
         self.assertEqual(employee1_aa_line.amount, -200.0)
         self.assertEqual(employee1_aa_line[self.analytic_plan._column_name()], self.analytic_account)
+
+    def test_user_can_complete_workorder_despite_project_restrictions(self):
+        """Ensure that a user who has Manufacturing and Timesheet rights but no access
+        to the project linked to the MO can still start and finish the work order.
+        """
+        user = new_test_user(
+            self.env,
+            'mo_manager',
+            'hr_timesheet.group_hr_timesheet_user,'
+            'mrp.group_mrp_manager,'
+            'project.group_project_user'
+        )
+
+        self.env['hr.employee'].create({
+            'user_id': user.id,
+            'image_1920': False,
+            'hourly_cost': 10
+        })
+        self.bom.operation_ids.workcenter_id.employee_ids = False
+        mo = self.env['mrp.production'].create({
+            'product_id': self.product.id,
+            'product_qty': 1,
+            'bom_id': self.bom.id,
+            'project_id': self.project.id,
+        })
+        mo.action_confirm()
+        wo = mo.workorder_ids
+        wo.with_user(user).button_start()
+        wo.with_user(user).button_finish()
+        self.assertEqual(wo.state, 'done')
+        mo.with_user(user).button_mark_done()
+        self.assertEqual(mo.state, 'done')
