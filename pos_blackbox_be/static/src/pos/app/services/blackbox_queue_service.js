@@ -163,8 +163,11 @@ class BlackboxQueueService {
                 (message) => {
                     if (message?.status?.status === "error") {
                         reject(new BlackboxError(426));
+                    } else if (typeof message.status === "string") {
+                        reject(new BlackboxError(message.status));
+                    } else {
+                        reject(new BlackboxError(message.status.status));
                     }
-                    reject(new BlackboxError(message.status.status));
                 }
             );
         });
