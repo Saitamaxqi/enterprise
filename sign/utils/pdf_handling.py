@@ -7,7 +7,7 @@ from io import BytesIO
 from reportlab.pdfgen import canvas
 
 from odoo.exceptions import ValidationError
-from odoo.tools.pdf import errors, PdfFileReader, PdfFileWriter, NameObject, DictionaryObject, DependencyError
+from odoo.tools.pdf import DependencyError, DictionaryObject, errors, NameObject, PdfFileReader, PdfFileWriter, PdfReadError
 from odoo.tools.translate import LazyTranslate
 
 _lt = LazyTranslate(__name__)
@@ -27,7 +27,7 @@ def get_valid_pdf_data(pdf_bytes, strict=True):
         pdf_reader = PdfFileReader(BytesIO(pdf_bytes), strict)
         if not pdf_reader.isEncrypted:
             return pdf_reader
-    except (DependencyError, UnicodeDecodeError):
+    except (DependencyError, UnicodeDecodeError, PdfReadError):
         _logger.warning("Failed to read PDF data.")
 
     raise ValidationError(_lt(

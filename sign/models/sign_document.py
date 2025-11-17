@@ -433,7 +433,7 @@ CRM, eCommerce, accounting, inventory, point of sale,\nproject management, etc.
     def _check_pdf_data_validity(self, datas):
         try:
             self._get_pdf_number_of_pages(base64.b64decode(datas))
-        except (ValueError, PdfReadError) as e:
+        except ValueError as e:
             raise UserError(self.env._("One uploaded file cannot be read. Is it a valid PDF?")) from e
 
     @api.model
