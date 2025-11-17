@@ -393,7 +393,7 @@ class HrContractSalary(main.HrContractSalary):
             new_version.date_end = version_vals.get('date_end')
         if new_version.car_id.id != version_vals.get('car_id'):
             # If the chosen car is different from the one in the current version, add the car model name to the diff
-            car = self.env['fleet.vehicle'].browse(version_vals.get('car_id'))
+            car = self.env['fleet.vehicle'].sudo().browse(version_vals.get('car_id'))
             version_diff.append((_('Company Car'), car.display_name or '', new_version.car_id.display_name or ''))
         if kw.get('package_submit', False):
             # If the chosen existing car is already taken by someone else (for example if the
