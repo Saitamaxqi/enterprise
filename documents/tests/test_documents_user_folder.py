@@ -337,3 +337,38 @@ class TestDocumentsUserFolder(TransactionCaseDocuments):
         expected_not_folder_a = expected_all - expected_folder_a
         actual_not_folder_a = self.env['documents.document'].search([('user_folder_id', 'not in', str(self.folder_a.id))])
         self.assertDocumentsEqual(actual_not_folder_a, expected_not_folder_a)
+
+    def test_documents_search_panel(self):
+        cases = [
+            (
+                {},
+                {
+                    "Company": None,
+                    "Company Admin Subfolder": self.company_folder.id,
+                    "Company Folder": "COMPANY",
+                    "Company Restricted Folder": "COMPANY",
+                    "Drive Admin Subfolder": self.internal_drive.id,
+                    "Internal User's Drive Document": "SHARED",
+                    "My Drive": None,
+                    "Recent": None,
+                    "Shared with me": None,
+                    "Trash": None,
+                    "folder A": "SHARED",
+                    "folder A - A": self.folder_a.id,
+                    "folder B": "SHARED",
+                },
+            ),
+            (
+                {"documents_unique_folder_id": self.folder_a.id},
+                {
+                    "folder A": False,
+                    "folder A - A": self.folder_a.id,
+                },
+            ),
+        ]
+        for context, expected in cases:
+            with self.subTest(context=context):
+                Documents = self.env['documents.document'].with_context(context)
+                actual = Documents.search_panel_select_range("user_folder_id")['values']
+                user_folder_ids = {vals["display_name"]: vals.get("user_folder_id") for vals in actual}
+                self.assertEqual(user_folder_ids, expected)

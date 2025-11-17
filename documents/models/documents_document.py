@@ -2504,11 +2504,10 @@ class DocumentsDocument(models.Model):
                     domain & Domain('folder_id', 'child_of', unique_folder_id),
                     search_panel_fields,
                 )
-                map(convert_user_folder_ids_to_int, values)
                 for record in values:
+                    convert_user_folder_ids_to_int(record)
                     if record['id'] == unique_folder_id:
                         record['user_folder_id'] = False  # Set as root
-                        break
                 return {
                     'parent_field': 'user_folder_id',
                     'values': values,
