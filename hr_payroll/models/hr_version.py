@@ -302,6 +302,10 @@ class HrVersion(models.Model):
                 nearly_expired_versions_without_new_versions |= expired_version
         return nearly_expired_versions_without_new_versions
 
+    @api.model
+    def _get_whitelist_fields_from_template(self):
+        return super()._get_whitelist_fields_from_template() + ['payroll_properties']
+
     def write(self, vals):
         if self and not self.env.context.get('tracking_disable'):
             # Force to track wage in employee form if any changes is found after version write
@@ -349,3 +353,7 @@ class HrVersion(models.Model):
             'target': 'new',
             'context': {'default_employee_ids': self.employee_id.ids}
         }
+
+    def action_configure_template_inputs(self):
+        self.ensure_one()
+        return self.structure_id.action_get_structure_inputs()

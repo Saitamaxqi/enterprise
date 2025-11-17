@@ -20,6 +20,13 @@
             <page name="information" position="attributes">
                 <attribute name="groups">hr_payroll.group_hr_payroll_user</attribute>
             </page>
+            <group name="salary_info" position="after">
+                <group groups="hr_payroll.group_hr_payroll_user" colspan="4">
+                    <field name="payroll_properties" nolabel="1" colspan="4"/>
+                    <button name="action_configure_template_inputs" type="object" icon="fa-plus" string="Add Inputs"
+                            class="btn btn-secondary text-break m-0"/>
+                </group>
+            </group>
             <label for="wage" position="before">
                 <field name="wage_type"/>
                 <field name="schedule_pay"/>
