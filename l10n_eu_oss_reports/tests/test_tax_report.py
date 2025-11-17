@@ -250,6 +250,23 @@ class OSSTaxReportTest(TestAccountReportsCommon):
             self.get_xml_tree_from_string(expected_xml)
         )
 
+    def test_tax_units(self):
+        report = self.env.ref('l10n_eu_oss_reports.oss_sales_report')
+        self.company_data_2['company'].currency_id = self.env.ref('base.EUR')
+        tax_unit = self.env['account.tax.unit'].create({
+            'name': 'BE Tax Unit',
+            'country_id': self.env.ref('base.be').id,
+            'main_company_id': self.env.company.id,
+            'company_ids': [Command.set([self.company_data['company'].id, self.company_data_2['company'].id])],
+            'vat': 'BE0477472701',
+        })
+        options = self._generate_options(report, '2021-04-01', '2021-06-30')
+        self.assertEqual(options['tax_unit'], tax_unit.id)
+        self.assertEqual(
+            [company['id'] for company in options['companies']],
+            [self.company_data['company'].id, self.company_data_2['company'].id]
+        )
+
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
 class TestTaxReportOSSNoMapping(TestAccountReportsCommon):
