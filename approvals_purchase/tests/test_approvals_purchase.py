@@ -381,6 +381,24 @@ class TestApprovalsPurchase(TestApprovalsCommon):
         self.env.user.company_id = current_company
         self.env.user.company_ids -= new_company
 
+    def test_purchase_06_prevent_multiple_create_purchase(self):
+        """ Check that creating RFQs can't be performed more than once. """
+        request_form = self.create_request_form(approver=self.user_approver)
+        with request_form.product_line_ids.new() as line:
+            line.product_id = self.product_computer
+            line.quantity = 30
+        request_purchase = request_form.save()
+        request_purchase.action_confirm()
+        request_purchase.with_user(self.user_approver).action_approve()
+        request_purchase.action_create_purchase_orders()
+        request_purchase.action_create_purchase_orders()
+
+        purchase_order = self.get_purchase_order(request_purchase, 0)
+        self.assertEqual(
+            purchase_order.order_line[0].product_qty, 30,
+            "Must have 30 units."
+        )
+
     def test_uom_01_create_purchase(self):
         """ Check the amount of product is correctly set, regarding the UoM of
         the approval request and the UoM on the purchase order line. """
