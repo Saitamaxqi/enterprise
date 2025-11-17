@@ -141,27 +141,27 @@
                     <record id="account_report_gstr2b_b2c_taxable_amount_balance" model="account.report.expression">
                         <field name="label">tax_base</field>
                         <field name="engine">aggregation</field>
-                        <field name="formula">b2c_regular.tax_base + b2c_rcm.tax_base</field>
+                        <field name="formula">b2c_rcm.tax_base</field>
                     </record>
                     <record id="account_report_gstr2b_b2c_igst_balance" model="account.report.expression">
                         <field name="label">tax_igst</field>
                         <field name="engine">aggregation</field>
-                        <field name="formula">b2c_regular.tax_igst + b2c_rcm.tax_igst</field>
+                        <field name="formula">b2c_rcm.tax_igst</field>
                     </record>
                     <record id="account_report_gstr2b_b2c_cgst_balance" model="account.report.expression">
                         <field name="label">tax_cgst</field>
                         <field name="engine">aggregation</field>
-                        <field name="formula">b2c_regular.tax_cgst + b2c_rcm.tax_cgst</field>
+                        <field name="formula">b2c_rcm.tax_cgst</field>
                     </record>
                     <record id="account_report_gstr2b_b2c_sgst_balance" model="account.report.expression">
                         <field name="label">tax_sgst</field>
                         <field name="engine">aggregation</field>
-                        <field name="formula">b2c_regular.tax_sgst + b2c_rcm.tax_sgst</field>
+                        <field name="formula">b2c_rcm.tax_sgst</field>
                     </record>
                     <record id="account_report_gstr2b_b2c_cess_balance" model="account.report.expression">
                         <field name="label">tax_cess</field>
                         <field name="engine">aggregation</field>
-                        <field name="formula">b2c_regular.tax_cess + b2c_rcm.tax_cess</field>
+                        <field name="formula">b2c_rcm.tax_cess</field>
                     </record>
                 </field>
                 <field name="hierarchy_level">0</field>
@@ -169,6 +169,7 @@
                     <record id="account_report_gstr2b_b2c_regular" model="account.report.line">
                         <field name="name">B2C Regular</field>
                         <field name="code">b2c_regular</field>
+                        <field name="hide_if_zero" eval="True"/>
                         <field name="expression_ids">
                             <record id="account_report_gstr2b_b2c_regular_taxable_amount_balance" model="account.report.expression">
                                 <field name="label">tax_base</field>
@@ -379,7 +380,7 @@
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_report_gstr2b_cdnur_regular" model="account.report.line">
-                        <field name="name">B2C Regular</field>
+                        <field name="name">B2C Overseas</field>
                         <field name="code">b2c_cdnur_regular</field>
                         <field name="expression_ids">
                             <record id="account_report_gstr2b_cdnur_regular_taxable_amount_balance" model="account.report.expression">
