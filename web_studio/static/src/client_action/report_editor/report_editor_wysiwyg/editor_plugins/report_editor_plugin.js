@@ -266,7 +266,7 @@ export class ReportEditorPlugin extends Plugin {
                     relationName
                 ) => {
                     const doc = this.document;
-                    this.editable.focus();
+                    doc.defaultView.focus();
 
                     const table = doc.createElement("table");
                     table.classList.add("table", "table-sm");
@@ -334,6 +334,7 @@ export class ReportEditorPlugin extends Plugin {
                     fieldString
                 ) => {
                     const doc = this.document;
+                    doc.defaultView.focus();
 
                     const span = doc.createElement("span");
                     span.setAttribute(
@@ -352,7 +353,6 @@ export class ReportEditorPlugin extends Plugin {
                         span.setAttribute("t-options-qweb_img_raw_data", 1);
                     }
                     this.dependencies.dom.insert(span);
-                    this.editable.focus();
                     this.dependencies.history.addStep();
                 },
             },
