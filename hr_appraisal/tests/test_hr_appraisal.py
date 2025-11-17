@@ -294,3 +294,55 @@ class TestHrAppraisal(TransactionCase):
         self.assertEqual(appraisal.employee_feedback, self.employee_feedback, "Employee feedback should stay the same after the appraisal is reopened")
         self.assertEqual(appraisal.manager_feedback, self.manager_feedback, "Manager feedback should stay the same after the appraisal is reopened")
         self.assertEqual(appraisal.assessment_note, self.appraisal_rating, "Appraisal rating shouldn't change when an appraisal is reopened")
+
+    def _get_appraisal_count(self, user):
+        return self.env['hr.appraisal'].with_user(user).search_count([
+            ('employee_id', '=', self.hr_employee.id),
+        ])
+
+    def test_appraisal_with_employee_officer(self):
+        """
+        This test checks that an admin can see appraisals of all employees,
+        while an employee officer can only see appraisals where they are
+        the appraiser.
+        """
+        admin_user = self.env.ref('base.user_admin')
+        officer_group = self.env.ref('hr.group_hr_manager')
+        officer_user = self.env['res.users'].create({
+            'name': 'Employee Officer',
+            'login': 'employee_officer',
+            'group_ids': [(6, 0, [officer_group.id])],
+            'notification_type': 'email',
+        })
+        officer_user.action_create_employee()
+
+        # Create appraisal A with admin as appraiser
+        appraisal_a = self.HrAppraisal.create({
+            'employee_id': self.hr_employee.id,
+            'manager_ids': [(6, 0, [admin_user.employee_id.id])],
+            'date_close': date.today() + relativedelta(months=1),
+            'state': '1_new',
+        })
+
+        self.assertEqual(self._get_appraisal_count(admin_user), 1)
+        self.assertEqual(self._get_appraisal_count(officer_user), 0)
+
+        # opening employee appraisals should not fail
+        self.hr_employee.with_user(officer_user).action_open_employee_appraisals()
+
+        # Create appraisal B with officer as appraiser
+        self.HrAppraisal.create({
+            'employee_id': self.hr_employee.id,
+            'manager_ids': [(6, 0, [officer_user.employee_id.id])],
+            'date_close': date.today() + relativedelta(months=1),
+            'state': '1_new',
+        })
+
+        self.assertEqual(self._get_appraisal_count(admin_user), 2)
+        self.assertEqual(self._get_appraisal_count(officer_user), 1)
+
+        # Delete appraisal A
+        appraisal_a.sudo().unlink()
+
+        self.assertEqual(self._get_appraisal_count(admin_user), 1)
+        self.assertEqual(self._get_appraisal_count(officer_user), 1)

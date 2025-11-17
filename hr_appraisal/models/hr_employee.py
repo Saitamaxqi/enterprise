@@ -164,7 +164,7 @@ class HrEmployee(models.Model):
 
     def action_open_employee_appraisals(self):
         self.ensure_one()
-        if self.appraisal_count == 1:
+        if self.appraisal_count == 1 and self.appraisal_ids:
             return {
                 'res_model': 'hr.appraisal',
                 'view_mode': 'form',
