@@ -11,15 +11,18 @@ class AccountReturnType(models.Model):
     def _generate_all_returns(self, country_code, main_company, tax_unit=None):
         rslt = super()._generate_all_returns(country_code, main_company, tax_unit=tax_unit)
 
-        # Only do that when instantiating the domestic returns, to avoid double computation in case of multivat
-        oss_tax_exists = self.env['account.tax'].search_count([
+        oss_tax_domain = [
             ('repartition_line_ids.tag_ids', 'in', self.env.ref('l10n_eu_oss.tag_oss').ids),
-            ('type_tax_use', '=', 'sale'),
             ('country_id.code', '=', country_code),
             *self.env['account.tax']._check_company_domain(main_company),
-        ], limit=1)
-        if oss_tax_exists:
+        ]
+
+        # Only do that when instantiating the domestic returns, to avoid double computation in case of multivat
+        if self.env['account.tax'].search_count([*oss_tax_domain, ('type_tax_use', '=', 'sale')], limit=1):
             self.env.ref('l10n_eu_oss_reports.eu_oss_sales_tax_return_type')._try_create_returns_for_fiscal_year(main_company, tax_unit=tax_unit)
+
+        if self.env['account.tax'].search_count([*oss_tax_domain, ('type_tax_use', '=', 'purchase')], limit=1):
+            self.env.ref('l10n_eu_oss_reports.eu_oss_imports_tax_return_type')._try_create_returns_for_fiscal_year(main_company, tax_unit=tax_unit)
 
         return rslt
 
