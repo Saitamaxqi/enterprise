@@ -109,7 +109,8 @@ class AccountMove(models.Model):
                 move.l10n_co_edi_cufe_cude_ref = move.l10n_co_edi_cufe_cude_ref
                 continue
 
-            move.l10n_co_edi_cufe_cude_ref = False
+            move.l10n_co_edi_cufe_cude_ref = move.l10n_co_edi_cufe_cude_ref
+
             documents = move.l10n_co_dian_document_ids.sorted()
             is_accepted_by_issuer = False
             for document in documents:
