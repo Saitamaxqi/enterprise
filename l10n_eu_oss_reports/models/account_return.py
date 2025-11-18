@@ -79,9 +79,7 @@ class AccountReturn(models.Model):
             checks.append({
                 'code': 'check_oss_currency',
                 'name': _lt("EUR Currency"),
-                'message': _lt("""
-                    OSS reports must be submitted in euros.
-                """),
+                'message': _lt("OSS reports must be submitted in euros."),
                 'result': 'reviewed' if self.company_id.currency_id.name == 'EUR' else 'anomaly',
             })
 
@@ -89,9 +87,7 @@ class AccountReturn(models.Model):
             checks.append({
                 'code': 'check_oss_only_intra_eu_transactions',
                 'name': _lt("Only intra-EU transactions"),
-                'message': _lt("""
-                    Exclude any domestic or extra-EU sales from the OSS report.
-                """),
+                'message': _lt("Exclude any domestic or extra-EU sales from the OSS report."),
                 'result': 'reviewed',
             })
 
@@ -123,9 +119,7 @@ class AccountReturn(models.Model):
             checks.append({
                 'code': 'check_oss_only_b2c_customer',
                 'name': _lt("Only B2C transactions"),
-                'message': _lt("""
-                    Only B2C transactions should be included in the OSS report.
-                """),
+                'message': _lt("Only B2C transactions should be included in the OSS report."),
                 'records_count': business_partners_count,
                 'records_model': self.env['ir.model']._get('res.partner').id,
                 'action': review_action if business_partner_ids else False,
