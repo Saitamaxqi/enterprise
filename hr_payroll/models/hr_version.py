@@ -303,7 +303,7 @@ class HrVersion(models.Model):
         return nearly_expired_versions_without_new_versions
 
     def write(self, vals):
-        if self:
+        if self and not self.env.context.get('tracking_disable'):
             # Force to track wage in employee form if any changes is found after version write
             self.employee_id._track_prepare({version.sudo()._get_contract_wage_field() for version in self})
         res = super().write(vals)

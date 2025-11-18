@@ -270,7 +270,8 @@ class HrVersion(models.Model):
 
     def write(self, vals):
         # Force to track cars in employee form if any changes is found after version write
-        self.employee_id._track_prepare(["car_id", "ordered_car_id", "bike_id"])
+        if not self.env.context.get('tracking_disable'):
+            self.employee_id._track_prepare(["car_id", "ordered_car_id", "bike_id"])
         return super().write(vals=vals)
 
     def _get_fields_that_recompute_payslip(self):
