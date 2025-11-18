@@ -1591,8 +1591,12 @@ export default class BarcodePickingModel extends BarcodeModel {
     _lineIsNotComplete(line) {
         const currentLine =
             (line.product_id.tracking !== "none" && this._getParentLine(line)) || line;
-        const isNotComplete =
+        let isNotComplete =
             currentLine.reserved_uom_qty && currentLine.qty_done < currentLine.reserved_uom_qty;
+        // if we're using the parent line we don't want to return true if the parent line is incomplete but not the line
+        if (isNotComplete && line != currentLine) {
+            isNotComplete = line.reserved_uom_qty && line.qty_done < line.reserved_uom_qty;
+        }
         if (!isNotComplete && currentLine.lines) {
             // Grouped lines/package lines have multiple sublines.
             for (const subline of currentLine.lines) {

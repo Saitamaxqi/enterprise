@@ -7375,3 +7375,17 @@ registry.category("web_tour.tours").add("test_qty_after_uom_update_picking_tour"
         },
     ],
 });
+
+registry.category("web_tour.tours").add("test_quantity_distribution_sublines_same_lot", {
+    steps: () => [
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan lot 1",
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan lot 1",
+        },
+        ...stepUtils.validateBarcodeOperation(".o_barcode_location_group > .o_barcode_line.o_line_completed"),
+    ]
+});

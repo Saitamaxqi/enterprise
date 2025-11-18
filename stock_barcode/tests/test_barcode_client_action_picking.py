@@ -4527,3 +4527,43 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         })
         internal_picking.action_confirm()
         self.assertEqual(internal_picking.move_ids.move_line_ids.product_stock_quant_ids.quantity, 10.0)
+
+    def test_quantity_distribution_sublines_same_lot(self):
+        """Test that when two lines with the same lot are grouped in barcode,
+        the quantities are split correctly between the lines when scanning two
+        times the lot.
+        """
+        grp_lot = self.env.ref('stock.group_production_lot')
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
+        lot_1 = self.env['stock.lot'].create({'name': 'lot 1', 'product_id': self.productlot1.id, 'company_id': self.env.company.id})
+        self.env['stock.quant'].create([
+            {
+                'product_id': self.productlot1.id,
+                'inventory_quantity': 2,
+                'lot_id': lot_1.id,
+                'location_id': self.stock_location.id,
+            },
+        ]).action_apply_inventory()
+
+        delivery_picking = self.env['stock.picking'].create({
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.customer_location.id,
+            'picking_type_id': self.picking_type_out.id,
+            'move_ids': [Command.create({
+                'product_id': self.productlot1.id,
+                'product_uom_qty': 1,
+                'price_unit': i,  # Different price unit so moves won't be merged.
+                'product_uom': self.productlot1.uom_id.id,
+                'location_id': self.stock_location.id,
+                'location_dest_id': self.customer_location.id,
+            }) for i in (1, 3)],
+        })
+        delivery_picking.action_confirm()
+        delivery_picking.action_assign()
+        url = self._get_client_action_url(delivery_picking.id)
+        self.start_tour(url, 'test_quantity_distribution_sublines_same_lot', login='admin')
+        self.assertEqual(len(delivery_picking.backorder_ids), 0)
+        self.assertRecordValues(delivery_picking.move_ids, [
+            {'quantity': 1.0, 'product_uom_qty': 1.0, 'lot_ids': [lot_1.id], 'picked': True},
+            {'quantity': 1.0, 'product_uom_qty': 1.0, 'lot_ids': [lot_1.id], 'picked': True},
+        ])
