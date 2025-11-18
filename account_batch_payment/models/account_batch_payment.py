@@ -296,9 +296,17 @@ class AccountBatchPayment(models.Model):
     def _compute_invalid_sct_partners_ids(self):
         sepa_batches = self.filtered(lambda b: b.payment_method_id.code == 'sepa_ct')
         for batch in sepa_batches:
-            batch.invalid_sct_partners_ids = batch.payment_ids.partner_id.filtered(
-                lambda partner: not (partner.city and partner.country_id)
-            )
+            invalid_partners = self.env['res.partner']
+            for partner in batch.payment_ids.partner_id:
+                addresses = partner._get_all_addr()
+                has_valid_address = any(
+                    addr.get('city') and addr.get('country')
+                    for addr in addresses
+                )
+                if not has_valid_address:
+                    invalid_partners |= partner
+
+            batch.invalid_sct_partners_ids = invalid_partners
         (self - sepa_batches).invalid_sct_partners_ids = self.env['res.partner']
 
     def action_invalid_partners_from_sct(self):
