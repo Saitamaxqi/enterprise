@@ -588,13 +588,14 @@ class HrPayslip(models.Model):
         self.filtered(lambda p: not p.credit_note and line_values['NET'][p.id]['total'] < 0).write({'has_negative_net_to_report': True})
         # Validate work entries for regular payslips (exclude end of year bonus, ...)
         regular_payslips = self.filtered(lambda p: p.struct_id.type_id.default_struct_id == p.struct_id)
-        work_entries = self.env['hr.work.entry']
-        for regular_payslip in regular_payslips:
-            work_entries |= self.env['hr.work.entry'].search([
+        work_entries_domain = Domain.OR([
+            [
                 ('date', '<=', regular_payslip.date_to),
                 ('date', '>=', regular_payslip.date_from),
-                ('employee_id', '=', regular_payslip.employee_id.id),
-            ])
+                ('employee_id', '=', regular_payslip.employee_id.id)
+            ] for regular_payslip in regular_payslips
+        ])
+        work_entries = self.env['hr.work.entry'].search(work_entries_domain)
         if work_entries:
             work_entries.action_validate()
 
