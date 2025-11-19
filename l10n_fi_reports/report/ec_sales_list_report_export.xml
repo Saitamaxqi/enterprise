@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <template id="l10n_fi_reports.ec_sales_list_report_export_line">
+        <template id="l10n_fi_reports.ec_sales_list_report_export_line"><t t-translation="off">
 102:<t t-esc="line_data['country_code']"/>
 103:<t t-esc="line_data['vat_number']"/>
 210:<t t-esc="line_data['goods']"/>
 211:<t t-esc="line_data['services']"/>
 212:<t t-esc="line_data['triangular']"/>
-009:<t t-esc="line_index + 1"/>
+009:<t t-esc="line_index + 1"/></t>
         </template>
 
         <!-- First line starting directly to avoid empty line when generated-->
-        <template id="l10n_fi_reports.ec_sales_list_report_export">000:VSRALVYV
+        <template id="l10n_fi_reports.ec_sales_list_report_export"><t t-translation="off">000:VSRALVYV
 198:<t t-esc="data['timestamp']"/>
 048:Odoo
 014:0000000-0
@@ -24,7 +24,7 @@
         <t t-set="line_data" t-value="line"/>
     </t>
 </t>
-999:1
+999:1</t>
         </template>
     </data>
 </odoo>

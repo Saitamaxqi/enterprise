@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-13 20:00+0000\n"
-"PO-Revision-Date: 2025-11-13 20:00+0000\n"
+"POT-Creation-Date: 2025-11-25 12:57+0000\n"
+"PO-Revision-Date: 2025-11-25 12:57+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,15 +21,33 @@ msgid "Accounting Return"
 msgstr ""
 
 #. module: l10n_fi_reports
+#. odoo-python
+#: code:addons/l10n_fi_reports/models/account_sales_report.py:0
+msgid "Business ID is needed on your current company to export VSRALVYV."
+msgstr ""
+
+#. module: l10n_fi_reports
 #: model:ir.model.fields,field_description:l10n_fi_reports.field_account_return__display_name
+#: model:ir.model.fields,field_description:l10n_fi_reports.field_l10n_fi_reports_ec_sales_report_handler__display_name
 #: model:ir.model.fields,field_description:l10n_fi_reports.field_l10n_fi_reports_tax_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_fi_reports.field_report_l10n_fi_reports_ec_sales_list_report_export__display_name
 #: model:ir.model.fields,field_description:l10n_fi_reports.field_report_l10n_fi_reports_tax_report_export__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: l10n_fi_reports
+#: model:ir.model,name:l10n_fi_reports.model_l10n_fi_reports_ec_sales_report_handler
+msgid "Finland EC Sales Report Custom Handler"
+msgstr ""
+
+#. module: l10n_fi_reports
 #: model:ir.model,name:l10n_fi_reports.model_l10n_fi_reports_tax_report_handler
 msgid "Finland Tax Report"
+msgstr ""
+
+#. module: l10n_fi_reports
+#: model:ir.actions.report,name:l10n_fi_reports.action_generate_ec_sales_list_report_export
+msgid "Generate EC Sales List report export"
 msgstr ""
 
 #. module: l10n_fi_reports
@@ -44,10 +62,28 @@ msgid "Generate VSRALVKV"
 msgstr ""
 
 #. module: l10n_fi_reports
+#. odoo-python
+#: code:addons/l10n_fi_reports/models/account_sales_report.py:0
+msgid "Generate VSRALVYV"
+msgstr ""
+
+#. module: l10n_fi_reports
 #: model:ir.model.fields,field_description:l10n_fi_reports.field_account_return__id
+#: model:ir.model.fields,field_description:l10n_fi_reports.field_l10n_fi_reports_ec_sales_report_handler__id
 #: model:ir.model.fields,field_description:l10n_fi_reports.field_l10n_fi_reports_tax_report_handler__id
+#: model:ir.model.fields,field_description:l10n_fi_reports.field_report_l10n_fi_reports_ec_sales_list_report_export__id
 #: model:ir.model.fields,field_description:l10n_fi_reports.field_report_l10n_fi_reports_tax_report_export__id
 msgid "ID"
+msgstr ""
+
+#. module: l10n_fi_reports
+#: model:account.report.column,name:l10n_fi_reports.finland_ec_sales_report_triangular
+msgid "Kolmikantakauppa"
+msgstr ""
+
+#. module: l10n_fi_reports
+#: model:ir.model,name:l10n_fi_reports.model_report_l10n_fi_reports_ec_sales_list_report_export
+msgid "L10n FI Report - EC Sales List export"
 msgstr ""
 
 #. module: l10n_fi_reports
@@ -65,8 +101,27 @@ msgstr ""
 
 #. module: l10n_fi_reports
 #. odoo-python
+#: code:addons/l10n_fi_reports/models/account_sales_report.py:0
+msgid ""
+"Make sure to update Finland localization to have the right expressions to "
+"generate your EC Sales report."
+msgstr ""
+
+#. module: l10n_fi_reports
+#: model:account.report.column,name:l10n_fi_reports.finland_ec_sales_report_services
+msgid "Palvelumyynnit"
+msgstr ""
+
+#. module: l10n_fi_reports
+#. odoo-python
+#: code:addons/l10n_fi_reports/models/account_sales_report.py:0
 #: code:addons/l10n_fi_reports/models/tax_report.py:0
 msgid "TXT"
+msgstr ""
+
+#. module: l10n_fi_reports
+#: model:account.report.column,name:l10n_fi_reports.finland_ec_sales_report_goods
+msgid "Tavaramyynnit"
 msgstr ""
 
 #. module: l10n_fi_reports
@@ -92,6 +147,13 @@ msgstr ""
 msgid ""
 "The declaration should be month by month, quarter per quarter or year by "
 "year. Please select only a right period."
+msgstr ""
+
+#. module: l10n_fi_reports
+#. odoo-python
+#: code:addons/l10n_fi_reports/models/account_sales_report.py:0
+msgid ""
+"The declaration should be month by month. Please select only a month period."
 msgstr ""
 
 #. module: l10n_fi_reports
