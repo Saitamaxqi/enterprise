@@ -569,7 +569,14 @@ class TestQualityCheck(TestQualityCommon):
             'location_dest_id': self.location_dest_id,
         } for product in (self.product, self.product_2)])
         receipt.action_confirm()
-
+        receipt.with_context(default_picking_id=receipt.id).write({
+            'move_ids': [Command.create({
+                'product_id': self.product_3.id,
+                'product_uom_qty': 1,
+                'location_id': self.location_id,
+                'location_dest_id': self.location_dest_id,
+            })],
+        })
         self.assertEqual(len(receipt.check_ids), 1)
         self.assertEqual(receipt.check_ids.point_id, quality_point_operation_type)
         self.assertEqual(receipt.check_ids.picking_id, receipt)
