@@ -50,11 +50,12 @@ class AccountChartTemplate(models.AbstractModel):
         be_recon_models = {}
         if template_code in ['be', 'be_comp', 'be_asso']:
             prepayment_communication = self.env['qr.code.payment.wizard']._be_company_vat_communication(self.env.company).replace('+++', '')
+            prepayment_collection_partner = self.env.ref('l10n_be_reports.partner_centre_de_perception_belgium', raise_if_not_found=False)
             be_recon_models = {
                 'advanced_tax_payment_reco': {
                     'name': _('Advanced Tax Payment'),
                     'trigger': 'auto_reconcile' if prepayment_communication else 'manual',
-                    'match_partner_ids': [self.env.ref('l10n_be_reports.partner_centre_de_perception_belgium').id],
+                    'match_partner_ids': [prepayment_collection_partner.id] if prepayment_collection_partner else [],
                     'match_amount': 'lower',
                     'match_amount_max': 0.0,
                     **({
@@ -63,7 +64,7 @@ class AccountChartTemplate(models.AbstractModel):
                     } if prepayment_communication else {}),
                     'line_ids': [
                         Command.create({
-                            'partner_id': self.env.ref('l10n_be_reports.partner_centre_de_perception_belgium').id,
+                            'partner_id': prepayment_collection_partner.id if prepayment_collection_partner else False,
                             'account_id': 'a4121',
                             'amount_type': 'percentage',
                             'amount_string': '100',
