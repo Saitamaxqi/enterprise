@@ -633,6 +633,7 @@
                                                                 <field name="engine">aggregation</field>
                                                                 <field name="formula">SYSCEBNL_ASSOC_XE.balance</field>
                                                                 <field name="subformula">cross_report(l10n_syscohada_reports.account_financial_report_syscebnl_pnl_assoc)</field>
+                                                                <field name="date_scope">from_beginning</field>
                                                             </record>
                                                         </field>
                                                     </record>
