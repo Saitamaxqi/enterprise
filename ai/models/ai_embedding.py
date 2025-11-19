@@ -90,6 +90,7 @@ class AIEmbedding(models.Model):
                         })
                         continue
                     source.attachment_id._setup_attachment_chunks(embedding_model, content)
+                    existing_checksum_model_pairs.append((source.attachment_id.checksum, embedding_model))
 
         # Generate embeddings for sources that are missing embeddings
         missing_embeddings = self.search([
