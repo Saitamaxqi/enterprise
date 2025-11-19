@@ -468,7 +468,7 @@ result = -(categories['PP'] + (result_rules['P.P.DED']['total'] if bool(categori
         <field name="code">ATN.CAR.2</field>
         <field name="sequence">160</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(version.transport_mode_car and version.car_atn)</field>
+        <field name="condition_python">result = bool(not payslip.is_outside_contract and version.transport_mode_car and version.car_atn)</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_qty = result_rules['ATN.CAR']['quantity']
@@ -483,7 +483,7 @@ result = -result_rules['ATN.CAR']['amount']
         <field name="code">ATN.INT.2</field>
         <field name="sequence">161</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = version.internet</field>
+        <field name="condition_python">result = bool(not payslip.is_outside_contract and version.internet)</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_qty = result_rules['ATN.INT']['quantity']
@@ -498,7 +498,7 @@ result = -result_rules['ATN.INT']['amount']
         <field name="code">ATN.LAP.2</field>
         <field name="sequence">163</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = version.has_laptop</field>
+        <field name="condition_python">result = bool(not payslip.is_outside_contract and version.has_laptop)</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 result_qty = result_rules['ATN.LAP']['quantity']
@@ -541,7 +541,7 @@ result = -result_rules['ATN.LAP']['amount']
         <field name="code">ATN.MOB.2</field>
         <field name="sequence">162</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = version.mobile</field>
+        <field name="condition_python">result = bool(not payslip.is_outside_contract and version.mobile)</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 if version.mobile:

@@ -903,6 +903,8 @@ class HrPayslip(models.Model):
     @property
     def is_outside_contract(self):
         self.ensure_one()
+        if self.env.context.get('salary_simulation'):
+            return False
         return self._is_outside_contract_dates()
 
     def _rule_parameter(self, code, reference_date=False):
