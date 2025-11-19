@@ -51,7 +51,7 @@ class HrVersion(models.Model):
         ##################################
         start_naive = start_dt.replace(tzinfo=None)
         end_naive = end_dt.replace(tzinfo=None)
-        attendance_based_contracts = self.filtered(lambda c: c.work_entry_source == 'attendance')
+        attendance_based_contracts = self.filtered_domain([('work_entry_source', '=', 'attendance')])
         search_domain = [
             ('employee_id', 'in', attendance_based_contracts.employee_id.ids),
             ('check_in', '<', end_naive),
@@ -61,26 +61,36 @@ class HrVersion(models.Model):
         attendances = self.env['hr.attendance'].sudo().search(search_domain) if attendance_based_contracts\
             else self.env['hr.attendance']
         intervals = defaultdict(list)
+        calendar_by_employee = {}
+        leaves = {}
+        lunches = {}
+        employee_by_calendar = defaultdict(lambda: self.env['hr.employee'])
+        for version in self:
+            calendar = version.resource_calendar_id
+            if calendar and not calendar.flexible_hours:
+                calendar_by_employee[version.employee_id] = calendar
+                employee_by_calendar[calendar] += version.employee_id
+        for calendar, employees in employee_by_calendar.items():
+            leaves |= calendar._leave_intervals_batch(start_dt, end_dt, resources=employees.resource_id)
+            lunches |= calendar._attendance_intervals_batch(start_dt, end_dt, resources=employees.resource_id, lunch=True)
         for attendance in attendances:
-            emp_cal = attendance._get_employee_calendar()
             resource = attendance.employee_id.resource_id
-            tz = timezone(emp_cal.tz or resource.tz)    # refer to resource's tz if fully flexible resource (calendar is False)
+            tz = timezone(attendance.employee_id.tz or resource.tz)    # refer to resource's tz if fully flexible resource (calendar is False)
             check_in_tz = attendance.check_in.astimezone(tz)
             check_out_tz = attendance.check_out.astimezone(tz)
             if attendance.overtime_status == 'refused':
                 check_out_tz -= timedelta(hours=attendance.validated_overtime_hours)
-            if attendance.employee_id.resource_calendar_id and not attendance.employee_id.resource_calendar_id.flexible_hours:
-                lunch_intervals = attendance.employee_id._employee_attendance_intervals(check_in_tz, check_out_tz, lunch=True)
-                leaves = emp_cal._leave_intervals_batch(check_in_tz, check_out_tz, None)[False] if emp_cal else Intervals([], keep_distinct=True)
-                real_lunch_intervals = lunch_intervals - leaves
-                attendance_intervals = Intervals([(check_in_tz, check_out_tz, attendance)]) - real_lunch_intervals
-            else:
-                attendance_intervals = Intervals([(check_in_tz, check_out_tz, attendance)])
+
+            resource_lunch = lunches.get(attendance.employee_id.resource_id.id, Intervals([]))
+            resource_leave = leaves.get(attendance.employee_id.resource_id.id, Intervals([]))
+            real_lunch_intervals = resource_lunch - resource_leave
+            attendance_intervals = Intervals([(check_in_tz, check_out_tz, attendance)]) - real_lunch_intervals
             for interval in attendance_intervals:
-                intervals[attendance.employee_id.resource_id.id].append((
+                intervals[resource.id].append((
                     max(start_dt, interval[0]),
                     min(end_dt, interval[1]),
                     attendance))
+
         mapped_intervals = {r: Intervals(intervals[r], keep_distinct=True) for r in resource_ids}
         mapped_intervals.update(super()._get_attendance_intervals(
             start_dt, end_dt))
@@ -105,12 +115,6 @@ class HrVersion(models.Model):
         }
         return result
 
-    def _get_interval_work_entry_type(self, interval):
-        self.ensure_one()
-        if isinstance(interval[2], self.env['hr.attendance'].__class__):
-            return self.env.ref('hr_work_entry.work_entry_type_attendance')
-        return super()._get_interval_work_entry_type(interval)
-
     def _get_valid_leave_intervals(self, attendances, interval):
         self.ensure_one()
         badge_attendances = Intervals([
@@ -126,12 +130,15 @@ class HrVersion(models.Model):
         self.ensure_one()
         non_attendance_intervals = [interval for interval in intervals if interval[2]._name not in ['hr.attendance', 'hr.attendance.overtime.line']]
         attendance_intervals = [interval for interval in intervals if interval[2]._name in ['hr.attendance', 'hr.attendance.overtime.line']]
+        if attendance_intervals:
+            default_overtime_type = self.env.ref('hr_work_entry.work_entry_type_overtime')
+            attendance_work_entry_type = self.env.ref('hr_work_entry.work_entry_type_attendance')
         vals = super()._get_real_attendance_work_entry_vals(non_attendance_intervals)
 
         employee = self.employee_id
         for interval in attendance_intervals:
             if interval[2]._name == 'hr.attendance':
-                work_entry_type = self._get_interval_work_entry_type(interval)
+                work_entry_type = attendance_work_entry_type
                 # All benefits generated here are using datetimes converted from the employee's timezone
                 vals += [dict([
                           ('name', "%s: %s" % (work_entry_type.name, employee.name)),
@@ -145,7 +152,6 @@ class HrVersion(models.Model):
             elif interval[2]._name == 'hr.attendance.overtime.line':
                 overtime_mode = self.ruleset_id.rate_combination_mode
                 overtime_line_id = interval[2]
-                default_overtime_type = self.env.ref('hr_work_entry.work_entry_type_overtime')
                 triggered_rule_work_entry_types = overtime_line_id.rule_ids.mapped('work_entry_type_id') or default_overtime_type
 
                 # Take into account manually encoded duration
