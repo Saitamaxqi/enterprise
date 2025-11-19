@@ -133,6 +133,11 @@
                 }
             }
         }
+
+        @media print {
+            border: 0;
+            padding: 0;
+        }
     }
 
     table.striped {
