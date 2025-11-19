@@ -19,6 +19,7 @@ patch(PosStore.prototype, {
 
         this._loadIotDevice(this.models["iot.device"].getAll());
         this.hardwareProxy.iotBoxes = this.models["iot.box"].getAll();
+        this.iotHttp.cacheIotBoxRecords(this.hardwareProxy.iotBoxes);
     },
     _loadIotDevice(devices) {
         const iotLongpolling = this.env.services.iot_longpolling;

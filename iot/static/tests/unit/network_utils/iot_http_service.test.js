@@ -22,9 +22,9 @@ class DummyOrm {
     async searchRead(model, domain, _fields) {
         const [[, , iotBoxId]] = domain;
         if (iotBoxId === 1) {
-            return [{ ip: "127.0.0.1", identifier: "box-123" }];
+            return [{ id: iotBoxId, ip: "127.0.0.1", identifier: "box-123" }];
         }
-        return [{ ip: "127.0.0.1", identifier: "box-456" }];
+        return [{ id: iotBoxId, ip: "127.0.0.1", identifier: "box-456" }];
     }
 }
 

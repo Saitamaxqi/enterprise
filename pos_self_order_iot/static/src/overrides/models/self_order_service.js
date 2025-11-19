@@ -13,6 +13,8 @@ patch(SelfOrder.prototype, {
         this.iotHttpService = services.iot_http;
         await super.setup(...arguments);
 
+        this.iotHttpService.cacheIotBoxRecords(this.models["iot.box"].getAll());
+
         if (!this.config.iface_print_via_proxy || this.config.self_ordering_mode !== "kiosk") {
             return;
         }

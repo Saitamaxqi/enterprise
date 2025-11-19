@@ -74,6 +74,12 @@ export class IotHttpService {
         this.notification.add(_t("Failed to reach the IoT Box for device: %s", deviceIdentifier), { type: "danger" });
     }
 
+    cacheIotBoxRecords(boxes) {
+        for (const box of boxes) {
+            this.cachedIotBoxes[box.id] = { ip: box.ip, identifier: box.identifier };
+        }
+    }
+
     async getIotBoxData(iotBoxId) {
         const record = await this.orm.searchRead("iot.box", [["id", "=", iotBoxId]], ["id", "ip", "identifier"]);
         if (!record) {
@@ -135,8 +141,7 @@ export class IotHttpService {
         }
 
         if (!this.cachedIotBoxes[iotBoxId]) {
-            const [box] = await this.getIotBoxData(iotBoxId);
-            this.cachedIotBoxes[iotBoxId] = { ip: box.ip, identifier: box.identifier };
+            this.cacheIotBoxRecords(await this.getIotBoxData(iotBoxId))
         }
         const { ip, identifier } = this.cachedIotBoxes[iotBoxId];
 
@@ -250,13 +255,14 @@ export const iotHttpService = {
             notification,
             orm
         );
+        const cacheIotBoxRecords = iot.cacheIotBoxRecords.bind(iot);
         const action = iot.action.bind(iot);
         const onMessage = iot.onMessage.bind(iot);
 
         // Expose only those functions to the environment
         // status is a getter to have a reactive value
         return {
-            post, action, webRtc, longpolling, websocket, onMessage, get status() {
+            post, action, webRtc, longpolling, websocket, onMessage, cacheIotBoxRecords, get status() {
                 return iot.connectionStatus;
             }
         };
