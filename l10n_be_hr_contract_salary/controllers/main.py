@@ -65,7 +65,7 @@ class HrContractSalary(main.HrContractSalary):
         if offer.country_code != 'BE' or not has_access:
             return has_access, error_page
 
-        if version.sudo().l10n_be_time_credit and version.sudo()._get_work_time_rate() == 0:
+        if version.sudo().l10n_be_time_credit and version.sudo().work_time_rate == 0:
             return False, request.render('http_routing.http_error', {
                 'status_code': self.env._('Oops'),
                 'status_message': self.env._('This contract is a full time credit time... No simulation can be done for this type of contract as its wage is equal to 0.')})
