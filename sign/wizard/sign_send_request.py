@@ -330,18 +330,25 @@ class SignSendRequest(models.TransientModel):
 
         :return: nothing, sets the value in the only_autofill_readonly field.
         """
+        # TODO master: clean this as it is only needed for download button (invisible for more than one signer)
+        item_type_to_field = {
+            'signature': 'sign_signature',
+            'initial': 'sign_initials',
+        }
         for request in self:
             role_to_user_map = {signer.role_id.id: signer.partner_id.main_user_id for signer in self.signer_ids}
-            only_autofill_readonly = True
+            item_auto_fill_values = []
             for item in request.template_id.sign_item_ids:
                 user = role_to_user_map.get(item.responsible_id.id)
-                if (not item.constant and
-                        not item.type_id.sudo().auto_field and
-                        item.type_id.name != 'Date' and
-                        not (item.type_id.name == 'Signature' and request._get_user_signature(user, 'sign_signature')) and
-                        not (item.type_id.name == 'Initials' and request._get_user_signature(user, 'sign_initials'))):
-                    only_autofill_readonly = False
-            request.only_autofill_readonly = only_autofill_readonly
+                res = False
+                constant_item = item.constant or item.type_id.sudo().auto_field or item.type_id.name == 'Date'
+                if constant_item:
+                    res = True
+                elif item.type_id.item_type in item_type_to_field and user == self.env.user:
+                    sign_field = item_type_to_field[item.type_id.item_type]
+                    res = bool(user[sign_field])
+                item_auto_fill_values.append(res)
+            request.only_autofill_readonly = all(item_auto_fill_values)
 
     @api.depends("only_autofill_readonly", "signers_count", "is_user_signer")
     def _compute_display_download_button(self):
