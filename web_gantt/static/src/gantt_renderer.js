@@ -343,23 +343,6 @@ export class GanttRenderer extends Component {
             onDrop: (params) => this.dragPillDrop(params),
         });
 
-        // Un-draggable pills
-        const unDragState = useGanttUndraggable({
-            // Refs and selectors
-            ref: this.gridRef,
-            elements: ".o_undraggable",
-            ignore: ".o_resize_handle,.o_connector_creator_bullet",
-            edgeScrolling: { enabled: false },
-            onWillStartDrag: this.cleanMultiSelection.bind(this),
-            // Handlers
-            onDragStart: () => {
-                this.interaction.mode = "locked";
-            },
-            onDragEnd: () => {
-                this.interaction.mode = null;
-            },
-        });
-
         // Resizable pills
         const resizeState = useGanttResizable({
             // Refs and selectors
@@ -445,7 +428,27 @@ export class GanttRenderer extends Component {
             },
         });
 
-        this.dragStates = [dragState, unDragState, resizeState];
+        this.dragStates = [dragState, resizeState];
+
+        if (!this.model.hasMultiCreate) {
+            // Un-draggable pills
+            const unDragState = useGanttUndraggable({
+                // Refs and selectors
+                ref: this.gridRef,
+                elements: ".o_undraggable",
+                ignore: ".o_resize_handle,.o_connector_creator_bullet",
+                edgeScrolling: { enabled: false },
+                onWillStartDrag: this.cleanMultiSelection.bind(this),
+                // Handlers
+                onDragStart: () => {
+                    this.interaction.mode = "locked";
+                },
+                onDragEnd: () => {
+                    this.interaction.mode = null;
+                },
+            });
+            this.dragStates.push(unDragState);
+        }
 
         this.prepareSelectionFeature();
 
@@ -739,6 +742,35 @@ export class GanttRenderer extends Component {
                 action = null;
             },
         });
+
+        if (this.model.hasMultiCreate) {
+            const pillSelectState = useGanttSelectable({
+                enable: () =>
+                    Boolean(this.cellForDrag.el) &&
+                    !this.cellForDrag.el.classList.contains("o_gantt_group"),
+                ref: this.gridRef,
+                hoveredCell: this.cellForDrag,
+                elements: ".o_undraggable",
+                edgeScrolling: {
+                    speed: 40,
+                    threshold: 150,
+                    direction: undefined,
+                },
+                hasMultiCreate: () => true,
+                rtl,
+                scale,
+                onDragStart: ({ startCol, endCol, startRow, endRow }) => {
+                    action = this.ctrlPressed ? "add" : "replace";
+                    update({ startCol, endCol, startRow, endRow });
+                },
+                onDrag: update,
+                onDrop: ({ startCol, endCol, startRow, endRow }) => {
+                    this.updateMultiSelection({ startCol, endCol, startRow, endRow }, action);
+                    action = null;
+                },
+            });
+            this.dragStates.push(pillSelectState);
+        }
 
         useBus(this.model.bus, "update", this.cleanMultiSelection.bind(this));
 
@@ -1416,7 +1448,11 @@ export class GanttRenderer extends Component {
         let copyResId;
         let fallbackSchedule;
         if (isCopyMode) {
-            copyResId = await this.model.copy(record.id, schedule, this.openPlanDialogCallback.bind(this));
+            copyResId = await this.model.copy(
+                record.id,
+                schedule,
+                this.openPlanDialogCallback.bind(this)
+            );
         } else {
             const fallbackParams = {
                 ...this.getUndoAfterDragRecordData(record),
@@ -1430,7 +1466,11 @@ export class GanttRenderer extends Component {
                     this.rescheduleAccordingToDependencyCallback.bind(this)
                 );
             } else {
-                await this.model.reschedule(record.id, schedule, this.openPlanDialogCallback.bind(this));
+                await this.model.reschedule(
+                    record.id,
+                    schedule,
+                    this.openPlanDialogCallback.bind(this)
+                );
             }
         }
 

@@ -817,8 +817,10 @@ export const useGanttSelectable = makeDraggableHook({
         addClass(cell, "pe-auto");
         return getResult(current);
     },
-    onDragStart({ ctx }) {
+    onDragStart({ ctx, removeClass }) {
         const { current } = ctx;
+        // Useless on cells, annoying on pills
+        removeClass(current.element, "o_dragged");
         return getResult(current);
     },
     onDrag({ ctx }) {
