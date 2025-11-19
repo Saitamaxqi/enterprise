@@ -400,6 +400,48 @@ class TestPayslipFlow(TestPayslipBase):
         payslip_form.save()
         self.assertTrue(payslip_form)
 
+    def test_10_related_payslip_not_flagged_as_duplicate(self):
+        """Refund/Correction payslips must NOT be treated as duplicates."""
+
+        original = self.env['hr.payslip'].create({
+            'name': 'Original Payslip',
+            'employee_id': self.richard_emp.id,
+            'struct_id': self.richard_emp.structure_type_id.default_struct_id.id,
+            'date_from': datetime.date(2025, 12, 1),
+            'date_to': datetime.date(2025, 12, 31),
+        })
+        original.compute_sheet()
+        original.action_payslip_done()
+        original.correct_sheet()
+        related = original.related_payslip_ids
+        refund = related.filtered(lambda p: p.is_refund_payslip)
+        correction = related - refund
+
+        warnings = refund._get_warnings_by_slip()[refund]
+        self.assertFalse(
+            any("Similar payslips found" in (w.get('message') or "") for w in warnings),
+            "Refund payslip incorrectly flagged as duplicate."
+        )
+
+        correction_warnings = correction._get_warnings_by_slip()[correction]
+        self.assertFalse(
+            any("Similar payslips found" in (w.get('message') or "") for w in correction_warnings),
+            "Correction payslip incorrectly flagged as duplicate."
+        )
+
+        duplicate = self.env['hr.payslip'].create({
+            'name': 'Actual Duplicate Payslip',
+            'employee_id': self.richard_emp.id,
+            'struct_id': original.struct_id.id,
+            'date_from': original.date_from,
+            'date_to': original.date_to,
+        })
+        duplicate_warnings = duplicate._get_warnings_by_slip()[duplicate]
+        self.assertTrue(
+            any("Similar payslips found" in (w.get('message') or "") for w in duplicate_warnings),
+            "Unrelated duplicate payslip should still trigger the warning."
+        )
+
     def test_04_cancel_a_done_payslip_with_payroll_admin(self):
         """Cancel a validated payslip using a new user with Payroll Admin access."""
         test_user = mail_new_test_user(

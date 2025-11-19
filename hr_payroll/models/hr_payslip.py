@@ -1331,6 +1331,15 @@ class HrPayslip(models.Model):
             if slip.employee_id and slip.struct_id and slip.date_from and slip.date_to:
                 key = (slip.employee_id.id, slip.struct_id.id, slip.date_from, slip.date_to)
                 duplicates = similar_payslips[key].filtered(lambda dup: dup.id != slip.id)
+                # Ignore duplicate warning if this slip is a refund of the original
+                if duplicates:
+                    related_payslips = self.env['hr.payslip']
+                    if slip.origin_payslip_id:
+                        related_payslips |= slip.origin_payslip_id | slip.origin_payslip_id.related_payslip_ids
+                    if slip.related_payslip_ids:
+                        related_payslips |= slip.related_payslip_ids
+                    duplicates -= related_payslips
+
                 if duplicates:
                     warnings.append({
                         'message': _("Similar payslips found"),
