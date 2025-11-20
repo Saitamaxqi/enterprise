@@ -41,7 +41,10 @@ class AccountJournalReportHandler(models.AbstractModel):
             },
             'templates': {
                 'AccountReportLineName': 'account_reports.JournalReportLineName',
-            }
+            },
+            'pdf_export': {
+                'pdf_export_main': 'account_reports.journal_report_pdf_export_main',
+            },
         }
 
     ##########################################################################
@@ -275,7 +278,7 @@ class AccountJournalReportHandler(models.AbstractModel):
             'base_url': base_url,
             'document_data': document_data
         }
-        body = self.env['ir.qweb']._render('account_reports.journal_report_pdf_export_main', render_values)
+        body = self.env['ir.qweb']._render(self._get_custom_display_config()['pdf_export']['pdf_export_main'], render_values)
 
         action_report = self.env['ir.actions.report']
         pdf_file_stream = io.BytesIO(action_report._run_wkhtmltopdf(
