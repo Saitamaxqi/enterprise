@@ -459,6 +459,8 @@ class AccountJournal(models.Model):
         return sanitize_communication(name[:name_length])
 
     def _get_SvcLvlText(self, payment_method_code):
+        if payment_method_code == 'iso20022':
+            return 'NURG'
         return None
 
     def _get_PstlAdr(self, partner_id, payment_method_code):
