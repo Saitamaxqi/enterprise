@@ -802,17 +802,20 @@ class AccountBankStatementLine(models.Model):
             ))
         move = self.move_id.with_context(force_delete=True, skip_readonly_check=True)
         move.line_ids = lines_commands
-        partner_id = self._get_partner_id({line['partner_id'] for line in lines_to_add if line.get('partner_id')})
-        partner = self.env['res.partner'].browse(partner_id)
-        if partner:
-            # To avoid "Incompatible companies on records" error, make sure the user is linked to a main company.
-            allowed_companies = partner.company_id.root_id
-            if len(lines_to_set.company_id) == 1:
-                # Or the user is linked to the st_line's company.
-                allowed_companies |= lines_to_set.company_id
-            # Or the user is not linked to any company.
-            if not partner.company_id or partner.company_id in allowed_companies:
-                move.line_ids.filtered(lambda line: not line.partner_id).partner_id = partner
+
+        # We only want to recompute the partner when it's using the reconcile button, not when deleting or editing lines
+        if self.env.context.get('recompute_partner'):
+            partner_id = self._get_partner_id({line['partner_id'] for line in lines_to_add if line.get('partner_id')})
+            partner = self.env['res.partner'].browse(partner_id)
+            if partner:
+                # To avoid "Incompatible companies on records" error, make sure the user is linked to a main company.
+                allowed_companies = partner.company_id.root_id
+                if len(lines_to_set.company_id) == 1:
+                    # Or the user is linked to the st_line's company.
+                    allowed_companies |= lines_to_set.company_id
+                # Or the user is not linked to any company.
+                if not partner.company_id or partner.company_id in allowed_companies:
+                    move.line_ids.filtered(lambda line: not line.partner_id).partner_id = partner
 
         # Create missing partner bank if necessary.
         if self.account_number and self.partner_id:
@@ -1213,7 +1216,10 @@ class AccountBankStatementLine(models.Model):
         if is_early_payment_discount:
             new_lines.extend(self._set_early_payment_discount_lines(early_pay_aml_values_list, open_balance))
 
-        self.with_context(no_exchange_difference_no_recursive=not has_exchange_diff)._add_move_line_to_statement_line_move(new_lines)
+        self.with_context(
+            no_exchange_difference_no_recursive=not has_exchange_diff,
+            recompute_partner=True,
+        )._add_move_line_to_statement_line_move(new_lines)
 
     def _get_partial_amounts(self, current_balance, move_line, open_amount_currency, open_balance):
         def has_enough(currency, open_amount, current_amount):

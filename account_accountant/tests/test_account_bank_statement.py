@@ -2198,10 +2198,29 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             {'account_id': st_line.journal_id.default_account_id.id, 'partner_id': self.partner_a.id, 'balance': 100.0, 'reconciled': False},
             {'account_id': self.account_revenue_1.id, 'partner_id': self.partner_a.id, 'balance': -100.0, 'reconciled': False},
         ])
+        st_line.edit_reconcile_line(st_line.line_ids[-1].id, {'balance': -20, 'amount_currency': -20})
+        st_line.set_account_bank_statement_line(st_line.line_ids[-1].id, self.account_revenue_1.id)
+        st_line.edit_reconcile_line(st_line.line_ids[-1].id, {'balance': -20, 'amount_currency': -20})
+        st_line.set_account_bank_statement_line(st_line.line_ids[-1].id, self.account_revenue_1.id)
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'partner_id': self.partner_a.id, 'balance': 100.0},
+            {'account_id': self.account_revenue_1.id, 'partner_id': self.partner_a.id, 'balance': -20.0},
+            {'account_id': self.account_revenue_1.id, 'partner_id': self.partner_a.id, 'balance': -20.0},
+            {'account_id': self.account_revenue_1.id, 'partner_id': self.partner_a.id, 'balance': -60.0},
+        ])
         st_line.edit_reconcile_line(st_line.line_ids[-1].id, {'partner_id': False})
         self.assertRecordValues(st_line.line_ids, [
-            {'account_id': st_line.journal_id.default_account_id.id, 'partner_id': self.partner_a.id, 'balance': 100.0, 'reconciled': False},
-            {'account_id': self.account_revenue_1.id, 'partner_id': False, 'balance': -100.0, 'reconciled': False},
+            {'account_id': st_line.journal_id.default_account_id.id, 'partner_id': self.partner_a.id, 'balance': 100.0},
+            {'account_id': self.account_revenue_1.id, 'partner_id': self.partner_a.id, 'balance': -20.0},
+            {'account_id': self.account_revenue_1.id, 'partner_id': self.partner_a.id, 'balance': -20.0},
+            {'account_id': self.account_revenue_1.id, 'partner_id': False, 'balance': -60.0},
+        ])
+        st_line.edit_reconcile_line(st_line.line_ids[2].id, {'partner_id': False})
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'partner_id': self.partner_a.id, 'balance': 100.0},
+            {'account_id': self.account_revenue_1.id, 'partner_id': self.partner_a.id, 'balance': -20.0},
+            {'account_id': self.account_revenue_1.id, 'partner_id': False, 'balance': -60.0},
+            {'account_id': self.account_revenue_1.id, 'partner_id': False, 'balance': -20.0},
         ])
 
     def test_reconciliation_without_payment_account(self):
