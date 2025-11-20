@@ -136,6 +136,15 @@ class VoipCall(models.Model):
         for call in self:
             call.country_id = country_id_by_iso_code.get(call.country_code_from_phone, False)
 
+    @api.ondelete(at_uninstall=False)
+    def _unlink_send_notification(self):
+        for partner, calls in self.grouped(lambda c: c.user_id.partner_id).items():
+            self.env["bus.bus"]._sendone(
+                partner,
+                "voip.call/delete",
+                {"ids": calls.ids},
+            )
+
     def action_open_calls(self):
         self.ensure_one()
         domain = Domain("phone_number", "=", self.phone_number)
