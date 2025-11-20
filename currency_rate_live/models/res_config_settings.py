@@ -334,7 +334,7 @@ class ResCompany(models.Model):
     def _parse_fta_data(self, available_currencies):
         ''' Parses the data returned in xml by FTA servers and returns it in a more
         Python-usable form.'''
-        request_url = 'https://www.backend-rates.bazg.admin.ch/api/xmldaily?d=yesterday&locale=en'
+        request_url = 'https://www.backend-rates.bazg.admin.ch/api/xmldaily?d=today&locale=en'
         response = requests.get(request_url, timeout=30)
         response.raise_for_status()
 
@@ -342,8 +342,7 @@ class ResCompany(models.Model):
         available_currency_names = available_currencies.mapped('name')
         xml_tree = etree.fromstring(response.content)
         data = xml2json_from_elementtree(xml_tree)
-        # valid dates (gueltigkeit) may be comma separated, the first one will do
-        date_elem = xml_tree.xpath("//*[local-name() = 'gueltigkeit']")[0]
+        date_elem = xml_tree.xpath("//*[local-name() = 'datum']")[0]
         date_rate = datetime.datetime.strptime(date_elem.text.split(',')[0], '%d.%m.%Y').date()
         for child_node in data['children']:
             if child_node['tag'] == 'devise':
