@@ -356,7 +356,16 @@ class AccountReturnType(models.Model):
         deadline_date = date_pointer
         type_xml_id = self.get_external_id()[self.id]
         while date_pointer < date_to and (deadline_date <= next_year or bypass_period_check):
-            period_date_from, period_date_to = self._get_period_boundaries(main_company, date_pointer)
+            if type_xml_id == 'account_reports.annual_corporate_tax_return_type':
+                # Exception for this particular report
+                # When the fiscal year is not following the typical Jan - Dec,
+                # the code in the else is not working.
+                # By doing this, we are using the right values to compute the
+                # date_from/date_to and date_deadline
+                fy_dates = main_company.compute_fiscalyear_dates(date_pointer)
+                period_date_from, period_date_to = fy_dates['date_from'], fy_dates['date_to']
+            else:
+                period_date_from, period_date_to = self._get_period_boundaries(main_company, date_pointer)
             deadline_date = self.env['account.return']._evaluate_deadline(main_company, self, type_xml_id, period_date_from, period_date_to)
             if (main_company.account_opening_date or date.min) <= deadline_date <= next_year or bypass_period_check:
                 periods.append((period_date_from, period_date_to))

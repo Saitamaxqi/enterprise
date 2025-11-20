@@ -1732,3 +1732,27 @@ class TestAccountReturn(TestAccountReportsCommon):
         self.assertEqual(second_company_completed_return.date_deadline, date(2024, 2, 7))
         self.assertEqual(first_company_return.date_deadline, date(2024, 3, 10))
         self.assertEqual(second_company_return.date_deadline, date(2024, 3, 15))
+
+    def test_annual_corporate_tax_return_exception_case(self):
+        """ Test annual corporate tax return generation for extended fiscal years.
+
+            Verifies that the tax return's start and end dates correctly match the
+            fiscal year boundaries when the fiscal year is longer than 12 months
+            (e.g., spanning across two calendar years).
+        """
+        self.env['account.fiscal.year'].create({
+            'name': 'Custom FY',
+            'date_from': date(2022, 9, 1),
+            'date_to': date(2023, 12, 31),
+        })
+
+        annual_corporate_tax_return = self.env.ref('account_reports.annual_corporate_tax_return_type')
+        with freeze_time(date(2023, 12, 1)):
+            # Generating the return later to be sure that we are in the acceptable time range of year or year + 1.
+            annual_corporate_tax_return._try_create_returns_for_fiscal_year(self.env.company, None)
+        existing_return = self.env['account.return'].search([
+            ('type_id', '=', annual_corporate_tax_return.id),
+            ('company_id', '=', self.env.company.id),
+        ])
+
+        self.assert_return_dates_equal(existing_return, [('2022-09-01', '2023-12-31')])
