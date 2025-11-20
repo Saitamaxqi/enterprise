@@ -812,12 +812,12 @@ class AccountReport(models.Model):
                 **previous_options['return_periodicity'],
                 'report_id': self.id,
             }
-        elif len(self.return_type_ids) == 1:
+        elif len(return_type := self.env['account.report'].browse(options['sections_source_id']).return_type_ids) == 1:
             main_company = self.env.company
-            start_day, start_month = self.return_type_ids._get_start_date_elements(main_company)
+            start_day, start_month = return_type._get_start_date_elements(main_company)
             options['return_periodicity'] = {
-                'periodicity': self.return_type_ids._get_periodicity(main_company),
-                'months_per_period': self.return_type_ids._get_periodicity_months_delay(main_company),
+                'periodicity': return_type._get_periodicity(main_company),
+                'months_per_period': return_type._get_periodicity_months_delay(main_company),
                 'start_day': start_day,
                 'start_month': start_month,
                 'return_type_id': self.return_type_ids.id,
