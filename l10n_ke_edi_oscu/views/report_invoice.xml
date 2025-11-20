@@ -149,20 +149,13 @@
             <attribute name="t-field"/>
             <attribute name="t-out">correct_sign(line.quantity)</attribute>
         </xpath>
-        <xpath expr="//td[@name='td_subtotal']/span" position="attributes">
-            <attribute name="t-field"/>
-            <attribute name="t-out">correct_sign(line.price_subtotal)</attribute>
-        </xpath>
-        <xpath expr="//td[@name='td_subtotal']/span" position="attributes">
-            <attribute name="t-field"/>
-            <attribute name="t-out">correct_sign(line.price_subtotal)</attribute>
-        </xpath>
-        <xpath expr="//td[@name='td_subtotal']" position="inside">
-            <span t-field="o.currency_id.symbol"/>
-        </xpath>
-        <xpath expr="//td[@name='td_subtotal']" position="after">
+        <xpath expr="//td[@name='td_subtotal']" position="replace">
+            <td name="td_subtotal" class="text-end o_price_total">
+                <span class="text-nowrap" t-out="correct_sign(line.price_subtotal)"/>
+                <span t-field="o.currency_id.symbol"/>
+            </td>
             <td name="td_total" class="text-end o_price_total">
-                <span class="text-nowrap" t-out="correct_sign(line.price_total)">27.00</span>
+                <span class="text-nowrap" t-out="correct_sign(line.price_total)"/>
                 <span t-field="o.currency_id.symbol"/>
             </td>
         </xpath>
