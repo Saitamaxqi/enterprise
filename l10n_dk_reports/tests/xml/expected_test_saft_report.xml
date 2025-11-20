@@ -66,6 +66,22 @@
             </Account>
             <Account>
                 <AccountID>___ignore___</AccountID>
+                <AccountDescription>Other credit institutions</AccountDescription>
+                <StandardAccountID>7350</StandardAccountID>
+                <AccountType>Liability</AccountType>
+                <OpeningDebitBalance>0.00</OpeningDebitBalance>
+                <ClosingDebitBalance>67.00</ClosingDebitBalance>
+            </Account>
+            <Account>
+                <AccountID>___ignore___</AccountID>
+                <AccountDescription>Suppliers of goods and services</AccountDescription>
+                <StandardAccountID>7440</StandardAccountID>
+                <AccountType>Liability</AccountType>
+                <OpeningDebitBalance>0.00</OpeningDebitBalance>
+                <ClosingCreditBalance>67.00</ClosingCreditBalance>
+            </Account>
+            <Account>
+                <AccountID>___ignore___</AccountID>
                 <AccountDescription>Suppliers of goods and services (copy)</AccountDescription>
                 <StandardAccountID>7441</StandardAccountID>
                 <AccountType>Liability</AccountType>
@@ -209,9 +225,9 @@
         </Owners>
     </MasterFiles>
     <GeneralLedgerEntries>
-        <NumberOfEntries>4</NumberOfEntries>
-        <TotalDebit>23750.00</TotalDebit>
-        <TotalCredit>23750.00</TotalCredit>
+        <NumberOfEntries>5</NumberOfEntries>
+        <TotalDebit>23817.00</TotalDebit>
+        <TotalCredit>23817.00</TotalCredit>
         <Journal>
             <JournalID>___ignore___</JournalID>
             <Description>Sales</Description>
@@ -370,6 +386,41 @@
                     <CreditAmount>
                         <Amount>3750.00</Amount>
                     </CreditAmount>
+                </Line>
+            </Transaction>
+        </Journal>
+        <Journal>
+            <JournalID>___ignore___</JournalID>
+            <Description>Miscellaneous Operations</Description>
+            <Type>general</Type>
+            <Transaction>
+                <TransactionID>___ignore___</TransactionID>
+                <Period>03</Period>
+                <PeriodYear>2021</PeriodYear>
+                <TransactionDate>2021-03-01</TransactionDate>
+                <TransactionType>entry</TransactionType>
+                <Description>MISC/2021/03/0001</Description>
+                <SystemEntryDate>___ignore___</SystemEntryDate>
+                <GLPostingDate>2021-03-01</GLPostingDate>
+                <Line>
+                    <RecordID>___ignore___</RecordID>
+                    <AccountID>___ignore___</AccountID>
+                    <ValueDate>2021-03-01</ValueDate>
+                    <SourceDocumentID>___ignore___</SourceDocumentID>
+                    <Description>MISC/2021/03/0001</Description>
+                    <CreditAmount>
+                        <Amount>67.00</Amount>
+                    </CreditAmount>
+                </Line>
+                <Line>
+                    <RecordID>___ignore___</RecordID>
+                    <AccountID>___ignore___</AccountID>
+                    <ValueDate>2021-03-01</ValueDate>
+                    <SourceDocumentID>___ignore___</SourceDocumentID>
+                    <Description>MISC/2021/03/0001</Description>
+                    <DebitAmount>
+                        <Amount>67.00</Amount>
+                    </DebitAmount>
                 </Line>
             </Transaction>
         </Journal>

@@ -114,6 +114,28 @@ class TestDKReportCommon(TestAccountReportsCommon):
 class TestDKReport(TestDKReportCommon):
 
     def test_validate_dk_saft_report_values(self):
+        payable_account = self.env['account.chart.template'].ref("dk_coa_7440")
+        liability_account = self.env['account.chart.template'].ref("dk_coa_7350")
+        # Create a move without a partner but with a receivable line
+        move = self.env['account.move'].create({
+                'move_type': 'entry',
+                'invoice_date': '2021-03-01',
+                'date': '2021-03-01',
+                'partner_id': None,
+                'invoice_line_ids': [
+                    Command.create({
+                        'credit': 67.0,
+                        'account_id': payable_account.id,
+                    }),
+                    Command.create({
+                        'debit': 67.0,
+                        'account_id': liability_account.id,
+                    })
+                ],
+            })
+        move._post()
+        self.env.flush_all()
+
         with tools.file_open("l10n_dk_reports/tests/xml/expected_test_saft_report.xml", "rb") as expected_xml:
             stringified_xml = self._generate_xml()
             self.assertXmlTreeEqual(
