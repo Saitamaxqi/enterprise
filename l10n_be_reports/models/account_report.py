@@ -159,7 +159,7 @@ class L10n_BeTaxReportHandler(models.AbstractModel):
             'year': str(dt_to[:4]),
             'client_nihil': options.get('client_nihil', False) and 'YES' or 'NO',
             'ask_restitution': options.get('ask_restitution', False) and 'YES' or 'NO',
-            'comment': options.get('comment') or '/',
+            'comment': options.get('comment'),
             'prorata_deduction': deduction_text,
             'representative_node': _get_xml_export_representative_node(report),
             'rectification_ref': options.get('rectification_ref'),
@@ -253,10 +253,17 @@ class L10n_BeTaxReportHandler(models.AbstractModel):
         </ns2:Data>
         <ns2:ClientListingNihil>%(client_nihil)s</ns2:ClientListingNihil>
         <ns2:Ask Restitution="%(ask_restitution)s"/>
+        """) % file_data
+
+        if file_data['comment']:
+            rslt += Markup("""
         <ns2:Comment>%(comment)s</ns2:Comment>
+            """) % file_data
+
+        rslt += Markup("""
     </ns2:VATDeclaration>
 </ns2:VATConsignment>
-        """) % file_data
+        """)
 
         return {
             'file_name': report.get_default_report_filename(options, 'xml'),

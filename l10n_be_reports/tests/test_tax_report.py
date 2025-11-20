@@ -52,7 +52,6 @@ class BelgiumTaxReportTest(AccountSalesReportCommon):
                 </ns2:Data>
                 <ns2:ClientListingNihil>NO</ns2:ClientListingNihil>
                 <ns2:Ask Restitution="NO"/>
-                <ns2:Comment>/</ns2:Comment>
             </ns2:VATDeclaration>
         </ns2:VATConsignment>
         """ % ref
@@ -163,7 +162,6 @@ class BelgiumTaxReportTest(AccountSalesReportCommon):
                     </ns2:Data>
                     <ns2:ClientListingNihil>NO</ns2:ClientListingNihil>
                     <ns2:Ask Restitution="NO"/>
-                    <ns2:Comment>/</ns2:Comment>
                 </ns2:VATDeclaration>
             </ns2:VATConsignment>
             """ % ref
@@ -235,7 +233,6 @@ class BelgiumTaxReportTest(AccountSalesReportCommon):
                 </ns2:Data>
                 <ns2:ClientListingNihil>NO</ns2:ClientListingNihil>
                 <ns2:Ask Restitution="NO"/>
-                <ns2:Comment>/</ns2:Comment>
             </ns2:VATDeclaration>
         </ns2:VATConsignment>
         """ % ref
@@ -322,7 +319,6 @@ class BelgiumTaxReportTest(AccountSalesReportCommon):
                 </ns2:Data>
                 <ns2:ClientListingNihil>NO</ns2:ClientListingNihil>
                 <ns2:Ask Restitution="NO"/>
-                <ns2:Comment>/</ns2:Comment>
             </ns2:VATDeclaration>
         </ns2:VATConsignment>
         """ % ref
@@ -392,7 +388,6 @@ class BelgiumTaxReportTest(AccountSalesReportCommon):
                 </ns2:Data>
                 <ns2:ClientListingNihil>YES</ns2:ClientListingNihil>
                 <ns2:Ask Restitution="NO"/>
-                <ns2:Comment>/</ns2:Comment>
             </ns2:VATDeclaration>
         </ns2:VATConsignment>
         """ % ref
