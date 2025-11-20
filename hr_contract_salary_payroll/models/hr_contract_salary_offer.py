@@ -97,7 +97,7 @@ class HrContractSalaryOffer(models.Model):
         monthly_wage_by_offer = {}
         self.env.flush_all()
         with self.env.cr.savepoint(flush=False) as sp:
-            for offer in self:
+            for offer in self.with_context(salary_simulation=True):
                 version = offer._get_version()
                 monthly_wage_by_offer[offer] = version._get_gross_from_employer_costs(offer.final_yearly_costs)
 
@@ -117,7 +117,7 @@ class HrContractSalaryOffer(models.Model):
         final_yearly_costs_by_offer = {}
         self.env.flush_all()
         with self.env.cr.savepoint(flush=False) as sp:
-            for offer in self:
+            for offer in self.with_context(salary_simulation=True):
                 version = offer._get_version()
                 final_yearly_costs_by_offer[offer] = version._get_employer_costs_from_gross(offer.monthly_wage)
 
@@ -137,7 +137,7 @@ class HrContractSalaryOffer(models.Model):
         vals_by_offer = {}
         self.env.flush_all()
         with self.env.cr.savepoint(flush=False) as sp:
-            for offer in self:
+            for offer in self.with_context(salary_simulation=True):
                 version = offer._get_version()
                 payslip = version._generate_salary_simulation_payslip()
                 yearly_employer_cost = version._get_employer_costs_from_gross(version._get_contract_wage())
