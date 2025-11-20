@@ -36,7 +36,7 @@ class SignSendRequest(models.TransientModel):
     cc_partner_ids = fields.Many2many('res.partner', string="Copy to", help="Contacts in copy will be notified by email once the document is either fully signed or refused.")
     is_user_signer = fields.Boolean(compute='_compute_is_user_signer')
 
-    subject = fields.Char(string="Subject", compute='_compute_subject', store=True)
+    subject = fields.Char(string="Subject", compute='_compute_subject', store=True, readonly=False)
     body = fields.Html('body', compute='_compute_mail_message_body', readonly=False, help="Message to be sent to signers of the specified document", store=True)
     message_cc = fields.Html("CC Message", help="Message to be sent to contacts in copy of the signed document")
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments', bypass_search_access=True)
