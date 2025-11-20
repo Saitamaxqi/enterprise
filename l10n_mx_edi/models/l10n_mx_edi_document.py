@@ -1293,25 +1293,18 @@ class L10n_Mx_EdiDocument(models.Model):
     # -------------------------------------------------------------------------
 
     @api.model
-    def _get_global_invoice_cfdi_sequence(self, company):
+    def _get_global_invoice_cfdi_sequence(self, company, create_if_missing=True):
         """ Get or create the ir.sequence to be used to get the global invoice document name.
 
-        :param company: The company owning the sequence.
-        :return:        An ir.sequence record.
+        :param company:             The company owning the sequence.
+        :param create_if_missing:   Create the sequence if not exists yet.
+        :return:                    An ir.sequence record.
         """
-        code = 'l10n_mx_global_invoice_cfdi'
-        sequence = self.env['ir.sequence'].sudo().search([('code', '=', code), ('company_id', '=', company.id)], limit=1)
-        if not sequence:
-            sequence = self.env['ir.sequence'].sudo().create({
-                'name': f"Global Invoice CFDI ({company.name})",
-                'code': code,
-                'company_id': company.id,
-                'prefix': 'GINV/',
-                'implementation': 'standard',
-                'use_date_range': True,
-                'padding': 5,
-            })
-        return sequence
+        sequence = company.l10n_mx_edi_global_invoice_sequence_id
+        if sequence:
+            return sequence
+        if not sequence and create_if_missing:
+            return company._create_l10n_mx_edi_global_invoice_sequence()
 
     @api.model
     def _consume_global_invoice_cfdi_sequence(self, sequence, number_next):
@@ -1394,7 +1387,9 @@ class L10n_Mx_EdiDocument(models.Model):
         self._add_base_lines_cfdi_values(cfdi_values, new_base_lines, global_invoice=True)
 
         # Sequence:
-        sequence = self._get_global_invoice_cfdi_sequence(cfdi_values['root_company'])
+        sequence = self._get_global_invoice_cfdi_sequence(cfdi_values['company'], create_if_missing=False)
+        if not sequence:
+            sequence = self._get_global_invoice_cfdi_sequence(cfdi_values['root_company'])
         cfdi_date = fields.Date.context_today(self)
         str_date = fields.Date.to_string(cfdi_date)
         folio = str(sequence.number_next)

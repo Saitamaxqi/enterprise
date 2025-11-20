@@ -984,12 +984,42 @@ class TestCFDIInvoice(TestMxEdiCommon):
             branch.l10n_mx_edi_certificate_ids = certificate
             self.cr.precommit.run()  # load the CoA
 
-            branch = self.env.company.child_ids
+            self.assertRecordValues(self.env.company, [{
+                'l10n_mx_edi_global_invoice_sequence_id': False,
+                'l10n_mx_edi_global_invoice_sequence_prefix': 'GINV/',
+            }])
+
+            self.assertRecordValues(branch, [{
+                'l10n_mx_edi_global_invoice_sequence_id': False,
+                'l10n_mx_edi_global_invoice_sequence_prefix': 'GINV/',
+            }])
+
             self.product.company_id = branch
+
+            # Invoice.
             invoice = self._create_invoice(company_id=branch.id)
             with self.with_mocked_pac_sign_success():
                 invoice._l10n_mx_edi_cfdi_invoice_try_send()
-            self._assert_invoice_cfdi(invoice, 'test_invoice_company_branch')
+            self._assert_invoice_cfdi(invoice, 'test_invoice_company_branch_inv')
+
+            # Global invoice using the sequence of the root company.
+            invoice = self._create_invoice(company_id=branch.id, l10n_mx_edi_cfdi_to_public=True)
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_global_invoice_try_send()
+            self._assert_global_invoice_cfdi_from_invoices(invoice, 'test_invoice_company_branch_ginvoice_1')
+
+            # Global invoice with a custom global invoice sequence on the branch.
+            branch.l10n_mx_edi_global_invoice_sequence_prefix = "SAL/"
+
+            self.assertRecordValues(branch, [{
+                'l10n_mx_edi_global_invoice_sequence_prefix': 'SAL/',
+            }])
+            self.assertTrue(branch.l10n_mx_edi_global_invoice_sequence_id)
+
+            invoice = self._create_invoice(company_id=branch.id, l10n_mx_edi_cfdi_to_public=True)
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_global_invoice_try_send()
+            self._assert_global_invoice_cfdi_from_invoices(invoice, 'test_invoice_company_branch_ginvoice_2')
 
     def test_invoice_then_refund(self):
         # Create an invoice then sign it.
