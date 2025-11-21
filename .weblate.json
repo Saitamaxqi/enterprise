@@ -1247,6 +1247,11 @@
                 "new_base": "project_timesheet_forecast_sale/i18n/project_timesheet_forecast_sale.pot"
             },
             {
+                "name": "purchase_accountant",
+                "filemask": "purchase_accountant/i18n/*.po",
+                "new_base": "purchase_accountant/i18n/purchase_accountant.pot"
+            },
+            {
                 "name": "purchase_intrastat",
                 "filemask": "purchase_intrastat/i18n/*.po",
                 "new_base": "purchase_intrastat/i18n/purchase_intrastat.pot"
