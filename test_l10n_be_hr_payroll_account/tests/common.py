@@ -242,12 +242,14 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
             'name': 'Debtors - (test)',
             'reconcile': True,
             'account_type': 'asset_receivable',
+            'company_ids': cls.company_id.ids,
         })
         a_pay = cls.env['account.account'].create({
             'code': 'X1111',
             'name': 'Creditors - (test)',
             'account_type': 'liability_payable',
             'reconcile': True,
+            'company_ids': cls.company_id.ids,
         })
         cls.env['ir.default'].set(
             'res.partner',
