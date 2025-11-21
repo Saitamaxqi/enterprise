@@ -146,7 +146,7 @@ class AccountMove(models.Model):
 
     def _get_deferred_entries_method(self):
         self.ensure_one()
-        if self.is_outbound():
+        if self.is_purchase_document():
             return self.company_id.generate_deferred_expense_entries_method
         return self.company_id.generate_deferred_revenue_entries_method
 
@@ -154,7 +154,7 @@ class AccountMove(models.Model):
     def _compute_deferred_entry_type(self):
         for move in self:
             if move.deferred_original_move_ids:
-                move.deferred_entry_type = 'expense' if move.deferred_original_move_ids[0].is_outbound() else 'revenue'
+                move.deferred_entry_type = 'expense' if move.deferred_original_move_ids[0].is_purchase_document() else 'revenue'
             else:
                 move.deferred_entry_type = False
 

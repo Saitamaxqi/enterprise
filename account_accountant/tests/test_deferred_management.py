@@ -46,7 +46,7 @@ class TestDeferredManagement(AccountTestInvoicingCommon):
         ]
 
     def create_invoice(self, move_type, invoice_lines, date=None, post=True):
-        journal = self.company_data['default_journal_purchase'] if move_type == 'in_invoice' else self.company_data['default_journal_sale']
+        journal = self.company_data['default_journal_purchase'] if move_type in self.env['account.move'].get_purchase_types() else self.company_data['default_journal_sale']
         move = self.env['account.move'].create({
             'move_type': move_type,
             'partner_id': self.partner_a.id,
@@ -168,13 +168,19 @@ class TestDeferredManagement(AccountTestInvoicingCommon):
     def test_deferred_expense_generate_entries_method(self):
         # The deferred entries are NOT generated when the invoice is validated if the method is set to 'manual'.
         self.company.generate_deferred_expense_entries_method = 'manual'
-        move2 = self.create_invoice('in_invoice', [self.expense_lines[0]], post=True)
-        self.assertEqual(len(move2.deferred_move_ids), 0)
+        move = self.create_invoice('in_invoice', [self.expense_lines[0]], post=True)
+        self.assertEqual(len(move.deferred_move_ids), 0)
+
+        move = self.create_invoice('in_refund', [self.expense_lines[0]], post=True)
+        self.assertEqual(len(move.deferred_move_ids), 0)
 
         # Test that the deferred entries are generated when the invoice is validated.
         self.company.generate_deferred_expense_entries_method = 'on_validation'
         move = self.create_invoice('in_invoice', [self.expense_lines[0]], post=True)
         self.assertEqual(len(move.deferred_move_ids), 5)  # 1 for the invoice deferred + 4 for the deferred entries
+
+        move = self.create_invoice('in_refund', [self.expense_lines[0]], post=True)
+        self.assertEqual(len(move.deferred_move_ids), 5)
         # See test_deferred_expense_credit_note for the values
 
     def test_deferred_expense_reset_to_draft(self):
