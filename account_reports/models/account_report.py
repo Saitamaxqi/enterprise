@@ -4775,7 +4775,9 @@ class AccountReport(models.Model):
 
         action_domain = [('display_type', 'not in', ('line_section', 'line_subsection', 'line_note'))]
 
-        if record_id is None:
+        if record_model == 'account.group':
+            action_domain += [('account_id.group_id', '=', False)] if record_id is None else [('account_id.group_id', 'child_of', record_id)]
+        elif record_id is None:
             # Default filters don't support the 'no set' value. For this case, we use a domain on the action instead
             model_fields_map = {
                 'account.account': 'account_id',
