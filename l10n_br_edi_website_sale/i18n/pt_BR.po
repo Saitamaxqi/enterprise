@@ -1,21 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_br_edi_website_sale
+# * l10n_br_edi_website_sale
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.5alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 19:56+0000\n"
-"PO-Revision-Date: 2024-08-19 16:32-0300\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-11-18 17:10+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
+"odoo-19-l10n/l10n_br_edi_website_sale/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_br_edi_website_sale
 #: model:ir.model.fields,help:l10n_br_edi_website_sale.field_delivery_carrier__l10n_br_edi_transporter_id
@@ -42,7 +44,7 @@ msgstr "Contratação de frete em nome do destinatário/emissor (FOB)"
 #: model:ir.model.fields,field_description:l10n_br_edi_website_sale.field_delivery_carrier__display_name
 #: model:ir.model.fields,field_description:l10n_br_edi_website_sale.field_sale_order__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Exibir nome"
 
 #. module: l10n_br_edi_website_sale
 #: model:ir.model.fields.selection,name:l10n_br_edi_website_sale.selection__delivery_carrier__l10n_br_edi_freight_model__freeshipping
@@ -63,7 +65,7 @@ msgstr "Contratação de frete no nome do emissor (CIF)"
 #: model:ir.model.fields,field_description:l10n_br_edi_website_sale.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:l10n_br_edi_website_sale.field_sale_order__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_br_edi_website_sale
 #: model:ir.model.fields.selection,name:l10n_br_edi_website_sale.selection__delivery_carrier__l10n_br_edi_freight_model__receivervehicle

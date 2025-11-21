@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_be_codabox
+# * l10n_be_codabox
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 19:54+0000\n"
-"PO-Revision-Date: 2025-11-13 14:39+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-18 17:09+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: German <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_be_codabox/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.res_config_settings_view_form
@@ -94,7 +97,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.change_password_wizard_view
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.connection_wizard_view
 msgid "Change password"
-msgstr ""
+msgstr "Passwort ändern"
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.validation_wizard_view
@@ -107,7 +110,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.revoke_wizard_view
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.validation_wizard_view
 msgid "Close"
-msgstr ""
+msgstr "Schließen"
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.res_config_settings_view_form
@@ -209,7 +212,7 @@ msgstr ""
 #. module: l10n_be_codabox
 #: model:ir.model,name:l10n_be_codabox.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Unternehmen"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_change_password_wizard__company_id
@@ -217,12 +220,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_revoke_wizard__company_id
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_validation_wizard__company_id
 msgid "Company"
-msgstr ""
+msgstr "Unternehmen"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_revoke_wizard__company_vat
 msgid "Company ID"
-msgstr ""
+msgstr "Unternehmens-ID"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__company_vat
@@ -233,7 +236,7 @@ msgstr ""
 #. module: l10n_be_codabox
 #: model:ir.model,name:l10n_be_codabox.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Konfigurationseinstellungen"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_change_password_wizard__confirm_fidu_password
@@ -282,7 +285,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_revoke_wizard__create_uid
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_validation_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Erstellt von"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_change_password_wizard__create_date
@@ -290,7 +293,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_revoke_wizard__create_date
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_validation_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Erstellt am"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_change_password_wizard__current_fidu_password
@@ -307,7 +310,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_res_company__display_name
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Name anzeigen"
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.account_journal_dashboard_inherit_l10n_be_codabox
@@ -318,7 +321,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_codabox/models/res_config_settings.py:0
 msgid "Error"
-msgstr ""
+msgstr "Fehler"
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.account_journal_dashboard_inherit_l10n_be_codabox
@@ -334,7 +337,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_res_company__id
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.res_config_settings_view_form
@@ -345,7 +348,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_codabox/wizard/revoke_wizard.py:0
 msgid "Information"
-msgstr ""
+msgstr "Information"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__is_fidu_consent_valid
@@ -403,7 +406,7 @@ msgstr ""
 #. module: l10n_be_codabox
 #: model:ir.model,name:l10n_be_codabox.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Journal"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_res_company__l10n_be_codabox_soda_journal
@@ -417,7 +420,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_revoke_wizard__write_uid
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_validation_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zuletzt aktualisiert von"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_change_password_wizard__write_date
@@ -425,7 +428,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_revoke_wizard__write_date
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_validation_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zuletzt aktualisiert am"
 
 #. module: l10n_be_codabox
 #. odoo-python
@@ -445,7 +448,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_change_password_wizard__new_fidu_password
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.change_password_wizard_view
 msgid "New Password"
-msgstr ""
+msgstr "Neues Passwort"
 
 #. module: l10n_be_codabox
 #. odoo-python
@@ -501,7 +504,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__fidu_password
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_validation_wizard__fidu_password
 msgid "Password"
-msgstr ""
+msgstr "Passwort"
 
 #. module: l10n_be_codabox
 #. odoo-python
@@ -535,7 +538,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.connection_wizard_view
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.revoke_wizard_view
 msgid "Revoke"
-msgstr ""
+msgstr "Widerrufen"
 
 #. module: l10n_be_codabox
 #. odoo-python
@@ -546,7 +549,7 @@ msgstr ""
 #. module: l10n_be_codabox
 #: model:ir.actions.act_window,name:l10n_be_codabox.action_open_accounting_settings
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__show_fidu_password
@@ -556,7 +559,7 @@ msgstr ""
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.res_config_settings_view_form
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.connection_wizard_view
@@ -578,7 +581,7 @@ msgstr ""
 #: code:addons/l10n_be_codabox/models/res_config_settings.py:0
 #: code:addons/l10n_be_codabox/wizard/change_password_wizard.py:0
 msgid "Success"
-msgstr ""
+msgstr "Erfolgreich"
 
 #. module: l10n_be_codabox
 #. odoo-python
@@ -669,7 +672,7 @@ msgstr ""
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.connection_wizard_view
 msgid "You can access the documentation"
-msgstr ""
+msgstr "Sie können auf die Dokumentation zugreifen"
 
 #. module: l10n_be_codabox
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.connection_wizard_view
@@ -678,3 +681,6 @@ msgid ""
 "                        <i class=\"fa fa-external-link\" aria-"
 "hidden=\"true\"/>"
 msgstr ""
+", indem Sie hier klicken\n"
+"                        <i class=\"fa fa-external-link\" aria-hidden=\"true\""
+"/>"

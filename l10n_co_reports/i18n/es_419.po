@@ -1,21 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_co_reports
+# * l10n_co_reports
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.1alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 19:58+0000\n"
-"PO-Revision-Date: 2024-11-19 12:29-0600\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-11-18 17:10+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
+"odoo-19-l10n/l10n_co_reports/es_419/>\n"
 "Language: es_419\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_co_reports
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_certification
@@ -25,7 +27,7 @@ msgstr ", practicó en la ciudad de"
 #. module: l10n_co_reports
 #: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_patrimonio_36
 msgid "36 NET INCOME FOR THE YEAR"
-msgstr ""
+msgstr "36 RESULTADOS DEL EJERCICIO"
 
 #. module: l10n_co_reports
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_libro_diario
@@ -65,12 +67,12 @@ msgstr "Artículo"
 #. module: l10n_co_reports
 #: model:account.report.line,name:l10n_co_reports.l10n_co_inv_blc_assets_expenses
 msgid "Assets + Expenses"
-msgstr ""
+msgstr "Activo + Gastos"
 
 #. module: l10n_co_reports
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_certification
 msgid "Bimestre"
-msgstr ""
+msgstr "Bimestre"
 
 #. module: l10n_co_reports
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_certification
@@ -160,7 +162,7 @@ msgstr ""
 #: model:account.report.column,name:l10n_co_reports.l10n_co_reports_fuente_communication
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_certification
 msgid "Concepto de retención"
-msgstr ""
+msgstr "Concepto de retención"
 
 #. module: l10n_co_reports
 #: model:ir.model.fields,field_description:l10n_co_reports.field_l10n_co_reports_retention_report_wizard__create_uid
@@ -318,7 +320,7 @@ msgstr "Última actualización por"
 #. module: l10n_co_reports
 #: model:ir.model.fields,field_description:l10n_co_reports.field_l10n_co_reports_retention_report_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización en"
 
 #. module: l10n_co_reports
 #: model:ir.model,name:l10n_co_reports.model_l10n_co_libro_diario_report_handler
@@ -333,17 +335,17 @@ msgstr "FOLIO"
 #. module: l10n_co_reports
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_certification
 msgid "Monto Total Operación"
-msgstr ""
+msgstr "Monto total operación"
 
 #. module: l10n_co_reports
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_certification
 msgid "Monto del Pago Sujeto Retención"
-msgstr ""
+msgstr "Monto del pago sujeto retención"
 
 #. module: l10n_co_reports
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_certification
 msgid "Monto del pago sujeto a retención"
-msgstr ""
+msgstr "Monto del pago sujeto a retención"
 
 #. module: l10n_co_reports
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_certification
@@ -392,12 +394,12 @@ msgstr "Estado de resultados"
 #. module: l10n_co_reports
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_certification
 msgid "Retenido Consignado"
-msgstr ""
+msgstr "Retenido consignado"
 
 #. module: l10n_co_reports
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_certification
 msgid "Retenido y consignado"
-msgstr ""
+msgstr "Retenido y consignado"
 
 #. module: l10n_co_reports
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_certification

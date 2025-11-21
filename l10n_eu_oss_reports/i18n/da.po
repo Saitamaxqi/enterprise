@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_eu_oss_reports
+# * l10n_eu_oss_reports
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 20:00+0000\n"
-"PO-Revision-Date: 2025-01-28 08:33+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-11-18 17:11+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Danish <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_eu_oss_reports/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_eu_oss_reports
 #. odoo-python
@@ -58,12 +61,12 @@ msgstr "Regnskabsrapport"
 #. module: l10n_eu_oss_reports
 #: model:ir.model,name:l10n_eu_oss_reports.model_account_return
 msgid "Accounting Return"
-msgstr ""
+msgstr "Regnskabsafkast"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model,name:l10n_eu_oss_reports.model_account_return_type
 msgid "Accounting Return Type"
-msgstr ""
+msgstr "Regnskabsmæssig afkasttype"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_account_report__availability_condition
@@ -84,17 +87,17 @@ msgstr "Virksomheder"
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_reports_return_submission_wizard__country_code
 msgid "Country Code"
-msgstr ""
+msgstr "Landekode"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_reports_return_submission_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Oprettet af"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_reports_return_submission_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Oprettet den"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_account_report__display_name
@@ -106,7 +109,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_tax_report_handler__display_name
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_res_company__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Vis navn"
 
 #. module: l10n_eu_oss_reports
 #: model_terms:ir.ui.view,arch_db:l10n_eu_oss_reports.oss_return_submission_wizard_form
@@ -129,7 +132,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_tax_report_handler__id
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_res_company__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_res_company__ioss
@@ -158,7 +161,7 @@ msgstr ""
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_reports_return_submission_wizard__instructions
 msgid "Instructions"
-msgstr ""
+msgstr "Instruktioner"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_res_company__intermediary_no
@@ -173,17 +176,17 @@ msgstr ""
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_reports_return_submission_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Sidst opdateret af"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_reports_return_submission_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Sidst opdateret den"
 
 #. module: l10n_eu_oss_reports
 #: model_terms:ir.ui.view,arch_db:l10n_eu_oss_reports.oss_return_submission_wizard_form
 msgid "Log in to"
-msgstr ""
+msgstr "Log ind på"
 
 #. module: l10n_eu_oss_reports
 #: model:account.return.type,name:l10n_eu_oss_reports.eu_oss_imports_tax_return_type
@@ -236,7 +239,7 @@ msgstr "Rapportering"
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_reports_return_submission_wizard__return_id
 msgid "Return"
-msgstr ""
+msgstr "Returnering"
 
 #. module: l10n_eu_oss_reports
 #: model_terms:ir.ui.view,arch_db:l10n_eu_oss_reports.oss_return_submission_wizard_form
@@ -257,6 +260,8 @@ msgid ""
 "The ISO country code in two chars. \n"
 "You can use this field for quick search."
 msgstr ""
+"ISO-landekoden med to tegn. \n"
+"Feltet kan bruges til hurtig søgning."
 
 #. module: l10n_eu_oss_reports
 #: model_terms:ir.ui.view,arch_db:l10n_eu_oss_reports.oss_return_submission_wizard_form

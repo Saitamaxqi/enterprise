@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_tr_hr_payroll
+# * l10n_tr_hr_payroll
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 20:11+0000\n"
-"PO-Revision-Date: 2025-11-13 20:11+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-18 17:13+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_tr_hr_payroll/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_tr_hr_payroll
 #: model:ir.actions.report,print_report_name:l10n_tr_hr_payroll.action_employment_certificate
@@ -54,12 +57,12 @@ msgstr ""
 #. module: l10n_tr_hr_payroll
 #: model:hr.salary.rule,name:l10n_tr_hr_payroll.l10n_tr_hr_payroll_structure_tr_employee_salary_assignment_of_salary_rule
 msgid "Assignment of Salary"
-msgstr ""
+msgstr "Maaş Ataması"
 
 #. module: l10n_tr_hr_payroll
 #: model:hr.salary.rule,name:l10n_tr_hr_payroll.l10n_tr_hr_payroll_structure_tr_employee_salary_attachment_of_salary_rule
 msgid "Attachment of Salary"
-msgstr ""
+msgstr "Maaş Eki"
 
 #. module: l10n_tr_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_tr_hr_payroll.hr_employee_employement_certificate
@@ -69,7 +72,7 @@ msgstr ""
 #. module: l10n_tr_hr_payroll
 #: model:hr.salary.rule,name:l10n_tr_hr_payroll.l10n_tr_hr_payroll_structure_tr_employee_salary_basic_salary_rule
 msgid "Basic Salary"
-msgstr ""
+msgstr "Temel Maaş"
 
 #. module: l10n_tr_hr_payroll
 #. odoo-python
@@ -95,7 +98,7 @@ msgstr ""
 #. module: l10n_tr_hr_payroll
 #: model:hr.salary.rule,name:l10n_tr_hr_payroll.l10n_tr_hr_payroll_structure_tr_employee_salary_child_support
 msgid "Child Support"
-msgstr ""
+msgstr "Çocuk Yardımı"
 
 #. module: l10n_tr_hr_payroll
 #: model:hr.salary.rule,name:l10n_tr_hr_payroll.turkey_net_tax_deduction
@@ -115,7 +118,7 @@ msgstr ""
 #. module: l10n_tr_hr_payroll
 #: model:hr.salary.rule,name:l10n_tr_hr_payroll.l10n_tr_hr_payroll_structure_tr_employee_salary_deduction_salary_rule
 msgid "Deduction"
-msgstr ""
+msgstr "Deduction"
 
 #. module: l10n_tr_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_tr_hr_payroll.hr_employee_employement_certificate
@@ -129,22 +132,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_tr_hr_payroll.field_hr_version__display_name
 #: model:ir.model.fields,field_description:l10n_tr_hr_payroll.field_report_l10n_tr_hr_payroll_report_emp_employement_cert__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "İsim Göster"
 
 #. module: l10n_tr_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_tr_hr_payroll.hr_employee_employement_certificate
 msgid "Duration"
-msgstr ""
+msgstr "Süre"
 
 #. module: l10n_tr_hr_payroll
 #: model:ir.model,name:l10n_tr_hr_payroll.model_hr_employee
 msgid "Employee"
-msgstr ""
+msgstr "Çalışan"
 
 #. module: l10n_tr_hr_payroll
 #: model:ir.model,name:l10n_tr_hr_payroll.model_hr_version
 msgid "Employee Contract"
-msgstr ""
+msgstr "Personel Sözleşmesi"
 
 #. module: l10n_tr_hr_payroll
 #: model:ir.model,name:l10n_tr_hr_payroll.model_report_l10n_tr_hr_payroll_report_emp_employement_cert
@@ -168,7 +171,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_tr_hr_payroll.field_hr_version__id
 #: model:ir.model.fields,field_description:l10n_tr_hr_payroll.field_report_l10n_tr_hr_payroll_report_emp_employement_cert__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_tr_hr_payroll
 #: model:ir.model.fields,help:l10n_tr_hr_payroll.field_hr_employee__l10n_tr_is_net_to_gross
@@ -215,7 +218,7 @@ msgstr ""
 #. module: l10n_tr_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_tr_hr_payroll.hr_employee_employement_certificate
 msgid "Mitchell Admin"
-msgstr ""
+msgstr "Mitchell Admin"
 
 #. module: l10n_tr_hr_payroll
 #: model:hr.salary.rule.category,name:l10n_tr_hr_payroll.l10n_tr_category_ntg_calculation
@@ -225,12 +228,12 @@ msgstr ""
 #. module: l10n_tr_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_tr_hr_payroll.hr_employee_employement_certificate
 msgid "Name"
-msgstr ""
+msgstr "İsim"
 
 #. module: l10n_tr_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_tr_hr_payroll.hr_employee_employement_certificate
 msgid "Nationality"
-msgstr ""
+msgstr "Uyruk (Ülke)"
 
 #. module: l10n_tr_hr_payroll
 #: model:hr.salary.rule.category,name:l10n_tr_hr_payroll.hr_salary_rule_category_tr_net_taxded
@@ -240,7 +243,7 @@ msgstr ""
 #. module: l10n_tr_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_tr_hr_payroll.view_employee_form_inherit_l10n_tr_hr_payroll
 msgid "Net Wage"
-msgstr ""
+msgstr "Net Ücret"
 
 #. module: l10n_tr_hr_payroll
 #: model:ir.model.fields,field_description:l10n_tr_hr_payroll.field_hr_employee__l10n_tr_is_net_to_gross
@@ -271,7 +274,7 @@ msgstr ""
 #. module: l10n_tr_hr_payroll
 #: model:ir.model,name:l10n_tr_hr_payroll.model_hr_payslip
 msgid "Pay Slip"
-msgstr ""
+msgstr "Bordro"
 
 #. module: l10n_tr_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_tr_hr_payroll.hr_employee_employement_certificate
@@ -281,7 +284,7 @@ msgstr ""
 #. module: l10n_tr_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_tr_hr_payroll.hr_employee_employement_certificate
 msgid "Position"
-msgstr ""
+msgstr "Pozisyon"
 
 #. module: l10n_tr_hr_payroll
 #: model:hr.salary.rule,name:l10n_tr_hr_payroll.hr_payroll_structure_tr_employee_salary_ytdgross
@@ -296,7 +299,7 @@ msgstr ""
 #. module: l10n_tr_hr_payroll
 #: model:hr.salary.rule,name:l10n_tr_hr_payroll.l10n_tr_hr_payroll_structure_tr_employee_salary_reimbursement_salary_rule
 msgid "Reimbursement"
-msgstr ""
+msgstr "Geri Ödeme"
 
 #. module: l10n_tr_hr_payroll
 #: model:hr.salary.rule,name:l10n_tr_hr_payroll.turkey_ssi_unemployment_company_contribution
@@ -331,7 +334,7 @@ msgstr ""
 #. module: l10n_tr_hr_payroll
 #: model:ir.model,name:l10n_tr_hr_payroll.model_hr_payroll_structure_type
 msgid "Salary Structure Type"
-msgstr ""
+msgstr "Ücret Yapısı Türü"
 
 #. module: l10n_tr_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_tr_hr_payroll.hr_employee_employement_certificate
@@ -385,7 +388,7 @@ msgstr ""
 #. module: l10n_tr_hr_payroll
 #: model:hr.salary.rule,name:l10n_tr_hr_payroll.l10n_tr_hr_payroll_structure_tr_employee_salary_gross_salary_rule
 msgid "Taxable Salary"
-msgstr ""
+msgstr "Vergiye Tabi Ücret"
 
 #. module: l10n_tr_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_tr_hr_payroll.hr_employee_employement_certificate
@@ -403,12 +406,12 @@ msgstr ""
 #. module: l10n_tr_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_tr_hr_payroll.hr_employee_employement_certificate
 msgid "To:"
-msgstr ""
+msgstr "Kime:"
 
 #. module: l10n_tr_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_tr_hr_payroll.hr_employee_employement_certificate
 msgid "Türkiye"
-msgstr ""
+msgstr "Türkiye"
 
 #. module: l10n_tr_hr_payroll
 #: model:hr.payroll.structure,name:l10n_tr_hr_payroll.hr_payroll_structure_tr_employee_salary

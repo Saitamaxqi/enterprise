@@ -1,26 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_be_reports
+# * l10n_be_reports
 #
 # Translators:
 # Martin Trigaux, 2023
 # Cécile Collart <cco@odoo.com>, 2023
 # Jolien De Paepe, 2023
-#
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.5a1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 19:55+0000\n"
-"PO-Revision-Date: 2025-10-14 14:23+0200\n"
-"Last-Translator: Dylan Kiss <dyki@odoo.com>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-11-18 17:09+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: French <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_be_reports/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.6\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_be_reports
 #. odoo-python
@@ -72,7 +73,7 @@ msgstr ""
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.report_281_50_pdf
 msgid "0.00"
-msgstr ""
+msgstr "0,00"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.report_325_pdf
@@ -347,17 +348,17 @@ msgstr "Plan comptable"
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_pay_wizard__partner_id
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_payment_details_table
 msgid "Account Holder"
-msgstr ""
+msgstr "Titulaire de compte"
 
 #. module: l10n_be_reports
 #: model:ir.model,name:l10n_be_reports.model_account_return
 msgid "Accounting Return"
-msgstr ""
+msgstr "Déclaration comptable"
 
 #. module: l10n_be_reports
 #: model:ir.model,name:l10n_be_reports.model_account_return_type
 msgid "Accounting Return Type"
-msgstr ""
+msgstr "Type de déclaration comptable"
 
 #. module: l10n_be_reports
 #: model:account.return.check.template,name:l10n_be_reports.account_return_check_template_be_sales_products_to_be_received
@@ -367,7 +368,7 @@ msgstr "Produits à recevoir (non facturés)"
 #. module: l10n_be_reports
 #: model:ir.model.fields,field_description:l10n_be_reports.field_mail_activity_type__category
 msgid "Action"
-msgstr ""
+msgstr "Action"
 
 #. module: l10n_be_reports
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_form_281_50__message_needaction
@@ -381,11 +382,14 @@ msgid ""
 "Actions may trigger specific behavior like opening calendar view or "
 "automatically mark as done when a document is uploaded"
 msgstr ""
+"Les actions peuvent déclencher des comportements spécifiques, tels que l’"
+"ouverture de la vue du calendrier ou automatiquement marquer comme fait "
+"lorsqu’un document est chargé."
 
 #. module: l10n_be_reports
 #: model:ir.model,name:l10n_be_reports.model_mail_activity_type
 msgid "Activity Type"
-msgstr ""
+msgstr "Type d'activité"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_return_lock_wizard_form
@@ -458,13 +462,13 @@ msgstr "Montant"
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_isoc_prepayment_pay_wizard__amount_to_pay
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_pay_wizard__amount_to_pay
 msgid "Amount To Pay"
-msgstr ""
+msgstr "Montant à payer"
 
 #. module: l10n_be_reports
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_isoc_prepayment_pay_wizard__currency_id
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_pay_wizard__currency_id
 msgid "Amount To Pay Currency"
-msgstr ""
+msgstr "Devise montant à payer"
 
 #. module: l10n_be_reports
 #: model:ir.model.fields,help:l10n_be_reports.field_l10n_be_form_281_50__paid_amount
@@ -508,7 +512,7 @@ msgstr ""
 #. module: l10n_be_reports
 #: model:ir.ui.menu,name:l10n_be_reports.menu_action_account_report_annual_statements
 msgid "Annual Statements"
-msgstr ""
+msgstr "Comptes annuels"
 
 #. module: l10n_be_reports
 #: model:account.return.check.template,description:l10n_be_reports.account_return_check_template_be_payroll_director_benefit_in_kind
@@ -734,7 +738,7 @@ msgstr "Numéro d'entreprise"
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_return_lock_wizard_form
 msgid "Bank"
-msgstr ""
+msgstr "Banque"
 
 #. module: l10n_be_reports
 #: model:ir.model,name:l10n_be_reports.model_l10n_be_company_region
@@ -756,6 +760,7 @@ msgstr ""
 #: model:ir.model,name:l10n_be_reports.model_l10n_be_reports_vat_return_submission_wizard
 msgid "Belgian Periodic VAT Report Export Wizard"
 msgstr ""
+"Assistant d'exportation de déclarations périodiques à la TVA en Belgique"
 
 #. module: l10n_be_reports
 #: model:ir.model,name:l10n_be_reports.model_l10n_be_reports_vat_return_lock_wizard
@@ -835,7 +840,7 @@ msgstr "Commissions"
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_pay_wizard__communication
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_payment_details_table
 msgid "Communication"
-msgstr ""
+msgstr "Communication"
 
 #. module: l10n_be_reports
 #: model:ir.model,name:l10n_be_reports.model_res_company
@@ -858,7 +863,7 @@ msgstr ""
 #. module: l10n_be_reports
 #: model:ir.model.fields,field_description:l10n_be_reports.field_res_company__l10n_be_company_type_id
 msgid "Company Type"
-msgstr ""
+msgstr "Type de société"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.report_325_pdf
@@ -901,7 +906,7 @@ msgstr "Pays du partenaire lors de la création de la fiche"
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.form_325_wizard_view_form
 msgid "Create"
-msgstr ""
+msgstr "Créer"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.form_325_wizard_view_form
@@ -916,7 +921,7 @@ msgstr "Créer le relevé 325"
 #. module: l10n_be_reports
 #: model:ir.model,website_form_label:l10n_be_reports.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Créer un client"
 
 #. module: l10n_be_reports
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_company_region__create_uid
@@ -1148,7 +1153,7 @@ msgstr "Chèques-repas du dirigeant : enregistrement comptable"
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_pay_wizard_form
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_return_lock_wizard_form
 msgid "Discard"
-msgstr ""
+msgstr "Ignorer"
 
 #. module: l10n_be_reports
 #: model:ir.model.fields,field_description:l10n_be_reports.field_account_chart_template__display_name
@@ -1255,7 +1260,7 @@ msgstr "Créances douteuses"
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.xbrl_export_wizard_form
 msgid "Download"
-msgstr ""
+msgstr "Télécharger"
 
 #. module: l10n_be_reports
 #. odoo-python
@@ -1268,7 +1273,7 @@ msgstr "Télécharger la fiche 281.50 en PDF"
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_listing_submission_wizard_form
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_return_submission_wizard_form
 msgid "Download XML"
-msgstr ""
+msgstr "Télécharger XML"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.form_281_50_view_form
@@ -1300,7 +1305,7 @@ msgstr "Néerlandais"
 #: model:account.return.type,name:l10n_be_reports.be_ec_sales_list_return_type
 #: model:ir.model.fields.selection,name:l10n_be_reports.selection__mail_activity_type__category__ec_sales_list
 msgid "EC Sales List"
-msgstr ""
+msgstr "Liste des ventes EC"
 
 #. module: l10n_be_reports
 #. odoo-python
@@ -1311,7 +1316,7 @@ msgstr "Relevé à la TVA des opérations intracommunautaires"
 #. module: l10n_be_reports
 #: model:ir.model,name:l10n_be_reports.model_l10n_be_reports_ec_sales_list_submission_wizard
 msgid "EC Sales List Submission Wizard"
-msgstr ""
+msgstr "Assistant de soumission de la liste des ventes EC"
 
 #. module: l10n_be_reports
 #. odoo-javascript
@@ -1352,7 +1357,7 @@ msgstr "Frais exposés"
 #. module: l10n_be_reports
 #: model:ir.model,name:l10n_be_reports.model_account_general_ledger_report_handler
 msgid "FEC Report Custom Handler"
-msgstr ""
+msgstr "Gestionnaire personnalisé du rapport FEC"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.report_325_pdf
@@ -1485,7 +1490,7 @@ msgstr "Généré"
 #. module: l10n_be_reports
 #: model:ir.model,name:l10n_be_reports.model_qr_code_payment_wizard
 msgid "Generic Payment Wizard with QR Code"
-msgstr ""
+msgstr "Assistant de paiement générique avec code QR"
 
 #. module: l10n_be_reports
 #: model:ir.model.fields.selection,name:l10n_be_reports.selection__l10n_be_form_325__sender_lang_code__3
@@ -1969,7 +1974,7 @@ msgstr "Je souhaite soumettre plus de 5 prorata spécifiques"
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_pay_wizard__acc_number
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_payment_details_table
 msgid "IBAN"
-msgstr ""
+msgstr "IBAN"
 
 #. module: l10n_be_reports
 #: model:ir.model.fields,field_description:l10n_be_reports.field_account_chart_template__id
@@ -2048,6 +2053,8 @@ msgid ""
 "If the field '% Special pro rata deduction' is filled, one of the fields "
 "'Special pro rata' must be filled"
 msgstr ""
+"Si le champ 'Pro rata usage avec % variable' est rempli, l'un des champs "
+"'Prorata Spécial' doit être rempli"
 
 #. module: l10n_be_reports
 #: model:account.return.check.template,description:l10n_be_reports.account_return_check_template_be_payroll_individual_pension_commitment
@@ -2130,7 +2137,7 @@ msgstr "Indique si le 325 est un test"
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_listing_submission_wizard__instructions
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__instructions
 msgid "Instructions"
-msgstr ""
+msgstr "Instructions"
 
 #. module: l10n_be_reports
 #: model:account.return.check.template,name:l10n_be_reports.account_return_check_template_be_tf_int_related_company_loans
@@ -2195,7 +2202,7 @@ msgstr "Est un abonné"
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_isoc_prepayment_pay_wizard__is_recoverable
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_pay_wizard__is_recoverable
 msgid "Is Recoverable"
-msgstr ""
+msgstr "Est récupérable"
 
 #. module: l10n_be_reports
 #: model:account.return.check.template,description:l10n_be_reports.account_return_check_template_be_rc_capital_grant
@@ -2322,7 +2329,7 @@ msgstr "Profession exercée"
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__write_uid
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_xbrl_export_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Dernière mise à jour par"
 
 #. module: l10n_be_reports
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_company_region__write_date
@@ -2339,7 +2346,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__write_date
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_xbrl_export_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Dernière mise à jour le"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.report_325_pdf
@@ -2384,20 +2391,20 @@ msgstr "Liste des fiches 281.50 pour ce partenaire"
 #: code:addons/l10n_be_reports/models/account_return.py:0
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_return_lock_wizard_form
 msgid "Lock"
-msgstr ""
+msgstr "Verrouiller"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.ec_sales_list_submission_wizard_form
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_listing_submission_wizard_form
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_return_submission_wizard_form
 msgid "Log in to"
-msgstr ""
+msgstr "Connectez-vous à"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.isoc_prepayment_pay_wizard_form
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_pay_wizard_form
 msgid "Mark Paid"
-msgstr ""
+msgstr "Marquer comme payé"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_pay_wizard_form
@@ -2453,7 +2460,7 @@ msgstr "NOMBRE DE FICHES ETABLIES"
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_company_region__name
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_company_type__name
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: l10n_be_reports
 #: model:ir.model.fields,help:l10n_be_reports.field_l10n_be_form_281_50__partner_name
@@ -2479,7 +2486,7 @@ msgstr "Reclassement du solde bancaire débiteur"
 #. odoo-javascript
 #: code:addons/l10n_be_reports/static/src/components/account_325_form_tree/account_325_form_tree.xml:0
 msgid "New"
-msgstr ""
+msgstr "Nouveau"
 
 #. module: l10n_be_reports
 #: model:account.return.check.template,name:l10n_be_reports.account_return_check_template_be_other_verify_next_year_allocations
@@ -2591,6 +2598,7 @@ msgstr "n° 3"
 #: code:addons/l10n_be_reports/models/account_return.py:0
 msgid "Only an Accounting Administrator can reset a tax return"
 msgstr ""
+"Seul un administrateur comptable peut réinitialiser une déclaration de TVA"
 
 #. module: l10n_be_reports
 #. odoo-python
@@ -2657,7 +2665,7 @@ msgstr "Partenaire"
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_isoc_prepayment_pay_wizard__partner_bank_id
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_pay_wizard__partner_bank_id
 msgid "Partner Bank"
-msgstr ""
+msgstr "Banque du partenaire"
 
 #. module: l10n_be_reports
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_form_281_50__partner_first_name
@@ -2710,7 +2718,7 @@ msgstr ""
 #. module: l10n_be_reports
 #: model:ir.model,name:l10n_be_reports.model_l10n_be_reports_vat_pay_wizard
 msgid "Payment instructions for VAT"
-msgstr ""
+msgstr "Instructions de paiement pour la TVA"
 
 #. module: l10n_be_reports
 #: model:account.return.check.template,name:l10n_be_reports.account_return_check_template_be_rc_memo
@@ -2731,7 +2739,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_reports/wizard/vat_return_lock_wizard.py:0
 msgid "Please enter a valid pro rata year (after 2000)"
-msgstr ""
+msgstr "Veuillez entrer une année de prorata valide (après 2000)"
 
 #. module: l10n_be_reports
 #. odoo-python
@@ -2811,7 +2819,7 @@ msgstr "Constitution d'une réserve de liquidation"
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_isoc_prepayment_pay_wizard__qr_code
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_pay_wizard__qr_code
 msgid "Qr Code"
-msgstr ""
+msgstr "Code QR"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.report_325_pdf
@@ -2830,7 +2838,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_form_281_50__rating_ids
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_form_325__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Évaluations"
 
 #. module: l10n_be_reports
 #: model:account.return.check.template,name:l10n_be_reports.account_return_check_template_be_other_long_term_liabilities_reclassification
@@ -2876,7 +2884,7 @@ msgstr "Représente un relevé 325"
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.account_return_kanban_view
 msgid "Reset"
-msgstr ""
+msgstr "Réinitialiser"
 
 #. module: l10n_be_reports
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_annual_corporate_tax_submission_wizard__return_id
@@ -2887,7 +2895,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_lock_wizard__return_id
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_submission_wizard__return_id
 msgid "Return"
-msgstr ""
+msgstr "Déclaration"
 
 #. module: l10n_be_reports
 #. odoo-python
@@ -2953,7 +2961,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.isoc_prepayment_pay_wizard_form
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_pay_wizard_form
 msgid "Send"
-msgstr ""
+msgstr "Envoyer"
 
 #. module: l10n_be_reports
 #: model:ir.model.fields.selection,name:l10n_be_reports.selection__l10n_be_form_325__sending_type__1
@@ -3216,6 +3224,8 @@ msgid ""
 "The percentage of uses and special pro rata must have values between 0 and "
 "100"
 msgstr ""
+"Les pourcentages d'utilisations et de prorata doivent avoir une valeur entre "
+"0 et 100"
 
 #. module: l10n_be_reports
 #. odoo-python
@@ -3282,6 +3292,8 @@ msgid ""
 "This feature seems to be as exclusive as Belgian chocolates. You must be "
 "logged in to a Belgian company to use it."
 msgstr ""
+"Cette fonctionnalité est aussi exclusive que les chocolats belges. Vous "
+"devez être connecté à une société belge pour l’utiliser."
 
 #. module: l10n_be_reports
 #: model:ir.model.fields,help:l10n_be_reports.field_l10n_be_form_325__sending_type
@@ -3349,7 +3361,7 @@ msgstr "Utilisateur"
 #. module: l10n_be_reports
 #: model:account.return.type,name:l10n_be_reports.be_vat_return_type
 msgid "VAT"
-msgstr ""
+msgstr "TVA"
 
 #. module: l10n_be_reports
 #: model:account.return.check.template,name:l10n_be_reports.account_return_check_template_be_state_vat_acc_reco_with_administration
@@ -3381,7 +3393,7 @@ msgstr "Numéro de TVA intracommunautaire"
 #. odoo-python
 #: code:addons/l10n_be_reports/models/account_return.py:0
 msgid "VAT Payment"
-msgstr ""
+msgstr "Paiement de la TVA"
 
 #. module: l10n_be_reports
 #: model:account.return.check.template,name:l10n_be_reports.account_return_check_template_be_rc_vat_rules
@@ -4121,7 +4133,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.xbrl_template_fcap
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.xbrl_template_fcon
 msgid "false"
-msgstr ""
+msgstr "faux"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.report_281_50_pdf

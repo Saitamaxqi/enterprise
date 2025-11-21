@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_in_hr_payroll
+# * l10n_in_hr_payroll
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.2alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 20:02+0000\n"
-"PO-Revision-Date: 2025-01-24 08:16+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-18 17:11+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Hindi <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_in_hr_payroll/hi/>\n"
 "Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_in_hr_payroll
 #. odoo-python
@@ -68,7 +71,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.actions.report,print_report_name:l10n_in_hr_payroll.action_report_salary_statement
 msgid "(object._get_report_base_filename())"
-msgstr ""
+msgstr "(object._get_report_base_filename())"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_salary_statement
@@ -269,7 +272,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_employee_view_form_in_inherit
 msgid "<span>/ month</span>"
-msgstr ""
+msgstr "<span>/ महीना</span>"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_contract_template_view_form
@@ -320,7 +323,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in_alt
 msgid "<strong class=\"me-2\">Name:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">नाम:</strong>"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in_alt
@@ -335,7 +338,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in_alt
 msgid "<strong class=\"me-2\">Pay Period:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">वेतन अवधि:</strong>"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in_alt
@@ -350,7 +353,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in_alt
 msgid "<strong class=\"me-2\">Working Schedule:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">काम का शेड्यूल:</strong>"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
@@ -489,7 +492,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payrolladvice
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
 msgid "<strong>Total</strong>"
-msgstr ""
+msgstr "<strong>कुल</strong>"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
@@ -499,7 +502,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
 msgid "<strong>YTD</strong>"
-msgstr ""
+msgstr "<strong>वाईटीडी</strong>"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.constraint,message:l10n_in_hr_payroll.constraint_l10n_in_hr_payroll_salary_statement_unique_salary_stat_43fa34b7
@@ -564,7 +567,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_esic_report__month__4
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_salary_statement__month__4
 msgid "April"
-msgstr ""
+msgstr "अप्रैल"
 
 #. module: l10n_in_hr_payroll
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_arrears
@@ -577,7 +580,7 @@ msgstr ""
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_stipend_assignment_of_salary_rule
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_worker_0001_assignment_of_salary_rule
 msgid "Assignment of Salary"
-msgstr ""
+msgstr "सैलरी का असाइनमेंट"
 
 #. module: l10n_in_hr_payroll
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_salary_structure_ind_emp_attachment_of_salary_rule
@@ -585,14 +588,14 @@ msgstr ""
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_stipend_attachment_of_salary_rule
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_worker_0001_attachment_of_salary_rule
 msgid "Attachment of Salary"
-msgstr ""
+msgstr "सैलरी का अटैचमेंट"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_epf_report__month__8
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_esic_report__month__8
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_salary_statement__month__8
 msgid "August"
-msgstr ""
+msgstr "अगस्त"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payrolladvice
@@ -614,7 +617,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_version__l10n_in_basic_salary_amount
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_salary_statement
 msgid "Basic Salary"
-msgstr ""
+msgstr "बेसिक सैलरी"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_employee__l10n_in_basic_percentage
@@ -631,7 +634,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_employee_view_form_in_inherit
 msgid "Benefits"
-msgstr ""
+msgstr "फ़ायदे"
 
 #. module: l10n_in_hr_payroll
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_journals
@@ -669,7 +672,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_yearly_salary_detail
 msgid "Cancel"
-msgstr ""
+msgstr "रद्द"
 
 #. module: l10n_in_hr_payroll
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payroll_rule_car
@@ -738,7 +741,7 @@ msgstr ""
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_stipend_child_support
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_worker_0001_child_support
 msgid "Child Support"
-msgstr ""
+msgstr "चाइल्ड सपोर्ट"
 
 #. module: l10n_in_hr_payroll
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_payroll_rule_metrocity
@@ -758,7 +761,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.l10n_in_labour_welfare_fund_wizard_view_form
 msgid "Close"
-msgstr ""
+msgstr "बंद करें"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,help:l10n_in_hr_payroll.field_res_company__l10n_in_esic_ip_number
@@ -772,7 +775,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.model,name:l10n_in_hr_payroll.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "कंपनियां"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_epf_report__company_id
@@ -781,25 +784,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__company_id
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__company_id
 msgid "Company"
-msgstr ""
+msgstr "कंपनी"
 
 #. module: l10n_in_hr_payroll
 #. odoo-python
 #: code:addons/l10n_in_hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_payroll_payment_report_wizard__l10n_in_company_bank_id
 msgid "Company Bank Account"
-msgstr ""
+msgstr "कंपनी बैंक खाता"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_res_config_settings__company_currency_id
 msgid "Company Currency"
-msgstr ""
+msgstr "कंपनी की करेंसी"
 
 #. module: l10n_in_hr_payroll
 #. odoo-python
 #: code:addons/l10n_in_hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "Company Name"
-msgstr ""
+msgstr "कंपनी का नाम"
 
 #. module: l10n_in_hr_payroll
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_company_transport
@@ -845,7 +848,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.model,name:l10n_in_hr_payroll.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "कॉन्फ़िगरेशन सेटिंग"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_employee_view_form_in_inherit
@@ -861,7 +864,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_in_hr_payroll/models/hr_payslip_run.py:0
 msgid "Create Payment"
-msgstr ""
+msgstr "पेमेंट बनाएं"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_payroll_payment_advice_report_view_form
@@ -878,7 +881,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__create_uid
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_yearly_salary_detail__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "इन्होंने बनाया"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_epf_report__create_date
@@ -890,29 +893,29 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__create_date
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_yearly_salary_detail__create_date
 msgid "Created on"
-msgstr ""
+msgstr "इस तारीख को बनाया गया"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__currency_id
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_tds_computation_wizard__currency_id
 msgid "Currency"
-msgstr ""
+msgstr "करेंसी"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__date_from
 msgid "Date From"
-msgstr ""
+msgstr "तारीख से"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__date_to
 msgid "Date To"
-msgstr ""
+msgstr "तारीख तक"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in_alt
 msgid "Days"
-msgstr ""
+msgstr "दिन"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payrolladvice
@@ -924,7 +927,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_esic_report__month__12
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_salary_statement__month__12
 msgid "December"
-msgstr ""
+msgstr "दिसंबर"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_salary_statement__line_ids
@@ -978,17 +981,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_yearly_salary_detail
 msgid "Department"
-msgstr ""
+msgstr "विभाग"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_salary_statement__name
 msgid "Description"
-msgstr ""
+msgstr "विवरण"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.l10n_in_tds_computation_wizard_view_form
 msgid "Discard"
-msgstr ""
+msgstr "खारिज करें"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_employee__display_name
@@ -1011,7 +1014,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__display_name
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_yearly_salary_detail__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "डिस्प्ले का नाम"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_salary_statement__documents_count
@@ -1028,7 +1031,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__include_done
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
 msgid "Done"
-msgstr ""
+msgstr "हो गया"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_epf_report_view_form
@@ -1178,12 +1181,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_employee_view_form_in_inherit
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payrolladvice
 msgid "Employee"
-msgstr ""
+msgstr "कर्मचारी"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model,name:l10n_in_hr_payroll.model_hr_version
 msgid "Employee Contract"
-msgstr ""
+msgstr "कर्मचारी का कॉन्ट्रैक्ट"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_line_wizard__employee_contibution
@@ -1219,7 +1222,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_yearly_salary_detail
 msgid "Employee Name"
-msgstr ""
+msgstr "कर्मचारी का नाम"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_employee__l10n_in_pf_employee_percentage
@@ -1314,7 +1317,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_yearly_salary_detail
 msgid "Employees"
-msgstr ""
+msgstr "कर्मचारी"
 
 #. module: l10n_in_hr_payroll
 #: model:hr.payroll.dashboard.warning,name:l10n_in_hr_payroll.hr_payroll_dashboard_warning_incoming_probation
@@ -1484,7 +1487,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__date_to
 msgid "End Date"
-msgstr ""
+msgstr "समाप्ति तिथि"
 
 #. module: l10n_in_hr_payroll
 #. odoo-python
@@ -1506,7 +1509,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
 msgid "Expired"
-msgstr ""
+msgstr "खत्म हो चुका"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_payroll_payment_report_wizard__export_format
@@ -1542,7 +1545,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_esic_report__month__2
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_salary_statement__month__2
 msgid "February"
-msgstr ""
+msgstr "फरवरी"
 
 #. module: l10n_in_hr_payroll
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_special
@@ -1572,7 +1575,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payrolladvice
 msgid "For"
-msgstr ""
+msgstr "के लिए"
 
 #. module: l10n_in_hr_payroll
 #. odoo-python
@@ -1583,7 +1586,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_hryearlysalary
 msgid "From Date"
-msgstr ""
+msgstr "तारीख से"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:hr.salary.rule,note:l10n_in_hr_payroll.hr_salary_rule_arrears
@@ -1678,7 +1681,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in_alt
 msgid "Hours"
-msgstr ""
+msgstr "घंटे"
 
 #. module: l10n_in_hr_payroll
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.hr_salary_rule_houserentallowancemetro_nonmetro
@@ -1731,7 +1734,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__id
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_yearly_salary_detail__id
 msgid "ID"
-msgstr ""
+msgstr "आईडी"
 
 #. module: l10n_in_hr_payroll
 #. odoo-python
@@ -1787,7 +1790,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.ui.menu,name:l10n_in_hr_payroll.menu_reporting_l10n_in
 msgid "India"
-msgstr ""
+msgstr "भारत"
 
 #. module: l10n_in_hr_payroll
 #: model:hr.payroll.structure,name:l10n_in_hr_payroll.hr_payroll_structure_in_employee_salary
@@ -1883,28 +1886,28 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_esic_report__month__1
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_salary_statement__month__1
 msgid "January"
-msgstr ""
+msgstr "जनवरी"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_yearly_salary_detail__job_id
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_yearly_salary_detail
 msgid "Job Position"
-msgstr ""
+msgstr "जॉब पोज़िशन"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_epf_report__month__7
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_esic_report__month__7
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_salary_statement__month__7
 msgid "July"
-msgstr ""
+msgstr "जुलाई"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_epf_report__month__6
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_esic_report__month__6
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_salary_statement__month__6
 msgid "June"
-msgstr ""
+msgstr "जून"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_employee__l10n_in_esic_employee_amount
@@ -2081,7 +2084,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__write_uid
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_yearly_salary_detail__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "इन्होंने आखिरी बार अपडेट किया"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_epf_report__write_date
@@ -2093,7 +2096,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__write_date
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_yearly_salary_detail__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "आखिरी बार अपडेट हुआ"
 
 #. module: l10n_in_hr_payroll
 #. odoo-python
@@ -2139,12 +2142,12 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_wizard__line_ids
 msgid "Line"
-msgstr ""
+msgstr "लाइन"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
 msgid "Logo"
-msgstr ""
+msgstr "लोगो"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
@@ -2161,12 +2164,12 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_esic_report__month__3
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_salary_statement__month__3
 msgid "March"
-msgstr ""
+msgstr "मार्च"
 
 #. module: l10n_in_hr_payroll
 #: model:hr.department,name:l10n_in_hr_payroll.l10n_in_hr_department_marketing
 msgid "Marketing"
-msgstr ""
+msgstr "मार्केटिंग"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_epf_report__month__5
@@ -2174,7 +2177,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_salary_statement__month__5
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_salary_statement
 msgid "May"
-msgstr ""
+msgstr "मई"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_contract_template_view_form
@@ -2215,7 +2218,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_esic_report__month
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_salary_statement__month
 msgid "Month"
-msgstr ""
+msgstr "महीना"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_salary_statement
@@ -2246,7 +2249,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_structure_in_stipend_net_salary
 msgid "Net"
-msgstr ""
+msgstr "नेट"
 
 #. module: l10n_in_hr_payroll
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_payroll_salary_structure_ind_emp_net_salary
@@ -2289,30 +2292,30 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_esic_report__month__11
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_salary_statement__month__11
 msgid "November"
-msgstr ""
+msgstr "नवंबर"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
 msgid "Number of Days"
-msgstr ""
+msgstr "दिनों की संख्या"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
 msgid "Number of Hours"
-msgstr ""
+msgstr "घंटों की संख्या"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_epf_report__month__10
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_esic_report__month__10
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_salary_statement__month__10
 msgid "October"
-msgstr ""
+msgstr "अक्टूबर"
 
 #. module: l10n_in_hr_payroll
 #. odoo-python
 #: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
 msgid "On Leave"
-msgstr ""
+msgstr "छुट्टी पर"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
@@ -2361,7 +2364,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__include_paid
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
 msgid "Paid"
-msgstr ""
+msgstr "चुका दिया गया"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_yearly_salary_detail
@@ -2414,7 +2417,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_tds_computation_wizard__payslip_id
 msgid "Payslip"
-msgstr ""
+msgstr "पेस्लिप"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_salary_register
@@ -2481,7 +2484,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.hr_employee_view_form_in_inherit
 msgid "Personal Information"
-msgstr ""
+msgstr "निजी जानकारी"
 
 #. module: l10n_in_hr_payroll
 #: model:hr.salary.rule,name:l10n_in_hr_payroll.l10n_in_hr_salary_rule_phone
@@ -2521,7 +2524,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.view_yearly_salary_detail
 msgid "Print"
-msgstr ""
+msgstr "प्रिंट"
 
 #. module: l10n_in_hr_payroll
 #: model:hr.contract.type,name:l10n_in_hr_payroll.l10n_in_contract_type_probation
@@ -2652,7 +2655,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_hr_payroll_payment_report_wizard__l10n_in_reference
 msgid "Report Name"
-msgstr ""
+msgstr "रिपोर्ट का नाम"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_esic_report__export_report_type
@@ -2674,7 +2677,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_in_hr_payroll/report/report_hr_esic.py:0
 msgid "Retired"
-msgstr ""
+msgstr "सेवानिवृत्त"
 
 #. module: l10n_in_hr_payroll
 #. odoo-python
@@ -2748,14 +2751,14 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.model,name:l10n_in_hr_payroll.model_hr_payroll_structure_type
 msgid "Salary Structure Type"
-msgstr ""
+msgstr "सैलरी स्ट्रक्चर टाइप"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_epf_report__month__9
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_esic_report__month__9
 #: model:ir.model.fields.selection,name:l10n_in_hr_payroll.selection__l10n_in_hr_payroll_salary_statement__month__9
 msgid "September"
-msgstr ""
+msgstr "सितंबर"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payrolladvice
@@ -2824,7 +2827,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_salary_register_wizard__date_from
 msgid "Start Date"
-msgstr ""
+msgstr "प्रारंभ दिनांक"
 
 #. module: l10n_in_hr_payroll
 #: model:hr.payroll.structure,name:l10n_in_hr_payroll.hr_payroll_structure_in_stipend
@@ -3045,7 +3048,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_hryearlysalary
 msgid "To Date"
-msgstr ""
+msgstr "तारीख तक"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
@@ -3125,12 +3128,12 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.model,name:l10n_in_hr_payroll.model_res_users
 msgid "User"
-msgstr ""
+msgstr "उपयोगकर्ता"
 
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_tds_computation_wizard__version_id
 msgid "Version"
-msgstr ""
+msgstr "वर्शन"
 
 #. module: l10n_in_hr_payroll
 #. odoo-python
@@ -3141,7 +3144,7 @@ msgstr ""
 #. module: l10n_in_hr_payroll
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_labour_welfare_fund_line_wizard__wizard_id
 msgid "Wizard"
-msgstr ""
+msgstr "विज़ार्ड"
 
 #. module: l10n_in_hr_payroll
 #: model:hr.payroll.structure,name:l10n_in_hr_payroll.structure_worker_0001
@@ -3190,7 +3193,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_l10n_in_hr_payroll_salary_statement__year
 #: model:ir.model.fields,field_description:l10n_in_hr_payroll.field_yearly_salary_detail__year
 msgid "Year"
-msgstr ""
+msgstr "साल"
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_salary_statement
@@ -3239,7 +3242,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payrolladvice
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payslip_in
 msgid "to"
-msgstr ""
+msgstr " "
 
 #. module: l10n_in_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_in_hr_payroll.report_payrolladvice

@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_uy_edi
+# * l10n_uy_edi
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 20:12+0000\n"
-"PO-Revision-Date: 2025-02-24 20:42+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-11-18 17:13+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
+"odoo-19-l10n/l10n_uy_edi/es_419/>\n"
 "Language: es_419\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_uy_edi
 #. odoo-python
@@ -111,7 +114,7 @@ msgstr "Enviar movimiento de cuenta"
 #. module: l10n_uy_edi
 #: model:ir.model,name:l10n_uy_edi.model_account_move_send_wizard
 msgid "Account Move Send Wizard"
-msgstr ""
+msgstr "Asistente de envío de movimientos de cuenta"
 
 #. module: l10n_uy_edi
 #: model:ir.model.fields.selection,name:l10n_uy_edi.selection__l10n_uy_edi_addenda__type__addenda
@@ -279,6 +282,8 @@ msgid ""
 "Company Name: \"%(company_name)s\", Company ID: (%(company_id)s), Errors: \"%"
 "(error)s\""
 msgstr ""
+"Nombre Compañía: \"%(company_name)s\", ID Compañía: (%(company_id)s), "
+"Errores: \"%(error)s\""
 
 #. module: l10n_uy_edi
 #: model:ir.model,name:l10n_uy_edi.model_res_config_settings
@@ -319,7 +324,7 @@ msgstr "Cree Cuenta de Prueba Uruware"
 #. module: l10n_uy_edi
 #: model:ir.model,website_form_label:l10n_uy_edi.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Crear un cliente"
 
 #. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_addenda__create_uid
@@ -346,7 +351,7 @@ msgstr "DGI Código Casa Principal o Sucursal"
 #. module: l10n_uy_edi
 #: model:ir.model.fields.selection,name:l10n_uy_edi.selection__res_company__l10n_uy_edi_ucfe_env__demo
 msgid "Demo"
-msgstr ""
+msgstr "Demostración"
 
 #. module: l10n_uy_edi
 #. odoo-python
@@ -453,6 +458,7 @@ msgid ""
 "ERROR: This is what we receive when requesting notification data (610) %"
 "(tree)s"
 msgstr ""
+"ERROR: Esto es lo que recibimos al solicitar una notificación (610)%(tree)s"
 
 #. module: l10n_uy_edi
 #: model:ir.model.fields.selection,name:l10n_uy_edi.selection__account_journal__l10n_uy_edi_type__electronic
@@ -563,7 +569,7 @@ msgstr "Terrestre"
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_res_config_settings__id
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_uy_edi
 #. odoo-python
@@ -673,7 +679,7 @@ msgstr "Leyenda Obligatoria"
 #. module: l10n_uy_edi
 #: model:ir.model.fields.selection,name:l10n_uy_edi.selection__account_journal__l10n_uy_edi_type__manual
 msgid "Manual"
-msgstr ""
+msgstr "Manual"
 
 #. module: l10n_uy_edi
 #: model:ir.model.fields.selection,name:l10n_uy_edi.selection__account_move__l10n_uy_edi_cfe_transport_route__1
@@ -698,7 +704,7 @@ msgstr "Factura"
 #. module: l10n_uy_edi
 #: model:ir.model.fields.selection,name:l10n_uy_edi.selection__account_move__l10n_uy_edi_cfe_transport_route__8
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.report_invoice_document_inherit_l10n_uy_edi

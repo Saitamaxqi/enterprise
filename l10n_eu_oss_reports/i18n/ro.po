@@ -1,21 +1,25 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_eu_oss_reports
+# * l10n_eu_oss_reports
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Betty Keresztesi <betty@soft4biz.ro>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 20:00+0000\n"
-"PO-Revision-Date: 2025-01-28 08:33+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-21 15:38+0000\n"
+"Last-Translator: Betty Keresztesi <betty@soft4biz.ro>\n"
+"Language-Team: Romanian <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_eu_oss_reports/ro/>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_eu_oss_reports
 #. odoo-python
@@ -26,6 +30,10 @@ msgid ""
 "report.\n"
 "                "
 msgstr ""
+"\n"
+"                    Excludeți orice vânzări interne sau extra-UE din "
+"raportul OSS.\n"
+"                "
 
 #. module: l10n_eu_oss_reports
 #. odoo-python
@@ -35,6 +43,9 @@ msgid ""
 "                    OSS reports must be submitted in euros.\n"
 "                "
 msgstr ""
+"\n"
+"                    Rapoartele OSS trebuie depuse în euro.\n"
+"                "
 
 #. module: l10n_eu_oss_reports
 #. odoo-python
@@ -45,57 +56,60 @@ msgid ""
 "report.\n"
 "                "
 msgstr ""
+"\n"
+"                    Numai tranzacțiile B2C trebuie incluse în raportul OSS.\n"
+"                "
 
 #. module: l10n_eu_oss_reports
 #: model_terms:ir.ui.view,arch_db:l10n_eu_oss_reports.oss_return_submission_wizard_form
 msgid "<span>Download your OSS return</span><br/>"
-msgstr ""
+msgstr "<span>Descărcați declarația OSS</span><br/>"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model,name:l10n_eu_oss_reports.model_account_report
 msgid "Accounting Report"
-msgstr ""
+msgstr "Raport Contabil"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model,name:l10n_eu_oss_reports.model_account_return
 msgid "Accounting Return"
-msgstr ""
+msgstr "Declarație fiscală"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model,name:l10n_eu_oss_reports.model_account_return_type
 msgid "Accounting Return Type"
-msgstr ""
+msgstr "Tip returnare contabilă"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_account_report__availability_condition
 msgid "Availability"
-msgstr ""
+msgstr "Disponibilitate"
 
 #. module: l10n_eu_oss_reports
 #. odoo-python
 #: code:addons/l10n_eu_oss_reports/models/account_generic_tax_report.py:0
 msgid "Choose a month or quarter to export the OSS report"
-msgstr ""
+msgstr "Alegeți o lună sau un trimestru pentru a exporta raportul OSS"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model,name:l10n_eu_oss_reports.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Companii"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_reports_return_submission_wizard__country_code
 msgid "Country Code"
-msgstr ""
+msgstr "Codul tarii"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_reports_return_submission_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creat de"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_reports_return_submission_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creat la"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_account_report__display_name
@@ -107,18 +121,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_tax_report_handler__display_name
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_res_company__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nume afișat"
 
 #. module: l10n_eu_oss_reports
 #: model_terms:ir.ui.view,arch_db:l10n_eu_oss_reports.oss_return_submission_wizard_form
 msgid "Download XML"
-msgstr ""
+msgstr "Descarcă XML"
 
 #. module: l10n_eu_oss_reports
 #. odoo-python
 #: code:addons/l10n_eu_oss_reports/models/account_return.py:0
 msgid "EUR Currency"
-msgstr ""
+msgstr "Moneda EUR"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_account_report__id
@@ -130,12 +144,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_tax_report_handler__id
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_res_company__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_res_company__ioss
 msgid "IOSS Number"
-msgstr ""
+msgstr "Număr IOSS"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,help:l10n_eu_oss_reports.field_res_company__ioss
@@ -143,6 +157,8 @@ msgid ""
 "Identification number for companies that import goods and services into the "
 "EU. For use in OSS reports."
 msgstr ""
+"Număr de identificare pentru companiile care importă bunuri și servicii în "
+"UE. Utilizat în rapoartele OSS."
 
 #. module: l10n_eu_oss_reports
 #. odoo-python
@@ -151,88 +167,90 @@ msgid ""
 "Inconsistent setup: OSS tax %s is mapped in fiscal positions from different "
 "countries."
 msgstr ""
+"Configurare inconsistentă: taxa OSS %s este mapată în poziții fiscale din "
+"diferite țări."
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_reports_return_submission_wizard__instructions
 msgid "Instructions"
-msgstr ""
+msgstr "Instrucțiuni"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_res_company__intermediary_no
 msgid "Intermediary Number"
-msgstr ""
+msgstr "Număr intermediar"
 
 #. module: l10n_eu_oss_reports
 #: model_terms:ir.ui.view,arch_db:l10n_eu_oss_reports.oss_return_submission_wizard_form
 msgid "Intervat"
-msgstr ""
+msgstr "Intervat"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_reports_return_submission_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima actualizare de"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_reports_return_submission_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima actualizare la"
 
 #. module: l10n_eu_oss_reports
 #: model_terms:ir.ui.view,arch_db:l10n_eu_oss_reports.oss_return_submission_wizard_form
 msgid "Log in to"
-msgstr ""
+msgstr "Autentificare"
 
 #. module: l10n_eu_oss_reports
 #: model:account.return.type,name:l10n_eu_oss_reports.eu_oss_imports_tax_return_type
 msgid "OSS Imports Return (CG)"
-msgstr ""
+msgstr "Retururi OSS Imports (CG)"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model,name:l10n_eu_oss_reports.model_l10n_eu_oss_reports_return_submission_wizard
 msgid "OSS Return Submission Wizard"
-msgstr ""
+msgstr "Asistent de depunere a declarației OSS"
 
 #. module: l10n_eu_oss_reports
 #: model:account.return.type,name:l10n_eu_oss_reports.eu_oss_sales_tax_return_type
 msgid "OSS Sales Return (CG)"
-msgstr ""
+msgstr "Retur vânzări OSS (CG)"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model,name:l10n_eu_oss_reports.model_l10n_eu_oss_tax_report_handler
 msgid "OSS Tax Report Custom Handler"
-msgstr ""
+msgstr "Handler personalizat pentru raportul de taxe OS"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model,name:l10n_eu_oss_reports.model_l10n_eu_oss_imports_tax_report_handler
 msgid "OSS Tax Report Custom Handler (Imports)"
-msgstr ""
+msgstr "Handler personalizat pentru raportul de taxe OSS (Importuri)"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model,name:l10n_eu_oss_reports.model_l10n_eu_oss_sales_tax_report_handler
 msgid "OSS Tax Report Custom Handler (Sales)"
-msgstr ""
+msgstr "Handler personalizat pentru raportul de taxe OSS (Vânzări)"
 
 #. module: l10n_eu_oss_reports
 #. odoo-python
 #: code:addons/l10n_eu_oss_reports/models/account_return.py:0
 msgid "Only B2C transactions"
-msgstr ""
+msgstr "Doar tranzacții B2C"
 
 #. module: l10n_eu_oss_reports
 #. odoo-python
 #: code:addons/l10n_eu_oss_reports/models/account_return.py:0
 msgid "Only intra-EU transactions"
-msgstr ""
+msgstr "Doar tranzacții intra-UE"
 
 #. module: l10n_eu_oss_reports
 #: model_terms:ir.ui.view,arch_db:l10n_eu_oss_reports.product_template_form
 msgid "Reporting"
-msgstr ""
+msgstr "Raportare"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_l10n_eu_oss_reports_return_submission_wizard__return_id
 msgid "Return"
-msgstr ""
+msgstr "Retur"
 
 #. module: l10n_eu_oss_reports
 #: model_terms:ir.ui.view,arch_db:l10n_eu_oss_reports.oss_return_submission_wizard_form
@@ -253,6 +271,8 @@ msgid ""
 "The ISO country code in two chars. \n"
 "You can use this field for quick search."
 msgstr ""
+"Codul ISO al țării din două caractere.\n"
+"Puteți utiliza acest câmp pentru căutări rapide."
 
 #. module: l10n_eu_oss_reports
 #: model_terms:ir.ui.view,arch_db:l10n_eu_oss_reports.oss_return_submission_wizard_form
@@ -295,7 +315,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_eu_oss_reports/models/account_generic_tax_report.py:0
 msgid "XML"
-msgstr ""
+msgstr "XML"
 
 #. module: l10n_eu_oss_reports
 #: model_terms:ir.ui.view,arch_db:l10n_eu_oss_reports.oss_return_submission_wizard_form

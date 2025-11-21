@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_vn_reports
+# * l10n_vn_reports
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 20:12+0000\n"
-"PO-Revision-Date: 2025-08-05 01:18+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-11-18 17:13+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_vn_reports/vi/>\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_vn_reports
 #: model:account.report.line,name:l10n_vn_reports.account_financial_report_l10n_vn_bs_flfaad
@@ -596,7 +599,7 @@ msgstr "D - VỐN CHỦ SỞ HỮU"
 #: model:ir.model.fields,field_description:l10n_vn_reports.field_l10n_vn_sales_tax_report_handler__display_name
 #: model:ir.model.fields,field_description:l10n_vn_reports.field_l10n_vn_tax_report_handler__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Tên hiển thị"
 
 #. module: l10n_vn_reports
 #. odoo-python
@@ -629,7 +632,7 @@ msgstr "I. Nợ ngắn hạn"
 #: model:ir.model.fields,field_description:l10n_vn_reports.field_l10n_vn_sales_tax_report_handler__id
 #: model:ir.model.fields,field_description:l10n_vn_reports.field_l10n_vn_tax_report_handler__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_vn_reports
 #: model:account.report.line,name:l10n_vn_reports.account_financial_report_l10n_vn_bs_fa
@@ -689,7 +692,7 @@ msgstr "TỔNG CỘNG NGUỒN VỐN (440 = 300 + 400)"
 #. module: l10n_vn_reports
 #: model:account.return.type,name:l10n_vn_reports.vn_tax_return_type
 msgid "Tax"
-msgstr ""
+msgstr "Thuế"
 
 #. module: l10n_vn_reports
 #: model:ir.model,name:l10n_vn_reports.model_l10n_vn_purchase_tax_report_handler

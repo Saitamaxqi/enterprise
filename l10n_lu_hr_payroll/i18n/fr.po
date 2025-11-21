@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_lu_hr_payroll
+# * l10n_lu_hr_payroll
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.1alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 20:05+0000\n"
-"PO-Revision-Date: 2024-10-18 07:40+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-11-18 17:12+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: French <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_lu_hr_payroll/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_lu_hr_payroll
 #: model:ir.actions.report,print_report_name:l10n_lu_hr_payroll.action_report_payslip_lux_gratification
@@ -69,7 +72,7 @@ msgstr "1,5"
 #. module: l10n_lu_hr_payroll
 #: model:hr.payroll.structure,payslip_name:l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_13th_month
 msgid "13th Month"
-msgstr ""
+msgstr "13ème Mois"
 
 #. module: l10n_lu_hr_payroll
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_employees_overtime_supplement_150
@@ -167,13 +170,13 @@ msgstr "<span>%</span>"
 #: model_terms:ir.ui.view,arch_db:l10n_lu_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_lu_hr_payroll.hr_employee_view_form
 msgid "<span>/ month</span>"
-msgstr ""
+msgstr "<span>/ mois</span>"
 
 #. module: l10n_lu_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_lu_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_lu_hr_payroll.hr_employee_view_form
 msgid "<span>/ worked day</span>"
-msgstr ""
+msgstr "<span>/ jour presté</span>"
 
 #. module: l10n_lu_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_lu_hr_payroll.hr_contract_template_view_form
@@ -248,14 +251,14 @@ msgstr "Avril"
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_hr_payroll_structure_lux_employee_gratification_assignment_of_salary_rule
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_hr_payroll_structure_lux_employee_salary_assignment_of_salary_rule
 msgid "Assignment of Salary"
-msgstr ""
+msgstr "Cession de salaire"
 
 #. module: l10n_lu_hr_payroll
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_hr_payroll_structure_lux_employee_13th_month_attachment_of_salary_rule
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_hr_payroll_structure_lux_employee_gratification_attachment_of_salary_rule
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_hr_payroll_structure_lux_employee_salary_attachment_of_salary_rule
 msgid "Attachment of Salary"
-msgstr ""
+msgstr "Saisie sur salaire"
 
 #. module: l10n_lu_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_lu_hr_payroll.selection__l10n_lu_monthly_declaration_wizard__month__8
@@ -289,7 +292,7 @@ msgstr "Gratification de base"
 #. module: l10n_lu_hr_payroll
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_hr_payroll_structure_lux_employee_salary_basic_salary_rule
 msgid "Basic Salary"
-msgstr ""
+msgstr "Salaire de base"
 
 #. module: l10n_lu_hr_payroll
 #: model:ir.model.fields,field_description:l10n_lu_hr_payroll.field_l10n_lu_monthly_declaration_wizard__batch_ids
@@ -396,7 +399,7 @@ msgstr ""
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_hr_payroll_structure_lux_employee_gratification_child_support
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_hr_payroll_structure_lux_employee_salary_child_support
 msgid "Child Support"
-msgstr ""
+msgstr "Pension alimentaire"
 
 #. module: l10n_lu_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_lu_hr_payroll.res_company_form_inherit
@@ -473,7 +476,7 @@ msgstr "DS"
 #: model_terms:ir.ui.view,arch_db:l10n_lu_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_lu_hr_payroll.hr_employee_view_form
 msgid "Daily Amount"
-msgstr ""
+msgstr "Montant par jour"
 
 #. module: l10n_lu_hr_payroll
 #: model:ir.model.fields,field_description:l10n_lu_hr_payroll.field_l10n_lu_monthly_declaration_wizard__date_end
@@ -505,7 +508,7 @@ msgstr "Nom DECSAL"
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_hr_payroll_structure_lux_employee_gratification_deduction_salary_rule
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_hr_payroll_structure_lux_employee_salary_deduction_salary_rule
 msgid "Deduction"
-msgstr ""
+msgstr "Déduction"
 
 #. module: l10n_lu_hr_payroll
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_employees_13th_month_dependency_insurance
@@ -612,7 +615,7 @@ msgstr "Générer la déclaration"
 #: model:hr.payroll.structure,payslip_name:l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_gratification
 #: model:hr.payslip.input.type,name:l10n_lu_hr_payroll.input_gratification
 msgid "Gratification"
-msgstr ""
+msgstr "Gratification"
 
 #. module: l10n_lu_hr_payroll
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_employees_13th_month_gross_gratification
@@ -1029,7 +1032,7 @@ msgstr "Taux de mutualité"
 #. module: l10n_lu_hr_payroll
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_employees_net
 msgid "Net"
-msgstr ""
+msgstr "Net"
 
 #. module: l10n_lu_hr_payroll
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_hr_payroll_structure_lux_employee_13th_month_net_salary
@@ -1089,13 +1092,13 @@ msgstr "Sécurité sociale officielle"
 #: model:ir.model.fields,field_description:l10n_lu_hr_payroll.field_hr_employee__l10n_lu_bik_other_benefits
 #: model:ir.model.fields,field_description:l10n_lu_hr_payroll.field_hr_version__l10n_lu_bik_other_benefits
 msgid "Others"
-msgstr ""
+msgstr "Autres"
 
 #. module: l10n_lu_hr_payroll
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_employees_overtime
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_employees_overtime_alw
 msgid "Overtime"
-msgstr ""
+msgstr "Heures supplémentaires"
 
 #. module: l10n_lu_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_lu_hr_payroll.input_overtime
@@ -1154,7 +1157,7 @@ msgstr "Taux"
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_hr_payroll_structure_lux_employee_gratification_reimbursement_salary_rule
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_hr_payroll_structure_lux_employee_salary_reimbursement_salary_rule
 msgid "Reimbursement"
-msgstr ""
+msgstr "Remboursement"
 
 #. module: l10n_lu_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_lu_hr_payroll.selection__hr_version__l10n_lu_meal_voucher_employee_computation__removed_from_net
@@ -1183,7 +1186,7 @@ msgstr "Numéro SECUline"
 #. module: l10n_lu_hr_payroll
 #: model:ir.model,name:l10n_lu_hr_payroll.model_hr_payroll_structure_type
 msgid "Salary Structure Type"
-msgstr ""
+msgstr "Type de structure de salaire"
 
 #. module: l10n_lu_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_lu_hr_payroll.selection__l10n_lu_monthly_declaration_wizard__month__9
@@ -1276,7 +1279,7 @@ msgstr "Fiche de retenue d'impôt"
 #. module: l10n_lu_hr_payroll
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_employees_taxable_amount
 msgid "Taxable Amount"
-msgstr ""
+msgstr "Montant imposable"
 
 #. module: l10n_lu_hr_payroll
 #. odoo-python
@@ -1342,7 +1345,7 @@ msgstr "Forfait véhicule"
 #. module: l10n_lu_hr_payroll
 #: model:hr.salary.rule,name:l10n_lu_hr_payroll.l10n_lu_employees_withholding_taxes
 msgid "Withholding Taxes"
-msgstr ""
+msgstr "Précompte professionnel"
 
 #. module: l10n_lu_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_lu_hr_payroll.selection__hr_payslip__l10n_lu_tax_classification__without

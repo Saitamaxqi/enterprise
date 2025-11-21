@@ -1,36 +1,39 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_ma_hr_payroll
+# * l10n_ma_hr_payroll
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 20:06+0000\n"
-"PO-Revision-Date: 2025-11-13 20:06+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-18 17:12+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: French <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_ma_hr_payroll/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_ma_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ma_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ma_hr_payroll.hr_employee_form_l10n_ma_payroll
 msgid "<span>/ month</span>"
-msgstr ""
+msgstr "<span>/ mois</span>"
 
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule,name:l10n_ma_hr_payroll.l10n_ma_hr_payroll_salary_ma_structure_base_assignment_of_salary_rule
 msgid "Assignment of Salary"
-msgstr ""
+msgstr "Cession de salaire"
 
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule,name:l10n_ma_hr_payroll.l10n_ma_hr_payroll_salary_ma_structure_base_attachment_of_salary_rule
 msgid "Attachment of Salary"
-msgstr ""
+msgstr "Saisie sur salaire"
 
 #. module: l10n_ma_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ma_hr_payroll.AVS
@@ -41,7 +44,7 @@ msgstr ""
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule,name:l10n_ma_hr_payroll.l10n_ma_hr_payroll_salary_ma_structure_base_basic_salary_rule
 msgid "Basic Salary"
-msgstr ""
+msgstr "Salaire de base"
 
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule,name:l10n_ma_hr_payroll.l10n_ma_hr_payroll_rules_cimr
@@ -66,7 +69,7 @@ msgstr ""
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule,name:l10n_ma_hr_payroll.l10n_ma_hr_payroll_salary_ma_structure_base_child_support
 msgid "Child Support"
-msgstr ""
+msgstr "Pension alimentaire"
 
 #. module: l10n_ma_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ma_hr_payroll.field_res_company__l10n_ma_collective_agreement
@@ -77,17 +80,17 @@ msgstr ""
 #. module: l10n_ma_hr_payroll
 #: model:ir.model,name:l10n_ma_hr_payroll.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Sociétés"
 
 #. module: l10n_ma_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ma_hr_payroll.res_config_settings_view_form
 msgid "Company Information"
-msgstr ""
+msgstr "Informations de la société"
 
 #. module: l10n_ma_hr_payroll
 #: model:ir.model,name:l10n_ma_hr_payroll.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Paramètres de configuration"
 
 #. module: l10n_ma_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ma_hr_payroll.field_hr_employee__l10n_ma_da
@@ -109,7 +112,7 @@ msgstr ""
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule,name:l10n_ma_hr_payroll.l10n_ma_hr_payroll_salary_ma_structure_base_deduction_salary_rule
 msgid "Deduction"
-msgstr ""
+msgstr "Déduction"
 
 #. module: l10n_ma_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ma_hr_payroll.field_hr_employee__display_name
@@ -118,12 +121,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ma_hr_payroll.field_res_company__display_name
 #: model:ir.model.fields,field_description:l10n_ma_hr_payroll.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom affiché"
 
 #. module: l10n_ma_hr_payroll
 #: model:ir.model,name:l10n_ma_hr_payroll.model_hr_employee
 msgid "Employee"
-msgstr ""
+msgstr "Employé"
 
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule,name:l10n_ma_hr_payroll.l10n_ma_hr_payroll_rules_employee_amo
@@ -138,7 +141,7 @@ msgstr ""
 #. module: l10n_ma_hr_payroll
 #: model:ir.model,name:l10n_ma_hr_payroll.model_hr_version
 msgid "Employee Contract"
-msgstr ""
+msgstr "Contrat de l'employé"
 
 #. module: l10n_ma_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ma_hr_payroll.field_res_company__l10n_ma_employer_contribution
@@ -188,7 +191,7 @@ msgstr ""
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule,name:l10n_ma_hr_payroll.l10n_ma_hr_rule_hra
 msgid "House Rent Allowance"
-msgstr ""
+msgstr "Allocation logement"
 
 #. module: l10n_ma_hr_payroll
 #: model:ir.model.fields,help:l10n_ma_hr_payroll.field_hr_employee__l10n_ma_hra
@@ -203,7 +206,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ma_hr_payroll.field_res_company__id
 #: model:ir.model.fields,field_description:l10n_ma_hr_payroll.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule.category,name:l10n_ma_hr_payroll.INCOME_TAX
@@ -292,28 +295,28 @@ msgstr ""
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule,name:l10n_ma_hr_payroll.l10n_ma_hr_payroll_salary_ma_structure_base_net_salary_rule
 msgid "Net Salary"
-msgstr ""
+msgstr "Salaire net"
 
 #. module: l10n_ma_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ma_hr_payroll.res_config_settings_view_form
 msgid "Offical Company Information"
-msgstr ""
+msgstr "Informations officielles sur l'entreprise"
 
 #. module: l10n_ma_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ma_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ma_hr_payroll.hr_employee_form_l10n_ma_payroll
 msgid "Options"
-msgstr ""
+msgstr "Options"
 
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule.category,name:l10n_ma_hr_payroll.O_TOTAL
 msgid "Others"
-msgstr ""
+msgstr "Autres"
 
 #. module: l10n_ma_hr_payroll
 #: model:ir.model,name:l10n_ma_hr_payroll.model_hr_payslip
 msgid "Pay Slip"
-msgstr ""
+msgstr "Fiche de Paie"
 
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule,name:l10n_ma_hr_payroll.l10n_ma_hr_payroll_rules_pro_contribution
@@ -328,7 +331,7 @@ msgstr ""
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule,name:l10n_ma_hr_payroll.l10n_ma_hr_payroll_salary_ma_structure_base_reimbursement_salary_rule
 msgid "Reimbursement"
-msgstr ""
+msgstr "Remboursement"
 
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule.category,name:l10n_ma_hr_payroll.SALC
@@ -338,7 +341,7 @@ msgstr ""
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule,name:l10n_ma_hr_payroll.l10n_ma_hr_rule_seniority
 msgid "Seniority"
-msgstr ""
+msgstr "Ancienneté"
 
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule,name:l10n_ma_hr_payroll.l10n_ma_hr_rule_social_contribution
@@ -354,7 +357,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ma_hr_payroll.field_res_company__l10n_ma_social_security_organization
 #: model:ir.model.fields,field_description:l10n_ma_hr_payroll.field_res_config_settings__l10n_ma_social_security_organization
 msgid "Social security organization"
-msgstr ""
+msgstr "Organisme de sécurité sociale"
 
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule.category,name:l10n_ma_hr_payroll.DEDIRPP
@@ -364,7 +367,7 @@ msgstr ""
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule,name:l10n_ma_hr_payroll.l10n_ma_hr_payroll_salary_ma_structure_base_gross_salary_rule
 msgid "Taxable Salary"
-msgstr ""
+msgstr "Salaire imposable"
 
 #. module: l10n_ma_hr_payroll
 #: model:hr.salary.rule,name:l10n_ma_hr_payroll.l10n_ma_hr_payroll_rules_total_untaxable_ded

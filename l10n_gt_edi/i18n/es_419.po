@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_gt_edi
+# * l10n_gt_edi
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 20:01+0000\n"
-"PO-Revision-Date: 2025-06-05 07:54+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-11-18 17:11+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
+"odoo-19-l10n/l10n_gt_edi/es_419/>\n"
 "Language: es_419\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_gt_edi
 #. odoo-python
@@ -44,17 +47,17 @@ msgstr "Plantilla de Plan de Cuentas"
 #. module: l10n_gt_edi
 #: model:ir.model,name:l10n_gt_edi.model_account_move_reversal
 msgid "Account Move Reversal"
-msgstr ""
+msgstr "Revocación de movimiento en cuenta"
 
 #. module: l10n_gt_edi
 #: model:ir.model,name:l10n_gt_edi.model_account_move_send
 msgid "Account Move Send"
-msgstr ""
+msgstr "Enviar movimiento de cuenta"
 
 #. module: l10n_gt_edi
 #: model:ir.model,name:l10n_gt_edi.model_account_debit_note
 msgid "Add Debit Note wizard"
-msgstr ""
+msgstr "Asistente para agregar nota de débito"
 
 #. module: l10n_gt_edi
 #. odoo-python
@@ -186,7 +189,7 @@ msgstr "Contacto"
 #. module: l10n_gt_edi
 #: model:ir.model,website_form_label:l10n_gt_edi.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Crear un cliente"
 
 #. module: l10n_gt_edi
 #: model:ir.model.fields,field_description:l10n_gt_edi.field_l10n_gt_edi_document__create_uid
@@ -239,7 +242,7 @@ msgstr ""
 #. module: l10n_gt_edi
 #: model:ir.model.fields,field_description:l10n_gt_edi.field_l10n_gt_edi_document__datetime
 msgid "Datetime"
-msgstr ""
+msgstr "Fecha y hora"
 
 #. module: l10n_gt_edi
 #. odoo-python
@@ -264,7 +267,7 @@ msgstr "Las notas de débito deben tener una factura vinculada"
 #. module: l10n_gt_edi
 #: model:ir.model.fields.selection,name:l10n_gt_edi.selection__res_company__l10n_gt_edi_service_provider__demo
 msgid "Demo"
-msgstr ""
+msgstr "Demostración"
 
 #. module: l10n_gt_edi
 #: model_terms:ir.ui.view,arch_db:l10n_gt_edi.report_invoice_document
@@ -289,7 +292,7 @@ msgstr "Nombre para mostrar"
 #. module: l10n_gt_edi
 #: model_terms:ir.ui.view,arch_db:l10n_gt_edi.account_move_form_inherit_l10n_gt_edi
 msgid "Download Certificate"
-msgstr ""
+msgstr "Descargar certificado"
 
 #. module: l10n_gt_edi
 #: model_terms:ir.ui.view,arch_db:l10n_gt_edi.account_move_form_inherit_l10n_gt_edi
@@ -463,7 +466,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_gt_edi.field_res_config_settings__id
 #: model:ir.model.fields,field_description:l10n_gt_edi.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_gt_edi
 #: model_terms:ir.ui.view,arch_db:l10n_gt_edi.report_invoice_document
@@ -473,7 +476,7 @@ msgstr ""
 #. module: l10n_gt_edi
 #: model:ir.model.fields.selection,name:l10n_gt_edi.selection__account_tax__l10n_gt_edi_short_name__iva
 msgid "IVA"
-msgstr ""
+msgstr "IVA"
 
 #. module: l10n_gt_edi
 #. odoo-python
@@ -573,7 +576,7 @@ msgstr "Última actualización en"
 #. module: l10n_gt_edi
 #: model:ir.model.fields,field_description:l10n_gt_edi.field_res_company__l10n_gt_edi_legal_name
 msgid "Legal Name"
-msgstr ""
+msgstr "Nombre legal"
 
 #. module: l10n_gt_edi
 #: model:ir.model.fields,help:l10n_gt_edi.field_res_company__l10n_gt_edi_legal_name
@@ -666,7 +669,7 @@ msgstr ""
 #. module: l10n_gt_edi
 #: model:l10n_latam.identification.type,name:l10n_gt_edi.it_nit
 msgid "NIT"
-msgstr ""
+msgstr "NIT"
 
 #. module: l10n_gt_edi
 #: model_terms:ir.ui.view,arch_db:l10n_gt_edi.report_invoice_document
@@ -732,7 +735,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_gt_edi/models/account_move.py:0
 msgid "Partner"
-msgstr ""
+msgstr "Empresa"
 
 #. module: l10n_gt_edi
 #: model:ir.model.fields,field_description:l10n_gt_edi.field_l10n_gt_edi_phrase__pdf_message
@@ -1053,7 +1056,7 @@ msgstr "Nombre de usuario para WebServices proporcionados por Infile"
 #. module: l10n_gt_edi
 #: model:ir.model.fields,field_description:l10n_gt_edi.field_l10n_gt_edi_document__uuid
 msgid "Uuid"
-msgstr ""
+msgstr "UUID"
 
 #. module: l10n_gt_edi
 #: model:ir.model.fields,field_description:l10n_gt_edi.field_res_company__l10n_gt_edi_vat_affiliation

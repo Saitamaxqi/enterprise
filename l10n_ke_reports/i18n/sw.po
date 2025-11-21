@@ -1,25 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_ke_reports
+# * l10n_ke_reports
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 20:04+0000\n"
-"PO-Revision-Date: 2025-11-13 20:04+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-18 17:11+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Swahili <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_ke_reports/sw/>\n"
 "Language: sw\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_ke_reports
 #: model:ir.model,name:l10n_ke_reports.model_account_chart_template
 msgid "Account Chart Template"
-msgstr ""
+msgstr "Kiolezo cha Chati ya Akaunti"
 
 #. module: l10n_ke_reports
 #: model:ir.model,name:l10n_ke_reports.model_account_return_type
@@ -35,7 +38,7 @@ msgstr ""
 #: model:account.report.column,name:l10n_ke_reports.account_financial_report_ke_bs_column
 #: model:account.report.column,name:l10n_ke_reports.account_financial_report_ke_profitandloss0_column
 msgid "Balance"
-msgstr ""
+msgstr "Mizani"
 
 #. module: l10n_ke_reports
 #: model:account.report,name:l10n_ke_reports.account_financial_report_ke_bs
@@ -55,7 +58,7 @@ msgstr ""
 #. module: l10n_ke_reports
 #: model:account.report.line,name:l10n_ke_reports.account_financial_report_ke_bs_A_2_3
 msgid "Cash and cash equivalents"
-msgstr ""
+msgstr "Fedha na fedha sawa"
 
 #. module: l10n_ke_reports
 #: model:account.report.line,name:l10n_ke_reports.account_financial_report_ke_income_tax_expense
@@ -75,7 +78,7 @@ msgstr ""
 #. module: l10n_ke_reports
 #: model:account.report.line,name:l10n_ke_reports.account_financial_report_ke_bs_B_2_1
 msgid "Current Liabilities"
-msgstr ""
+msgstr "Madeni ya Sasa"
 
 #. module: l10n_ke_reports
 #: model:account.report.line,name:l10n_ke_reports.account_financial_report_ke_bs_B_2_1_2
@@ -96,7 +99,7 @@ msgstr ""
 #. module: l10n_ke_reports
 #: model:account.report.line,name:l10n_ke_reports.account_financial_report_ke_bs_B_1
 msgid "Equity"
-msgstr ""
+msgstr "Usawa"
 
 #. module: l10n_ke_reports
 #: model:account.report.line,name:l10n_ke_reports.account_financial_report_ke_bs_B
@@ -127,12 +130,12 @@ msgstr ""
 #. module: l10n_ke_reports
 #: model:account.report.line,name:l10n_ke_reports.account_financial_report_ke_bs_A_1_3
 msgid "Intangible assets"
-msgstr ""
+msgstr "Mali zisizoshikika"
 
 #. module: l10n_ke_reports
 #: model:account.report.line,name:l10n_ke_reports.account_financial_report_ke_bs_A_2_1
 msgid "Inventories"
-msgstr ""
+msgstr "Malipo"
 
 #. module: l10n_ke_reports
 #: model:account.report.line,name:l10n_ke_reports.account_financial_report_ke_bs_A_1_2
@@ -142,7 +145,7 @@ msgstr ""
 #. module: l10n_ke_reports
 #: model:account.report.line,name:l10n_ke_reports.account_financial_report_ke_bs_B_2
 msgid "Liabilities"
-msgstr ""
+msgstr "Madeni"
 
 #. module: l10n_ke_reports
 #: model:account.report.line,name:l10n_ke_reports.account_financial_report_ke_profit_loss
@@ -198,7 +201,7 @@ msgstr ""
 #: model:account.report,name:l10n_ke_reports.account_financial_report_ke_profitandloss0
 #: model:ir.actions.client,name:l10n_ke_reports.action_account_report_ke_pnl
 msgid "Profit and Loss"
-msgstr ""
+msgstr "Faida na hasara"
 
 #. module: l10n_ke_reports
 #: model:account.report.line,name:l10n_ke_reports.account_financial_report_ke_profit_loss_before_taxes
@@ -213,7 +216,7 @@ msgstr ""
 #. module: l10n_ke_reports
 #: model:account.report.line,name:l10n_ke_reports.account_financial_report_ke_bs_B_1_2
 msgid "Reserves"
-msgstr ""
+msgstr "Akiba"
 
 #. module: l10n_ke_reports
 #: model:account.report.line,name:l10n_ke_reports.account_financial_report_ke_sales_revenue

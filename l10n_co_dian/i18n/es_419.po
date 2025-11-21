@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_co_dian
+# * l10n_co_dian
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.5a1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 19:58+0000\n"
-"PO-Revision-Date: 2025-07-11 06:26+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-11-18 17:10+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
+"odoo-19-l10n/l10n_co_dian/es_419/>\n"
 "Language: es_419\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_commercial_state__received
@@ -49,42 +52,44 @@ msgstr "034 - Aceptado por el Emisor"
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "1018418009"
-msgstr ""
+msgstr "1018418009"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "18760000001"
-msgstr ""
+msgstr "18760000001"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "2019-01-01"
-msgstr ""
+msgstr "2019-01-01"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "2024-03-15 15:43:50"
-msgstr ""
+msgstr "2024-03-15 15:43:50"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "2024-03-15 15:43:58"
-msgstr ""
+msgstr "2024-03-15 15:43:58"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "2030-12-31"
-msgstr ""
+msgstr "2030-12-31"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "4390"
-msgstr ""
+msgstr "4390"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "6c33aba6cd0086c0af774f5ff5e3535e16dc9a753df6bdd8da3d5d242ccee7016d4fc897225593b6e240a9e9f8b19373"
 msgstr ""
+"6c33aba6cd0086c0af774f5ff5e3535e16dc9a753df6bdd8da3d5d242ccee7016d4fc897225593b6e240a9e9f8b19373"
+""
 
 #. module: l10n_co_dian
 #: model:mail.template,body_html:l10n_co_dian.email_template_commercial_event
@@ -250,7 +255,7 @@ msgstr ""
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
 msgid "ApplicationResponse"
-msgstr ""
+msgstr "ApplicationResponse"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.l10n_co_dian_operation_mode_view_tree
@@ -265,7 +270,7 @@ msgstr "Adjunto"
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "Autorretenedor"
-msgstr ""
+msgstr "Autorretenedor"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
@@ -280,18 +285,18 @@ msgstr "Iniciar Proceso de Habilitaciòn"
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_identifier_type__cude
 msgid "CUDE"
-msgstr ""
+msgstr "CUDE"
 
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_identifier_type__cuds
 msgid "CUDS"
-msgstr ""
+msgstr "CUDS"
 
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_identifier_type__cufe
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "CUFE"
-msgstr ""
+msgstr "CUFE"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.view_account_move_form_inherit_l10n_co_dian
@@ -304,7 +309,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__identifier
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.view_account_invoice_filter_inherit_l10n_co_dian
 msgid "CUFE/CUDE/CUDS"
-msgstr ""
+msgstr "CUFE/CUDE/CUDS"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.view_l10n_co_dian_claim_wizard_form
@@ -314,7 +319,7 @@ msgstr "Cancelar"
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__res_company__l10n_co_dian_provider__carvajal
 msgid "Carvajal"
-msgstr ""
+msgstr "Carvajal"
 
 #. module: l10n_co_dian
 #: model:ir.model,name:l10n_co_dian.model_certificate_certificate
@@ -416,12 +421,12 @@ msgstr ""
 #. module: l10n_co_dian
 #: model:ir.model,name:l10n_co_dian.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contacto"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "Contado"
-msgstr ""
+msgstr "Contado"
 
 #. module: l10n_co_dian
 #: model:ir.model.fields,help:l10n_co_dian.field_account_journal__l10n_co_dian_technical_key
@@ -433,7 +438,7 @@ msgstr ""
 #. module: l10n_co_dian
 #: model:ir.model,website_form_label:l10n_co_dian.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Crear un cliente"
 
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_claim_wizard__create_uid
@@ -452,24 +457,24 @@ msgstr "Creado el"
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "Crédito"
-msgstr ""
+msgstr "Crédito"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "Crédito ACH"
-msgstr ""
+msgstr "Crédito ACH"
 
 #. module: l10n_co_dian
 #. odoo-python
 #: code:addons/l10n_co_dian/models/account_move_send.py:0
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.view_account_move_form_inherit_l10n_co_dian
 msgid "DIAN"
-msgstr ""
+msgstr "DIAN"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
 msgid "DIAN 2.1"
-msgstr ""
+msgstr "DIAN 2.1"
 
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__l10n_co_dian_operation_mode__dian_software_operation_mode__invoice
@@ -484,7 +489,7 @@ msgstr "DIAN 2.1: Documentos soporte"
 #. module: l10n_co_dian
 #: model:account.journal,name:l10n_co_dian.debit_note_journal
 msgid "DIAN Debit Notes"
-msgstr ""
+msgstr "DIAN Notas Débito"
 
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_res_config_settings__l10n_co_dian_demo_mode
@@ -511,7 +516,7 @@ msgstr ""
 #. module: l10n_co_dian
 #: model:account.journal,name:l10n_co_dian.support_document_journal
 msgid "DIAN Support Documents"
-msgstr ""
+msgstr "DIAN Documento Soporte"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
@@ -575,7 +580,7 @@ msgstr "Documento con inconsistencias"
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
 msgid "Documentos adjuntos"
-msgstr ""
+msgstr "Documentos adjuntos"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.view_account_move_form_inherit_l10n_co_dian
@@ -694,7 +699,7 @@ msgstr "Todas las líneas deben tener un precio unitario diferente de 0."
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "Factura de venta"
-msgstr ""
+msgstr "Factura de venta"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.view_account_move_form_inherit_l10n_co_dian
@@ -747,12 +752,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_vendor_document
 msgid "INV/2023/0001"
-msgstr ""
+msgstr "INV/2023/0001"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "IVA"
-msgstr ""
+msgstr "IVA"
 
 #. module: l10n_co_dian
 #: model:product.template,name:l10n_co_dian.product_product_imprevistos_product_template
@@ -917,7 +922,7 @@ msgstr "Documento"
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "NIT:"
-msgstr ""
+msgstr "NIT:"
 
 #. module: l10n_co_dian
 #. odoo-python
@@ -978,7 +983,7 @@ msgstr "Modo de operación"
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_vendor_document
 msgid "PROFORMA"
-msgstr ""
+msgstr "PROFORMA"
 
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_commercial_state__pending
@@ -1038,12 +1043,12 @@ msgstr "Volver a cargar la configuración de la DIAN"
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "SETT1"
-msgstr ""
+msgstr "SETT1"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "SETT5000000"
-msgstr ""
+msgstr "SETT5000000"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.res_config_settings_view_form
@@ -1166,7 +1171,7 @@ msgstr ""
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "Somos Grandes Contribuyentes"
-msgstr ""
+msgstr "Somos Grandes Contribuyentes"
 
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__state
@@ -1363,7 +1368,7 @@ msgstr ""
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
 msgid "UBL 2.1"
-msgstr ""
+msgstr "UBL 2.1"
 
 #. module: l10n_co_dian
 #: model:ir.model,name:l10n_co_dian.model_account_edi_xml_ubl_dian
@@ -1379,7 +1384,7 @@ msgstr "No se encontró el URI %(uri)s"
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
 msgid "UTF-8"
-msgstr ""
+msgstr "UTF-8"
 
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_claim_reason__02
@@ -1484,22 +1489,22 @@ msgstr "Clave del zip"
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
 msgid "dummy"
-msgstr ""
+msgstr "dummy"
 
 #. module: l10n_co_dian
 #: model:ir.actions.act_window,name:l10n_co_dian.l10n_co_dian_operation_mode_action
 msgid "l10n_co_dian.operation_mode.action"
-msgstr ""
+msgstr "l10n_co_dian.operation_mode.action"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "proforma"
-msgstr ""
+msgstr "proforma"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.attached_document
 msgid "text/xml"
-msgstr ""
+msgstr "text/xml"
 
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document

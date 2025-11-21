@@ -1,21 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_sa_hr_payroll
+# * l10n_sa_hr_payroll
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 20:10+0000\n"
-"PO-Revision-Date: 2025-10-29 09:11+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-18 17:12+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_sa_hr_payroll/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.actions.report,print_report_name:l10n_sa_hr_payroll.action_report_advance_and_loan
@@ -33,19 +36,19 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_employee_view_form
 msgid "<span>/ month</span>"
-msgstr ""
+msgstr "<span>/ شهر</span>"
 
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_employee_view_form
 msgid "<span>/ year</span>"
-msgstr ""
+msgstr "<span>/ سنة</span>"
 
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_employee_view_form
 msgid "<span>days</span>"
-msgstr ""
+msgstr "<span>أيام</span>"
 
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.report_payslip_sa
@@ -91,18 +94,18 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.l10n_sa_hr_payroll_ksa_saudi_employee_payroll_structure_assignment_of_salary_rule
 msgid "Assignment of Salary"
-msgstr ""
+msgstr "تعيين الراتب"
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.l10n_sa_hr_payroll_ksa_saudi_employee_payroll_structure_attachment_of_salary_rule
 msgid "Attachment of Salary"
-msgstr ""
+msgstr "مرفق الراتب"
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.model,name:l10n_sa_hr_payroll.model_res_bank
 #: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_res_config_settings__l10n_sa_bank_id
 msgid "Bank"
-msgstr ""
+msgstr "البنك"
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_res_bank__l10n_sa_bank_establishment_code
@@ -137,12 +140,12 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.l10n_sa_hr_payroll_ksa_saudi_employee_payroll_structure_basic_salary_rule
 msgid "Basic Salary"
-msgstr ""
+msgstr "الراتب الأساسي"
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.l10n_sa_hr_payroll_ksa_saudi_employee_payroll_structure_child_support
 msgid "Child Support"
-msgstr ""
+msgstr "دعم الطفل"
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.departure.reason,name:l10n_sa_hr_payroll.saudi_departure_clause_77
@@ -153,7 +156,7 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:ir.model,name:l10n_sa_hr_payroll.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "الشركات"
 
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.res_config_settings_view_form
@@ -163,7 +166,7 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:ir.model,name:l10n_sa_hr_payroll.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "تهيئة الإعدادات"
 
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_salary_attachment_view_form
@@ -173,12 +176,12 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.l10n_sa_hr_payroll_ksa_saudi_employee_payroll_structure_deduction_salary_rule
 msgid "Deduction"
-msgstr ""
+msgstr "الخصم"
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.model,name:l10n_sa_hr_payroll.model_hr_departure_reason
 msgid "Departure Reason"
-msgstr ""
+msgstr "سبب المغادرة"
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_hr_departure_reason__display_name
@@ -193,7 +196,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_res_company__display_name
 #: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "اسم العرض"
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.l10n_sa_hr_payroll_ksa_saudi_employee_payroll_structure_emergency_leave_salary_rule
@@ -203,12 +206,12 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:ir.model,name:l10n_sa_hr_payroll.model_hr_employee
 msgid "Employee"
-msgstr ""
+msgstr "الموظف"
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.model,name:l10n_sa_hr_payroll.model_hr_version
 msgid "Employee Contract"
-msgstr ""
+msgstr "عقد الموظف"
 
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_contract_template_view_form
@@ -225,12 +228,12 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.ksa_saudi_end_of_service_provision_salary_rule
 msgid "End of Service Provision"
-msgstr ""
+msgstr "نهاية الخدمة"
 
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.report_payslip_sa
 msgid "Entries"
-msgstr ""
+msgstr "القيود"
 
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.res_config_settings_view_form
@@ -257,17 +260,17 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.l10n_sa_hr_payroll_ksa_saudi_employee_payroll_structure_expenses_reimbursement
 msgid "Expenses Reimbursement"
-msgstr ""
+msgstr "رد أموال النفقات"
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_hr_payroll_payment_report_wizard__export_format
 msgid "Export Format"
-msgstr ""
+msgstr "صيغة الملف المصدر"
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_sa_hr_payroll.selection__hr_departure_reason__l10n_sa_reason_type__fired
 msgid "Fired"
-msgstr ""
+msgstr "مطرود"
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.ksa_saudi_social_insurance_contribution
@@ -282,12 +285,12 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.l10n_sa_hr_payroll_ksa_saudi_employee_payroll_structure_gross_salary_rule
 msgid "Gross"
-msgstr ""
+msgstr "الإجمالي"
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.model,name:l10n_sa_hr_payroll.model_hr_payroll_payment_report_wizard
 msgid "HR Payroll Payment Report Wizard"
-msgstr ""
+msgstr "معالج تقرير دفع المرتبات للموارد البشرية"
 
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_contract_template_view_form
@@ -298,7 +301,7 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.ksa_saudi_housing_allowance_salary_rule
 msgid "Housing Allowance"
-msgstr ""
+msgstr "بدل السكن"
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.department,name:l10n_sa_hr_payroll.sa_hr_department_human_resources
@@ -318,7 +321,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_res_company__id
 #: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "المُعرف"
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.model.fields,help:l10n_sa_hr_payroll.field_res_bank__l10n_sa_bank_establishment_code
@@ -357,12 +360,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_sa_hr_payroll/models/hr_salary_attachment.py:0
 msgid "Loan"
-msgstr ""
+msgstr "قرض"
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.l10n_sa_salary_advance_and_loan_loan_amount
 msgid "Loan Amount"
-msgstr ""
+msgstr "مبلغ القرض"
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_sa_hr_payroll.l10n_sa_input_loan_deduction
@@ -402,7 +405,7 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.l10n_sa_hr_payroll_ksa_saudi_employee_payroll_structure_maternity_leave_salary_rule
 msgid "Maternity Leave"
-msgstr ""
+msgstr "إجازة وضع"
 
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_contract_template_view_form
@@ -456,18 +459,18 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.l10n_sa_salary_advance_and_loan_Net_Salary_advance
 msgid "Net"
-msgstr ""
+msgstr "صافي"
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.l10n_sa_hr_payroll_ksa_saudi_employee_payroll_structure_net_salary
 msgid "Net Salary"
-msgstr ""
+msgstr "صافي المرتب"
 
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_employee_view_form
 msgid "Number of Days"
-msgstr ""
+msgstr "عدد الأيام"
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.model.constraint,message:l10n_sa_hr_payroll.constraint_hr_version_l10n_sa_hr_payroll_number_of_days_constraint
@@ -496,7 +499,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_employee_view_form
 msgid "Other"
-msgstr ""
+msgstr "غير ذلك"
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.ksa_saudi_end_of_service_clause_77_salary_rule
@@ -521,7 +524,7 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.ksa_saudi_overtime
 msgid "Overtime"
-msgstr ""
+msgstr "الوقت الإضافي"
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.l10n_sa_hr_payroll_ksa_saudi_employee_payroll_structure_paid_leave_salary_rule
@@ -536,17 +539,17 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_res_config_settings__company_partner_id
 msgid "Partner"
-msgstr ""
+msgstr "الشريك"
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.model,name:l10n_sa_hr_payroll.model_hr_payslip_run
 msgid "Pay Run"
-msgstr ""
+msgstr "تشغيل الدفع"
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.model,name:l10n_sa_hr_payroll.model_hr_payslip
 msgid "Pay Slip"
-msgstr ""
+msgstr "إيصال الدفع"
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.actions.report,name:l10n_sa_hr_payroll.action_report_advance_and_loan
@@ -568,12 +571,12 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_payslip_run_view_kanban
 msgid "Reference"
-msgstr ""
+msgstr "الرقم المرجعي"
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.l10n_sa_hr_payroll_ksa_saudi_employee_payroll_structure_reimbursement_salary_rule
 msgid "Reimbursement"
-msgstr ""
+msgstr "إعادة الأموال"
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.ksa_saudi_employee_payroll_structure_remaining_leave_days_compensation
@@ -583,12 +586,12 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_sa_hr_payroll.selection__hr_departure_reason__l10n_sa_reason_type__resigned
 msgid "Resigned"
-msgstr ""
+msgstr "استقال"
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_sa_hr_payroll.selection__hr_departure_reason__l10n_sa_reason_type__retired
 msgid "Retired"
-msgstr ""
+msgstr "تقاعد"
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_res_company__l10n_sa_annual_leave_type_id
@@ -627,7 +630,7 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:ir.model,name:l10n_sa_hr_payroll.model_hr_payroll_structure_type
 msgid "Salary Structure Type"
-msgstr ""
+msgstr "نوع هيكل الراتب"
 
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.res_config_settings_view_form
@@ -712,7 +715,7 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:ir.model.fields,help:l10n_sa_hr_payroll.field_hr_salary_attachment__other_input_type_code
 msgid "The code that can be used in the salary rules"
-msgstr ""
+msgstr "الكود الذي يمكن استخدامه في قواعد الراتب"
 
 #. module: l10n_sa_hr_payroll
 #. odoo-python
@@ -725,18 +728,18 @@ msgstr ""
 msgid ""
 "The net amount will be recovered from the first positive remuneration "
 "established after this."
-msgstr ""
+msgstr "سوف تتم استعادة صافي المبلغ من أول أجر موجب يتم إنشاؤه بعد هذا."
 
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_employee_view_form
 msgid "Transportation"
-msgstr ""
+msgstr "وسائل النقل"
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.ksa_saudi_transportation_allowance_salary_rule
 msgid "Transportation Allowance"
-msgstr ""
+msgstr "بدل المواصلات"
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.ksa_saudi_unpaid_leave
@@ -791,7 +794,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_employee_view_form
 msgid "Work Permit"
-msgstr ""
+msgstr "تصريح عمل"
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.ksa_saudi_employee_payroll_structure_work_permit
@@ -808,4 +811,4 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_sa_hr_payroll/models/hr_salary_attachment.py:0
 msgid "id"
-msgstr ""
+msgstr "المعرف"

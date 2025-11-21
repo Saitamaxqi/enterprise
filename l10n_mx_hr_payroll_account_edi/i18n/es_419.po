@@ -1,50 +1,53 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_mx_hr_payroll_account_edi
+# * l10n_mx_hr_payroll_account_edi
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 20:07+0000\n"
-"PO-Revision-Date: 2025-11-13 20:07+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-18 17:12+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
+"odoo-19-l10n/l10n_mx_hr_payroll_account_edi/es_419/>\n"
 "Language: es_419\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.actions.report,print_report_name:l10n_mx_hr_payroll_account_edi.action_report_payslip_mx_cfdi
 msgid "'Payslip - %s' % (object.employee_id.name)"
-msgstr ""
+msgstr "'Recibo de nómina - %s' % (object.employee_id.name)"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_work_entry_type__l10n_mx_sat_code__01
 msgid "01"
-msgstr ""
+msgstr "01"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_work_entry_type__l10n_mx_sat_code__02
 msgid "02"
-msgstr ""
+msgstr "02"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_work_entry_type__l10n_mx_sat_code__03
 msgid "03"
-msgstr ""
+msgstr "03"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_work_entry_type__l10n_mx_sat_code__04
 msgid "04"
-msgstr ""
+msgstr "04"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_payment_periodicity__10
 msgid "10 Days"
-msgstr ""
+msgstr "10 días"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_payment_periodicity__03
@@ -54,7 +57,7 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_payment_periodicity__04
 msgid "15 Days"
-msgstr ""
+msgstr "15 días"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.report_payslip_mx_cfdi
@@ -193,7 +196,7 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.l10n_mx_hr_payslip_view_form
 msgid "Are you sure you want to proceed?"
-msgstr ""
+msgstr "¿De verdad quieres continuar?"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_regime_type__07
@@ -234,19 +237,19 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.report_payslip_mx_cfdi
 msgid "Barcode"
-msgstr ""
+msgstr "Código de barras"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_payment_periodicity__06
 msgid "Bi-Monthly"
-msgstr ""
+msgstr "Bimestral"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_hr_payslip__l10n_mx_edi_cfdi_attachment_id
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.l10n_mx_hr_payslip_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.res_config_settings_view_form
 msgid "CFDI"
-msgstr ""
+msgstr "CFDI"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_hr_salary_rule__l10n_mx_concept
@@ -256,7 +259,7 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_hr_payslip__l10n_mx_edi_cfdi_origin
 msgid "CFDI Origin"
-msgstr ""
+msgstr "CFDI relacionado"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.report_payslip_mx_cfdi
@@ -266,13 +269,13 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_hr_payslip__l10n_mx_edi_cfdi_state
 msgid "CFDI status"
-msgstr ""
+msgstr "Estado del CFDI"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_hr_employee__l10n_mx_curp
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.report_payslip_mx_cfdi
 msgid "CURP"
-msgstr ""
+msgstr "CURP"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #. odoo-python
@@ -295,18 +298,18 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__l10n_mx_edi_document__state__payslip_cancel
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.l10n_mx_hr_payslip_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__l10n_mx_edi_document__state__payslip_cancel_failed
 msgid "Cancel In Error"
-msgstr ""
+msgstr "Cancelación con error"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_payslip__l10n_mx_edi_cfdi_sat_state__cancelled
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_payslip__l10n_mx_edi_cfdi_state__cancel
 msgid "Cancelled"
-msgstr ""
+msgstr "Cancelado"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,help:l10n_mx_hr_payroll_account_edi.field_l10n_mx_concept__is_taxable
@@ -317,6 +320,8 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_mx_hr_payroll_account_edi.field_res_config_settings__is_company
 msgid "Check if the contact is a company, otherwise it is a person"
 msgstr ""
+"Marque esta casilla si el contacto es una empresa. De lo contrario, es una "
+"persona."
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__res_company__l10n_mx_risk_type__1
@@ -346,12 +351,12 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_payment_periodicity__08
 msgid "Commission"
-msgstr ""
+msgstr "Comisión"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model,name:l10n_mx_hr_payroll_account_edi.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Empresas"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model,name:l10n_mx_hr_payroll_account_edi.model_l10n_mx_concept
@@ -374,7 +379,7 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model,name:l10n_mx_hr_payroll_account_edi.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Ajustes de configuración"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_shift_type__06
@@ -390,22 +395,22 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.l10n_mx_hr_payslip_view_form
 msgid "Create Draft Entry"
-msgstr ""
+msgstr "Crear un asiento en estado de borrador"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_l10n_mx_concept__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_l10n_mx_concept__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado en"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_payment_periodicity__01
 msgid "Daily"
-msgstr ""
+msgstr "Diario"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.report_payslip_mx_cfdi
@@ -430,7 +435,7 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__l10n_mx_concept__cfdi_type__deduction
 msgid "Deduction"
-msgstr ""
+msgstr "Deducción"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.report_payslip_mx_cfdi
@@ -449,7 +454,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_res_company__display_name
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre para mostrar"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__res_company__l10n_mx_risk_type__99
@@ -459,19 +464,19 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.l10n_mx_hr_payslip_view_form
 msgid "Download"
-msgstr ""
+msgstr "Descarga"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #. odoo-python
 #: code:addons/l10n_mx_hr_payroll_account_edi/models/hr_payslip.py:0
 #: model:ir.model,name:l10n_mx_hr_payroll_account_edi.model_hr_employee
 msgid "Employee"
-msgstr ""
+msgstr "Empleado"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model,name:l10n_mx_hr_payroll_account_edi.model_hr_version
 msgid "Employee Contract"
-msgstr ""
+msgstr "Contrato del empleado"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #. odoo-python
@@ -492,12 +497,12 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_payslip__l10n_mx_edi_cfdi_sat_state__error
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.report_payslip_mx_cfdi
 msgid "Exento"
-msgstr ""
+msgstr "Exento"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_payroll_structure__l10n_mx_payroll_type__e
@@ -517,12 +522,12 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_hr_payslip__l10n_mx_edi_cfdi_uuid
 msgid "Fiscal Folio"
-msgstr ""
+msgstr "Folio fiscal"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.report_payslip_mx_cfdi
 msgid "Folio"
-msgstr ""
+msgstr "Folio"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.report_payslip_mx_cfdi
@@ -533,11 +538,12 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_mx_hr_payroll_account_edi.field_hr_payslip__l10n_mx_edi_cfdi_uuid
 msgid "Folio in electronic invoice, is returned by SAT when send to stamp."
 msgstr ""
+"El SAT regresa el folio en la factura electrónica cuando se envia a timbrar."
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.l10n_mx_hr_payslip_view_form
 msgid "Force CFDI"
-msgstr ""
+msgstr "Forzar CFDI"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.l10n_mx_hr_payslip_view_form
@@ -552,12 +558,12 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model,name:l10n_mx_hr_payroll_account_edi.model_hr_work_entry_type
 msgid "HR Work Entry Type"
-msgstr ""
+msgstr "Tipo de entrada de trabajo de RR. HH."
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_shift_type__04
 msgid "Hourly"
-msgstr ""
+msgstr "Por horas"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_hr_employee__id
@@ -571,7 +577,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_res_company__id
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #. odoo-python
@@ -600,6 +606,18 @@ msgid ""
 "- 06: Factura generada por los traslados previos\n"
 "- 07: CFDI por aplicación de anticipo"
 msgstr ""
+"En algunos casos, como pagos, notas de crédito, notas de débito, facturas "
+"renovadas o facturas que se rehacen debido a un pago por adelantado, se debe "
+"completar este campo, el formato es:\n"
+"Tipo de origen | UUID1, UUID2, ...., UUIDn.\n"
+"Donde el tipo de origen podría ser:\n"
+"- 01: Nota de crédito de los documentos relacionados\n"
+"- 02: Nota de débito de los documentos relacionados\n"
+"- 03: Devolución de mercancía sobre facturas o traslados previos\n"
+"- 04: Sustitución de CFDI previos\n"
+"- 05: Traslados de mercancías facturadas previamente\n"
+"- 06: Factura generada por los traslados previos\n"
+"- 07: CFDI por aplicación de anticipo"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #. odoo-python
@@ -610,7 +628,7 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_res_config_settings__is_company
 msgid "Is a Company"
-msgstr ""
+msgstr "Es una empresa"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_res_company__l10n_mx_curp
@@ -621,7 +639,7 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_hr_payslip__l10n_mx_edi_document_ids
 msgid "L10N Mx Edi Document"
-msgstr ""
+msgstr "Documento L10N Mx Edi"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_res_company__l10n_mx_imss_id
@@ -666,12 +684,12 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_l10n_mx_concept__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualización por"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_l10n_mx_concept__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización en"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.report_payslip_mx_cfdi
@@ -691,27 +709,27 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model,name:l10n_mx_hr_payroll_account_edi.model_l10n_mx_edi_document
 msgid "Mexican documents that needs to transit outside of Odoo"
-msgstr ""
+msgstr "Documentos mexicanos que se deben procesar fuera de Odoo"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.ui.menu,name:l10n_mx_hr_payroll_account_edi.menu_l10n_mx_hr_payroll_configuration
 msgid "Mexico"
-msgstr ""
+msgstr "México"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_shift_type__03
 msgid "Mixed"
-msgstr ""
+msgstr "Mezclado"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_payment_periodicity__05
 msgid "Monthly"
-msgstr ""
+msgstr "Mensual"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_l10n_mx_concept__name
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_shift_type__02
@@ -721,12 +739,12 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_payslip__l10n_mx_edi_cfdi_sat_state__not_defined
 msgid "Not Defined"
-msgstr ""
+msgstr "Sin definir"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_payslip__l10n_mx_edi_cfdi_sat_state__not_found
 msgid "Not Found"
-msgstr ""
+msgstr "No se encontro"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.view_l10n_mx_concept_filter
@@ -781,12 +799,12 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model,name:l10n_mx_hr_payroll_account_edi.model_hr_payslip
 msgid "Pay Slip"
-msgstr ""
+msgstr "Recibo de nómina"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_l10n_mx_concept__payroll_code
 msgid "Payroll Code"
-msgstr ""
+msgstr "Código de nómina"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.l10n_mx_hr_payroll_structure_form
@@ -796,7 +814,7 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_l10n_mx_edi_document__payslip_id
 msgid "Payslip"
-msgstr ""
+msgstr "Recibo de nómina"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_regime_type__04
@@ -816,7 +834,7 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.l10n_mx_hr_payslip_view_form
 msgid "Print"
-msgstr ""
+msgstr "Imprimir"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.l10n_mx_hr_payslip_view_form
@@ -833,7 +851,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_hr_employee__l10n_mx_rfc
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.report_payslip_mx_cfdi
 msgid "RFC"
-msgstr ""
+msgstr "RFC"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.report_payslip_mx_cfdi
@@ -869,12 +887,12 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.l10n_mx_hr_payslip_view_form
 msgid "Retry"
-msgstr ""
+msgstr "Reintentar"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.res_config_settings_view_form
 msgid "Risk Type"
-msgstr ""
+msgstr "Tipo de riesgo"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_l10n_mx_concept__sat_code
@@ -890,7 +908,7 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_hr_payslip__l10n_mx_edi_cfdi_sat_state
 msgid "SAT status"
-msgstr ""
+msgstr "Estado del SAT"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #. odoo-python
@@ -908,12 +926,12 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model,name:l10n_mx_hr_payroll_account_edi.model_hr_salary_rule
 msgid "Salary Rule"
-msgstr ""
+msgstr "Regla salarial"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model,name:l10n_mx_hr_payroll_account_edi.model_hr_payroll_structure
 msgid "Salary Structure"
-msgstr ""
+msgstr "Estructura salarial"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.view_l10n_mx_concept_filter
@@ -933,12 +951,12 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__l10n_mx_edi_document__state__payslip_sent_failed
 msgid "Send In Error"
-msgstr ""
+msgstr "Error en el envío"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__l10n_mx_edi_document__state__payslip_sent
 msgid "Sent"
-msgstr ""
+msgstr "Enviado"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.report_payslip_mx_cfdi
@@ -949,7 +967,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_mx_hr_payroll_account_edi/models/hr_payslip.py:0
 msgid "Settings"
-msgstr ""
+msgstr "Ajustes"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_regime_type__13
@@ -969,22 +987,22 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.l10n_mx_hr_payslip_view_form
 msgid "Show"
-msgstr ""
+msgstr "Mostrar"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_payslip__l10n_mx_edi_cfdi_state__sent
 msgid "Signed"
-msgstr ""
+msgstr "Firmado"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_shift_type__07
 msgid "Split"
-msgstr ""
+msgstr "Dividir"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_l10n_mx_edi_document__state
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #. odoo-python
@@ -1000,7 +1018,7 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_hr_payslip__l10n_mx_edi_cfdi_cancel_id
 msgid "Substituted By"
-msgstr ""
+msgstr "Sustituido por"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_l10n_mx_concept__is_taxable
@@ -1013,7 +1031,7 @@ msgstr ""
 #: code:addons/l10n_mx_hr_payroll_account_edi/models/hr_payslip.py:0
 msgid ""
 "The CFDI document was successfully created and signed by the government."
-msgstr ""
+msgstr "El documento CFDI fue creado con éxito y firmado por el gobierno."
 
 #. module: l10n_mx_hr_payroll_account_edi
 #. odoo-python
@@ -1035,6 +1053,9 @@ msgid ""
 "You must get manually a key from the PAC to confirm the currency rate is "
 "accurate enough."
 msgstr ""
+"El SAT no proporciona información para la moneda %s.\n"
+"Debes obtener manualmente una clave del PAC para confirmar que el tipo de "
+"cambio es preciso."
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.report_payslip_mx_cfdi
@@ -1050,13 +1071,13 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.report_payslip_mx_cfdi
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields,field_description:l10n_mx_hr_payroll_account_edi.field_l10n_mx_concept__cfdi_type
 #: model_terms:ir.ui.view,arch_db:l10n_mx_hr_payroll_account_edi.view_l10n_mx_concept_filter
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_payment_periodicity__07
@@ -1072,18 +1093,18 @@ msgstr ""
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_payslip__l10n_mx_edi_cfdi_sat_state__valid
 msgid "Validated"
-msgstr ""
+msgstr "Validado"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #: model:ir.model.fields.selection,name:l10n_mx_hr_payroll_account_edi.selection__hr_version__l10n_mx_payment_periodicity__02
 msgid "Weekly"
-msgstr ""
+msgstr "Semanal"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #. odoo-python
 #: code:addons/l10n_mx_hr_payroll_account_edi/models/hr_payslip.py:0
 msgid "Work Contact"
-msgstr ""
+msgstr "Contacto de trabajo"
 
 #. module: l10n_mx_hr_payroll_account_edi
 #. odoo-python

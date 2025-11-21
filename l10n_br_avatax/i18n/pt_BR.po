@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_br_avatax
+# * l10n_br_avatax
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 19:56+0000\n"
-"PO-Revision-Date: 2024-10-23 16:26-0300\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-11-18 17:10+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
+"odoo-19-l10n/l10n_br_avatax/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0.1\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_br_avatax
 #. odoo-python
@@ -161,7 +164,7 @@ msgstr "Ativo"
 #. module: l10n_br_avatax
 #: model:product.template,name:l10n_br_avatax.added_taxes_consumable_product_product_template
 msgid "Added Taxes Consumable Product"
-msgstr ""
+msgstr "Produtos consumíveis com imposto adicionado"
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__account_external_tax_mixin__l10n_br_use_type__agricultural_production
@@ -462,6 +465,7 @@ msgstr ""
 msgid ""
 "Brazil: this will override the purpose of use for all products sold here."
 msgstr ""
+"Brasil: Substituirá o propósito de uso de todos os produtos vendidos aqui."
 
 #. module: l10n_br_avatax
 #. odoo-python
@@ -585,7 +589,7 @@ msgstr "Continuar configurações"
 #. module: l10n_br_avatax
 #: model:ir.model,website_form_label:l10n_br_avatax.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Criar um cliente"
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_cnae_code__create_uid
@@ -840,7 +844,7 @@ msgstr "Lançamento de diário"
 #. module: l10n_br_avatax
 #: model:ir.model,name:l10n_br_avatax.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Item do diário"
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_res_config_settings__l10n_br_avatax_show_existing_account_warning
@@ -1016,7 +1020,7 @@ msgstr "Não aplicável"
 #. module: l10n_br_avatax
 #: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_partner_view_list
 msgid "Number"
-msgstr ""
+msgstr "Número"
 
 #. module: l10n_br_avatax
 #. odoo-python
@@ -1044,7 +1048,7 @@ msgstr "Tipos de Operação"
 #. module: l10n_br_avatax
 #: model:product.template,name:l10n_br_avatax.other_cost_transport_product_product_template
 msgid "Other Costs"
-msgstr ""
+msgstr "Outros custos"
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_transport_cost_type__other
@@ -1146,7 +1150,7 @@ msgstr "Propósito de uso"
 #. module: l10n_br_avatax
 #: model:product.template,name:l10n_br_avatax.regular_consumable_product_product_template
 msgid "Regular Consumable Product"
-msgstr ""
+msgstr "Produto consumível regular"
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__account_external_tax_mixin__l10n_br_use_type__resale
@@ -1271,7 +1275,7 @@ msgstr "Subproduto"
 #. module: l10n_br_avatax
 #: model:product.template,name:l10n_br_avatax.subtracted_consumable_product_product_template
 msgid "Subtracted Consumable Product"
-msgstr ""
+msgstr "Produto consumível subtraído"
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_partner__l10n_br_subject_cofins__h
@@ -1655,7 +1659,7 @@ msgstr "Armazém geral"
 #: code:addons/l10n_br_avatax/models/product_product.py:0
 #: code:addons/l10n_br_avatax/models/res_partner.py:0
 msgid "id"
-msgstr ""
+msgstr "id"
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_partner__l10n_br_activity_sector__importer

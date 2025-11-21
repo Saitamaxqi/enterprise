@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_es_reports
+# * l10n_es_reports
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.5a1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 20:00+0000\n"
-"PO-Revision-Date: 2025-08-28 05:46+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-11-18 17:11+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Spanish <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_es_reports/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_es_reports
 #: model:ir.model.fields,help:l10n_es_reports.field_res_company__l10n_es_reports_iae_group
@@ -72,13 +75,13 @@ msgstr "Declaración de impuestos"
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_manual_partner_data__operation_key__a
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_real_estates_vat__operation_key__a
 msgid "Adquisiciones de bienes y servicios"
-msgstr ""
+msgstr "Adquisiciones de bienes y servicios"
 
 #. module: l10n_es_reports
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_manual_partner_data__operation_class__local_negocio
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_real_estates_vat__operation_class__local_negocio
 msgid "Arrendamiento Local Negocio"
-msgstr ""
+msgstr "Arrendamiento Local Negocio"
 
 #. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_bank_statement_line__l10n_es_reports_mod347_available
@@ -96,7 +99,7 @@ msgstr "Disponible para Mod349"
 #. odoo-python
 #: code:addons/l10n_es_reports/models/aeat_tax_reports.py:0
 msgid "BOE"
-msgstr ""
+msgstr "BOE"
 
 #. module: l10n_es_reports
 #: model:ir.model,name:l10n_es_reports.model_l10n_es_reports_aeat_boe_export_wizard
@@ -418,7 +421,7 @@ msgstr "E - Suministro"
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_manual_partner_data__operation_key__b
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_real_estates_vat__operation_key__b
 msgid "Entregas de bienes y prestaciones de servicios"
-msgstr ""
+msgstr "Entregas de bienes y prestaciones de servicios"
 
 #. module: l10n_es_reports
 #. odoo-python
@@ -578,7 +581,7 @@ msgstr "Asiento contable"
 #. module: l10n_es_reports
 #: model:ir.model,name:l10n_es_reports.model_account_journal_report_handler
 msgid "Journal Report Custom Handler"
-msgstr ""
+msgstr "Gestor personalizado de informes de diario"
 
 #. module: l10n_es_reports
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod390_boe_wizard
@@ -758,7 +761,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_manual_partner_data__operation_class__otras
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_real_estates_vat__operation_class__otras
 msgid "Otras operaciones"
-msgstr ""
+msgstr "Otras operaciones"
 
 #. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_mod347_manual_partner_data__parent_wizard_id

@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_ca_payment_cpa005
+# * l10n_ca_payment_cpa005
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.2alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 19:56+0000\n"
-"PO-Revision-Date: 2024-02-16 20:25+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-11-18 17:10+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: French <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_ca_payment_cpa005/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_ca_payment_cpa005
 #. odoo-python
@@ -102,7 +105,7 @@ msgstr "Un fichier TEF canadien ne peut pas contenir plusieurs devises (%s)."
 #. module: l10n_ca_payment_cpa005
 #: model:ir.model.fields,field_description:l10n_ca_payment_cpa005.field_l10n_ca_cpa005_transaction_code__active
 msgid "Active"
-msgstr ""
+msgstr "Actif"
 
 #. module: l10n_ca_payment_cpa005
 #: model:ir.model,name:l10n_ca_payment_cpa005.model_res_partner_bank
@@ -123,7 +126,7 @@ msgstr "Codes de transaction CPA/EFT"
 #. module: l10n_ca_payment_cpa005
 #: model:ir.ui.menu,name:l10n_ca_payment_cpa005.menu_l10n_ca_cpa005_root
 msgid "Canada"
-msgstr ""
+msgstr "Canada"
 
 #. module: l10n_ca_payment_cpa005
 #: model:account.payment.method,name:l10n_ca_payment_cpa005.account_payment_method_cpa005
@@ -146,7 +149,7 @@ msgstr "Configuration EFT/CPA canadienne"
 #. module: l10n_ca_payment_cpa005
 #: model:ir.model.fields,field_description:l10n_ca_payment_cpa005.field_l10n_ca_cpa005_transaction_code__code
 msgid "Code"
-msgstr ""
+msgstr "Code"
 
 #. module: l10n_ca_payment_cpa005
 #: model:ir.model,name:l10n_ca_payment_cpa005.model_res_company
@@ -156,12 +159,12 @@ msgstr "Sociétés"
 #. module: l10n_ca_payment_cpa005
 #: model:ir.model.fields,field_description:l10n_ca_payment_cpa005.field_l10n_ca_cpa005_transaction_code__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: l10n_ca_payment_cpa005
 #: model:ir.model.fields,field_description:l10n_ca_payment_cpa005.field_l10n_ca_cpa005_transaction_code__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #. module: l10n_ca_payment_cpa005
 #: model:ir.model.fields,field_description:l10n_ca_payment_cpa005.field_account_journal__l10n_ca_cpa005_destination_data_center
@@ -177,7 +180,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ca_payment_cpa005.field_res_company__display_name
 #: model:ir.model.fields,field_description:l10n_ca_payment_cpa005.field_res_partner_bank__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom affiché"
 
 #. module: l10n_ca_payment_cpa005
 #: model:ir.model.fields,field_description:l10n_ca_payment_cpa005.field_account_payment__l10n_ca_cpa005_transaction_code_id
@@ -233,22 +236,22 @@ msgstr "Aller aux paiements"
 #: model:ir.model.fields,field_description:l10n_ca_payment_cpa005.field_res_company__id
 #: model:ir.model.fields,field_description:l10n_ca_payment_cpa005.field_res_partner_bank__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_ca_payment_cpa005
 #: model:ir.model,name:l10n_ca_payment_cpa005.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Journal"
 
 #. module: l10n_ca_payment_cpa005
 #: model:ir.model.fields,field_description:l10n_ca_payment_cpa005.field_l10n_ca_cpa005_transaction_code__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Dernière mise à jour par"
 
 #. module: l10n_ca_payment_cpa005
 #: model:ir.model.fields,field_description:l10n_ca_payment_cpa005.field_l10n_ca_cpa005_transaction_code__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Dernière mise à jour le"
 
 #. module: l10n_ca_payment_cpa005
 #: model_terms:ir.ui.view,arch_db:l10n_ca_payment_cpa005.view_batch_payment_form_inherit
