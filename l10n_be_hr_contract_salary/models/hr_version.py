@@ -3,6 +3,7 @@ import ast
 from markupsafe import Markup
 
 from odoo import api, fields, models, _
+from odoo.fields import Domain
 
 
 class HrVersion(models.Model):
@@ -296,3 +297,11 @@ class HrVersion(models.Model):
             'ip': benefits['ip_value'] and ast.literal_eval(benefits['ip_value']),
             'ip_wage_rate': version_vals.get('ip_wage_rate')
         }
+
+    def _get_available_cars_domain(self):
+        return Domain.AND(
+            [
+                super()._get_available_cars_domain(),
+                Domain('state_id.hide_in_offer', '=', False),
+            ],
+        )

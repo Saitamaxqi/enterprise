@@ -222,16 +222,16 @@ class HrVersion(models.Model):
                     lambda c: c.state == 'open'
                 ).recurring_cost_amount_depreciated = version.recurring_cost_amount_depreciated
 
+    def _get_available_cars_domain(self):
+        return self._get_vehicles_without_current_drivers_domain(
+            self.employee_id.work_contact_id,
+        )
+
     @api.depends('name')
     def _compute_available_cars_amount(self):
         for version in self:
             version.available_cars_amount = self.env['fleet.vehicle'].sudo().search_count(
-                Domain.AND([
-                    version._get_vehicles_without_current_drivers_domain(
-                        version.employee_id.work_contact_id
-                    ),
-                    [('state_id.hide_in_offer', '=', False)]
-                ])
+                version._get_available_cars_domain(),
             )
 
     @api.depends('name')
