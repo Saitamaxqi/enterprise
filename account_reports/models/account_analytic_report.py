@@ -11,7 +11,7 @@ class AccountReport(models.AbstractModel):
 
     filter_analytic_groupby = fields.Boolean(
         string="Analytic Group By",
-        compute=lambda x: x._compute_report_option_filter('filter_analytic_groupby'), readonly=False, store=True, depends=['root_report_id'],
+        compute=lambda x: x._compute_report_option_filter('filter_analytic_groupby'), readonly=False, store=True, depends=['root_report_id', 'section_main_report_ids'],
     )
 
     def _get_options_initializers_forced_sequence_map(self):
