@@ -104,7 +104,7 @@ class SocialAccount(models.Model):
         }] """
 
         params = {
-            'metric': 'page_post_engagements,page_fan_adds,page_fan_removes',
+            'metric': 'page_post_engagements',
             'period': 'day',
             'access_token': self.facebook_access_token
         }
@@ -133,10 +133,6 @@ class SocialAccount(models.Model):
             metric_name = metric.get('name')
             if metric_name == 'page_post_engagements':
                 statistics['page_post_engagements'] = total_value
-            elif metric_name == 'page_fan_adds':
-                statistics['page_fans'] += total_value
-            elif metric_name == 'page_fan_removes':
-                statistics['page_fans'] -= total_value
 
         return statistics
 
