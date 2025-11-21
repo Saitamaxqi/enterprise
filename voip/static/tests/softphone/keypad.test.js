@@ -233,7 +233,7 @@ test("T9 search does not match when contact has falsy t9_name", async () => {
 
 test("clicking a keypad key should not focus the input on mobile", async () => {
     await start();
-    mockUserAgent("Chrome/0.0.0 Android (OdooMobile; Linux; Android 13; Odoo TestSuite)");
+    mockUserAgent("android");
     await click(".o_menu_systray [title='Show Softphone']");
     await click(".o-voip-Softphone nav button:contains(Keypad)");
     await click(".o-voip-Keypad-digit:contains(2)");
