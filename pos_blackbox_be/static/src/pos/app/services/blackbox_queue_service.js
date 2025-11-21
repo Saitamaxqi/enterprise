@@ -4,6 +4,7 @@ import { _t } from "@web/core/l10n/translation";
 import { NumberPopup } from "@point_of_sale/app/components/popups/number_popup/number_popup";
 import { BlackboxError } from "@pos_blackbox_be/pos/app/utils/blackbox_error";
 import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
+import { logPosMessage } from "@point_of_sale/app/utils/pretty_console_log";
 
 export const blackboxQueueService = {
     dependencies: ["hardware_proxy", "dialog", "pos_data", "bus_service", "iot_http"],
@@ -154,13 +155,25 @@ class BlackboxQueueService {
             );
         }
 
+        logPosMessage("FDM", "pushDataToBlackbox", `sending batch, batch size: ${batch.length}`);
+
         return new Promise((resolve, reject) => {
             this.iotHttp.action(
                 fdm.iotId,
                 fdm.identifier,
                 { action: "batchAction", high_level_message: batch },
-                (message) => resolve(message),
                 (message) => {
+                    logPosMessage("FDM", "pushDataToBlackbox", `batch succeeded`);
+
+                    resolve(message);
+                },
+                (message) => {
+                    logPosMessage(
+                        "FDM",
+                        "pushDataToBlackbox",
+                        `batch failed: ${message?.status?.status ?? message?.status}`
+                    );
+
                     if (message?.status?.status === "error") {
                         reject(new BlackboxError(426));
                     } else if (typeof message.status === "string") {

@@ -2,6 +2,7 @@ import { registry } from "@web/core/registry";
 import { _t } from "@web/core/l10n/translation";
 import { BlackboxError } from "@pos_blackbox_be/pos/app/utils/blackbox_error";
 import { RetryFdmPopup } from "@pos_blackbox_be/pos/app/components/popups/retry_fdm_popup/retry_fdm_popup";
+import { downloadPosLogs } from "@point_of_sale/app/utils/pretty_console_log";
 
 function blackboxErrorHandler(env, error, originalError) {
     if (originalError instanceof BlackboxError) {
@@ -31,6 +32,7 @@ function blackboxErrorHandler(env, error, originalError) {
             title: _t("Fiscal Data Module error: ") + originalError.code,
             message: originalError.message || currentError,
             retry: originalError.retry,
+            downloadLogs: downloadPosLogs,
         });
         return true;
     }
