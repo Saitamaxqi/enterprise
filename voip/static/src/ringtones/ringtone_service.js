@@ -27,7 +27,7 @@ export const ringtoneService = {
             ...ringtones,
             stopPlaying() {
                 audio.pause();
-                audio.src = null;
+                audio.removeAttribute("src");
                 audio.currentTime = 0;
             },
         };
