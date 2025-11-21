@@ -100,7 +100,11 @@ export class IotHttpService {
     async _webRtc({ identifier, deviceIdentifier, data, messageId, onSuccess, onFailure, messageType }) {
         await this.webRtc.onMessage(identifier, deviceIdentifier, messageId, onSuccess, onFailure);
         if (data) {
-            await this.webRtc.sendMessage(identifier, { device_identifier: deviceIdentifier, data }, messageId, messageType);
+            await this.webRtc.sendMessage(identifier, {
+                device_identifier: deviceIdentifier,
+                data,
+                ...data, // compatibility with v19.1+ IoT Boxes
+            }, messageId, messageType);
         }
         this.connectionStatus = "webrtc";
     }
@@ -130,7 +134,16 @@ export class IotHttpService {
         };
         this.websocket.onMessage(identifier, deviceIdentifier, onSuccess, onFailureWithTimeout, "operation_confirmation", messageId);
         if (data) {
-            this.websocket.sendMessage(identifier, { device_identifiers: [deviceIdentifier], ...data }, messageId, messageType);
+            this.websocket.sendMessage(
+                identifier,
+                {
+                    device_identifiers: [deviceIdentifier],
+                    device_identifier: deviceIdentifier, // compatibility with v19.1+ IoT Boxes
+                    ...data
+                },
+                messageId,
+                messageType,
+            );
         }
         this.connectionStatus = "websocket";
     }
