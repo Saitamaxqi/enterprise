@@ -13,11 +13,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-13 09:24+0000\n"
+"POT-Creation-Date: 2025-11-21 18:40+0000\n"
+"PO-Revision-Date: 2025-11-20 08:14+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
-"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/iot/ja/>"
-"\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/iot/ja/"
+">\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -122,8 +122,9 @@ msgstr ""
 msgid ""
 "Blackbox driver update required. Please restart your IoT Box to update the "
 "blackbox driver."
-msgstr "Blackboxドライバーの更新が必要です。ドライバーを更新するには IoT "
-"Boxを再起動してください。"
+msgstr ""
+"Blackboxドライバーの更新が必要です。ドライバーを更新するには IoT Boxを再起動"
+"してください。"
 
 #. module: iot
 #. odoo-javascript
@@ -255,7 +256,7 @@ msgstr "デバイス数"
 #. odoo-javascript
 #: code:addons/iot/static/src/backend/iot_device_form.js:0
 msgid "Device is disconnected"
-msgstr ""
+msgstr "デバイスが切断されています"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_kanban
@@ -347,6 +348,8 @@ msgstr "ドメインIPアドレス"
 msgid ""
 "Failed to check IoT Box network, check that it's connected to the Internet."
 msgstr ""
+"IoT Boxのネットワークチェックに失敗しました。インターネットに接続されているか"
+"確認してください。"
 
 #. module: iot
 #. odoo-javascript
@@ -376,12 +379,13 @@ msgstr "パスワード%s リセットに失敗しました。"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Failed to send the restart command to the IoT Box ('%s')"
-msgstr ""
+msgstr "IoT Boxへの再起動コマンドの送信に失敗しました ('%s')"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Finally, paste the pairing token below in the \"Server token\" field."
-msgstr "最後に、以下のペアリングトークンを「サーバートークン」欄に貼り付けてください"
+msgstr ""
+"最後に、以下のペアリングトークンを「サーバートークン」欄に貼り付けてください"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
@@ -393,9 +397,9 @@ msgstr "IoT boxのIPアドレスを確認し、ウェブホームページに接
 msgid ""
 "First, connect the IoT Box to internet, using an ethernet cable. Or, "
 "checkout the"
-msgstr "まず、IoT "
-"boxをイーサネットケーブルでインターネットに接続してください。または、次の方法"
-"をご確認ください:"
+msgstr ""
+"まず、IoT boxをイーサネットケーブルでインターネットに接続してください。また"
+"は、次の方法をご確認ください:"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__fiscal_data_module
@@ -478,7 +482,8 @@ msgstr "保管ロット"
 msgid ""
 "If checked, this dialog won't appear the next time you print and the "
 "selected printers will be used automatically."
-msgstr "チェックを入れると、次回印刷時にこのダイアログは表示されず、選択したプリンタ"
+msgstr ""
+"チェックを入れると、次回印刷時にこのダイアログは表示されず、選択したプリンタ"
 "が自動的に使用されます。"
 
 #. module: iot
@@ -486,12 +491,13 @@ msgstr "チェックを入れると、次回印刷時にこのダイアログは
 msgid ""
 "If your IoT Box has no access to the internet, you can pair it with your "
 "database using the pairing token."
-msgstr "IoT "
-"boxがインターネットに接続できない場合は、ペアリングトークンを使ってデータベー"
-"スとペアリングすることができます"
+msgstr ""
+"IoT boxがインターネットに接続できない場合は、ペアリングトークンを使ってデータ"
+"ベースとペアリングすることができます"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__version
+#: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "Image Version"
 msgstr "イメージバージョン"
 
@@ -1077,7 +1083,8 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Then click on \"Configure\" under \"Odoo database connected\" section."
-msgstr "「Odooデータベースが接続されました」セクションの「設定」をクリックしてくださ"
+msgstr ""
+"「Odooデータベースが接続されました」セクションの「設定」をクリックしてくださ"
 "い"
 
 #. module: iot
@@ -1176,6 +1183,11 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Vat Signing Card not compatible with Fiscal Data Module."
+msgstr ""
+
+#. module: iot
+#: model:ir.model.fields,field_description:iot.field_iot_box__version_commit_url
+msgid "Version Commit Url"
 msgstr ""
 
 #. module: iot

@@ -3,19 +3,22 @@
 # * helpdesk_stock
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-10-08 18:46+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-17 03:47+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Slovak <https://translate.odoo.com/projects/odoo-19/"
+"helpdesk_stock/sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: helpdesk_stock
 #. odoo-python
@@ -58,18 +61,18 @@ msgstr ""
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_stock_return_picking__partner_id
 msgid "Customer"
-msgstr ""
+msgstr "Zákazník"
 
 #. module: helpdesk_stock
 #: model_terms:ir.ui.view,arch_db:helpdesk_stock.helpdesk_ticket_view_form_inherit_helpdesk_stock
 msgid "Deliveries"
-msgstr ""
+msgstr "Dodania"
 
 #. module: helpdesk_stock
 #. odoo-python
 #: code:addons/helpdesk_stock/models/helpdesk_ticket.py:0
 msgid "Delivery Orders"
-msgstr ""
+msgstr "Dodacie objednávky"
 
 #. module: helpdesk_stock
 #. odoo-python
@@ -80,7 +83,7 @@ msgstr ""
 #. module: helpdesk_stock
 #: model_terms:ir.ui.view,arch_db:helpdesk_stock.view_stock_return_picking_form_inherit_helpdesk_stock
 msgid "Delivery to Return"
-msgstr ""
+msgstr "Doručenie na vrátenie"
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_helpdesk_sla_report_analysis__display_name
@@ -90,12 +93,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk_stock.field_stock_return_picking__display_name
 #: model:ir.model.fields,field_description:helpdesk_stock.field_stock_return_picking_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Zobrazovaný názov"
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,help:helpdesk_stock.field_helpdesk_ticket__tracking
 msgid "Ensure the traceability of a storable product in your warehouse."
-msgstr ""
+msgstr "Zabezpečte sledovateľnosť skladovateľného produktu vo vašom sklade."
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_helpdesk_ticket__has_partner_picking
@@ -106,7 +109,7 @@ msgstr ""
 #: model:ir.model,name:helpdesk_stock.model_helpdesk_ticket
 #: model:ir.model.fields,field_description:helpdesk_stock.field_stock_picking__ticket_id
 msgid "Helpdesk Ticket"
-msgstr ""
+msgstr "Helpdesk požiadavka"
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_helpdesk_sla_report_analysis__id
@@ -116,12 +119,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk_stock.field_stock_return_picking__id
 #: model:ir.model.fields,field_description:helpdesk_stock.field_stock_return_picking_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_helpdesk_ticket__lot_id
 msgid "Lot/Serial Number"
-msgstr ""
+msgstr "Šarža/sériové číslo"
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,help:helpdesk_stock.field_stock_picking__ticket_visibility
@@ -140,14 +143,14 @@ msgstr ""
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_stock_return_picking__picking_id
 msgid "Picking"
-msgstr ""
+msgstr "Vyberanie"
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_helpdesk_sla_report_analysis__product_id
 #: model:ir.model.fields,field_description:helpdesk_stock.field_helpdesk_ticket__product_id
 #: model:ir.model.fields,field_description:helpdesk_stock.field_helpdesk_ticket_report_analysis__product_id
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,help:helpdesk_stock.field_helpdesk_ticket__product_id
@@ -159,49 +162,49 @@ msgstr ""
 #. module: helpdesk_stock
 #: model_terms:ir.ui.view,arch_db:helpdesk_stock.helpdesk_ticket_view_form_inherit_stock_user
 msgid "Replace"
-msgstr ""
+msgstr "Vymeniť"
 
 #. module: helpdesk_stock
 #: model_terms:ir.ui.view,arch_db:helpdesk_stock.helpdesk_ticket_view_form_inherit_stock_user
 msgid "Return"
-msgstr ""
+msgstr "Návrat"
 
 #. module: helpdesk_stock
 #. odoo-python
 #: code:addons/helpdesk_stock/models/helpdesk_ticket.py:0
 #: model:ir.model.fields,field_description:helpdesk_stock.field_helpdesk_ticket__picking_ids
 msgid "Return Orders"
-msgstr ""
+msgstr "Objednávky na vrátenie"
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_helpdesk_ticket__pickings_count
 msgid "Return Orders Count"
-msgstr ""
+msgstr "Počet objednávok na vrátenie"
 
 #. module: helpdesk_stock
 #: model:ir.model,name:helpdesk_stock.model_stock_return_picking
 msgid "Return Picking"
-msgstr ""
+msgstr "Návratka"
 
 #. module: helpdesk_stock
 #: model:ir.model,name:helpdesk_stock.model_stock_return_picking_line
 msgid "Return Picking Line"
-msgstr ""
+msgstr "Riadok návratky"
 
 #. module: helpdesk_stock
 #: model_terms:ir.ui.view,arch_db:helpdesk_stock.helpdesk_ticket_view_form_inherit_helpdesk_stock
 msgid "Returns"
-msgstr ""
+msgstr "Vratky"
 
 #. module: helpdesk_stock
 #: model:ir.model,name:helpdesk_stock.model_helpdesk_sla_report_analysis
 msgid "SLA Status Analysis"
-msgstr ""
+msgstr "Analýza stavu SLA"
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_stock_return_picking__sale_order_id
 msgid "Sales Order"
-msgstr ""
+msgstr "Objednávka"
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_stock_return_picking__suitable_picking_ids
@@ -222,12 +225,12 @@ msgstr ""
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_stock_return_picking__ticket_id
 msgid "Ticket"
-msgstr ""
+msgstr "Požiadavka"
 
 #. module: helpdesk_stock
 #: model:ir.model,name:helpdesk_stock.model_helpdesk_ticket_report_analysis
 msgid "Ticket Analysis"
-msgstr ""
+msgstr "Analýza požiadavky"
 
 #. module: helpdesk_stock
 #. odoo-python
@@ -239,12 +242,12 @@ msgstr ""
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_helpdesk_ticket__tracking
 msgid "Tracking"
-msgstr ""
+msgstr "Sledovanie"
 
 #. module: helpdesk_stock
 #: model:ir.model,name:helpdesk_stock.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Prevod"
 
 #. module: helpdesk_stock
 #. odoo-python

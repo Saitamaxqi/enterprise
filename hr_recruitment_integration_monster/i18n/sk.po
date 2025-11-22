@@ -3,19 +3,22 @@
 # * hr_recruitment_integration_monster
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-10-08 18:47+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-17 03:21+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Slovak <https://translate.odoo.com/projects/odoo-19/"
+"hr_recruitment_integration_monster/sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_recruitment_integration_monster
 #: model:res.partner.industry,name:hr_recruitment_integration_monster.monster_industry_28
@@ -45,7 +48,7 @@ msgstr ""
 #. module: hr_recruitment_integration_monster
 #: model:res.partner.industry,name:hr_recruitment_integration_monster.monster_industry_0
 msgid "All"
-msgstr ""
+msgstr "Všetko"
 
 #. module: hr_recruitment_integration_monster
 #: model:res.partner.industry,name:hr_recruitment_integration_monster.monster_industry_30
@@ -101,7 +104,7 @@ msgstr ""
 #. module: hr_recruitment_integration_monster
 #: model:ir.model,name:hr_recruitment_integration_monster.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Spoločnosti"
 
 #. module: hr_recruitment_integration_monster
 #: model:res.partner.industry,name:hr_recruitment_integration_monster.monster_industry_32
@@ -121,7 +124,7 @@ msgstr ""
 #. module: hr_recruitment_integration_monster
 #: model:ir.model,name:hr_recruitment_integration_monster.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Nastavenia konfigurácie"
 
 #. module: hr_recruitment_integration_monster
 #: model:res.partner.industry,name:hr_recruitment_integration_monster.monster_industry_4
@@ -141,7 +144,7 @@ msgstr ""
 #. module: hr_recruitment_integration_monster
 #: model:ir.model,name:hr_recruitment_integration_monster.model_hr_contract_type
 msgid "Contract Type"
-msgstr ""
+msgstr "Druh zmluvy"
 
 #. module: hr_recruitment_integration_monster
 #. odoo-python
@@ -154,7 +157,7 @@ msgstr ""
 #. module: hr_recruitment_integration_monster
 #: model:ir.model,name:hr_recruitment_integration_monster.model_res_currency
 msgid "Currency"
-msgstr ""
+msgstr "Mena"
 
 #. module: hr_recruitment_integration_monster
 #: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_hr_contract_type__display_name
@@ -166,12 +169,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_res_currency__display_name
 #: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_res_partner_industry__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Zobrazovaný Názov"
 
 #. module: hr_recruitment_integration_monster
 #: model:res.partner.industry,name:hr_recruitment_integration_monster.monster_industry_38
 msgid "Education"
-msgstr ""
+msgstr "Vzdelanie"
 
 #. module: hr_recruitment_integration_monster
 #: model:res.partner.industry,name:hr_recruitment_integration_monster.monster_industry_11
@@ -243,12 +246,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_res_currency__id
 #: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_res_partner_industry__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: hr_recruitment_integration_monster
 #: model:ir.model,name:hr_recruitment_integration_monster.model_res_partner_industry
 msgid "Industry"
-msgstr ""
+msgstr "Priemysel"
 
 #. module: hr_recruitment_integration_monster
 #: model:res.partner.industry,name:hr_recruitment_integration_monster.monster_industry_24
@@ -360,7 +363,7 @@ msgstr ""
 #. module: hr_recruitment_integration_monster
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_monster.res_config_settings_view_form
 msgid "Password"
-msgstr ""
+msgstr "Heslo"
 
 #. module: hr_recruitment_integration_monster
 #: model:res.partner.industry,name:hr_recruitment_integration_monster.monster_industry_42
@@ -469,7 +472,7 @@ msgstr ""
 #. module: hr_recruitment_integration_monster
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_monster.res_config_settings_view_form
 msgid "Username"
-msgstr ""
+msgstr "Používateľské meno"
 
 #. module: hr_recruitment_integration_monster
 #: model:res.partner.industry,name:hr_recruitment_integration_monster.monster_industry_37

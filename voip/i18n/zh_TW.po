@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"POT-Creation-Date: 2025-11-21 18:40+0000\n"
 "PO-Revision-Date: 2025-11-15 12:52+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -337,7 +337,7 @@ msgstr "正在撥打"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/softphone.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Calling…"
 msgstr "致電中⋯"
 
@@ -837,7 +837,6 @@ msgstr "圖片"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "In call"
 msgstr "通話中"
@@ -850,7 +849,6 @@ msgstr "入庫"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/softphone.js:0
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Incoming call"
 msgstr "通話來電"
@@ -866,6 +864,12 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 msgid "Incoming calls will be muted"
 msgstr "來電將會被靜音"
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/softphone.js:0
+msgid "Incoming call…"
+msgstr ""
 
 #. module: voip
 #. odoo-javascript
@@ -1157,6 +1161,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 msgid "Outgoing call (%(duration)s)"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/softphone.js:0
+msgid "Outgoing call…"
 msgstr ""
 
 #. module: voip

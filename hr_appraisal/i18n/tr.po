@@ -22,13 +22,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-11-12 14:57+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "hr_appraisal/tr/>\n"
 "Language: tr\n"
@@ -60,7 +61,6 @@ msgstr "%s'nin Hedefleri"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal_campaign_wizard__manager
-#, fuzzy
 msgid ""
 "'Employee's Manager': Each appraisal will be conducted by the direct manager "
 "of the employee\n"
@@ -74,15 +74,13 @@ msgstr ""
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
-#, fuzzy
 msgid ". Then, schedule a meeting to discuss it."
 msgstr ". Ardından, bunu tartışmak için bir toplantı planlayın."
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
-#, fuzzy
 msgid ". Then, share it with appraisers."
-msgstr ". Sonra da bunu değerleme uzmanlarıyla paylaşın."
+msgstr ". Sonra da bunu değerlendirme uzmanlarıyla paylaşın."
 
 #. module: hr_appraisal
 #: model:ir.model.fields.selection,name:hr_appraisal.selection__hr_appraisal_goal__progression__100
@@ -112,7 +110,6 @@ msgstr "%75"
 
 #. module: hr_appraisal
 #: model:mail.template,body_html:hr_appraisal.mail_template_appraisal_confirm
-#, fuzzy
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
@@ -144,7 +141,7 @@ msgstr ""
 "                        <t t-out=\"ctx.get('employee_to_name')\"> "
 "çalışanının</t> bir değerlendirmesi onaylanmıştır.\n"
 "                       <br/><br/>\n"
-"                        Lütfen birlikte bir ekspertiz tarihi planlayın.\n"
+"                        Lütfen birlikte bir değerlendirme tarihi planlayın.\n"
 "                       <br/><br/>\n"
 "                       <t t-if=\"ctx.get('recipient_users')\">\n"
 "                            <p style="
@@ -155,7 +152,7 @@ msgstr ""
 "object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px;\""
 ">{{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px;"
 "\">\n"
-"                                    Ekspertizi Görüntüle\n"
+"                                    Değerlendirmeyi Görüntüle\n"
 "                               </a>\n"
 "                            </p>\n"
 "                       </t>\n"
@@ -165,7 +162,6 @@ msgstr ""
 
 #. module: hr_appraisal
 #: model:mail.template,body_html:hr_appraisal.mail_template_appraisal_request_from_employee
-#, fuzzy
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
@@ -226,7 +222,7 @@ msgstr ""
 "object.employee_id.company_id.email_primary_color or '#FFFFFF'}}; border-"
 "radius: 5px;\">{{object.employee_id.company_id.email_primary_color or "
 "'#FFFFFF'}}; border-radius: 5px;\">\n"
-"                                    Ekspertizi Görüntüle\n"
+"                                    Değerlendirmeyi Görüntüle\n"
 "                               </a>\n"
 "                            </p>\n"
 "                       </t>\n"
@@ -236,7 +232,6 @@ msgstr ""
 
 #. module: hr_appraisal
 #: model:mail.template,body_html:hr_appraisal.mail_template_appraisal_reminder
-#, fuzzy
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;"
@@ -282,11 +277,11 @@ msgstr ""
 "                    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">"
 "\n"
 "                        Merhaba <t t-out=\"ctx.get('employee_to_name')\">"
-"[çalışan]</t>,\n"
+"[employee]</t>,\n"
 "                       <br/>\n"
 "                        <t t-out=\"ctx.get('manager_names')\"> [Appraisers] "
 "ile yapacağınız bir sonraki değerlendirmeniz için kısa bir hatırlatma</t>\n"
-"                        <t t-out=\"ctx.get('date_close')\"> [son tarih]</t> "
+"                        <t t-out=\"ctx.get('date_close')\"> [deadline]</t> "
 "için planlanmıştır.\n"
 "                       <br/>\n"
 "                        <t t-if=\"ctx.get('user_body')\">\n"
@@ -296,7 +291,8 @@ msgstr ""
 "                            </div>\n"
 "                       </t>\n"
 "                        <t t-if=\"ctx.get('recipient_users')\">\n"
-"                            Ekspertiz formunuza buradan ulaşabilirsiniz:\n"
+"                            Değerlendirme formunuza buradan ulaşabilirsiniz:"
+"\n"
 "                           <p class=\"text-center my-3 py-2 px-3\">\n"
 "                                <a t-att-href=\"ctx.get('url')\" t-attf-"
 "style=\" margin: auto; background-color: {{"
@@ -305,7 +301,7 @@ msgstr ""
 "object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px;\""
 ">{{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px;"
 "\">\n"
-"                                    Ekspertizi Görüntüle\n"
+"                                    Değerlendirmeyi Görüntüle\n"
 "                               </a>\n"
 "                            </p>\n"
 "                       </t>\n"
@@ -321,7 +317,6 @@ msgstr ""
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid ""
 "<em>\n"
 "                        Describe something you are proud of—work that had a "
@@ -330,14 +325,13 @@ msgid ""
 "                    </em>"
 msgstr ""
 "<em>\n"
-"                        Gurur duyduğunuz bir şeyi anlatın - üzerinizde "
-"olumlu bir etkisi olan bir iş\n"
-"                        Şirket.\n"
+"                        Gurur duyduğunuz, şirkette olumlu bir etki yaratmış "
+"bir\n"
+"                         işi anlatın.\n"
 "                   </em>"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid ""
 "<em>\n"
 "                        Did you face any new difficulties or unexpected "
@@ -351,7 +345,6 @@ msgstr ""
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid ""
 "<em>\n"
 "                        Every job has its strong points. In your opinion, "
@@ -360,14 +353,13 @@ msgid ""
 "                    </em>"
 msgstr ""
 "<em>\n"
-"                        Her işin güçlü yanları vardır. Sizce hangi görevler "
-"sizin için \n"
-"                        en çok ve en az hangisinden hoşlanırsınız?\n"
+"                        Her işin güçlü yanları vardır. Sizce hangi "
+"görevlerden en çok \n"
+"                        hangilerinden en az hoşlanıyorsunuz?\n"
 "                   </em>"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_manager_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid ""
 "<em>\n"
 "                        From a manager’s point of view, how could you help "
@@ -381,7 +373,6 @@ msgstr ""
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid ""
 "<em>\n"
 "                        How can the company support your needs and "
@@ -390,15 +381,13 @@ msgid ""
 "                    </em>"
 msgstr ""
 "<em>\n"
-"                        Şirket, size yardımcı olmak için ihtiyaçlarınızı ve "
-"hedeflerinizi nasıl destekleyebilir? \n"
-"                        hedeflerinize ulaşmak ve daha iyi işbirliğini teşvik "
-"etmek?\n"
+"                         hedeflerinize ulaşmak ve daha iyi işbirliği "
+"sağlamanız için Şirket, \n"
+"                         size nasıl destek olabilir?\n"
 "                   </em>"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_manager_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid ""
 "<em>\n"
 "                        How do you see the employee in the future? Does your "
@@ -408,13 +397,12 @@ msgid ""
 msgstr ""
 "<em>\n"
 "                        Çalışanı gelecekte nasıl görüyorsunuz? Vizyonunuz "
-"aşağıdakilerle uyumlu mu \n"
-"                        çalışanın hedefleri?\n"
+"çalışanın hedefleri \n"
+"                         ile uyumlu mu\n"
 "                   </em>"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_manager_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid ""
 "<em>\n"
 "                        Mention any achievements that demonstrate their "
@@ -423,9 +411,9 @@ msgid ""
 "                    </em>"
 msgstr ""
 "<em>\n"
-"                        Güçlü yönlerini gösteren herhangi bir başarıdan "
-"bahsedin \n"
-"                        işle ilgili zorlukların üstesinden gelmek.\n"
+"                        İşle ilgili zorlukların üstesinden gelme konusundaki "
+"güçlü yönlerini\n"
+"                        gösteren başarılarından bahsedin.\n"
 "                   </em>"
 
 #. module: hr_appraisal
@@ -435,19 +423,16 @@ msgstr "<em>Otonomi</em>"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid "<em>Company culture and values</em>"
 msgstr "<em>Şirket kültürü ve değerleri</em>"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid "<em>Compensation</em>"
 msgstr "<em>Tazminat</em>"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_manager_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid "<em>Do you need a rapid response to address the current situation?</em>"
 msgstr ""
 "<em>Mevcut durumu ele almak için hızlı bir müdahaleye mi ihtiyacınız "
@@ -455,37 +440,31 @@ msgstr ""
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid "<em>Internal Communication</em>"
 msgstr "<em>İç İletişim</em>"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid "<em>Job content</em>"
 msgstr "<em>İş içeriği</em>"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_manager_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid "<em>Proactivity</em>"
 msgstr "<em>Proaktiflik</em>"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid "<em>Provide a long-term objective (beyond 6 months).</em>"
 msgstr "<em>Uzun vadeli bir hedef (6 ayın ötesinde) sağlayın.</em>"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid "<em>Provide a short-term objective (within the next 6 months).</em>"
 msgstr "<em>Kısa vadeli bir hedef belirtin (önümüzdeki 6 ay içinde).</em>"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_manager_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid "<em>Stress Management</em>"
 msgstr "<em>Stres Yönetimi</em>"
 
@@ -501,7 +480,6 @@ msgstr "<em>Zaman Yönetimi</em>"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid "<em>Work organization</em>"
 msgstr "<em>İş organizasyonu</em>"
 
@@ -528,27 +506,24 @@ msgstr "<span class=\"o_stat_text\">Hedef</span>"
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_template_view_hierarchy
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_view_hierarchy
-#, fuzzy
 msgid "<span id=\"span_tag\" invisible=\"not tag_ids\">Tags:</span>"
 msgstr "<span id=\"span_tag\" invisible=\"not tag_ids\">Etiketler:</span>"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
-#, fuzzy
 msgid ""
 "<span invisible=\"employee_feedback_published\">Shared to Appraisers</span>\n"
 "                                            <strong class=\"text-success\" "
 "invisible=\"not employee_feedback_published\">Shared to Appraisers</strong>"
 msgstr ""
-"<span invisible=\"employee_feedback_published\">Değerleme Uzmanlarıyla "
+"<span invisible=\"employee_feedback_published\">Değerlendirme Uzmanlarıyla "
 "Paylaşıldı</span>\n"
 "                                            <strong class=\"text-success\" "
-"invisible=\"not employee_feedback_published\">Değerleme Uzmanlarıyla "
+"invisible=\"not employee_feedback_published\">Değerlendirme Uzmanlarıyla "
 "Paylaşıldı</strong>"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
-#, fuzzy
 msgid ""
 "<span invisible=\"manager_feedback_published\">Shared to Employee</span>\n"
 "                                            <strong class=\"text-success\" "
@@ -626,26 +601,22 @@ msgstr ""
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_view_hierarchy
-#, fuzzy
 msgid "<span>Deadline:</span>"
 msgstr "<span>Son teslim tarihi:</span>"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_template_view_hierarchy
-#, fuzzy
 msgid "<span>Expected Time:</span>"
 msgstr "<span>Beklenen süre:</span>"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_template_view_form
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_template_view_hierarchy
-#, fuzzy
 msgid "<span>months</span>"
 msgstr "<span>aylar</span>"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
-#, fuzzy
 msgid ""
 "<strong class=\"text-info\" "
 "invisible=\"employee_feedback_published\">Private</strong>\n"
@@ -659,7 +630,6 @@ msgstr ""
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
-#, fuzzy
 msgid ""
 "<strong class=\"text-info\" "
 "invisible=\"manager_feedback_published\">Private</strong>\n"
@@ -1078,7 +1048,6 @@ msgstr "<strong>Yönetim ekibinden ek yardıma ihtiyaç duyar mısınız ?</stro
 #. module: hr_appraisal
 #. odoo-python
 #: code:addons/hr_appraisal/models/hr_appraisal_goal.py:0
-#, fuzzy
 msgid "A goal template already exist for this goal."
 msgstr "Bu hedef için bir hedef şablonu zaten mevcuttur."
 
@@ -1117,7 +1086,6 @@ msgstr "Aktiviteler"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
-#, fuzzy
 msgid "Activities of"
 msgstr "Faaliyetleri"
 
@@ -1147,7 +1115,6 @@ msgstr "Aktivite  Türü"
 #. module: hr_appraisal
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/list/hr_employee_selection_list/hr_employee_selection_list_view.xml:0
-#, fuzzy
 msgid "Add Goals to Employees"
 msgstr "Çalışanlara Hedefler Ekleme"
 
@@ -1173,13 +1140,11 @@ msgstr "Tüm Çalışanlar"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_note_view_tree
-#, fuzzy
 msgid "All companies"
 msgstr "Tüm şirketler"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal_campaign_wizard__mode
-#, fuzzy
 msgid ""
 "Allow to create appraisals in batches:\n"
 "- By Employee: for specific employees\n"
@@ -1189,14 +1154,13 @@ msgid ""
 msgstr ""
 "Toplu olarak değerlendirme oluşturmaya izin verin:\n"
 "- Çalışana Göre: belirli çalışanlar için\n"
-"Şirkete göre: belirtilen şirketin tüm çalışanları\n"
+"- Şirkete göre: belirtilen şirketin tüm çalışanları\n"
 "- Departmana Göre: belirtilen departmanın tüm çalışanları\n"
 "- Çalışan Etiketine Göre: belirli çalışan grubu kategorisindeki tüm "
 "çalışanlar"
 
 #. module: hr_appraisal
 #: model:mail.template,description:hr_appraisal.mail_template_appraisal_reminder
-#, fuzzy
 msgid "An appraisal reminder sent manually to the employee by the manager"
 msgstr ""
 "Yönetici tarafından çalışana manuel olarak gönderilen bir değerlendirme "
@@ -1235,15 +1199,13 @@ msgstr "Değerleme Değerlendirme Notu"
 #: code:addons/hr_appraisal/models/hr_appraisal.py:0
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.js:0
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_campaign_wizard_view_form
-#, fuzzy
 msgid "Appraisal Campaign"
-msgstr "Değerleme Kampanyası"
+msgstr "Değerlendirme Kampanyası"
 
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_hr_appraisal_campaign_wizard
-#, fuzzy
 msgid "Appraisal Campaign Wizard"
-msgstr "Değerleme Kampanyası Sihirbazı"
+msgstr "Değerlendirme Kampanyası Sihirbazı"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_res_company__appraisal_confirm_mail_template
@@ -1303,9 +1265,8 @@ msgstr "Değerlendirme Özellikleri"
 
 #. module: hr_appraisal
 #: model:mail.template,subject:hr_appraisal.mail_template_appraisal_reminder
-#, fuzzy
 msgid "Appraisal Reminder"
-msgstr "Ekspertiz Hatırlatma"
+msgstr "Değerlendirme Hatırlatması"
 
 #. module: hr_appraisal
 #. odoo-python
@@ -1407,7 +1368,6 @@ msgstr "İşlem Değerlendirmesi"
 #. module: hr_appraisal
 #. odoo-python
 #: code:addons/hr_appraisal/wizard/hr_appraisal_campaign_wizard.py:0
-#, fuzzy
 msgid ""
 "Appraisals won't be created for the following employees because they don't "
 "have a manager: %(employees)s"
@@ -1417,9 +1377,8 @@ msgstr ""
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
-#, fuzzy
 msgid "Appraisers"
-msgstr "Değerleme Uzmanları"
+msgstr "Değerlendirme Uzmanları"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
@@ -1643,9 +1602,8 @@ msgstr "Yeni hedef oluştur"
 #. module: hr_appraisal
 #: model_terms:ir.actions.act_window,help:hr_appraisal.action_hr_appraisal_goal_template
 #: model_terms:ir.actions.act_window,help:hr_appraisal.action_hr_appraisal_goal_template_library
-#, fuzzy
 msgid "Create new goals Template"
-msgstr "Yeni hedefler oluştur Şablon"
+msgstr "Yeni hedefler şablonu Oluştur"
 
 #. module: hr_appraisal
 #: model_terms:ir.actions.act_window,help:hr_appraisal.hr_appraisal_goal_tag_action
@@ -1717,20 +1675,17 @@ msgstr "Sil"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_departure_wizard__delete_appraisal
-#, fuzzy
 msgid "Delete Future Appraisals"
 msgstr "Gelecekteki Değerlemeleri Sil"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_departure_wizard__delete_appraisal
-#, fuzzy
 msgid "Delete all appraisal after contract end date."
 msgstr "Sözleşme bitiş tarihinden sonraki tüm değerlendirmeleri silin."
 
 #. module: hr_appraisal
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/components/goal_template_delete_confirmation_dialog/goal_template_delete_confirmation_dialog.js:0
-#, fuzzy
 msgid "Delete with children"
 msgstr "Çocuklarla birlikte silin"
 
@@ -1746,7 +1701,6 @@ msgstr "Departman"
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.open_view_hr_appraisal_graph_department
-#, fuzzy
 msgid "Department Appraisals"
 msgstr "Departman Değerlendirmeleri"
 
@@ -1868,7 +1822,6 @@ msgstr "Çalışan Kullanıcısı"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
-#, fuzzy
 msgid "Employee to review"
 msgstr "İncelenecek çalışan"
 
@@ -1915,13 +1868,11 @@ msgstr "%s için değerlendirme doldurun"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
-#, fuzzy
 msgid "Fill in the employee's feedback section before"
 msgstr "Çalışanın geri bildirim bölümünü daha önce doldurun"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
-#, fuzzy
 msgid "Fill in the manager's feedback section before"
 msgstr "Daha önce yöneticinin geri bildirimi bölümünü doldurun"
 
@@ -1970,13 +1921,11 @@ msgstr "Hedef Etiketleri"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__template_goal_id
-#, fuzzy
 msgid "Goal Template"
 msgstr "Hedef Şablonu"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_view_search
-#, fuzzy
 msgid "Goal or Employee"
 msgstr "Hedef veya Çalışan"
 
@@ -1998,33 +1947,28 @@ msgstr "Hedef Sayısı"
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.action_hr_appraisal_goal_template
-#, fuzzy
 msgid "Goals Template"
 msgstr "Hedefler Şablonu"
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.action_hr_appraisal_goal_template_library
-#, fuzzy
 msgid "Goals Template Library"
 msgstr "Hedefler Şablon Kitaplığı"
 
 #. module: hr_appraisal
 #: model:mail.template,name:hr_appraisal.mail_template_appraisal_request_from_employee
-#, fuzzy
 msgid "HR: Appraisal Request By Employee"
 msgstr "İK: Çalışan Tarafından Değerlendirme Talebi"
 
 #. module: hr_appraisal
 #: model:mail.template,name:hr_appraisal.mail_template_appraisal_reminder
-#, fuzzy
 msgid "HR: Appraisal reminder"
 msgstr "İK: Değerlendirme hatırlatması"
 
 #. module: hr_appraisal
 #: model:mail.template,name:hr_appraisal.mail_template_appraisal_confirm
-#, fuzzy
 msgid "HR: General Appraisal Confirmation"
-msgstr "İK: Genel Değerleme Onayı"
+msgstr "İK: Genel Değerlendirme Onayı"
 
 #. module: hr_appraisal
 #: model:hr.appraisal.goal.tag,name:hr_appraisal.hr_appraisal_goal_tag_hardskills
@@ -2033,7 +1977,6 @@ msgstr "Teknik Beceriler"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__has_edit_right
-#, fuzzy
 msgid "Has Edit Right"
 msgstr "Düzenleme Hakkı Var"
 
@@ -2050,13 +1993,11 @@ msgstr "Çalışan nasıl gelişebilir?"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid "How do I feel about my own role?"
 msgstr "Kendi rolüm hakkında ne hissediyorum?"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid "How do I feel about the company?"
 msgstr "Şirket hakkında ne hissediyorum?"
 
@@ -2107,7 +2048,6 @@ msgstr "İşaretliyse, bazı mesajlar gönderi hatası içermektedir."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__manager_feedback_published
-#, fuzzy
 msgid ""
 "If greened, the employee will be able to see your feedback. Otherwise, your "
 "feedback is blurred and visible only to you."
@@ -2117,7 +2057,6 @@ msgstr ""
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal__employee_feedback_published
-#, fuzzy
 msgid ""
 "If greened, the manager will be able to see and edit your feedback. "
 "Otherwise, your feedback is blurred and visible only to you."
@@ -2128,7 +2067,6 @@ msgstr ""
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
-#, fuzzy
 msgid "If you need, ask feedback to a selection of colleagues you work with."
 msgstr ""
 "İhtiyaç duyarsanız, birlikte çalıştığınız meslektaşlarınızdan bir seçkiye "
@@ -2167,9 +2105,8 @@ msgstr "Takipçi mi"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__is_last_appraisal_late
-#, fuzzy
 msgid "Is Last Appraisal Late"
-msgstr "Son Ekspertiz Geç mi Kaldı"
+msgstr "Son Değerlendirme Geç mi Kaldı"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__is_manager
@@ -2192,7 +2129,6 @@ msgstr "İş Pozisyonu"
 #. module: hr_appraisal
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.xml:0
-#, fuzzy
 msgid "Keep track of how your employees are doing..."
 msgstr "Çalışanlarınızın ne yaptığını takip edin..."
 
@@ -2203,7 +2139,6 @@ msgstr "Dil"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
-#, fuzzy
 msgid "Last 365 days"
 msgstr "Son 365 gün"
 
@@ -2216,13 +2151,11 @@ msgstr "Son Değerlendirme Tarihi"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee_public__last_appraisal_state
-#, fuzzy
 msgid "Last Appraisal State"
 msgstr "Son Değerleme Durumu"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__last_ongoing_appraisal_date
-#, fuzzy
 msgid "Last Ongoing Appraisal Date"
 msgstr "Son Devam Eden Değerlendirme Tarihi"
 
@@ -2264,9 +2197,8 @@ msgstr "Geciken Aktiviteler"
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_kanban
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_employee_tree
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_tree
-#, fuzzy
 msgid "Launch Campaign"
-msgstr "Lansman Kampanyası"
+msgstr "Kampanyayı Başlat"
 
 #. module: hr_appraisal
 #: model:ir.ui.menu,name:hr_appraisal.menu_config_goal_template
@@ -2286,14 +2218,13 @@ msgstr "Örnek Verileri Yükle"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_manager_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid ""
 "Long term (&gt; 6 months) career discussion: Where does the employee\n"
 "                    want to go, and how can you help them reach that goal?"
 msgstr ""
-"Uzun vadeli (&gt; 6 ay) kariyer tartışması: Çalışan nerede çalışıyor?\n"
-"                    gitmek istiyorlar ve bu hedefe ulaşmalarına nasıl "
-"yardımcı olabilirsiniz?"
+"Uzun vadeli (&gt; 6 ay) kariyer tartışması: Çalışan nereye gitmek\n"
+"                    istiyor ve oraya ulaşmak için nasıl yardımcı "
+"olabilirsiniz?"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_request_appraisal__template_id
@@ -2377,9 +2308,8 @@ msgstr "Şekli"
 #. module: hr_appraisal
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/components/cog_menu/multiple_appraisals_cog_menu.xml:0
-#, fuzzy
 msgid "Multiple Appraisals"
-msgstr "Çoklu Ekspertiz"
+msgstr "Çoklu Değerlendirmeler"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
@@ -2409,7 +2339,6 @@ msgstr "Takımım"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
-#, fuzzy
 msgid "My team"
 msgstr "Benim takımım"
 
@@ -2430,7 +2359,6 @@ msgstr "İyileştirme gerekiyorr"
 #. module: hr_appraisal
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.xml:0
-#, fuzzy
 msgid "New Employee"
 msgstr "Yeni Çalışan"
 
@@ -2479,21 +2407,18 @@ msgstr "Sonraki Değerleme Tarihi"
 #. module: hr_appraisal
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.xml:0
-#, fuzzy
 msgid "No Appraisals found!"
-msgstr "Ekspertiz bulunamadı!"
+msgstr "Değerlendirme bulunamadı!"
 
 #. module: hr_appraisal
 #. odoo-python
 #: code:addons/hr_appraisal/wizard/hr_appraisal_campaign_wizard.py:0
-#, fuzzy
 msgid "No employees have the tag %(category_name)s"
-msgstr "Hiçbir çalışan etikete sahip değil %(category_name)s"
+msgstr "Hiçbir çalışan şu etikete %(category_name)s sahip değil"
 
 #. module: hr_appraisal
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.xml:0
-#, fuzzy
 msgid "No employees to assess yet!"
 msgstr "Henüz değerlendirecek çalışan yok!"
 
@@ -2511,15 +2436,13 @@ msgstr "Not"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__number_of_completed_sibling_goals
-#, fuzzy
 msgid "Number Of Completed Sibling Goals"
 msgstr "Tamamlanan Kardeş Hedeflerinin Sayısı"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__number_of_sibling_goals
-#, fuzzy
 msgid "Number Of Sibling Goals"
-msgstr "Kardeş Sayısı Hedefleri"
+msgstr "Kardeş Hedefler Sayısı"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_needaction_counter
@@ -2552,7 +2475,6 @@ msgstr "Yetkili: Tüm değerlendirmelere erişim"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
-#, fuzzy
 msgid "On demand"
 msgstr "Talep üzerine"
 
@@ -2571,7 +2493,6 @@ msgstr "Devam Eden Değerlendirme Sayısı"
 #. module: hr_appraisal
 #. odoo-python
 #: code:addons/hr_appraisal/models/hr_appraisal.py:0
-#, fuzzy
 msgid "Oops! You can only delete draft appraisals."
 msgstr "Oops! Yalnızca taslak değerlendirmeleri silebilirsiniz."
 
@@ -2579,7 +2500,6 @@ msgstr "Oops! Yalnızca taslak değerlendirmeleri silebilirsiniz."
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/kanban/goal_kanban/goal_kanban_view.xml:0
 #: code:addons/hr_appraisal/static/src/views/list/goal_list/goal_list_view.xml:0
-#, fuzzy
 msgid "Open Library"
 msgstr "Açık Kütüphane"
 
@@ -2591,13 +2511,11 @@ msgstr "Fırsatlar"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.request_appraisal_view_form
-#, fuzzy
 msgid "Optional comment..."
-msgstr "İsteğe bağlı yorum..."
+msgstr "Opsiyonel yorum..."
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_request_appraisal__lang
-#, fuzzy
 msgid ""
 "Optional translation language (ISO code) to select when sending out an "
 "email. If not set, the main partner's language will be used. This should "
@@ -2622,9 +2540,8 @@ msgstr "Genel deneyime dair geri bildirim"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__parent_id
-#, fuzzy
 msgid "Parent Goal Template"
-msgstr "Ebeveyn Hedef Şablonu"
+msgstr "Ana Hedef Şablonu"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__parent_path
@@ -2647,12 +2564,11 @@ msgstr ""
 #. module: hr_appraisal
 #. odoo-python
 #: code:addons/hr_appraisal/models/hr_appraisal.py:0
-#, fuzzy
 msgid ""
 "Please set a final rating to validate these appraisals:\n"
 "- %s"
 msgstr ""
-"Lütfen bu değerlendirmeleri doğrulamak için nihai bir derecelendirme "
+"Lütfen bu değerlendirmeleri doğrulamak için final bir derecelendirme "
 "belirleyin:\n"
 "- %s"
 
@@ -2691,9 +2607,8 @@ msgstr "İlerleme"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_view_kanban
-#, fuzzy
 msgid "Progress:"
-msgstr "İlerleme var:"
+msgstr "İlerleme:"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__appraisal_properties
@@ -2703,7 +2618,6 @@ msgstr "Özellikler"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_template_view_form
-#, fuzzy
 msgid ""
 "Provide visible information on the                             goal, how the "
 "employee can achieve it. Which benefit he will get from it. Maybe some "
@@ -2715,7 +2629,6 @@ msgstr ""
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_view_form
-#, fuzzy
 msgid ""
 "Provide visible information on the goal, how the employee can achieve it. "
 "Which benefit he will get from it.                             Maybe some "
@@ -2826,15 +2739,13 @@ msgstr "Programlayın"
 #. module: hr_appraisal
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.xml:0
-#, fuzzy
 msgid "Schedule Appraisals"
-msgstr "Ekspertizleri Planlayın"
+msgstr "Değerlendirmeyi Planlayın"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
-#, fuzzy
 msgid "Schedule Meeting"
-msgstr "Toplantı Programı"
+msgstr "Toplantı Planlayın"
 
 #. module: hr_appraisal
 #: model_terms:ir.actions.act_window,help:hr_appraisal.hr_appraisal_action_multiple_appraisals
@@ -2855,7 +2766,6 @@ msgstr "Seçme"
 #. module: hr_appraisal
 #. odoo-python
 #: code:addons/hr_appraisal/models/hr_appraisal_goal.py:0
-#, fuzzy
 msgid "Select Employees"
 msgstr "Çalışanları Seçin"
 
@@ -2884,7 +2794,6 @@ msgstr ""
 
 #. module: hr_appraisal
 #: model:mail.template,description:hr_appraisal.mail_template_appraisal_request_from_employee
-#, fuzzy
 msgid ""
 "Sent manually to the manager by the employee who wants to do an appraisal"
 msgstr ""
@@ -2925,19 +2834,16 @@ msgstr "Yönetici Geri Bildirimini Tam Göster"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
-#, fuzzy
 msgid "Show all records which has been created during the last 365 days"
 msgstr "Son 365 gün içinde oluşturulan tüm kayıtları gösterin"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_search
-#, fuzzy
 msgid "Show all records whose next activity date is past"
 msgstr "Bir sonraki etkinlik tarihi geçmiş olan tüm kayıtları göster"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__sibling_goals_ratio
-#, fuzzy
 msgid "Sibling Goals Ratio"
 msgstr "Kardeş Hedefleri Oranı"
 
@@ -2980,19 +2886,16 @@ msgstr "Beklentileri Güçlü Bir Şekilde Aşmak"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__child_ids
-#, fuzzy
 msgid "Sub Goal Template"
 msgstr "Alt Hedef Şablonu"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_template_view_list
-#, fuzzy
 msgid "Sub Goals"
 msgstr "Alt Hedefler"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_template_view_form
-#, fuzzy
 msgid "Sub-Goals"
 msgstr "Alt Hedefler"
 
@@ -3055,18 +2958,14 @@ msgstr "Değerlendirmenin durumu, 'Gerçekleştiren' %s olarak ayarlanmıştır"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal_goal__usual_duration_month
-#, fuzzy
 msgid ""
 "The average timing for the goals to be completed. It will populate the "
 "estimated end date when assigned"
-msgstr ""
-"Hedeflerin tamamlanması için ortalama zamanlama. Atandığında tahmini bitiş "
-"tarihini dolduracaktır"
+msgstr "Hedeflerin tamamlanması için ortalama zamanlama. dolduracaktır"
 
 #. module: hr_appraisal
 #. odoo-python
 #: code:addons/hr_appraisal/wizard/hr_appraisal_campaign_wizard.py:0
-#, fuzzy
 msgid "The company %(company_name)s doesn't have employees"
 msgstr "%(company_name)s şirketinin çalışanı yok"
 
@@ -3082,7 +2981,6 @@ msgstr ""
 #. module: hr_appraisal
 #. odoo-python
 #: code:addons/hr_appraisal/wizard/hr_appraisal_campaign_wizard.py:0
-#, fuzzy
 msgid "The department %(department_name)s doesn't have employees"
 msgstr "%(department_name)s departmanının çalışanı yok"
 
@@ -3120,13 +3018,12 @@ msgstr ""
 #. module: hr_appraisal
 #. odoo-python
 #: code:addons/hr_appraisal/wizard/hr_appraisal_campaign_wizard.py:0
-#, fuzzy
 msgid ""
 "The following employees already have appraisals on %(appraisal_date)s: %"
 "(employees)s. The existing appraisals will be used instead of creating new "
 "ones."
 msgstr ""
-"Aşağıdaki çalışanların %(appraisal_date)s: %(employees)s adresinde zaten "
+"%(appraisal_date)s taraihinde aşağıdaki çalışanların %(employees)s zaten "
 "değerlendirmeleri bulunmaktadır. Yeni değerlendirmeler oluşturmak yerine "
 "mevcut değerlendirmeler kullanılacaktır."
 
@@ -3175,7 +3072,6 @@ msgstr "Eğitim Etkinlikleri"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_campaign_wizard_view_form
-#, fuzzy
 msgid "Type Employee's Name"
 msgstr "Çalışanın Adını Yazın"
 
@@ -3238,13 +3134,11 @@ msgstr "Kullanıcı İçeriği"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__usual_duration_month
-#, fuzzy
 msgid "Usual Timing"
 msgstr "Olağan Zamanlama"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_template_form
-#, fuzzy
 msgid "Visible to all"
 msgstr "Herkes tarafından görülebilir"
 
@@ -3278,30 +3172,26 @@ msgstr "Websitesi iletişim geçmişi"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid "What are my most important achievements since my last appraisal?"
 msgstr ""
 "Son değerlendirmemden bu yana elde ettiğim en önemli başarılar nelerdir?"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid ""
 "What are my short- and long-term goals within the company and for my\n"
 "                    career?"
 msgstr ""
-"Şirket içinde ve kendim için kısa ve uzun vadeli hedeflerim nelerdir?\n"
-"                    Kariyer mi?"
+"Kariyer için Şirket içinde kısa ve uzun vadeli hedeflerim\n"
+"                    nelerdir?"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid "What do I need to improve my work?"
 msgstr "İşimi geliştirmek için neye ihtiyacım var?"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid ""
 "What has been the most challenging aspect of my work this past year,\n"
 "                  and why?"
@@ -3311,7 +3201,6 @@ msgstr ""
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
-#, fuzzy
 msgid "Which parts of my job do I enjoy the most? Which do I enjoy the least?"
 msgstr ""
 "İşimin en çok hangi bölümlerinden keyif alıyorum? Hangilerinden en az keyif "
@@ -3320,11 +3209,10 @@ msgstr ""
 #. module: hr_appraisal
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.xml:0
-#, fuzzy
 msgid "Would you like to test with sample data or create your own employees?"
 msgstr ""
-"Örnek verilerle test etmek veya kendi çalışanlarınızı oluşturmak ister "
-"misiniz?"
+"Örnek verilerle test etmek ister misiniz? veya kendi çalışanlarınızı "
+"oluşturmak ister misiniz?"
 
 #. module: hr_appraisal
 #. odoo-python
@@ -3338,7 +3226,6 @@ msgstr ""
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_template_view_form
-#, fuzzy
 msgid "You can define this goal to be part of another one"
 msgstr "Bu hedefi başka bir hedefin parçası olarak tanımlayabilirsiniz"
 
@@ -3354,7 +3241,6 @@ msgstr ""
 #. module: hr_appraisal
 #. odoo-python
 #: code:addons/hr_appraisal/models/hr_appraisal_goal.py:0
-#, fuzzy
 msgid ""
 "You cannot duplicate at the same time a goal and one of its children.\n"
 "Duplicating a goal will also duplicate its children."
@@ -3391,7 +3277,6 @@ msgstr "örn. Yıllık Değerlendirme"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_template_view_form
-#, fuzzy
 msgid "e.g. Improve English"
 msgstr "örneğin İngilizceyi Geliştirin"
 

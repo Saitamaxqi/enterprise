@@ -3,12 +3,13 @@
 # * accountant_knowledge
 #
 # "Junko Augias (juau)" <juau@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-13 09:24+0000\n"
+"PO-Revision-Date: 2025-11-20 08:15+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "accountant_knowledge/ja/>\n"
@@ -360,7 +361,8 @@ msgid ""
 "Based on our procedures, we have not identified any matters that would call "
 "into question the overall consistency and plausibility of the interim "
 "financial statements as attached to this statement."
-msgstr ""
+msgstr "当社の手続に基づき、本声明に添付された中間財務諸表の全体的な整合性および妥当"
+"性に疑問を呈する事項は特定されませんでした。"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -1771,7 +1773,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__title
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_form
 msgid "Title"
-msgstr ""
+msgstr "タイトル"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets

@@ -3,19 +3,22 @@
 # * planning
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-08 18:43+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-17 03:14+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Kabyle <https://translate.odoo.com/projects/odoo-19/planning/"
+"kab/>\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: planning
 #. odoo-python
@@ -27,7 +30,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/planning/models/planning_role.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (Anɣel )"
 
 #. module: planning
 #: model:ir.actions.report,print_report_name:planning.report_planning_slot
@@ -429,7 +432,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:planning.field_planning_role__active
 #: model:ir.model.fields,field_description:planning.field_planning_slot_template__active
 msgid "Active"
-msgstr ""
+msgstr "Urmid"
 
 #. module: planning
 #. odoo-javascript
@@ -603,7 +606,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/planning/static/src/views/planning_calendar/planning_filter_section/planning_calendar_filter_section.xml:0
 msgid "Avatar"
-msgstr ""
+msgstr "Avatar"
 
 #. module: planning
 #: model:ir.ui.menu,name:planning.planning_menu_schedule_by_resource
@@ -637,7 +640,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:planning.field_planning_role__color
 #: model:ir.model.fields,field_description:planning.field_planning_slot__color
 msgid "Color"
-msgstr ""
+msgstr "Ini"
 
 #. module: planning
 #: model:planning.role,name:planning.planning_role_cm
@@ -647,7 +650,7 @@ msgstr ""
 #. module: planning
 #: model:ir.model,name:planning.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Tikebbaniyin"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__company_id
@@ -656,7 +659,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:planning.field_planning_slot__company_id
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search_base
 msgid "Company"
-msgstr ""
+msgstr "Takebbwanit"
 
 #. module: planning
 #: model:ir.model.fields,help:planning.field_planning_planning__company_id
@@ -673,13 +676,13 @@ msgstr ""
 #. module: planning
 #: model:ir.ui.menu,name:planning.planning_menu_settings
 msgid "Configuration"
-msgstr ""
+msgstr "Tawila"
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/views/planning_calendar/planning_ask_recurrence_update/planning_ask_recurrence_update_dialog.xml:0
 msgid "Confirm"
-msgstr ""
+msgstr "Sentem"
 
 #. module: planning
 #. odoo-javascript
@@ -716,7 +719,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:planning.field_planning_slot__create_uid
 #: model:ir.model.fields,field_description:planning.field_planning_slot_template__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Yerna-t"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_calendar_resource__create_date
@@ -728,14 +731,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:planning.field_planning_slot__create_date
 #: model:ir.model.fields,field_description:planning.field_planning_slot_template__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Yerna di"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.open_slots_list_template
 #: model_terms:ir.ui.view,arch_db:planning.period_report_template
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form
 msgid "Date"
-msgstr ""
+msgstr "Azemz"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_planning__date_end
@@ -763,7 +766,7 @@ msgstr ""
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.res_config_settings_view_form
 msgid "Deadline"
-msgstr ""
+msgstr "Azemz n tagara"
 
 #. module: planning
 #: model:ir.model.fields,help:planning.field_planning_planning__self_unassign_days_before
@@ -807,7 +810,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:planning.planning_role_view_kanban
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_kanban
 msgid "Delete"
-msgstr ""
+msgstr "Kkes"
 
 #. module: planning
 #. odoo-javascript
@@ -838,7 +841,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:planning.planning_send_view_form
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
 msgid "Discard"
-msgstr ""
+msgstr "Sefsex"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_hr_departure_wizard__display_name
@@ -871,7 +874,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:planning.selection__planning_slot__state__draft
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search_base
 msgid "Draft"
-msgstr ""
+msgstr "Arewway"
 
 #. module: planning
 #: model_terms:digest.tip,tip_description:planning.digest_tip_planning_0
@@ -884,7 +887,7 @@ msgstr ""
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__duration
 msgid "Duration"
-msgstr ""
+msgstr "Timirt"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot_template__duration_days
@@ -895,7 +898,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:planning.planning_role_view_kanban
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_kanban
 msgid "Edit"
-msgstr ""
+msgstr "Ẓreg"
 
 #. module: planning
 #. odoo-javascript
@@ -928,7 +931,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:planning.field_planning_preview__employee_id
 #: model:ir.model.fields,field_description:planning.field_planning_slot__employee_id
 msgid "Employee"
-msgstr ""
+msgstr "Amaris"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.hr_employee_view_form_simplified
@@ -960,7 +963,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:planning.field_planning_slot__end_datetime
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search_base
 msgid "End Date"
-msgstr ""
+msgstr "Azemz n tagara"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot_template__end_time
@@ -1063,12 +1066,12 @@ msgstr ""
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot_template__name
 msgid "Hours"
-msgstr ""
+msgstr "Asragen"
 
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_analysis_report__resource_type__user
 msgid "Human"
-msgstr ""
+msgstr "Amdan"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form
@@ -1112,7 +1115,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:planning.field_res_config_settings__id
 #: model:ir.model.fields,field_description:planning.field_resource_resource__id
 msgid "ID"
-msgstr ""
+msgstr "Asulay"
 
 #. module: planning
 #: model:ir.model.fields,help:planning.field_planning_analysis_report__publication_warning
@@ -1149,7 +1152,7 @@ msgstr ""
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.hr_employee_view_form_simplified
 msgid "Job Position"
-msgstr ""
+msgstr "Tadekkwant n Umahil"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__job_title
@@ -1167,7 +1170,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:planning.field_planning_slot__write_uid
 #: model:ir.model.fields,field_description:planning.field_planning_slot_template__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Aleqqem aneggaru sɣuṛ"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_calendar_resource__write_date
@@ -1179,7 +1182,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:planning.field_planning_slot__write_date
 #: model:ir.model.fields,field_description:planning.field_planning_slot_template__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Aleqqem aneggaru di"
 
 #. module: planning
 #. odoo-javascript
@@ -1261,7 +1264,7 @@ msgstr ""
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_analysis_report__resource_type__material
 msgid "Material"
-msgstr ""
+msgstr "Allal"
 
 #. module: planning
 #: model:ir.actions.act_window,name:planning.planning_action_resources
@@ -1287,7 +1290,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/planning/static/src/js/planning_calendar_front.js:0
 msgid "Month"
-msgstr ""
+msgstr "Aggur"
 
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_recurrency__repeat_unit__month
@@ -1330,13 +1333,13 @@ msgstr ""
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_role__name
 msgid "Name"
-msgstr ""
+msgstr "Isem"
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/views/planning_calendar/planning_calendar_controller.js:0
 msgid "New Event"
-msgstr ""
+msgstr "Tadyant tamaynut"
 
 #. module: planning
 #. odoo-javascript
@@ -1408,7 +1411,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:planning.open_slots_list_template
 #: model_terms:ir.ui.view,arch_db:planning.period_report_template
 msgid "Note"
-msgstr ""
+msgstr "Awennit"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_shift_ics_description
@@ -1656,7 +1659,7 @@ msgstr ""
 #: code:addons/planning/static/src/views/planning_gantt/planning_gantt_controller.xml:0
 #: model_terms:ir.ui.view,arch_db:planning.planning_preview_view_form
 msgid "Preview"
-msgstr ""
+msgstr "Timeẓriwt"
 
 #. module: planning
 #: model:ir.actions.act_window,name:planning.resource_preview_action
@@ -1668,7 +1671,7 @@ msgstr ""
 #: code:addons/planning/static/src/views/planning_calendar/planning_calendar_controller.xml:0
 #: code:addons/planning/static/src/views/planning_gantt/planning_gantt_controller.xml:0
 msgid "Print"
-msgstr ""
+msgstr "Siggez"
 
 #. module: planning
 #. odoo-javascript
@@ -1774,7 +1777,7 @@ msgstr ""
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
 msgid "Remove"
-msgstr ""
+msgstr "Kkes"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__repeat
@@ -1817,7 +1820,7 @@ msgstr ""
 #. module: planning
 #: model:ir.ui.menu,name:planning.planning_menu_reporting
 msgid "Reporting"
-msgstr ""
+msgstr "Assaɣen"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.period_report_template
@@ -1834,14 +1837,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
 msgid "Reset to Draft"
-msgstr ""
+msgstr "Rrit d arewway"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__resource_id
 #: model:ir.model.fields,field_description:planning.field_planning_slot__resource_id
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search_base
 msgid "Resource"
-msgstr ""
+msgstr "Taɣbalut"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__resource_color
@@ -1853,7 +1856,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:planning.field_planning_role__resource_ids
 #: model_terms:ir.ui.view,arch_db:planning.planning_role_view_search
 msgid "Resources"
-msgstr ""
+msgstr "Tiɣbula"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__role_id
@@ -1910,7 +1913,7 @@ msgstr ""
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
 msgid "Save"
-msgstr ""
+msgstr "Kles"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.employee_no_email_list_wizard
@@ -1984,7 +1987,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
 msgid "Send"
-msgstr ""
+msgstr "Azen"
 
 #. module: planning
 #: model:ir.model,name:planning.model_planning_send
@@ -2002,7 +2005,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:planning.planning_action_settings
 #: model:ir.ui.menu,name:planning.planning_menu_settings_config
 msgid "Settings"
-msgstr ""
+msgstr "Tawila"
 
 #. module: planning
 #. odoo-javascript
@@ -2152,13 +2155,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:planning.field_planning_slot__start_datetime
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search_base
 msgid "Start Date"
-msgstr ""
+msgstr "Azemz n tazwara"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__state
 #: model:ir.model.fields,field_description:planning.field_planning_slot__state
 msgid "Status"
-msgstr ""
+msgstr "Addad"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_planning__end_datetime
@@ -2368,13 +2371,13 @@ msgstr ""
 #: code:addons/planning/static/src/js/planning_calendar_front.js:0
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search_base
 msgid "Today"
-msgstr ""
+msgstr "Assa"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__resource_type
 #: model:ir.model.fields,field_description:planning.field_planning_slot__resource_type
 msgid "Type"
-msgstr ""
+msgstr "Tawsit"
 
 #. module: planning
 #. odoo-python
@@ -2417,7 +2420,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:planning.field_planning_slot__user_id
 #: model:res.groups,name:planning.group_planning_user
 msgid "User"
-msgstr ""
+msgstr "Aseqdac"
 
 #. module: planning
 #. odoo-python
@@ -2429,7 +2432,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/planning/static/src/js/planning_calendar_front.js:0
 msgid "Week"
-msgstr ""
+msgstr "Dduṛt"
 
 #. module: planning
 #. odoo-python
@@ -2656,7 +2659,7 @@ msgstr ""
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.period_report_template
 msgid "to"
-msgstr ""
+msgstr "ɣer"
 
 #. module: planning
 #: model:mail.template,subject:planning.email_template_slot_single

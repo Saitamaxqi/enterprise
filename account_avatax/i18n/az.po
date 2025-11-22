@@ -3,19 +3,22 @@
 # * account_avatax
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-08 18:45+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-17 07:03+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Azerbaijani <https://translate.odoo.com/projects/odoo-19/"
+"account_avatax/az/>\n"
 "Language: az\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_avatax
 #. odoo-python
@@ -78,7 +81,7 @@ msgstr ""
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_account_chart_template
 msgid "Account Chart Template"
-msgstr ""
+msgstr "Hesablar Planı Şablonu"
 
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_account_fiscal_position__avatax_invoice_account_id
@@ -233,24 +236,24 @@ msgstr ""
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Ləğv edin"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__city
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
 msgid "City"
-msgstr ""
+msgstr "Şəhər"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_connection_test_result_view_form
 msgid "Close"
-msgstr ""
+msgstr "Bağlayın"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_exemption__code
 #: model:ir.model.fields,field_description:account_avatax.field_product_avatax_category__code
 msgid "Code"
-msgstr ""
+msgstr "Kod"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
@@ -266,12 +269,12 @@ msgstr ""
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Şirkətlər"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_exemption__company_id
 msgid "Company"
-msgstr ""
+msgstr "Şirkət"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
@@ -281,18 +284,18 @@ msgstr ""
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Parametrləri Konfiqurasiya edin"
 
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__country_id
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
 msgid "Country"
-msgstr ""
+msgstr "Ölkə"
 
 #. module: account_avatax
 #: model:ir.model,website_form_label:account_avatax.model_res_partner
@@ -305,7 +308,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__create_uid
 #: model:ir.model.fields,field_description:account_avatax.field_product_avatax_category__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Tərəfindən yaradılıb"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_connection_test_result__create_date
@@ -313,7 +316,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__create_date
 #: model:ir.model.fields,field_description:account_avatax.field_product_avatax_category__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Tarixdə yaradıldı"
 
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_res_partner__avalara_partner_code
@@ -325,7 +328,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_exemption__description
 #: model:ir.model.fields,field_description:account_avatax.field_product_avatax_category__description
 msgid "Description"
-msgstr ""
+msgstr "Təsvir"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_account_avatax_unique_code__display_name
@@ -344,7 +347,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:account_avatax.field_res_partner__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Göstəriləcək Ad"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
@@ -354,23 +357,23 @@ msgstr ""
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_account_fiscal_position
 msgid "Fiscal Position"
-msgstr ""
+msgstr "Fiskal Pozisyon"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__validated_latitude
 msgid "Geo Latitude"
-msgstr ""
+msgstr "Coğrafi Paralel"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__validated_longitude
 msgid "Geo Longitude"
-msgstr ""
+msgstr "Coğrafi Uzunluq"
 
 #. module: account_avatax
 #. odoo-python
 #: code:addons/account_avatax/models/account_external_tax_mixin.py:0
 msgid "Go to the configuration panel"
-msgstr ""
+msgstr "Konfiqurasiya panelinə daxil olun"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_account_avatax_unique_code__id
@@ -389,7 +392,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_res_config_settings__id
 #: model:ir.model.fields,field_description:account_avatax.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__is_already_valid
@@ -406,7 +409,7 @@ msgstr ""
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Jurnal Girişi"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_connection_test_result__write_uid
@@ -414,7 +417,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__write_uid
 #: model:ir.model.fields,field_description:account_avatax.field_product_avatax_category__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Son Yeniləyən"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_connection_test_result__write_date
@@ -422,7 +425,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__write_date
 #: model:ir.model.fields,field_description:account_avatax.field_product_avatax_category__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Son Yenilənmə tarixi"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
@@ -447,7 +450,7 @@ msgstr ""
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_exemption__name
 msgid "Name"
-msgstr ""
+msgstr "Ad"
 
 #. module: account_avatax
 #. odoo-python
@@ -485,7 +488,7 @@ msgstr ""
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__partner_id
 msgid "Partner"
-msgstr ""
+msgstr "Tərəfdaş"
 
 #. module: account_avatax
 #. odoo-python
@@ -496,22 +499,22 @@ msgstr ""
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Məhsul"
 
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_product_category
 msgid "Product Category"
-msgstr ""
+msgstr "Məhsul Kateqoriyası"
 
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Məhsul Çeşidi"
 
 #. module: account_avatax
 #: model:ir.model.fields.selection,name:account_avatax.selection__res_company__avalara_environment__production
 msgid "Production"
-msgstr ""
+msgstr "Məhsul"
 
 #. module: account_avatax
 #: model:ir.model.fields.selection,name:account_avatax.selection__res_company__avalara_environment__sandbox
@@ -532,18 +535,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__state_id
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
 msgid "State"
-msgstr ""
+msgstr "Dövlət"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__street
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
 msgid "Street"
-msgstr ""
+msgstr "Küçə"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__street2
 msgid "Street2"
-msgstr ""
+msgstr "Küçə 2"
 
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_avatax_validate_address
@@ -639,7 +642,7 @@ msgstr ""
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_partner_form_inherit
 msgid "Validate"
-msgstr ""
+msgstr "Təsdiqləyin"
 
 #. module: account_avatax
 #. odoo-python
@@ -693,7 +696,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__zip
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
 msgid "Zip Code"
-msgstr ""
+msgstr "Poçt İndeksi"
 
 #. module: account_avatax
 #. odoo-python

@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-12 15:01+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "ai_knowledge/tr/>\n"
 "Language: tr\n"
@@ -22,13 +23,11 @@ msgstr ""
 
 #. module: ai_knowledge
 #: model:ir.model,name:ai_knowledge.model_ai_agent_source
-#, fuzzy
 msgid "AI Agent Source"
 msgstr "Yapay Zeka Ajan Kaynağı"
 
 #. module: ai_knowledge
 #: model:ir.model,name:ai_knowledge.model_ai_composer
-#, fuzzy
 msgid "AI model configurations (system prompts) for text drafting."
 msgstr ""
 "Metin hazırlama için yapay zeka model konfigürasyonları (sistem istemleri)."
@@ -41,7 +40,6 @@ msgstr "Aksiyon"
 #. module: ai_knowledge
 #. odoo-javascript
 #: code:addons/ai_knowledge/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
-#, fuzzy
 msgid "Add from Knowledge"
 msgstr "Bilgiden Ekle"
 
@@ -71,13 +69,11 @@ msgstr "Bilgi Birikimi Makalesi"
 #. module: ai_knowledge
 #. odoo-javascript
 #: code:addons/ai_knowledge/static/src/wysiwyg_article_helper_patch.js:0
-#, fuzzy
 msgid "Knowledge Article Editor"
 msgstr "Bilgi Makalesi Editörü"
 
 #. module: ai_knowledge
 #: model:ir.model.fields,field_description:ai_knowledge.field_ai_agent_source__article_id
-#, fuzzy
 msgid "Source Article"
 msgstr "Kaynak Makale"
 
@@ -88,6 +84,5 @@ msgstr "Tür"
 
 #. module: ai_knowledge
 #: model:ir.model.fields.selection,name:ai_knowledge.selection__ai_composer__interface_key__html_field_knowledge
-#, fuzzy
 msgid "Write a new Knowledge article"
 msgstr "Yeni bir Bilgi makalesi yazın"

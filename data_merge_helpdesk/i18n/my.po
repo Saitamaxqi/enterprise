@@ -3,13 +3,14 @@
 # * data_merge_helpdesk
 #
 # Oakarmin Iron <oakarminiron@gmail.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-10-28 07:57+0000\n"
-"Last-Translator: Oakarmin Iron <oakarminiron@gmail.com>\n"
+"PO-Revision-Date: 2025-11-17 03:43+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Burmese <https://translate.odoo.com/projects/odoo-19/"
 "data_merge_helpdesk/my/>\n"
 "Language: my\n"
@@ -37,10 +38,10 @@ msgstr ""
 #. module: data_merge_helpdesk
 #: model:ir.model.fields,field_description:data_merge_helpdesk.field_helpdesk_ticket__id
 msgid "ID"
-msgstr ""
+msgstr "နံပါတ်"
 
 #. module: data_merge_helpdesk
 #: model:ir.actions.server,name:data_merge_helpdesk.merge_action_helpdesk_tag
 #: model:ir.actions.server,name:data_merge_helpdesk.merge_action_helpdesk_ticket
 msgid "Merge"
-msgstr ""
+msgstr "ပေါင်း"

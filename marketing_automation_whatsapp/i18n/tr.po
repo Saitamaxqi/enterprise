@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-11-12 15:04+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:30+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "marketing_automation_whatsapp/tr/>\n"
 "Language: tr\n"
@@ -23,25 +24,21 @@ msgstr ""
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_activity_summary_template_whatsapp
-#, fuzzy
 msgid "\" <strong>doesn't get opened</strong>,"
 msgstr "\" <strong>açılmıyor</strong>,"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_activity_summary_template_whatsapp
-#, fuzzy
 msgid "\" <strong>doesn't get replied</strong>,"
-msgstr "\" <strong></strong> adresinden yanıt alamıyor,"
+msgstr "\" <strong>yanıt alınamıyor</strong>,"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_activity_summary_template_whatsapp
-#, fuzzy
 msgid "\" <strong>gets bounced</strong>,"
-msgstr "\" <strong>sıçradı</strong>,"
+msgstr "\" <strong>iletilemedi</strong>,"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_marketing_campaign__whatsapp_template_count
-#, fuzzy
 msgid "# Whatsapp"
 msgstr "# Whatsapp"
 
@@ -52,37 +49,31 @@ msgstr "<i class=\"fa fa-exclamation-circle\"/> Bounced after"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
-#, fuzzy
 msgid "<i class=\"fa fa-exclamation-circle\"/> Clicked within"
 msgstr "<i class=\"fa fa-exclamation-circle\"/> İçinde tıklandı"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
-#, fuzzy
 msgid "<i class=\"fa fa-exclamation-circle\"/> Not Clicked within"
 msgstr "<i class=\"fa fa-exclamation-circle\"/> İçinde Tıklanmadı"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
-#, fuzzy
 msgid "<i class=\"fa fa-exclamation-circle\"/> Not Opened after"
 msgstr "<i class=\"fa fa-exclamation-circle\"/> Sonrasında Açılmadı"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
-#, fuzzy
 msgid "<i class=\"fa fa-exclamation-circle\"/> Not Replied within"
 msgstr "<i class=\"fa fa-exclamation-circle\"/> İçinde Cevap Verilmedi"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
-#, fuzzy
 msgid "<i class=\"fa fa-exclamation-circle\"/> Opened after"
-msgstr "<i class=\"fa fa-exclamation-circle\"/> Sonra açıldı"
+msgstr "<i class=\"fa fa-exclamation-circle\"/> Sonrasında açıldı"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
-#, fuzzy
 msgid "<i class=\"fa fa-exclamation-circle\"/> Replied within"
 msgstr "<i class=\"fa fa-exclamation-circle\"/> İçinde cevap verdi"
 
@@ -93,7 +84,6 @@ msgstr "<i class=\"fa fa-pie-chart\"/> Ayrıntılar"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
-#, fuzzy
 msgid ""
 "<i data-trigger-type=\"whatsapp_read\" class=\"fa fa-check-circle "
 "o_ma_text_read o_add_child_activity text-info\" title=\"Opened\" "
@@ -141,7 +131,6 @@ msgstr ""
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_participant_view_form
-#, fuzzy
 msgid ""
 "<span class=\"text-primary\">\n"
 "                        <i class=\"fa fa-check-circle\"/> Not opened yet\n"
@@ -153,7 +142,6 @@ msgstr ""
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_participant_view_form
-#, fuzzy
 msgid ""
 "<span class=\"text-primary\">\n"
 "                        <i class=\"fa fa-exclamation-circle\"/> Didn't "
@@ -162,12 +150,11 @@ msgid ""
 msgstr ""
 "<span class=\"text-primary\">\n"
 "                        <i class=\"fa fa-exclamation-circle\"/> Henüz "
-"sıçramadı\n"
+"iletilememe dönüşü yapılmadı\n"
 "                   </span>"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_participant_view_form
-#, fuzzy
 msgid ""
 "<span class=\"text-primary\">\n"
 "                        <i class=\"fa fa-hand-pointer-o\"/> Not clicked yet\n"
@@ -180,14 +167,13 @@ msgstr ""
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_participant_view_form
-#, fuzzy
 msgid ""
 "<span class=\"text-primary\">\n"
 "                        <i class=\"fa fa-reply\"/> Not replied\n"
 "                    </span>"
 msgstr ""
 "<span class=\"text-primary\">\n"
-"                        <i class=\"fa fa-reply\"/> Yanıtlanmadı\n"
+"                        <i class=\"fa fa-reply\"/> Henüz yanıtlanmadı\n"
 "                   </span>"
 
 #. module: marketing_automation_whatsapp
@@ -225,9 +211,8 @@ msgstr "İsim Göster"
 #. module: marketing_automation_whatsapp
 #. odoo-python
 #: code:addons/marketing_automation_whatsapp/models/marketing_activity.py:0
-#, fuzzy
 msgid "Exception in Whatsapp Marketing: %s"
-msgstr "Whatsapp Pazarlamasında İstisna: %s"
+msgstr "Whatsapp Pazarlama İstisnası: %s"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_discuss_channel__id
@@ -248,12 +233,11 @@ msgstr "Bağlantı İzleyici Tıklaması"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_activity_view_form
-#, fuzzy
 msgid ""
 "Make sure you select url tracking under buttons option, otherwise those "
 "links won't be tracked"
 msgstr ""
-"Düğmeler seçeneği altında url izlemeyi seçtiğinizden emin olun, aksi "
+"Düğmeler seçeneği altında url izlemeyi seçtiğinizden emin olun. Aksi "
 "takdirde bu bağlantılar izlenmez"
 
 #. module: marketing_automation_whatsapp
@@ -263,7 +247,6 @@ msgstr "Pazarlama Aktitivesi"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.actions.act_window,name:marketing_automation_whatsapp.whatsapp_template_action_marketing_automation
-#, fuzzy
 msgid "Marketing Automation Whatsapp"
 msgstr "Pazarlama Otomasyonu Whatsapp"
 
@@ -285,25 +268,21 @@ msgstr "Pazarlama İzi"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
-#, fuzzy
 msgid "Message Clicked"
-msgstr "Mesaj Tıklandı"
+msgstr "Mesaja Tıklandı"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
-#, fuzzy
 msgid "Message Opened"
 msgstr "Mesaj Açıldı"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
-#, fuzzy
 msgid "Message Replied"
 msgstr "Mesaj Yanıtlandı"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
-#, fuzzy
 msgid "Message Sent"
 msgstr "Mesaj Gönderildi"
 
@@ -315,30 +294,26 @@ msgstr "Açıldı"
 #. module: marketing_automation_whatsapp
 #. odoo-python
 #: code:addons/marketing_automation_whatsapp/models/marketing_trace.py:0
-#, fuzzy
 msgid "Parent Whatsapp message got opened"
-msgstr "Ebeveyn Whatsapp mesajı açıldı"
+msgstr "Üst Whatsapp mesajı açıldı"
 
 #. module: marketing_automation_whatsapp
 #. odoo-python
 #: code:addons/marketing_automation_whatsapp/models/marketing_trace.py:0
-#, fuzzy
 msgid "Parent Whatsapp message was clicked"
-msgstr "Ebeveyn Whatsapp mesajı tıklandı"
+msgstr "Üst Whatsapp mesajı tıklandı"
 
 #. module: marketing_automation_whatsapp
 #. odoo-python
 #: code:addons/marketing_automation_whatsapp/models/marketing_trace.py:0
-#, fuzzy
 msgid "Parent Whatsapp was replied to"
-msgstr "Ebeveyn Whatsapp'ına yanıt verildi"
+msgstr "Üst Whatsapp'a yanıt verildi"
 
 #. module: marketing_automation_whatsapp
 #. odoo-python
 #: code:addons/marketing_automation_whatsapp/models/marketing_trace.py:0
-#, fuzzy
 msgid "Parent whatsapp was bounced"
-msgstr "Ebeveyn whatsapp'ı geri döndü"
+msgstr "Üst whatsapp iletilemedi"
 
 #. module: marketing_automation_whatsapp
 #. odoo-python
@@ -412,133 +387,116 @@ msgstr "WhatsApp Şablon Düğmesi"
 #. odoo-python
 #: code:addons/marketing_automation_whatsapp/models/marketing_activity.py:0
 #: code:addons/marketing_automation_whatsapp/models/whatsapp_message.py:0
-#, fuzzy
 msgid "WhatsApp canceled"
 msgstr "WhatsApp iptal edildi"
 
 #. module: marketing_automation_whatsapp
 #. odoo-python
 #: code:addons/marketing_automation_whatsapp/models/marketing_activity.py:0
-#, fuzzy
 msgid "WhatsApp failed"
 msgstr "WhatsApp başarısız oldu"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_marketing_activity__whatsapp_error
-#, fuzzy
 msgid "Whatsapp Error"
 msgstr "Whatsapp Hatası"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_link_tracker_click__whatsapp_message_id
 #: model:ir.model.fields.selection,name:marketing_automation_whatsapp.selection__marketing_activity__activity_type__whatsapp
-#, fuzzy
 msgid "Whatsapp Message"
 msgstr "Whatsapp Mesajı"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_marketing_activity__whatsapp_template_id
-#, fuzzy
 msgid "Whatsapp Template"
 msgstr "Whatsapp Şablonu"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields.selection,name:marketing_automation_whatsapp.selection__marketing_activity__trigger_type__whatsapp_click
-#, fuzzy
 msgid "Whatsapp: click"
 msgstr "Whatsapp: tıklayın"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields.selection,name:marketing_automation_whatsapp.selection__marketing_activity__trigger_type__whatsapp_bounced
-#, fuzzy
 msgid "Whatsapp: message bounced"
-msgstr "Whatsapp: mesaj geri döndü"
+msgstr "Whatsapp: mesaj iletilemedi"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields.selection,name:marketing_automation_whatsapp.selection__marketing_activity__trigger_type__whatsapp_not_click
-#, fuzzy
 msgid "Whatsapp: not click"
-msgstr "Whatsapp: tıklanmıyor"
+msgstr "Whatsapp: tıklanmadı"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields.selection,name:marketing_automation_whatsapp.selection__marketing_activity__trigger_type__whatsapp_not_read
-#, fuzzy
 msgid "Whatsapp: not opened"
 msgstr "Whatsapp: açılmadı"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields.selection,name:marketing_automation_whatsapp.selection__marketing_activity__trigger_type__whatsapp_not_replied
-#, fuzzy
 msgid "Whatsapp: not replied"
 msgstr "Whatsapp: cevap verilmedi"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields.selection,name:marketing_automation_whatsapp.selection__marketing_activity__trigger_type__whatsapp_read
-#, fuzzy
 msgid "Whatsapp: opened"
 msgstr "Whatsapp: açıldı"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields.selection,name:marketing_automation_whatsapp.selection__marketing_activity__trigger_type__whatsapp_replied
-#, fuzzy
 msgid "Whatsapp: replied"
 msgstr "Whatsapp: cevaplandı"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_activity_summary_template_whatsapp
-#, fuzzy
 msgid "after the <strong>Whatsapp message</strong> sent by the Activity \""
 msgstr ""
-"<strong>Whatsapp mesajından sonra</strong> tarafından gönderilen etkinlik \""
+"Aktivite tarafından gönderilen <strong>Whatsapp mesajından</strong> sonra \""
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_activity_summary_template_whatsapp
-#, fuzzy
 msgid ""
 "after the Participant <strong>clicks</strong><br/>on any link included in "
 "the <strong>Whatsapp message</strong> sent by the Activity \""
 msgstr ""
-"Katılımcı <strong>Faaliyet tarafından gönderilen <strong>Whatsapp mesajında</"
-"strong> yer alan herhangi bir bağlantıya</strong><br/>tıkladıktan sonra \""
+"Katılımcı <strong>Aktivite tarafından gönderilen</strong>  <strong>Whatsapp "
+"mesajında</strong> yer alan herhangi bir bağlantıya</strong>tıkladıktan<br/> "
+"sonra \""
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_activity_summary_template_whatsapp
-#, fuzzy
 msgid ""
 "after the Participant <strong>opens the Whatsapp message</strong> sent by "
 "the Activity \""
 msgstr ""
-"Katılımcı <strong>, Faaliyet tarafından gönderilen</strong> Whatsapp "
+"Katılımcı <strong>, Aktivite tarafından gönderilen</strong> Whatsapp "
 "mesajını açtıktan sonra \""
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_activity_summary_template_whatsapp
-#, fuzzy
 msgid ""
 "after the Participant <strong>replies to the Whatsapp message</strong> sent "
 "by the Activity \""
 msgstr ""
-"Katılımcı <strong>, Faaliyet tarafından gönderilen</strong> Whatsapp "
+"Katılımcı <strong>, Aktivite tarafından gönderilen</strong> Whatsapp "
 "mesajını yanıtladıktan sonra \""
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_activity_summary_template_whatsapp
-#, fuzzy
 msgid "doesn't get clicked,"
 msgstr "tıklanmıyor,"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_activity_summary_template_whatsapp
-#, fuzzy
 msgid "if <strong>Whatsapp message</strong> sent by the Activity \""
-msgstr "eğer <strong>Whatsapp mesajı</strong> tarafından gönderildiyse \""
+msgstr ""
+"eğer <strong>Whatsapp mesajı</strong> Aktivite tarafından gönderildiyse \""
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_activity_summary_template_whatsapp
-#, fuzzy
 msgid ""
 "if no link included in the <strong>Whatsapp message</strong> sent by the "
 "Activity \""
 msgstr ""
-"Faaliyet tarafından gönderilen <strong>Whatsapp mesajı</strong> içerisinde "
+"Aktivite tarafından gönderilen <strong>Whatsapp mesajı</strong> içerisinde "
 "herhangi bir bağlantı yer almıyorsa \""

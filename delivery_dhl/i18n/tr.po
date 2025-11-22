@@ -18,13 +18,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:51+0000\n"
-"PO-Revision-Date: 2025-11-12 14:55+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "delivery_dhl/tr/>\n"
 "Language: tr\n"
@@ -197,7 +198,6 @@ msgstr "D - Express Worldwide"
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__delivery_type__dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__stock_package_type__package_carrier_type__dhl
-#, fuzzy
 msgid "DHL (Legacy)"
 msgstr "DHL (Eski)"
 
@@ -284,7 +284,6 @@ msgstr "DHL şifresi eksik, lütfen teslimat yöntemi ayarlarınızı değiştir
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_default_package_type_id
-#, fuzzy
 msgid "DHLxw Package Type"
 msgstr "DHLxw Paket Türü"
 
@@ -501,7 +500,6 @@ msgstr "Gönderen"
 #. module: delivery_dhl
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
-#, fuzzy
 msgid "Shipment created into DHL <br/> <b>Tracking Number: </b>%s"
 msgstr "DHL <br/> <b>Takip Numarasına oluşturulan gönderi: </b>%s"
 

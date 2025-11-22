@@ -12,13 +12,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-11-12 14:57+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:30+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "mrp_maintenance/tr/>\n"
 "Language: tr\n"
@@ -35,7 +36,6 @@ msgstr "<span class=\"o_stat_text\">Bakım</span>"
 
 #. module: mrp_maintenance
 #: model_terms:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
-#, fuzzy
 msgid "<span class=\"o_stat_text\">Work Center</span>"
 msgstr "<span class=\"o_stat_text\">İş Merkezi</span>"
 
@@ -71,9 +71,8 @@ msgstr "Yeni bir bakım talebi ekle"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request__recurring_leaves_count
-#, fuzzy
 msgid "Additional Leaves to Plan Ahead"
-msgstr "Önceden Planlamak İçin Ek Yapraklar"
+msgstr "Önceden Planlamak İçin Ek İzinler"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__message_attachment_count
@@ -87,9 +86,8 @@ msgstr "İş Merkezini Engelle"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_request__recurring_leaves_count
-#, fuzzy
 msgid "Block the workcenter for this many time slots in the future in advance."
-msgstr "İş merkezini gelecekte şu kadar zaman aralığı için önceden bloke edin."
+msgstr "İş merkezini, gelecekteki şu kadar zaman dilimi için önceden bloke et."
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request__company_id
@@ -249,7 +247,6 @@ msgstr "Takipçi mi"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_request__block_workcenter
-#, fuzzy
 msgid ""
 "It won't be possible to plan work orders or other maintenances on this "
 "workcenter during this time."
@@ -337,13 +334,11 @@ msgstr "Üretim Emri"
 #. module: mrp_maintenance
 #. odoo-python
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:0
-#, fuzzy
 msgid "Manufacturing Orders are already scheduled for this time slot."
-msgstr "Üretim Siparişleri bu zaman aralığı için zaten planlanmıştır."
+msgstr "Bu zaman dilimi için zaten Üretim Emirleri planlanmış durumda."
 
 #. module: mrp_maintenance
 #: model_terms:ir.actions.act_window,help:mrp_maintenance.maintenance_workcenter_action
-#, fuzzy
 msgid ""
 "Manufacturing operations are processed at Work Centers. A Work Center can be "
 "composed of\n"
@@ -352,8 +347,8 @@ msgid ""
 msgstr ""
 "Üretim işlemleri İş Merkezlerinde işlenir. Bir İş Merkezi şunlardan "
 "oluşabilir\n"
-"            işçiler ve/veya makineler, maliyetlendirme, çizelgeleme, "
-"kapasite planlama vb. için kullanılırlar."
+"            işçiler ve/veya makineler. Maliyetlendirme, planlama, kapasite "
+"planlama vb. için kullanılırlar."
 
 #. module: mrp_maintenance
 #: model_terms:ir.ui.view,arch_db:mrp_maintenance.mrp_workcenter_view_form_inherit_maintenance
@@ -418,9 +413,10 @@ msgstr "Sonraki Aktivitie Türü"
 #. module: mrp_maintenance
 #. odoo-python
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:0
-#, fuzzy
 msgid "No available slot within 700 days after the planned start."
-msgstr "Planlanan başlangıçtan sonraki 700 gün içinde boş yer olmaması."
+msgstr ""
+"Planlanan başlangıç tarihinden sonraki 700 gün içinde uygun bir zaman dilimi "
+"bulunmamaktadır."
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__message_needaction_counter
@@ -470,14 +466,12 @@ msgstr "İstek"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_stage__create_leaves
-#, fuzzy
 msgid "Request Confirmed"
 msgstr "Talep Onaylandı"
 
 #. module: mrp_maintenance
 #. odoo-javascript
 #: code:addons/mrp_maintenance/static/src/components/menuPopup.xml:0
-#, fuzzy
 msgid "Request Maintenance"
 msgstr "Bakım Talebi"
 
@@ -528,34 +522,31 @@ msgstr "Teknik Sorumlu"
 #. module: mrp_maintenance
 #. odoo-javascript
 #: code:addons/mrp_maintenance/static/src/components/maintenance_request_form_view.js:0
-#, fuzzy
 msgid "The maintenance request has successfully been created."
 msgstr "Bakım talebi başarıyla oluşturuldu."
 
 #. module: mrp_maintenance
 #. odoo-python
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:0
-#, fuzzy
 msgid ""
 "The schedule has changed from %(desired_date)s to %(effective_date)s due to "
 "planned manufacturing orders."
 msgstr ""
-"Planlanan üretim siparişleri nedeniyle program %(desired_date)s adresinden "
-"%(effective_date)s adresine değiştirilmiştir."
+"Planlanmış üretim emirleri nedeniyle program %(desired_date)s tarihinden "
+"%(effective_date)s tarihine değiştirilmiştir."
 
 #. module: mrp_maintenance
 #. odoo-python
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:0
-#, fuzzy
 msgid "The workcenter is missing for %s."
-msgstr "İş merkezi %s için eksiktir."
+msgstr "%s için İş Merkezi eksik."
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_mrp_workcenter__effective_date
-#, fuzzy
 msgid "This date will be used to compute the Mean Time Between Failure."
 msgstr ""
-"Bu tarih Arızalar Arası Ortalama Süreyi hesaplamak için kullanılacaktır."
+"Bu tarih Arızalar Arası Ortalama Süreyi (MTBF) hesaplamak için "
+"kullanılacaktır."
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_mrp_workcenter__activity_exception_decoration
@@ -574,7 +565,6 @@ msgstr "Websitesi iletişim geçmişi"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_stage__create_leaves
-#, fuzzy
 msgid ""
 "When this box is unticked, and the maintenance is of the type 'Work Center', "
 "no leave is created on the respective work center when a maintenance request "
@@ -583,11 +573,12 @@ msgid ""
 "listed duration, either at the specified date, or as soon as possible, if "
 "the work center is unavailable then."
 msgstr ""
-"Bu kutunun işareti kaldırıldığında ve bakım 'İş Merkezi' türünde olduğunda, "
-"bir bakım talebi oluşturulduğunda ilgili iş merkezinde izin oluşturulmaz.\n"
-"Kutu işaretlenirse, iş merkezi belirtilen tarihte veya iş merkezi o sırada "
-"kullanılamıyorsa mümkün olan en kısa sürede listelenen süre boyunca otomatik "
-"olarak engellenir."
+"Bu kutu işaretli olmadığında ve bakım tipi “İş Merkezi” olduğunda, bakım "
+"talebi oluşturulduğunda ilgili iş merkezi üzerinde herhangi bir blokaj "
+"oluşturulmaz.\n"
+"Kutu işaretlendiğinde, iş merkezi belirtilen süre boyunca otomatik olarak "
+"bloke edilir; bu, belirtilen tarihte veya iş merkezi o tarihte müsait "
+"değilse mümkün olan en erken zamanda gerçekleştirilir."
 
 #. module: mrp_maintenance
 #: model:ir.model,name:mrp_maintenance.model_mrp_workcenter

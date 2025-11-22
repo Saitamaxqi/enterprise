@@ -3,19 +3,22 @@
 # * pos_enterprise
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:48+0000\n"
-"PO-Revision-Date: 2025-10-08 18:48+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-17 07:05+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Kabyle <https://translate.odoo.com/projects/odoo-19/"
+"pos_enterprise/kab/>\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_kanban
@@ -57,7 +60,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/stages/stages.xml:0
 msgid "All"
-msgstr ""
+msgstr "Akkw"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_form
@@ -116,12 +119,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/preparation_display/preparation_display.xml:0
 msgid "Close"
-msgstr ""
+msgstr "Mdel"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_stage__color
 msgid "Color"
-msgstr ""
+msgstr "Ini"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__combo_line_ids
@@ -131,7 +134,7 @@ msgstr ""
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__company_id
 msgid "Company"
-msgstr ""
+msgstr "Takebbwanit"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_order__completion_time
@@ -156,7 +159,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_state__create_uid
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_preparation_display_reset_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Yerna-t"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__create_date
@@ -166,7 +169,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_state__create_date
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_preparation_display_reset_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Yerna di"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_prep_order__pdis_general_customer_note
@@ -199,7 +202,7 @@ msgstr ""
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_reset_wizard
 msgid "Discard"
-msgstr ""
+msgstr "Sefsex"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_category__display_name
@@ -229,13 +232,13 @@ msgstr ""
 #: code:addons/pos_enterprise/static/src/app/components/order/order.xml:0
 #: code:addons/pos_enterprise/static/src/app/components/preparation_display/preparation_display.xml:0
 msgid "Done"
-msgstr ""
+msgstr "Immed"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/backend/components/fields/duration_field.js:0
 msgid "Duration"
-msgstr ""
+msgstr "Timirt"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_preset
@@ -258,7 +261,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/preparation_display/preparation_display.xml:0
 msgid "Filters"
-msgstr ""
+msgstr "Imzizdigen"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.res_config_settings_view_form
@@ -301,7 +304,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_enterprise.field_res_config_settings__id
 #: model:ir.model.fields,field_description:pos_enterprise.field_resource_calendar_attendance__id
 msgid "ID"
-msgstr ""
+msgstr "Asulay"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_prep_line__combo_parent_id
@@ -368,7 +371,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_state__write_uid
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_preparation_display_reset_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Aleqqem aneggaru sɣuṛ"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__write_date
@@ -378,7 +381,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_state__write_date
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_preparation_display_reset_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Aleqqem aneggaru di"
 
 #. module: pos_enterprise
 #. odoo-javascript
@@ -390,7 +393,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/preparation_display/preparation_display.xml:0
 msgid "Loading..."
-msgstr ""
+msgstr "Asali ..."
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_res_config_settings__pos_module_pos_urban_piper
@@ -402,7 +405,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__name
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_stage__name
 msgid "Name"
-msgstr ""
+msgstr "Isem"
 
 #. module: pos_enterprise
 #: model_terms:ir.actions.act_window,help:pos_enterprise.action_preparation_display
@@ -424,12 +427,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_order__pos_order_id
 #: model:ir.model.fields,field_description:pos_enterprise.field_preparation_time_report__order_id
 msgid "Order"
-msgstr ""
+msgstr "Taladna"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_preparation_time_report__create_date
 msgid "Order Date"
-msgstr ""
+msgstr "Azemz n tladna"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_order__order_name
@@ -484,17 +487,17 @@ msgstr ""
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__pos_config_ids
 msgid "Point of Sale"
-msgstr ""
+msgstr "Agaz n uznuznu"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_category
 msgid "Point of Sale Category"
-msgstr ""
+msgstr "Taggayt  n wagaz n uznuznu"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_config
 msgid "Point of Sale Configuration"
-msgstr ""
+msgstr "Tawila n wagaz n uznuznu"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_order_line
@@ -504,12 +507,12 @@ msgstr ""
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_order
 msgid "Point of Sale Orders"
-msgstr ""
+msgstr "Tiludna n wagaz n uznuznu"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_session
 msgid "Point of Sale Session"
-msgstr ""
+msgstr "Tiɣimit n ugaz n uznuznu"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__pos_order_line_uuid
@@ -604,12 +607,12 @@ msgstr ""
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_preparation_time_report__product_id
 msgid "Product"
-msgstr ""
+msgstr "Afaris"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_product_attribute
 msgid "Product Attribute"
-msgstr ""
+msgstr "Imyerr n ufaris"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__product_id
@@ -624,7 +627,7 @@ msgstr ""
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Tameskalt n ufaris"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__category_ids
@@ -640,7 +643,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__quantity
 #: model:ir.model.fields,field_description:pos_enterprise.field_preparation_time_report__qty
 msgid "Quantity"
-msgstr ""
+msgstr "Tanecta"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__cancelled
@@ -658,7 +661,7 @@ msgstr ""
 #: code:addons/pos_enterprise/static/src/app/components/order/order.xml:0
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_reset_wizard
 msgid "Reset"
-msgstr ""
+msgstr "Wennez"
 
 #. module: pos_enterprise
 #. odoo-python
@@ -695,7 +698,7 @@ msgstr ""
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_stage__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Agzum"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_order__avg_service_time
@@ -706,7 +709,7 @@ msgstr ""
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_state__stage_id
 msgid "Stage"
-msgstr ""
+msgstr "Amecwaṛ"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__stage_ids

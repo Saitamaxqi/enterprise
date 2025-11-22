@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-11-12 15:02+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/whatsapp/"
 "tr/>\n"
 "Language: tr\n"
@@ -54,18 +55,16 @@ msgstr ", ... (%s Diğerleri)"
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template.py:0
-#, fuzzy
 msgid ""
 "- Button URL will be modified to include the domain. (e.g., \"/my_path\" "
 "will be \"https://mydomain.odoo.com/my_path\")\n"
 msgstr ""
-"- Düğme URL'si etki alanını içerecek şekilde değiştirilecektir. (örneğin, "
+"- Düğme URL'si alan adını içerecek şekilde değiştirilecektir. (örneğin, "
 "\"/my_path\" \"https://mydomain.odoo.com/my_path\" olacaktır)\n"
 
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template.py:0
-#, fuzzy
 msgid "- The phone number set in \"Buttons\" does not look correct."
 msgstr "- \"Düğmeler \"de ayarlanan telefon numarası doğru görünmüyor."
 
@@ -228,9 +227,8 @@ msgstr "İzin verilen şirketler"
 #. module: whatsapp
 #. odoo-javascript
 #: code:addons/whatsapp/static/src/core/common/composer_patch.js:0
-#, fuzzy
 msgid "Answer as %(whatsapp_account_name)s"
-msgstr "Cevap olarak %(whatsapp_account_name)s"
+msgstr "%(whatsapp_account_name)s olarak cevapla"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__app_uid
@@ -540,7 +538,6 @@ msgstr "Kontak"
 #. module: whatsapp
 #. odoo-javascript
 #: code:addons/whatsapp/static/src/core/common/composer_patch.js:0
-#, fuzzy
 msgid "Conversation closed."
 msgstr "Görüşme kapanmıştır."
 
@@ -551,9 +548,8 @@ msgstr "Oluşturma Tarihi"
 
 #. module: whatsapp
 #: model:ir.model,website_form_label:whatsapp.model_res_partner
-#, fuzzy
 msgid "Create a Customer"
-msgstr "Müşteri Oluşturma"
+msgstr "Müşteri Oluştur"
 
 #. module: whatsapp
 #: model_terms:ir.actions.act_window,help:whatsapp.whatsapp_account_action
@@ -750,7 +746,6 @@ msgstr "WhatsApp’ı Etkinleştir"
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_account.py:0
-#, fuzzy
 msgid ""
 "Enabling WhatsApp debug stops medias (pictures, videos, pdf, ...) from being "
 "received."
@@ -1093,7 +1088,6 @@ msgstr "Üstbilgi"
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template.py:0
-#, fuzzy
 msgid "Header Document is missing"
 msgstr "Başlık Belgesi eksik"
 
@@ -1183,7 +1177,6 @@ msgstr "İşaretlenirse, WhatsApp kategorisi Sohbet kenar çubuğunda açık olu
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_form
-#, fuzzy
 msgid "If the URL has no domain, your domain will be added."
 msgstr "URL'nin alan adı yoksa, alan adınız eklenecektir."
 
@@ -1732,7 +1725,6 @@ msgstr "Yer tutucu"
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/wizard/whatsapp_composer.py:0
-#, fuzzy
 msgid "Please select a WhatsApp Template to send."
 msgstr "Lütfen göndermek için bir WhatsApp Şablonu seçin."
 
@@ -1873,7 +1865,6 @@ msgstr "Yinele"
 #. module: whatsapp
 #. odoo-javascript
 #: code:addons/whatsapp/static/src/core/common/composer_actions_patch.js:0
-#, fuzzy
 msgid "Revive WhatsApp Conversation"
 msgstr "WhatsApp Konuşmasını Canlandırın"
 
@@ -1912,7 +1903,6 @@ msgstr "Tüm seçenekleri gör"
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/ir_actions_server.py:0
-#, fuzzy
 msgid "Send %(template_name)s"
 msgstr "Gönder %(template_name)s"
 
@@ -2304,7 +2294,6 @@ msgstr "Mesaj işleniyor."
 
 #. module: whatsapp
 #: model:ir.model.fields,help:whatsapp.field_whatsapp_account__phone_number
-#, fuzzy
 msgid "The phone number used in the Whatsapp Business Account."
 msgstr "Whatsapp İşletme Hesabında kullanılan telefon numarası."
 
@@ -2357,7 +2346,6 @@ msgstr "Bu mesaj gönderilirken bir sorun oluştu."
 #. module: whatsapp
 #. odoo-javascript
 #: code:addons/whatsapp/static/src/core/common/thread_patch.xml:0
-#, fuzzy
 msgid ""
 "This conversation has been closed as more than 24 hours have passed since "
 "the last message received."
@@ -2389,7 +2377,6 @@ msgstr "Tip"
 #. module: whatsapp
 #: model:ir.model.fields,help:whatsapp.field_ir_actions_server__state
 #: model:ir.model.fields,help:whatsapp.field_ir_cron__state
-#, fuzzy
 msgid ""
 "Type of server action. The following values are available:\n"
 "- 'Update a Record': update the values of a record\n"
@@ -2412,7 +2399,7 @@ msgstr ""
 "- 'SMS Gönder': SMS gönderin, belgelere kaydedin (SMS)- 'Takipçi Ekle/"
 "Kaldır': bir kayda takipçi ekleyin veya kaldırın (Tartışın)\n"
 "- 'Kayıt Oluştur': yeni değerlerle yeni bir kayıt oluşturun\n"
-"- 'Execute Code': yürütülecek bir Python kodu bloğu\n"
+"- 'Kodu Çalıştır': yürütülecek bir Python kodu bloğu\n"
 "- 'Webhook Bildirimi Gönder': Webhook olarak da bilinen harici bir sisteme "
 "POST isteği gönderme\n"
 "- 'Çoklu Eylemler': diğer birkaç sunucu eylemini tetikleyen bir eylem "
@@ -2473,7 +2460,6 @@ msgstr "Kullanıcı Adı"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template_variable__field_type__user_phone
-#, fuzzy
 msgid "User Phone"
 msgstr "Kullanıcı Telefonu"
 
@@ -2497,7 +2483,6 @@ msgstr "Kullanıcı WhatsApp mesajı almayı kabul etmiş"
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/wizard/whatsapp_composer.py:0
-#, fuzzy
 msgid ""
 "User phone number required in template but no value set on user profile."
 msgstr ""
@@ -2577,9 +2562,8 @@ msgstr "Vietnamca"
 #. module: whatsapp
 #. odoo-javascript
 #: code:addons/whatsapp/static/src/core/web/thread_actions.js:0
-#, fuzzy
 msgid "View Contact"
-msgstr "İletişimi Görüntüle"
+msgstr "Kişiyi Görüntüle"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template_button__button_type__url
@@ -2874,14 +2858,12 @@ msgstr "başka bir belge"
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/res_partner.py:0
-#, fuzzy
 msgid "channel_partner_ids"
 msgstr "channel_partner_ids"
 
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/res_partner.py:0
-#, fuzzy
 msgid "channel_type"
 msgstr "channel_type"
 

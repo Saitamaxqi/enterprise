@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-12 15:03+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "appointment_google_reserve/tr/>\n"
 "Language: tr\n"
@@ -23,7 +24,6 @@ msgstr ""
 #. module: appointment_google_reserve
 #. odoo-python
 #: code:addons/appointment_google_reserve/models/appointment_type.py:0
-#, fuzzy
 msgid ""
 "%(appointment_type_name)s: A %(appointment_category)s appointment type "
 "cannot be used with the Google Bookings integration."
@@ -34,7 +34,6 @@ msgstr ""
 #. module: appointment_google_reserve
 #. odoo-python
 #: code:addons/appointment_google_reserve/models/appointment_type.py:0
-#, fuzzy
 msgid ""
 "%(appointment_type_name)s: Please configure your Google Reserve Merchant for "
 "Google Reserve."
@@ -45,7 +44,6 @@ msgstr ""
 #. module: appointment_google_reserve
 #. odoo-python
 #: code:addons/appointment_google_reserve/models/appointment_type.py:0
-#, fuzzy
 msgid ""
 "%(appointment_type_name)s: The Google Bookings integration only works in the "
 "auto-assign mode."
@@ -55,7 +53,6 @@ msgstr ""
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
-#, fuzzy
 msgid ""
 "<i class=\"ms-2 fa fa-info-circle\" title=\"Required for Google Reserve\"/>"
 msgstr ""
@@ -63,7 +60,6 @@ msgstr ""
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
-#, fuzzy
 msgid ""
 "<span class=\"fa fa-check fa-fw me-1\"/>Your Google Reserve Synchronization "
 "is active."
@@ -73,7 +69,6 @@ msgstr ""
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
-#, fuzzy
 msgid ""
 "<span class=\"fa fa-check fa-hourglass me-1\"/>Your Appointment Type is "
 "being synchronized with Google Reserve.<br/>\n"
@@ -106,7 +101,6 @@ msgstr "Randevu Türü"
 
 #. module: appointment_google_reserve
 #: model:ir.actions.server,name:appointment_google_reserve.ir_cron_iap_google_reserve_availabilities_ir_actions_server
-#, fuzzy
 msgid "Appointment: Upload Availabilities to IAP for Google Reserve"
 msgstr "Randevu: Google Reserve için Uygunlukları IAP'ye Yükleyin"
 
@@ -117,7 +111,6 @@ msgstr "Randevular"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_type__is_auto_assign
-#, fuzzy
 msgid "Assign automatically"
 msgstr "Otomatik olarak atama"
 
@@ -133,7 +126,6 @@ msgstr "Karalisteye alınan telefon sabit telefondur"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__business_category
-#, fuzzy
 msgid "Business Category"
 msgstr "İşletme Kategorisi"
 
@@ -144,7 +136,6 @@ msgstr "Takvim Etkinliği"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_appointment_type__google_reserve_merchant_id
-#, fuzzy
 msgid "Configure your company data for Google Reserve"
 msgstr "Şirket verilerinizi Google Reserve için yapılandırın"
 
@@ -160,7 +151,6 @@ msgstr "Oluşturuldu"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
-#, fuzzy
 msgid "Disable Google Reserve"
 msgstr "Google Reserve'ü devre dışı bırakın"
 
@@ -180,7 +170,6 @@ msgstr "İsim Göster"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_type__google_reserve_enable
-#, fuzzy
 msgid "Enable Google Booking"
 msgstr "Google Rezervasyonu Etkinleştirin"
 
@@ -205,51 +194,43 @@ msgstr "Takipçiler (İş ortakları)"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_calendar_event__is_google_reserve
-#, fuzzy
 msgid "From Google Reserve"
 msgstr "Google Reserve'den"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_type__google_reserve_pending_sync
-#, fuzzy
 msgid "Google Booking Pending Synchronization"
 msgstr "Google Rezervasyon Bekleyen Senkronizasyonu"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
-#, fuzzy
 msgid "Google Bookings"
 msgstr "Google Rezervasyonları"
 
 #. module: appointment_google_reserve
 #: model:ir.ui.menu,name:appointment_google_reserve.menu_appointment_google_reserve_merchants
-#, fuzzy
 msgid "Google Reserve"
 msgstr "Google Reserve"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_type__google_reserve_access_token
-#, fuzzy
 msgid "Google Reserve Access Token"
 msgstr "Google Reserve Erişim Belirteci"
 
 #. module: appointment_google_reserve
 #: model:ir.model,name:appointment_google_reserve.model_google_reserve_merchant
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_type__google_reserve_merchant_id
-#, fuzzy
 msgid "Google Reserve Merchant"
 msgstr "Google Reserve Merchant"
 
 #. module: appointment_google_reserve
 #: model:ir.actions.act_window,name:appointment_google_reserve.google_reserve_merchant_action
-#, fuzzy
 msgid "Google Reserve Merchants"
 msgstr "Google Reserve Satıcıları"
 
 #. module: appointment_google_reserve
 #. odoo-python
 #: code:addons/appointment_google_reserve/models/google_reserve_merchant.py:0
-#, fuzzy
 msgid ""
 "Google Reserve requires a complete address.Including a Country, a City, a "
 "Postal Code and a Street"
@@ -264,7 +245,6 @@ msgstr "Mesaj Var"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
-#, fuzzy
 msgid ""
 "Hold a second — are you sure you want to stop showing on Google Reserve? "
 "Changes can take up to 24 hours to take effect."
@@ -275,7 +255,6 @@ msgstr ""
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
-#, fuzzy
 msgid "I'm ready, synchronize!"
 msgstr "Hazırım, senkronize ol!"
 
@@ -337,7 +316,6 @@ msgstr "Son Güncelleme"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__name
-#, fuzzy
 msgid "Merchant Name"
 msgstr "Satıcı Adı"
 
@@ -353,7 +331,6 @@ msgstr "Mesajlar"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
-#, fuzzy
 msgid "Not yet"
 msgstr "Henüz değil"
 
@@ -380,7 +357,6 @@ msgstr "Teslimat hatası olan mesaj sayısı"
 #. module: appointment_google_reserve
 #. odoo-python
 #: code:addons/appointment_google_reserve/models/appointment_type.py:0
-#, fuzzy
 msgid ""
 "Only Appointment Managers can enable or disable the Google Reserve "
 "Integration"
@@ -391,7 +367,6 @@ msgstr ""
 #. module: appointment_google_reserve
 #. odoo-python
 #: code:addons/appointment_google_reserve/models/appointment_type.py:0
-#, fuzzy
 msgid "Only Appointment Managers can enable the Google Reserve Integration"
 msgstr ""
 "Google Reserve Entegrasyonunu yalnızca Randevu Yöneticileri etkinleştirebilir"
@@ -418,7 +393,6 @@ msgstr "Değerlendirmeler"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
-#, fuzzy
 msgid ""
 "Ready to synchronize your Appointment Type with Google Reserve? Make sure "
 "your setup is complete — changes may take up to 24 hours to appear once live."
@@ -434,7 +408,6 @@ msgstr "Kaynak İzin Detayı"
 
 #. module: appointment_google_reserve
 #: model:appointment.type,name:appointment_google_reserve.appointment_type_restaurant
-#, fuzzy
 msgid "Rest'Odoo"
 msgstr "Rest'Odoo"
 
@@ -450,20 +423,17 @@ msgstr "Temizlenmiş Numara"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
-#, fuzzy
 msgid "Stop syncing"
 msgstr "Senkronizasyonu durdur"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
-#, fuzzy
 msgid "Synchronize with Google Reserve"
 msgstr "Google Reserve ile senkronize edin"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__phone
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__website_url
-#, fuzzy
 msgid "Used by Google to properly match merchants and partners, recommended."
 msgstr ""
 "Satıcıları ve iş ortaklarını doğru şekilde eşleştirmek için Google "
@@ -472,7 +442,6 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__business_category
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__location_id
-#, fuzzy
 msgid "Used by Google to try to match your physical address to your business."
 msgstr ""
 "Google tarafından fiziksel adresinizi işletmenizle eşleştirmeye çalışmak "
@@ -495,6 +464,5 @@ msgstr "Websitesi iletişim geçmişi"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.google_reserve_merchant_view_form
-#, fuzzy
 msgid "e.g Restaurant"
-msgstr "Örneğin Restoran"
+msgstr "Örneğin restoran"

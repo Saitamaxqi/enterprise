@@ -5,13 +5,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:42+0000\n"
-"PO-Revision-Date: 2025-11-12 15:03+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-20 13:21+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "account_fiscal_categories/tr/>\n"
 "Language: tr\n"
@@ -30,14 +31,12 @@ msgstr "Hesap"
 
 #. module: account_fiscal_categories
 #: model:ir.model,name:account_fiscal_categories.model_account_fiscal_category
-#, fuzzy
 msgid "Account Fiscal Category"
 msgstr "Hesap Mali Kategorisi"
 
 #. module: account_fiscal_categories
 #. odoo-python
 #: code:addons/account_fiscal_categories/report/account_fiscal_report_handler.py:0
-#, fuzzy
 msgid "Account(s) with Multiple Fiscal Rates"
 msgstr "Birden Fazla Mali Orana Sahip Hesap(lar)"
 
@@ -48,13 +47,11 @@ msgstr "Etkin"
 
 #. module: account_fiscal_categories
 #: model_terms:ir.actions.act_window,help:account_fiscal_categories.action_account_fiscal_category_list
-#, fuzzy
 msgid "Add a Fiscal Category"
 msgstr "Mali Kategori Ekleme"
 
 #. module: account_fiscal_categories
 #: model:account.report.column,name:account_fiscal_categories.fiscal_report_total_amount
-#, fuzzy
 msgid "Base Total"
 msgstr "Temel Toplam"
 
@@ -102,39 +99,33 @@ msgstr "İsim Göster"
 
 #. module: account_fiscal_categories
 #: model:account.report.column,name:account_fiscal_categories.fiscal_report_deductible_amount
-#, fuzzy
 msgid "Fiscal Amount"
 msgstr "Mali Tutar"
 
 #. module: account_fiscal_categories
 #: model:ir.actions.act_window,name:account_fiscal_categories.action_account_fiscal_category_list
 #: model:ir.ui.menu,name:account_fiscal_categories.menu_action_account_fiscal_category_list
-#, fuzzy
 msgid "Fiscal Categories"
 msgstr "Mali Kategoriler"
 
 #. module: account_fiscal_categories
 #: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account__fiscal_category_id
 #: model_terms:ir.ui.view,arch_db:account_fiscal_categories.view_account_form
-#, fuzzy
 msgid "Fiscal Category"
 msgstr "Mali Kategori"
 
 #. module: account_fiscal_categories
 #: model:ir.model,name:account_fiscal_categories.model_account_account_fiscal_rate
-#, fuzzy
 msgid "Fiscal Rate"
 msgstr "Mali Oran"
 
 #. module: account_fiscal_categories
 #: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account_fiscal_rate__rate
-#, fuzzy
 msgid "Fiscal Rate (%)"
 msgstr "Mali Oran (%)"
 
 #. module: account_fiscal_categories
 #: model_terms:ir.ui.view,arch_db:account_fiscal_categories.view_account_form
-#, fuzzy
 msgid "Fiscal Rates"
 msgstr "Mali Oranlar"
 
@@ -142,19 +133,16 @@ msgstr "Mali Oranlar"
 #: model:account.report,name:account_fiscal_categories.fiscal_report
 #: model:ir.actions.client,name:account_fiscal_categories.action_account_fiscal_report
 #: model:ir.ui.menu,name:account_fiscal_categories.menu_action_account_fiscal_report
-#, fuzzy
 msgid "Fiscal Report"
 msgstr "Mali Rapor"
 
 #. module: account_fiscal_categories
 #: model:ir.model,name:account_fiscal_categories.model_account_fiscal_report_handler
-#, fuzzy
 msgid "Fiscal Report Custom Handler"
 msgstr "Mali Rapor Özel İşleyicisi"
 
 #. module: account_fiscal_categories
 #: model:ir.model.constraint,message:account_fiscal_categories.constraint_account_fiscal_category_unique_code
-#, fuzzy
 msgid "Fiscal category code should be unique."
 msgstr "Mali kategori kodu benzersiz olmalıdır."
 
@@ -166,7 +154,6 @@ msgstr "Büyük Defter"
 
 #. module: account_fiscal_categories
 #: model:account.return.check.template,description:account_fiscal_categories.account_return_check_template_meal_expense_adjustment
-#, fuzzy
 msgid ""
 "General: Make sure the deduction for business meals is under the legal limit."
 msgstr ""
@@ -201,7 +188,6 @@ msgstr "Son Güncelleme"
 
 #. module: account_fiscal_categories
 #: model:account.return.check.template,name:account_fiscal_categories.account_return_check_template_meal_expense_adjustment
-#, fuzzy
 msgid "Meal expense adjustments"
 msgstr "Yemek gideri ayarlamaları"
 
@@ -257,13 +243,11 @@ msgstr "örn. İndirilemeyen Vergi"
 #. module: account_fiscal_categories
 #. odoo-javascript
 #: code:addons/account_fiscal_categories/static/src/components/fiscal_report/warnings.xml:0
-#, fuzzy
 msgid "in this period."
 msgstr "bu dönemde."
 
 #. module: account_fiscal_categories
 #. odoo-javascript
 #: code:addons/account_fiscal_categories/static/src/components/fiscal_report/warnings.xml:0
-#, fuzzy
 msgid "multiple fiscal rates"
 msgstr "çoklu mali oranlar"

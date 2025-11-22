@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-11-12 15:06+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "hr_recruitment_reports/tr/>\n"
 "Language: tr\n"
@@ -44,7 +45,6 @@ msgstr "Adayın İsmi"
 #. module: hr_recruitment_reports
 #: model:ir.actions.act_window,name:hr_recruitment_reports.recruitment_report_action
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_reports.recruitment_report_view_pivot
-#, fuzzy
 msgid "Application Analysis"
 msgstr "Uygulama Analizi"
 
@@ -67,7 +67,6 @@ msgstr "Arşivlendi"
 
 #. module: hr_recruitment_reports
 #: model:ir.model.fields,field_description:hr_recruitment_reports.field_hr_recruitment_stage_report__days_in_stage
-#, fuzzy
 msgid "Average Days in Stage"
 msgstr "Aşamadaki Ortalama Günler"
 
@@ -118,7 +117,6 @@ msgstr "İşe Alım Oranı"
 #: model:ir.actions.act_window,name:hr_recruitment_reports.recruitment_stage_report_action
 #: model:ir.ui.menu,name:hr_recruitment_reports.hr_applicant_stage_report_menu
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_reports.recruitment_stage_report_view_cohort
-#, fuzzy
 msgid "Hiring Velocity"
 msgstr "İşe Alım Hızı"
 
@@ -156,7 +154,6 @@ msgstr "İş Pozisyonu"
 #. module: hr_recruitment_reports
 #: model_terms:ir.actions.act_window,help:hr_recruitment_reports.recruitment_stage_report_action
 #: model_terms:ir.actions.act_window,help:hr_recruitment_reports.recruitment_stage_report_job_action
-#, fuzzy
 msgid ""
 "Keep an eye on the stages of your recruitment process and prevent any "
 "bottleneck."
@@ -278,11 +275,9 @@ msgstr "Takım Performansı"
 
 #. module: hr_recruitment_reports
 #: model_terms:ir.actions.act_window,help:hr_recruitment_reports.recruitment_report_team_action
-#, fuzzy
 msgid "This report allows you to compare recruiters and their performances."
 msgstr ""
-"Bu rapor, işe alım uzmanlarını ve performanslarını karşılaştırmanıza olanak "
-"tanır."
+"Bu rapor, işe alım uzmanlarını ve performanslarını karşılaştırmanızı sağlar."
 
 #. module: hr_recruitment_reports
 #: model_terms:ir.actions.act_window,help:hr_recruitment_reports.recruitment_report_source_action

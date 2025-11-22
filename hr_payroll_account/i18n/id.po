@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:47+0000\n"
+"POT-Creation-Date: 2025-11-21 18:42+0000\n"
 "PO-Revision-Date: 2025-11-14 07:46+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
@@ -63,10 +63,10 @@ msgid ""
 msgstr ""
 "<span class=\"o_stat_text\" invisible=\"move_state != 'draft'\">Entri Jurnal "
 "<br/>(Draft)</span>\n"
-"                        <span class=\"o_stat_text\" invisible="
-"\"move_state != 'posted'\">Entri Jurnal <br/>(Dipost)</span>\n"
-"                        <span class=\"o_stat_text\" invisible="
-"\"move_state != 'cancel'\">Entri Jurnal <br/>(Dibatalkan)</span>"
+"                        <span class=\"o_stat_text\" invisible=\"move_state !"
+"= 'posted'\">Entri Jurnal <br/>(Dipost)</span>\n"
+"                        <span class=\"o_stat_text\" invisible=\"move_state !"
+"= 'cancel'\">Entri Jurnal <br/>(Dibatalkan)</span>"
 
 #. module: hr_payroll_account
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.view_move_form_inherit
@@ -465,21 +465,6 @@ msgid "Set employee on account line"
 msgstr ""
 
 #. module: hr_payroll_account
-#. odoo-python
-#: code:addons/hr_payroll_account/models/hr_payslip.py:0
-msgid "Some contracts for these payslips have no structure type, employees: %s"
-msgstr ""
-"Beberapa kontrak untuk payslip-payslip ini tidak memiliki tipe struktur, "
-"karyawan: %s"
-
-#. module: hr_payroll_account
-#. odoo-python
-#: code:addons/hr_payroll_account/models/hr_payslip.py:0
-msgid "Some payroll structures have no account journal defined on it: %s"
-msgstr ""
-"Beberapa struktur payroll tidak memiliki akun jurnal yang didefinisikan: %s"
-
-#. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_salary_rule__split_move_lines
 msgid "Split on names"
 msgstr ""
@@ -559,6 +544,17 @@ msgstr "Anda tidak dapat membuat entri jurnal untuk payslip yang dibayar."
 #: code:addons/hr_payroll_account/models/account_journal.py:0
 msgid "You cannot delete the journal linked to a Salary Structure"
 msgstr "Anda tidak dapat menghapus jurnal yang di-link ke Struktur Gaji"
+
+#~ msgid ""
+#~ "Some contracts for these payslips have no structure type, employees: %s"
+#~ msgstr ""
+#~ "Beberapa kontrak untuk payslip-payslip ini tidak memiliki tipe struktur, "
+#~ "karyawan: %s"
+
+#~ msgid "Some payroll structures have no account journal defined on it: %s"
+#~ msgstr ""
+#~ "Beberapa struktur payroll tidak memiliki akun jurnal yang didefinisikan: "
+#~ "%s"
 
 #~ msgid "Analytic Account"
 #~ msgstr "Akun Analitik"

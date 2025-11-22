@@ -19,13 +19,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-11-12 14:59+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "social_push_notifications/tr/>\n"
 "Language: tr\n"
@@ -69,7 +70,6 @@ msgstr "Yapılandırma Ayarları"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
-#, fuzzy
 msgid "Configure Push Notifications"
 msgstr "Anlık Bildirimleri Yapılandırma"
 
@@ -171,7 +171,6 @@ msgstr "Firebase Web API Anahtarı"
 #: model:ir.model.fields,field_description:social_push_notifications.field_res_config_settings__firebase_web_app_id
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_account__firebase_web_app_id
 #: model:ir.model.fields,field_description:social_push_notifications.field_website__firebase_web_app_id
-#, fuzzy
 msgid "Firebase Web App ID"
 msgstr "Firebase Web Uygulaması Kimliği"
 
@@ -561,7 +560,6 @@ msgstr "Anlık bildirim hesabını silemezsiniz."
 #. module: social_push_notifications
 #. odoo-python
 #: code:addons/social_push_notifications/models/social_account.py:0
-#, fuzzy
 msgid ""
 "You have to install \"google_auth>=1.18.0\" to be able to send push "
 "notifications."
@@ -571,7 +569,6 @@ msgstr ""
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
-#, fuzzy
 msgid "e.g. \"1:280765099157:web:7c7b7d7b7d7b7d7b7d7b7d\""
 msgstr "e.g. \"1:280765099157:web:7c7b7d7b7d7b7d7b7d7b7d\""
 

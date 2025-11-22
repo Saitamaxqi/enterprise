@@ -17,13 +17,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-11-12 14:58+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "sale_amazon/tr/>\n"
 "Language: tr\n"
@@ -35,7 +36,6 @@ msgstr ""
 
 #. module: sale_amazon
 #: model:mail.template,body_html:sale_amazon.order_sync_failure
-#, fuzzy
 msgid ""
 "<div>\n"
 "            <p>The synchronization of the Amazon order with reference <t t-"
@@ -77,7 +77,7 @@ msgstr ""
 "                    <li> <em> Son Sipariş Senkronizasyonu</em> için "
 "siparişin son durum güncellemesinden önceki bir tarih belirleyin.</li>\n"
 "                    <li>Değişiklikleri kaydedin ve <em>SYNC ORDERS</em> "
-"düğmesine tıklayın.</li>\n"
+"butouna tıklayın.</li>\n"
 "                </ol>\n"
 "            \n"
 "           <p>Sorun devam ederse <a href=\"https://www.odoo.com/help/\">Odoo "
@@ -87,7 +87,6 @@ msgstr ""
 
 #. module: sale_amazon
 #: model:mail.template,body_html:sale_amazon.picking_sync_failure
-#, fuzzy
 msgid ""
 "<style>\n"
 "                .amz_table {\n"
@@ -375,7 +374,6 @@ msgstr "Etkin"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_account_view_form
-#, fuzzy
 msgid ""
 "Add any new marketplace that this account has "
 "gained                                           access to."
@@ -404,9 +402,8 @@ msgstr "Amazon Hesapları"
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_offer__amazon_feed_ref
 #: model:ir.model.fields,field_description:sale_amazon.field_stock_picking__amazon_feed_ref
-#, fuzzy
 msgid "Amazon Feed Reference"
-msgstr "Amazon Besleme Referansı"
+msgstr "Amazon Feed Referansı"
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_sale_order_line__amazon_item_ref
@@ -437,25 +434,21 @@ msgstr "Amazon Teklifleri"
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_recover_order_wizard__amazon_order_ref
-#, fuzzy
 msgid "Amazon Order Reference"
 msgstr "Amazon Sipariş Referansı"
 
 #. module: sale_amazon
 #: model:ir.model,name:sale_amazon.model_amazon_recover_order_wizard
-#, fuzzy
 msgid "Amazon Recover Order Wizard"
 msgstr "Amazon Sipariş Kurtarma Sihirbazı"
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_sale_order__amazon_order_ref
-#, fuzzy
 msgid "Amazon Reference"
-msgstr "Amazon Referans"
+msgstr "Amazon Referansı"
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_offer__sku
-#, fuzzy
 msgid "Amazon SKU"
 msgstr "Amazon SKU"
 
@@ -472,7 +465,6 @@ msgstr "Amazon Gönderi"
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_offer__amazon_sync_status
 #: model:ir.model.fields,field_description:sale_amazon.field_stock_picking__amazon_sync_status
-#, fuzzy
 msgid "Amazon Synchronization Status"
 msgstr "Amazon Senkronizasyon Durumu"
 
@@ -490,22 +482,20 @@ msgstr "Amazon pazar yerleri silinemez."
 #. module: sale_amazon
 #. odoo-python
 #: code:addons/sale_amazon/models/stock_move.py:0
-#, fuzzy
 msgid "Amazon move: %s"
-msgstr "Amazon hamlesi: %s"
+msgstr "Amazon Stok Hareketi: %s"
 
 #. module: sale_amazon
 #. odoo-python
 #: code:addons/sale_amazon/models/stock_picking.py:0
-#, fuzzy
 msgid ""
 "Amazon require certain information for the shipping location. Please make "
 "sure the following information are set on '%(location_name)s' (%"
 "(location)s): street, country and country code."
 msgstr ""
 "Amazon, gönderim konumu için belirli bilgiler gerektirir. Lütfen aşağıdaki "
-"bilgilerin '%(location_name)s' (%(location)s) adresinde ayarlandığından emin "
-"olun: cadde, ülke ve ülke kodu."
+"bilgilerin '%(location_name)s' (%(location)s) adresinde cadde, ülke ve ülke "
+"kodu bilgilerinin ayarlandığından emin olun."
 
 #. module: sale_amazon
 #. odoo-python
@@ -601,7 +591,6 @@ msgstr "Amazon.fr"
 
 #. module: sale_amazon
 #: model:amazon.marketplace,name:sale_amazon.marketplace_IE
-#, fuzzy
 msgid "Amazon.ie"
 msgstr "Amazon.ie"
 
@@ -647,7 +636,6 @@ msgstr "Amazon: Teklifler için Mevcut Envanter Senkronizasyon Hatası"
 
 #. module: sale_amazon
 #: model:mail.template,name:sale_amazon.picking_sync_failure
-#, fuzzy
 msgid "Amazon: Delivery Order Synchronization Failure"
 msgstr "Amazon: Teslimat Siparişi Senkronizasyon Hatası"
 
@@ -663,15 +651,13 @@ msgstr "Amazon: mevcut envanteri senkronize et"
 
 #. module: sale_amazon
 #: model:ir.actions.server,name:sale_amazon.ir_cron_sync_amazon_pickings_ir_actions_server
-#, fuzzy
 msgid "Amazon: sync delivery orders"
 msgstr "Amazon: teslimat siparişlerini senkronize edin"
 
 #. module: sale_amazon
 #: model:ir.actions.server,name:sale_amazon.ir_cron_sync_amazon_feeds_ir_actions_server
-#, fuzzy
 msgid "Amazon: sync feeds"
-msgstr "Amazon: beslemeleri senkronize et"
+msgstr "Amazon: Feedleri senkronize et"
 
 #. module: sale_amazon
 #: model:ir.actions.server,name:sale_amazon.ir_cron_sync_amazon_orders_ir_actions_server
@@ -696,7 +682,6 @@ msgstr "Arşivlendi"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_account_view_form
-#, fuzzy
 msgid "Are you sure you want to disconnect this account?"
 msgstr "Bu hesabın bağlantısını kesmek istediğinizden emin misiniz?"
 
@@ -770,13 +755,11 @@ msgstr "Kimlik %s ile Amazon hesabı bulunamadı"
 #. module: sale_amazon
 #. odoo-python
 #: code:addons/sale_amazon/utils.py:0
-#, fuzzy
 msgid "Could not process the feed document send by Amazon."
-msgstr "Amazon tarafından gönderilen besleme belgesi işlenemedi."
+msgstr "Amazon tarafından gönderilen feed belgesi işlenemedi."
 
 #. module: sale_amazon
 #: model:ir.model,website_form_label:sale_amazon.model_res_partner
-#, fuzzy
 msgid "Create a Customer"
 msgstr "Müşteri Oluşturma"
 
@@ -854,7 +837,6 @@ msgstr "Hata"
 #. module: sale_amazon
 #. odoo-python
 #: code:addons/sale_amazon/models/amazon_account.py:0
-#, fuzzy
 msgid "Error (%(code)s): %(message)s"
 msgstr "Hata (%(code)s): %(message)s"
 
@@ -871,15 +853,13 @@ msgstr "Avrupa"
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_account__location_id
-#, fuzzy
 msgid "FBA Stock Location"
 msgstr "FBA Stok Konumu"
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_account__synchronize_inventory
-#, fuzzy
 msgid "FBM Stock"
-msgstr "FBM Hisse Senedi"
+msgstr "FBM Stok"
 
 #. module: sale_amazon
 #: model:ir.model.fields.selection,name:sale_amazon.selection__amazon_marketplace__region__us-west-2
@@ -926,15 +906,13 @@ msgstr ""
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_res_config_settings__has_amazon_account
-#, fuzzy
 msgid "Has Amazon Account"
 msgstr "Amazon Hesabı Var"
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_account__base_marketplace_id
-#, fuzzy
 msgid "Home Marketplace"
-msgstr "Ana Sayfa Marketplace"
+msgstr "Pazaryeri Anasayfa"
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_account__id
@@ -983,7 +961,6 @@ msgstr ""
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.picking_view_form
-#, fuzzy
 msgid "In Processing by Amazon"
 msgstr "Amazon Tarafından İşleniyor"
 
@@ -994,9 +971,8 @@ msgstr "LWA Erişim Token"
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_account__access_token_expiry
-#, fuzzy
 msgid "LWA Access Token Expiry"
-msgstr "LWA Erişim Jetonu Sona Erme"
+msgstr "LWA Erişim Token Sona Ermesi"
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_account__refresh_token
@@ -1026,13 +1002,11 @@ msgstr "Son Güncelleme"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.res_config_settings_view_form
-#, fuzzy
 msgid "Link My Account"
 msgstr "Hesabımı Bağla"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_account_view_form
-#, fuzzy
 msgid ""
 "Link your Amazon account with Odoo to start synchronizing your "
 "Amazon                               orders."
@@ -1047,9 +1021,8 @@ msgstr "Kilitle"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_offer_view_search
-#, fuzzy
 msgid "MarketPlace"
-msgstr "MarketPlace"
+msgstr "Pazaryeri"
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_offer__marketplace_id
@@ -1076,7 +1049,6 @@ msgstr "Yeni"
 #. module: sale_amazon
 #. odoo-python
 #: code:addons/sale_amazon/models/amazon_offer.py:0
-#, fuzzy
 msgid "Non-storable product cannot be synced."
 msgstr "Depolanamayan ürün senkronize edilemez."
 
@@ -1165,7 +1137,6 @@ msgstr ""
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.recover_order_wizard_form
-#, fuzzy
 msgid "Recover"
 msgstr "Kurtarmak"
 
@@ -1174,7 +1145,6 @@ msgstr "Kurtarmak"
 #: code:addons/sale_amazon/models/amazon_account.py:0
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_account_view_form
 #: model_terms:ir.ui.view,arch_db:sale_amazon.recover_order_wizard_form
-#, fuzzy
 msgid "Recover Order"
 msgstr "Sipariş Kurtarma"
 
@@ -1197,7 +1167,6 @@ msgstr ""
 
 #. module: sale_amazon
 #: model:ir.model.fields.selection,name:sale_amazon.selection__amazon_offer__amazon_sync_status__reset
-#, fuzzy
 msgid "Reset FBM stock"
 msgstr "FBM stokunu sıfırlayın"
 
@@ -1208,21 +1177,18 @@ msgstr "Kısıtlı Veri Token"
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_account__restricted_data_token_expiry
-#, fuzzy
 msgid "Restricted Data Token Expiry"
 msgstr "Kısıtlı Veri Simgesinin Sona Ermesi"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.picking_view_form
-#, fuzzy
 msgid "Retry Amazon Sync"
 msgstr "Amazon Sync'i Yeniden Deneyin"
 
 #. module: sale_amazon
 #: model:ir.model.constraint,message:sale_amazon.constraint_amazon_offer_unique_sku
-#, fuzzy
 msgid "SKU must be unique for a given account."
-msgstr "SKU, belirli bir hesap için benzersiz olmalıdır."
+msgstr "SKU, belirli bir hesap için benzersiz/tek olmalıdır."
 
 #. module: sale_amazon
 #: model:ir.model,name:sale_amazon.model_sale_order
@@ -1246,15 +1212,13 @@ msgstr "Satış Temsilcisi"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.picking_view_form
-#, fuzzy
 msgid "Scheduled for Amazon Synchronization"
 msgstr "Amazon Senkronizasyonu için Planlandı"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.quick_create_account_form
-#, fuzzy
 msgid "Select the amazon marketplace to log in from."
-msgstr "Giriş yapmak için amazon marketplace'i seçin."
+msgstr "Giriş yapmak için Amazon pazaryerini seçin."
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_marketplace__seller_central_url
@@ -1278,7 +1242,6 @@ msgstr "Stok Hareketi"
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_offer__sync_stock
-#, fuzzy
 msgid "Stock Synchronization"
 msgstr "Stok Senkronizasyonu"
 
@@ -1290,21 +1253,18 @@ msgstr "Bu hesap için mevcut olan pazaryerleri başarıyla güncellendi!"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_account_view_form
-#, fuzzy
 msgid "Sync Deliveries"
 msgstr "Teslimatları Senkronize Et"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_account_view_form
-#, fuzzy
 msgid "Sync FBM Inventory"
 msgstr "FBM Envanterini Senkronize Et"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_account_view_form
-#, fuzzy
 msgid "Sync Feeds Status"
-msgstr "Senkronizasyon Beslemeleri Durumu"
+msgstr "Feed Durumunu Senkronize Et"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_account_view_form
@@ -1326,13 +1286,11 @@ msgstr ""
 
 #. module: sale_amazon
 #: model:mail.template,subject:sale_amazon.picking_sync_failure
-#, fuzzy
 msgid "Synchronization of delivery orders has failed"
 msgstr "Teslimat siparişlerinin senkronizasyonu başarısız oldu"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.picking_view_form
-#, fuzzy
 msgid "Synchronization with Amazon failed"
 msgstr "Amazon ile senkronizasyon başarısız oldu"
 
@@ -1343,7 +1301,6 @@ msgstr "Senkronize edin"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.picking_view_form
-#, fuzzy
 msgid "Synchronized with Amazon"
 msgstr "Amazon ile senkronize"
 
@@ -1355,14 +1312,12 @@ msgstr "Vergi Dahil"
 #. module: sale_amazon
 #. odoo-python
 #: code:addons/sale_amazon/wizards/recover_order_wizard.py:0
-#, fuzzy
 msgid "The Amazon order reference must be in 3-7-7 format."
 msgstr "Amazon sipariş referansı 3-7-7 formatında olmalıdır."
 
 #. module: sale_amazon
 #. odoo-python
 #: code:addons/sale_amazon/models/amazon_account.py:0
-#, fuzzy
 msgid ""
 "The Amazon order with reference %(ref)s was not recovered because its "
 "currency was missing from the Amazon order data."
@@ -1373,7 +1328,6 @@ msgstr ""
 #. module: sale_amazon
 #. odoo-python
 #: code:addons/sale_amazon/models/amazon_account.py:0
-#, fuzzy
 msgid ""
 "The Amazon order with reference %(ref)s was not recovered because its status "
 "(%(status)s) is not eligible for synchronization for its fulfillment channel "
@@ -1418,7 +1372,6 @@ msgstr "Stok Tutma Birimi."
 
 #. module: sale_amazon
 #: model:ir.model.fields,help:sale_amazon.field_amazon_offer__amazon_channel
-#, fuzzy
 msgid ""
 "The channel will be updated with the incomming orders or during the next "
 "stock synchronization."
@@ -1444,9 +1397,8 @@ msgstr ""
 
 #. module: sale_amazon
 #: model:ir.model.fields,help:sale_amazon.field_amazon_account__base_marketplace_id
-#, fuzzy
 msgid "The home marketplace of this account; used for authentication only."
-msgstr "Bu hesabın ana pazarı; yalnızca kimlik doğrulama için kullanılır."
+msgstr "Bu hesabın ana pazaryeri ; yalnızca kimlik doğrulama için kullanılır."
 
 #. module: sale_amazon
 #: model:ir.model.fields,help:sale_amazon.field_amazon_account__last_orders_sync
@@ -1502,7 +1454,6 @@ msgstr "Belirtecin geçersiz hale geldiği an."
 #. module: sale_amazon
 #. odoo-python
 #: code:addons/sale_amazon/models/sale_order.py:0
-#, fuzzy
 msgid ""
 "The order has been cancelled by the Amazon customer while someproducts have "
 "already been delivered. Please create a return for this order to adjust the "
@@ -1515,27 +1466,23 @@ msgstr ""
 #. module: sale_amazon
 #. odoo-python
 #: code:addons/sale_amazon/models/amazon_account.py:0
-#, fuzzy
 msgid "The order was not found on this account's marketplaces."
 msgstr "Sipariş bu hesabın pazar yerlerinde bulunamadı."
 
 #. module: sale_amazon
 #. odoo-python
 #: code:addons/sale_amazon/models/amazon_account.py:0
-#, fuzzy
 msgid "The provided reference does not match any Amazon order."
 msgstr "Sağlanan referans herhangi bir Amazon siparişiyle eşleşmiyor."
 
 #. module: sale_amazon
 #: model:ir.model.fields,help:sale_amazon.field_amazon_recover_order_wizard__amazon_order_ref
-#, fuzzy
 msgid "The reference to the Amazon order to recover, in 3-7-7 format"
 msgstr "3-7-7 formatında Amazon kurtarma emrine yapılan atıf"
 
 #. module: sale_amazon
 #. odoo-python
 #: code:addons/sale_amazon/models/stock_picking.py:0
-#, fuzzy
 msgid ""
 "The sales order of this delivery order is not linked to an Amazon account."
 msgstr ""
@@ -1564,7 +1511,6 @@ msgstr ""
 
 #. module: sale_amazon
 #: model:ir.model.fields,help:sale_amazon.field_stock_picking__amazon_sync_status
-#, fuzzy
 msgid ""
 "The synchronization status of the delivery order to Amazon:\n"
 "- Pending: The delivery order has been confirmed and will soon be "
@@ -1581,7 +1527,6 @@ msgstr ""
 
 #. module: sale_amazon
 #: model:ir.model.fields,help:sale_amazon.field_amazon_offer__amazon_sync_status
-#, fuzzy
 msgid ""
 "The synchronization status of the product's stock level to Amazon:\n"
 "- Processing: The stock level has been sent and is being processed.\n"
@@ -1600,7 +1545,6 @@ msgstr ""
 #. module: sale_amazon
 #. odoo-python
 #: code:addons/sale_amazon/models/amazon_account.py:0
-#, fuzzy
 msgid ""
 "The synchronization with Amazon failed. Amazon gave us this information "
 "about the problem:"
@@ -1637,7 +1581,6 @@ msgstr ""
 #. module: sale_amazon
 #. odoo-python
 #: code:addons/sale_amazon/models/res_partner.py:0
-#, fuzzy
 msgid ""
 "This Amazon partner was created with an invalid state (%s); please set the "
 "correct state manually."
@@ -1652,7 +1595,6 @@ msgstr "Aktarım"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_account_view_form
-#, fuzzy
 msgid "Update available marketplaces"
 msgstr "Mevcut pazar yerlerini güncelleyin"
 
@@ -1684,7 +1626,6 @@ msgstr "Fiyatın vergi tutarını içerip içermediği."
 #. module: sale_amazon
 #. odoo-python
 #: code:addons/sale_amazon/models/amazon_account.py:0
-#, fuzzy
 msgid ""
 "You cannot delete an account that is linked to sale orders. Please archive "
 "it instead."
@@ -1743,7 +1684,6 @@ msgstr ""
 #. module: sale_amazon
 #. odoo-python
 #: code:addons/sale_amazon/models/amazon_account.py:0
-#, fuzzy
 msgid "account_id"
 msgstr "account_id"
 

@@ -12,13 +12,14 @@
 # Layna Nascimento, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Maitê Dietze (madi)" <madi@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-11-14 11:43+0000\n"
-"Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
+"PO-Revision-Date: 2025-11-16 05:24+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/account_asset/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -263,7 +264,7 @@ msgstr "Relatório financeiro"
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_return
 msgid "Accounting Return"
-msgstr ""
+msgstr "Retorno contábil"
 
 #. module: account_asset
 #. odoo-python
@@ -325,7 +326,7 @@ msgstr "Todas as linhas devem ser da mesma conta"
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "All the lines should be from the same company"
-msgstr ""
+msgstr "Todas as linhas devem ser da mesma empresa"
 
 #. module: account_asset
 #. odoo-python
@@ -356,6 +357,8 @@ msgid ""
 "An asset wil be created for each asset model when this account is used on a "
 "vendor bill or a refund"
 msgstr ""
+"Um ativo será criado para cada modelo de ativo quando essa conta for usada "
+"em uma conta de fornecedor ou em um reembolso"
 
 #. module: account_asset
 #. odoo-python
@@ -416,7 +419,7 @@ msgstr "Conta de contrapartida do ativo"
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_group_form_view
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_group_list_view
 msgid "Asset Group"
-msgstr ""
+msgstr "Grupo de ativos"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_bank_statement_line__asset_id_display_name
@@ -454,7 +457,7 @@ msgstr "Modelos de ativos"
 #: model:ir.model.fields,field_description:account_asset.field_account_bank_statement_line__asset_move_type
 #: model:ir.model.fields,field_description:account_asset.field_account_move__asset_move_type
 msgid "Asset Move Type"
-msgstr ""
+msgstr "Tipo de movimentação de ativos"
 
 #. module: account_asset
 #. odoo-python
@@ -489,7 +492,7 @@ msgstr "Ativo criado"
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "Asset created from invoice: %s"
-msgstr ""
+msgstr "Ativo criado da fatura: %s"
 
 #. module: account_asset
 #. odoo-python
@@ -712,17 +715,17 @@ msgstr "Contar ativos"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__count_linked_asset
 msgid "Count Linked Asset"
-msgstr ""
+msgstr "Total de ativos vinculados"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_group__count_linked_assets
 msgid "Count Linked Assets"
-msgstr ""
+msgstr "Total de ativos vinculados"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__country_code
 msgid "Country Code"
-msgstr ""
+msgstr "Código do país"
 
 #. module: account_asset
 #: model:ir.actions.server,name:account_asset.action_account_aml_to_asset
@@ -900,13 +903,13 @@ msgstr "Painel de depreciação modificado %s"
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "Depreciation entry %(name)s posted (%(value)s)"
-msgstr ""
+msgstr "Lançamento de depreciação %(name)s realizado (%(value)s)"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "Depreciation entry %(name)s reversed (%(value)s)"
-msgstr ""
+msgstr "Lançamento de depreciação %(name)s revertido (%(value)s)"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__display_account_asset_id
@@ -960,7 +963,7 @@ msgstr "Alienar"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__distribution_analytic_account_ids
 msgid "Distribution Analytic Account"
-msgstr ""
+msgstr "Conta analítica de distribuição"
 
 #. module: account_asset
 #: model:ir.actions.server,name:account_asset.action_server_download_asset_template
@@ -1022,7 +1025,7 @@ msgstr "Conta de ativo fixo"
 #. odoo-python
 #: code:addons/account_asset/models/account_return.py:0
 msgid "Fixed Assets"
-msgstr ""
+msgstr "Ativos fixos"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__message_follower_ids
@@ -1097,19 +1100,19 @@ msgstr "Agrupar por conta"
 #. odoo-javascript
 #: code:addons/account_asset/static/src/components/depreciation_schedule/groupby.xml:0
 msgid "Group By Asset Group"
-msgstr ""
+msgstr "Agrupar por grupo de ativos"
 
 #. module: account_asset
 #. odoo-javascript
 #: code:addons/account_asset/static/src/components/depreciation_schedule/groupby.xml:0
 msgid "Group by Account"
-msgstr ""
+msgstr "Agrupar por conta"
 
 #. module: account_asset
 #. odoo-javascript
 #: code:addons/account_asset/static/src/components/depreciation_schedule/groupby.xml:0
 msgid "Group by Asset Group"
-msgstr ""
+msgstr "Agrupar por grupo de ativos"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__has_message
@@ -1237,6 +1240,7 @@ msgid ""
 "Journal Items of %(account)s should have a label in order to generate an "
 "asset"
 msgstr ""
+"Os itens de diário de %(account)s devem ter uma etiqueta para gerar um ativo"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__write_uid
@@ -1266,7 +1270,7 @@ msgstr "Linear"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__linked_assets_ids
 msgid "Linked Assets"
-msgstr ""
+msgstr "Ativos vinculados"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__asset_modify__gain_or_loss__loss
@@ -1318,7 +1322,7 @@ msgstr "Modelo"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__asset_properties_definition
 msgid "Model Properties"
-msgstr ""
+msgstr "Propriedades do modelo"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_modify_form
@@ -1375,7 +1379,7 @@ msgstr ""
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_search
 msgid "My Activities"
-msgstr ""
+msgstr "Minhas atividades"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__my_activity_date_deadline
@@ -1385,22 +1389,22 @@ msgstr "Prazo da minha atividade"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_group__name
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_move__asset_move_type__negative_revaluation
 msgid "Negative revaluation"
-msgstr ""
+msgstr "Reavaliação negativa"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__net_gain_on_sale
 msgid "Net gain on sale"
-msgstr ""
+msgstr "Lucro líquido na venda"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__net_gain_on_sale
 msgid "Net value of gain or loss on sale of an asset"
-msgstr ""
+msgstr "Valor líquido do lucro ou perda na venda de um ativo"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_asset_modify__value_residual
@@ -1442,7 +1446,7 @@ msgstr "Não"
 #. odoo-javascript
 #: code:addons/account_asset/static/src/components/depreciation_schedule/groupby.xml:0
 msgid "No Grouping"
-msgstr ""
+msgstr "Sem agrupamento"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__prorata_computation_type__none
@@ -1470,7 +1474,7 @@ msgstr "Valor não depreciável"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__salvage_value_pct
 msgid "Not Depreciable Value Percent"
-msgstr ""
+msgstr "Porcentagem do valor não depreciável"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_asset_modify__name
@@ -1517,7 +1521,7 @@ msgstr "Número de erros"
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Número de mensagens que requerem ação"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__message_has_error_counter
@@ -1532,6 +1536,9 @@ msgid ""
 "recorded for this period. Ensure assets are properly registered for "
 "automatic depreciation calculation."
 msgstr ""
+"O Odoo gerencia a depreciação de seus ativos fixos. ão há depreciação "
+"registrada nesse período. Certifique-se de que os ativos estejam devidamente "
+"registrados para o cálculo automático da depreciação."
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__state__paused
@@ -1578,7 +1585,7 @@ msgstr "Superior"
 #: code:addons/account_asset/models/account_asset.py:0
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
 msgid "Parent Asset"
-msgstr ""
+msgstr "Ativo principal"
 
 #. module: account_asset
 #. odoo-python
@@ -1600,7 +1607,7 @@ msgstr "Duração do período"
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_move__asset_move_type__positive_revaluation
 msgid "Positive revaluation"
-msgstr ""
+msgstr "Reavaliação positiva"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
@@ -1611,7 +1618,7 @@ msgstr "Lançamentos realizados"
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__asset_properties
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_search
 msgid "Properties"
-msgstr ""
+msgstr "Propriedades"
 
 #. module: account_asset
 #. odoo-python
@@ -1623,7 +1630,7 @@ msgstr "Data de pro rata"
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_move__asset_move_type__purchase
 msgid "Purchase"
-msgstr ""
+msgstr "Compras"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__rating_ids
@@ -1737,13 +1744,13 @@ msgstr "Definir como 'Em execução'"
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_search
 msgid "Show all records whose next activity date is past"
-msgstr ""
+msgstr "Mostrar todos os registros cuja data da próxima atividade já passou"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "Some fields are missing %s"
-msgstr ""
+msgstr "Alguns campos estão ausentes %s"
 
 #. module: account_asset
 #. odoo-python
@@ -1765,6 +1772,8 @@ msgid ""
 "Starting date of the period used in the prorata calculation of the first "
 "depreciation"
 msgstr ""
+"Data de início do período usado no cálculo proporcional da primeira "
+"depreciação"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__state
@@ -1804,6 +1813,8 @@ msgid ""
 "The ISO country code in two chars. \n"
 "You can use this field for quick search."
 msgstr ""
+"O código ISO do país em dois caracteres. \n"
+"Você pode usar esse campo para pesquisas rápidas."
 
 #. module: account_asset
 #. odoo-python
@@ -1813,6 +1824,9 @@ msgid ""
 "account %(dep_acc)s has been debited by %(dep_delta)s. This corresponds to %"
 "(move_count)s cancelled %(word)s:"
 msgstr ""
+"A conta %(exp_acc)s foi creditada em %(exp_delta)s, enquanto a conta "
+"%(dep_acc)s foi debitada em %(dep_delta)s. Isso corresponde a %(move_count)s "
+"%(word)s cancelados."
 
 #. module: account_asset
 #. odoo-python
@@ -1842,6 +1856,9 @@ msgid ""
 "Purchase's value (%(purchase_value)s). Please make sure this is what you "
 "want."
 msgstr ""
+"O valor que você inseriu (%(entered_amount)s) não corresponde ao valor da "
+"compra relacionada (%(purchase_value)s). Certifique-se de que isso é o que "
+"você prentende fazer."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_asset_modify__asset_id
@@ -1989,12 +2006,12 @@ msgstr "Aumento de valor para: %(asset)s"
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_group_form_view
 msgid "Visible to all"
-msgstr ""
+msgstr "Visível para todos"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__warning_count_assets
 msgid "Warning Count Assets"
-msgstr ""
+msgstr "Aviso do total de ativos"
 
 #. module: account_asset
 #. odoo-python
@@ -2047,6 +2064,8 @@ msgstr "Anos"
 #: code:addons/account_asset/static/src/views/fields/properties/properties_field.js:0
 msgid "You can add Property fields only on Assets with an Asset Model set."
 msgstr ""
+"Você pode adicionar campos de propriedade somente em ativos com um modelo de "
+"ativo definido."
 
 #. module: account_asset
 #. odoo-python
@@ -2062,7 +2081,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "You can't re-evaluate the asset before the lock date."
-msgstr ""
+msgstr "Não é possível reavaliar o ativo antes do período de bloqueio."
 
 #. module: account_asset
 #. odoo-python
@@ -2070,6 +2089,8 @@ msgstr ""
 msgid ""
 "You cannot add or remove bills when the asset is already running or closed."
 msgstr ""
+"Não é possível adicionar ou remover faturas quando o ativo já estiver em "
+"execução ou fechado."
 
 #. module: account_asset
 #. odoo-python
@@ -2120,7 +2141,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "You cannot dispose of an asset before the lock date."
-msgstr ""
+msgstr "Não é possível alienar um ativo antes do período de bloqueio."
 
 #. module: account_asset
 #. odoo-python
@@ -2140,7 +2161,7 @@ msgstr "Não é possível retomar em uma data igual ou anterior à data de pausa
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "You cannot select the same account as the Depreciation Account"
-msgstr ""
+msgstr "Não é possível selecionar a mesma conta como conta de depreciação"
 
 #. module: account_asset
 #. odoo-python
@@ -2187,7 +2208,7 @@ msgstr "book_value"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "company_id"
-msgstr ""
+msgstr "company_id"
 
 #. module: account_asset
 #: model:account.report.column,name:account_asset.assets_report_date_from
@@ -2257,13 +2278,13 @@ msgstr "lançamento"
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "gain"
-msgstr ""
+msgstr "ganho"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "gain/loss"
-msgstr ""
+msgstr "ganho/perda"
 
 #. module: account_asset
 #. odoo-python
@@ -2275,7 +2296,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "loss"
-msgstr ""
+msgstr "perda"
 
 #. module: account_asset
 #. odoo-python
@@ -2305,7 +2326,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "modify"
-msgstr ""
+msgstr "modificar"
 
 #. module: account_asset
 #. odoo-python
@@ -2317,7 +2338,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "pause"
-msgstr ""
+msgstr "pause"
 
 #. module: account_asset
 #. odoo-python
@@ -2341,7 +2362,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "sell"
-msgstr ""
+msgstr "vender"
 
 #~ msgid " (%s of %s)"
 #~ msgstr " (%s de %s)"

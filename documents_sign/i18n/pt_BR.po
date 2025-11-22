@@ -8,12 +8,13 @@
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Maitê Dietze (madi)" <madi@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~14.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-11-13 22:40+0000\n"
+"PO-Revision-Date: 2025-11-18 17:08+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/documents_sign/pt_BR/>\n"
@@ -164,7 +165,7 @@ msgstr "Solicitar assinatura"
 #. module: documents_sign
 #: model:ir.model,name:documents_sign.model_sign_request_item
 msgid "Signature Request Item"
-msgstr ""
+msgstr "Item de solicitação de assinatura"
 
 #. module: documents_sign
 #: model:ir.model,name:documents_sign.model_sign_template
@@ -187,34 +188,38 @@ msgstr "Marcadores de documentos assinados"
 msgid ""
 "The \"%s\" folder is required by the Sign application and cannot be deleted."
 msgstr ""
+"A pasta \"%s\" é necessária para o aplicativo Assinar e não pode ser "
+"excluída."
 
 #. module: documents_sign
 #. odoo-python
 #: code:addons/documents_sign/models/documents_document.py:0
 msgid "This action can only be applied on pdf document."
-msgstr ""
+msgstr "Essa ação só pode ser aplicada a documentos PDF."
 
 #. module: documents_sign
 #: model:ir.model,name:documents_sign.model_sign_import_documents
 msgid "Wizard to select PDF documents from the Documents app to sign"
 msgstr ""
+"Assistente para selecionar documentos PDF do aplicativo Documents para "
+"assinar"
 
 #. module: documents_sign
 #. odoo-python
 #: code:addons/documents_sign/models/documents_document.py:0
 msgid "You cannot archive the Sign folder (%s)."
-msgstr ""
+msgstr "Não é possível arquivar a pasta Assinar (%s)."
 
 #. module: documents_sign
 #. odoo-python
 #: code:addons/documents_sign/models/documents_document.py:0
 msgid "You cannot set a company on the %s folder."
-msgstr ""
+msgstr "Não é possível definir uma empresa na pasta %s."
 
 #. module: documents_sign
 #: model:documents.document,name:documents_sign.documents_attachment_video_studio_document
 msgid "sample-nda.pdf"
-msgstr ""
+msgstr "sample-nda.pdf"
 
 #~ msgid ""
 #~ "A set of condition and actions which will be available to all attachments "

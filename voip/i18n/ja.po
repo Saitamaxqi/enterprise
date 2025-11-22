@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-14 18:41+0000\n"
-"PO-Revision-Date: 2025-11-15 12:50+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"POT-Creation-Date: 2025-11-21 18:40+0000\n"
+"PO-Revision-Date: 2025-11-21 06:33+0000\n"
+"Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/voip/ja/"
 ">\n"
 "Language: ja\n"
@@ -248,7 +248,7 @@ msgstr "通話"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__call_count
 msgid "Call Count"
-msgstr ""
+msgstr "通話回数"
 
 #. module: voip
 #. odoo-javascript
@@ -260,19 +260,19 @@ msgstr "不在着信 (%(time)s)"
 #: model_terms:ir.ui.view,arch_db:voip.voip_provider_tree_view
 #: model_terms:ir.ui.view,arch_db:voip.voip_provider_view_form
 msgid "Call Recording"
-msgstr ""
+msgstr "通話録音"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Call Status Badge"
-msgstr ""
+msgstr "通話ステータスバッジ"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Call Via Desk Phone"
-msgstr ""
+msgstr "デスクホン経由の通話"
 
 #. module: voip
 #. odoo-javascript
@@ -324,12 +324,12 @@ msgstr "%(phone_number)sへの通話"
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__voip
 msgid "Call with Odoo Phone"
-msgstr ""
+msgstr "Odoo電話で通話"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__phone
 msgid "Call with phone's default app"
-msgstr ""
+msgstr "電話のデフォルトアプリで通話"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__calling
@@ -338,7 +338,7 @@ msgstr "発信中"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/softphone.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Calling…"
 msgstr "発信中…"
 
@@ -356,7 +356,7 @@ msgstr "通話"
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_graph
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_pivot
 msgid "Calls Analysis"
-msgstr ""
+msgstr "通話分析"
 
 #. module: voip
 #. odoo-javascript
@@ -369,13 +369,13 @@ msgstr "キャンセル"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/transfer_confirmation.xml:0
 msgid "Cancel transfer"
-msgstr ""
+msgstr "転送をキャンセル"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Cancelled Call"
-msgstr ""
+msgstr "キャンセル済通話"
 
 #. module: voip
 #. odoo-javascript
@@ -409,6 +409,7 @@ msgid ""
 "Choose which app to open when clicking on a phone number in the Odoo Mobile "
 "app."
 msgstr ""
+"Odooモバイルアプリで電話番号をクリックしたときに開くアプリを選択します。"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__company_id
@@ -840,7 +841,6 @@ msgstr "画像"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "In call"
 msgstr "通話中"
@@ -853,7 +853,6 @@ msgstr "入荷"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/softphone.js:0
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Incoming call"
 msgstr "着信"
@@ -869,6 +868,12 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 msgid "Incoming calls will be muted"
 msgstr "着信はミュートされます"
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/softphone.js:0
+msgid "Incoming call…"
+msgstr ""
 
 #. module: voip
 #. odoo-javascript
@@ -1162,6 +1167,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 msgid "Outgoing call (%(duration)s)"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/softphone.js:0
+msgid "Outgoing call…"
 msgstr ""
 
 #. module: voip

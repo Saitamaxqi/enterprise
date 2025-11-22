@@ -13,13 +13,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-11-12 14:58+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "sale_timesheet_enterprise/tr/>\n"
 "Language: tr\n"
@@ -32,45 +33,40 @@ msgstr ""
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_dialog/timesheet_leaderboard_dialog.js:0
-#, fuzzy
 msgid "%(billableTime)s / %(billable_time_target)s (%(billingRate)s%)"
 msgstr "%(billableTime)s / %(billable_time_target)s (%(billingRate)s%)"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.js:0
-#, fuzzy
 msgid "%(currentBillableTimeText)s / %(currentTargetTotalTimeText)s "
 msgstr "%(currentBillableTimeText)s / %(currentTargetTotalTimeText)s "
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/views/timesheet_analysis_pivot/timesheet_analysis_pivot_model.js:0
-#, fuzzy
 msgid "%(employee_name)s (%(target)sh / month)"
 msgstr "%(employee_name)s (%(target)ssaat / ay)"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.js:0
-#, fuzzy
 msgid "%(percentage)s%"
 msgstr "%(percentage)s%"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.js:0
-#, fuzzy
 msgid "(%(percentage)s%)"
 msgstr "(%(percentage)s%)"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_kanban
-#, fuzzy
 msgid ""
 "<i class=\"fa fa-fw me-2 fa-birthday-cake text-primary\" title=\"Birthday\"/>"
 msgstr ""
-"<i class=\"fa fa-fw me-2 fa-birthday-cake text-primary\" title=\"Birthday\"/>"
+"<i class=\"fa fa-fw me-2 fa-birthday-cake text-primary\" title=\"Doğum Günü\""
+"/>"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_kanban
@@ -85,13 +81,11 @@ msgstr "<i class=\"fa fa-fw me-2 fa-phone text-primary\" title=\"Phone\"/>"
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_form
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_employee_form
-#, fuzzy
 msgid "<span class=\"m-14 w-100\">per month</span>"
-msgstr "<span class=\"m-14 w-100\">her ay</span>"
+msgstr "<span class=\"m-14 w-100\">ayda</span>"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.sale_timesheet_enterprise_advance_payment_inv_timesheet_view_form
-#, fuzzy
 msgid ""
 "<span>\n"
 "                            Some employees currently have active timers for "
@@ -124,7 +118,6 @@ msgstr "Analitik Satırı"
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_7
-#, fuzzy
 msgid ""
 "Any time spent interacting with others—whether it’s a quick call, a meeting, "
 "or an informal chat—is valuable and should be recorded."
@@ -152,7 +145,6 @@ msgstr "Avatar 128"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__avatar_1920
-#, fuzzy
 msgid "Avatar 1920"
 msgstr "Avatar 1920"
 
@@ -164,13 +156,11 @@ msgstr "Ortalama"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_hr_employee_public__billable_time_target
-#, fuzzy
 msgid "Billable Time Target"
 msgstr "Faturalandırılabilir Zaman Hedefi"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_res_config_settings__timesheet_show_rates
-#, fuzzy
 msgid "Billing Rate Indicators"
 msgstr "Faturalama Oranı Göstergeleri"
 
@@ -178,7 +168,6 @@ msgstr "Faturalama Oranı Göstergeleri"
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_dialog/timesheet_leaderboard_dialog.js:0
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_res_config_settings__timesheet_show_leaderboard
-#, fuzzy
 msgid "Billing Rate Leaderboard"
 msgstr "Faturalama Oranı Lider Tablosu"
 
@@ -191,7 +180,6 @@ msgstr "Faturalandırma Süresi Hedefi"
 #. module: sale_timesheet_enterprise
 #: model:ir.ui.menu,name:sale_timesheet_enterprise.hr_timesheet_menu_employee
 #: model:ir.ui.menu,name:sale_timesheet_enterprise.hr_timesheet_menu_employee_billable_time_target
-#, fuzzy
 msgid "Billing Time Targets"
 msgstr "Faturalama Zaman Hedefleri"
 
@@ -203,7 +191,6 @@ msgstr "Faturalandırma:"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.res_config_settings_view_form
-#, fuzzy
 msgid ""
 "Boost productivity and competitiveness by displaying a leaderboard based on "
 "the billing rates."
@@ -213,7 +200,6 @@ msgstr ""
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_15
-#, fuzzy
 msgid ""
 "By maintaining clear timesheets, you demonstrate your dedication and help "
 "build trust—your effort truly matters!"
@@ -254,7 +240,6 @@ msgstr "Ayarlar"
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_9
-#, fuzzy
 msgid ""
 "Consistently tracking your time ensures no effort, big or small, goes "
 "unnoticed."
@@ -297,7 +282,6 @@ msgstr "Departman"
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_overtime_indication/timesheet_overtime_indication.js:0
-#, fuzzy
 msgid ""
 "Difference between the allocated %(uom)s (%(allocated_hours)s) on the sales "
 "order line and the %(uom)s spent (%(worked_hours)s) on all related projects "
@@ -336,7 +320,6 @@ msgstr "Geçerli görevin ilerlemesini görüntüler."
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_10
-#, fuzzy
 msgid ""
 "Don’t second-guess whether something “counts”—if you’ve spent time on it, it "
 "belongs in your timesheet."
@@ -346,13 +329,11 @@ msgstr ""
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_tree
-#, fuzzy
 msgid "Edit Billable Time Target"
 msgstr "Faturalandırılabilir Zaman Hedefini Düzenleme"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_edit_billable_time_target
-#, fuzzy
 msgid ""
 "Edit Billable Time Target wizard from Timesheet for users without employee "
 "access"
@@ -414,12 +395,11 @@ msgstr "ID"
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_6
-#, fuzzy
 msgid ""
 "If you’re unsure if something is billable, just log it. You deserve credit."
 msgstr ""
 "Bir şeyin faturalandırılabilir olup olmadığından emin değilseniz, sadece "
-"kaydedin. Alacak'ı hak ediyorsunuz."
+"kaydedin. Emeğinizin karşılığını hak ediyorsunuz."
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__image_1024
@@ -443,7 +423,6 @@ msgstr "Faturalama Kuralı"
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_3
-#, fuzzy
 msgid ""
 "It's part of the job to search for information. These hours should also be "
 "billable."
@@ -505,7 +484,6 @@ msgstr "Menü"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__mobile_phone
-#, fuzzy
 msgid "Mobile Phone"
 msgstr "Cep Telefonu"
 
@@ -517,9 +495,8 @@ msgstr "Ay"
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__billable_time_target
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.sale_timesheet_employee_list_inherit
-#, fuzzy
 msgid "Monthly Billing Time Target"
-msgstr "Aylık Faturalama Süresi Hedefi"
+msgstr "Aylık Faturalama Hedef Süresi"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.actions.act_window,help:sale_timesheet_enterprise.hr_timesheet_tip_action
@@ -552,7 +529,6 @@ msgstr "Yeni İşe Alınmış"
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.actions.act_window,help:sale_timesheet_enterprise.action_open_edit_billable_time_target
 #: model_terms:ir.actions.act_window,help:sale_timesheet_enterprise.action_open_view_employee
-#, fuzzy
 msgid "No employees found"
 msgstr "Çalışan bulunamadı"
 
@@ -568,7 +544,6 @@ msgstr "Örgütleme Şeması"
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_11
-#, fuzzy
 msgid ""
 "Organizing, planning, or reviewing your work is part of the job and should "
 "be logged like any other task."
@@ -578,7 +553,6 @@ msgstr ""
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_12
-#, fuzzy
 msgid ""
 "Preparation is crucial for successful meetings. Always include the time you "
 "spend getting ready in your timesheet."
@@ -599,9 +573,8 @@ msgstr "Proje"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__birthday_public_display_string
-#, fuzzy
 msgid "Public Date of Birth"
-msgstr "Halka Açık Doğum Tarihi"
+msgstr "Herkese Açık Doğum Tarihi"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_hr_employee_public
@@ -611,7 +584,6 @@ msgstr "Herkese Açık Personel"
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.xml:0
-#, fuzzy
 msgid "Record timesheets to determine your billing rate!"
 msgstr ""
 "Faturalandırma oranınızı belirlemek için Çalışma Çizelgelerini kaydedin!"
@@ -619,7 +591,6 @@ msgstr ""
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.xml:0
-#, fuzzy
 msgid "Record timesheets to earn your rank!"
 msgstr "Rütbenizi kazanmak için Çalışma Çizelgelerini kaydedin!"
 
@@ -635,7 +606,6 @@ msgstr "Satış Sipariş Satırı"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.res_config_settings_view_form
-#, fuzzy
 msgid ""
 "Set a billable time target for your employees. If their current rate falls "
 "below their target, it will be highlighted in red."
@@ -646,7 +616,6 @@ msgstr ""
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.actions.act_window,help:sale_timesheet_enterprise.action_open_edit_billable_time_target
 #: model_terms:ir.actions.act_window,help:sale_timesheet_enterprise.action_open_view_employee
-#, fuzzy
 msgid "Set a billing time target for employees whose timesheets you approve."
 msgstr ""
 "Çalışma çizelgelerini onayladığınız çalışanlar için bir faturalama süresi "
@@ -654,13 +623,11 @@ msgstr ""
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.res_config_settings_view_form
-#, fuzzy
 msgid "Set employee billing time targets"
 msgstr "Çalışanların faturalandırma zaman hedeflerini belirleyin"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_hr_employee_public__show_billable_time_target
-#, fuzzy
 msgid "Show Billable Time Target"
 msgstr "Faturalandırılabilir Zaman Hedefini Göster"
 
@@ -683,19 +650,16 @@ msgstr "Daha fazla göster"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,help:sale_timesheet_enterprise.field_res_config_settings__timesheet_show_rates
-#, fuzzy
 msgid "Show the billing indicators on My Timesheets view"
 msgstr "Faturalama göstergelerini Çalışma Çizelgeleri görünümünde gösterme"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,help:sale_timesheet_enterprise.field_res_config_settings__timesheet_show_leaderboard
-#, fuzzy
 msgid "Show the leaderboard on My Timesheets view"
 msgstr "Liderlik tablosunu Çalışma Çizelgeleri görünümünde göster"
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_13
-#, fuzzy
 msgid ""
 "Small administrative tasks keep operations running smoothly. Don’t forget to "
 "include them in your timesheet."
@@ -721,7 +685,6 @@ msgstr "Faturalandırılabilir zaman hedefi negatif olamaz."
 #. module: sale_timesheet_enterprise
 #. odoo-python
 #: code:addons/sale_timesheet_enterprise/models/project_task.py:0
-#, fuzzy
 msgid "This Sale Order Item doesn't have a target value of planned hours."
 msgstr ""
 "Bu Satış Siparişi Kaleminin planlanan saatler için bir hedef değeri yok."
@@ -768,7 +731,6 @@ msgstr "Alt görevleri de dahil olmak üzere bu görev için harcanan zaman."
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_8
-#, fuzzy
 msgid ""
 "Time spent troubleshooting or resolving unexpected issues is still work. "
 "Don’t forget to include it in your timesheet."
@@ -829,7 +791,6 @@ msgstr "Bahşiş Adı"
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_dialog/timesheet_leaderboard_dialog.xml:0
-#, fuzzy
 msgid "Tip of the day"
 msgstr "Günün İpucu"
 
@@ -844,7 +805,6 @@ msgstr "Bahşişler"
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_dialog/timesheet_leaderboard_dialog.js:0
-#, fuzzy
 msgid "Total Time Leaderboard"
 msgstr "Toplam Süre Liderlik Tablosu"
 
@@ -864,7 +824,6 @@ msgstr ""
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,help:sale_timesheet_enterprise.field_project_task__display_name
-#, fuzzy
 msgid ""
 "Use these keywords in the title to set new tasks:\n"
 "\n"
@@ -907,7 +866,6 @@ msgstr "Hafta"
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_14
-#, fuzzy
 msgid ""
 "When you share your knowledge with clients or teammates, that time is "
 "valuable. Be sure to track it accurately."
@@ -990,7 +948,6 @@ msgstr ""
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.xml:0
-#, fuzzy
 msgid "o_timesheet_leaderboard_confetti"
 msgstr "o_timesheet_leaderboard_confetti"
 

@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-12 15:05+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "pos_settle_due/tr/>\n"
 "Language: tr\n"
@@ -56,9 +57,8 @@ msgstr "Kontak"
 
 #. module: pos_settle_due
 #: model:ir.model,website_form_label:pos_settle_due.model_res_partner
-#, fuzzy
 msgid "Create a Customer"
-msgstr "Müşteri Oluşturma"
+msgstr "Müşteri Oluşturun"
 
 #. module: pos_settle_due
 #. odoo-javascript
@@ -91,7 +91,6 @@ msgstr "Para yatırın"
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
-#, fuzzy
 msgid "Deposited:"
 msgstr "Yatırıldı:"
 
@@ -116,7 +115,6 @@ msgstr "%s %s Şuraya para yatırmak istiyor musunuz?"
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
-#, fuzzy
 msgid ""
 "Do you want to deposit money to a specific customer? If so, first select him/"
 "her."
@@ -162,7 +160,6 @@ msgstr "ID"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_order__init_customer_due_total
-#, fuzzy
 msgid "Initial due (before any settlement)"
 msgstr "İlk vade (herhangi bir uzlaşmadan önce)"
 
@@ -183,16 +180,14 @@ msgstr "Yevmiye Kaydı"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_order__settled_orders_count
-#, fuzzy
 msgid "Number of settled orders"
 msgstr "Sonuçlandırılan sipariş sayısı"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_account_bank_statement_line__pos_order_line_ids
 #: model:ir.model.fields,field_description:pos_settle_due.field_account_move__pos_order_line_ids
-#, fuzzy
 msgid "Order lines settling the invoice"
-msgstr "Faturayı kapatan sipariş satırları"
+msgstr "Fatura tutarını belirleyen sipariş kalemleri"
 
 #. module: pos_settle_due
 #: model_terms:ir.ui.view,arch_db:pos_settle_due.customer_due_pos_order_list_view
@@ -222,92 +217,78 @@ msgstr "Satış Noktası Oturumu"
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/services/pos_store.js:0
-#, fuzzy
 msgid "Select the payment method to deposit money"
 msgstr "Para yatırmak için ödeme yöntemini seçin"
 
 #. module: pos_settle_due
 #: model:product.template,name:pos_settle_due.product_product_settle_product_template
-#, fuzzy
 msgid "Settle Due"
-msgstr "Vadeli Uzlaşma"
+msgstr "Kalan Tutarı Ödeyin"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_config__settle_due_product_id
-#, fuzzy
 msgid "Settle Due Product"
-msgstr "Vadesi Gelen Ürünü Yerleştirin"
+msgstr "Vadesi Gelen Ürünü Tahsil Edin"
 
 #. module: pos_settle_due
 #: model:product.template,name:pos_settle_due.product_product_settle_invoice_product_template
-#, fuzzy
 msgid "Settle Invoice"
-msgstr "Faturayı Kapat"
+msgstr "Faturayı Tahsil Edin"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_config__settle_invoice_product_id
-#, fuzzy
 msgid "Settle Invoice Product"
-msgstr "Fatura Ürününü Yerleştir"
+msgstr "Fatura Tahsilat Ürünü"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
-#, fuzzy
 msgid "Settle due amount"
-msgstr "Vadesi gelen tutarı kapatın"
+msgstr "Ödenmemiş Tutarı Tahsil Edin"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
-#, fuzzy
 msgid "Settle due orderlines"
-msgstr "Vadesi gelen siparişleri ayarlayın"
+msgstr "Vadesi Gelen Sipariş Satırlarını Tahsil Edin"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
-#, fuzzy
 msgid "Settle invoices"
-msgstr "Faturaları düzenleyin"
+msgstr "Faturaları Tahsil Edin"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
-#, fuzzy
 msgid "Settle orders"
-msgstr "Siparişleri ayarlayın"
+msgstr "Siparişleri Tahsil Edin"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_order_line__settled_invoice_id
-#, fuzzy
 msgid "Settled Invoice"
-msgstr "Uzlaşılmış Fatura"
+msgstr "Tamamlanmış Fatura"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_order_line__settled_order_id
-#, fuzzy
 msgid "Settled Order"
-msgstr "Yerleşik Düzen"
+msgstr "Tamamlanmış Sipariş"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_order__settled_order_line_ids
-#, fuzzy
 msgid "Settled Order Lines"
-msgstr "Yerleşmiş Sipariş Hatları"
+msgstr "Tahsilatı Tamamlanmış Sipariş Satırları"
 
 #. module: pos_settle_due
 #. odoo-python
 #: code:addons/pos_settle_due/models/pos_order.py:0
 #: model_terms:ir.ui.view,arch_db:pos_settle_due.pos_order_form_inherit_pos_settle_due
-#, fuzzy
 msgid "Settled Orders"
-msgstr "Yerleşmiş Siparişler"
+msgstr "Tahsilatı Tamamlanmış Siparişler"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_res_partner__pos_orders_amount_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_res_users__pos_orders_amount_due
-#, fuzzy
 msgid "Sum of customers PoS orders's due amount"
 msgstr ""
 "Müşterilerin Satış Noktası Siparişlerinin vadesi gelen tutarlarının toplamı"
@@ -315,7 +296,6 @@ msgstr ""
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_res_partner__invoices_amount_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_res_users__invoices_amount_due
-#, fuzzy
 msgid "Sum of customers's invoice due amount"
 msgstr "Müşterilerin ödenmesi gereken fatura tutarlarının toplamı"
 
@@ -328,36 +308,31 @@ msgstr "Bu sipariş boş"
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
-#, fuzzy
 msgid ""
 "The selected customer is not in the list of partners of the ongoing settling "
 "orderlines."
 msgstr ""
-"Seçilen müşteri, devam eden hesaplaşma sipariş hatlarının ortakları "
-"listesinde yer almıyor."
+"Seçtiğiniz müşteri, şu anda tahsilatı yapılan sipariş satırlarıyla ilişkili "
+"iş ortakları arasında bulunmuyor."
 
 #. module: pos_settle_due
 #: model:ir.model.fields,help:pos_settle_due.field_pos_config__settle_due_product_id
-#, fuzzy
 msgid "This product is used as to settle due of customer account."
-msgstr "Bu ürün, müşteri hesabının ödenmesi için kullanılır."
+msgstr "Bu ürün, müşteri hesabındaki borcun tahsil edilmesi için kullanılır."
 
 #. module: pos_settle_due
 #: model:ir.model.fields,help:pos_settle_due.field_pos_config__settle_invoice_product_id
-#, fuzzy
 msgid "This product is used as to settle invoices of customer."
-msgstr "Bu ürün müşteri faturalarının ödenmesi için kullanılır."
+msgstr "Bu ürün, müşteri faturalarının tahsilatında kullanılır."
 
 #. module: pos_settle_due
 #: model:ir.model.fields,help:pos_settle_due.field_pos_config__deposit_product_id
-#, fuzzy
 msgid "This product is used to deposit money on customer account."
-msgstr "Bu ürün müşteri hesabına para yatırmak için kullanılır."
+msgstr "Bu ürün, müşteri hesabına para yatırmak için kullanılır."
 
 #. module: pos_settle_due
 #: model_terms:ir.ui.view,arch_db:pos_settle_due.customer_due_pos_order_list_view
 #: model_terms:ir.ui.view,arch_db:pos_settle_due.due_account_move_list_view
-#, fuzzy
 msgid "Total due"
 msgstr "Toplam ödenmesi gereken"
 
@@ -387,9 +362,9 @@ msgstr "Sıfır tutarında para yatırılamaz."
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
-#, fuzzy
 msgid "You cannot refund a deposit/settling order."
-msgstr "Depozito/yerleştirme emrini iade edemezsiniz."
+msgstr ""
+"Bir depozito veya tahsilat işlemi yapılmış bir siparişi iade edemezsiniz."
 
 #. module: pos_settle_due
 #. odoo-python

@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-11-12 15:02+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "spreadsheet_dashboard_stock/tr/>\n"
 "Language: tr\n"
@@ -24,21 +25,18 @@ msgstr ""
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "All / Rental"
 msgstr "Tümü / Kiralama"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "All / Saleable"
 msgstr "Tümü / Satılabilir"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "All / Saleable / Office Furniture"
 msgstr "Tümü / Satılabilir / Ofis Mobilyaları"
 
@@ -58,21 +56,18 @@ msgstr "Elmalı Turta"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "Avg  Delay"
 msgstr "Ortalama Gecikme"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "Avg Cycle Time"
 msgstr "Ortalama Çevrim Süresi"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-#, fuzzy
 msgid "Avg Lead Time"
 msgstr "Ortalama Teslim Süresi"
 
@@ -85,9 +80,8 @@ msgstr "Bagel"
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "BlueWave Solar"
-msgstr "BlueWave Solar"
+msgstr "Mavi Dalga Gunes Enerjisi"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -111,7 +105,6 @@ msgstr "Kontak"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "Count orders on time"
 msgstr "Siparişleri zamanında sayın"
 
@@ -131,7 +124,6 @@ msgstr "Mevcut dönem"
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-#, fuzzy
 msgid "Current period reworked"
 msgstr "Cari dönem yeniden çalışıldı"
 
@@ -152,7 +144,6 @@ msgstr "Devir süresi (Gün)"
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-#, fuzzy
 msgid "Cycle time Current period"
 msgstr "Çevrim süresi Mevcut dönem"
 
@@ -167,7 +158,6 @@ msgstr "Gecikme (gün)"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Deliveries next 7 days"
 msgstr "Önümüzdeki 7 gün içinde teslimatlar"
 
@@ -188,14 +178,12 @@ msgstr "Talep"
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Departmental Transfer"
 msgstr "Departman Transferi"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
-#, fuzzy
 msgid "Destination locations"
 msgstr "Hedef konumlar"
 
@@ -221,7 +209,6 @@ msgstr "Karşılama oranı"
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "Fill rate sort by Top Demand"
 msgstr "En Çok Talebe göre doluluk oranı sıralaması"
 
@@ -235,7 +222,6 @@ msgstr "İç Transferler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "Internal lead time"
 msgstr "Dahili teslim süresi"
 
@@ -248,7 +234,6 @@ msgstr "John Stones"
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "Julia Denver"
 msgstr "Julia Denver"
 
@@ -264,7 +249,6 @@ msgstr "Temel Performans Göstergesi"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Late deliveries"
 msgstr "Geç teslimatlar"
 
@@ -272,14 +256,12 @@ msgstr "Geç teslimatlar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Late internal transfer"
 msgstr "Geç iç transfer"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Late internal transfers"
 msgstr "Geç iç transferler"
 
@@ -287,14 +269,12 @@ msgstr "Geç iç transferler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Late receptions"
 msgstr "Geç resepsiyonlar"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Location Transfer"
 msgstr "Konum Transferi"
 
@@ -307,7 +287,6 @@ msgstr "Üretim"
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "Moves lines count by operation"
 msgstr "Satır sayısını işleme göre taşır"
 
@@ -320,14 +299,12 @@ msgstr "Çok Tahıllı Ekmek"
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-#, fuzzy
 msgid "Number of Operations by Operation Type"
 msgstr "Operasyon Türüne Göre Operasyon Sayısı"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Nvidia"
 msgstr "Nvidia"
 
@@ -340,14 +317,12 @@ msgstr "Siyah Ofis Koltuğu"
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-#, fuzzy
 msgid "On Time Operations"
 msgstr "Zamanında Operasyonlar"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "On Time delivery"
 msgstr "Zamanında teslimat"
 
@@ -361,7 +336,6 @@ msgstr "Zamanında teslimatlar"
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "On time rate sort by Top Demand"
 msgstr "Zamanında oranı En Çok Talebe göre sırala"
 
@@ -369,7 +343,6 @@ msgstr "Zamanında oranı En Çok Talebe göre sırala"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Open deliveries to date"
 msgstr "Bugüne kadarki açık teslimatlar"
 
@@ -377,7 +350,6 @@ msgstr "Bugüne kadarki açık teslimatlar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Open internal transfers to date"
 msgstr "Bugüne kadar açık iç transferler"
 
@@ -385,7 +357,6 @@ msgstr "Bugüne kadar açık iç transferler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Open late deliveries"
 msgstr "Açık geç teslimatlar"
 
@@ -393,7 +364,6 @@ msgstr "Açık geç teslimatlar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Open late internal transfers"
 msgstr "Geç saatlere kadar açık iç transferler"
 
@@ -401,7 +371,6 @@ msgstr "Geç saatlere kadar açık iç transferler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Open late receipts"
 msgstr "Geç saatlere kadar açık makbuzlar"
 
@@ -409,7 +378,6 @@ msgstr "Geç saatlere kadar açık makbuzlar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Open receptions to date"
 msgstr "Bugüne kadarki açık resepsiyonlar"
 
@@ -417,14 +385,12 @@ msgstr "Bugüne kadarki açık resepsiyonlar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Open transfers to date"
 msgstr "Bugüne kadarki açık transferler"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "OpenAI"
 msgstr "OpenAI"
 
@@ -472,7 +438,6 @@ msgstr "Paket"
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Patagonia"
 msgstr "Patagonya"
 
@@ -510,7 +475,6 @@ msgstr "Önceki dönem"
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-#, fuzzy
 msgid "Previous period reworked"
 msgstr "Önceki dönem yeniden çalışıldı"
 
@@ -531,7 +495,6 @@ msgstr "Ürün Kategorisi"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "Qty scrapped product by category"
 msgstr "Kategoriye göre hurdaya ayrılan ürün miktarı"
 
@@ -546,7 +509,6 @@ msgstr "Miktar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "Quantity of stock adjustments by category"
 msgstr "Kategoriye göre stok ayarlamalarının miktarı"
 
@@ -561,7 +523,6 @@ msgstr "Alımlar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Receptions next 7 days"
 msgstr "Önümüzdeki 7 gün resepsiyonlar"
 
@@ -581,7 +542,6 @@ msgstr "Sorumlu"
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Rivian"
 msgstr "Rivian"
 
@@ -589,21 +549,18 @@ msgstr "Rivian"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Scheduled on"
 msgstr "Planlanan tarih"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Slack Technologies"
 msgstr "Slack Teknolojileri"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
-#, fuzzy
 msgid "Source location"
 msgstr "Kaynak konum"
 
@@ -637,15 +594,13 @@ msgstr "Aktarım"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Transfer to be assigned"
-msgstr "Atanacak transfer"
+msgstr "Gorevlendirilecek transfer"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "Transfers count by responsible and operation"
 msgstr "Transferler sorumlu ve operasyona göre sayılır"
 
@@ -664,14 +619,12 @@ msgstr "Depo"
 
 #. module: spreadsheet_dashboard_stock
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_stock.spreadsheet_dashboard_warehouse_operations
-#, fuzzy
 msgid "Warehouse Daily Operations"
 msgstr "Depo Günlük Operasyonları"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
-#, fuzzy
 msgid "Warehouse-to-Warehouse Transfer"
 msgstr "Depodan Depoya Transfer"
 
@@ -679,28 +632,24 @@ msgstr "Depodan Depoya Transfer"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "Weekly Stock Moves Lines by operation"
 msgstr "Operasyona Göre Haftalık Stok Hareketleri Hatları"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "[E-COM11] Cabinet with Doors"
 msgstr "[E-COM11] Kapaklı Dolap"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "[FURN_0269] Office Chair Black"
 msgstr "[FURN_0269] Ofis Koltuğu Siyah"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
-#, fuzzy
 msgid "[FURN_8855] Drawer"
 msgstr "[FURN_8855] Çekmece"
 

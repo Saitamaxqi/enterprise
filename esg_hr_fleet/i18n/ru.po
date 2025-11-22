@@ -3,13 +3,14 @@
 # * esg_hr_fleet
 #
 # "Anastasiia Koroleva (koan)" <koan@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-11-12 08:52+0000\n"
-"Last-Translator: \"Anastasiia Koroleva (koan)\" <koan@odoo.com>\n"
+"PO-Revision-Date: 2025-11-16 13:46+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
 "esg_hr_fleet/ru/>\n"
 "Language: ru\n"
@@ -35,13 +36,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/esg_hr_fleet/static/src/fields/conflicting_emission_ids_field.xml:0
 msgid "Arrow"
-msgstr ""
+msgstr "Стрелка"
 
 #. module: esg_hr_fleet
 #. odoo-javascript
 #: code:addons/esg_hr_fleet/static/src/fields/conflicting_emission_ids_field.xml:0
 msgid "Arrow icon"
-msgstr ""
+msgstr "Значок стрелки"
 
 #. module: esg_hr_fleet
 #: model_terms:ir.ui.view,arch_db:esg_hr_fleet.res_config_settings_view_form
@@ -51,18 +52,18 @@ msgstr ""
 #. module: esg_hr_fleet
 #: model:ir.model,name:esg_hr_fleet.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Компании"
 
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_esg_employee_commuting_report__company_id
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_fleet_vehicle_assignation_log__company_id
 msgid "Company"
-msgstr ""
+msgstr "Компания"
 
 #. module: esg_hr_fleet
 #: model:ir.model,name:esg_hr_fleet.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Параметры конфигурации"
 
 #. module: esg_hr_fleet
 #. odoo-python
@@ -73,27 +74,27 @@ msgstr ""
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_employee_commuting_emissions_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Создано:"
 
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_employee_commuting_emissions_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Дата создания:"
 
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_esg_employee_commuting_report__date_from
 msgid "Date"
-msgstr ""
+msgstr "Дата"
 
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_esg_employee_commuting_report__date_to
 msgid "Date To"
-msgstr ""
+msgstr "Дата до"
 
 #. module: esg_hr_fleet
 #: model_terms:ir.ui.view,arch_db:esg_hr_fleet.employee_commuting_emissions_wizard_form
 msgid "Discard"
-msgstr ""
+msgstr "Отменить"
 
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_employee_commuting_emissions_wizard__display_name
@@ -103,7 +104,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_res_company__display_name
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Display Name"
 
 #. module: esg_hr_fleet
 #: model_terms:ir.ui.view,arch_db:esg_hr_fleet.employee_commuting_emissions_wizard_form
@@ -113,17 +114,17 @@ msgstr ""
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_esg_employee_commuting_report__driver_id
 msgid "Driver"
-msgstr ""
+msgstr "Водитель"
 
 #. module: esg_hr_fleet
 #: model:ir.model,name:esg_hr_fleet.model_fleet_vehicle_assignation_log
 msgid "Drivers history on a vehicle"
-msgstr ""
+msgstr "История водителей на автомобиле"
 
 #. module: esg_hr_fleet
 #: model_terms:ir.ui.view,arch_db:esg_hr_fleet.res_config_settings_view_form
 msgid "ESG"
-msgstr ""
+msgstr "ESG"
 
 #. module: esg_hr_fleet
 #: model:ir.model,name:esg_hr_fleet.model_esg_employee_commuting_report
@@ -169,7 +170,7 @@ msgstr ""
 #. module: esg_hr_fleet
 #: model:ir.ui.menu,name:esg_hr_fleet.menu_esg_hr
 msgid "HR"
-msgstr ""
+msgstr "Отдел кадров"
 
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_employee_commuting_emissions_wizard__id
@@ -189,12 +190,12 @@ msgstr ""
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_employee_commuting_emissions_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Последнее обновление:"
 
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_employee_commuting_emissions_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Дата последнего обновления:"
 
 #. module: esg_hr_fleet
 #: model_terms:ir.actions.act_window,help:esg_hr_fleet.action_employee_commuting_report_views
@@ -209,7 +210,7 @@ msgstr ""
 #. module: esg_hr_fleet
 #: model_terms:ir.ui.view,arch_db:esg_hr_fleet.employee_commuting_emissions_wizard_form
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
 #. module: esg_hr_fleet
 #. odoo-javascript
@@ -221,7 +222,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:esg_hr_fleet.action_esg_configuration
 #: model:ir.ui.menu,name:esg_hr_fleet.menu_mrp_config
 msgid "Settings"
-msgstr ""
+msgstr "Настройки"
 
 #. module: esg_hr_fleet
 #: model:ir.model.constraint,message:esg_hr_fleet.constraint_res_company_weekly_days_at_office_check
@@ -245,7 +246,7 @@ msgstr ""
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_esg_employee_commuting_report__vehicle_id
 msgid "Vehicle"
-msgstr ""
+msgstr "Транспортное средство"
 
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_res_company__weekly_days_at_office
@@ -266,7 +267,7 @@ msgstr ""
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_esg_employee_commuting_report__total_distance
 msgid "km"
-msgstr ""
+msgstr "км"
 
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_esg_employee_commuting_report__total_co2

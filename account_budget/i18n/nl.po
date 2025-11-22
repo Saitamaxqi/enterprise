@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-10 08:20+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-11-18 08:55+0000\n"
+"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "account_budget/nl/>\n"
 "Language: nl\n"
@@ -421,7 +421,7 @@ msgstr "Indien aangevinkt hebben sommige berichten een leveringsfout."
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
 msgid "In a Budget"
-msgstr "In een Budget"
+msgstr "In een budget"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__is_above_budget
@@ -542,7 +542,7 @@ msgstr "Openen"
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
 msgid "Open Budget"
-msgstr "Budget openen"
+msgstr "Open budget"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_split_wizard__period
@@ -687,7 +687,7 @@ msgstr "Totaal behaald"
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_tree
 msgid "Total Budget"
-msgstr "Totaal Budget"
+msgstr "Totaal budget"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__line_type
@@ -732,7 +732,7 @@ msgstr "Jaar"
 #. odoo-python
 #: code:addons/account_budget/models/budget_analytic.py:0
 msgid "You cannot create recursive revision of budget."
-msgstr "Je kunt geen recursieve revisie van het budget aanmaken."
+msgstr "Je kan geen recursieve revisie van budgetten aanmaken."
 
 #. module: account_budget
 #. odoo-python
@@ -749,7 +749,7 @@ msgstr "bijv. Budget 2023"
 #. odoo-python
 #: code:addons/account_budget/wizards/budget_split_wizard.py:0
 msgid "id"
-msgstr "ID"
+msgstr "id"
 
 #~ msgid ""
 #~ "\"End Date\" of the budget line should be included in the Period of the "

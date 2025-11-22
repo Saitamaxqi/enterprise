@@ -26,13 +26,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-11-12 14:58+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "quality_control/tr/>\n"
 "Language: tr\n"
@@ -44,27 +45,23 @@ msgstr ""
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
-#, fuzzy
 msgid "% of the time"
 msgstr "% of zaman"
 
 #. module: quality_control
 #. odoo-python
 #: code:addons/quality_control/models/quality.py:0
-#, fuzzy
 msgid "%(product_name)s is not in Picking %(picking_name)s"
-msgstr "%(product_name)s Toplama'da değil %(picking_name)s"
+msgstr "%(product_name)s, %(picking_name)s toplamasında yer almıyor"
 
 #. module: quality_control
 #: model:ir.actions.report,print_report_name:quality_control.quality_check_report
 #: model:ir.actions.report,print_report_name:quality_control.quality_check_report_internal
-#, fuzzy
 msgid "'Worksheet_%s' % object.name"
 msgstr "'Çalışma Sayfası_%s' % object.name"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "15.3 cm"
 msgstr "15,3 cm"
 
@@ -93,13 +90,11 @@ msgstr ""
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.stock_picking_view_form_inherit_quality
-#, fuzzy
 msgid "<span class=\"o_stat_text text-danger\">Quality Checks</span>"
 msgstr "<span class=\"o_stat_text text-danger\">Kalite Kontrolleri</span>"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.stock_picking_view_form_inherit_quality
-#, fuzzy
 msgid "<span class=\"o_stat_text text-success\">Quality Checks</span>"
 msgstr "<span class=\"o_stat_text text-success\">Kalite Kontrolleri</span>"
 
@@ -129,7 +124,6 @@ msgstr "<span class=\"o_stat_text\">Kalite Uyarısı</span>"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.stock_production_lot_view_form
-#, fuzzy
 msgid "<span class=\"o_stat_text\">Quality Alerts:</span>"
 msgstr "<span class=\"o_stat_text\">Kalite Uyarıları:</span>"
 
@@ -145,13 +139,11 @@ msgstr "<span class=\"o_stat_text\">Kalite Kontrolleri</span>"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
-#, fuzzy
 msgid "<span>% of products</span>"
 msgstr "<span>% of ürünler</span>"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
-#, fuzzy
 msgid "<span>Test </span>"
 msgstr "<span>Test </span>"
 
@@ -167,55 +159,46 @@ msgstr "<span>max </span>"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "<strong>Lot/Serial Number: </strong>"
 msgstr "<strong>Lot/Seri Numarası: </strong>"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "<strong>Measure: </strong>"
-msgstr "<strong>Ölçün: </strong>"
+msgstr "<strong>Ölçüm: </strong>"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "<strong>Notes: </strong>"
 msgstr "<strong>Notlar: </strong>"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "<strong>Product: </strong>"
 msgstr "<strong>Ürün: </strong>"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "<strong>Test Type: </strong>"
 msgstr "<strong>Test Türü: </strong>"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "<strong>Tested by: </strong>"
-msgstr "<strong>Tarafından test edildi: </strong>"
+msgstr "<strong> Test Eden: </strong>"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "<strong>Tested on: </strong>"
-msgstr "<strong>Test edildi: </strong>"
+msgstr "<strong>Test edilen: </strong>"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "<strong>Transfer: </strong>"
 msgstr "<strong>Transfer: </strong>"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "<strong>Warning: </strong>"
 msgstr "<strong>Uyarı: </strong>"
 
@@ -257,13 +240,11 @@ msgstr "Tüm kontroller geçildi"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "All parameters passed."
 msgstr "Tüm parametreler geçti."
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__allowed_product_ids
-#, fuzzy
 msgid "Allowed Product"
 msgstr "İzin Verilen Ürün"
 
@@ -289,9 +270,8 @@ msgstr "Kontrol Et"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_stock_move_line__check_state
-#, fuzzy
 msgid "Check State"
-msgstr "Eyaleti Kontrol Edin"
+msgstr "Durumu Kontrol Edin"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_check_view_tree
@@ -364,13 +344,11 @@ msgstr "Kontrol Noktaları"
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__measure_on
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__measure_on
 #: model:ir.model.fields,field_description:quality_control.field_quality_point__measure_on
-#, fuzzy
 msgid "Control per"
-msgstr "Kontrol başına"
+msgstr "Kontrol Bazı"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.view_quality_point_kanban
-#, fuzzy
 msgid "Control per:"
 msgstr "Kontrol başına:"
 
@@ -415,7 +393,6 @@ msgstr "Oluşturuldu"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__current_check_id
-#, fuzzy
 msgid "Current Check"
 msgstr "Güncel Kontrol"
 
@@ -444,7 +421,6 @@ msgstr "Bütün stok hareketleri için kullanılan varsayılan ölçü birimi."
 #. module: quality_control
 #: model_terms:ir.actions.act_window,help:quality_control.quality_check_action_main
 #: model_terms:ir.actions.act_window,help:quality_control.quality_check_action_team
-#, fuzzy
 msgid ""
 "Define Quality Control Points in order to automatically generate\n"
 "              quality checks at the right logistic operation: transfers, "
@@ -452,13 +428,12 @@ msgid ""
 msgstr ""
 "Otomatik olarak oluşturmak için Kalite Kontrol Noktalarını tanımlayın\n"
 "              Doğru lojistik operasyonda kalite kontrolleri: transferler, "
-"üretim siparişleri."
+"üretim emirleri."
 
 #. module: quality_control
 #: model:ir.model.fields,help:quality_control.field_quality_check__testing_percentage_within_lot
 #: model:ir.model.fields,help:quality_control.field_quality_check_wizard__testing_percentage_within_lot
 #: model:ir.model.fields,help:quality_control.field_quality_point__testing_percentage_within_lot
-#, fuzzy
 msgid "Defines the percentage within a lot that should be tested"
 msgstr "Bir lot içinde test edilmesi gereken yüzdeyi tanımlar"
 
@@ -486,7 +461,6 @@ msgstr "Sorunun açıklaması..."
 #: model:ir.model.fields,help:quality_control.field_quality_check__is_lot_tested_fractionally
 #: model:ir.model.fields,help:quality_control.field_quality_check_wizard__is_lot_tested_fractionally
 #: model:ir.model.fields,help:quality_control.field_quality_point__is_lot_tested_fractionally
-#, fuzzy
 msgid "Determines if only a fraction of the lot should be tested"
 msgstr "Partinin sadece bir kısmının test edilip edilmeyeceğini belirler"
 
@@ -549,19 +523,16 @@ msgstr "Başarısız"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_check_view_form
-#, fuzzy
 msgid "Failed Quantity"
 msgstr "Başarısız Miktar"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__failure_location_id
-#, fuzzy
 msgid "Failure Location"
 msgstr "Arıza Konumu"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__potential_failure_location_ids
-#, fuzzy
 msgid "Failure Locations"
 msgstr "Arıza Konumları"
 
@@ -589,21 +560,18 @@ msgstr "Sonraki Aktiviteler"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__hide_picking_id
-#, fuzzy
 msgid "Hide Picking"
-msgstr "Post Toplama"
+msgstr "Toplamayı Gizle"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__hide_production_id
-#, fuzzy
 msgid "Hide Production"
-msgstr "Hide Üretim"
+msgstr "Üretimi Gizle"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__hide_repair_id
-#, fuzzy
 msgid "Hide Repair"
-msgstr "Post Tamiri"
+msgstr "Tamiri Gizle"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_product_product__id
@@ -625,17 +593,17 @@ msgstr "ID"
 
 #. module: quality_control
 #: model:ir.model.fields,help:quality_control.field_quality_check_wizard__potential_failure_location_ids
-#, fuzzy
 msgid ""
 "If quality check fails, a destination location is chosen from this list for\n"
 "- each failed specific product quantity if control is per quantity\n"
 " /- all quantities of a product if control is per product\n"
 " /- all quantities of products in the operation if control is per operation"
 msgstr ""
-"Kalite kontrolü başarısız olursa, bu listeden bir hedef konum seçilir.\n"
-"- kontrol miktar başına ise her başarısız belirli ürün miktarı\n"
-" /- kontrol ürün başına ise bir ürünün tüm miktarları\n"
-" /- kontrol operasyon başına ise operasyondaki tüm ürün miktarları"
+"Kalite kontrolü başarısız olursa, aşağıdaki durumlara göre bu listeden bir "
+"hedef lokasyon seçilir:\n"
+"- kontrol, miktar başına ise her bir başarısız belirli ürün miktarı için\n"
+" /- kontrol, ürün başına ise bir ürünün tüm miktarları için\n"
+" /- kontrol, operasyon başına ise operasyondaki tüm ürün miktarları için"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_check_view_search
@@ -658,7 +626,6 @@ msgstr "Açıklamalar"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__is_last_check
-#, fuzzy
 msgid "Is Last Check"
 msgstr "Son Kontrol"
 
@@ -669,13 +636,11 @@ msgstr "John Doe"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "LT-00045"
 msgstr "LT-00045"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "Laptop XYZ"
 msgstr "Dizüstü Bilgisayar XYZ"
 
@@ -701,21 +666,18 @@ msgstr "Geciken Aktiviteler"
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__lot_line_id
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__lot_line_id
-#, fuzzy
 msgid "Lot Line"
-msgstr "Lot Çizgisi"
+msgstr "Lot Satırı"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__is_lot_tested_fractionally
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__is_lot_tested_fractionally
 #: model:ir.model.fields,field_description:quality_control.field_quality_point__is_lot_tested_fractionally
-#, fuzzy
 msgid "Lot Tested Fractionally"
 msgstr "Lot Fraksiyonel Olarak Test Edildi"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_check_wizard_form_failure
-#, fuzzy
 msgid "Lot/SN"
 msgstr "Lot/SN"
 
@@ -826,19 +788,16 @@ msgstr "Kalite uyarısı yok"
 #. module: quality_control
 #: model_terms:ir.actions.act_window,help:quality_control.quality_check_action_main
 #: model_terms:ir.actions.act_window,help:quality_control.quality_check_action_team
-#, fuzzy
 msgid "No quality check found"
 msgstr "Kalite kontrolü bulunamadı"
 
 #. module: quality_control
 #: model_terms:ir.actions.act_window,help:quality_control.quality_check_action_report
-#, fuzzy
 msgid "No quality checks"
 msgstr "Kalite kontrolü yok"
 
 #. module: quality_control
 #: model_terms:ir.actions.act_window,help:quality_control.quality_point_action
-#, fuzzy
 msgid "No quality control point found"
 msgstr "Kalite kontrol noktası bulunamadı"
 
@@ -866,13 +825,11 @@ msgstr "Notlar"
 
 #. module: quality_control
 #: model:ir.model.fields.selection,name:quality_control.selection__quality_point__measure_frequency_type__on_demand
-#, fuzzy
 msgid "On-demand"
 msgstr "İsteğe bağlı"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.view_quality_check_wizard
-#, fuzzy
 msgid "Open spreadsheet"
 msgstr "Elektronik tabloyu aç"
 
@@ -886,7 +843,6 @@ msgstr "Operasyon"
 #: model:ir.model.fields,help:quality_control.field_quality_check__measure_on
 #: model:ir.model.fields,help:quality_control.field_quality_check_wizard__measure_on
 #: model:ir.model.fields,help:quality_control.field_quality_point__measure_on
-#, fuzzy
 msgid ""
 "Operation = One quality check is requested at the operation level.\n"
 "                  Product = A quality check is requested per product.\n"
@@ -905,7 +861,6 @@ msgstr "Genel Bakış"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
-#, fuzzy
 msgid "Partial Test"
 msgstr "Kısmi Test"
 
@@ -923,7 +878,6 @@ msgstr "Başarılı"
 
 #. module: quality_control
 #: model:quality.point.test_type,name:quality_control.test_type_passfail
-#, fuzzy
 msgid "Pass - Fail"
 msgstr "Geçti - Kaldı"
 
@@ -1007,7 +961,6 @@ msgstr "Ürünler"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "QC-00123"
 msgstr "QC-00123"
 
@@ -1074,7 +1027,6 @@ msgstr "Kalite Uyarıları"
 #. module: quality_control
 #: model:ir.actions.act_window,name:quality_control.quality_alert_action_report
 #: model:ir.ui.menu,name:quality_control.menu_quality_alert_report
-#, fuzzy
 msgid "Quality Alerts Analysis"
 msgstr "Kalite Uyarıları Analizi"
 
@@ -1111,13 +1063,11 @@ msgstr "Kalite Kontrol Başarısız"
 #. module: quality_control
 #. odoo-python
 #: code:addons/quality_control/wizard/quality_check_wizard.py:0
-#, fuzzy
 msgid "Quality Check Failed for %(product_name)s"
-msgstr "Kalite Kontrolü Başarısız %(product_name)s"
+msgstr "%(product_name)s için Kalite Kontrolü Başarısız"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "Quality Check Picture"
 msgstr "Kalite Kontrol Resmi"
 
@@ -1128,7 +1078,6 @@ msgstr "Kalite Kontrol Miktarı"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "Quality Check:"
 msgstr "Kalite Kontrol:"
 
@@ -1193,7 +1142,6 @@ msgstr "Kalite Noktaları"
 #. module: quality_control
 #: model:ir.actions.act_window,name:quality_control.quality_spreadsheet_template_action_config
 #: model:ir.ui.menu,name:quality_control.menu_config_quality_spreadsheet_template
-#, fuzzy
 msgid "Quality Spreadsheet Templates"
 msgstr "Kalite Elektronik Tablo Şablonları"
 
@@ -1220,31 +1168,26 @@ msgstr ""
 
 #. module: quality_control
 #: model:ir.model,name:quality_control.model_report_quality_control_quality_worksheet_internal
-#, fuzzy
 msgid "Quality Worksheet Internal Report"
 msgstr "Kalite Çalışma Sayfası İç Rapor"
 
 #. module: quality_control
 #: model:ir.model,name:quality_control.model_report_quality_control_quality_worksheet
-#, fuzzy
 msgid "Quality Worksheet Report"
 msgstr "Kalite Çalışma Sayfası Raporu"
 
 #. module: quality_control
 #: model:ir.model,name:quality_control.model_quality_check_spreadsheet
-#, fuzzy
 msgid "Quality check spreadsheet"
 msgstr "Kalite kontrol elektronik tablosu"
 
 #. module: quality_control
 #: model:ir.model,name:quality_control.model_quality_spreadsheet_template
-#, fuzzy
 msgid "Quality check template spreadsheet"
 msgstr "Kalite kontrol şablonu elektronik tablosu"
 
 #. module: quality_control
 #: model_terms:ir.actions.act_window,help:quality_control.quality_point_action
-#, fuzzy
 msgid ""
 "Quality control points define the quality checks which should be\n"
 "              performed at each operation, for your different products."
@@ -1263,53 +1206,45 @@ msgstr "Miktar"
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__qty_failed
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_check_wizard_form_failure
-#, fuzzy
 msgid "Quantity Failed"
-msgstr "Miktar Başarısız"
+msgstr "Başarısız Miktar"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__qty_passed
-#, fuzzy
 msgid "Quantity Passed"
 msgstr "Geçilen Miktar"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__qty_tested
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__qty_tested
-#, fuzzy
 msgid "Quantity Tested"
 msgstr "Test Edilen Miktar"
 
 #. module: quality_control
 #: model:ir.model.fields,help:quality_control.field_quality_check__qty_tested
 #: model:ir.model.fields,help:quality_control.field_quality_check_wizard__qty_tested
-#, fuzzy
 msgid "Quantity of product tested within the lot"
 msgstr "Parti içinde test edilen ürün miktarı"
 
 #. module: quality_control
 #: model:ir.model.fields,help:quality_control.field_quality_check__qty_failed
-#, fuzzy
 msgid "Quantity of product that failed the quality check"
 msgstr "Kalite kontrolünde başarısız olan ürün miktarı"
 
 #. module: quality_control
 #: model:ir.model.fields,help:quality_control.field_quality_check__qty_passed
-#, fuzzy
 msgid "Quantity of product that passed the quality check"
 msgstr "Kalite kontrolünden geçen ürün miktarı"
 
 #. module: quality_control
 #: model:ir.model.fields,help:quality_control.field_quality_check__qty_to_test
 #: model:ir.model.fields,help:quality_control.field_quality_check_wizard__qty_to_test
-#, fuzzy
 msgid "Quantity of product to test within the lot"
 msgstr "Parti içinde test edilecek ürün miktarı"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__qty_to_test
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__qty_to_test
-#, fuzzy
 msgid "Quantity to Test"
 msgstr "Test Edilecek Miktar"
 
@@ -1336,26 +1271,22 @@ msgstr "Sorumlu"
 #. module: quality_control
 #. odoo-javascript
 #: code:addons/quality_control/static/src/spreadsheet_bundle/quality_check_spreadsheet_action/quality_check_spreadsheet_action.xml:0
-#, fuzzy
 msgid "Save in"
 msgstr "Kaydet"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__show_lot_text
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__show_lot_text
-#, fuzzy
 msgid "Show Lot Text"
 msgstr "Lot Metnini Göster"
 
 #. module: quality_control
 #: model:ir.model.fields.selection,name:quality_control.selection__stock_move_line__check_state__fail
-#, fuzzy
 msgid "Some checks failed"
 msgstr "Bazı kontroller başarısız oldu"
 
 #. module: quality_control
 #: model:ir.model.fields.selection,name:quality_control.selection__stock_move_line__check_state__in_progress
-#, fuzzy
 msgid "Some checks to be done"
 msgstr "Yapılması gereken bazı kontroller"
 
@@ -1432,7 +1363,6 @@ msgstr "Stok Hareket Satırı"
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__check_cell
 #: model:ir.model.fields,field_description:quality_control.field_quality_point__spreadsheet_check_cell
 #: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__check_cell
-#, fuzzy
 msgid "Success cell"
 msgstr "Başarı hücresi"
 
@@ -1455,7 +1385,6 @@ msgstr "Ekip Adı"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.view_quality_point_kanban
-#, fuzzy
 msgid "Team:"
 msgstr "Takım:"
 
@@ -1476,15 +1405,13 @@ msgstr "Test Türü"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_tree
-#, fuzzy
 msgid "Testing % Within Lot"
-msgstr "Lot içinde % Wtest edilmesi"
+msgstr "Lot İçindeki Test %"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__testing_percentage_within_lot
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__testing_percentage_within_lot
 #: model:ir.model.fields,field_description:quality_control.field_quality_point__testing_percentage_within_lot
-#, fuzzy
 msgid "Testing Percentage Within Lot"
 msgstr "Lot İçinde Test Yüzdesi"
 
@@ -1492,7 +1419,6 @@ msgstr "Lot İçinde Test Yüzdesi"
 #: model:ir.model.fields,help:quality_control.field_quality_check_spreadsheet__check_cell
 #: model:ir.model.fields,help:quality_control.field_quality_point__spreadsheet_check_cell
 #: model:ir.model.fields,help:quality_control.field_quality_spreadsheet_template__check_cell
-#, fuzzy
 msgid ""
 "The check is successful if the success cell value is TRUE. If there are "
 "several sheets, specify which one you want to use (e.g. Sheet2!C4). If not "
@@ -1504,7 +1430,6 @@ msgstr ""
 
 #. module: quality_control
 #: model:ir.model.fields,help:quality_control.field_quality_point__measure_frequency_value
-#, fuzzy
 msgid "The probability of each quality check being generated"
 msgstr "Her bir kalite kontrolünün oluşturulma olasılığı"
 
@@ -1544,7 +1469,6 @@ msgstr "Aktarım"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "Transfer-987"
 msgstr "Transfer-987"
 
@@ -1577,19 +1501,16 @@ msgstr "Doğrula"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "Value near threshold."
 msgstr "Değer eşiğe yakın."
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_spreadsheet_template_view_list
-#, fuzzy
 msgid "Visible to all"
 msgstr "Herkes tarafından görülebilir"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
-#, fuzzy
 msgid "Visual Check"
 msgstr "Görsel Kontrol"
 
@@ -1606,25 +1527,21 @@ msgstr "Hafta"
 
 #. module: quality_control
 #: model:ir.model,name:quality_control.model_quality_check_wizard
-#, fuzzy
 msgid "Wizard for Quality Check Pop Up"
-msgstr "Kalite Kontrol Sihirbazı Açılır"
+msgstr "Kalite Kontrol Açılır Penceresi Sihirbazı"
 
 #. module: quality_control
 #: model:ir.actions.report,name:quality_control.quality_check_report
-#, fuzzy
 msgid "Worksheet Report - External (PDF)"
 msgstr "Çalışma Sayfası Raporu - Harici (PDF)"
 
 #. module: quality_control
 #: model:ir.actions.report,name:quality_control.quality_check_report_internal
-#, fuzzy
 msgid "Worksheet Report - Internal (PDF)"
 msgstr "Çalışma Sayfası Raporu - Dahili (PDF)"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.view_quality_check_wizard
-#, fuzzy
 msgid "Write quality check notes..."
 msgstr "Kalite kontrol notları yazın..."
 
@@ -1641,7 +1558,6 @@ msgstr ""
 #. module: quality_control
 #. odoo-python
 #: code:addons/quality_control/wizard/quality_check_wizard.py:0
-#, fuzzy
 msgid "You must provide a picture before validating"
 msgstr "Doğrulamadan önce bir resim sağlamalısınız"
 
@@ -1658,9 +1574,8 @@ msgstr "rumuz"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_alert_team_view_form
-#, fuzzy
 msgid "e.g. The QA Masters"
-msgstr "Örneğin; Kalite Kontrol Ustaları"
+msgstr "örneğin; Kalite Uzmanları"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_alert_team_view_form

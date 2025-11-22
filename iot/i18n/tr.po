@@ -18,15 +18,16 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-12 14:56+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
-"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/iot/tr/>"
-"\n"
+"POT-Creation-Date: 2025-11-21 18:40+0000\n"
+"PO-Revision-Date: 2025-11-21 14:30+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/iot/tr/"
+">\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,13 +38,11 @@ msgstr ""
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-#, fuzzy
 msgid "%s is currently restarting"
 msgstr "%s şu anda yeniden başlatılıyor"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
-#, fuzzy
 msgid ""
 "<span class=\"spinner-border spinner-border-sm\"/>\n"
 "                    Searching for an IoT Box.\n"
@@ -55,13 +54,11 @@ msgstr ""
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
-#, fuzzy
 msgid "A fiscal data module has been connected. To use it,"
 msgstr "Bir mali veri modülü bağlanmıştır. Kullanmak için,"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__must_install_fdm_module
-#, fuzzy
 msgid "A fiscal data module is connected to this IoT Box"
 msgstr "Bu IoT Kutusuna bir mali veri modülü bağlanır"
 
@@ -72,7 +69,6 @@ msgstr "IoT Kutusu sihirbazı ekle"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_discovered_box__add_iot_box_wizard_id
-#, fuzzy
 msgid "Add Iot Box Wizard"
 msgstr "Iot Kutusu Ekleme Sihirbazı"
 
@@ -84,20 +80,17 @@ msgstr "Yönetici"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
-#, fuzzy
 msgid "All communication protocols are working properly."
 msgstr "Tüm iletişim protokolleri düzgün çalışıyor."
 
 #. module: iot
 #: model:ir.model,name:iot.model_iot_discovered_box
-#, fuzzy
 msgid "An IoT box that is in pairing mode"
 msgstr "Eşleştirme modunda olan bir IoT kutusu"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-#, fuzzy
 msgid "Are you sure you want to restart Odoo on the IoT Box?"
 msgstr "Odoo'yu IoT Kutusunda yeniden başlatmak istediğinizden emin misiniz?"
 
@@ -119,14 +112,12 @@ msgstr "Barkod Tarayıcı"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.xml:0
-#, fuzzy
 msgid "Be careful:"
 msgstr "Dikkatli ol:"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid ""
 "Blackbox did not respond to your request. This usually means it has "
 "disconnected. Please check its cable connection and its power supply. "
@@ -139,7 +130,6 @@ msgstr ""
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid ""
 "Blackbox driver update required. Please restart your IoT Box to update the "
 "blackbox driver."
@@ -150,14 +140,12 @@ msgstr ""
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Blackbox is running and operational"
 msgstr "Blackbox çalışıyor ve operasyonel"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid ""
 "Blackbox responded with invalid response. Please check the cable connection "
 "and the power supply, then retry. Restart if necessary"
@@ -183,7 +171,6 @@ msgstr "Cihazın hala bağlı olup olmadığını kontrol edin"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
-#, fuzzy
 msgid "Check the lights"
 msgstr "Işıkları kontrol edin"
 
@@ -195,7 +182,6 @@ msgstr "Tıkla"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
-#, fuzzy
 msgid "Communication protocol '%s' is not working properly."
 msgstr "İletişim protokolü '%s' düzgün çalışmıyor."
 
@@ -221,7 +207,6 @@ msgstr "Bağlan"
 
 #. module: iot
 #: model:ir.actions.act_window,name:iot.action_add_iot_box
-#, fuzzy
 msgid "Connect my IoT Box"
 msgstr "IoT Kutumu Bağlayın"
 
@@ -232,7 +217,6 @@ msgstr "Bağlandı"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__connected_status
-#, fuzzy
 msgid "Connected Status"
 msgstr "Bağlı Durum"
 
@@ -282,13 +266,11 @@ msgstr "Cihaz Sayısı"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/backend/iot_device_form.js:0
-#, fuzzy
 msgid "Device is disconnected"
 msgstr "Cihaz bağlantısı kesildi"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_kanban
-#, fuzzy
 msgid "Device type is {{0}}"
 msgstr "Cihaz tipi {{0}}"
 
@@ -317,13 +299,11 @@ msgstr "Bağlantı Kesildi"
 
 #. module: iot
 #: model:ir.actions.client,name:iot.action_discover_iot_boxes
-#, fuzzy
 msgid "Discover IoT boxes"
 msgstr "IoT kutularını keşfedin"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__discovered_box_ids
-#, fuzzy
 msgid "Discovered Box"
 msgstr "Keşfedilen Kutu"
 
@@ -334,7 +314,6 @@ msgstr "Ekran"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__display_device_ids
-#, fuzzy
 msgid "Display Device"
 msgstr "Görüntüleme Cihazı"
 
@@ -360,7 +339,6 @@ msgstr "Görünen URL"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__do_not_ask_again
-#, fuzzy
 msgid "Do not ask me again"
 msgstr "Bana bir daha sorma."
 
@@ -378,7 +356,6 @@ msgstr "Alan Adresi"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
-#, fuzzy
 msgid ""
 "Failed to check IoT Box network, check that it's connected to the Internet."
 msgstr ""
@@ -387,41 +364,35 @@ msgstr ""
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_download_logs.js:0
-#, fuzzy
 msgid "Failed to download logs from %s"
 msgstr "Günlükler indirilemedi %s"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Failed to initiate print"
 msgstr "Yazdırma başlatılamadı"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Failed to reach the IoT Box for device: %s"
-msgstr "Cihaz için IoT Kutusuna ulaşılamadı: %s"
+msgstr "Cihaz için IoT kutusuna ulaşılamadı: %s"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_reset_password.js:0
-#, fuzzy
 msgid "Failed to reset %s password."
 msgstr "%s şifresi sıfırlanamadı."
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
-#, fuzzy
 msgid "Failed to send the restart command to the IoT Box ('%s')"
 msgstr "IoT Box'a yeniden başlatma komutu gönderilemedi ('%s')"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
-#, fuzzy
 msgid "Finally, paste the pairing token below in the \"Server token\" field."
 msgstr ""
 "Son olarak, aşağıdaki eşleştirme belirtecini \"Sunucu belirteci\" alanına "
@@ -429,14 +400,12 @@ msgstr ""
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
-#, fuzzy
 msgid "Find the IP address of your IoT Box then connect to the web homepage."
 msgstr ""
 "IoT Box'ınızın IP adresini bulun ve ardından web ana sayfasına bağlanın."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
-#, fuzzy
 msgid ""
 "First, connect the IoT Box to internet, using an ethernet cable. Or, "
 "checkout the"
@@ -452,41 +421,35 @@ msgstr "Mali Veri Modülü"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/backend/iot_device_form.js:0
-#, fuzzy
 msgid "Fiscal Data Module is connected and operational"
 msgstr "Mali Veri Modülü bağlı ve çalışır durumda"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Fiscal Data Module memory 90% full."
 msgstr "Mali Veri Modülü belleği 90% full."
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Fiscal Data Module memory full."
 msgstr "Mali Veri Modülü belleği dolu."
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Fiscal Data Module not operational. Please restart the blackbox"
 msgstr "Mali Veri Modülü çalışmıyor. Lütfen kara kutuyu yeniden başlatın"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Fiscal Data Module real time clock corrupt."
 msgstr "Mali Veri Modülü gerçek zaman saati bozuk."
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__hdmi
-#, fuzzy
 msgid "HDMI"
 msgstr "HDMI"
 
@@ -528,7 +491,6 @@ msgstr "Tanımlayıcı"
 
 #. module: iot
 #: model:ir.model.fields,help:iot.field_select_printers_wizard__do_not_ask_again
-#, fuzzy
 msgid ""
 "If checked, this dialog won't appear the next time you print and the "
 "selected printers will be used automatically."
@@ -538,7 +500,6 @@ msgstr ""
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
-#, fuzzy
 msgid ""
 "If your IoT Box has no access to the internet, you can pair it with your "
 "database using the pairing token."
@@ -548,26 +509,24 @@ msgstr ""
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__version
+#: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "Image Version"
 msgstr "Görüntü Sürümü"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
-#, fuzzy
 msgid "Internet is connected"
 msgstr "İnternet bağlı"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Invalid PIN."
 msgstr "Geçersiz PIN."
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Invalid data in message sent to the blackbox."
 msgstr "Kara kutuya gönderilen mesajda geçersiz veri."
 
@@ -586,20 +545,17 @@ msgstr "IoT Kutusu"
 #. module: iot
 #. odoo-python
 #: code:addons/iot/wizard/discovered_iot_box.py:0
-#, fuzzy
 msgid "IoT Box %(serial_n)s %(pairing_code)s"
 msgstr "IoT Kutusu %(serial_n)s %(pairing_code)s"
 
 #. module: iot
 #. odoo-python
 #: code:addons/iot/wizard/add_iot_box.py:0
-#, fuzzy
 msgid "IoT Box %s found. Connecting..."
 msgstr "IoT Box %s bulundu. Bağlanıyor..."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
-#, fuzzy
 msgid "IoT Box detected correctly."
 msgstr "IoT Kutusu doğru algılandı."
 
@@ -607,14 +563,12 @@ msgstr "IoT Kutusu doğru algılandı."
 #. odoo-python
 #: code:addons/iot/wizard/add_iot_box.py:0
 #: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
-#, fuzzy
 msgid "IoT Box found. Connecting..."
 msgstr "IoT Kutusu bulundu. Bağlanıyor..."
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
-#, fuzzy
 msgid ""
 "IoT Box local network is %(lan_quality)s and internet is %(wan_quality)s"
 msgstr "IoT Box yerel ağı %(lan_quality)s ve internet %(wan_quality)s"
@@ -637,7 +591,6 @@ msgstr "IoT Cihazları"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__iot_box_to_connect
-#, fuzzy
 msgid "Iot Box To Connect"
 msgstr "Bağlanmak için Iot Kutusu"
 
@@ -659,7 +612,6 @@ msgstr "Klavye Düzeni"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__subtype__label_printer
-#, fuzzy
 msgid "Label Printer"
 msgstr "Etiket Yazıcısı"
 
@@ -690,13 +642,11 @@ msgstr "Düzen"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
-#, fuzzy
 msgid "Make sure the IoT Box is powered on."
 msgstr "IoT Box'ın açık olduğundan emin olun."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
-#, fuzzy
 msgid "Make sure the Network lights are on."
 msgstr "Ağ ışıklarının açık olduğundan emin olun."
 
@@ -741,60 +691,51 @@ msgstr "Ağ"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/backend/add_iot_box_form_controller.js:0
-#, fuzzy
 msgid "New IoT Box connected!"
 msgstr "Yeni IoT Kutusu bağlandı!"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_reset_password.js:0
-#, fuzzy
 msgid "New SSH password for %s"
-msgstr "için yeni SSH şifresi %s"
+msgstr "%s için yeni SSH şifresi"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
-#, fuzzy
 msgid "No IoT Box found"
 msgstr "IoT Kutusu bulunamadı"
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
-#, fuzzy
 msgid "No IoT Box found!"
 msgstr "IoT Kutusu bulunamadı!"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "No Vat Signing Card or Vat Signing Card broken."
 msgstr "KDV İmza Kartı yok veya KDV İmza Kartı bozuk."
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/select_printer_wizard.js:0
-#, fuzzy
 msgid "No printer selected"
 msgstr "Seçili yazıcı yok"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/client_action/delete_local_storage.xml:0
-#, fuzzy
 msgid "No report to display"
 msgstr "Görüntülenecek rapor yok"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
-#, fuzzy
 msgid "Note: It takes ~1 minute. After that, try to pair manually."
-msgstr "Not: ~1 dakika sürer. Bundan sonra, manuel olarak eşleştirmeyi deneyin."
+msgstr "Not: ~1 dakika sürer. Sonrasında, manuel olarak eşleştirmeyi deneyin."
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__subtype__office_printer
-#, fuzzy
 msgid "Office Printer"
 msgstr "Ofis Yazıcısı"
 
@@ -802,47 +743,41 @@ msgstr "Ofis Yazıcısı"
 #: model:ir.model.fields.selection,name:iot.selection__add_iot_box__stage__pair_offline
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
-#, fuzzy
 msgid "Offline Pairing"
 msgstr "Çevrimdışı Eşleştirme"
 
 #. module: iot
 #. odoo-python
 #: code:addons/iot/models/ir_actions_report.py:0
-#, fuzzy
 msgid ""
 "One of the printer used to print the document has been removed.\n"
 "To reset printers, go to the IoT App, Configuration tab, \"Reset Linked "
 "Printers\" and retry the operation."
 msgstr ""
 "Belgeyi yazdırmak için kullanılan yazıcılardan biri kaldırıldı.\n"
-"Yazıcıları sıfırlamak için IoT Uygulaması, Yapılandırma sekmesi, "
-"\"Bağlı Yazıcıları Sıfırla \"ya gidin ve işlemi yeniden deneyin."
+"Yazıcıları sıfırlamak için IoT Uygulaması, Yapılandırma sekmesi, \"Bağlı "
+"Yazıcıları Sıfırla \"ya gidin ve işlemi yeniden deneyin."
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Operation wasn't saved on the blackbox"
 msgstr "Operasyon kara kutuya kaydedilmedi"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
-#, fuzzy
 msgid "Optional: Plug a screen"
 msgstr "İsteğe bağlı: Bir ekran takın"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Out of paper"
 msgstr "Kağıt bitti"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "PIN accepted."
 msgstr "PIN kabul edildi."
 
@@ -850,7 +785,6 @@ msgstr "PIN kabul edildi."
 #. odoo-python
 #: code:addons/iot/wizard/add_iot_box.py:0
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
-#, fuzzy
 msgid "Pair an IoT Box offline"
 msgstr "IoT Kutusunu çevrimdışı eşleştirme"
 
@@ -862,14 +796,12 @@ msgstr "Eşleme Kodu"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
-#, fuzzy
 msgid "Pairing code received from a printer or screen"
-msgstr "Bir yazıcıdan veya ekrandan alınan eşleştirme kodu"
+msgstr "Bir yazıcıdan veya ekrandan eşleştirme kodu alındı"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Paper is low"
 msgstr "Kağıt miktarı düşük"
 
@@ -881,25 +813,21 @@ msgstr "Ödeme Terminali"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Please activate the Vat Signing Card with PIN."
 msgstr "Lütfen KDV İmzalama Kartını PIN ile etkinleştirin."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
-#, fuzzy
 msgid "Plug a screen or a printer to get a status."
 msgstr "Durum almak için bir ekran veya yazıcı takın."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
-#, fuzzy
 msgid "Power is on"
 msgstr "Güç açık"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
-#, fuzzy
 msgid "Power the box"
 msgstr "Kutuya güç verin"
 
@@ -916,14 +844,12 @@ msgstr "Yazıcı"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Printer is not ready"
 msgstr "Yazıcı hazır değil"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Printer is unreachable"
 msgstr "Yazıcıya ulaşılamıyor"
 
@@ -935,7 +861,6 @@ msgstr "Yazıcılar"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Printing timed out"
 msgstr "Yazdırma zaman aşımına uğradı"
 
@@ -952,14 +877,12 @@ msgstr "Makbuz Yazıcısı"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.xml:0
-#, fuzzy
 msgid "Remote Debug"
 msgstr "Uzaktan Hata Ayıklama"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.xml:0
-#, fuzzy
 msgid ""
 "Remote debug is enabled, the owner of the token you provided has access to "
 "both your IoT Box\n"
@@ -974,7 +897,6 @@ msgstr ""
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid ""
 "Repeated request. This request was already handled by the fiscal data module."
 msgstr ""
@@ -1002,14 +924,12 @@ msgstr "Raporlar"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_form
-#, fuzzy
 msgid "Reports to Auto-Print"
 msgstr "Otomatik Yazdırılacak Raporlar"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/client_action/delete_local_storage.xml:0
-#, fuzzy
 msgid "Reports with linked printers"
 msgstr "Bağlantılı yazıcılara sahip raporlar"
 
@@ -1017,20 +937,17 @@ msgstr "Bağlantılı yazıcılara sahip raporlar"
 #. odoo-javascript
 #: code:addons/iot/static/src/client_action/delete_local_storage.xml:0
 #: model:ir.ui.menu,name:iot.iot_clear_selected_devices
-#, fuzzy
 msgid "Reset Linked Printers"
 msgstr "Bağlı Yazıcıları Sıfırla"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/backend/no_iot_box_found_form_controller.js:0
-#, fuzzy
 msgid "Retrying in "
 msgstr "İçinde yeniden deneme "
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__ssl_certificate_end_date
-#, fuzzy
 msgid "SSL Certificate End Date"
 msgstr "SSL Sertifika Bitiş Tarihi"
 
@@ -1047,40 +964,34 @@ msgstr "Tartı"
 #. module: iot
 #. odoo-python
 #: code:addons/iot/wizard/add_iot_box.py:0
-#, fuzzy
 msgid "Searching for an IoT Box..."
 msgstr "Bir IoT Kutusu Aranıyor..."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_select_box_to_connect
-#, fuzzy
 msgid "Select IoT Box to connect"
 msgstr "Bağlanmak için IoT Box'ı seçin"
 
 #. module: iot
 #. odoo-python
 #: code:addons/iot/models/ir_actions_report.py:0
-#, fuzzy
 msgid "Select Printers for %s"
 msgstr "Şunlar için Yazıcıları Seçin %s"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/select_printer_wizard.js:0
-#, fuzzy
 msgid "Select at least one printer"
 msgstr "En az bir yazıcı seçin"
 
 #. module: iot
 #: model:ir.model,name:iot.model_select_printers_wizard
-#, fuzzy
 msgid "Selection of printers"
 msgstr "Yazıcı seçimi"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/iot_report_action.js:0
-#, fuzzy
 msgid "Sending document to printer %s..."
 msgstr "Belgeyi yazıcıya gönderme %s..."
 
@@ -1097,7 +1008,6 @@ msgstr "Seri Numarası"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
-#, fuzzy
 msgid ""
 "Setup in progress, should take maximum 1 minute...\n"
 "                    <span class=\"spinner-border spinner-border-sm\"/>"
@@ -1108,7 +1018,6 @@ msgstr ""
 #. module: iot
 #. odoo-python
 #: code:addons/iot/wizard/add_iot_box.py:0
-#, fuzzy
 msgid "Several IoT's detected"
 msgstr "Birkaç IoT tespit edildi"
 
@@ -1119,7 +1028,6 @@ msgstr "Aşama"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
-#, fuzzy
 msgid "Standard Pairing"
 msgstr "Standart Eşleştirme"
 
@@ -1131,7 +1039,6 @@ msgstr "Başla"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/iot_report_action.js:0
-#, fuzzy
 msgid "Started printing operation on printer %s..."
 msgstr "Yazıcıda yazdırma işlemi başlatıldı %s..."
 
@@ -1147,7 +1054,6 @@ msgstr "Alt-Tür"
 
 #. module: iot
 #: model:ir.model.fields,help:iot.field_iot_device__subtype
-#, fuzzy
 msgid "Subtype of device."
 msgstr "Cihazın alt türü."
 
@@ -1169,27 +1075,23 @@ msgstr "Test"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/backend/iot_device_form.js:0
-#, fuzzy
 msgid "Test page printed"
 msgstr "Test sayfası yazdırıldı"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
-#, fuzzy
 msgid "Testing communication with IoT Box and network quality, please wait..."
 msgstr "IoT Box ile iletişim ve ağ kalitesi test ediliyor, lütfen bekleyin..."
 
 #. module: iot
 #: model:ir.model,name:iot.model_iot_channel
-#, fuzzy
 msgid "The Websocket IoT Channel"
 msgstr "Websocket IoT Kanalı"
 
 #. module: iot
 #. odoo-python
 #: code:addons/iot/models/ir_actions_report.py:0
-#, fuzzy
 msgid ""
 "The report you are trying to print requires an IoT Box to be printed.\n"
 "Make sure you linked the report '%s' to the corresponding IoT printer device."
@@ -1199,7 +1101,6 @@ msgstr ""
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
-#, fuzzy
 msgid "Then click on \"Configure\" under \"Odoo database connected\" section."
 msgstr ""
 "Ardından \"Odoo veritabanı bağlı\" bölümünün altındaki \"Yapılandır\" "
@@ -1250,28 +1151,24 @@ msgstr "USB"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Unknown identifier."
 msgstr "Bilinmeyen tanımlayıcı."
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Unknown printer error occurred"
 msgstr "Bilinmeyen yazıcı hatası oluştu"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Unspecified error."
 msgstr "Belirtilmemiş hata."
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Unspecified warning."
 msgstr "Belirtilmemiş uyarı."
 
@@ -1282,7 +1179,6 @@ msgstr "Desteklenmiyor"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
-#, fuzzy
 msgid "Use Pairing Code"
 msgstr "Eşleştirme Kodunu Kullanın"
 
@@ -1299,20 +1195,22 @@ msgstr "Varyant"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Vat Signing Card blocked."
 msgstr "KDV İmza Kartı bloke edildi."
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
-#, fuzzy
 msgid "Vat Signing Card not compatible with Fiscal Data Module."
 msgstr "KDV İmzalama Kartı Mali Veri Modülü ile uyumlu değildir."
 
 #. module: iot
+#: model:ir.model.fields,field_description:iot.field_iot_box__version_commit_url
+msgid "Version Commit Url"
+msgstr ""
+
+#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
-#, fuzzy
 msgid "Visible to all"
 msgstr "Herkes tarafından görülebilir"
 
@@ -1327,14 +1225,12 @@ msgstr ""
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_select_box_to_connect
-#, fuzzy
 msgid "Which one do you want to connect?<br/><br/>"
 msgstr "Hangisini bağlamak istiyorsunuz?<br/><br/>"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.xml:0
-#, fuzzy
 msgid ""
 "You can enable remote debug on your IoT Box by providing a Ngrok authtoken."
 msgstr ""
@@ -1353,13 +1249,11 @@ msgstr "bağlantı"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_kanban
-#, fuzzy
 msgid "connection_type"
 msgstr "connection_type"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_kanban
-#, fuzzy
 msgid "device-icon"
 msgstr "cihaz-ikonu"
 
@@ -1370,13 +1264,11 @@ msgstr "dokümantasyon"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
-#, fuzzy
 msgid "e.g. ABDE0123"
 msgstr "örn. ABDE0123"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
-#, fuzzy
 msgid ""
 "for Wi-Fi.<br/>\n"
 "                Then, connect the IoT Box to a printer (via USB cable) or a "
@@ -1385,27 +1277,24 @@ msgid ""
 msgstr ""
 "Wi-Fi için.<br/>\n"
 "                Ardından, eşleştirme kodunu almak için IoT Box'ı bir "
-"yazıcıya (USB kablosuyla) veya bir ekrana (mikro HDMI kablosuyla) bağlayın.<"
-"br/>\n"
+"yazıcıya (USB kablosuyla) veya bir ekrana (mikro HDMI kablosuyla) bağlayın."
+"<br/>\n"
 "                <br/>"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
-#, fuzzy
 msgid "install the Fiscal Data Module"
 msgstr "Mali Veri Modülünü kurun"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.xml:0
-#, fuzzy
 msgid ""
 "it enables remote access to your local network to the owner of the token."
 msgstr "token'ın sahibine yerel ağınıza uzaktan erişim sağlar."
 
 #. module: iot
 #: model:ir.actions.client,name:iot.action_iot_delete_linked_devices_menu
-#, fuzzy
 msgid "reset.linked.printers"
 msgstr "reset.linked.printers"
 

@@ -4,13 +4,14 @@
 #
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-11-12 15:05+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "documents_spreadsheet/tr/>\n"
 "Language: tr\n"
@@ -23,7 +24,6 @@ msgstr ""
 #. module: documents_spreadsheet
 #. odoo-javascript
 #: code:addons/documents_spreadsheet/static/src/documents_view/documents_spreadsheet_controller_mixin.js:0
-#, fuzzy
 msgid " file preview"
 msgstr " dosya önizleme"
 
@@ -77,14 +77,12 @@ msgstr ""
 #. module: documents_spreadsheet
 #. odoo-python
 #: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "Can edit the spreadsheet, including structure and content."
 msgstr "Yapı ve içerik dahil olmak üzere elektronik tabloyu düzenleyebilir."
 
 #. module: documents_spreadsheet
 #. odoo-python
 #: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "Can view the spreadsheet. Cannot make changes."
 msgstr "Elektronik tabloyu görüntüleyebilir. Değişiklik yapamaz."
 
@@ -177,7 +175,6 @@ msgstr "Belgeler / Partner"
 
 #. module: documents_spreadsheet
 #: model:ir.model,name:documents_spreadsheet.model_documents_sharing
-#, fuzzy
 msgid "Documents Sharing"
 msgstr "Belge Paylaşımı"
 
@@ -216,7 +213,6 @@ msgstr "Dosya"
 #. module: documents_spreadsheet
 #. odoo-javascript
 #: code:addons/documents_spreadsheet/static/src/documents_view/documents_spreadsheet_controller_mixin.js:0
-#, fuzzy
 msgid "Freeze and Share"
 msgstr "Dondur ve Paylaş"
 
@@ -348,29 +344,25 @@ msgstr "Aşamalara göre Fırsatlar"
 #. module: documents_spreadsheet
 #. odoo-python
 #: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "Partner(s): %(partner_names)s."
 msgstr "Ortak(lar): %(partner_names)s."
 
 #. module: documents_spreadsheet
 #: model:documents.document,name:documents_spreadsheet.spreadsheet_demo_pipeline
-#, fuzzy
 msgid "Pipeline dashboard"
-msgstr "Boru hattı gösterge tablosu"
+msgstr "Pipeline gösterge tablosu"
 
 #. module: documents_spreadsheet
 #. odoo-python
 #: code:addons/documents_spreadsheet/models/documents_document.py:0
-#, fuzzy
 msgid "Portal users cannot be the owner of a spreadsheet."
-msgstr "Portal kullanıcıları bir elektronik tablonun sahibi olamaz."
+msgstr "Portal kullanıcıları bir e-tablonun sahibi olamaz."
 
 #. module: documents_spreadsheet
 #. odoo-python
 #: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "Read only spreadsheet(s): %(document_names)s."
-msgstr "Yalnızca elektronik tabloları okuyun: %(document_names)s."
+msgstr "Yalnızca e-tabloları okuyun: %(document_names)s."
 
 #. module: documents_spreadsheet
 #. odoo-javascript
@@ -386,7 +378,6 @@ msgstr "Dosya geri yüklensin mi?"
 
 #. module: documents_spreadsheet
 #: model:documents.document,name:documents_spreadsheet.spreadsheet_demo_sales_commission
-#, fuzzy
 msgid "Sales Commissions"
 msgstr "Satış Komisyonları"
 
@@ -507,9 +498,8 @@ msgstr ""
 #. module: documents_spreadsheet
 #. odoo-javascript
 #: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_action.js:0
-#, fuzzy
 msgid "Spreadsheet moved to trash"
-msgstr "Elektronik tablo çöp kutusuna taşındı"
+msgstr "E-tablo çöp kutusuna taşındı"
 
 #. module: documents_spreadsheet
 #. odoo-python
@@ -570,13 +560,12 @@ msgstr ""
 #. module: documents_spreadsheet
 #. odoo-javascript
 #: code:addons/documents_spreadsheet/static/src/spreadsheet_clone_xlsx_dialog/spreadsheet_clone_xlsx_dialog.xml:0
-#, fuzzy
 msgid ""
 "This type of file cannot be previewed or edited directly in Odoo. Opening "
 "your file with Odoo Spreadsheet will allow you to do so."
 msgstr ""
 "Bu dosya türü doğrudan Odoo'da önizlenemez veya düzenlenemez. Dosyanızı Odoo "
-"Spreadsheet ile açmak bunu yapmanıza izin verecektir."
+"Spreadsheet (E-tablo) ile açmak bunu yapmanıza izin verecektir."
 
 #. module: documents_spreadsheet
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_document__thumbnail
@@ -636,22 +625,20 @@ msgstr "Dondurulmuş haldeki bir elektronik çizelge dondurulamaz"
 #. module: documents_spreadsheet
 #. odoo-python
 #: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
-#, fuzzy
 msgid ""
 "You can not share spreadsheet(s) in edit mode (%(document_names)s) to non-"
 "internal users."
 msgstr ""
-"Elektronik tablo(lar)ı düzenleme modunda (%(document_names)s) dahili olmayan "
-"kullanıcılarla paylaşamazsınız."
+"E-tabloları düzenleme modunda (%(document_names)s) dışarıdaki kullanıcılarla "
+"paylaşamazsınız."
 
 #. module: documents_spreadsheet
 #. odoo-python
 #: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
-#, fuzzy
 msgid ""
 "You cannot share spreadsheet(s) via link in edit mode (%(document_names)s)."
 msgstr ""
-"Elektronik tablo(lar)ı düzenleme modunda bağlantı yoluyla paylaşamazsınız "
+"E-tabloları düzenleme modunda bağlantı yoluyla paylaşamazsınız "
 "(%(document_names)s)."
 
 #. module: documents_spreadsheet

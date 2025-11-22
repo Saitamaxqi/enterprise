@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-11-12 15:01+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "spreadsheet_dashboard_sale_subscription/tr/>\n"
 "Language: tr\n"
@@ -37,7 +38,6 @@ msgstr "# Abonelikler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "/sub."
 msgstr "/sub."
 
@@ -47,21 +47,18 @@ msgstr "/sub."
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "ARR"
-msgstr "ARR"
+msgstr "ARR (Yillik Tekrar Eden Gelir)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "Active sub."
-msgstr "Aktif subay."
+msgstr "Aktif abonelik."
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "All time data"
 msgstr "Tüm zaman verileri"
 
@@ -69,14 +66,12 @@ msgstr "Tüm zaman verileri"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
-#, fuzzy
 msgid "Average Revenue"
 msgstr "Ortalama Gelir"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "Average revenue"
 msgstr "Ortalama gelir"
 
@@ -84,9 +79,8 @@ msgstr "Ortalama gelir"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Avg MRR / Subscriptions"
-msgstr "Ortalama MRR / Abonelikler"
+msgstr "Ortalama MRR (Aylik Tekrar Eden Gelir) / Abonelikler"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -98,21 +92,18 @@ msgstr "Önce"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
-#, fuzzy
 msgid "CLTV"
 msgstr "CLTV"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Camera Services"
 msgstr "Kamera Hizmetleri"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Car Leasing"
 msgstr "Araç Kiralama"
 
@@ -141,24 +132,21 @@ msgstr "Kaybedilen Abonelik ($)"
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "Churn (MRR)"
-msgstr "Churn (MRR)"
+msgstr "Aylik Tekrar Eden Gelir (MRR) Bazinda Sonlanan Abonelik"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "Churn (count)"
-msgstr "Churn (sayı)"
+msgstr "Adet Bazinda Sonlanan Abonelik (sayı)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "Churn ARR"
-msgstr "Churn ARR"
+msgstr "Yillik Tekrar Eden Gelir Bazinda (ARR) Sonlanan Abonelik"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -171,17 +159,15 @@ msgstr "Kaybedildi"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Churned %"
-msgstr "Çalkalanmış %"
+msgstr "Churned % (Sonlandirilan Abonelikler Yuzdesi)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
-#, fuzzy
 msgid "Churns"
-msgstr "Yayıklar"
+msgstr "Sonlandirilan Abonelikler"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -202,16 +188,14 @@ msgstr "Daralma ($)"
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "Contraction (MRR)"
-msgstr "Daralma (MRR)"
+msgstr "Aylık Tekrarlayan Gelir (MRR) Daralması"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "Contraction (count)"
-msgstr "Kasılma (sayım)"
+msgstr "Aylık Tekrarlayan Gelir (MRR) Daralması - Adet Bazinda"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -231,14 +215,12 @@ msgstr "Ülke"
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "Cumul"
-msgstr "Cumul"
+msgstr "Kümüle"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "Cumul period"
 msgstr "Kümülatif dönem"
 
@@ -259,25 +241,22 @@ msgstr "Güncel Değer"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
-#, fuzzy
 msgid "Cust. Life Time Value"
-msgstr "Cust. Yaşam Süresi Değeri"
+msgstr "Musteri. Yaşam Süresi Değeri"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Cust. Lifespan"
-msgstr "Cust. Yaşam Süresi"
+msgstr "Musteri Yaşam Süresi"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Cust. Lifetime Value"
-msgstr "Cust. Yaşam Boyu Değer"
+msgstr "Musteri Yaşam Boyu Değer"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -292,30 +271,26 @@ msgstr "Müşteri"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
-#, fuzzy
 msgid "Customer Churn Rate"
-msgstr "Müşteri Kaybı Oranı"
+msgstr "Müşteri Abonelik Sonlandirma Oranı"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
-#, fuzzy
 msgid "Customer Churn rate"
-msgstr "Müşteri kayıp oranı"
+msgstr "Müşteri Abonelik Sonlandirma Oranı"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
-#, fuzzy
 msgid "Customer Life Time Value"
 msgstr "Müşteri Yaşam Süresi Değeri"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "Customer Life time value"
 msgstr "Müşteri Yaşam süresi değeri"
 
@@ -323,9 +298,8 @@ msgstr "Müşteri Yaşam süresi değeri"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
-#, fuzzy
 msgid "Customer churn rate"
-msgstr "Müşteri kayıp oranı"
+msgstr "Müşteri Abonelik Sonlandirma Oranı"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -352,16 +326,14 @@ msgstr "Büyüme ($)"
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "Expansion (MRR)"
-msgstr "Genişleme (MRR)"
+msgstr "Aylık Tekrarlayan Gelir Bazinda Genişleme (MRR)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "Expansion (count)"
-msgstr "Genişleme (sayı)"
+msgstr "Adet Bazinda Genişleme (sayı)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -397,7 +369,6 @@ msgstr "Temel Performans Göstergesi"
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "Last 30 Days analysis"
 msgstr "Son 30 Gün analizi"
 
@@ -412,7 +383,6 @@ msgstr "Son 30 gün"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Lifespan"
 msgstr "Yaşam Süresi"
 
@@ -468,23 +438,20 @@ msgstr "MRR Gelişimi"
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "MRR by Country"
-msgstr "Ülkelere Göre MRR"
+msgstr "Ülkelere Göre Aylık Tekrarlayan Gelir"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "MRR by Products"
-msgstr "Ürünlere Göre MRR"
+msgstr "Ürünlere Göre Aylık Tekrarlayan Gelir"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
-#, fuzzy
 msgid "MRR by Products Category"
-msgstr "Ürün Kategorisine Göre MRR"
+msgstr "Ürün Kategorisine Göre Aylık Tekrarlayan Gelir"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -492,41 +459,36 @@ msgstr "Ürün Kategorisine Göre MRR"
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "MRR by Recurrence"
-msgstr "Yinelemeye Göre MRR"
+msgstr "Yinelemeye Göre Aylık Tekrarlayan Gelir"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "MRR by Sales Team"
-msgstr "Satış Ekibine Göre MRR"
+msgstr "Satış Ekibine Göre Aylık Tekrarlayan Gelir"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "MRR by Team"
-msgstr "Ekibe Göre MRR"
+msgstr "Ekibe Göre Aylık Tekrarlayan Gelir"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
-#, fuzzy
 msgid "MRR delta"
-msgstr "MRR delta"
+msgstr "Aylık Tekrarlayan Gelir Degisimi ( MRR Delta)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "MRR over time"
-msgstr "Zaman içinde MRR"
+msgstr "Zaman içinde Aylık Tekrarlayan Gelir"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -538,7 +500,6 @@ msgstr "Aracı:"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Month(s)"
 msgstr "Ay(lar)"
 
@@ -552,7 +513,6 @@ msgstr "Aylık"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
-#, fuzzy
 msgid "Monthly Growth"
 msgstr "Aylık Büyüme"
 
@@ -560,21 +520,18 @@ msgstr "Aylık Büyüme"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Monthly Rec. Rev."
-msgstr "Aylık Rec. Rev."
+msgstr "Aylık Tekrarlayan Gelir"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "Montly analysis"
 msgstr "Montly analizi"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Motion Sensors"
 msgstr "Hareket Sensörleri"
 
@@ -582,7 +539,6 @@ msgstr "Hareket Sensörleri"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "Net New"
 msgstr "Net Yeni"
 
@@ -590,22 +546,19 @@ msgstr "Net Yeni"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "Net New ARR"
-msgstr "Net Yeni ARR"
+msgstr "Net Yeni Yillik Tekrarlayan Gelir"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
-#, fuzzy
 msgid "Net Retention"
 msgstr "Net Elde Tutma"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "Net Retention Rate"
 msgstr "Net Elde Tutma Oranı"
 
@@ -613,7 +566,6 @@ msgstr "Net Elde Tutma Oranı"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
-#, fuzzy
 msgid "Net Retention rate"
 msgstr "Net Elde Tutma Oranı"
 
@@ -626,14 +578,12 @@ msgstr "Yeni"
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "New (MRR)"
-msgstr "Yeni (MRR)"
+msgstr "Yeni (Aylık Tekrarlayan Gelir)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "New (count)"
 msgstr "Yeni (sayı)"
 
@@ -641,9 +591,8 @@ msgstr "Yeni (sayı)"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "New ARR"
-msgstr "Yeni ARR"
+msgstr "Yeni Yillik Tekrarlayan Gelir"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -679,9 +628,8 @@ msgstr "Yeni abonelikler ($)"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "Non Rec. Invoiced "
-msgstr "Kayıt Dışı Faturalandırılmış "
+msgstr "Faturalandırılmış Tek Seferlik Gelir "
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -694,17 +642,15 @@ msgstr "Tek seferlik gelir"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "Non Recurring Invoiced"
-msgstr "Yinelenmeyen Faturalar"
+msgstr "Faturalandırılmış Tek Seferlik Gelir"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "Non Recurring Invoiced (%)"
-msgstr "Yinelenmeyen Faturalı (%)"
+msgstr "Faturalandırılmış Tek Seferlik Gelir (%)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -716,7 +662,6 @@ msgstr "Tekrarlamayan Gelir"
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Office Cleaning"
 msgstr "Ofis Temizliği"
 
@@ -767,17 +712,15 @@ msgstr "Yinelenme"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "Recurring Invoiced"
-msgstr "Yinelenen Faturalar"
+msgstr "Faturalandirilmis Yenilenen Gelir"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "Recurring Invoiced (%)"
-msgstr "Yinelenen Faturalar (%)"
+msgstr "Faturalandirilmis Yenilenen Gelir (%)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_sale_subscription.spreadsheet_dashboard_retention
@@ -794,14 +737,12 @@ msgstr "Gelir Değişimi"
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "Revenue Churn Rate"
 msgstr "Gelir Kaybı Oranı"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
-#, fuzzy
 msgid "Revenue Churn rate"
 msgstr "Gelir Kayıp oranı"
 
@@ -809,7 +750,6 @@ msgstr "Gelir Kayıp oranı"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
-#, fuzzy
 msgid "Revenue churn rate"
 msgstr "Gelir kayıp oranı"
 
@@ -825,9 +765,8 @@ msgstr "Satış Ekibi"
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
-#, fuzzy
 msgid "Salesperon"
-msgstr "Salesperon"
+msgstr "Satis peronu"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -898,9 +837,8 @@ msgstr "En İyi Yeni Abonelikler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Top Plans"
-msgstr "Üst Planlar"
+msgstr "En Iyi Planlar"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -927,7 +865,6 @@ msgstr "En Yüksek Düzenli Gelir"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Top Recurrences"
 msgstr "En Çok Tekrarlananlar"
 
@@ -935,7 +872,6 @@ msgstr "En Çok Tekrarlananlar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Top Sales Team"
 msgstr "En İyi Satış Ekibi"
 
@@ -943,7 +879,6 @@ msgstr "En İyi Satış Ekibi"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Top Salesman"
 msgstr "En İyi Satıcı"
 
@@ -951,7 +886,6 @@ msgstr "En İyi Satıcı"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "Top Salesperson"
 msgstr "En İyi Satış Elemanı"
 
@@ -959,7 +893,6 @@ msgstr "En İyi Satış Elemanı"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Top Subscriptions"
 msgstr "En İyi Abonelikler"
 
@@ -967,7 +900,6 @@ msgstr "En İyi Abonelikler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "Top upgrades"
 msgstr "En iyi yükseltmeler"
 
@@ -975,7 +907,6 @@ msgstr "En iyi yükseltmeler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Total Subscriptions"
 msgstr "Toplam Abonelikler"
 
@@ -983,9 +914,8 @@ msgstr "Toplam Abonelikler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
-#, fuzzy
 msgid "Total churned"
-msgstr "Toplam çalkalanan"
+msgstr "Toplam kaybedilen abonelikler"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -1003,15 +933,13 @@ msgstr "Birleşik Devletler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "Up/Down ARR"
-msgstr "Yukarı/Aşağı ARR"
+msgstr "Up/Down ARR"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "Up/Downgrade"
 msgstr "Yükseltme/Düşürme"
 
@@ -1041,7 +969,6 @@ msgstr "En Büyük Daralma"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "Worst Downgrades"
 msgstr "En Kötü Not Düşürmeler"
 
@@ -1061,7 +988,6 @@ msgstr "Yıllık Tekrar Eden"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#, fuzzy
 msgid "of total invoiced"
 msgstr "toplam faturalanan tutarın"
 

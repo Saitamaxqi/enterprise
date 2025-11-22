@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-11-10 08:22+0000\n"
+"POT-Creation-Date: 2025-11-21 18:40+0000\n"
+"PO-Revision-Date: 2025-11-17 06:57+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Hindi <https://translate.odoo.com/projects/odoo-19/"
 "appointment/hi/>\n"
@@ -809,8 +809,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "<i class=\"fa fa-thumbs-up me-3 text-info\"/>Appointment Reserved!"
-msgstr ""
-"<i class=\"fa fa-thumbs-up me-3 text-info\"/>अपॉइंटमेंट रिज़र्व किया गया!"
+msgstr "<i class=\"fa fa-thumbs-up me-3 text-info\"/>अपॉइंटमेंट रिज़र्व किया गया!"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -873,8 +872,8 @@ msgstr ""
 "<i class=\"fa fa-warning me-2\"/>\n"
 "                    <span invisible=\"schedule_based_on != 'users'\">व्यक्तिगत "
 "लिंक शेयर करने के लिए, आपको अपॉइंटमेंट से जुड़ना होगा.</span>\n"
-"                    <span invisible=\"schedule_based_on != 'resources'\""
-">संसाधनों के लिए व्यक्तिगत अपॉइंटमेंट लिंक नहीं बना सकते.</span>"
+"                    <span invisible=\"schedule_based_on != "
+"'resources'\">संसाधनों के लिए व्यक्तिगत अपॉइंटमेंट लिंक नहीं बना सकते.</span>"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -936,8 +935,8 @@ msgid ""
 "<span class=\"text-muted\" invisible=\"category != 'custom'\">Depending on "
 "the Slots</span>"
 msgstr ""
-"<span class=\"text-muted\" invisible=\"category != 'custom'\">स्लॉट के ऊपर निर्"
-"भर है</span>"
+"<span class=\"text-muted\" invisible=\"category != 'custom'\">स्लॉट के ऊपर "
+"निर्भर है</span>"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -1085,8 +1084,7 @@ msgstr "कस्टम अपॉइंटमेंट अपडेट करन
 msgid ""
 "A punctual appointment type should be limited between a start and end "
 "datetime."
-msgstr ""
-"जो अपॉइंटमेंट सही समय पर होनी है, उसका शुरू और खत्म होने का समय तय होना चाहिए।"
+msgstr "जो अपॉइंटमेंट सही समय पर होनी है, उसका शुरू और खत्म होने का समय तय होना चाहिए।"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__access_token
@@ -1128,6 +1126,8 @@ msgstr "ऐक्टिविटी टाइप आइकॉन"
 
 #. module: appointment
 #. odoo-javascript
+#: code:addons/appointment/static/src/views/appointment_calendar/appointment_calendar_controller.js:0
+#: code:addons/appointment/static/src/views/appointment_calendar/appointment_calendar_controller.xml:0
 #: code:addons/appointment/static/src/views/gantt/gantt_renderer.js:0
 #: code:addons/appointment/static/src/views/gantt/gantt_renderer_controls.xml:0
 #: code:addons/appointment/static/src/views/list/list_renderer.js:0
@@ -2139,8 +2139,8 @@ msgid ""
 "Defines the type of video call link that will be used for the generated "
 "events. Keep it empty to prevent generating meeting url."
 msgstr ""
-"जनरेट किए गए इवेंट के लिए वीडियो कॉल लिंक का प्रकार तय करें. वीडियो लिंक नहीं चाहिए, तो"
-" इसे खाली छोड़ दें।"
+"जनरेट किए गए इवेंट के लिए वीडियो कॉल लिंक का प्रकार तय करें. वीडियो लिंक नहीं चाहिए, "
+"तो इसे खाली छोड़ दें।"
 
 #. module: appointment
 #: model:appointment.type,name:appointment.appointment_type_dental_care
@@ -2171,8 +2171,8 @@ msgid ""
 "Details<span class=\"d-inline-block mx-sm-3 fa fa-angle-right text-muted "
 "fs-5\"/>"
 msgstr ""
-"जानकारी<span class="
-"\"d-inline-block mx-sm-3 fa fa-angle-right text-muted fs-5\"/>"
+"जानकारी<span class=\"d-inline-block mx-sm-3 fa fa-angle-right text-muted "
+"fs-5\"/>"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_slot__allday
@@ -2254,8 +2254,7 @@ msgstr "अवधि"
 #. module: appointment
 #: model_terms:appointment.type,message_intro:appointment.appointment_type_tennis_court
 msgid "Easily reserve tennis courts for your next match, anytime and anywhere."
-msgstr ""
-"आसानी से कभी भी और कहीं भी अपने अगले मैच के लिए टेनिस कोर्ट रिज़र्व करें।"
+msgstr "आसानी से कभी भी और कहीं भी अपने अगले मैच के लिए टेनिस कोर्ट रिज़र्व करें।"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_form
@@ -2381,8 +2380,8 @@ msgid ""
 "Get the users linked to the appointment type selected to apply a domain on "
 "the users that can be selected"
 msgstr ""
-"चुने गए अपॉइंटमेंट प्रकार से जुड़े उपयोगकर्ताओं को पाएं, ताकि उन उपयोगकर्ताओं पर एक डोमेन लागू"
-" किया जा सके जिन्हें चुना जा सकता है"
+"चुने गए अपॉइंटमेंट प्रकार से जुड़े उपयोगकर्ताओं को पाएं, ताकि उन उपयोगकर्ताओं पर एक डोमेन "
+"लागू किया जा सके जिन्हें चुना जा सकता है"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -2506,8 +2505,7 @@ msgstr ""
 #: model:ir.model.fields,help:appointment.field_appointment_type__booked_mail_template_id
 msgid ""
 "If set an email will be sent to the customer when the appointment is booked."
-msgstr ""
-"अगर इसे सेट किया जाता है, तो अपॉइंटमेंट बुक होने पर ग्राहक को एक ईमेल भेजा जाएगा।"
+msgstr "अगर इसे सेट किया जाता है, तो अपॉइंटमेंट बुक होने पर ग्राहक को एक ईमेल भेजा जाएगा।"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__canceled_mail_template_id
@@ -2749,8 +2747,7 @@ msgstr "लिंक किए गए रिसोर्स"
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_resource__linked_resource_ids
 msgid "List of resources that can be combined to handle a bigger demand."
-msgstr ""
-"उन संसाधनों की सूची जिन्हें ज़्यादा मांग को संभालने के लिए जोड़ा जा सकता है।"
+msgstr "उन संसाधनों की सूची जिन्हें ज़्यादा मांग को संभालने के लिए जोड़ा जा सकता है।"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__location_id
@@ -3034,8 +3031,7 @@ msgstr "ऑनलाइन मीटिंग"
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
 msgid ""
 "Only letters, numbers, underscores and dashes are allowed in your links."
-msgstr ""
-"आपके लिंक में सिर्फ़ अक्षर, अंक, अंडरस्कोर और डैश का इस्तेमाल किया जा सकता है।"
+msgstr "आपके लिंक में सिर्फ़ अक्षर, अंक, अंडरस्कोर और डैश का इस्तेमाल किया जा सकता है।"
 
 #. module: appointment
 #. odoo-python
@@ -3051,8 +3047,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment/models/appointment_type.py:0
 msgid "Only one anytime appointment type is allowed for a specific user."
-msgstr ""
-"एक खास उपयोगकर्ता के लिए केवल एक ही कभी भी अपॉइंटमेंट प्रकार की अनुमति है।"
+msgstr "एक खास उपयोगकर्ता के लिए केवल एक ही कभी भी अपॉइंटमेंट प्रकार की अनुमति है।"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
@@ -3121,7 +3116,7 @@ msgstr "फ़ोन नंबर"
 #. module: appointment
 #: model:appointment.question,name:appointment.appointment_question_phone
 msgid "Phone number"
-msgstr ""
+msgstr "फ़ोन नंबर"
 
 #. module: appointment
 #. odoo-javascript
@@ -3392,8 +3387,7 @@ msgstr "(दिनों में) के बाद शेड्यूल न �
 msgid ""
 "Schedule your visit today and experience expert dental care brought right to "
 "your doorstep."
-msgstr ""
-"आज ही अपनी विज़िट शेड्यूल करें और अपने घर पर ही डेंटल केयर एक्सपर्ट से बात करें।"
+msgstr "आज ही अपनी विज़िट शेड्यूल करें और अपने घर पर ही डेंटल केयर एक्सपर्ट से बात करें।"
 
 #. module: appointment
 #. odoo-python
@@ -3534,8 +3528,7 @@ msgstr "लिंक शेयर करें"
 #: code:addons/appointment/static/src/components/appointment_booking_action_helper/appointment_booking_action_helper.xml:0
 msgid ""
 "Share this appointment type via link or schedule an appointment manually"
-msgstr ""
-"इस अपॉइंटमेंट के प्रकार को लिंक से शेयर करें या अपॉइंटमेंट को मैन्युअल तरीके से शेड्यूल करें"
+msgstr "इस अपॉइंटमेंट के प्रकार को लिंक से शेयर करें या अपॉइंटमेंट को मैन्युअल तरीके से शेड्यूल करें"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__shareable
@@ -3689,8 +3682,8 @@ msgid ""
 "Starting from the beginning of the time slot, Odoo will create a new slot at "
 "regular intervals based on the time specified here."
 msgstr ""
-"समय स्लॉट की शुरुआत से, Odoo यहां बताए गए समय के आधार पर नियमित अंतराल पर एक नया स्लॉ"
-"ट बनाएगा।"
+"समय स्लॉट की शुरुआत से, Odoo यहां बताए गए समय के आधार पर नियमित अंतराल पर एक नया "
+"स्लॉट बनाएगा।"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__select_first
@@ -3821,8 +3814,7 @@ msgstr "इवेंट %s, अपॉइंटमेंट प्रकार �
 msgid ""
 "The event %s cannot have an appointment status without being linked to an "
 "appointment type."
-msgstr ""
-"इवेंट %s, अपॉइंटमेंट प्रकार से लिंक हुए बिना अपॉइंटमेंट की स्थिति नहीं रख सकता।"
+msgstr "इवेंट %s, अपॉइंटमेंट प्रकार से लिंक हुए बिना अपॉइंटमेंट की स्थिति नहीं रख सकता।"
 
 #. module: appointment
 #. odoo-python
@@ -3834,15 +3826,13 @@ msgstr "फ़ील्ड '%s' टारगेट किए गए मॉडल
 #. odoo-python
 #: code:addons/appointment/models/appointment_invite.py:0
 msgid "The following appointment type(s) have no resource assigned: %s."
-msgstr ""
-"निम्नलिखित अपॉइंटमेंट के प्रकारों में कोई रिसोर्स असाइन नहीं किया गया है: %s।"
+msgstr "निम्नलिखित अपॉइंटमेंट के प्रकारों में कोई रिसोर्स असाइन नहीं किया गया है: %s।"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/models/appointment_invite.py:0
 msgid "The following appointment type(s) have no staff assigned: %s."
-msgstr ""
-"निम्नलिखित अपॉइंटमेंट के प्रकारों में कोई स्टाफ़ असाइन नहीं किया गया है: %s।"
+msgstr "निम्नलिखित अपॉइंटमेंट के प्रकारों में कोई स्टाफ़ असाइन नहीं किया गया है: %s।"
 
 #. module: appointment
 #. odoo-python
@@ -3927,8 +3917,8 @@ msgid ""
 "This appointment type has no availabilities because it has no resource "
 "assigned"
 msgstr ""
-"इस अपॉइंटमेंट प्रकार की कोई उपलब्धता नहीं है, क्योंकि इसमें कोई संसाधन असाइन नहीं किया गया"
-" है"
+"इस अपॉइंटमेंट प्रकार की कोई उपलब्धता नहीं है, क्योंकि इसमें कोई संसाधन असाइन नहीं किया "
+"गया है"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
@@ -4257,8 +4247,7 @@ msgstr "आपका अपॉइंटमेंट"
 #. odoo-javascript
 #: code:addons/appointment/static/src/components/appointment_sync_button/appointment_sync_button.js:0
 msgid "Your calendar is already configured and was successfully synchronized."
-msgstr ""
-"आपका कैलेंडर पहले ही कॉन्फ़िगर हो चुका है और सफलतापूर्वक सिंक हो गया है।"
+msgstr "आपका कैलेंडर पहले ही कॉन्फ़िगर हो चुका है और सफलतापूर्वक सिंक हो गया है।"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_meeting_user
@@ -4457,7 +4446,7 @@ msgstr " "
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "up to"
-msgstr ""
+msgstr "तक"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.portal_my_appointments

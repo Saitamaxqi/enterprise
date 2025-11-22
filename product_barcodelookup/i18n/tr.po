@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:45+0000\n"
-"PO-Revision-Date: 2025-11-12 15:07+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:42+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "product_barcodelookup/tr/>\n"
 "Language: tr\n"
@@ -32,7 +33,6 @@ msgstr ""
 
 #. module: product_barcodelookup
 #: model_terms:ir.ui.view,arch_db:product_barcodelookup.product_fetch_image_wizard_view_form
-#, fuzzy
 msgid ""
 "<span invisible=\"nb_products_selected &lt;= 1000\">\n"
 "                            As only 1000 products can be processed per day, "
@@ -48,7 +48,6 @@ msgstr ""
 
 #. module: product_barcodelookup
 #: model_terms:ir.ui.view,arch_db:product_barcodelookup.product_fetch_image_wizard_view_form
-#, fuzzy
 msgid ""
 "<strong>Note: </strong>\n"
 "                        Some images may not be royalty-free and should not "
@@ -61,7 +60,6 @@ msgstr ""
 #. module: product_barcodelookup
 #. odoo-python
 #: code:addons/product_barcodelookup/wizard/product_fetch_image_wizard.py:0
-#, fuzzy
 msgid ""
 "A task to process products in the background is already running. Please try "
 "again later."
@@ -71,25 +69,21 @@ msgstr ""
 
 #. module: product_barcodelookup
 #: model_terms:ir.ui.view,arch_db:product_barcodelookup.res_config_settings_view_form
-#, fuzzy
 msgid "API Key:"
 msgstr "API Anahtarı:"
 
 #. module: product_barcodelookup
 #: model:ir.model.fields,field_description:product_barcodelookup.field_res_config_settings__barcodelookup_api_key
-#, fuzzy
 msgid "API key"
 msgstr "API anahtarı"
 
 #. module: product_barcodelookup
 #: model_terms:ir.ui.view,arch_db:product_barcodelookup.res_config_settings_view_form
-#, fuzzy
 msgid "Barcode Database"
 msgstr "Barkod Veritabanı"
 
 #. module: product_barcodelookup
 #: model:ir.model.fields,help:product_barcodelookup.field_res_config_settings__barcodelookup_api_key
-#, fuzzy
 msgid "Barcode Lookup API Key for create product from barcode."
 msgstr "Barkoddan ürün oluşturmak için Barkod Arama API Anahtarı."
 
@@ -105,7 +99,6 @@ msgstr "Yapılandırma Ayarları"
 
 #. module: product_barcodelookup
 #: model_terms:ir.ui.view,arch_db:product_barcodelookup.res_config_settings_view_form
-#, fuzzy
 msgid "Create products by scanning using"
 msgstr "Kullanarak tarayarak ürünler oluşturun"
 
@@ -130,7 +123,6 @@ msgstr "İsim Göster"
 
 #. module: product_barcodelookup
 #: model:ir.model,name:product_barcodelookup.model_product_fetch_image_wizard
-#, fuzzy
 msgid ""
 "Fetch product images from Barcode Lookup based on the product's barcode."
 msgstr "Ürünün barkoduna göre Barkod Arama'dan ürün resimlerini getirin."
@@ -143,14 +135,12 @@ msgstr "Resimleri Al"
 #. module: product_barcodelookup
 #: model:ir.actions.act_window,name:product_barcodelookup.product_product_action_get_pic_with_barcode
 #: model:ir.actions.act_window,name:product_barcodelookup.product_template_action_get_pic_with_barcode
-#, fuzzy
 msgid "Get Pictures from Barcode Lookup"
 msgstr "Barkod Aramadan Resimler Alın"
 
 #. module: product_barcodelookup
 #. odoo-python
 #: code:addons/product_barcodelookup/wizard/product_fetch_image_wizard.py:0
-#, fuzzy
 msgid "Go to Settings"
 msgstr "Ayarlar'a gidin"
 
@@ -165,7 +155,6 @@ msgstr "ID"
 
 #. module: product_barcodelookup
 #: model:ir.model.fields,field_description:product_barcodelookup.field_product_product__is_image_fetch_pending
-#, fuzzy
 msgid "Is Image Fetch Pending"
 msgstr "Görüntü Getirme Bekliyor mu"
 
@@ -196,7 +185,6 @@ msgstr "Seçilen ürün sayısı"
 
 #. module: product_barcodelookup
 #: model_terms:ir.ui.view,arch_db:product_barcodelookup.product_fetch_image_wizard_view_form
-#, fuzzy
 msgid "Out of"
 msgstr "Dışarıda"
 
@@ -207,7 +195,6 @@ msgstr "Ürün"
 
 #. module: product_barcodelookup
 #: model:ir.actions.server,name:product_barcodelookup.ir_cron_fetch_image_ir_actions_server
-#, fuzzy
 msgid "Product Images: Get product images from Barcode Lookup"
 msgstr "Ürün Görselleri: Barkod Arama'dan ürün görsellerini alın"
 
@@ -238,14 +225,12 @@ msgstr "Ürünler arka planda işlenir. Resimler aşamalı olarak güncellenecek
 #. module: product_barcodelookup
 #. odoo-python
 #: code:addons/product_barcodelookup/wizard/product_fetch_image_wizard.py:0
-#, fuzzy
 msgid "The API Key for Barcode Lookup must be set in the General Settings."
 msgstr "Barkod Arama için API Anahtarı Genel Ayarlar'da ayarlanmalıdır."
 
 #. module: product_barcodelookup
 #. odoo-python
 #: code:addons/product_barcodelookup/wizard/product_fetch_image_wizard.py:0
-#, fuzzy
 msgid ""
 "The Barcode Lookup API key is not set properly or it is invalid. Check your "
 "API key in setting and retry."
@@ -263,7 +248,6 @@ msgstr "Kriterleri karşılayan seçili ürünlerin listesi (barkodlu ve görsel
 #. module: product_barcodelookup
 #. odoo-python
 #: code:addons/product_barcodelookup/wizard/product_fetch_image_wizard.py:0
-#, fuzzy
 msgid ""
 "The scheduled action \"Product Images: Get product images from Barcode "
 "Lookup\" has been deleted. Please contact your administrator to have the "
@@ -287,7 +271,6 @@ msgstr ""
 
 #. module: product_barcodelookup
 #: model:product.attribute,name:product_barcodelookup.product_attribute_lookup_8
-#, fuzzy
 msgid "age group"
 msgstr "yaş grubu"
 
@@ -298,13 +281,11 @@ msgstr "barcodelookup.com"
 
 #. module: product_barcodelookup
 #: model:product.attribute,name:product_barcodelookup.product_attribute_lookup_6
-#, fuzzy
 msgid "brand"
 msgstr "marka"
 
 #. module: product_barcodelookup
 #: model:product.attribute,name:product_barcodelookup.product_attribute_lookup_1
-#, fuzzy
 msgid "color"
 msgstr "renk"
 
@@ -315,7 +296,6 @@ msgstr "örn. d7vctmiv2rwgenebha8bxq7irooudn"
 
 #. module: product_barcodelookup
 #: model:product.attribute,name:product_barcodelookup.product_attribute_lookup_2
-#, fuzzy
 msgid "gender"
 msgstr "cinsiyet"
 
@@ -326,37 +306,31 @@ msgstr "imalatçı"
 
 #. module: product_barcodelookup
 #: model:product.attribute,name:product_barcodelookup.product_attribute_lookup_3
-#, fuzzy
 msgid "material"
 msgstr "malzeme"
 
 #. module: product_barcodelookup
 #: model:product.attribute,name:product_barcodelookup.product_attribute_lookup_4
-#, fuzzy
 msgid "pattern"
 msgstr "desen"
 
 #. module: product_barcodelookup
 #: model_terms:ir.ui.view,arch_db:product_barcodelookup.product_fetch_image_wizard_view_form
-#, fuzzy
 msgid "selected products,"
 msgstr "seçilmiş ürünler,"
 
 #. module: product_barcodelookup
 #: model:product.attribute,name:product_barcodelookup.product_attribute_lookup_7
-#, fuzzy
 msgid "size"
 msgstr "boyut"
 
 #. module: product_barcodelookup
 #: model_terms:ir.ui.view,arch_db:product_barcodelookup.product_fetch_image_wizard_view_form
-#, fuzzy
 msgid "will be processed."
 msgstr "işlenecektir."
 
 #. module: product_barcodelookup
 #: model_terms:ir.ui.view,arch_db:product_barcodelookup.product_fetch_image_wizard_view_form
-#, fuzzy
 msgid ""
 "won't be\n"
 "                            processed because they either already have an "

@@ -27,13 +27,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-11-12 14:55+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-20 13:21+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "account_asset/tr/>\n"
 "Language: tr\n"
@@ -277,7 +278,6 @@ msgstr "Muhasebe Raporu"
 
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_return
-#, fuzzy
 msgid "Accounting Return"
 msgstr "Muhasebe İadesi"
 
@@ -519,7 +519,6 @@ msgstr "Varlık elden çıkarıldı. %s"
 
 #. module: account_asset
 #: model:account.return.check.template,name:account_asset.account_return_check_template_asset_movement_and_accounting_treatment
-#, fuzzy
 msgid "Asset movement and accounting treatment"
 msgstr "Varlık hareketleri ve muhasebe işlemleri"
 
@@ -654,7 +653,6 @@ msgstr "Karakteristik"
 
 #. module: account_asset
 #: model:account.return.check.template,description:account_asset.account_return_check_template_review_depreciation_periods_new_acquisitions
-#, fuzzy
 msgid ""
 "Check depreciation periods for new acquisitions and ensure consistency with "
 "similar assets. Document any changes in accounting methods."
@@ -990,7 +988,6 @@ msgstr "Analitik Hesap Dağılımı"
 
 #. module: account_asset
 #: model:ir.actions.server,name:account_asset.action_server_download_asset_template
-#, fuzzy
 msgid "Download Asset Import Template"
 msgstr "Varlık İçe Aktarma Şablonunu İndirin"
 
@@ -1023,13 +1020,12 @@ msgstr "Süre / Oran"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid ""
 "Either \"Months\" or \"Years\" (case-insensitive). Specifies the unit of "
 "duration."
 msgstr ""
-"\"Aylar\" veya \"Yıllar\" (büyük/küçük harfe duyarlı değildir). Süre "
-"birimini belirtir."
+"\"Ay\" veya \"Yıl\" (büyük/küçük harfe duyarlı değildir). Süre birimini "
+"belirtir."
 
 #. module: account_asset
 #. odoo-python
@@ -1173,7 +1169,6 @@ msgstr "İstisnai bir etkinliği belirtmek için kullanılan simge."
 
 #. module: account_asset
 #: model:account.return.check.template,description:account_asset.account_return_check_template_asset_movement_and_accounting_treatment
-#, fuzzy
 msgid ""
 "Identify acquisitions, disposals, write-offs, etc. Ensure correct accounting "
 "treatment, depreciation, and capital gains processing."
@@ -1194,7 +1189,6 @@ msgstr "İşaretliyse, bazı mesajlar gönderi hatası içermektedir."
 
 #. module: account_asset
 #: model_terms:ir.actions.act_window,help:account_asset.action_account_asset_form
-#, fuzzy
 msgid ""
 "Import your fixed assets' original data and their already accumulated "
 "depreciation."
@@ -1324,7 +1318,6 @@ msgstr "Manage Items"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "Mandatory column. This is the name of the asset."
 msgstr "Zorunlu sütun. Bu, varlığın adıdır."
 
@@ -1385,9 +1378,8 @@ msgstr "Aylar"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "Months/Years"
-msgstr "Aylar/Yıllar"
+msgstr "Ay/Yıl"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_account__multiple_assets_per_line
@@ -1406,7 +1398,6 @@ msgstr ""
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid ""
 "Must match the selected company during import. Use the company's display "
 "name."
@@ -1569,7 +1560,6 @@ msgstr "Teslimat hatası olan mesaj adedi"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_return.py:0
-#, fuzzy
 msgid ""
 "Odoo manages depreciation for your fixed assets. No depreciation was "
 "recorded for this period. Ensure assets are properly registered for "
@@ -1587,7 +1577,6 @@ msgstr "Beklemede"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid ""
 "Only applicable for Declining Balance method (e.g., 2 for double declining). "
 "Ignored for Straight Line."
@@ -1604,7 +1593,6 @@ msgstr "Varlığı Aç"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid ""
 "Optional. The name or external ID of the asset group. Must exist in Odoo "
 "(e.g., Office Equipment, Vehicles, Machinery)."
@@ -1735,7 +1723,6 @@ msgstr ""
 
 #. module: account_asset
 #: model:account.return.check.template,name:account_asset.account_return_check_template_review_depreciation_periods_new_acquisitions
-#, fuzzy
 msgid "Review depreciation periods for new acquisitions"
 msgstr "Yeni satın almalar için amortisman sürelerini gözden geçirin"
 
@@ -1789,7 +1776,6 @@ msgstr "Devam Eden Olarak Ayarla"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_search
-#, fuzzy
 msgid "Show all records whose next activity date is past"
 msgstr "Bir sonraki etkinlik tarihi geçmiş olan tüm kayıtları göster"
 
@@ -1808,7 +1794,6 @@ msgstr "Gerekli bazı değerler eksik"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid ""
 "Start date of the depreciation period. Should be in MM-DD-YYYY format. If "
 "left blank, it defaults to the acquisition date."
@@ -1881,7 +1866,6 @@ msgstr ""
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid ""
 "The accumulated depreciation account (contra-asset account). Must exist in "
 "Odoo and be of \"Fixed Asset\" or \"Non-current Assets\" type."
@@ -1898,7 +1882,6 @@ msgstr "İki amortisman arasındaki süre"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "The amount will be considered in company currency."
 msgstr "Tutar, şirket para birimi cinsinden dikkate alınacaktır."
 
@@ -1922,7 +1905,6 @@ msgstr "Bu sihirbaz tarafından değiştirilecek varlık"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid ""
 "The balance sheet account for the asset itself (e.g., \"151000 Fixed "
 "Asset\"). Must exist in Odoo and be of \"Fixed Asset\" or \"Non-current "
@@ -1940,7 +1922,6 @@ msgstr "Alt varlıklar bu varlığın değerinde kazançlardır"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid ""
 "The code or name of the associated journal in Odoo for depreciation entries "
 "(e.g., MISC - Miscellaneous Operations, INV - Customer Invoices, BILL - "
@@ -1962,7 +1943,6 @@ msgstr ""
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid ""
 "The estimated residual value of the asset at the end of its useful life. "
 "This amount will not be depreciated. Considered in company currency."
@@ -1974,7 +1954,6 @@ msgstr ""
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid ""
 "The expense account for posting periodic depreciation entries (e.g., "
 "\"630000 Depreciation Expenses\"). Must exist in Odoo and be of "
@@ -1998,7 +1977,6 @@ msgstr "Son amortisman satırında kalan değer 0 olmalıdır"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid ""
 "The total amount of depreciation already recorded for the asset before "
 "import. This amount will be considered in company currency."
@@ -2078,7 +2056,6 @@ msgstr "Value increase for: %(asset)s"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_group_form_view
-#, fuzzy
 msgid "Visible to all"
 msgstr "Herkes tarafından görülebilir"
 
@@ -2124,7 +2101,6 @@ msgstr ""
 
 #. module: account_asset
 #: model_terms:ir.actions.act_window,help:account_asset.action_account_asset_form
-#, fuzzy
 msgid "With our template"
 msgstr "Şablonumuz ile"
 
@@ -2240,42 +2216,36 @@ msgstr "Amortisman Hesabı olarak aynı hesabı seçemezsiniz"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "account_asset_id"
 msgstr "account_asset_id"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "account_depreciation_expense_id"
 msgstr "account_depreciation_expense_id"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "account_depreciation_id"
 msgstr "account_depreciation_id"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "acquisition_date"
 msgstr "acquisition_date"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "already_depreciated_amount_import"
 msgstr "already_depreciated_amount_import"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "asset_group_id"
 msgstr "asset_group_id"
 
@@ -2287,7 +2257,6 @@ msgstr "kayıtlı_değer"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "company_id"
 msgstr "company_id"
 
@@ -2311,14 +2280,12 @@ msgstr "itfa_edilebilir)"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "e.g. 01-27-2025 (format: MM-DD-YYYY)"
 msgstr "örneğin 01-27-2025 (format: MM-DD-YYYY)"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid ""
 "e.g. 3 for 3 years, or 12 for 12 months. It must be an integer representing "
 "the total number of periods."
@@ -2334,7 +2301,6 @@ msgstr "Örn. Laptop iBook"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid ""
 "e.g. No Prorata, Constant Periods, Based on days per period. This determines "
 "how the first depreciation entry is calculated."
@@ -2345,7 +2311,6 @@ msgstr ""
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid ""
 "e.g. Straight Line, Declining Balance. Determines how depreciation is "
 "calculated."
@@ -2380,7 +2345,6 @@ msgstr "kazanç/zarar"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "journal_id"
 msgstr "journal_id"
 
@@ -2393,42 +2357,36 @@ msgstr "zarar"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "method"
 msgstr "yöntem"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "method_number"
 msgstr "method_number"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "method_period"
 msgstr "method_period"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "method_progress_factor"
 msgstr "method_progress_factor"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
-#, fuzzy
 msgid "modify"
 msgstr "değiştir"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "original_value"
 msgstr "original_value"
 
@@ -2441,30 +2399,26 @@ msgstr "duraklat"
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "prorata_computation_type"
 msgstr "prorata_computation_type"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "prorata_date"
 msgstr "prorata_date"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
-#, fuzzy
 msgid "salvage_value"
 msgstr "salvage_value"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
-#, fuzzy
 msgid "sell"
-msgstr "satmak"
+msgstr "sat"
 
 #~ msgid " (copy)"
 #~ msgstr " (kopya)"

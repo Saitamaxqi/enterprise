@@ -4,13 +4,14 @@
 #
 # "Cécile Collart (cco)" <cco@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# "Manon Rondou (ronm)" <ronm@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-08 20:05+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-11-18 17:09+0000\n"
+"Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/ai_app/fr/"
 ">\n"
 "Language: fr\n"
@@ -46,6 +47,9 @@ msgid ""
 "<span class=\"text-muted\" invisible=\"(not is_system_default or "
 "focused_models) and interface_key != 'systray_ai_button'\">All Models</span>"
 msgstr ""
+"<span class=\"text-muted\" invisible=\"(not is_system_default or "
+"focused_models) and interface_key != 'systray_ai_button'\">Tous les "
+"modèles</span>"
 
 #. module: ai_app
 #: model:ir.ui.menu,name:ai_app.ai_menu_root
@@ -126,7 +130,7 @@ msgstr "Règles personnalisées"
 #: model:ir.ui.menu,name:ai_app.menu_ai_composer
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_tree
 msgid "Default Prompts"
-msgstr ""
+msgstr "Prompts par défaut"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_topic_view_form
@@ -142,7 +146,7 @@ msgstr "Clé"
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_form
 msgid "Mail Template extra prompt"
-msgstr ""
+msgstr "Prompt supplémentaire pour le modèle d’e-mail"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_search
@@ -159,7 +163,7 @@ msgstr "Nom"
 #. module: ai_app
 #: model_terms:ir.actions.act_window,help:ai_app.ai_composer_action
 msgid "No Default Prompts found!"
-msgstr ""
+msgstr "Aucun prompt par défaut trouvé !"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_form
@@ -216,7 +220,7 @@ msgstr "Résumez ce que fait ce sujet"
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_view_search
 msgid "System Rules"
-msgstr ""
+msgstr "Règles du système"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_form
@@ -229,6 +233,8 @@ msgid ""
 "Those are used to configure when to call a specific agent, or to add an "
 "extra prompt to your request."
 msgstr ""
+"Servent à configurer quand appeler un agent spécifique ou à ajouter un "
+"prompt supplémentaire à votre demande."
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_topic_view_search
@@ -265,7 +271,7 @@ msgstr "Lorsque les utilisateurs ont besoin de"
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_form
 msgid "Write your prompt..."
-msgstr ""
+msgstr "Écrivez votre prompt..."
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_topic_view_form

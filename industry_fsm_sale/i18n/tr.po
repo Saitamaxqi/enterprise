@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-11-12 15:06+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "industry_fsm_sale/tr/>\n"
 "Language: tr\n"
@@ -77,13 +78,12 @@ msgstr ""
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_view_form_inherit
-#, fuzzy
 msgid ""
 "<span invisible=\"not allow_material\" class=\"text-muted\">Hide prices on "
 "customer report</span>"
 msgstr ""
 "<span invisible=\"not allow_material\" class=\"text-muted\">Müşteri "
-"raporunda fiyatları gizleme</span>"
+"raporunda fiyatları gizle</span>"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_view_form_inherit
@@ -178,7 +178,6 @@ msgstr "Analitik Satırı"
 #. module: industry_fsm_sale
 #. odoo-javascript
 #: code:addons/industry_fsm_sale/static/src/components/product_catalog/kanban_controller.xml:0
-#, fuzzy
 msgid "Back to Task"
 msgstr "Göreve Geri Dön"
 
@@ -298,7 +297,6 @@ msgstr "Tamamı Faturalanan"
 #. module: industry_fsm_sale
 #. odoo-javascript
 #: code:addons/industry_fsm_sale/static/src/js/tours/industry_fsm_sale_tour.js:0
-#, fuzzy
 msgid "Go back to your <b>task</b>."
 msgstr "<b>görevinize geri dönün</b>."
 
@@ -310,7 +308,6 @@ msgstr "Field Service <b>görevinize</b> geri dönün."
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_project__hide_price
-#, fuzzy
 msgid "Hide price on customer report and portal"
 msgstr "Müşteri raporunda ve portalda fiyat gizleme"
 
@@ -570,9 +567,8 @@ msgstr "Hizmet"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_order__task_id
-#, fuzzy
 msgid "Source Task"
-msgstr "Kaynak Görevi"
+msgstr "Kaynak Görev"
 
 #. module: industry_fsm_sale
 #: model:ir.model,name:industry_fsm_sale.model_project_task
@@ -677,7 +673,6 @@ msgstr "<b>Ürün listenizde</b> gezinmek için içerik haritalarını kullanın
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,help:industry_fsm_sale.field_project_task__display_name
-#, fuzzy
 msgid ""
 "Use these keywords in the title to set new tasks:\n"
 "\n"
@@ -698,7 +693,7 @@ msgstr ""
 "        kullanıcı Görevi bir kullanıcıya atayın\n"
 "        ! Görevi orta öncelikli olarak ayarlayın\n"
 "        !! Görevi yüksek öncelikli olarak ayarlayın\n"
-"        !!! Görevi acil bir öncelik olarak belirleyin\n"
+"        !!! Görevi acil öncelikli olarak belirleyin\n"
 "\n"
 "        Doğru formatı ve sırayı kullandığınızdan emin olun, örneğin "
 "Yapılandırma ekranını iyileştirin 5h #özellik #v16 @Mitchell !"

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-10-08 02:41+0000\n"
+"PO-Revision-Date: 2025-11-20 22:52+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/spreadsheet_dashboard_purchase_stock/es_419/>\n"
@@ -26,7 +26,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "% On time deliveries by vendor"
-msgstr "% De entregas a tiempo por proveedor"
+msgstr "% de entregas a tiempo por proveedor"
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
@@ -404,7 +404,7 @@ msgstr "Prueba por lotes de productos"
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "Top 10 late receipts"
-msgstr "Las 10 recepciones tardías principales"
+msgstr "Las 10 recepciones más tardías"
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
@@ -418,21 +418,21 @@ msgstr "Órdenes de compra principales por valor"
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "Top purchased products"
-msgstr "Productos comprados principales"
+msgstr "Productos más comprados"
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "Top vendors by amount"
-msgstr "Proveedores principales por cantidad"
+msgstr "Mejores proveedores por cantidad"
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "Top vendors by lead time in days"
-msgstr "Proveedores principales por plazo de entrega en días"
+msgstr "Mejores proveedores por plazo de entrega en días"
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript

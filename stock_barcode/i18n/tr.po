@@ -20,13 +20,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-12 13:03+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "stock_barcode/tr/>\n"
 "Language: tr\n"
@@ -66,7 +67,6 @@ msgstr ""
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.scrap_product_selector
-#, fuzzy
 msgid ""
 "<i class=\"fa fa-fw fa-lg fa-map-marker me-3\" title=\"Source Location\"/>"
 msgstr ""
@@ -79,13 +79,11 @@ msgstr "<i class=\"fa fa-fw fa-lg fa-tags me-3\" title=\"Product\"/>"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_quant_barcode_kanban_2
-#, fuzzy
 msgid "<i class=\"fa fa-lg fa-archive me-2\" title=\"Package\"/>"
 msgstr "<i class=\"fa fa-lg fa-archive me-2\" title=\"Package\"/>"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_quant_barcode_kanban_2
-#, fuzzy
 msgid "<i class=\"fa fa-lg fa-user-o me-2\" title=\"Owner\"/>"
 msgstr "<i class=\"fa fa-lg fa-user-o me-2\" title=\"Owner\"/>"
 
@@ -119,13 +117,11 @@ msgstr "<span>Miktarları Tamamla</span>"
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/controllers/stock_barcode.py:0
-#, fuzzy
 msgid "A GTIN can only contains digits"
 msgstr "Bir GTIN yalnızca rakamlar içerebilir"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__restrict_scan_product
-#, fuzzy
 msgid "A line's product must be scanned before the line can be edited"
 msgstr "Hattın düzenlenebilmesi için önce hattın ürününün taranması gerekir"
 
@@ -147,7 +143,6 @@ msgstr "Ürün Ekle"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_barcode_view_picking_type_form
-#, fuzzy
 msgid "Add colors to operation cards to help users differentiate them."
 msgstr ""
 "Kullanıcıların ayırt etmesine yardımcı olmak için işlem kartlarına renkler "
@@ -168,7 +163,6 @@ msgstr "Her üründen sonra"
 #. module: stock_barcode
 #: model:ir.model.fields.selection,name:stock_barcode.selection__stock_picking_type__restrict_put_in_pack__optional
 #: model:ir.model.fields.selection,name:stock_barcode.selection__stock_picking_type__restrict_scan_dest_location__optional
-#, fuzzy
 msgid "After group of products"
 msgstr "Ürün grubundan sonra"
 
@@ -195,7 +189,6 @@ msgstr "Tam toplama onayına izin ver"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__barcode_validation_full
-#, fuzzy
 msgid ""
 "Allow validating a picking even if nothing has been scanned yet, i.e. do an "
 "immediate transfer"
@@ -206,7 +199,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid ""
 "An error occured during parsing of element_string: AI code %(ai_code)s is "
 "missing for scheme %(scheme_name)s"
@@ -217,7 +209,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid ""
 "An error occured with field '%(field_name)s': the corresponding AI '%"
 "(ai_code)s' was not found in the element_string"
@@ -228,7 +219,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid ""
 "An error occured: value of company_prefix_length (%(company_prefix_length)s) "
 "must be between 6 and 12 inclusive."
@@ -239,14 +229,12 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid "An error occurred with field '%(field_name)s': %(error_message)s"
 msgstr "'%(field_name)s' alanında bir hata oluştu: %(error_message)s"
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid ""
 "An error occurred with field 'partition': no partition value can be found "
 "for the given company_prefix_length"
@@ -257,7 +245,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid "An error occurred with method '%(method_name)s': %(error_message)s"
 msgstr "'%(method_name)s' yönteminde bir hata oluştu: %(error_message)s"
 
@@ -314,7 +301,6 @@ msgstr "Barkod Uygulaması"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_location__barcode_img
-#, fuzzy
 msgid "Barcode Img"
 msgstr "Barkod Img"
 
@@ -359,7 +345,6 @@ msgstr "Barkodlar mevcut değil."
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid ""
 "Binary value %(word)s cannot be represented with %(word_size_write)s bits"
 msgstr "İkili değer %(word)s %(word_size_write)s bitleri ile gösterilemez"
@@ -401,7 +386,6 @@ msgstr "Bu işlem iptal edilsin mi?"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_barcode_view_picking_type_form
-#, fuzzy
 msgid "Card Color"
 msgstr "Kart Rengi"
 
@@ -437,7 +421,6 @@ msgstr "Onayla"
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/confirm_quant_dialog.xml:0
-#, fuzzy
 msgid "Confirm Inventory Adjustment"
 msgstr "Envanter Ayarlamasını Onayla"
 
@@ -455,7 +438,6 @@ msgstr "Tüm Konumları Say"
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/main_menu/main_menu.xml:0
-#, fuzzy
 msgid "Count Inventory"
 msgstr "Envanter Sayımı"
 
@@ -466,7 +448,6 @@ msgstr "Sayılan Miktar"
 
 #. module: stock_barcode
 #: model:ir.model,website_form_label:stock_barcode.model_res_partner
-#, fuzzy
 msgid "Create a Customer"
 msgstr "Müşteri Oluşturma"
 
@@ -508,7 +489,6 @@ msgstr "Demo Verileri Aktif"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_move_line_product_selector
-#, fuzzy
 msgid "Destination Container Package"
 msgstr "Varış Yeri Konteyner Paketi"
 
@@ -571,7 +551,6 @@ msgstr "İsim Göster"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__show_reserved_sns
-#, fuzzy
 msgid ""
 "Display reserved lots/serial numbers. When not active, the picker can pick "
 "lots/serials as they want."
@@ -592,7 +571,6 @@ msgstr ""
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__restrict_put_in_pack
-#, fuzzy
 msgid ""
 "Does the picker have to put the scanned products in a package? If yes, when?"
 msgstr ""
@@ -601,7 +579,6 @@ msgstr ""
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__restrict_scan_dest_location
-#, fuzzy
 msgid "Does the picker have to scan the destination? If yes, when?"
 msgstr "Toplayıcının hedefi taraması gerekiyor mu? Evet ise, ne zaman?"
 
@@ -642,7 +619,6 @@ msgstr "Sahte"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__electronic_product_code
-#, fuzzy
 msgid "Electronic Product Code"
 msgstr "Elektronik Ürün Kodu"
 
@@ -654,7 +630,6 @@ msgstr "Boş Hareket Sayısı"
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_move_line.py:0
-#, fuzzy
 msgid ""
 "Error: The product barcode is not a valid Global Trade Item Number, we can't "
 "generate an Electronic Product Code for it."
@@ -665,7 +640,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_move_line.py:0
-#, fuzzy
 msgid ""
 "Error: We can't generate an Electronic Product Code for a product without a "
 "barcode."
@@ -675,7 +649,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_move_line.py:0
-#, fuzzy
 msgid ""
 "Error: We can't generate an Electronic Product Code for a tracked product "
 "without a tracking number."
@@ -686,7 +659,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid ""
 "Field '%(field_name)s' is a reserved field, you can't manually update its "
 "value with this method"
@@ -697,7 +669,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid "Field '%(field_name)s' not found"
 msgstr "Alan '%(field_name)s' bulunamadı"
 
@@ -720,7 +691,6 @@ msgstr "Aşağıdaki bekleyen siparişler oluşturuldu:"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__barcode_allow_extra_product
-#, fuzzy
 msgid "For planned transfers, allow adding non-reserved products"
 msgstr ""
 "Planlı transferler için, rezerve edilmemiş ürünlerin eklenmesine izin verin"
@@ -747,7 +717,6 @@ msgstr "Kaynak Konum taraması zorlansın mı?"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_picking_type__barcode_validation_after_dest_location
-#, fuzzy
 msgid "Force a destination for all products"
 msgstr "Tüm ürünler için bir varış noktası zorlayın"
 
@@ -847,28 +816,24 @@ msgstr "Uluslararası Makale numarası ürün tanımlama için kullanılır."
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid "Invalid pad_char '%(pad_char)s'. Use '0' or '1'."
 msgstr "Geçersiz pad_char '%(pad_char)s'. '0' veya '1' kullanın."
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid "Invalid pad_side '%(pad_side)s'. Use 'left' or 'right'."
 msgstr "Geçersiz pad_side '%(pad_side)s'. 'left' veya 'right' kullanın."
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid "Invalid word_pad_char '%(word_pad_char)s'. Use '0' or '1'."
 msgstr "Geçersiz word_pad_char '%(word_pad_char)s'. '0' veya '1' kullanın."
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid "Invalid word_pad_side '%(word_pad_side)s'. Use 'left' or 'right'."
 msgstr ""
 "Geçersiz word_pad_side '%(word_pad_side)s'. 'left' veya 'right' kullanın."
@@ -908,13 +873,11 @@ msgstr "Ayrıl"
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid "Length must be a positive integer"
 msgstr "Uzunluk pozitif bir tamsayı olmalıdır"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_product_uom
-#, fuzzy
 msgid "Link between products and their UoMs"
 msgstr "Ürünler ve UoM'leri arasındaki bağlantı"
 
@@ -1032,56 +995,48 @@ msgstr "%(barcode)s barkoduna karşılık gelen toplama veya ürün mevcut deği
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
-#, fuzzy
 msgid "No product found for barcode %s"
 msgstr "Barkod için ürün bulunamadı '%s'"
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
-#, fuzzy
 msgid "No product or lot found for barcode %s"
 msgstr "Barkod için ürün veya lot bulunamadı %s"
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
-#, fuzzy
 msgid "No product or package found for barcode %s"
 msgstr "Barkod için ürün veya paket bulunamadı %s"
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
-#, fuzzy
 msgid "No product or packaging found for barcode %s"
 msgstr "Barkod için ürün veya ambalaj bulunamadı %s"
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
-#, fuzzy
 msgid "No product, lot, or package found for barcode %s"
 msgstr "%s barkodu için ürün, parti veya paket bulunamadı"
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
-#, fuzzy
 msgid "No product, lot, or packaging found for barcode %s"
 msgstr "Barkod için ürün, parti veya ambalaj bulunamadı %s"
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
-#, fuzzy
 msgid "No product, lot, packaging, or package found for barcode %s"
 msgstr "Barkod için ürün, lot, ambalaj veya paket bulunamadı %s"
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
-#, fuzzy
 msgid "No product, package, or packaging found for barcode %s"
 msgstr "Barkod için ürün, paket veya ambalaj bulunamadı %s"
 
@@ -1105,7 +1060,6 @@ msgstr "Beklenen tarama değil"
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/js/stock_barcode_sml_form.js:0
-#, fuzzy
 msgid ""
 "Oops! It seems that this product is not located in %(location)s.\n"
 "Do you confirm you picked from there?"
@@ -1141,7 +1095,6 @@ msgstr "Seçenekler"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__outermost_result_package_id
-#, fuzzy
 msgid "Outermost Result Package"
 msgstr "En Dıştaki Sonuç Paketi"
 
@@ -1171,20 +1124,17 @@ msgstr "Ambalajlama Miktarı"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__packaging_uom_id
-#, fuzzy
 msgid "Packaging Unit of Measure"
 msgstr "Ambalaj Ölçü Birimi"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_move_line__packaging_uom_id
-#, fuzzy
 msgid "Packaging unit from sale or purchase orders"
 msgstr "Satış veya satın alma siparişlerinden paketleme birimi"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/line.xml:0
-#, fuzzy
 msgid "Packaging:"
 msgstr "Paketleme"
 
@@ -1206,7 +1156,6 @@ msgstr "Kısmi Hareket Sayısı"
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid ""
 "Partition table %(table_name)s not found, available tables are : %"
 "(table_list)s)"
@@ -1287,7 +1236,6 @@ msgstr "Toplama İşlemleri Yazdır"
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/main_menu/main_menu.js:0
-#, fuzzy
 msgid ""
 "Print the %(sheet_s)sdemo data sheet%(sheet_e)s to test, or %"
 "(ops_s)sbarcodes%(ops_e)s for operations."
@@ -1379,13 +1327,11 @@ msgstr "Yapılan Miktar"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_move_line_product_selector
-#, fuzzy
 msgid "Quantity in Stock"
 msgstr "Stoktaki miktar"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_move_line__packaging_uom_qty
-#, fuzzy
 msgid "Quantity in the packaging unit"
 msgstr "Ambalaj birimindeki miktar"
 
@@ -1426,7 +1372,6 @@ msgstr "İadeler"
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/kanban/stock_barcode_kanban_renderer.js:0
-#, fuzzy
 msgid ""
 "Scan a %(bold_s)s transfer%(bold_e)s or a %(bold_s)s product%(bold_e)s to "
 "filter your records"
@@ -1437,7 +1382,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/kanban/stock_barcode_kanban_renderer.js:0
-#, fuzzy
 msgid ""
 "Scan a %(bold_s)s transfer%(bold_e)s, a %(bold_s)s product%(bold_e)s, a %"
 "(bold_s)s lot%(bold_e)s, a %(bold_s)s packaging%(bold_e)s, or a %(bold_s)s "
@@ -1450,7 +1394,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/kanban/stock_barcode_kanban_renderer.js:0
-#, fuzzy
 msgid ""
 "Scan a %(bold_s)s transfer%(bold_e)s, a %(bold_s)s product%(bold_e)s, a %"
 "(bold_s)s lot%(bold_e)s, or a %(bold_s)s package%(bold_e)s to filter your "
@@ -1463,7 +1406,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/kanban/stock_barcode_kanban_renderer.js:0
-#, fuzzy
 msgid ""
 "Scan a %(bold_s)s transfer%(bold_e)s, a %(bold_s)s product%(bold_e)s, a %"
 "(bold_s)s lot%(bold_e)s, or a %(bold_s)s packaging%(bold_e)s to filter your "
@@ -1476,7 +1418,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/kanban/stock_barcode_kanban_renderer.js:0
-#, fuzzy
 msgid ""
 "Scan a %(bold_s)s transfer%(bold_e)s, a %(bold_s)s product%(bold_e)s, a %"
 "(bold_s)s packaging%(bold_e)s, or a %(bold_s)s package%(bold_e)s to filter "
@@ -1489,7 +1430,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/kanban/stock_barcode_kanban_renderer.js:0
-#, fuzzy
 msgid ""
 "Scan a %(bold_s)s transfer%(bold_e)s, a %(bold_s)s product%(bold_e)s, or a %"
 "(bold_s)s lot%(bold_e)s to filter your records"
@@ -1500,7 +1440,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/kanban/stock_barcode_kanban_renderer.js:0
-#, fuzzy
 msgid ""
 "Scan a %(bold_s)s transfer%(bold_e)s, a %(bold_s)s product%(bold_e)s, or a %"
 "(bold_s)s package%(bold_e)s to filter your records"
@@ -1511,7 +1450,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/kanban/stock_barcode_kanban_renderer.js:0
-#, fuzzy
 msgid ""
 "Scan a %(bold_s)s transfer%(bold_e)s, a %(bold_s)s product%(bold_e)s, or a %"
 "(bold_s)s packaging%(bold_e)s to filter your records"
@@ -1522,21 +1460,18 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/main_menu/main_menu.js:0
-#, fuzzy
 msgid "Scan a %(bold_s)slocation%(bold_e)s to initiate a transfer"
 msgstr "Aktarımı başlatmak için bir %(bold_s)skonumunu%(bold_e)s tarayın"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/main_menu/main_menu.js:0
-#, fuzzy
 msgid "Scan a %(bold_s)spackage%(bold_e)s to find a transfer"
 msgstr "Bir transfer bulmak için %(bold_s)spaketini%(bold_e)s tarayın"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/main_menu/main_menu.js:0
-#, fuzzy
 msgid "Scan a %(bold_s)spicking%(bold_e)s to open it"
 msgstr ""
 "Toplama açmak için %(bold_s)sadresini tarayın ve%(bold_e)s adresini seçin"
@@ -1544,7 +1479,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/main_menu/main_menu.js:0
-#, fuzzy
 msgid ""
 "Scan a %(bold_s)sproduct%(bold_e)s or its %(bold_s)spackaging%(bold_e)s to "
 "locate it"
@@ -1555,7 +1489,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/main_menu/main_menu.js:0
-#, fuzzy
 msgid ""
 "Scan a %(bold_s)stracking number%(bold_e)s or a %(bold_s)spackage%(bold_e)s "
 "to find a transfer"
@@ -1566,7 +1499,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/main_menu/main_menu.js:0
-#, fuzzy
 msgid "Scan a %(bold_s)stracking number%(bold_e)s to find a transfer"
 msgstr "Bir transferi bulmak için %(bold_s)stakip numarasını%(bold_e)s tarayın"
 
@@ -1634,7 +1566,6 @@ msgstr "%s konumundan bir ürün tarayın"
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
-#, fuzzy
 msgid "Scan a product or a lot to filter the transfers."
 msgstr "Transferleri filtrelemek için bir ürünü veya partiyi tarayın."
 
@@ -1647,14 +1578,12 @@ msgstr "Bir ürün veya bir paket tarayın"
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
-#, fuzzy
 msgid "Scan a product or a package to filter the transfers."
 msgstr "Transferleri filtrelemek için bir ürünü veya paketi tarayın."
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
-#, fuzzy
 msgid "Scan a product or a packaging to filter the transfers."
 msgstr "Aktarımları filtrelemek için bir ürünü veya ambalajı tarayın."
 
@@ -1679,14 +1608,12 @@ msgstr "Bir ürün ve ardından hedef konumu tarayın"
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
-#, fuzzy
 msgid "Scan a product to filter the transfers."
 msgstr "Aktarımları filtrelemek için bir ürünü tarayın."
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
-#, fuzzy
 msgid ""
 "Scan a product, a lot, a packaging, or a package to filter the transfers."
 msgstr ""
@@ -1696,14 +1623,12 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
-#, fuzzy
 msgid "Scan a product, a lot, or a package to filter the transfers."
 msgstr "Transferleri filtrelemek için bir ürünü, partiyi veya paketi tarayın."
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
-#, fuzzy
 msgid "Scan a product, a lot, or a packaging to filter the transfers."
 msgstr "Aktarımları filtrelemek için bir ürünü, partiyi veya ambalajı tarayın."
 
@@ -1722,7 +1647,6 @@ msgstr "Bir ürün, bir paket veya hedef konumu tarayın."
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
-#, fuzzy
 msgid "Scan a product, a package, or a packaging to filter the transfers."
 msgstr "Aktarımları filtrelemek için bir ürünü, paketi veya ambalajı tarayın."
 
@@ -1753,7 +1677,6 @@ msgstr "Bir seri numarası ve ardından hedef konumu tarayın"
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/main_menu/main_menu.js:0
-#, fuzzy
 msgid "Scan an %(bold_s)soperation type%(bold_e)s to start it"
 msgstr "Başlatmak için bir %(bold_s)sişlem türünü%(bold_e)s tarayın"
 
@@ -1853,7 +1776,6 @@ msgstr "Bir Ürün Seç"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_move_line_product_selector
-#, fuzzy
 msgid "Select where else to pick the product from"
 msgstr "Ürünü başka nereden toplayacağınızı seçin"
 
@@ -1926,7 +1848,6 @@ msgstr "Stok Paket Türü"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__is_barcode_picking_type
-#, fuzzy
 msgid ""
 "Technical field indicating if type should be used in barcode app and used to "
 "control visibility in the related UI."
@@ -1936,7 +1857,6 @@ msgstr ""
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__show_barcode_validation
-#, fuzzy
 msgid ""
 "Technical field used to compute whether the \"Final Validation\" group "
 "should be displayed, to support combined groups/invisible complexity."
@@ -1948,7 +1868,6 @@ msgstr ""
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid "The encoding '%(encoding_name)s' is not supported."
 msgstr "'%(encoding_name)s' kodlaması desteklenmemektedir."
 
@@ -2009,7 +1928,6 @@ msgstr "Bu sayfada yazdırılacak bir şey yok."
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
-#, fuzzy
 msgid ""
 "This package contains extra products and extra products are not allowed on "
 "this operation."
@@ -2128,14 +2046,12 @@ msgstr "Doğrula"
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid "Value %(value)s cannot be represented with %(length)s bits"
 msgstr "%(value)s değeri %(length)s bitleri ile gösterilemez"
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid "Value '%(value)s' must be an integer"
 msgstr "Değer '%(value)s' bir tamsayı olmalıdır"
 
@@ -2147,7 +2063,6 @@ msgstr "Son taranan barkodun değeri"
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid "Value to encode contains invalid character(s): %(invalid_chars)s"
 msgstr "Kodlanacak değer geçersiz karakter(ler) içeriyor: %(invalid_chars)s"
 
@@ -2160,7 +2075,6 @@ msgstr "Görüntüleyici"
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/confirm_quant_dialog.xml:0
-#, fuzzy
 msgid "Wait a Review"
 msgstr "Bir İnceleme Bekleyin"
 
@@ -2172,7 +2086,6 @@ msgstr "Depo"
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
-#, fuzzy
 msgid "Word size must be a positive integer"
 msgstr "Kelime boyutu pozitif bir tamsayı olmalıdır"
 

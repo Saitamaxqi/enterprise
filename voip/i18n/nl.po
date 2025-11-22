@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-14 18:41+0000\n"
-"PO-Revision-Date: 2025-11-15 12:51+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"POT-Creation-Date: 2025-11-21 18:40+0000\n"
+"PO-Revision-Date: 2025-11-21 14:30+0000\n"
+"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/voip/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -344,7 +344,7 @@ msgstr "Wordt gebeld"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/softphone.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Calling…"
 msgstr "Aan het bellen…"
 
@@ -852,7 +852,6 @@ msgstr "Afbeelding"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "In call"
 msgstr "In gesprek"
@@ -865,7 +864,6 @@ msgstr "Inkomend"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/softphone.js:0
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Incoming call"
 msgstr "Inkomende oproep"
@@ -881,6 +879,12 @@ msgstr "Inkomende oproep (%(duration)s)"
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 msgid "Incoming calls will be muted"
 msgstr "Binnenkomende oproepen worden gedempt"
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/softphone.js:0
+msgid "Incoming call…"
+msgstr ""
 
 #. module: voip
 #. odoo-javascript
@@ -918,6 +922,8 @@ msgid ""
 "have your administrator verify that the media type is correctly set to SRTP-"
 "DTLS."
 msgstr ""
+"Het lijkt erop dat de server niet het juiste mediatype gebruikt. Laat je "
+"beheerder controleren of het mediatype correct is ingesteld op SRTP-DTLS."
 
 #. module: voip
 #. odoo-javascript
@@ -1119,7 +1125,7 @@ msgstr "Odoo Telefoon"
 #. module: voip
 #: model:res.groups,name:voip.group_voip_officer
 msgid "Officer"
-msgstr "Functionaris"
+msgstr "Agent"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
@@ -1175,6 +1181,12 @@ msgstr "Uitgaande oproep"
 #: code:addons/voip/static/src/softphone/history.js:0
 msgid "Outgoing call (%(duration)s)"
 msgstr "Uitgaande oproep (%(duration)s)"
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/softphone.js:0
+msgid "Outgoing call…"
+msgstr ""
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__pbx_ip
@@ -1525,6 +1537,8 @@ msgid ""
 "The DTLS fingerprint and/or setup is missing from the SDP. Please have your "
 "administrator verify that the PBX is configured to use SRTP-DTLS."
 msgstr ""
+"De DTLS-vingerafdruk en/of -instelling ontbreekt in het SDP. Laat je "
+"beheerder controleren of de PBX is geconfigureerd om SRTP-DTLS te gebruiken."
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_provider__pbx_ip

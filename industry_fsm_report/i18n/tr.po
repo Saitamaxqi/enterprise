@@ -13,13 +13,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-11-12 14:56+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "industry_fsm_report/tr/>\n"
 "Language: tr\n"
@@ -346,7 +347,6 @@ msgstr "Otomatik olarak bir <b>imza</b> oluşturarak zamandan tasarruf edin."
 #. module: industry_fsm_report
 #: model_terms:ir.actions.act_window,help:industry_fsm_report.project_task_action_fsm_planning_groupby_worksheet
 #: model_terms:ir.actions.act_window,help:industry_fsm_report.project_task_action_fsm_planning_groupby_worksheet2
-#, fuzzy
 msgid "Schedule your tasks and assign them to your technicians."
 msgstr "Görevlerinizi planlayın ve teknisyenlerinize atayın."
 
@@ -414,7 +414,6 @@ msgstr "Görev Analizi"
 #. module: industry_fsm_report
 #: model:ir.model.fields,field_description:industry_fsm_report.fsm_template_field7
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.report_custom_x_project_task_worksheet_template_4
-#, fuzzy
 msgid "Technician Signature"
 msgstr "Teknisyen İmzası"
 
@@ -426,7 +425,6 @@ msgstr "<b>Görevinize</b> geri dönmek için ekmek kırıntılarını kullanın
 
 #. module: industry_fsm_report
 #: model:ir.model.fields,help:industry_fsm_report.field_project_task__display_name
-#, fuzzy
 msgid ""
 "Use these keywords in the title to set new tasks:\n"
 "\n"
@@ -444,7 +442,7 @@ msgstr ""
 "\n"
 "        30h Göreve 30 saat ayırın\n"
 "        #tags Görevdeki etiketleri ayarlayın\n"
-"        kullanıcı Görevi bir kullanıcıya atayın\n"
+"        @user Görevi bir kullanıcıya atayın\n"
 "        ! Görevi orta öncelikli olarak ayarlayın\n"
 "        !! Görevi yüksek öncelikli olarak ayarlayın\n"
 "        !!! Görevi acil bir öncelik olarak belirleyin\n"

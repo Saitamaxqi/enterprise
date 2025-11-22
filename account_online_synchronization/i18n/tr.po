@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-12 15:01+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-20 13:21+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "account_online_synchronization/tr/>\n"
 "Language: tr\n"
@@ -59,7 +60,6 @@ msgstr "<i class=\"oi oi-arrow-right me-2\"/> Şimdi Gönder"
 
 #. module: account_online_synchronization
 #: model:mail.template,body_html:account_online_synchronization.email_template_sync_reminder
-#, fuzzy
 msgid ""
 "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
 "16px; background-color: #FFFFFF; font-family:Verdana, Arial,sans-serif; "
@@ -369,13 +369,11 @@ msgstr "Otomatik senkronizasyon"
 
 #. module: account_online_synchronization
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_online_account__available_balance
-#, fuzzy
 msgid "Available Balance"
 msgstr "Mevcut Bakiye"
 
 #. module: account_online_synchronization
 #: model:ir.model.fields,help:account_online_synchronization.field_account_online_account__available_balance
-#, fuzzy
 msgid ""
 "Available balance of the account sent by the third party provider. This is "
 "typically the balance plus/minus pending transactions."
@@ -386,7 +384,6 @@ msgstr ""
 #. module: account_online_synchronization
 #. odoo-javascript
 #: code:addons/account_online_synchronization/static/src/components/bank_reconciliation/statement_summary/statement_summary.xml:0
-#, fuzzy
 msgid "Available balance with pending"
 msgstr "Beklemede olan mevcut bakiye"
 
@@ -445,7 +442,6 @@ msgstr "İşlem almak istediğiniz tarih ve yevmiyeyi seçin"
 
 #. module: account_online_synchronization
 #: model_terms:ir.ui.view,arch_db:account_online_synchronization.account_duplicate_transaction_wizard_view_form
-#, fuzzy
 msgid "Choose a date from which you want to check the transactions."
 msgstr "İşlemleri kontrol etmek istediğiniz bir tarih seçin."
 
@@ -540,7 +536,6 @@ msgstr "Kontak"
 
 #. module: account_online_synchronization
 #: model:ir.model,website_form_label:account_online_synchronization.model_res_partner
-#, fuzzy
 msgid "Create a Customer"
 msgstr "Müşteri Oluşturma"
 
@@ -865,7 +860,6 @@ msgstr "Son Senkronizasyon"
 
 #. module: account_online_synchronization
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_online_account__last_sync
-#, fuzzy
 msgid "Last Transaction Synchronized on"
 msgstr "Senkronize Edilen Son İşlem"
 
@@ -966,7 +960,6 @@ msgstr "Sonraki senkronizasyon"
 #. module: account_online_synchronization
 #. odoo-python
 #: code:addons/account_online_synchronization/models/account_journal.py:0
-#, fuzzy
 msgid "No Pending Transactions"
 msgstr "Bekleyen İşlem Yok"
 
@@ -1045,7 +1038,6 @@ msgstr "Çevrim İçi İşlem Tanımlayıcısı"
 #. module: account_online_synchronization
 #. odoo-python
 #: code:addons/account_online_synchronization/models/account_bank_statement.py:0
-#, fuzzy
 msgid "Opening Statement: First Synchronization"
 msgstr "Açılış Konuşması: İlk Senkronizasyon"
 
@@ -1067,7 +1059,6 @@ msgstr "Beklemede"
 #. module: account_online_synchronization
 #. odoo-python
 #: code:addons/account_online_synchronization/models/account_journal.py:0
-#, fuzzy
 msgid "Pending Transactions"
 msgstr "Bekleyen İşlemler"
 
@@ -1111,13 +1102,11 @@ msgstr "İşleniyor"
 
 #. module: account_online_synchronization
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_duplicate_transaction_wizard__provider_duplicate_ids
-#, fuzzy
 msgid "Provider Duplicate"
 msgstr "Sağlayıcı Yinelenen"
 
 #. module: account_online_synchronization
 #: model_terms:ir.ui.view,arch_db:account_online_synchronization.account_duplicate_transaction_wizard_view_form
-#, fuzzy
 msgid "Provider Duplicates"
 msgstr "Sağlayıcı Kopyaları"
 
@@ -1225,7 +1214,6 @@ msgstr "Banka Hesabı Seçin"
 #. module: account_online_synchronization
 #. odoo-python
 #: code:addons/account_online_synchronization/models/account_online.py:0
-#, fuzzy
 msgid "Select a Credit Card Account"
 msgstr "Bir Alacak Kartı Hesabı Seçin"
 
@@ -1264,7 +1252,6 @@ msgstr "Banka Hesap Ayarları"
 #. module: account_online_synchronization
 #. odoo-python
 #: code:addons/account_online_synchronization/models/account_online.py:0
-#, fuzzy
 msgid "Setup Credit Card Account"
 msgstr "Kredi Alacak Hesabı Kurun"
 
@@ -1329,14 +1316,12 @@ msgstr ""
 #. module: account_online_synchronization
 #. odoo-javascript
 #: code:addons/account_online_synchronization/static/src/components/transient_bank_statement_line_list_view/transient_bank_statement_line_list_view.xml:0
-#, fuzzy
 msgid "There are cancelled"
 msgstr "İptal edilenler var"
 
 #. module: account_online_synchronization
 #. odoo-python
 #: code:addons/account_online_synchronization/models/account_journal.py:0
-#, fuzzy
 msgid "There are no pending transactions for this journal."
 msgstr "Bu yevmiye defteri için bekleyen işlem yoktur."
 
@@ -1562,14 +1547,12 @@ msgstr "işlemler getirildi"
 #. module: account_online_synchronization
 #. odoo-javascript
 #: code:addons/account_online_synchronization/static/src/components/transient_bank_statement_line_list_view/transient_bank_statement_line_list_view.xml:0
-#, fuzzy
 msgid ""
 "within this period that were not created using the online synchronization."
-msgstr "Bu süre içinde çevrimiçi senkronizasyon kullanılarak oluşturulmamış."
+msgstr "bu süre içinde çevrimiçi senkronizasyon kullanılarak oluşturulmamış."
 
 #. module: account_online_synchronization
 #. odoo-javascript
 #: code:addons/account_online_synchronization/static/src/components/transient_bank_statement_line_list_view/transient_bank_statement_line_list_view.xml:0
-#, fuzzy
 msgid "within this period."
 msgstr "bu süre içinde."

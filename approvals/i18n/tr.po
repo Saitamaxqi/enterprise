@@ -21,13 +21,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-12 14:55+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "approvals/tr/>\n"
 "Language: tr\n"
@@ -65,19 +66,16 @@ msgstr "1200"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
-#, fuzzy
 msgid "<i class=\"fa fa-check text-success me-1\"/>Approve"
 msgstr "<i class=\"fa fa-check text-success me-1\"/>Onaylamak"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
-#, fuzzy
 msgid "<i class=\"fa fa-times text-danger me-1\"/>Refuse"
 msgstr "<i class=\"fa fa-times text-danger me-1\"/>Çöp"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
-#, fuzzy
 msgid "<span class=\"col-2 fw-bold\">Description:</span>"
 msgstr "<span class=\"col-2 fw-bold\">Açıklama:</span>"
 
@@ -183,7 +181,6 @@ msgstr "İstekte belirtilmesi gereken ek bir başvuru."
 
 #. module: approvals
 #: model:ir.model.constraint,message:approvals.constraint_approval_approver_unique_request_user
-#, fuzzy
 msgid "An approver with the same user already exists for this request."
 msgstr "Bu talep için aynı kullanıcıya sahip bir onaylayıcı zaten mevcut."
 
@@ -201,7 +198,6 @@ msgstr "Onay"
 #. module: approvals
 #: model:ir.actions.act_window,name:approvals.approval_category_action
 #: model:ir.ui.menu,name:approvals.approvals_category_menu_config
-#, fuzzy
 msgid "Approval Categories"
 msgstr "Onay Kategorileri"
 
@@ -214,13 +210,11 @@ msgstr "Onay Kategorisi"
 
 #. module: approvals
 #: model:ir.model,name:approvals.model_approval_category_approver
-#, fuzzy
 msgid "Approval Category Approver"
 msgstr "Onay Kategorisi Onaylayan"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__approval_properties_definition
-#, fuzzy
 msgid "Approval Properties"
 msgstr "Onay Özellikleri"
 
@@ -626,7 +620,6 @@ msgstr "Yazı tipi harika simgesi ör. fa-görevler"
 
 #. module: approvals
 #: model:ir.actions.server,name:approvals.model_approval_request_approve_admin
-#, fuzzy
 msgid "Force Approval"
 msgstr "Kuvvet Onayı"
 
@@ -1322,7 +1315,6 @@ msgstr "Test Referans"
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
-#, fuzzy
 msgid "The request %(request_name)s for %(request_owner)s has been approved"
 msgstr "%(request_owner)s için %(request_name)s talebi onaylanmıştır"
 
@@ -1336,7 +1328,6 @@ msgstr ""
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
-#, fuzzy
 msgid ""
 "The request created on %(create_date)s by %(request_owner)s has been "
 "approved."
@@ -1356,7 +1347,6 @@ msgstr ""
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
-#, fuzzy
 msgid "The request has been approved by an Approval Officer"
 msgstr "Talep bir Onay Görevlisi tarafından onaylanmıştır"
 
@@ -1477,14 +1467,12 @@ msgstr "Geri Çek"
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
-#, fuzzy
 msgid "You are not allowed to approved or refused your own approval."
 msgstr "Kendi onayınızı onaylamanıza veya reddetmenize izin verilmez."
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
-#, fuzzy
 msgid "You can't delete an approved request. Archive it instead."
 msgstr "Onaylanmış bir talebi silemezsiniz. Bunun yerine arşivleyin."
 
@@ -1507,7 +1495,6 @@ msgstr ""
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
-#, fuzzy
 msgid "You do not have the rights to execute that action."
 msgstr "Bu eylemi gerçekleştirme hakkına sahip değilsiniz."
 
@@ -1526,7 +1513,6 @@ msgstr "En az bir belge eklemeniz gerekir."
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
-#, fuzzy
 msgid "You must cancel and then back to draft the approval first."
 msgstr ""
 "Önce iptal etmeli ve ardından onay taslağını hazırlamak için geri "

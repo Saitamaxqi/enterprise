@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-11-12 15:02+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "hr_appraisal_survey/tr/>\n"
 "Language: tr\n"
@@ -36,7 +37,6 @@ msgstr "360 Derece Geri Bildirim"
 
 #. module: hr_appraisal_survey
 #: model:ir.model.fields,field_description:hr_appraisal_survey.field_hr_appraisal_template__survey_template_ids
-#, fuzzy
 msgid "360 Feedback Survey"
 msgstr "360 Geri Bildirim Anketi"
 
@@ -47,7 +47,6 @@ msgstr "<i class=\"oi oi-fw oi-arrow-right\"/>Değerlendirmeye Git"
 
 #. module: hr_appraisal_survey
 #: model:mail.template,body_html:hr_appraisal_survey.mail_template_appraisal_ask_feedback
-#, fuzzy
 msgid ""
 "<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
 "                    Dear <t t-out=\"object.partner_id.name or "
@@ -206,7 +205,6 @@ msgstr "Hatalarını kabul eder"
 #. module: hr_appraisal_survey
 #: model:ir.model.fields,field_description:hr_appraisal_survey.field_appraisal_ask_feedback__allowed_survey_template_ids
 #: model:ir.model.fields,field_description:hr_appraisal_survey.field_appraisal_select_survey__allowed_survey_template_ids
-#, fuzzy
 msgid "Allowed Survey Template"
 msgstr "İzin Verilen Anket Şablonu"
 
@@ -334,7 +332,6 @@ msgstr "İptal"
 #. odoo-python
 #: code:addons/hr_appraisal_survey/models/survey_survey.py:0
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_survey.appraisal_select_survey_view_form
-#, fuzzy
 msgid "Choose Survey"
 msgstr "Anket Seçiniz"
 
@@ -492,7 +489,6 @@ msgstr "Coşku & dolaylı doğru projeler/atamalar"
 
 #. module: hr_appraisal_survey
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_survey.hr_appraisal_template_view_form
-#, fuzzy
 msgid "Every template allowed"
 msgstr "Her şablona izin verilir"
 
@@ -520,9 +516,8 @@ msgstr "Değerlendirmeye buradan gidin:"
 
 #. module: hr_appraisal_survey
 #: model:mail.template,name:hr_appraisal_survey.mail_template_appraisal_ask_feedback
-#, fuzzy
 msgid "HR: Ask Feedback 360"
-msgstr "İK: Geri Bildirim 360'a Sor"
+msgstr "İK: 360 Geri Bildirim Y"
 
 #. module: hr_appraisal_survey
 #: model:survey.question,title:hr_appraisal_survey.appraisal_360_5
@@ -566,9 +561,8 @@ msgstr ""
 
 #. module: hr_appraisal_survey
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_survey.hr_appraisal_view_form
-#, fuzzy
 msgid "If you need,"
-msgstr "Eğer ihtiyacın varsa,"
+msgstr "İhtiyacınız varsa,"
 
 #. module: hr_appraisal_survey
 #: model:survey.question.answer,value:hr_appraisal_survey.arow_3_1_5
@@ -673,9 +667,8 @@ msgstr "Asla"
 #. module: hr_appraisal_survey
 #. odoo-python
 #: code:addons/hr_appraisal_survey/models/survey_survey.py:0
-#, fuzzy
 msgid "No surveys found for this appraisal."
-msgstr "Bu değerleme için herhangi bir araştırma bulunamamıştır."
+msgstr "Bu değerleme için herhangi bir anket bulunamamıştır."
 
 #. module: hr_appraisal_survey
 #: model:survey.question,title:hr_appraisal_survey.appraisal_2_1
@@ -689,13 +682,11 @@ msgstr "Sıklıkla"
 
 #. module: hr_appraisal_survey
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_survey.appraisal_ask_feedback_view_form
-#, fuzzy
 msgid "Optional comment..."
-msgstr "İsteğe bağlı yorum..."
+msgstr "Opsiyonel yorum..."
 
 #. module: hr_appraisal_survey
 #: model:ir.model.fields,help:hr_appraisal_survey.field_appraisal_ask_feedback__lang
-#, fuzzy
 msgid ""
 "Optional translation language (ISO code) to select when sending out an "
 "email. If not set, the main partner's language will be used. This should "
@@ -703,9 +694,9 @@ msgid ""
 "e.g. {{ object.partner_id.lang }}."
 msgstr ""
 "Bir e-posta gönderirken seçmek için isteğe bağlı çeviri dili (ISO kodu). "
-"Ayarlanmazsa, ana ortağın dili kullanılacaktır. Bu genellikle uygun dili "
-"sağlayan bir yer tutucu ifade olmalıdır, örneğin {{ object.partner_id.lang "
-"}}."
+"Ayarlanmadığı takdirde ana partnerin dili geçerli olur. Bu değer, genellikle "
+"doğru dili otomatik olarak getiren bir yer tutucu ifade olmalıdır. Örn: {{ "
+"object.partner_id.lang }}."
 
 #. module: hr_appraisal_survey
 #: model_terms:survey.question,description:hr_appraisal_survey.appraisal_1
@@ -725,9 +716,8 @@ msgstr "Kişisel performans hedefleri"
 #. module: hr_appraisal_survey
 #. odoo-python
 #: code:addons/hr_appraisal_survey/wizard/appraisal_ask_feedback.py:0
-#, fuzzy
 msgid "Please set an Answer Deadline in the future"
-msgstr "Lütfen gelecekte bir Son Cevap Tarihi belirleyin"
+msgstr "Yanıt için ileri tarihli bir teslim tarihi belirleyin"
 
 #. module: hr_appraisal_survey
 #: model:survey.question,title:hr_appraisal_survey.appraisal_1_2
@@ -816,7 +806,6 @@ msgstr "Yanıtları Görüntüle"
 
 #. module: hr_appraisal_survey
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_survey.appraisal_select_survey_view_form
-#, fuzzy
 msgid "See Results"
 msgstr "Sonuçları Gör"
 
@@ -832,9 +821,8 @@ msgstr "Çözüm arayışına girmeden önce sorunu iyice anlamaya çalışın"
 
 #. module: hr_appraisal_survey
 #: model:ir.model,name:hr_appraisal_survey.model_appraisal_select_survey
-#, fuzzy
 msgid "Select survey type for an appraisal to show its results"
-msgstr "Sonuçlarını göstermek üzere bir ekspertiz için anket türünü seçin"
+msgstr "Değerleme sonuçlarını göstermek üzere anket türünü seçin"
 
 #. module: hr_appraisal_survey
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_survey.appraisal_ask_feedback_view_form
@@ -905,7 +893,6 @@ msgstr "Anket Geri Bildirimi"
 
 #. module: hr_appraisal_survey
 #: model:ir.model.fields,field_description:hr_appraisal_survey.field_appraisal_select_survey__survey_input_ids
-#, fuzzy
 msgid "Survey Inputs"
 msgstr "Anket Girdileri"
 
@@ -931,12 +918,11 @@ msgstr "Anket Kullanıcı Girişi"
 
 #. module: hr_appraisal_survey
 #: model:mail.template,subject:hr_appraisal_survey.mail_template_appraisal_ask_feedback
-#, fuzzy
 msgid ""
 "Take part in {{ ctx.get('employee_id') and ctx['employee_id'].name or "
 "'this' }} appraisal"
 msgstr ""
-"{{ ctx.get('employee_id') and ctx['employee_id'].name or 'this' }} "
+"{{ ctx.get('employee_id') and ctx['employee_id'].name or 'this' }}'ın "
 "değerlendirmesinde yer alın"
 
 #. module: hr_appraisal_survey
@@ -1011,7 +997,6 @@ msgstr ""
 
 #. module: hr_appraisal_survey
 #: model:ir.model.fields,help:hr_appraisal_survey.field_hr_appraisal_template__survey_template_ids
-#, fuzzy
 msgid ""
 "The survey templates available to choose from for the appraisals that use "
 "this template."
@@ -1147,22 +1132,19 @@ msgstr ""
 #. module: hr_appraisal_survey
 #. odoo-python
 #: code:addons/hr_appraisal_survey/models/survey_survey.py:0
-#, fuzzy
 msgid "You can't ask feedback for multiple appraisals at once."
 msgstr "Aynı anda birden fazla değerlendirme için geri bildirim isteyemezsiniz."
 
 #. module: hr_appraisal_survey
 #. odoo-python
 #: code:addons/hr_appraisal_survey/models/survey_survey.py:0
-#, fuzzy
 msgid "You can't select multiple feedback templates."
 msgstr "Birden fazla geri bildirim şablonu seçemezsiniz."
 
 #. module: hr_appraisal_survey
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_survey.hr_appraisal_view_form
-#, fuzzy
 msgid "ask feedback"
-msgstr "geri bildirim isteyin"
+msgstr "Geri bildirim isteyin"
 
 #. module: hr_appraisal_survey
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_survey.hr_appraisal_survey_button_form_view
@@ -1171,6 +1153,5 @@ msgstr "veya"
 
 #. module: hr_appraisal_survey
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_survey.hr_appraisal_view_form
-#, fuzzy
 msgid "to a selection of colleagues you work with."
-msgstr "Birlikte çalıştığınız meslektaşlarınızdan bir seçkiye."
+msgstr "çalışma arkadaşlarınıza"

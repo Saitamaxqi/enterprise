@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-11-12 15:01+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "delivery_ups_rest/tr/>\n"
 "Language: tr\n"
@@ -61,25 +62,21 @@ msgstr "Kontak"
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
-#, fuzzy
 msgid "Could not decode response"
 msgstr "Yanıtın kodu çözülemedi"
 
 #. module: delivery_ups_rest
 #: model:ir.model,website_form_label:delivery_ups_rest.model_res_partner
-#, fuzzy
 msgid "Create a Customer"
 msgstr "Müşteri Oluşturma"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "Create an account on"
 msgstr "Üzerinde bir hesap oluşturun"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "Create an app"
 msgstr "Bir uygulama oluşturun"
 
@@ -114,19 +111,16 @@ msgstr ""
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "Fill your address and contact information"
 msgstr "Adres ve iletişim bilgilerinizi doldurun"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "From there, get your <b>account number</b>"
 msgstr "Oradan <b>hesap numaranızı alın</b>"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "How to setup UPS?"
 msgstr "UPS nasıl kurulur?"
 
@@ -159,7 +153,6 @@ msgstr "İnç"
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
-#, fuzzy
 msgid ""
 "Invalid Authentication Information: Please check your credentials and "
 "configuration within UPS's system."
@@ -179,19 +172,16 @@ msgstr "Etiket Biçimi"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "Log in with your account on"
 msgstr "Hesabınızla giriş yapın"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "Name your app,"
 msgstr "Uygulamanıza isim verin,"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid ""
 "Now go to odoo and create a shipping method for UPS, using Account Number "
 "(step2) and Client ID + Client Secret (step 8). Also ensure you use correct "
@@ -203,7 +193,6 @@ msgstr ""
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid ""
 "Now open your app, you'll have your <b>Client ID</b> and <b>Client Secret</b>"
 msgstr ""
@@ -270,7 +259,6 @@ msgstr "Recipient Phone must be at least 10 alphanumeric characters."
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_require_signature
-#, fuzzy
 msgid "Require Signature"
 msgstr "İmza Gerektir"
 
@@ -301,7 +289,6 @@ msgstr "Cumartesi Teslimatı"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "Save and Accept terms and your app is created!"
 msgstr "Şartları kaydedin ve kabul edin ve uygulamanız oluşturuldu!"
 
@@ -340,7 +327,6 @@ msgstr "Gönderim Yöntemleri"
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
-#, fuzzy
 msgid "Something went wrong, please try again later!!"
 msgstr "Bir şeyler ters gitti, lütfen daha sonra tekrar deneyin!!!"
 
@@ -372,7 +358,6 @@ msgstr ""
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
-#, fuzzy
 msgid ""
 "The delivery cannot be done because the weight of your product %s is missing."
 msgstr "Ürününüzün ağırlığı %s eksik olduğu için teslimat yapılamamaktadır."
@@ -392,7 +377,6 @@ msgstr ""
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
-#, fuzzy
 msgid "The name of the customer should be no more than 35 characters."
 msgstr "Müşterinin adı en fazla 35 karakter olmalıdır."
 
@@ -429,25 +413,21 @@ msgstr "UPS"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__02
-#, fuzzy
 msgid "UPS 2nd Day"
 msgstr "UPS 2. Gün"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__59
-#, fuzzy
 msgid "UPS 2nd Day AM"
 msgstr "UPS 2. Gün AM"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__12
-#, fuzzy
 msgid "UPS 3-day Select"
 msgstr "UPS 3 Günlük Seçim"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_access_token
-#, fuzzy
 msgid "UPS Access Token"
 msgstr "UPS Erişim Jetonu"
 
@@ -460,13 +440,11 @@ msgstr "UPS Hesap Numarası"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_client_id
-#, fuzzy
 msgid "UPS Client ID"
 msgstr "UPS Müşteri Kimliği"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_client_secret
-#, fuzzy
 msgid "UPS Client Secret"
 msgstr "UPS Müşteri Sırrı"
 
@@ -477,7 +455,6 @@ msgstr "UPS Yapılandırma"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__03
-#, fuzzy
 msgid "UPS Ground"
 msgstr "UPS Kara"
 
@@ -488,19 +465,16 @@ msgstr "UPS Etiket Dosya Türü"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__01
-#, fuzzy
 msgid "UPS Next Day"
 msgstr "UPS Ertesi Gün"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__14
-#, fuzzy
 msgid "UPS Next Day AM"
 msgstr "UPS Ertesi Gün AM"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__13
-#, fuzzy
 msgid "UPS Next Day Air Saver"
 msgstr "UPS Ertesi Gün Hava Tasarrufu"
 
@@ -516,7 +490,6 @@ msgstr "UPS Cumartesi Teslimatı"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__65
-#, fuzzy
 msgid "UPS Saver"
 msgstr "UPS Saver"
 
@@ -527,31 +500,26 @@ msgstr "UPS Servis Türü"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__11
-#, fuzzy
 msgid "UPS Standard"
 msgstr "UPS Standart"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__08
-#, fuzzy
 msgid "UPS Worldwide Expedited"
 msgstr "UPS Dünya Çapında Hızlandırılmış"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__07
-#, fuzzy
 msgid "UPS Worldwide Express"
 msgstr "UPS Worldwide Express"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__96
-#, fuzzy
 msgid "UPS Worldwide Express Freight"
-msgstr "UPS Dünya Çapında Ekspres Kargo"
+msgstr "UPS Dünya Çapında Ekspres Yük Taşımacılığı"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__54
-#, fuzzy
 msgid "UPS Worldwide Express Plus"
 msgstr "UPS Worldwide Express Plus"
 
@@ -573,11 +541,10 @@ msgstr ""
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/payment_provider.py:0
-#, fuzzy
 msgid "UPS provider is configured to use only Collect on Delivery."
 msgstr ""
-"UPS sağlayıcısı yalnızca Teslimatta Al seçeneğini kullanacak şekilde "
-"yapılandırılmıştır."
+"UPS sağlayıcısı yalnızca Kapıda Ödeme (Collect on Delivery) yöntemiyle "
+"kullanılacak şekilde yapılandırılmıştır."
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_duty_payment
@@ -604,9 +571,10 @@ msgstr "Bir UPS hesap numarası girmeniz gerekir."
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
-#, fuzzy
 msgid "You must setup a client ID and secret on the carrier first"
-msgstr "Önce taşıyıcıda bir istemci kimliği ve parolası ayarlamanız gerekir"
+msgstr ""
+"Öncelikle taşıyıcıda bir müşteri kimliği (Client ID) ve gizli anahtar "
+"(Secret) oluşturmalısınız."
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_label_file_type__zpl
@@ -616,82 +584,71 @@ msgstr "ZPL"
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/sale_order.py:0
-#, fuzzy
 msgid "[UPS] UPS Billing will remain to the customer"
-msgstr "[UPS] UPS Faturalaması müşteriye kalacaktır"
+msgstr "[UPS] UPS faturası müşteri üzerine kalacaktır"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid ""
 "add products <b>Authorization, Address validation, Locator, Paperless "
 "Documents, Shipping and Rating</b>"
 msgstr ""
 "ürün ekle <b>Yetkilendirme, Adres doğrulama, Konum Belirleyici, Kağıtsız "
-"Belgeler, Nakliye ve Derecelendirme</b>"
+"Belgeler, Nakliye ve Değerlendirme</b>"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "and go to Apps"
 msgstr "ve Uygulamalar'a gidin"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "developer.ups.com"
 msgstr "developer.ups.com"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "the callback is your odoo address https://\"mycompany\".odoo.com"
-msgstr "geri arama odoo adresinizdir https://\"mycompany\".odoo.com"
+msgstr ""
+"Geri çağırma (callback) sizin Odoo adresinizdir. https://\"mycompany\""
+".odoo.com"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "ups step 1"
 msgstr "ups adım 1"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "ups step 2"
 msgstr "ups adım 2"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "ups step 3"
 msgstr "ups adım 3"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "ups step 4"
 msgstr "ups adım 4"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "ups step 5"
 msgstr "ups adım 5"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "ups step 6"
 msgstr "ups adım 6"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "ups.com"
 msgstr "ups.com"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
-#, fuzzy
 msgid "you're ready to go!"
-msgstr "Gitmeye hazırsın!"
+msgstr "hazırsınız!"

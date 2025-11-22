@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-11-12 15:05+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "hr_work_entry_attendance/tr/>\n"
 "Language: tr\n"
@@ -49,7 +50,6 @@ msgstr ""
 #. module: hr_work_entry_attendance
 #: model:ir.model.fields,help:hr_work_entry_attendance.field_hr_employee__overtime_from_attendance
 #: model:ir.model.fields,help:hr_work_entry_attendance.field_hr_version__overtime_from_attendance
-#, fuzzy
 msgid "Add extra hours from attendances to the working entries"
 msgstr "Çalışma girişlerine katılımlardan ekstra saatler ekleyin"
 
@@ -61,7 +61,6 @@ msgstr "Katılım"
 
 #. module: hr_work_entry_attendance
 #: model:ir.model,name:hr_work_entry_attendance.model_hr_attendance_overtime_line
-#, fuzzy
 msgid "Attendance Overtime Line"
 msgstr "Devamlılık Fazla Mesai Hattı"
 
@@ -120,7 +119,6 @@ msgstr "Fazla mesai"
 
 #. module: hr_work_entry_attendance
 #: model:ir.model,name:hr_work_entry_attendance.model_hr_attendance_overtime_rule
-#, fuzzy
 msgid "Overtime Rule"
 msgstr "Fazla Mesai Kuralı"
 
@@ -131,7 +129,6 @@ msgstr "Çalışan İş Girişlerini Yeniden Oluşturun"
 
 #. module: hr_work_entry_attendance
 #: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_attendance_overtime_rule__amount_rate
-#, fuzzy
 msgid "Salary Rate"
 msgstr "Maaş Oranı"
 
@@ -168,18 +165,15 @@ msgstr "Puantaj Kaydı Türü"
 
 #. module: hr_work_entry_attendance
 #: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_attendance_overtime_line__work_entry_type_overtime_id
-#, fuzzy
 msgid "Work Entry Type Overtime"
 msgstr "İşe Giriş Türü Fazla Mesai"
 
 #. module: hr_work_entry_attendance
 #: model_terms:ir.ui.view,arch_db:hr_work_entry_attendance.hr_attendance_overtime_rule_view_form
-#, fuzzy
 msgid "Work entry type to use:"
 msgstr "Kullanılacak iş girişi türü:"
 
 #. module: hr_work_entry_attendance
 #: model:ir.model.constraint,message:hr_work_entry_attendance.constraint_hr_attendance_overtime_rule_if_paid_work_entry_type_defined
-#, fuzzy
 msgid "if paid the work entry should be defined"
 msgstr "ücretli ise iş girişi tanımlanmalıdır"

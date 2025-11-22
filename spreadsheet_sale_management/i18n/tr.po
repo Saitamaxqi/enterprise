@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-11-12 15:02+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "spreadsheet_sale_management/tr/>\n"
 "Language: tr\n"
@@ -22,14 +23,12 @@ msgstr ""
 
 #. module: spreadsheet_sale_management
 #: model_terms:ir.ui.view,arch_db:spreadsheet_sale_management.sale_order_spreadsheet_view_search
-#, fuzzy
 msgid "Calculator Templates"
 msgstr "Hesap Makinesi Şablonları"
 
 #. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/side_panel/field_sync_side_panel.xml:0
-#, fuzzy
 msgid "Cell to sync"
 msgstr "Senkronize edilecek hücre"
 
@@ -56,7 +55,6 @@ msgstr "Geçerli Revizyon UUID’si"
 #. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/field_sync_extension_hook.js:0
-#, fuzzy
 msgid "Delete field syncing"
 msgstr "Alan senkronizasyonunu silme"
 
@@ -76,27 +74,23 @@ msgstr "Küçük Resmi Göster"
 #. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/field_sync_extension_hook.js:0
-#, fuzzy
 msgid "Edit sync"
 msgstr "Senkronizasyonu düzenle"
 
 #. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/field_sync_extension_hook.js:0
-#, fuzzy
 msgid "Field syncing"
 msgstr "Alan senkronizasyonu"
 
 #. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/side_panel/field_sync_side_panel.xml:0
-#, fuzzy
 msgid "Field to sync"
 msgstr "Senkronize edilecek alan"
 
 #. module: spreadsheet_sale_management
 #: model:sale.order.template.line,name:spreadsheet_sale_management.sale_order_template_line_assembly
-#, fuzzy
 msgid "Furniture Assembly"
 msgstr "Mobilya Montajı"
 
@@ -111,28 +105,24 @@ msgstr "ID"
 #. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/model/field_sync_ui_plugin.js:0
-#, fuzzy
 msgid "It should be a boolean."
-msgstr "Bir boolean olmalıdır."
+msgstr "Bir boolean (True / False veya Dogru/Yanlis) olmalıdır."
 
 #. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/model/field_sync_ui_plugin.js:0
-#, fuzzy
 msgid "It should be a number."
 msgstr "Bir sayı olmalı."
 
 #. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/model/field_sync_ui_plugin.js:0
-#, fuzzy
 msgid "It should be an id."
 msgstr "Bir kimlik olmalı."
 
 #. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/model/field_sync_ui_plugin.js:0
-#, fuzzy
 msgid "It should be an integer."
 msgstr "Bir tamsayı olmalıdır."
 
@@ -154,7 +144,6 @@ msgstr "Yerel teslimat"
 #. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/model/field_sync_ui_plugin.js:0
-#, fuzzy
 msgid ""
 "Multiple cells are updating the same field of the same record! Unable to "
 "determine which one to choose: %s"
@@ -175,7 +164,6 @@ msgstr "Sipariş"
 #. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/side_panel/field_sync_side_panel.xml:0
-#, fuzzy
 msgid "Position of the record in the list"
 msgstr "Kaydın listedeki konumu"
 
@@ -203,9 +191,8 @@ msgstr "Alıntı"
 
 #. module: spreadsheet_sale_management
 #: model_terms:ir.ui.view,arch_db:spreadsheet_sale_management.sale_order_spreadsheet_view_search
-#, fuzzy
 msgid "Quote Sheets"
-msgstr "Alıntı Sayfaları"
+msgstr "Teklif Sayfaları"
 
 #. module: spreadsheet_sale_management
 #: model:ir.model.fields,field_description:spreadsheet_sale_management.field_sale_order__spreadsheet_template_id
@@ -217,9 +204,8 @@ msgstr "Fiyat teklifi hesaplayıcısı"
 #. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/side_panel/field_sync_side_panel.xml:0
-#, fuzzy
 msgid "Record to sync (position)"
-msgstr "Senkronize etmek için kayıt (konum)"
+msgstr "Senkronize etmek için kaydetmek (konum)"
 
 #. module: spreadsheet_sale_management
 #: model:ir.model.fields,field_description:spreadsheet_sale_management.field_spreadsheet_cell_thread__sale_order_spreadsheet_id
@@ -235,7 +221,6 @@ msgstr "Satış Siparişi E-tabloları"
 #. module: spreadsheet_sale_management
 #. odoo-python
 #: code:addons/spreadsheet_sale_management/models/sale_order_spreadsheet.py:0
-#, fuzzy
 msgid "Sale order lines"
 msgstr "Satış Siparişi Satırı"
 
@@ -247,7 +232,6 @@ msgstr "Satış Siparişi"
 #. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/action/field_sync_action.xml:0
-#, fuzzy
 msgid "Save in"
 msgstr "Kaydet"
 
@@ -290,14 +274,12 @@ msgstr "E-tablo Dosyası"
 #. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/field_sync_extension_hook.js:0
-#, fuzzy
 msgid "Sync with field"
 msgstr "Alan ile senkronize edin"
 
 #. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/model/field_sync_ui_plugin.js:0
-#, fuzzy
 msgid ""
 "The value of %(cell_reference)s (%(cell_value)s) can't be used for field \"%"
 "(field_name)s\"."

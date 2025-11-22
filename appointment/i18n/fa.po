@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
+"POT-Creation-Date: 2025-11-21 18:40+0000\n"
 "PO-Revision-Date: 2025-11-10 08:22+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Persian <https://translate.odoo.com/projects/odoo-19/"
@@ -855,8 +855,8 @@ msgstr ""
 "                    <span invisible=\"schedule_based_on != 'users'\">Iبه "
 "اشتراک گذاشتن لینک برای قرار ملاقاتی که هیچ کاربری به ان اختصاص داده نشده "
 "غیرممکن است.</span>\n"
-"                    <span invisible=\"schedule_based_on != 'resources'\""
-">.</span>"
+"                    <span invisible=\"schedule_based_on != 'resources'\">.</"
+"span>"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
@@ -872,8 +872,9 @@ msgstr ""
 "<i class=\"fa fa-warning me-2\"/>\n"
 "                    <span invisible=\"schedule_based_on != 'users'\">You "
 "برای به اشتراک گذاری یک لینک شخصی باید عضوی از قرار ملاقات باشید.</span>\n"
-"                    <span invisible=\"schedule_based_on != 'resources'\">نمی‌"
-"توانید لینک شخصی را برای یک قرار ملاقات مبتنی بر منابع ایجاد کنید.</span>"
+"                    <span invisible=\"schedule_based_on != "
+"'resources'\">نمی‌توانید لینک شخصی را برای یک قرار ملاقات مبتنی بر منابع "
+"ایجاد کنید.</span>"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -1047,8 +1048,8 @@ msgstr ""
 "<strong>قرار ملاقات لغو شد!</strong>\n"
 "                                            بازه‌ی زمانی انتخاب شده موجود "
 "نیست.\n"
-"                                            به نظر می‌رسد در آن تاریخ شما جلسه‌"
-"ی دیگری با ما دارید ."
+"                                            به نظر می‌رسد در آن تاریخ شما "
+"جلسه‌ی دیگری با ما دارید ."
 
 #. module: appointment
 #. odoo-python
@@ -1123,6 +1124,8 @@ msgstr "آیکون نوع فعالیت"
 
 #. module: appointment
 #. odoo-javascript
+#: code:addons/appointment/static/src/views/appointment_calendar/appointment_calendar_controller.js:0
+#: code:addons/appointment/static/src/views/appointment_calendar/appointment_calendar_controller.xml:0
 #: code:addons/appointment/static/src/views/gantt/gantt_renderer.js:0
 #: code:addons/appointment/static/src/views/gantt/gantt_renderer_controls.xml:0
 #: code:addons/appointment/static/src/views/list/list_renderer.js:0
@@ -1391,8 +1394,8 @@ msgid ""
 "Appointment Resources are the places or equipment people can book\n"
 "                (e.g. Tables, Tennis Courts, Meeting Rooms, ...)"
 msgstr ""
-"منابع قرار ملاقات‌ها مکان‌ها یا تجهیزاتی هستند که امکان ثبت آنها وجود دارد ("
-"مانند میزها، زمین‌های تنیس، اتاق‌های جلسه، ...)"
+"منابع قرار ملاقات‌ها مکان‌ها یا تجهیزاتی هستند که امکان ثبت آنها وجود دارد "
+"(مانند میزها، زمین‌های تنیس، اتاق‌های جلسه، ...)"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__appointment_status
@@ -1896,8 +1899,8 @@ msgid ""
 "                (e.g. a specific user only, a list of appointment types, ...)"
 msgstr ""
 "لینک‌هایی را پیکربندی می‌کند که امکان رزرو قرار ملاقات با تنظیمات اختصاصی را "
-"فراهم می‌کنند<br> (به طورمثال تنها برای یک کاربر، فهرستی از انواع قرار ملاقات‌"
-"ها و ...)"
+"فراهم می‌کنند<br> (به طورمثال تنها برای یک کاربر، فهرستی از انواع قرار "
+"ملاقات‌ها و ...)"
 
 #. module: appointment
 #. odoo-javascript
@@ -2161,16 +2164,16 @@ msgid ""
 "Details<span class=\"d-inline-block mx-sm-3 fa fa-angle-right text-muted "
 "fs-5\"/>"
 msgstr ""
-"جزئیات<span class="
-"\"d-inline-block mx-sm-3 fa fa-angle-right text-muted fs-5\"/>"
+"جزئیات<span class=\"d-inline-block mx-sm-3 fa fa-angle-right text-muted "
+"fs-5\"/>"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_slot__allday
 msgid ""
 "Determine if the slot englobe the whole day, mainly used for unique slot type"
 msgstr ""
-"مشخص کنید که آیا بازه‌ی زمانی کل روز را در بر می‌گیرد یا نه، عمدتاًٌ برای یک بازه‌"
-"ی زمانی انحصاری مورد استفاده قرار می‌گیرد"
+"مشخص کنید که آیا بازه‌ی زمانی کل روز را در بر می‌گیرد یا نه، عمدتاًٌ برای یک "
+"بازه‌ی زمانی انحصاری مورد استفاده قرار می‌گیرد"
 
 #. module: appointment
 #. odoo-javascript

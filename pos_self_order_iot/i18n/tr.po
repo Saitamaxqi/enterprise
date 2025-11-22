@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:48+0000\n"
-"PO-Revision-Date: 2025-11-12 15:02+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "pos_self_order_iot/tr/>\n"
 "Language: tr\n"
@@ -39,7 +40,6 @@ msgstr "Yapılandırma Ayarları"
 
 #. module: pos_self_order_iot
 #: model:ir.model,name:pos_self_order_iot.model_auto_config_pos_iot
-#, fuzzy
 msgid "Configure Automatically IoT Box In PoS"
 msgstr "Satış Noktasında IoT Kutusunu Otomatik Olarak Yapılandırma"
 
@@ -73,7 +73,6 @@ msgstr "IoT Kutusu"
 
 #. module: pos_self_order_iot
 #: model_terms:ir.ui.view,arch_db:pos_self_order_iot.res_config_settings_view_form_menu_iot
-#, fuzzy
 msgid "Launch on"
 msgstr "Başlat"
 
@@ -95,7 +94,6 @@ msgstr "Normal"
 #. module: pos_self_order_iot
 #. odoo-python
 #: code:addons/pos_self_order_iot/models/pos_config.py:0
-#, fuzzy
 msgid "Opening the kiosk on %s"
 msgstr "Kioskun açılması %s"
 
@@ -132,6 +130,5 @@ msgstr "Kiosk modu için ekranın yönünü seçin."
 
 #. module: pos_self_order_iot
 #: model_terms:ir.ui.view,arch_db:pos_self_order_iot.res_config_settings_view_form_menu_iot
-#, fuzzy
 msgid "no IoT Box"
 msgstr "IoT Kutusu yok"

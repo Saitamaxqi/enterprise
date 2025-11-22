@@ -10,13 +10,14 @@
 # Fırat Kaya <firat.kaya@mechsoft.com.tr>, 2022
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.5alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:50+0000\n"
-"PO-Revision-Date: 2025-11-12 15:00+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "voip_onsip/tr/>\n"
 "Language: tr\n"
@@ -44,7 +45,6 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:voip_onsip.field_res_users_settings__onsip_auth_username
 #: model_terms:ir.ui.view,arch_db:voip_onsip.onsip_res_user_form
 #: model_terms:ir.ui.view,arch_db:voip_onsip.onsip_res_users_view_form_preferences
-#, fuzzy
 msgid "OnSIP Auth Username"
 msgstr "OnSIP Auth Kullanıcı Adı"
 
@@ -55,7 +55,6 @@ msgstr "OnSIP Domain"
 
 #. module: voip_onsip
 #: model:ir.model.fields,field_description:voip_onsip.field_res_users__onsip_auth_username
-#, fuzzy
 msgid "Onsip Auth Username"
 msgstr "Onsip Auth Kullanıcı Adı"
 
@@ -76,7 +75,6 @@ msgstr "Kullanıcı ayarları"
 
 #. module: voip_onsip
 #: model:ir.model,name:voip_onsip.model_voip_provider
-#, fuzzy
 msgid "VoIP Provider"
 msgstr "VoIP Sağlayıcısı"
 

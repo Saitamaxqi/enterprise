@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:50+0000\n"
-"PO-Revision-Date: 2025-11-12 15:07+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:42+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "website_sale_fedex/tr/>\n"
 "Language: tr\n"
@@ -23,11 +24,10 @@ msgstr ""
 
 #. module: website_sale_fedex
 #: model:ir.model.fields,help:website_sale_fedex.field_delivery_carrier__fedex_use_locations
-#, fuzzy
 msgid ""
 "Allows the ecommerce user to choose a pick-up point as delivery address."
 msgstr ""
-"E-ticaret kullanıcısının teslimat adresi olarak bir teslim alma noktası "
+"E-ticaret kullanıcısının teslimat adresi olarak bir teslim alma noktasını "
 "seçmesine olanak tanır."
 
 #. module: website_sale_fedex
@@ -37,26 +37,22 @@ msgstr "İsim Göster"
 
 #. module: website_sale_fedex
 #: model:ir.model.fields,field_description:website_sale_fedex.field_delivery_carrier__fedex_locations_radius_value
-#, fuzzy
 msgid "Fedex Locations Radius"
 msgstr "Fedex Lokasyonları Yarıçapı"
 
 #. module: website_sale_fedex
 #: model:ir.model.fields,field_description:website_sale_fedex.field_delivery_carrier__fedex_locations_radius_unit
-#, fuzzy
 msgid "Fedex Locations Radius Unit"
 msgstr "Fedex Lokasyonları Yarıçap Birimi"
 
 #. module: website_sale_fedex
 #: model:ir.model.fields,field_description:website_sale_fedex.field_delivery_carrier__fedex_locations_radius_unit_name
-#, fuzzy
 msgid "Fedex Radius Unit Name"
-msgstr "Fedex Radius Birim Adı"
+msgstr "Fedex Yarıçap Birimi Adı"
 
 #. module: website_sale_fedex
 #. odoo-python
 #: code:addons/website_sale_fedex/models/fedex_locations_request.py:0
-#, fuzzy
 msgid "Fedex Server Not Found"
 msgstr "Fedex Sunucusu Bulunamadı"
 
@@ -67,20 +63,17 @@ msgstr "ID"
 
 #. module: website_sale_fedex
 #: model_terms:ir.ui.view,arch_db:website_sale_fedex.view_delivery_carrier_form_with_provider_fedex
-#, fuzzy
 msgid "Locations Radius"
 msgstr "Konumlar Yarıçap"
 
 #. module: website_sale_fedex
 #: model:ir.model.fields,help:website_sale_fedex.field_delivery_carrier__fedex_locations_radius_value
-#, fuzzy
 msgid "Maximum locations distance radius."
 msgstr "Maksimum konum mesafesi yarıçapı."
 
 #. module: website_sale_fedex
 #. odoo-python
 #: code:addons/website_sale_fedex/models/fedex_locations_request.py:0
-#, fuzzy
 msgid "No Fedex pick-up points available for that shipping address"
 msgstr "Bu gönderi adresi için Fedex teslim alma noktası yok"
 
@@ -92,7 +85,6 @@ msgstr "Nakliye Yöntemleri"
 #. module: website_sale_fedex
 #. odoo-python
 #: code:addons/website_sale_fedex/models/fedex_locations_request.py:0
-#, fuzzy
 msgid ""
 "There was an error retrieving Fedex localisations:\n"
 "%s"
@@ -102,6 +94,5 @@ msgstr ""
 
 #. module: website_sale_fedex
 #: model:ir.model.fields,field_description:website_sale_fedex.field_delivery_carrier__fedex_use_locations
-#, fuzzy
 msgid "Use Fedex Locations"
 msgstr "Fedex Konumlarını Kullanın"

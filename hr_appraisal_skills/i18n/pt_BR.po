@@ -4,12 +4,13 @@
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # "Maitê Dietze (madi)" <madi@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:51+0000\n"
-"PO-Revision-Date: 2025-09-30 02:42+0000\n"
+"PO-Revision-Date: 2025-11-19 16:33+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/hr_appraisal_skills/pt_BR/>\n"
@@ -208,12 +209,12 @@ msgstr "Aprimoramento"
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__target_job_skill_progress
 msgid "Job Target"
-msgstr ""
+msgstr "Objetivo profissional"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.constraint,message:hr_appraisal_skills.constraint_hr_appraisal_skill_target_job_skill_progress_range
 msgid "Job Target Score should be between 0 and 1"
-msgstr ""
+msgstr "A pontuação da meta de trabalho deve estar entre 0 e 1"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields.selection,name:hr_appraisal_skills.selection__hr_appraisal_skill_report__evolution__just_added
@@ -300,7 +301,7 @@ msgstr "Progresso de zero conhecimento (0%) até totalmente dominado (100%)."
 #. module: hr_appraisal_skills
 #: model:ir.model.constraint,message:hr_appraisal_skills.constraint_hr_appraisal_skill_check_goals_completion_percentage
 msgid "Progress should be a number between 0 and 100."
-msgstr ""
+msgstr "O progresso deve ser um número entre 0 e 100."
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.view_hr_appraisal_form
@@ -386,13 +387,15 @@ msgstr ""
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skills_view_form
 msgid "The end date must be after the start date."
-msgstr ""
+msgstr "A data final deve ser posterior à data inicial."
 
 #. module: hr_appraisal_skills
 #. odoo-python
 #: code:addons/hr_appraisal_skills/models/hr_appraisal_skill.py:0
 msgid "The skill level %(level)s is not valid for skill type: %(type)s"
 msgstr ""
+"O nível de habilidade %(level)s não é um tipo válido para o tipo de "
+"habilidade: %(type)s"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,help:hr_appraisal_skills.field_hr_appraisal_goal__current_goal_skill_ids
@@ -402,19 +405,19 @@ msgstr ""
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skills_view_form
 msgid "To"
-msgstr ""
+msgstr "Até"
 
 #. module: hr_appraisal_skills
 #. odoo-python
 #: code:addons/hr_appraisal_skills/models/hr_appraisal_skill.py:0
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.view_hr_appraisal_form
 msgid "Unknown"
-msgstr ""
+msgstr "Desconhecido"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skills_view_form
 msgid "Validity"
-msgstr ""
+msgstr "Validade"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__valid_from
@@ -462,7 +465,7 @@ msgstr "Se marcada, o tipo de habilidade se tornará um tipo de certificação"
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skills_view_form
 msgid "indefinite"
-msgstr ""
+msgstr "indefinido"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.view_hr_appraisal_form

@@ -15,13 +15,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:51+0000\n"
-"PO-Revision-Date: 2025-11-12 14:55+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "delivery_usps/tr/>\n"
 "Language: tr\n"
@@ -359,16 +360,14 @@ msgstr "%s # numaralı gönderi iptal edildi"
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/delivery_usps.py:0
-#, fuzzy
 msgid "Shipment created into USPS"
-msgstr "USPS'de oluşturulan gönderi"
+msgstr "Gönderi USPS'de oluşturuldu."
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/delivery_usps.py:0
-#, fuzzy
 msgid "Shipment created into USPS <br/> <b>Tracking Number: </b>%s"
-msgstr "Gönderi USPS <br/> <b>Takip Numarasına oluşturuldu: </b>%s"
+msgstr "Gönderi USPS'de oluşturuldu <br/> <b>Takip Numarası: </b>%s"
 
 #. module: delivery_usps
 #: model:ir.model,name:delivery_usps.model_delivery_carrier
@@ -449,13 +448,11 @@ msgstr "Konteyner tipi"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__delivery_type__usps
-#, fuzzy
 msgid "USPS (Legacy)"
 msgstr "USPS (Eski)"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_label_file_type
-#, fuzzy
 msgid "USPS (Legacy) Label File Type"
 msgstr "USPS (Eski) Etiket Dosya Türü"
 

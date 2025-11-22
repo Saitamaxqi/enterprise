@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-12 13:03+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-11-20 13:21+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "account_accountant_batch_payment/tr/>\n"
 "Language: tr\n"
@@ -61,30 +62,26 @@ msgstr "Yevmiye Kalemi"
 
 #. module: account_accountant_batch_payment
 #: model:ir.model.fields,field_description:account_accountant_batch_payment.field_account_move_line__payment_lines_ids
-#, fuzzy
 msgid "Payment Lines"
-msgstr "Ödeme Hatları"
+msgstr "Ödeme Satırları"
 
 #. module: account_accountant_batch_payment
 #. odoo-javascript
 #: code:addons/account_accountant_batch_payment/static/src/components/bank_reconciliation/batch_payment_popover/batch_payment_popover.xml:0
-#, fuzzy
 msgid "Search More ..."
 msgstr "Daha Fazla Ara..."
 
 #. module: account_accountant_batch_payment
 #. odoo-javascript
 #: code:addons/account_accountant_batch_payment/static/src/components/bank_reconciliation/button_list/button_list.js:0
-#, fuzzy
 msgid "Search: Batch Payment"
-msgstr "Arama yapın: Toplu Ödeme"
+msgstr "Arama: Toplu Ödeme"
 
 #. module: account_accountant_batch_payment
 #. odoo-javascript
 #: code:addons/account_accountant_batch_payment/static/src/components/bank_reconciliation/batch_payment_popover/batch_payment_popover.js:0
-#, fuzzy
 msgid "Search: Batch payment"
-msgstr "Arama yapın: Toplu ödeme"
+msgstr "Arama: Toplu Ödeme"
 
 #. module: account_accountant_batch_payment
 #. odoo-javascript

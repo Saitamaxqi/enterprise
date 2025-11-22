@@ -7,12 +7,13 @@
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Junko Augias (juau)" <juau@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.5alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-11-14 07:46+0000\n"
+"PO-Revision-Date: 2025-11-18 05:40+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "website_helpdesk_forum/ja/>\n"
@@ -213,7 +214,7 @@ msgstr "ヘルプデスクチーム数"
 #. odoo-python
 #: code:addons/website_helpdesk_forum/models/forum_forum.py:0
 msgid "Helpdesk Teams"
-msgstr ""
+msgstr "ヘルプデスクのチーム"
 
 #. module: website_helpdesk_forum
 #: model:ir.model,name:website_helpdesk_forum.model_helpdesk_ticket
@@ -225,7 +226,7 @@ msgstr "ヘルプデスクチケット"
 #: code:addons/website_helpdesk_forum/static/src/components/create_ticket_dialog/create_ticket_dialog.js:0
 msgid ""
 "Helpdesk ticket %(ticket)s has been successfully created for this forum post."
-msgstr ""
+msgstr "ヘルプデスクチケット%(ticket)s がこのフォーラム投稿用に正常に作成されました。"
 
 #. module: website_helpdesk_forum
 #: model:ir.model.fields,field_description:website_helpdesk_forum.field_forum_forum__id
@@ -249,18 +250,18 @@ msgstr "最終更新日"
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.knowledge_base_forum_card
 msgid "Most voted"
-msgstr ""
+msgstr "投票数が多い"
 
 #. module: website_helpdesk_forum
 #. odoo-javascript
 #: code:addons/website_helpdesk_forum/static/src/components/create_ticket_dialog/create_ticket_dialog.xml:0
 msgid "Please fill out this field."
-msgstr ""
+msgstr "このフィールドを入力して下さい。"
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.knowledge_base_forum_card
 msgid "Quick Links"
-msgstr ""
+msgstr "クリックリンク"
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.helpdesk_ticket_select_forum_wizard_view_form
@@ -288,19 +289,19 @@ msgstr "タグ"
 #. odoo-python
 #: code:addons/website_helpdesk_forum/models/helpdesk.py:0
 msgid "There are no posts associated with this ticket."
-msgstr ""
+msgstr "このセッションに関連した投稿リマインダはありません"
 
 #. module: website_helpdesk_forum
 #: model:ir.model.fields,help:website_helpdesk_forum.field_helpdesk_team__top_forum_posts
 msgid ""
 "These are the top posts in the forums associated with this helpdesk team"
-msgstr ""
+msgstr "以下は、このヘルプデスクチームに関連するフォーラムの上位投稿です。"
 
 #. module: website_helpdesk_forum
 #. odoo-python
 #: code:addons/website_helpdesk_forum/models/forum_forum.py:0
 msgid "Ticket created from forum post"
-msgstr ""
+msgstr "フォーラム投稿からチケットが作成されました"
 
 #. module: website_helpdesk_forum
 #. odoo-javascript
@@ -312,7 +313,7 @@ msgstr "タイトル"
 #. module: website_helpdesk_forum
 #: model:ir.model.fields,field_description:website_helpdesk_forum.field_helpdesk_team__top_forum_posts
 msgid "Top Posts"
-msgstr ""
+msgstr "トップ投稿"
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.search_result
@@ -328,7 +329,7 @@ msgstr "チケットを共有するにはフォーラムを選択する必要が
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.search_result
 msgid "• 0 Answer"
-msgstr ""
+msgstr "• 0 回答"
 
 #~ msgid "Ticket"
 #~ msgstr "チケット"

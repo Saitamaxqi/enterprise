@@ -8,13 +8,14 @@
 # Jolien De Paepe, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Manon Rondou (ronm)" <ronm@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-10-23 08:07+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-11-16 17:47+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "helpdesk_stock/fr/>\n"
 "Language: fr\n"
@@ -73,13 +74,13 @@ msgstr "Client"
 #. module: helpdesk_stock
 #: model_terms:ir.ui.view,arch_db:helpdesk_stock.helpdesk_ticket_view_form_inherit_helpdesk_stock
 msgid "Deliveries"
-msgstr ""
+msgstr "Livraisons"
 
 #. module: helpdesk_stock
 #. odoo-python
 #: code:addons/helpdesk_stock/models/helpdesk_ticket.py:0
 msgid "Delivery Orders"
-msgstr ""
+msgstr "Bons de livraison"
 
 #. module: helpdesk_stock
 #. odoo-python
@@ -154,6 +155,26 @@ msgid ""
 "be modified on each ticket individually by adding or removing the portal "
 "user as follower."
 msgstr ""
+"Personnes pour qui cette équipe d'assistance et ses tickets seront visibles."
+"\n"
+"\n"
+"- Utilisateurs internes invités : les utilisateurs internes peuvent accéder "
+"à l'équipe et aux tickets qu'ils suivent. Cet accès peut être modifié sur "
+"chaque ticket individuellement en ajoutant ou supprimant l'utilisateur en "
+"tant qu'abonné.\n"
+"Un utilisateur avec le niveau de droit d'accès assistance > administrateur "
+"peut toujours accéder à cette équipe et à ses tickets, même s'il ne fait pas "
+"explicitement partie des abonnés.\n"
+"\n"
+"- Tous les utilisateurs internes : tous les utilisateurs internes peuvent "
+"accéder à l'équipe et à tous ses tickets sans distinction.\n"
+"\n"
+"- Utilisateurs invités du portail et tous les utilisateurs internes : tous "
+"les utilisateurs internes peuvent accéder à l'équipe et à tous ses tickets "
+"sans distinction.\n"
+"Les utilisateurs du portail ne peuvent accéder qu'aux tickets qu'ils "
+"suivent. Cet accès peut être modifié sur chaque ticket individuellement en "
+"ajoutant ou supprimant l'utilisateur du portail en tant qu'abonné."
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_stock_return_picking__picking_id
@@ -179,7 +200,7 @@ msgstr ""
 #. module: helpdesk_stock
 #: model_terms:ir.ui.view,arch_db:helpdesk_stock.helpdesk_ticket_view_form_inherit_stock_user
 msgid "Replace"
-msgstr ""
+msgstr "Remplacer"
 
 #. module: helpdesk_stock
 #: model_terms:ir.ui.view,arch_db:helpdesk_stock.helpdesk_ticket_view_form_inherit_stock_user
@@ -206,7 +227,7 @@ msgstr "Transfert de retour"
 #. module: helpdesk_stock
 #: model:ir.model,name:helpdesk_stock.model_stock_return_picking_line
 msgid "Return Picking Line"
-msgstr ""
+msgstr "Ligne de transfert de retour"
 
 #. module: helpdesk_stock
 #: model_terms:ir.ui.view,arch_db:helpdesk_stock.helpdesk_ticket_view_form_inherit_helpdesk_stock

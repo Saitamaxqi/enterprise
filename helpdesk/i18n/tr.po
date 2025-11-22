@@ -30,13 +30,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-12 14:58+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/helpdesk/"
 "tr/>\n"
 "Language: tr\n"
@@ -131,12 +132,11 @@ msgstr ""
 #. module: helpdesk
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/js/tours/helpdesk.js:0
-#, fuzzy
 msgid ""
 "<b>Log internal notes</b> and use @<b>mentions</b> to notify your colleagues."
 msgstr ""
-"<b>Dahili notları</b> adresine kaydedin ve iş arkadaşlarınızı bilgilendirmek "
-"için @<b>mention'larını</b> kullanın."
+"<b>Dahili notlarınızı kaydedin</b> ve iş arkadaşlarınızı bilgilendirmek için "
+"@<b>mention'larını</b> kullanın."
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.solved_ticket_request_email_template
@@ -182,7 +182,6 @@ msgstr ""
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.rating_ticket_request_email_template
-#, fuzzy
 msgid ""
 "<div>\n"
 "    <t t-set=\"access_token\" t-value=\"object._rating_get_access_token()\"/"
@@ -281,7 +280,7 @@ msgstr ""
 "değerlendirmek için lütfen bir dakikanızı ayırın.\n"
 "           <t t-if=\"object._rating_get_operator().name\">\n"
 "                <strong t-out=\"object._rating_get_operator().name or ''\"> "
-"Mitchell Admin</strong> adresine atanmıştır.<br/>\n"
+"Mitchell Admin</strong> kullanıcısına atanmıştır.<br/>\n"
 "            </t>\n"
 "           <t t-else=\"\">\n"
 "                .<br/><br/>\n"
@@ -293,7 +292,7 @@ msgstr ""
 "               <tr><td style=\"font-size: 14px; text-align:center;\">\n"
 "                   <strong>Hizmetlerimiz hakkında ne düşündüğünüzü bize "
 "söyleyin</strong><br/>\n"
-"                   <span style=\"text-color: #888888\">(bu gülen suratlardan "
+"                   <span style=\"text-color: #888888\">(bu ifadelerden "
 "birine tıklayın)</span>\n"
 "                </td></tr>\n"
 "                <tr><td style=\"font-size: 14px;\">\n"
@@ -332,7 +331,7 @@ msgstr ""
 "           <br/><br/><span style="
 "\"margin: 0px 0px 0px 0px; font-size: 12px; opacity: 0.5; color: #454748;\""
 ">Bu müşteri anketi, biletiniz <b t-out=\"object.stage_id.name or ''\">In "
-"Progress</b> sahnesine taşındığı için gönderilmiştir.</span>\n"
+"Progress</b> aşamasına taşındığı için gönderilmiştir.</span>\n"
 "        </td></tr>\n"
 "    </tbody>\n"
 "   </table>\n"
@@ -341,7 +340,6 @@ msgstr ""
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.new_ticket_request_email_template
-#, fuzzy
 msgid ""
 "<div>\n"
 "    Dear <t t-out=\"object.sudo().partner_id.name or "
@@ -426,7 +424,7 @@ msgid ""
 msgstr ""
 "<div>\n"
 "    Sayın <t t-out=\"object.sudo().partner_id.name or object.sudo()"
-".partner_name or 'Madam/Sir'\">Hanımefendi/Sefir</t>,<br/><br/>\n"
+".partner_name or 'Madam/Sir'\">Hanım/Bey</t>,<br/><br/>\n"
 "    Sizin isteğiniz\n"
 "   <t t-if="
 "\"hasattr(object.team_id, 'website_id') and object.get_portal_url()\">\n"
@@ -438,7 +436,7 @@ msgstr ""
 "    alındı ve <t t-out=\"object.team_id.name or ''\">VIP Destek</t> ekibimiz "
 "tarafından inceleniyor.<br/><br/>\n"
 "    Biletinizin referansı <strong><t t-out=\"object.ticket_ref or ''\""
-">15</t></strong> adresidir.<br/><br/>\n"
+">15</t></strong> tir.<br/><br/>\n"
 "\n"
 "    Ek bilgi vermek için bu e-postayı yanıtlamanız yeterlidir.<br/><br/>\n"
 "   <t t-if=\"object.team_id.show_knowledge_base\">\n"
@@ -514,7 +512,7 @@ msgstr ""
 "   </div>\n"
 "\n"
 "    Saygılarımla,<br/><br/>\n"
-"   <t t-out=\"object.team_id.name or 'Helpdesk'\">Yardım Masası</t> Ekip\n"
+"   <t t-out=\"object.team_id.name or 'Helpdesk'\">Yardım Masası</t> Ekibi\n"
 "</div>\n"
 "        "
 
@@ -530,7 +528,6 @@ msgstr ""
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
-#, fuzzy
 msgid ""
 "<i class=\"fa fa-fw o_button_icon fa-smile-o text-success\" "
 "invisible=\"rating_avg &lt; 3.66\" title=\"Happy\"/>\n"
@@ -788,7 +785,6 @@ msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.constraint,message:helpdesk.constraint_helpdesk_tag_assignment_tag_team_unique
-#, fuzzy
 msgid "A tag can only be used once per team."
 msgstr "Bir etiket takım başına yalnızca bir kez kullanılabilir."
 
@@ -890,7 +886,6 @@ msgstr ""
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.action_edit_followers_helpdesk_ticket
-#, fuzzy
 msgid "Add/remove followers"
 msgstr "Takipçi ekleme/kaldırma"
 
@@ -1011,7 +1006,6 @@ msgstr "Bu aşamaları silmek istediğinizden emin misiniz?"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.action_helpdesk_tag_assignment
-#, fuzzy
 msgid ""
 "Assign tickets to the appropriate team members by defining who can work on "
 "tickets with certain tags."
@@ -1058,7 +1052,6 @@ msgstr "Atama Yöntemi"
 #. module: helpdesk
 #. odoo-python
 #: code:addons/helpdesk/models/helpdesk_ticket.py:0
-#, fuzzy
 msgid ""
 "At this time, there is no preview available to show. The current ticket "
 "cannot be accessed by the customer, as it belongs to a helpdesk team that is "
@@ -1130,21 +1123,18 @@ msgstr "Son 7 Günün Ortalama Değerlendirmesi"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
-#, fuzzy
 msgid "Average Rating: Happy"
 msgstr "Ortalama Puan: Mutlu"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
-#, fuzzy
 msgid "Average Rating: Neutral"
 msgstr "Ortalama Değerlendirme: Nötr"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
-#, fuzzy
 msgid "Average Rating: Unhappy"
 msgstr "Ortalama Değerlendirme: Mutsuz"
 
@@ -1359,13 +1349,11 @@ msgstr "Ayarlar"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.action_helpdesk_tag_assignment
-#, fuzzy
 msgid "Configure Tags Handled by Team Members"
 msgstr "Ekip Üyeleri Tarafından İşlenen Etiketleri Yapılandırma"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-#, fuzzy
 msgid "Configure tags handled by team members"
 msgstr "Ekip üyeleri tarafından işlenen etiketleri yapılandırma"
 
@@ -1404,13 +1392,11 @@ msgstr "Oluşturma Tarihi"
 
 #. module: helpdesk
 #: model:ir.model,website_form_label:helpdesk.model_res_partner
-#, fuzzy
 msgid "Create a Customer"
 msgstr "Müşteri Oluşturma"
 
 #. module: helpdesk
 #: model:ir.model,website_form_label:helpdesk.model_helpdesk_ticket
-#, fuzzy
 msgid "Create a Ticket"
 msgstr "Bilet Oluşturma"
 
@@ -1561,7 +1547,6 @@ msgstr "SLA aşamasına ilk kez ulaşılan tarih"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__rotting_days
-#, fuzzy
 msgid "Day count since this resource was last updated"
 msgstr "Bu kaynağın son güncellenmesinden bu yana geçen gün sayısı"
 
@@ -1574,13 +1559,11 @@ msgstr "Çalışma takvimini dikkate almadan SLA aşamasına ulaşmak için gün
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rotting_days
-#, fuzzy
 msgid "Days Rotting"
 msgstr "Çürüyen Günler"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage__rotting_threshold_days
-#, fuzzy
 msgid "Days to rot"
 msgstr "Çürümeye kalan günler"
 
@@ -1654,7 +1637,6 @@ msgstr "Sil"
 
 #. module: helpdesk
 #: model:ir.model.fields.selection,name:helpdesk.selection__helpdesk_team__assign_method__tags
-#, fuzzy
 msgid "Dispatch tickets based on tags"
 msgstr "Etiketlere göre bilet gönderme"
 
@@ -2005,7 +1987,6 @@ msgstr "Yardım Masası Aşama Silme Sihirbazı"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_tag_assignment
-#, fuzzy
 msgid "Helpdesk Tag Assignment"
 msgstr "Yardım Masası Etiket Ataması"
 
@@ -2095,7 +2076,6 @@ msgstr "Yüksek öncelik"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage__rotting_threshold_days
-#, fuzzy
 msgid "Highlight tickets that haven't been updated for this many days."
 msgstr "Şu kadar gündür güncellenmemiş biletleri vurgulayın."
 
@@ -2152,7 +2132,6 @@ msgstr ""
 
 #. module: helpdesk
 #: model:helpdesk.team,name:helpdesk.helpdesk_team2
-#, fuzzy
 msgid "IT Support (Auto Assignment by Tags)"
 msgstr "BT Desteği (Etiketlere Göre Otomatik Atama)"
 
@@ -2635,7 +2614,6 @@ msgstr "Etiket bulunamadı. Hadi bir tane oluşturalım!"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.action_helpdesk_tag_assignment
-#, fuzzy
 msgid "No tags or team members found. Let's create them!"
 msgstr "Etiket veya ekip üyesi bulunamadı. Hadi onları yaratalım!"
 
@@ -3097,7 +3075,6 @@ msgstr "İadeler"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-#, fuzzy
 msgid "Reimburse customers with a voucher code for future purchases"
 msgstr ""
 "Gelecekteki satın alımlar için müşterilere bir kupon kodu ile geri ödeme "
@@ -3120,7 +3097,6 @@ msgstr "Onarımlar"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_product_replacements
-#, fuzzy
 msgid "Replacements"
 msgstr "Değiştirmeler"
 
@@ -3162,7 +3138,6 @@ msgstr "İadeler"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__is_rotting
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
-#, fuzzy
 msgid "Rotting"
 msgstr "Çürüme"
 
@@ -3384,7 +3359,6 @@ msgstr ""
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
-#, fuzzy
 msgid "Send customers a replacement for a lost, damaged, or returned item"
 msgstr ""
 "Kayıp, hasarlı veya iade edilen bir ürün için müşterilere yenisini gönderin"
@@ -3442,7 +3416,6 @@ msgstr "SLA Politikalarını Göster"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
-#, fuzzy
 msgid "Show all records whose next activity date is past"
 msgstr "Bir sonraki etkinlik tarihi geçmiş olan tüm kayıtları göster"
 
@@ -3597,7 +3570,6 @@ msgstr "Ekip"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_helpdesk_tag_assignment_search
-#, fuzzy
 msgid "Team Member"
 msgstr "Ekip Üyesi"
 
@@ -3620,7 +3592,6 @@ msgstr "Şablonlar"
 #. module: helpdesk
 #. odoo-python
 #: code:addons/helpdesk/models/helpdesk_ticket.py:0
-#, fuzzy
 msgid "The customer cannot belong to a different company than the ticket."
 msgstr "Müşteri, biletten farklı bir şirkete ait olamaz."
 
@@ -3815,7 +3786,6 @@ msgstr "Destek Talebi SLA Durumu"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag_assignment__tag_id
-#, fuzzy
 msgid "Ticket Tag"
 msgstr "Bilet Etiketi"
 
@@ -4017,14 +3987,12 @@ msgstr "Atanmamış"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search_base
 #: model_terms:ir.ui.view,arch_db:helpdesk.team_rating_progress_data
-#, fuzzy
 msgid "Unhappy"
 msgstr "Mutsuz"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
-#, fuzzy
 msgid "Unhappy face"
 msgstr "Mutsuz yüz"
 
@@ -4062,7 +4030,6 @@ msgstr "Kuponları Kullan"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__use_giftcards
-#, fuzzy
 msgid "Use Gift Cards"
 msgstr "Hediye Kartları Kullanın"
 
@@ -4112,7 +4079,6 @@ msgstr ""
 #. module: helpdesk
 #. odoo-python
 #: code:addons/helpdesk/models/helpdesk_team.py:0
-#, fuzzy
 msgid ""
 "Want to use the website form? Just adjust your team's visibility to "
 "\"Invited portal users and all internal users\" and watch the magic happen!"
@@ -4251,12 +4217,11 @@ msgstr "Negatif hedefleriniz olamaz"
 #. module: helpdesk
 #. odoo-python
 #: code:addons/helpdesk/models/res_partner.py:0
-#, fuzzy
 msgid ""
 "You cannot update the company of this partner because it would lead to "
 "inconsistency with some of its tickets."
 msgstr ""
-"Bu iş ortağının şirketini güncelleyemezsiniz çünkü bu, bazı biletleriyle "
+"Bu iş ortağının şirketini güncelleyemezsiniz çünkü bu, bazı biletlerle "
 "tutarsızlığa yol açacaktır."
 
 #. module: helpdesk
@@ -4283,7 +4248,6 @@ msgstr "rumuz"
 #. module: helpdesk
 #. odoo-python
 #: code:addons/helpdesk/controllers/portal.py:0
-#, fuzzy
 msgid "close_date"
 msgstr "close_date"
 
@@ -4336,7 +4300,6 @@ msgstr "ekip arama"
 #. module: helpdesk
 #. odoo-python
 #: code:addons/helpdesk/models/helpdesk_team.py:0
-#, fuzzy
 msgid "team_id"
 msgstr "team_id"
 
@@ -4349,9 +4312,8 @@ msgstr "biletler"
 #. module: helpdesk
 #. odoo-python
 #: code:addons/helpdesk/controllers/portal.py:0
-#, fuzzy
 msgid "user_id"
-msgstr "kullanıcı_id"
+msgstr "user_id"
 
 #. module: helpdesk
 #: model:mail.template,subject:helpdesk.rating_ticket_request_email_template

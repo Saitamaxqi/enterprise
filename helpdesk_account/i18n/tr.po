@@ -11,13 +11,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.5alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-11-12 14:55+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "helpdesk_account/tr/>\n"
 "Language: tr\n"
@@ -29,9 +30,8 @@ msgstr ""
 
 #. module: helpdesk_account
 #: model_terms:ir.ui.view,arch_db:helpdesk_account.view_move_form_helpdesk
-#, fuzzy
 msgid "<span class=\"o_stat_text\">Ticket</span>"
-msgstr "<span class=\"o_stat_text\">Bilet</span>"
+msgstr "<span class=\"o_stat_text\">Destek Talebi</span>"
 
 #. module: helpdesk_account
 #: model:ir.model,name:helpdesk_account.model_account_move_reversal
@@ -40,9 +40,8 @@ msgstr "Yevmiye Kaydının Ters Kaydı"
 
 #. module: helpdesk_account
 #: model:ir.model,website_form_label:helpdesk_account.model_helpdesk_ticket
-#, fuzzy
 msgid "Create a Ticket"
-msgstr "Bilet Oluşturma"
+msgstr "Destek Talebi Oluşturma"
 
 #. module: helpdesk_account
 #. odoo-python
@@ -91,7 +90,6 @@ msgstr "ID"
 
 #. module: helpdesk_account
 #: model_terms:ir.ui.view,arch_db:helpdesk_account.view_account_move_reversal_inherit_helpdesk_account
-#, fuzzy
 msgid "Invoices to Refund"
 msgstr "İade Edilecek Faturalar"
 
@@ -114,7 +112,6 @@ msgstr "İade/Fiyat Farkı"
 #. module: helpdesk_account
 #. odoo-python
 #: code:addons/helpdesk_account/models/account_move.py:0
-#, fuzzy
 msgid "Refund %(status)s"
 msgstr "Para iadesi %(status)s"
 
@@ -127,14 +124,12 @@ msgstr "İade Oluşturuldu"
 #. odoo-python
 #: code:addons/helpdesk_account/models/account_move.py:0
 #: code:addons/helpdesk_account/wizard/account_move_reversal.py:0
-#, fuzzy
 msgid "Refund created"
 msgstr "Geri ödeme oluşturuldu"
 
 #. module: helpdesk_account
 #. odoo-python
 #: code:addons/helpdesk_account/wizard/account_move_reversal.py:0
-#, fuzzy
 msgid "Reversal of: %(reason)s"
 msgstr "Tersine çevrilmesi: %(reason)s"
 
@@ -152,9 +147,8 @@ msgstr "Satış Siparişi"
 #. module: helpdesk_account
 #. odoo-python
 #: code:addons/helpdesk_account/models/account_move.py:0
-#, fuzzy
 msgid "You cannot create a Credit Note without invoice lines"
-msgstr "Fatura satırları olmadan bir Alacak Notu oluşturamazsınız"
+msgstr "Fatura satırları olmadan bir Alacak Dekontu oluşturamazsınız"
 
 #. module: helpdesk_account
 #. odoo-python

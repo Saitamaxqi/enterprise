@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:46+0000\n"
-"PO-Revision-Date: 2025-11-12 15:06+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "spreadsheet_edition/tr/>\n"
 "Language: tr\n"
@@ -24,21 +25,18 @@ msgstr ""
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/view_hook.js:0
-#, fuzzy
 msgid "%(field name)s by %(order)s"
 msgstr "%(field name)s tarafından %(order)s"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/list_init_callback.js:0
-#, fuzzy
 msgid "%(list_name)s (List #%(list_id)s)"
 msgstr "%(list_name)s (Liste #%(list_id)s)"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/version_history_action.js:0
-#, fuzzy
 msgid "%(name)s (restored from %(timestamp)s)"
 msgstr "%(name)s ( %(timestamp)s adresinden alınmıştır)"
 
@@ -46,21 +44,18 @@ msgstr "%(name)s ( %(timestamp)s adresinden alınmıştır)"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/pivot_init_callback.js:0
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/plugins/pivot_odoo_insertion.js:0
-#, fuzzy
 msgid "%(pivot_name)s (Pivot #%(pivot_id)s)"
 msgstr "%(pivot_name)s (Pivot #%(pivot_id)s)"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/pivot_view/pivot_view.js:0
-#, fuzzy
 msgid "%(pivot_title)s by %(group_by)s"
 msgstr "%(pivot_title)s tarafından %(group_by)s"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/pivot_view/pivot_view.js:0
-#, fuzzy
 msgid "%(pivot_title)s by %(group_by)s (%(granularity)s)"
 msgstr "%(pivot_title)s tarafından %(group_by)s (%(granularity)s)"
 
@@ -79,14 +74,12 @@ msgstr "%s konu"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/components/locale_status/locale_status.js:0
-#, fuzzy
 msgid "- dates: %s"
 msgstr "- tarihler: %s"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/components/locale_status/locale_status.js:0
-#, fuzzy
 msgid "- numbers: %s"
 msgstr "- Sayılar: %s"
 
@@ -98,7 +91,6 @@ msgstr "1 konu"
 
 #. module: spreadsheet_edition
 #: model:ir.model.constraint,message:spreadsheet_edition.constraint_spreadsheet_revision_parent_unique
-#, fuzzy
 msgid "A revision based on the same revision already exists"
 msgstr "Aynı revizyonu temel alan bir revizyon zaten mevcut"
 
@@ -128,7 +120,6 @@ msgstr "Yorum ekle..."
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/comments/index.js:0
-#, fuzzy
 msgid "All Comments"
 msgstr "Tüm Yorumlar"
 
@@ -141,7 +132,6 @@ msgstr "Tüm sayfalar"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/list_details_side_panel.js:0
-#, fuzzy
 msgid "Are you sure you want to delete this list?"
 msgstr "Bu listeyi silmek istediğinizden emin misiniz?"
 
@@ -154,7 +144,6 @@ msgstr "Artan"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/relation_filter_editor_side_panel.js:0
-#, fuzzy
 msgid ""
 "At least one data source has an invalid model. Please delete it before "
 "editing this global filter."
@@ -175,7 +164,6 @@ msgstr "Üretici"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/relation_filter_editor_side_panel.xml:0
-#, fuzzy
 msgid "Automatically filter on the current user"
 msgstr "Geçerli kullanıcı üzerinde otomatik olarak filtreleme"
 
@@ -189,7 +177,6 @@ msgstr "Geri"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/components/spreadsheet_selector_dialog/spreadsheet_selector_panel.js:0
 #: code:addons/spreadsheet_edition/static/src/assets/components/spreadsheet_selector_grid/spreadsheet_selector_grid.js:0
-#, fuzzy
 msgid "Blank spreadsheet"
 msgstr "Boş elektronik tablo"
 
@@ -251,7 +238,6 @@ msgstr "Onayla"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/global_filter_side_panel.xml:0
-#, fuzzy
 msgid "Create filter"
 msgstr "Filtre oluştur"
 
@@ -318,16 +304,14 @@ msgstr "Varsayılan Değer"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/side_panels/pivot_details_side_panel.js:0
-#, fuzzy
 msgid "Defer updates"
 msgstr "Güncellemeleri ertele"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/side_panels/pivot_details_side_panel.xml:0
-#, fuzzy
 msgid "Delete Pivot"
-msgstr "Pivot Sil"
+msgstr "Pivot'u Sil"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -338,7 +322,6 @@ msgstr "Azalan"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/components/locale_status/locale_status.js:0
-#, fuzzy
 msgid ""
 "Difference between user locale (%(user_locale)s) and spreadsheet locale (%"
 "(spreadsheet_locale)s). This spreadsheet is using the formats below:"
@@ -384,24 +367,21 @@ msgstr "İndir"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/o_spreadsheet/menu_item_registry.js:0
-#, fuzzy
 msgid "Download as JSON"
 msgstr "JSON olarak indirin"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/filter_editor_store.js:0
-#, fuzzy
 msgid "Duplicated filter label"
-msgstr "Çoğaltılmış filtre etiketi"
+msgstr "Dublike filtre etiketi"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/chart/side_panels/common/config_panel.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/components/side_panel_domain/side_panel_domain.xml:0
-#, fuzzy
 msgid "Edit domain"
-msgstr "Etki alanını düzenle"
+msgstr "Alan adını düzenle"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -419,7 +399,6 @@ msgstr "Alan"
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/relation_filter_editor_side_panel.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/selection_filter_editor_side_panel.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/text_filter_editor_side_panel.xml:0
-#, fuzzy
 msgid "Field matching"
 msgstr "Alan eşleştirme"
 
@@ -439,7 +418,6 @@ msgstr "Filtre özellikleri"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/selection_filter_editor_side_panel.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/text_filter_editor_side_panel.xml:0
-#, fuzzy
 msgid "Filter value"
 msgstr "Filtre değeri"
 
@@ -463,35 +441,30 @@ msgstr "Takipçiler (İş ortakları)"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/o_spreadsheet/menu_item_registry.js:0
-#, fuzzy
 msgid "From Odoo data"
 msgstr "Odoo verilerinden"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/o_spreadsheet/menu_item_registry.js:0
-#, fuzzy
 msgid "From range"
-msgstr "Menzilden"
+msgstr "Belirli bir aralıktan"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/filter_component.xml:0
-#, fuzzy
 msgid "Global Filters"
-msgstr "Küresel Filtreler"
+msgstr "Global Filtreler"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/components/collaborative_status/collaborative_status.js:0
-#, fuzzy
 msgid "Go to %(userName)s"
 msgstr "Gitmek %(userName)s"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/components/spreadsheet_selector_dialog/spreadsheet_selector_dialog.js:0
-#, fuzzy
 msgid "Graph name"
 msgstr "Grafik adı"
 
@@ -503,7 +476,6 @@ msgstr "Mesaj Var"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/version_history_action.js:0
-#, fuzzy
 msgid "Heads up!"
 msgstr "Dikkat edin!"
 
@@ -529,7 +501,6 @@ msgstr "İşaretliyse, bazı mesajlar gönderi hatası içermektedir."
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/version_history_action.js:0
-#, fuzzy
 msgid ""
 "If you go ahead, your document will go back to the version from %s.\n"
 "Any changes you've made after that time will disappear. Ready to proceed?"
@@ -541,7 +512,6 @@ msgstr ""
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/chart/side_panels/odoo_line/odoo_line_config_panel.xml:0
-#, fuzzy
 msgid "Include historical data"
 msgstr "Geçmiş verileri dahil edin"
 
@@ -554,14 +524,12 @@ msgstr "Ekle"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/pivot_missing_cell_dialog/pivot_missing_cell_dialog.xml:0
-#, fuzzy
 msgid "Insert a pivot cell"
 msgstr "Pivot hücre ekleme"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/comments/index.js:0
-#, fuzzy
 msgid "Insert comment"
 msgstr "Yorum ekle"
 
@@ -605,7 +573,6 @@ msgstr "Açıklama"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/filter_editor_store.js:0
-#, fuzzy
 msgid "Label is missing."
 msgstr "Etiket kayıp."
 
@@ -638,7 +605,6 @@ msgstr "Odoo menüsünü bağlama"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/related_filters/related_filters.xml:0
-#, fuzzy
 msgid ""
 "Link each filter to a corresponding field in the data source to enable "
 "filtering."
@@ -655,28 +621,24 @@ msgstr "E-tablodaki bağlantı menüsü"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/components/spreadsheet_selector_dialog/spreadsheet_selector_dialog.js:0
-#, fuzzy
 msgid "Link name"
 msgstr "Bağlantı adı"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/chart/odoo_menu/chart_panel.xml:0
-#, fuzzy
 msgid "Link to Odoo menu"
 msgstr "Odoo menüsüne bağlantı"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/related_filters/related_filters.xml:0
-#, fuzzy
 msgid "Link to the filter"
 msgstr "Filtre bağlantısı"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/index.js:0
-#, fuzzy
 msgid "List #%s"
 msgstr "Liste #%s"
 
@@ -689,7 +651,6 @@ msgstr "Liste İsmi"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/list_details_side_panel.js:0
-#, fuzzy
 msgid ""
 "List duplicated. Use the \"Re-insert list\" menu item to insert it in a "
 "sheet."
@@ -700,14 +661,12 @@ msgstr ""
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/list_details_side_panel.js:0
-#, fuzzy
 msgid "List duplication failed"
 msgstr "Liste çoğaltma başarısız oldu"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/components/spreadsheet_selector_dialog/spreadsheet_selector_dialog.js:0
-#, fuzzy
 msgid "List name"
 msgstr "Liste adı"
 
@@ -727,21 +686,18 @@ msgstr "Bir kopyasını çıkar"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/restore_version_dialog/restore_version_dialog.xml:0
-#, fuzzy
 msgid "Make a copy instead"
 msgstr "Bunun yerine bir kopyasını alın"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/filter_editor_side_panel.xml:0
-#, fuzzy
 msgid "Match this filter to a field for each data source"
 msgstr "Bu filtreyi her veri kaynağı için bir alanla eşleştirin"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/related_filters_section/related_fitlers_section.js:0
-#, fuzzy
 msgid "Matching %(matching)s / %(total)s filters"
 msgstr "Eşleşen %(matching)s / %(total)s filtreler"
 
@@ -764,21 +720,18 @@ msgstr "Mesajlar"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/plugins/list_autofill_plugin.js:0
-#, fuzzy
 msgid "Missing list #%s"
 msgstr "Eksik liste #%s"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/plugins/pivot_autofill_plugin.js:0
-#, fuzzy
 msgid "Missing pivot"
 msgstr "Eksik pivot"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/plugins/pivot_autofill_plugin.js:0
-#, fuzzy
 msgid "Missing pivot #%s"
 msgstr "Eksik pivot #%s"
 
@@ -826,9 +779,8 @@ msgstr "%s'da yeni Bahsetme"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/index.js:0
-#, fuzzy
 msgid "New Odoo Pivot"
-msgstr "Yeni Odoo Pivot"
+msgstr "Yeni Odoo Pivotu"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -839,14 +791,12 @@ msgstr "Sonraki"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_field_offset.xml:0
-#, fuzzy
 msgid "No offset"
 msgstr "Ofset yok"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/components/spreadsheet_selector_grid/spreadsheet_selector_grid.xml:0
-#, fuzzy
 msgid "No preview"
 msgstr "Önizleme yok"
 
@@ -873,14 +823,12 @@ msgstr "Teslimat hatası olan mesaj adedi"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/components/spreadsheet_selector_dialog/spreadsheet_selector_dialog.xml:0
-#, fuzzy
 msgid "Number of records to insert into the spreadsheet"
 msgstr "Elektronik tabloya eklenecek kayıt sayısı"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/global_filter_side_panel.xml:0
-#, fuzzy
 msgid "Numeric"
 msgstr "Sayısal"
 
@@ -906,7 +854,6 @@ msgstr "Sipariş"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/version_history_action.js:0
-#, fuzzy
 msgid "Original data"
 msgstr "Orijinal veriler"
 
@@ -918,21 +865,18 @@ msgstr "Üst Revizyon"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_field_offset.xml:0
-#, fuzzy
 msgid "Period offset"
 msgstr "Dönem ofseti"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_field_offset.js:0
-#, fuzzy
 msgid "Period offset applied to this source"
 msgstr "Bu kaynağa uygulanan dönem ofseti"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_field_offset.xml:0
-#, fuzzy
 msgid "Period(s)"
 msgstr "Dönem(ler)"
 
@@ -940,9 +884,8 @@ msgstr "Dönem(ler)"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/pivot_view/pivot_view.js:0
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/side_panels/odoo_pivot_layout_configurator/odoo_pivot_layout_configurator.js:0
-#, fuzzy
 msgid "Pivot contains duplicate groupbys"
-msgstr "Pivot yinelenen gruplar içeriyor"
+msgstr "Pivot dublike gruplar içeriyor"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -953,7 +896,6 @@ msgstr "Pivot adı"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/o_spreadsheet/menu_item_registry.js:0
-#, fuzzy
 msgid "Pivot table"
 msgstr "Pivot tablo"
 
@@ -967,7 +909,6 @@ msgstr "Lütfen geçerli bir numara girin."
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/relation_filter_editor_side_panel.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/text_filter_editor_side_panel.xml:0
-#, fuzzy
 msgid "Possible values"
 msgstr "Olası değerler"
 
@@ -1016,7 +957,6 @@ msgstr "Listeyi yeniden ekle"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/o_spreadsheet/menu_item_registry.js:0
-#, fuzzy
 msgid "Re-insert pivot cell"
 msgstr "Pivot hücreyi yeniden yerleştirin"
 
@@ -1035,13 +975,11 @@ msgstr "Bu konuyu yeniden aç"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/plugins/list_autofill_plugin.js:0
-#, fuzzy
 msgid "Record #%(record_number)s"
 msgstr "Kayıt #%(record_number)s"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__res_id
-#, fuzzy
 msgid "Record id"
 msgstr "Kayıt kimliği"
 
@@ -1060,7 +998,6 @@ msgstr "Tüm verileri yenile"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/relation_filter_editor_side_panel.xml:0
-#, fuzzy
 msgid "Related model"
 msgstr "İlgili model"
 
@@ -1085,7 +1022,6 @@ msgstr "Adını değiştir"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_field_offset.js:0
-#, fuzzy
 msgid "Requires a selected field"
 msgstr "Seçili bir alan gerektirir"
 
@@ -1104,39 +1040,33 @@ msgstr "Çözüldü"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/side_panel/version_history_item.js:0
-#, fuzzy
 msgid "Restore this version"
 msgstr "Bu sürümü geri yükle"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/text_filter_editor_side_panel.xml:0
-#, fuzzy
 msgid "Restrict values to ranges"
 msgstr "Değerleri aralıklarla sınırlayın"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/relation_filter_editor_side_panel.xml:0
-#, fuzzy
 msgid "Restrict values with a domain"
-msgstr "Değerleri bir etki alanı ile kısıtlayın"
+msgstr "Değerleri bir alan adı ile kısıtlayın"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__revision_date
-#, fuzzy
 msgid "Revision Date"
 msgstr "Revizyon Tarihi"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__revision_uuid
-#, fuzzy
 msgid "Revision Uuid"
 msgstr "Revizyon Uuid"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__name
-#, fuzzy
 msgid "Revision name"
 msgstr "Revizyon adı"
 
@@ -1185,14 +1115,12 @@ msgstr "Ara..."
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/index.js:0
-#, fuzzy
 msgid "See list properties"
 msgstr "Liste özelliklerine bakın"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/index.js:0
-#, fuzzy
 msgid "See version history"
 msgstr "Sürüm geçmişine bakın"
 
@@ -1223,14 +1151,12 @@ msgstr "Seçim"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/selection_filter_editor_side_panel.xml:0
-#, fuzzy
 msgid "Selection field"
 msgstr "Seçim alanı"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/index.js:0
-#, fuzzy
 msgid "Set as filter"
 msgstr "Filtre olarak ayarla"
 
@@ -1275,7 +1201,6 @@ msgstr "Elektronik çizelge tartışma dizisi"
 
 #. module: spreadsheet_edition
 #: model:ir.model,name:spreadsheet_edition.model_spreadsheet_mixin
-#, fuzzy
 msgid "Spreadsheet mixin"
 msgstr "Elektronik tablo karışımı"
 
@@ -1294,7 +1219,6 @@ msgstr "Metin"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/version_history_action.js:0
-#, fuzzy
 msgid ""
 "The history of your spreadsheet is corrupted and you are likely missing "
 "recent revisions. This feature cannot be used."
@@ -1305,7 +1229,6 @@ msgstr ""
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/chart/side_panels/common/config_panel.js:0
-#, fuzzy
 msgid ""
 "The model (%(model)s) of this chart is not valid (it may have been renamed/"
 "deleted). Please re-insert a new chart."
@@ -1316,7 +1239,6 @@ msgstr ""
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/list_details_side_panel.js:0
-#, fuzzy
 msgid ""
 "The model (%(model)s) of this list is not valid (it may have been renamed/"
 "deleted). Please re-insert a new list."
@@ -1327,7 +1249,6 @@ msgstr ""
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/side_panels/pivot_details_side_panel.js:0
-#, fuzzy
 msgid ""
 "The model (%(model)s) of this pivot is not valid (it may have been renamed/"
 "deleted). Please re-insert a new pivot."
@@ -1338,7 +1259,6 @@ msgstr ""
 #. module: spreadsheet_edition
 #. odoo-python
 #: code:addons/spreadsheet_edition/models/spreadsheet_mixin.py:0
-#, fuzzy
 msgid ""
 "The operation could not be applied because of a concurrent update. Please "
 "try again."
@@ -1348,7 +1268,6 @@ msgstr ""
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/version_history_action.js:0
-#, fuzzy
 msgid ""
 "There are missing revisions that prevent to restore the whole edition "
 "history.\n"
@@ -1362,13 +1281,11 @@ msgstr ""
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/side_panel/version_history_side_panel.xml:0
-#, fuzzy
 msgid "There are no prior revisions for this spreadsheet."
 msgstr "Bu hesap tablosu için daha önce herhangi bir revizyon yapılmamıştır."
 
 #. module: spreadsheet_edition
 #: model:ir.model.constraint,message:spreadsheet_edition.constraint_spreadsheet_revision_initial_unique
-#, fuzzy
 msgid "There can be only one initial revision per spreadsheet"
 msgstr "Elektronik tablo başına yalnızca bir ilk revizyon yapılabilir"
 
@@ -1376,7 +1293,6 @@ msgstr "Elektronik tablo başına yalnızca bir ilk revizyon yapılabilir"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/list_details_side_panel.js:0
 #: code:addons/spreadsheet_edition/static/src/bundle/o_spreadsheet/icons.xml:0
-#, fuzzy
 msgid "This list is not used"
 msgstr "Bu liste kullanılmamaktadır"
 
@@ -1401,21 +1317,18 @@ msgstr "Toplam"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/related_filters/related_filters.xml:0
-#, fuzzy
 msgid "Unlink from the filter"
 msgstr "Filtreden bağlantıyı kaldırın"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/side_panel/version_history_side_panel.xml:0
-#, fuzzy
 msgid "Version History"
 msgstr "Sürüm Geçmişi"
 
 #. module: spreadsheet_edition
 #. odoo-python
 #: code:addons/spreadsheet_edition/models/spreadsheet_mixin.py:0
-#, fuzzy
 msgid "Version restored"
 msgstr "Sürüm geri yüklendi"
 
@@ -1450,14 +1363,12 @@ msgstr "Yıl"
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/restore_version_dialog/restore_version_dialog.xml:0
-#, fuzzy
 msgid "Yes, restore"
 msgstr "Evet, geri yükle"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/global_filter_side_panel.xml:0
-#, fuzzy
 msgid "Yes/No"
 msgstr "Evet/Hayır"
 

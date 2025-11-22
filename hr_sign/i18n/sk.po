@@ -3,19 +3,22 @@
 # * hr_sign
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-10-08 18:47+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-16 13:53+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Slovak <https://translate.odoo.com/projects/odoo-19/hr_sign/"
+"sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_sign
 #. odoo-python
@@ -45,7 +48,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_sign.hr_employee_public_view_form
 #: model_terms:ir.ui.view,arch_db:hr_sign.hr_employee_sign_view_form
 msgid "<span class=\"o_stat_text\">Signature Requests</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Žiadosti o podpis</span>"
 
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_mail_activity_plan_template
@@ -60,47 +63,47 @@ msgstr ""
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
 msgid "Attach a file"
-msgstr ""
+msgstr "Priložiť súbor"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__attachment_ids
 msgid "Attachment"
-msgstr ""
+msgstr "Príloha"
 
 #. module: hr_sign
 #: model:sign.template,redirect_url_text:hr_sign.template_sign_termination
 msgid "Close"
-msgstr ""
+msgstr "Zatvoriť"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__version_id
 msgid "Contract"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__cc_partner_ids
 msgid "Copy to"
-msgstr ""
+msgstr "Kopírovať do"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Vytvoril"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Vytvorené"
 
 #. module: hr_sign
 #: model:sign.item.role,name:hr_sign.sign_item_role_default
 msgid "Customer"
-msgstr ""
+msgstr "Zákazník"
 
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
 msgid "Discard"
-msgstr ""
+msgstr "Zrušiť"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__display_name
@@ -111,12 +114,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_sign.field_mail_activity_schedule__display_name
 #: model:ir.model.fields,field_description:hr_sign.field_res_users__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Zobrazovaný Názov"
 
 #. module: hr_sign
 #: model:ir.actions.act_window,name:hr_sign.sign_contract_wizard_action
 msgid "Document Signature"
-msgstr ""
+msgstr "Podpis dokumentu"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_mail_activity_plan_template__sign_template_id
@@ -131,7 +134,7 @@ msgstr ""
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__mail_to
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #. module: hr_sign
 #: model:ir.model.fields,help:hr_sign.field_hr_contract_sign_document_wizard__mail_to
@@ -146,18 +149,18 @@ msgstr ""
 #: model:ir.model,name:hr_sign.model_hr_employee
 #: model:sign.item.role,name:hr_sign.sign_item_role_employee_signatory
 msgid "Employee"
-msgstr ""
+msgstr "Zamestnanec"
 
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_hr_version
 msgid "Employee Contract"
-msgstr ""
+msgstr "Zamestnanecká zmluva"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__employee_role_id
 #: model:ir.model.fields,field_description:hr_sign.field_mail_activity_plan_template__employee_role_id
 msgid "Employee Role"
-msgstr ""
+msgstr "Úloha zamestnanca"
 
 #. module: hr_sign
 #: model:ir.model.fields,help:hr_sign.field_hr_contract_sign_document_wizard__employee_role_id
@@ -170,12 +173,12 @@ msgstr ""
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__employee_ids
 msgid "Employees"
-msgstr ""
+msgstr "Zamestnanci"
 
 #. module: hr_sign
 #: model:sign.item.role,name:hr_sign.sign_item_role_job_responsible
 msgid "HR Responsible"
-msgstr ""
+msgstr "Zodpovedný za HR"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__has_both_template
@@ -191,7 +194,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_sign.field_mail_activity_schedule__id
 #: model:ir.model.fields,field_description:hr_sign.field_res_users__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_mail_activity_plan_template__is_signature_request
@@ -201,12 +204,12 @@ msgstr ""
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Naposledy upravoval"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Naposledy upravované"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__mail_displayed
@@ -221,7 +224,7 @@ msgstr ""
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__message
 msgid "Message"
-msgstr ""
+msgstr "Správa"
 
 #. module: hr_sign
 #. odoo-python
@@ -243,7 +246,7 @@ msgstr ""
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
 msgid "Optional Message..."
-msgstr ""
+msgstr "Voliteľná správa..."
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__possible_template_ids
@@ -253,28 +256,28 @@ msgstr ""
 #. module: hr_sign
 #: model:ir.model.fields.selection,name:hr_sign.selection__hr_contract_sign_document_wizard__mail_to__private
 msgid "Private"
-msgstr ""
+msgstr "Súkromné"
 
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_hr_employee_public
 msgid "Public Employee"
-msgstr ""
+msgstr "Verejný zamestnanec"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_employee__sign_request_ids
 #: model:ir.model.fields,field_description:hr_sign.field_hr_version__sign_request_ids
 msgid "Requested Signatures"
-msgstr ""
+msgstr "Požadované podpisy"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__responsible_id
 msgid "Responsible"
-msgstr ""
+msgstr "Zodpovedný"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_mail_activity_plan_template__responsible_count
 msgid "Responsible Count"
-msgstr ""
+msgstr "Zodpovedný počet"
 
 #. module: hr_sign
 #: model:ir.model.fields,help:hr_sign.field_hr_contract_sign_document_wizard__sign_template_ids
@@ -287,19 +290,19 @@ msgstr ""
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
 msgid "Send"
-msgstr ""
+msgstr "Poslať"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_employee_public__sign_request_ids
 msgid "Sign Request"
-msgstr ""
+msgstr "Žiadosť o podpísanie"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_employee__sign_request_count
 #: model:ir.model.fields,field_description:hr_sign.field_hr_employee_public__sign_request_count
 #: model:ir.model.fields,field_description:hr_sign.field_hr_version__sign_request_count
 msgid "Sign Request Count"
-msgstr ""
+msgstr "Počet žiadostí o podpis"
 
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
@@ -310,12 +313,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__sign_template_responsible_ids
 #: model:ir.model.fields,field_description:hr_sign.field_mail_activity_plan_template__sign_template_responsible_ids
 msgid "Sign Template Responsible"
-msgstr ""
+msgstr "Zodpovedná šablóna podpisu"
 
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_hr_contract_sign_document_wizard
 msgid "Sign document in contract"
-msgstr ""
+msgstr "Podpísať dokument v zmluve"
 
 #. module: hr_sign
 #. odoo-python
@@ -325,12 +328,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_sign.hr_employee_sign_view_form
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
 msgid "Signature Request"
-msgstr ""
+msgstr "Podpisová žiadosť"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__subject
 msgid "Subject"
-msgstr ""
+msgstr "Predmet"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__template_warning
@@ -345,7 +348,7 @@ msgstr ""
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_res_users
 msgid "User"
-msgstr ""
+msgstr "Užívateľ"
 
 #. module: hr_sign
 #: model:ir.model.fields.selection,name:hr_sign.selection__hr_contract_sign_document_wizard__mail_to__work
@@ -355,7 +358,7 @@ msgstr ""
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
 msgid "Write email or search contact..."
-msgstr ""
+msgstr "Napísať email alebo hľadať kontakt..."
 
 #. module: hr_sign
 #. odoo-python
@@ -363,3 +366,5 @@ msgstr ""
 msgid ""
 "You can't delete a contract linked to a signed document, archive it instead."
 msgstr ""
+"Zmluvu spojenú s podpísaným dokumentom nemôžete vymazať, namiesto toho ju "
+"archivujte."

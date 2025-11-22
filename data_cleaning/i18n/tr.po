@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:51+0000\n"
-"PO-Revision-Date: 2025-11-12 15:03+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "data_cleaning/tr/>\n"
 "Language: tr\n"
@@ -24,7 +25,6 @@ msgstr ""
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_group.py:0
-#, fuzzy
 msgid "%(model)s - Similarity: %(similarity)s%%"
 msgstr "%(model)s - Benzerlik: %(similarity)s%%"
 
@@ -69,7 +69,6 @@ msgstr "<span class=\"oe_inline\">%</span>"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_model_form
-#, fuzzy
 msgid "<span invisible=\"not custom_merge_method\">Model specific</span>"
 msgstr "<span invisible=\"not custom_merge_method\">Modele özel</span>"
 
@@ -247,7 +246,6 @@ msgstr "Ülke"
 
 #. module: data_cleaning
 #: model:ir.model,website_form_label:data_cleaning.model_res_partner
-#, fuzzy
 msgid "Create a Customer"
 msgstr "Müşteri Oluşturma"
 
@@ -316,7 +314,6 @@ msgstr "Veri Birleştirme: Yinelenen Kayıtları Bulun"
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_cleaning_model.py:0
-#, fuzzy
 msgid "Data to Clean"
 msgstr "Temizlenecek Veriler"
 
@@ -372,7 +369,6 @@ msgstr "Tekilleştirme Kuralları"
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_model.py:0
-#, fuzzy
 msgid "Deduplication is forbidden on the model: %s"
 msgstr "Model üzerinde veri tekilleştirme yasaktır: %s"
 
@@ -453,7 +449,6 @@ msgstr "Yinelenenler"
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_model.py:0
-#, fuzzy
 msgid "Duplicates to Merge"
 msgstr "Birleştirilecek Kopyalar"
 
@@ -659,7 +654,6 @@ msgstr "Manuel"
 #. module: data_cleaning
 #: model:ir.actions.act_window,name:data_cleaning.ir_model_action_merge
 #: model:ir.ui.menu,name:data_cleaning.ir_model_menu_merge_action_manager
-#, fuzzy
 msgid "Manual Merge"
 msgstr "Manuel Birleştirme"
 
@@ -705,7 +699,6 @@ msgstr "Birleştirme eylemi eklendi"
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_model.py:0
-#, fuzzy
 msgid "Missing required PostgreSQL extension: unaccent"
 msgstr "Gerekli PostgreSQL uzantısı eksik: unaccent"
 
@@ -787,7 +780,6 @@ msgstr "Kullanıcıları Bilgilendirin"
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
-#, fuzzy
 msgid "Query Failed."
 msgstr "Sorgu Başarısız."
 
@@ -839,7 +831,6 @@ msgstr "Tekilleştirme sürecine uygun kayıtlar"
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
-#, fuzzy
 msgid "Records must be of the same model"
 msgstr "Kayıtlar aynı modelden olmalıdır"
 
@@ -919,7 +910,6 @@ msgstr "Depolama"
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/report/data_storage.py:0
-#, fuzzy
 msgid "Storage Detail: %(name)s"
 msgstr "Depolama Detayı: %(name)s"
 
@@ -967,14 +957,12 @@ msgstr "Bildirim sıklığı 0'dan büyük olmalıdır"
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
-#, fuzzy
 msgid "The referenced record does not exist"
 msgstr "Başvurulan kayıt mevcut değil"
 
 #. module: data_cleaning
 #. odoo-javascript
 #: code:addons/data_cleaning/static/src/views/data_merge_list_view.js:0
-#, fuzzy
 msgid "The selected records have been merged"
 msgstr "Seçilen kayıtlar birleştirildi"
 
@@ -987,7 +975,6 @@ msgstr "Hedef model yok."
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
-#, fuzzy
 msgid "There is not referenced record"
 msgstr "Referans verilen bir kayıt yok"
 

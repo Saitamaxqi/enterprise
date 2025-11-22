@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-11-12 15:05+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "spreadsheet_dashboard_marketing_automation/tr/>\n"
 "Language: tr\n"
@@ -24,7 +25,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "# of mails opened"
 msgstr "# Açılan posta sayısı"
 
@@ -32,14 +32,12 @@ msgstr "# Açılan posta sayısı"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "# of mails sent"
 msgstr "# Gönderilen posta sayısı"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
-#, fuzzy
 msgid "Average Order Value (AOV)"
 msgstr "Ortalama Sipariş Değeri (AOV)"
 
@@ -47,16 +45,14 @@ msgstr "Ortalama Sipariş Değeri (AOV)"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "Bounce Rate"
-msgstr "Hemen Çıkma Oranı"
+msgstr "Geri dönen Oran"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
-#, fuzzy
 msgid "Bounce details"
-msgstr "Sıçrama detayları"
+msgstr "Geri dönme detayları"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -81,7 +77,6 @@ msgstr "İptal Edildi"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "Click-Through Rate (CTR)"
 msgstr "Tıklama Oranı (TO)"
 
@@ -89,7 +84,6 @@ msgstr "Tıklama Oranı (TO)"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "Click-to-open Rate (CTOR)"
 msgstr "Tıklama-Açma Oranı (CTOR)"
 
@@ -104,7 +98,6 @@ msgstr "Tıklandı"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "Clicks (%)"
 msgstr "Tıklamalar (%)"
 
@@ -136,7 +129,6 @@ msgstr "Teslim Edilen"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "Delivery  Rate"
 msgstr "Teslimat Oranı"
 
@@ -144,7 +136,6 @@ msgstr "Teslimat Oranı"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "Delivery Rate"
 msgstr "Teslimat Oranı"
 
@@ -157,7 +148,6 @@ msgstr "E-posta ile Pazarlama"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "Engagement Rate"
 msgstr "Katılım Oranı"
 
@@ -177,7 +167,6 @@ msgstr "Posta Kampanyası"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "Mailing campaigns in preparation"
 msgstr "Posta kampanyaları hazırlanıyor"
 
@@ -185,7 +174,6 @@ msgstr "Posta kampanyaları hazırlanıyor"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "Mails sent over previous period"
 msgstr "Önceki dönemde gönderilen postalar"
 
@@ -193,7 +181,6 @@ msgstr "Önceki dönemde gönderilen postalar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "Mails sent per month"
 msgstr "Aylık gönderilen postalar"
 
@@ -213,14 +200,12 @@ msgstr "Aracı:"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "N-1"
 msgstr "N-1"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
-#, fuzzy
 msgid "New Subscribers"
 msgstr "Yeni Aboneler"
 
@@ -246,9 +231,8 @@ msgstr "Sipariş sayısı"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "Open Rate"
-msgstr "Açık Oran"
+msgstr "Açma Oranı"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -285,7 +269,6 @@ msgstr "Sebep"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "Received (%)"
 msgstr "Alındı (%)"
 
@@ -311,10 +294,10 @@ msgstr "Replied (%)"
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
-#, fuzzy
 msgid "Requires # of click date defined -> worth ? change ?"
 msgstr ""
-"Tanımlanan tıklama tarihi sayısını gerektirir -> değer mi? değişiklik mi?"
+"Tanımlanan tıklama tarihi sayısını gerektirir -> değer mi? değişiklik yapmak "
+"ister misiniz?"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -326,7 +309,6 @@ msgstr "Sorumlu"
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
-#, fuzzy
 msgid "Revenue Generated"
 msgstr "Elde Edilen Gelir"
 
@@ -369,7 +351,6 @@ msgstr "Konu"
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
-#, fuzzy
 msgid "Subscribers Growth Rate"
 msgstr "Abone Büyüme Oranı"
 
@@ -383,29 +364,25 @@ msgstr "Hedef URL"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "Top 10 best link trackers"
-msgstr "En iyi 10 bağlantı izleyici"
+msgstr "En İyi 10 Link Takip Aracı"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "Top 10 recent mailing campaigns"
 msgstr "En son 10 posta kampanyası"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "Top 5 failed reasons"
 msgstr "En başarısız 5 neden"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
-#, fuzzy
 msgid "Top products sold"
 msgstr "En çok satılan ürünler"
 
@@ -418,7 +395,6 @@ msgstr "Toplam"
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
-#, fuzzy
 msgid "Unsubscribe Rate"
 msgstr "Abonelikten Çıkma Oranı"
 
@@ -433,7 +409,6 @@ msgstr "Abonelikten Çık"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "Unsubscribers"
 msgstr "Abonelikten Çıkanlar"
 
@@ -447,6 +422,5 @@ msgstr "Ziyaretler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
-#, fuzzy
 msgid "vs last period"
 msgstr "vs son dönem"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-11-13 07:38+0000\n"
+"PO-Revision-Date: 2025-11-18 05:41+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "sign_emsigner/ja/>\n"
@@ -222,24 +222,24 @@ msgstr "警告"
 #. odoo-python
 #: code:addons/sign_emsigner/controllers/main.py:0
 msgid "emSigner IAP service could not be found."
-msgstr ""
+msgstr "emSigner IAPサービスが見つかりませんでした。"
 
 #. module: sign_emsigner
 #: model:ir.model.fields,field_description:sign_emsigner.field_sign_request_item__emsigner_reference_number
 msgid "emSigner Reference Number"
-msgstr ""
+msgstr "emSigner参照番号"
 
 #. module: sign_emsigner
 #: model:ir.model.fields,field_description:sign_emsigner.field_sign_request_item__emsigner_status
 msgid "emSigner Status"
-msgstr ""
+msgstr "emSignerステータス"
 
 #. module: sign_emsigner
 #: model:ir.model.fields,field_description:sign_emsigner.field_sign_request_item__emsigner_transaction_number
 msgid "emSigner Transaction Number"
-msgstr ""
+msgstr "emSigner取引番号"
 
 #. module: sign_emsigner
 #: model:ir.model.fields,field_description:sign_emsigner.field_sign_request_item__emsigner_return_value
 msgid "emSigner Values"
-msgstr ""
+msgstr "emSigner値"

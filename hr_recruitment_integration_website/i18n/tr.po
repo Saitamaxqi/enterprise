@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-11-12 15:04+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "hr_recruitment_integration_website/tr/>\n"
 "Language: tr\n"
@@ -29,7 +30,6 @@ msgstr "Başvuru Yöntemi"
 #. module: hr_recruitment_integration_website
 #. odoo-python
 #: code:addons/hr_recruitment_integration_website/wizard/hr_recruitment_post_job.py:0
-#, fuzzy
 msgid "At least one job board must be selected.\n"
 msgstr "En az bir iş kurulu seçilmelidir.\n"
 
@@ -41,7 +41,6 @@ msgstr "Kampanya Başlangıç Tarihi"
 #. module: hr_recruitment_integration_website
 #. odoo-python
 #: code:addons/hr_recruitment_integration_website/wizard/hr_recruitment_post_job.py:0
-#, fuzzy
 msgid "Campaign Start Date is required.\n"
 msgstr "Kampanya Başlangıç Tarihi gereklidir.\n"
 
@@ -58,7 +57,6 @@ msgstr "Açıklama"
 #. module: hr_recruitment_integration_website
 #. odoo-python
 #: code:addons/hr_recruitment_integration_website/wizard/hr_recruitment_post_job.py:0
-#, fuzzy
 msgid "Description is required.\n"
 msgstr "Açıklama gereklidir.\n"
 
@@ -199,7 +197,6 @@ msgstr ""
 #. module: hr_recruitment_integration_website
 #. odoo-python
 #: code:addons/hr_recruitment_integration_website/wizard/hr_recruitment_post_job.py:0
-#, fuzzy
 msgid ""
 "URL is required if the apply method is 'Redirect to company's website'.\n"
 msgstr ""
@@ -221,6 +218,5 @@ msgstr ""
 
 #. module: hr_recruitment_integration_website
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_website.hr_recruitment_post_job_wizard_view_form
-#, fuzzy
 msgid "Your job will be automatically published."
 msgstr "İşiniz otomatik olarak yayınlanacaktır."

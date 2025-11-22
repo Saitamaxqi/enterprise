@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"POT-Creation-Date: 2025-11-21 18:40+0000\n"
 "PO-Revision-Date: 2025-11-14 07:51+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/iot/"
@@ -492,6 +492,7 @@ msgstr ""
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__version
+#: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "Image Version"
 msgstr "Versi Gambar"
 
@@ -554,8 +555,8 @@ msgstr "IoT Box ditemukan. Menghubungkan..."
 msgid ""
 "IoT Box local network is %(lan_quality)s and internet is %(wan_quality)s"
 msgstr ""
-"Jaringan lokal IoT Box adalah %(lan_quality)s dan internet adalah "
-"%(wan_quality)s"
+"Jaringan lokal IoT Box adalah %(lan_quality)s dan internet adalah %"
+"(wan_quality)s"
 
 #. module: iot
 #: model:ir.actions.act_window,name:iot.iot_box_action
@@ -1188,6 +1189,11 @@ msgstr "Kartu Tanda Tangan PPN diblokir."
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Vat Signing Card not compatible with Fiscal Data Module."
 msgstr "Kartu Tanda Tangan PPN tidak kompatibel dengan Modul Data Fiskal."
+
+#. module: iot
+#: model:ir.model.fields,field_description:iot.field_iot_box__version_commit_url
+msgid "Version Commit Url"
+msgstr ""
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form

@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:42+0000\n"
-"PO-Revision-Date: 2025-11-13 10:23+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "hr_expense_stripe/tr/>\n"
 "Language: tr\n"
@@ -23,13 +24,11 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.js:0
-#, fuzzy
 msgid "(Fetching...)"
-msgstr "(Getirme...)"
+msgstr "(Yükleniyor...)"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.res_config_settings_view_form
-#, fuzzy
 msgid ""
 "<i class=\"fa fa-warning ms-1 text-warning\"/>\n"
 "                                <span class=\"text-warning\"> Stripe issuing "
@@ -41,7 +40,6 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_kanban
-#, fuzzy
 msgid ""
 "<span class=\"card_cvc w-50 text-end stripe_card_text_sm\" invisible=\"state "
 "in ('draft', 'pending')\">\n"
@@ -55,7 +53,6 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.account_journal_form_inherit_expense_stripe
-#, fuzzy
 msgid "<span class=\"o_stat_text\">Cards</span>"
 msgstr "<span class=\"o_stat_text\">Kartlar</span>"
 
@@ -66,13 +63,11 @@ msgstr "<span class=\"o_stat_text\">Çalışan</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_view_form_inherits_stripe
-#, fuzzy
 msgid "<span class=\"ps-2\">Cards</span>"
 msgstr "<span class=\"ps-2\">Kartlar</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_receive_wizard_form
-#, fuzzy
 msgid ""
 "<span invisible=\"not show_warning_wrong_last_4\" class=\"fa fa-exclamation-"
 "triangle text-danger pb-2\" title=\"Entered digits don't match the last 4 "
@@ -80,35 +75,30 @@ msgid ""
 msgstr ""
 "<span invisible=\"not show_warning_wrong_last_4\" class="
 "\"fa fa-exclamation-triangle text-danger pb-2\" title="
-"\"Entered digits don't match the last 4 digits of the card.\"/>"
+"\"Girilen rakamlar kartını son 4 hanesiyle eşleşmiyor.\"/>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.account_journal_dashboard_kanban_view_inherit_expense_stripe
-#, fuzzy
 msgid "<span>Available</span>"
 msgstr "<span>Mevcut</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
-#, fuzzy
 msgid "<span>and</span>"
 msgstr "<span>ve</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
-#, fuzzy
 msgid "<span>per transaction</span>"
 msgstr "<span>işlem başına</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
-#, fuzzy
 msgid "<span>per</span>"
 msgstr "<span>başına</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_topup_wizard_form
-#, fuzzy
 msgid ""
 "<strong>Top up your Stripe Issuing account to ensure your balance covers "
 "upcoming expenses.</strong>"
@@ -118,7 +108,6 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model:mail.template,body_html:hr_expense_stripe.email_template_hr_expense_stripe_card_canceled
-#, fuzzy
 msgid ""
 "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
 "16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
@@ -341,7 +330,6 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model:mail.template,body_html:hr_expense_stripe.email_template_hr_expense_stripe_card_ordered
-#, fuzzy
 msgid ""
 "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
 "16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
@@ -557,7 +545,6 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model:mail.template,body_html:hr_expense_stripe.email_template_hr_expense_stripe_card_shipped
-#, fuzzy
 msgid ""
 "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
 "16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
@@ -811,7 +798,6 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/res_company.py:0
-#, fuzzy
 msgid "A Webhook URL already exists for this company."
 msgstr "Bu şirket için bir Web kancası URL'si zaten mevcut."
 
@@ -819,29 +805,24 @@ msgstr "Bu şirket için bir Web kancası URL'si zaten mevcut."
 #. odoo-python
 #: code:addons/hr_expense_stripe/controllers/main.py:0
 #: code:addons/hr_expense_stripe/models/account_bank_statement_line.py:0
-#, fuzzy
 msgid "A card that doesn't exist on the database was used"
 msgstr "Veritabanında bulunmayan bir kart kullanıldı"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_hr_expense_stripe_card_block_wizard
-#, fuzzy
 msgid "A wizard used to block a card"
-msgstr "Bir kartı bloke etmek için kullanılan bir sihirbaz"
+msgstr "Kart blokesi için kullanılan bir aygıt"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_hr_expense_stripe_card_receive_wizard
-#, fuzzy
 msgid "A wizard used to first active a card when received"
 msgstr ""
-"Bir kart alındığında ilk olarak aktif hale getirmek için kullanılan bir "
-"sihirbaz"
+"Bir kart alındığında ilk olarak aktif hale getirmek için kullanılan bir aygıt"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.ac_refrigeration_repair
-#, fuzzy
 msgid "AC Refrigeration Repair"
-msgstr "AC Soğutma Onarımı"
+msgstr "Klima Soğutma Onarımı"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_account_chart_template
@@ -851,19 +832,16 @@ msgstr "Hesap Planı Şablonu"
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_expense_issuing_terms.xml:0
-#, fuzzy
 msgid "Account Closure"
 msgstr "Hesap Kapatma"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__account_number
-#, fuzzy
 msgid "Account number"
 msgstr "Hesap numarası"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.accounting_bookkeeping_services
-#, fuzzy
 msgid "Accounting Bookkeeping Services"
 msgstr "Muhasebe Defter Tutma Hizmetleri"
 
@@ -887,25 +865,21 @@ msgstr "Etkin"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.advertising_services
-#, fuzzy
 msgid "Advertising Services"
 msgstr "Reklam Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
-#, fuzzy
 msgid "Agricultural services"
 msgstr "Tarımsal hizmetler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.airlines_air_carriers
-#, fuzzy
 msgid "Airlines Air Carriers"
 msgstr "Havayolları Hava Taşıyıcıları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.airports_flying_fields
-#, fuzzy
 msgid "Airports Flying Fields"
 msgstr "Havaalanları Uçuş Alanları"
 
@@ -921,32 +895,27 @@ msgstr "Tüm ülkeler"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_list
-#, fuzzy
 msgid "All valid MCCs"
 msgstr "Tüm geçerli MCC'ler"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
-#, fuzzy
 msgid "Allow All"
 msgstr "Tümüne İzin Ver"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
-#, fuzzy
 msgid "Allowed codes"
 msgstr "İzin verilen kodlar"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_form
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_list
-#, fuzzy
 msgid "Always refuse transactions"
 msgstr "İşlemleri her zaman reddedin"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.ambulance_services
-#, fuzzy
 msgid "Ambulance Services"
 msgstr "Ambulans Hizmetleri"
 
@@ -957,57 +926,48 @@ msgstr "Tutar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.amusement_parks_carnivals
-#, fuzzy
 msgid "Amusement Parks Carnivals"
 msgstr "Eğlence Parkları Karnavallar"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense.py:0
-#, fuzzy
 msgid "An Expense card that doesn't exist on the database was used"
 msgstr "Veritabanında bulunmayan bir Gider kartı kullanıldı"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "An insecure authorization method was used"
 msgstr "Güvensiz bir yetkilendirme yöntemi kullanıldı"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.antique_reproductions
-#, fuzzy
 msgid "Antique Reproductions"
 msgstr "Antika Reprodüksiyonlar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.antique_shops
-#, fuzzy
 msgid "Antique Shops"
 msgstr "Antika Dükkanları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.aquariums
-#, fuzzy
 msgid "Aquariums"
 msgstr "Akvaryumlar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.architectural_surveying_services
-#, fuzzy
 msgid "Architectural Surveying Services"
 msgstr "Mimari Ölçme Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.art_dealers_and_galleries
-#, fuzzy
 msgid "Art Dealers and Galleries"
 msgstr "Sanat Satıcıları ve Galerileri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.artists_supply_and_craft_shops
-#, fuzzy
 msgid "Artists Supply and Craft Shops"
 msgstr "Sanatçı Malzemeleri ve El Sanatları Mağazaları"
 
@@ -1019,73 +979,61 @@ msgstr "Ek Sayısı"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.auto_body_repair_shops
-#, fuzzy
 msgid "Auto Body Repair Shops"
 msgstr "Oto Kaporta Tamir Atölyeleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.auto_paint_shops
-#, fuzzy
 msgid "Auto Paint Shops"
 msgstr "Oto Boya Atölyeleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.auto_service_shops
-#, fuzzy
 msgid "Auto Service Shops"
 msgstr "Oto Servis Dükkanları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.auto_and_home_supply_stores
-#, fuzzy
 msgid "Auto and Home Supply Stores"
 msgstr "Oto ve Ev Tedarik Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.automated_fuel_dispensers
-#, fuzzy
 msgid "Automated Fuel Dispensers"
 msgstr "Otomatik Yakıt Dispenserleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.automobile_associations
-#, fuzzy
 msgid "Automobile Associations"
 msgstr "Otomobil Dernekleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.automotive_parts_and_accessories_stores
-#, fuzzy
 msgid "Automotive Parts and Accessories Stores"
 msgstr "Otomotiv Parça ve Aksesuar Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.automotive_tire_stores
-#, fuzzy
 msgid "Automotive Tire Stores"
 msgstr "Otomotiv Lastik Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__bic
-#, fuzzy
 msgid "BIC"
-msgstr "BIC"
+msgstr "İş İnovasyon / Entegrasyon Merkezi"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.bail_and_bond_payments
-#, fuzzy
 msgid "Bail and Bond Payments"
 msgstr "Kefalet ve Tahvil Ödemeleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.bakeries
-#, fuzzy
 msgid "Bakeries"
 msgstr "Fırınlar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.bands_orchestras
-#, fuzzy
 msgid "Bands Orchestras"
 msgstr "Gruplar Orkestralar"
 
@@ -1096,43 +1044,36 @@ msgstr "Banka Hesap Ekstresi Kalemi"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__statement_description
-#, fuzzy
 msgid "Bank statement description"
 msgstr "Banka hesap özeti açıklaması"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.barber_and_beauty_shops
-#, fuzzy
 msgid "Barber and Beauty Shops"
 msgstr "Berber ve Güzellik Dükkanları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.betting_casino_gambling
-#, fuzzy
 msgid "Betting Casino Gambling"
-msgstr "Bahis Casino Kumar"
+msgstr "Bahis ve Kumarhane"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.bicycle_shops
-#, fuzzy
 msgid "Bicycle Shops"
 msgstr "Bisiklet Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.billiard_pool_establishments
-#, fuzzy
 msgid "Billiard Pool Establishments"
 msgstr "Bilardo Havuzu İşletmeleri"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__billing_country_code
-#, fuzzy
 msgid "Billing Country Code"
 msgstr "Faturalama Ülke Kodu"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__birthday
-#, fuzzy
 msgid "Birthday"
 msgstr "Doğum Günü"
 
@@ -1145,9 +1086,8 @@ msgstr "Engelle"
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "Block a Card"
-msgstr "Bir Kartı Engelle"
+msgstr "Kartı Engelle"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__state__canceled
@@ -1158,25 +1098,21 @@ msgstr "Engellendi"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.boat_dealers
-#, fuzzy
 msgid "Boat Dealers"
 msgstr "Tekne Satıcıları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.boat_rentals_and_leases
-#, fuzzy
 msgid "Boat Rentals and Leases"
 msgstr "Tekne Kiralama ve Leasing"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.book_stores
-#, fuzzy
 msgid "Book Stores"
 msgstr "Kitap Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.books_periodicals_and_newspapers
-#, fuzzy
 msgid "Books Periodicals and Newspapers"
 msgstr "Kitaplar Süreli Yayınlar ve Gazeteler"
 
@@ -1187,44 +1123,37 @@ msgstr "Bowling Salonları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.bus_lines
-#, fuzzy
 msgid "Bus Lines"
 msgstr "Otobüs Hatları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.business_secretarial_schools
-#, fuzzy
 msgid "Business Secretarial Schools"
 msgstr "İşletme Sekreterliği Okulları"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
-#, fuzzy
 msgid "Business services"
 msgstr "İş hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.buying_shopping_services
-#, fuzzy
 msgid "Buying Shopping Services"
 msgstr "Alışveriş Hizmetleri Satın Alma"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_card_receive_terms.xml:0
-#, fuzzy
 msgid "By ticking the box, you agree:"
 msgstr "Kutuyu işaretleyerek kabul etmiş olursunuz:"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.cable_satellite_and_other_pay_television_and_radio
-#, fuzzy
 msgid "Cable Satellite and Other Pay Television and Radio"
 msgstr "Kablo Uydu ve Diğer Ödemeli Televizyon ve Radyo"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.camera_and_photographic_supply_stores
-#, fuzzy
 msgid "Camera and Photographic Supply Stores"
 msgstr "Kamera ve Fotoğraf Malzemeleri Mağazaları"
 
@@ -1241,25 +1170,21 @@ msgstr "İptal Edildi"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__cancellation_reason
-#, fuzzy
 msgid "Cancellation Reason"
 msgstr "İptal Nedeni"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.candy_nut_and_confectionery_stores
-#, fuzzy
 msgid "Candy Nut and Confectionery Stores"
 msgstr "Şekerleme ve Şekerleme Dükkanları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.car_and_truck_dealers_new_used
-#, fuzzy
 msgid "Car and Truck Dealers New Used"
 msgstr "Araba ve Kamyon Satıcıları Yeni Kullanılmış"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.car_and_truck_dealers_used_only
-#, fuzzy
 msgid "Car and Truck Dealers Used Only"
 msgstr "Sadece Kullanılmış Otomobil ve Kamyon Satıcıları"
 
@@ -1272,38 +1197,32 @@ msgstr "Kart"
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "Card Activation"
 msgstr "Kart Aktivasyonu"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
-#, fuzzy
 msgid "Card Details"
 msgstr "Kart Detayları"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__last_4_challenge
-#, fuzzy
 msgid "Card Last 4 digits"
 msgstr "Kart Son 4 hane"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_card_receive_terms.xml:0
-#, fuzzy
 msgid "Card Liability"
 msgstr "Kart Sorumluluğu"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__spending_policy_interval_amount
-#, fuzzy
 msgid "Card Limit"
 msgstr "Kart Limiti"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__card_name
-#, fuzzy
 msgid "Card Name"
 msgstr "Kart Adı"
 
@@ -1315,46 +1234,39 @@ msgstr "Kart numarası"
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_card_receive_terms.xml:0
-#, fuzzy
 msgid "Card Reception"
 msgstr "Kart Resepsiyonu"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_block_wizard__card_id
-#, fuzzy
 msgid "Card To Block"
 msgstr "Bloklanacak Kart"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.js:0
-#, fuzzy
 msgid "Card cvc copied to the clipboard."
 msgstr "Kart cvc panoya kopyalandı."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/account_bank_statement_line.py:0
-#, fuzzy
 msgid "Card ending in %(last_4)s payment to %(merchant_name)s"
 msgstr "%(last_4)s ile biten kart ile ödeme %(merchant_name)s"
 
 #. module: hr_expense_stripe
 #: model:mail.message.subtype,description:hr_expense_stripe.mt_stripe_card_received
-#, fuzzy
 msgid "Card marked as received."
 msgstr "Kart alındı olarak işaretlendi."
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.js:0
-#, fuzzy
 msgid "Card number copied to the clipboard."
 msgstr "Kart numarası panoya kopyalandı."
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__card_id
-#, fuzzy
 msgid "Card to activate"
 msgstr "Etkinleştirilecek kart"
 
@@ -1365,20 +1277,17 @@ msgstr "Etkinleştirilecek kart"
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__employee_id
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_view_search
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
-#, fuzzy
 msgid "Cardholder"
 msgstr "Kart sahibi"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "Cardholder Configuration"
 msgstr "Kart Sahibi Yapılandırması"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__phone_number
-#, fuzzy
 msgid "Cardholder Mobile Number"
 msgstr "Kart Sahibinin Cep Telefonu Numarası"
 
@@ -1390,20 +1299,17 @@ msgstr "Kart sahibi adı"
 
 #. module: hr_expense_stripe
 #: model:mail.message.subtype,name:hr_expense_stripe.mt_stripe_card_received
-#, fuzzy
 msgid "Cardholder Received"
 msgstr "Kart Sahibi Alındı"
 
 #. module: hr_expense_stripe
 #: model:mail.message.subtype,name:hr_expense_stripe.mt_stripe_cardholder_updated
-#, fuzzy
 msgid "Cardholder updated"
 msgstr "Kart sahibi güncellendi"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "Cardholders"
 msgstr "Kart sahipleri"
 
@@ -1417,19 +1323,16 @@ msgstr "Kartlar"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_view_search
-#, fuzzy
 msgid "Cards of Your Team Member"
 msgstr "Ekip Üyenizin Kartları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.carpentry_services
-#, fuzzy
 msgid "Carpentry Services"
 msgstr "Marangozluk Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.carpet_upholstery_cleaning
-#, fuzzy
 msgid "Carpet Upholstery Cleaning"
 msgstr "Halı Döşeme Temizliği"
 
@@ -1445,49 +1348,41 @@ msgstr "Catering Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.charitable_and_social_service_organizations_fundraising
-#, fuzzy
 msgid "Charitable and Social Service Organizations Fundraising"
-msgstr "Hayırsever ve Sosyal Hizmet Kuruluşları Kaynak Geliştirme"
+msgstr "Yardım ve Sosyal Hizmet Kuruluşları Kaynak Geliştirme"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.chemicals_and_allied_products
-#, fuzzy
 msgid "Chemicals and Allied Products"
 msgstr "Kimyasallar ve Müttefik Ürünler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.child_care_services
-#, fuzzy
 msgid "Child Care Services"
 msgstr "Çocuk Bakım Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.childrens_and_infants_wear_stores
-#, fuzzy
 msgid "Children and Infant's Wear Stores"
 msgstr "Çocuk ve Bebek Giyim Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.chiropodists_podiatrists
-#, fuzzy
 msgid "Chiropodists Podiatrists"
 msgstr "Kiropodistler Podiatristler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.chiropractors
-#, fuzzy
 msgid "Chiropractors"
 msgstr "Kiropraktörler"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_topup_wizard_form
-#, fuzzy
 msgid "Choose any amount — the QR code updates automatically"
 msgstr "İstediğiniz miktarı seçin - QR kodu otomatik olarak güncellenir"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.cigar_stores_and_stands
-#, fuzzy
 msgid "Cigar Stores and Stands"
 msgstr "Puro Dükkanları ve Standları"
 
@@ -1498,13 +1393,11 @@ msgstr "Şehir"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.civic_social_fraternal_associations
-#, fuzzy
 msgid "Civic Social Fraternal Associations"
 msgstr "Sivil Sosyal Kardeşlik Dernekleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.cleaning_and_maintenance
-#, fuzzy
 msgid "Cleaning and Maintenance"
 msgstr "Temizlik ve Bakım"
 
@@ -1519,13 +1412,11 @@ msgstr "Kapat"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.clothing_rental
-#, fuzzy
 msgid "Clothing Rental"
 msgstr "Kıyafet Kiralama"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
-#, fuzzy
 msgid "Clothing shops"
 msgstr "Giyim mağazaları"
 
@@ -1537,7 +1428,6 @@ msgstr "Kod"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.colleges_universities
-#, fuzzy
 msgid "Colleges Universities"
 msgstr "Kolejler Üniversiteler"
 
@@ -1548,25 +1438,21 @@ msgstr "Renk"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.commercial_equipment
-#, fuzzy
 msgid "Commercial Equipment"
 msgstr "Ticari Ekipmanlar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.commercial_footwear
-#, fuzzy
 msgid "Commercial Footwear"
 msgstr "Ticari Ayakkabılar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.commercial_photography_art_and_graphics
-#, fuzzy
 msgid "Commercial Photography Art and Graphics"
 msgstr "Ticari Fotoğrafçılık Sanat ve Grafik"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.commuter_transport_and_ferries
-#, fuzzy
 msgid "Commuter Transport and Ferries"
 msgstr "Banliyö Taşımacılığı ve Feribotlar"
 
@@ -1590,50 +1476,42 @@ msgstr "Şirket Ülkesi"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__company_partner_id
-#, fuzzy
 msgid "Company Partner"
 msgstr "Şirket Ortağı"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_expense_issuing_terms.xml:0
-#, fuzzy
 msgid "Compliance Obligation"
 msgstr "Uyumluluk Yükümlülüğü"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.computer_network_services
-#, fuzzy
 msgid "Computer Network Services"
 msgstr "Bilgisayar Ağı Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.computer_programming
-#, fuzzy
 msgid "Computer Programming"
 msgstr "Bilgisayar Programcılığı"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.computer_repair
-#, fuzzy
 msgid "Computer Repair"
 msgstr "Bilgisayar Tamiri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.computer_software_stores
-#, fuzzy
 msgid "Computer Software Stores"
 msgstr "Bilgisayar Yazılım Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.computers_peripherals_and_software
-#, fuzzy
 msgid "Computers Peripherals and Software"
 msgstr "Bilgisayar Çevre Birimleri ve Yazılımları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.concrete_work_services
-#, fuzzy
 msgid "Concrete Work Services"
 msgstr "Beton İşleri Hizmetleri"
 
@@ -1665,31 +1543,26 @@ msgstr "İnşaat Malzemeleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.consulting_public_relations
-#, fuzzy
 msgid "Consulting Public Relations"
 msgstr "Halkla İlişkiler Danışmanlığı"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
-#, fuzzy
 msgid "Contracted services"
 msgstr "Sözleşmeli hizmetler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.correspondence_schools
-#, fuzzy
 msgid "Correspondence Schools"
 msgstr "Yazışmalı Okullar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.cosmetic_stores
-#, fuzzy
 msgid "Cosmetic Stores"
 msgstr "Kozmetik Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.counseling_services
-#, fuzzy
 msgid "Counseling Services"
 msgstr "Danışmanlık Hizmetleri"
 
@@ -1705,32 +1578,27 @@ msgstr "Ülke"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.country_clubs
-#, fuzzy
 msgid "Country Clubs"
 msgstr "Ülke Kulüpleri"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "Country not allowed"
 msgstr "İzin verilmeyen ülke"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.courier_services
-#, fuzzy
 msgid "Courier Services"
 msgstr "Kurye Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.court_costs
-#, fuzzy
 msgid "Court Costs"
 msgstr "Mahkeme Masrafları"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.res_config_settings_view_form
-#, fuzzy
 msgid ""
 "Create prepaid virtual and physical cards for both one-time and recurring "
 "expenses, integrated into Odoo through Stripe Issuing."
@@ -1740,7 +1608,6 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model_terms:ir.actions.act_window,help:hr_expense_stripe.action_hr_expense_stripe_card
-#, fuzzy
 msgid ""
 "Create virtual and physical cards for smooth team spending, whether for "
 "single purchases or ongoing expenses."
@@ -1770,13 +1637,11 @@ msgstr "Oluşturuldu"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.credit_reporting_agencies
-#, fuzzy
 msgid "Credit Reporting Agencies"
 msgstr "Alacak Raporlama Kuruluşları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.cruise_lines
-#, fuzzy
 msgid "Cruise Lines"
 msgstr "Kruvaziyer Hatları"
 
@@ -1788,19 +1653,16 @@ msgstr "Kur"
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_topup_wizard.py:0
-#, fuzzy
 msgid "Currency %(name)s is not available in the system. Please activate it"
 msgstr "Para Birimi %(name)s sistemde mevcut değildir. Lütfen etkinleştirin"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.dairy_products_stores
-#, fuzzy
 msgid "Dairy Products Stores"
 msgstr "Süt Ürünleri Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.dance_hall_studios_schools
-#, fuzzy
 msgid "Dance Hall Studios Schools"
 msgstr "Dans Salonu Stüdyoları Okullar"
 
@@ -1821,15 +1683,13 @@ msgstr "Teslim Adresi"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.dentists_orthodontists
-#, fuzzy
 msgid "Dentists Orthodontists"
 msgstr "Diş Hekimleri Ortodontistler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.department_stores
-#, fuzzy
 msgid "Department Stores"
-msgstr "Büyük Departman Mağazalar"
+msgstr "Çok Bölümlü Mağazalar"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_block_wizard__other_reason_text
@@ -1838,97 +1698,81 @@ msgstr "Açıklama"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__cancellation_reason__design_rejected
-#, fuzzy
 msgid "Design Rejected"
 msgstr "Tasarım Reddedildi"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.detective_agencies
-#, fuzzy
 msgid "Detective Agencies"
 msgstr "Dedektiflik Büroları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.digital_goods_applications
-#, fuzzy
 msgid "Digital Goods Applications"
 msgstr "Dijital Ürün Uygulamaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.digital_goods_games
-#, fuzzy
 msgid "Digital Goods Games"
 msgstr "Dijital Ürünler Oyunlar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.digital_goods_large_volume
-#, fuzzy
 msgid "Digital Goods Large Volume"
 msgstr "Dijital Ürünler Büyük Hacimli"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.digital_goods_media
-#, fuzzy
 msgid "Digital Goods Media"
 msgstr "Dijital Ürünler Medya"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.direct_marketing_catalog_merchant
-#, fuzzy
 msgid "Direct Marketing Catalog Merchant"
 msgstr "Doğrudan Pazarlama Kataloğu Satıcısı"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.direct_marketing_combination_catalog_and_retail_merchant
-#, fuzzy
 msgid "Direct Marketing Combination Catalog and Retail Merchant"
 msgstr "Doğrudan Pazarlama Kombinasyonu Katalog ve Perakende Satıcı"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.direct_marketing_inbound_telemarketing
-#, fuzzy
 msgid "Direct Marketing Inbound Telemarketing"
 msgstr "Doğrudan Pazarlama Inbound Telemarketing"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.direct_marketing_insurance_services
-#, fuzzy
 msgid "Direct Marketing Insurance Services"
 msgstr "Doğrudan Pazarlama Sigorta Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.direct_marketing_other
-#, fuzzy
 msgid "Direct Marketing Other"
 msgstr "Doğrudan Pazarlama Diğer"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.direct_marketing_outbound_telemarketing
-#, fuzzy
 msgid "Direct Marketing Outbound Telemarketing"
 msgstr "Doğrudan Pazarlama Outbound Telemarketing"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.direct_marketing_subscription
-#, fuzzy
 msgid "Direct Marketing Subscription"
 msgstr "Doğrudan Pazarlama Aboneliği"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.direct_marketing_travel
-#, fuzzy
 msgid "Direct Marketing Travel"
 msgstr "Doğrudan Pazarlama Seyahat"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_topup_wizard__pull_push_funds__pull
-#, fuzzy
 msgid "Directly pull funds from the company bank account"
 msgstr "Doğrudan şirket banka hesabından para çekme"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
-#, fuzzy
 msgid "Disallowed codes"
 msgstr "İzin verilmeyen kodlar"
 
@@ -1941,7 +1785,6 @@ msgstr "Sil"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.discount_stores
-#, fuzzy
 msgid "Discount Stores"
 msgstr "İndirim Mağazaları"
 
@@ -1970,7 +1813,6 @@ msgstr "İsim Göster"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.doctors
-#, fuzzy
 msgid "Doctors"
 msgstr "Doktorlar"
 
@@ -1981,7 +1823,6 @@ msgstr "Yapıldı"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.door_to_door_sales
-#, fuzzy
 msgid "Door To Door Sales"
 msgstr "Kapıdan Kapıya Satış"
 
@@ -1995,97 +1836,81 @@ msgstr "Taslak"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.drapery_window_covering_and_upholstery_stores
-#, fuzzy
 msgid "Drapery Window Covering and Upholstery Stores"
 msgstr "Perdelik Pencere Kaplama ve Döşeme Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.drinking_places
-#, fuzzy
 msgid "Drinking Places"
-msgstr "İçme Mekanları"
+msgstr "Alkollü İçki Mekanları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.drug_stores_and_pharmacies
-#, fuzzy
 msgid "Drug Stores and Pharmacies"
 msgstr "İlaç Mağazaları ve Eczaneler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.drugs_drug_proprietaries_and_druggist_sundries
-#, fuzzy
 msgid "Drugs Drug Proprietaries and Druggist Sundries"
-msgstr "Uyuşturucu Maddeler Eczaneler ve Eczacılar"
+msgstr "Eczaneler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.dry_cleaners
-#, fuzzy
 msgid "Dry Cleaners"
 msgstr "Kuru Temizleyiciler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.durable_goods
-#, fuzzy
 msgid "Durable Goods"
-msgstr "Dayanıklı Mallar"
+msgstr "Dayanıklı Tüketim Malları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.duty_free_stores
-#, fuzzy
 msgid "Duty Free Stores"
 msgstr "Duty Free Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.eating_places_restaurants
-#, fuzzy
 msgid "Eating Places Restaurants"
-msgstr "Yemek Yeme Yerleri Restoranlar"
+msgstr "Restoranlar ve Yemek Yerleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.educational_services
-#, fuzzy
 msgid "Educational Services"
 msgstr "Eğitim Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.electric_razor_stores
-#, fuzzy
 msgid "Electric Razor Stores"
 msgstr "Elektrikli Tıraş Makinesi Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.electric_vehicle_charging
-#, fuzzy
 msgid "Electric Vehicle Charging"
 msgstr "Elektrikli Araç Şarjı"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.electrical_parts_and_equipment
-#, fuzzy
 msgid "Electrical Parts and Equipment"
 msgstr "Elektrikli Parçalar ve Ekipmanlar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.electrical_services
-#, fuzzy
 msgid "Electrical Services"
 msgstr "Elektrik Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.electronics_repair_shops
-#, fuzzy
 msgid "Electronics Repair Shops"
 msgstr "Elektronik Tamir Atölyeleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.electronics_stores
-#, fuzzy
 msgid "Electronics Stores"
 msgstr "Elektronik Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.elementary_secondary_schools
-#, fuzzy
 msgid "Elementary Secondary Schools"
 msgstr "İlköğretim Ortaöğretim Okulları"
 
@@ -2096,7 +1921,6 @@ msgstr "E-Posta"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.emergency_services_gcas_visa_use_only
-#, fuzzy
 msgid "Emergency Services GCAS Visa Use Only"
 msgstr "Acil Durum Hizmetleri GCAS Sadece Vize Kullanımı"
 
@@ -2108,7 +1932,6 @@ msgstr "Çalışan"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_hr_expense_stripe_card
-#, fuzzy
 msgid "Employee Expense Card"
 msgstr "Çalışan Harcama Kartı"
 
@@ -2119,20 +1942,19 @@ msgstr "Çalışan Adı"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.employment_temp_agencies
-#, fuzzy
 msgid "Employment Temp Agencies"
 msgstr "Geçici İstihdam Büroları"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.xml:0
-#, fuzzy
 msgid "Enter the code we sent to the cardholder's phone number ending in"
-msgstr "ile biten kart sahibinin telefon numarasına gönderdiğimiz kodu girin."
+msgstr ""
+"Kart bilgileri iletilen kart sahibinin telefon numarasına gönderilen kodu "
+"girin"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.equipment_rental
-#, fuzzy
 msgid "Equipment Rental"
 msgstr "Ekipman Kiralama"
 
@@ -2144,7 +1966,6 @@ msgstr "Hata"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__shipping_estimated_delivery
-#, fuzzy
 msgid "Estimated Delivery"
 msgstr "Tahmini Teslimat"
 
@@ -2158,26 +1979,22 @@ msgstr "Masraf"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_account_payment_method_line__card_id
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.res_config_settings_view_form
-#, fuzzy
 msgid "Expense Card"
 msgstr "Harcama Kartı"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_expense_issuing_terms.xml:0
-#, fuzzy
 msgid "Expense Cards Terms and Conditions"
 msgstr "Harcama Kartları Hüküm ve Koşulları"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
-#, fuzzy
 msgid "Expense Category to Use"
 msgstr "Kullanılacak Gider Kategorisi"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_mcc_stripe_tag__product_id
-#, fuzzy
 msgid "Expense Category to use"
 msgstr "Kullanılacak Gider Kategorisi"
 
@@ -2188,21 +2005,18 @@ msgstr "Masraf Bölünmesi"
 
 #. module: hr_expense_stripe
 #: model:ir.actions.server,name:hr_expense_stripe.hr_expense_stripe_issuing_status_cron_ir_actions_server
-#, fuzzy
 msgid "Expense Stripe issuing: Update account status"
 msgstr "Gider Şeridi düzenleniyor: Hesap durumunu güncelleme"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense.py:0
-#, fuzzy
 msgid "Expense was refunded by vendor"
 msgstr "Gider satıcı tarafından iade edildi"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense.py:0
-#, fuzzy
 msgid "Expense was refused by Stripe, or an error occurred"
 msgstr "Gider Stripe tarafından reddedildi veya bir hata oluştu"
 
@@ -2221,7 +2035,6 @@ msgstr "Masraf Sayısı"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
-#, fuzzy
 msgid "Expenses Stripe Card"
 msgstr "Giderler Şerit Kart"
 
@@ -2232,21 +2045,18 @@ msgstr "Son Kullanma Tarihi"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.exterminating_services
-#, fuzzy
 msgid "Exterminating Services"
 msgstr "İlaçlama Hizmetleri"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.js:0
-#, fuzzy
 msgid "Failed to fetch StripeJS initialization params."
 msgstr "StripeJS başlatma parametreleri getirilemedi."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid ""
 "Failed to update card from Stripe. You are trying to update the wrong card."
 msgstr ""
@@ -2259,31 +2069,26 @@ msgstr "Arıza"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.family_clothing_stores
-#, fuzzy
 msgid "Family Clothing Stores"
 msgstr "Aile Giyim Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.fast_food_restaurants
-#, fuzzy
 msgid "Fast Food Restaurants"
 msgstr "Fast Food Restoranları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.financial_institutions
-#, fuzzy
 msgid "Financial Institutions"
 msgstr "Finansal Kurumlar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.fines_government_administrative_entities
-#, fuzzy
 msgid "Fines Government Administrative Entities"
 msgstr "Para Cezaları Kamu İdari Kuruluşları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.fireplace_fireplace_screens_and_accessories_stores
-#, fuzzy
 msgid "Fireplace Fireplace Screens and Accessories Stores"
 msgstr "Şömine Şömine Perdeleri ve Aksesuarları Mağazaları"
 
@@ -2294,21 +2099,18 @@ msgstr "İsim"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.floor_covering_stores
-#, fuzzy
 msgid "Floor Covering Stores"
 msgstr "Zemin Kaplama Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.florists
-#, fuzzy
 msgid "Florists"
 msgstr "Çiçekçiler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.florists_supplies_nursery_stock_and_flowers
-#, fuzzy
 msgid "Florists Supplies Nursery Stock and Flowers"
-msgstr "Çiçekçi Malzemeleri Fidanlık Stokları ve Çiçekler"
+msgstr "Bahçe Malzemeleri"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_follower_ids
@@ -2324,7 +2126,6 @@ msgstr "Takipçiler (İş ortakları)"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_product_product__stripe_mcc_ids
-#, fuzzy
 msgid ""
 "For expenses created through Stripe Expense Cards, this Expense Category "
 "will be automatically assigned when a transaction matching the following MCC "
@@ -2339,25 +2140,21 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "Forbidden access to the IAP proxy server"
 msgstr "IAP proxy sunucusuna erişim yasak"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.freezer_and_locker_meat_provisioners
-#, fuzzy
 msgid "Freezer and Locker Meat Provisioners"
 msgstr "Dondurucu ve Dolap Et Sağlayıcıları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.fuel_dealers_non_automotive
-#, fuzzy
 msgid "Fuel Dealers Non Automotive"
 msgstr "Otomotiv Dışı Akaryakıt Bayileri"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_topup_wizard_form
-#, fuzzy
 msgid "Funds go to a prepaid balance used by your expense cards"
 msgstr ""
 "Fonlar, harcama kartlarınız tarafından kullanılan ön ödemeli bir bakiyeye "
@@ -2365,134 +2162,112 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.funeral_services_crematories
-#, fuzzy
 msgid "Funeral Services Crematories"
 msgstr "Cenaze Hizmetleri Krematoryumlar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.furniture_home_furnishings_and_equipment_stores_except_appliances
-#, fuzzy
 msgid "Furniture Home Furnishings and Equipment Stores Except Appliances"
 msgstr "Beyaz Eşya Hariç Mobilya Ev Eşyası ve Ekipmanları Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.furniture_repairs_refinishing
-#, fuzzy
 msgid "Furniture Repairs Refinishing"
 msgstr "Mobilya Onarımları Tamirat"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.furriers_and_fur_shops
-#, fuzzy
 msgid "Furriers and Fur Shops"
 msgstr "Kürkçüler ve Kürk Dükkanları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.general_services
-#, fuzzy
 msgid "General Services"
 msgstr "Genel Hizmetler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.gift_card_novelty_and_souvenir_shops
-#, fuzzy
 msgid "Gift Card Novelty and Souvenir Shops"
 msgstr "Hediye Kartı Hediyelik Eşya Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.glass_paint_and_wallpaper_stores
-#, fuzzy
 msgid "Glass Paint and Wallpaper Stores"
 msgstr "Cam Boyası ve Duvar Kağıdı Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.glassware_crystal_stores
-#, fuzzy
 msgid "Glassware Crystal Stores"
 msgstr "Cam Eşya Kristal Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.golf_courses_public
-#, fuzzy
 msgid "Golf Courses Public"
-msgstr "Golf Sahaları Halka Açık"
+msgstr "Halka Açık Golf Sahaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.government_licensed_horse_dog_racing_us_region_only
-#, fuzzy
 msgid "Government Licensed Horse Dog Racing US Region Only"
 msgstr "Devlet Lisanslı At Köpek Yarışları Sadece ABD Bölgesi"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.government_licensed_online_casinos_online_gambling_us_region_only
-#, fuzzy
 msgid "Government Licensed Online Casinos Online Gambling US Region Only"
 msgstr ""
 "Devlet Lisanslı Çevrimiçi Kumarhaneler Çevrimiçi Kumar Sadece ABD Bölgesi"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.government_owned_lotteries_non_us_region
-#, fuzzy
 msgid "Government Owned Lotteries Non US Region"
 msgstr "Devlete Ait Piyangolar ABD Dışı Bölge"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.government_owned_lotteries_us_region_only
-#, fuzzy
 msgid "Government Owned Lotteries US Region Only"
 msgstr "Devlete Ait Piyangolar Yalnızca ABD Bölgesi"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.government_services
-#, fuzzy
 msgid "Government Services"
 msgstr "Devlet Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
-#, fuzzy
 msgid "Government services"
 msgstr "Devlet hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.grocery_stores_supermarkets
-#, fuzzy
 msgid "Grocery Stores Supermarkets"
 msgstr "Bakkallar Süpermarketler"
 
 #. module: hr_expense_stripe
 #: model:mail.template,name:hr_expense_stripe.email_template_hr_expense_stripe_card_ordered
-#, fuzzy
 msgid "HR Expense Stripe Card Ordered"
-msgstr "İK Harcama Şerit Kartı Sipariş Edildi"
+msgstr "İK Harcama Stripe Kartı Sipariş Edildi"
 
 #. module: hr_expense_stripe
 #: model:mail.template,name:hr_expense_stripe.email_template_hr_expense_stripe_card_canceled
-#, fuzzy
 msgid "HR Expense Stripe Card Shipment has been Cancelled"
-msgstr "İK Gider Şerit Kartı Gönderimi İptal Edildi"
+msgstr "İK Gider Stripe Kartı Gönderimi İptal Edildi"
 
 #. module: hr_expense_stripe
 #: model:mail.template,name:hr_expense_stripe.email_template_hr_expense_stripe_card_shipped
-#, fuzzy
 msgid "HR Expense Stripe Card Shipped"
-msgstr "İK Gider Şerit Kartı Gönderildi"
+msgstr "İK Gider Stripe Kartı Gönderildi"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.hardware_equipment_and_supplies
-#, fuzzy
 msgid "Hardware Equipment and Supplies"
 msgstr "Donanım Ekipman ve Malzemeleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.hardware_stores
-#, fuzzy
 msgid "Hardware Stores"
 msgstr "Donanım Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__has_employee
-#, fuzzy
 msgid "Has Employee"
 msgstr "Çalışan Var"
 
@@ -2504,63 +2279,53 @@ msgstr "Mesaj Var"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.health_and_beauty_spas
-#, fuzzy
 msgid "Health and Beauty Spas"
 msgstr "Sağlık ve Güzellik Kaplıcaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.hearing_aids_sales_and_supplies
-#, fuzzy
 msgid "Hearing Aids Sales and Supplies"
 msgstr "İşitme Cihazları Satış ve Malzemeleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.heating_plumbing_a_c
-#, fuzzy
 msgid "Heating Plumbing A C"
-msgstr "Isıtma Tesisat A C"
+msgstr "Isıtma Tesisat Klima"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.hobby_toy_and_game_shops
-#, fuzzy
 msgid "Hobby Toy and Game Shops"
 msgstr "Hobi Oyuncak ve Oyun Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.home_supply_warehouse_stores
-#, fuzzy
 msgid "Home Supply Warehouse Stores"
 msgstr "Ev Eşyası Depo Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.hospitals
-#, fuzzy
 msgid "Hospitals"
 msgstr "Hastaneler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.hotels_motels_and_resorts
-#, fuzzy
 msgid "Hotels Motels and Resorts"
 msgstr "Oteller Moteller ve Tatil Köyleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.household_appliance_stores
-#, fuzzy
 msgid "Household Appliance Stores"
 msgstr "Ev Aletleri Mağazaları"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_receive_wizard_form
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.res_config_settings_view_form
-#, fuzzy
 msgid "I confirm agreeing to the"
 msgstr "Kabul ettiğimi onaylıyorum"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/res_company.py:0
-#, fuzzy
 msgid "IAP Public key used for Stripe Issuing"
 msgstr "Stripe Verme için kullanılan IAP Açık anahtarı"
 
@@ -2608,14 +2373,12 @@ msgstr "İşaretliyse, bazı mesajlar gönderi hatası içermektedir."
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_topup_wizard_form
-#, fuzzy
 msgid "If the balance is too low, card payments will be declined"
 msgstr "Bakiye çok düşükse, kart ödemeleri reddedilecektir"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_expense_issuing_terms.xml:0
-#, fuzzy
 msgid ""
 "If you close your Stripe Issuing account, you must: transfer out all "
 "remaining funds before closure,\n"
@@ -2626,13 +2389,12 @@ msgstr ""
 "Stripe Issuing hesabınızı kapatırsanız, şunları yapmalısınız: kapatmadan "
 "önce kalan tüm parayı transfer edin,\n"
 "                    bekleyen işlemleri çözün, hesabın tamamen "
-"kapatıldığından emin olun. Odoo ve Stripe sorumlu değildir\n"
-"                    çekilmemiş fonlar için."
+"kapatıldığından emin olun. Çekilmemiş bakiyeler için Odoo ve Stripe sorumlu "
+"değildir"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_card_receive_terms.xml:0
-#, fuzzy
 msgid ""
 "If your account or card is closed, you must stop using and destroy the "
 "card.\n"
@@ -2650,45 +2412,38 @@ msgstr "Pasif"
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_expense_issuing_terms.xml:0
-#, fuzzy
 msgid "Indemnification"
 msgstr "Tazminat"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.industrial_supplies
-#, fuzzy
 msgid "Industrial Supplies"
 msgstr "Endüstriyel Malzemeler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.information_retrieval_services
-#, fuzzy
 msgid "Information Retrieval Services"
 msgstr "Bilgi Erişim Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.insurance_underwriting_premiums
-#, fuzzy
 msgid "Insurance Underwriting Premiums"
 msgstr "Sigorta Underwriting Primleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.intra_company_purchases
-#, fuzzy
 msgid "Intra Company Purchases"
 msgstr "Şirket İçi Alımlar"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "Invalid Employee"
 msgstr "Geçersiz Çalışan"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "Invalid email type, must be 'canceled', 'ordered' or 'shipped'."
 msgstr ""
 "Geçersiz e-posta türü, 'iptal edildi', 'sipariş edildi' veya 'gönderildi' "
@@ -2697,14 +2452,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/controllers/main.py:0
-#, fuzzy
 msgid "Invalid event type '%(invalid_event)s'"
 msgstr "Geçersiz olay türü '%(invalid_event)s'"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "Invalid or expired signature found in the request. Please check your "
 "configuration"
@@ -2715,19 +2468,16 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "Invalid request sent to the Odoo IAP proxy server: %(reason)s"
 msgstr "Odoo IAP proxy sunucusuna geçersiz istek gönderildi: %(reason)s"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense__is_card_expense
-#, fuzzy
 msgid "Is Card Expense"
 msgstr "Kart Harcaması mı"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__is_confirmed
-#, fuzzy
 msgid "Is Confirmed"
 msgstr "Onaylandı"
 
@@ -2739,7 +2489,6 @@ msgstr "Takipçi mi"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.jewelry_stores_watches_clocks_and_silverware_stores
-#, fuzzy
 msgid "Jewelry Stores Watches Clocks and Silverware Stores"
 msgstr "Mücevher Mağazaları Saatler ve Gümüş Eşya Mağazaları"
 
@@ -2751,26 +2500,22 @@ msgstr "Yevmiye"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.res_config_settings_view_form
-#, fuzzy
 msgid "Journal where stripe transactions are recorded"
 msgstr "Şerit işlemlerinin kaydedildiği günlük"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.landscaping_services
-#, fuzzy
 msgid "Landscaping Services"
 msgstr "Peyzaj Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_view_search
-#, fuzzy
 msgid "Last 4"
 msgstr "Son 4"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__last_4
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__card_last_4
-#, fuzzy
 msgid "Last 4 digits"
 msgstr "Son 4 hane"
 
@@ -2801,19 +2546,16 @@ msgstr "Son Güncelleme"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.laundries
-#, fuzzy
 msgid "Laundries"
 msgstr "Çamaşırhaneler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.laundry_cleaning_services
-#, fuzzy
 msgid "Laundry Cleaning Services"
 msgstr "Çamaşırhane Temizlik Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.legal_services_attorneys
-#, fuzzy
 msgid "Legal Services Attorneys"
 msgstr "Hukuk Hizmetleri Avukatları"
 
@@ -2824,14 +2566,12 @@ msgstr "Limit"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__spending_policy_interval
-#, fuzzy
 msgid "Limit Frequency"
 msgstr "Limit Frekans"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_expense_issuing_terms.xml:0
-#, fuzzy
 msgid "Limitation of Liability"
 msgstr "Sorumluluğun Sınırlandırılması"
 
@@ -2849,44 +2589,37 @@ msgstr "Kayıp"
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_card_receive_terms.xml:0
-#, fuzzy
 msgid "Lost or Stolen Cards"
 msgstr "Kayıp veya Çalıntı Kartlar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.luggage_and_leather_goods_stores
-#, fuzzy
 msgid "Luggage and Leather Goods Stores"
 msgstr "Bagaj ve Deri Eşya Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.lumber_building_materials_stores
-#, fuzzy
 msgid "Lumber Building Materials Stores"
 msgstr "Kereste Yapı Malzemeleri Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:ir.ui.menu,name:hr_expense_stripe.menu_product_mcc_stripe_tag
-#, fuzzy
 msgid "MCC"
 msgstr "MCC"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "MCC not allowed"
 msgstr "MCC'ye izin verilmiyor"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
-#, fuzzy
 msgid "MCCs"
 msgstr "MCC'ler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.marinas_service_and_supplies
-#, fuzzy
 msgid "Marinas Service and Supplies"
 msgstr "Marinalar Servis ve Malzemeleri"
 
@@ -2897,80 +2630,67 @@ msgstr "Pazaryerleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.masonry_stonework_and_plaster
-#, fuzzy
 msgid "Masonry Stonework and Plaster"
 msgstr "Duvarcılık Taş İşçiliği ve Sıva"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.massage_parlors
-#, fuzzy
 msgid "Massage Parlors"
 msgstr "Masaj Salonları"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense__mcc_tag_id
-#, fuzzy
 msgid "Mcc Tag"
 msgstr "Mcc Etiketi"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.medical_dental_ophthalmic_and_hospital_equipment_and_supplies
-#, fuzzy
 msgid "Medical Dental Ophthalmic and Hospital Equipment and Supplies"
 msgstr "Tıbbi Diş Oftalmik ve Hastane Ekipmanları ve Malzemeleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.medical_services
-#, fuzzy
 msgid "Medical Services"
 msgstr "Tıbbi Hizmetler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.medical_and_dental_labs
-#, fuzzy
 msgid "Medical and Dental Labs"
 msgstr "Tıbbi ve Dental Laboratuvarlar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.membership_organizations
-#, fuzzy
 msgid "Membership Organizations"
 msgstr "Üyelik Organizasyonları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.mens_womens_clothing_stores
-#, fuzzy
 msgid "Men and Women's Clothing Stores"
 msgstr "Erkek ve Kadın Giyim Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.mens_and_boys_clothing_and_accessories_stores
-#, fuzzy
 msgid "Men and boys' Clothing and Accessories Stores"
 msgstr "Erkek ve Erkek Çocuk Giyim ve Aksesuar Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_product__stripe_mcc_ids
-#, fuzzy
 msgid "Merchant Category Code (MCC)"
 msgstr "Satıcı Kategori Kodu (MCC)"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__spending_policy_category_tag_ids
-#, fuzzy
 msgid "Merchant Category Codes"
 msgstr "Satıcı Kategori Kodları"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
-#, fuzzy
 msgid "Merchant codes that will always be refused when used by a vendor"
 msgstr ""
 "Bir satıcı tarafından kullanıldığında her zaman reddedilecek satıcı kodları"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
-#, fuzzy
 msgid "Merchant codes that will be accepted when used by a vendor"
 msgstr "Bir satıcı tarafından kullanıldığında kabul edilecek satıcı kodları"
 
@@ -2988,86 +2708,72 @@ msgstr "Mesajlar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.metal_service_centers
-#, fuzzy
 msgid "Metal Service Centers"
 msgstr "Metal Servis Merkezleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.miscellaneous_apparel_and_accessory_shops
-#, fuzzy
 msgid "Miscellaneous Apparel and Accessory Shops"
 msgstr "Çeşitli Giyim ve Aksesuar Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.miscellaneous_auto_dealers
-#, fuzzy
 msgid "Miscellaneous Auto Dealers"
 msgstr "Muhtelif Oto Galerileri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.miscellaneous_business_services
-#, fuzzy
 msgid "Miscellaneous Business Services"
 msgstr "Çeşitli İşletme Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.miscellaneous_food_stores
-#, fuzzy
 msgid "Miscellaneous Food Stores"
 msgstr "Çeşitli Gıda Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.miscellaneous_general_merchandise
-#, fuzzy
 msgid "Miscellaneous General Merchandise"
 msgstr "Çeşitli Genel Mallar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.miscellaneous_general_services
-#, fuzzy
 msgid "Miscellaneous General Services"
 msgstr "Muhtelif Genel Hizmetler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.miscellaneous_home_furnishing_specialty_stores
-#, fuzzy
 msgid "Miscellaneous Home Furnishing Specialty Stores"
-msgstr "Çeşitli Ev Eşyası Özel Mağazaları"
+msgstr "Muhtelif Ev Eşyası Özel Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.miscellaneous_publishing_and_printing
-#, fuzzy
 msgid "Miscellaneous Publishing and Printing"
-msgstr "Çeşitli Yayıncılık ve Basım"
+msgstr "Muhtelif Yayıncılık ve Basım"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.miscellaneous_recreation_services
-#, fuzzy
 msgid "Miscellaneous Recreation Services"
-msgstr "Çeşitli Rekreasyon Hizmetleri"
+msgstr "Muhtelif Rekreasyon Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.miscellaneous_specialty_retail
-#, fuzzy
 msgid "Miscellaneous Specialty Retail"
-msgstr "Çeşitli Özel Perakende"
+msgstr "Muhtelif Özel Perakende"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
-#, fuzzy
 msgid "Miscellaneous shops"
-msgstr "Çeşitli mağazalar"
+msgstr "Muhtelif mağazalar"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "Missing Cardholder on IAP proxy server"
 msgstr "IAP proxy sunucusunda Eksik Kart Sahibi"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.mobile_home_dealers
-#, fuzzy
 msgid "Mobile Home Dealers"
 msgstr "Mobil Ev Satıcıları"
 
@@ -3078,56 +2784,47 @@ msgstr "Ay"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.motion_picture_theaters_cinema
-#, fuzzy
 msgid "Motion Picture Theaters Cinema"
 msgstr "Sinema Salonları Sinema"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.motor_freight_carriers_and_trucking
-#, fuzzy
 msgid "Motor Freight Carriers and Trucking"
 msgstr "Motorlu Yük Taşıyıcıları ve Kamyonculuk"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.motor_homes_dealers
-#, fuzzy
 msgid "Motor Homes Dealers"
 msgstr "Motorlu Ev Satıcıları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.motor_vehicle_supplies_and_new_parts
-#, fuzzy
 msgid "Motor Vehicle Supplies and New Parts"
 msgstr "Motorlu Araç Malzemeleri ve Yeni Parçalar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.motorcycle_shops_dealers
-#, fuzzy
 msgid "Motorcycle Shops Dealers"
 msgstr "Motosiklet Mağazaları Bayileri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.motorcycle_shops_and_dealers
-#, fuzzy
 msgid "Motorcycle Shops and Dealers"
 msgstr "Motosiklet Mağazaları ve Satıcıları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.music_stores_musical_instruments_pianos_and_sheet_music
-#, fuzzy
 msgid "Music Stores Musical Instruments Pianos and Sheet Music"
 msgstr "Müzik Mağazaları Müzik Aletleri Piyanolar ve Notalar"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.xml:0
-#, fuzzy
 msgid "My Card"
 msgstr "Benim Kartım"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_view_search
-#, fuzzy
 msgid "My Cards"
 msgstr "Kartlarım"
 
@@ -3138,7 +2835,6 @@ msgstr "Takımım"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_view_search
-#, fuzzy
 msgid "My own Cards"
 msgstr "Kendi Kartlarım"
 
@@ -3152,92 +2848,79 @@ msgstr "Adı"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_account_journal__nb_stripe_card
-#, fuzzy
 msgid "Nb Stripe Card"
-msgstr "Nb Şerit Kart"
+msgstr "Nb Stripe Kart"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_expense_issuing_terms.xml:0
-#, fuzzy
 msgid "Negative Balances"
 msgstr "Negatif Bakiyeler"
 
 #. module: hr_expense_stripe
 #: model:mail.activity.type,name:hr_expense_stripe.mail_act_expense_add_receipt
-#, fuzzy
 msgid "New card payment expense"
 msgstr "Yeni kart ödeme gideri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.news_dealers_and_newsstands
-#, fuzzy
 msgid "News Dealers and Newsstands"
 msgstr "Haber Bayileri ve Gazete Bayileri"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "No MCC found"
 msgstr "MCC bulunamadı"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "No MCC is properly set"
 msgstr "Hiçbir MCC düzgün şekilde ayarlanmamıştır"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "No country found"
 msgstr "Ülke bulunamadı"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_card_block_wizard.py:0
-#, fuzzy
 msgid "No reason provided"
 msgstr "Sebep belirtilmedi"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "No signature found in the request. Please check your configuration"
-msgstr "İstekte imza bulunamadı. Lütfen yapılandırmanızı kontrol edin"
+msgstr "Talepte imza bulunamadı. Lütfen yapılandırmanızı kontrol edin"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid ""
 "No valid employee selected, please set an employee to be able to update its "
 "cardholder data"
 msgstr ""
 "Geçerli bir çalışan seçilmedi, lütfen kart sahibi verilerini "
-"güncelleyebilmesi için bir çalışan ayarlayın"
+"güncelleyebilmesi için bir çalışan seçin"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.non_fi_money_orders
-#, fuzzy
 msgid "Non-Fi Money Orders"
 msgstr "Non-Fi Para Emirleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.non_fi_stored_value_card_purchase_load
-#, fuzzy
 msgid "Non-Fi Stored Value Card Purchase Load"
 msgstr "Non-Fi Saklı Değer Kartı Satın Alma Yükü"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.nondurable_goods
-#, fuzzy
 msgid "Nondurable Goods"
-msgstr "Dayanıksız Mallar"
+msgstr "Dayanıksız Tüketim Malları"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_needaction_counter
@@ -3265,20 +2948,17 @@ msgstr "Teslimat hatası olan mesaj sayısı"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.nurseries_lawn_and_garden_supply_stores
-#, fuzzy
 msgid "Nurseries Lawn and Garden Supply Stores"
 msgstr "Fidanlıklar Çim ve Bahçe Malzemeleri Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.nursing_personal_care
-#, fuzzy
 msgid "Nursing Personal Care"
 msgstr "Hemşirelik Kişisel Bakım"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_expense_issuing_terms.xml:0
-#, fuzzy
 msgid ""
 "Odoo cannot be held liable for any consequences arising from the use of\n"
 "                    your Stripe Issuing account, including lost funds, "
@@ -3291,14 +2971,12 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.office_and_commercial_furniture
-#, fuzzy
 msgid "Office and Commercial Furniture"
 msgstr "Ofis ve Ticari Mobilyalar"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_topup_wizard.py:0
-#, fuzzy
 msgid ""
 "Only IBAN is supported for Stripe Issuing funding instructions right now"
 msgstr ""
@@ -3308,7 +2986,6 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_topup_wizard.py:0
-#, fuzzy
 msgid ""
 "Only SEPA is supported for Stripe Issuing funding instructions right now"
 msgstr ""
@@ -3318,7 +2995,6 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/product_mcc_stripe_tag.py:0
-#, fuzzy
 msgid ""
 "Only administrators can change the code or the stripe technical name of a "
 "MCC."
@@ -3329,33 +3005,28 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "Only licenses databases can use Odoo Stripe Issuing services."
 msgstr ""
 "Odoo Stripe Issuing hizmetlerini yalnızca lisans veritabanları kullanabilir."
 
 #. module: hr_expense_stripe
 #: model:ir.model.constraint,message:hr_expense_stripe.constraint_account_bank_statement_line_check_unique_stripe_id
-#, fuzzy
 msgid "Only one bank statement can be created from a single stripe transaction"
 msgstr "Tek bir şerit işleminden yalnızca bir banka ekstresi oluşturulabilir"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "Operation only allowed for expense administrators."
 msgstr "Yalnızca gider yöneticilerinin çalışmasına izin verilir."
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.opticians_eyeglasses
-#, fuzzy
 msgid "Opticians Eyeglasses"
 msgstr "Gözlükçüler Gözlükler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.optometrists_ophthalmologist
-#, fuzzy
 msgid "Optometrists Ophthalmologist"
 msgstr "Optometristler Oftalmologlar"
 
@@ -3366,25 +3037,21 @@ msgstr "Sipariş"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__ordered_by
-#, fuzzy
 msgid "Ordered By"
 msgstr "Sipariş Veren"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__original_phone_number
-#, fuzzy
 msgid "Original Phone Number"
 msgstr "Orijinal Telefon Numarası"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.orthopedic_goods_prosthetic_devices
-#, fuzzy
 msgid "Orthopedic Goods Prosthetic Devices"
 msgstr "Ortopedik Ürünler Protez Cihazlar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.osteopaths
-#, fuzzy
 msgid "Osteopaths"
 msgstr "Osteopatlar"
 
@@ -3397,31 +3064,26 @@ msgstr "Diğer"
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.xml:0
-#, fuzzy
 msgid "PIN Number:"
 msgstr "PIN Numarası:"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.package_stores_beer_wine_and_liquor
-#, fuzzy
 msgid "Package Stores Beer Wine and Liquor"
 msgstr "Paket Mağazalar Bira Şarap ve Likör"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.paints_varnishes_and_supplies
-#, fuzzy
 msgid "Paints Varnishes and Supplies"
 msgstr "Boyalar Vernikler ve Malzemeler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.parking_lots_garages
-#, fuzzy
 msgid "Parking Lots Garages"
 msgstr "Otoparklar Garajlar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.passenger_railways
-#, fuzzy
 msgid "Passenger Railways"
 msgstr "Yolcu Demiryolları"
 
@@ -3435,7 +3097,6 @@ msgstr "Duraklat"
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/pause_card_warning_action.xml:0
-#, fuzzy
 msgid "Pause Card"
 msgstr "Duraklatma Kartı"
 
@@ -3448,7 +3109,6 @@ msgstr "Duraklatıldı"
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/pause_card_warning_action.xml:0
-#, fuzzy
 msgid ""
 "Pausing your card will make it unactive. Only Expense Administrators can "
 "reactivate it."
@@ -3458,7 +3118,6 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.pawn_shops
-#, fuzzy
 msgid "Pawn Shops"
 msgstr "Rehin Dükkanları"
 
@@ -3491,13 +3150,11 @@ msgstr "Bekleyen"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.pet_shops_pet_food_and_supplies
-#, fuzzy
 msgid "Pet Shops Pet Food and Supplies"
 msgstr "Evcil Hayvan Dükkanları Evcil Hayvan Yiyecek ve Malzemeleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.petroleum_and_petroleum_products
-#, fuzzy
 msgid "Petroleum and Petroleum Products"
 msgstr "Petrol ve Petrol Ürünleri"
 
@@ -3508,19 +3165,16 @@ msgstr "Telefon Numarası"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.photo_developing
-#, fuzzy
 msgid "Photo Developing"
 msgstr "Fotoğraf Geliştirme"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.photographic_photocopy_microfilm_equipment_and_supplies
-#, fuzzy
 msgid "Photographic Photocopy Microfilm Equipment and Supplies"
 msgstr "Fotografik Fotokopi Mikrofilm Ekipman ve Malzemeleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.photographic_studios
-#, fuzzy
 msgid "Photographic Studios"
 msgstr "Fotoğraf Stüdyoları"
 
@@ -3528,64 +3182,54 @@ msgstr "Fotoğraf Stüdyoları"
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.js:0
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__card_type__physical
-#, fuzzy
 msgid "Physical"
 msgstr "Fiziksel"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.picture_video_production
-#, fuzzy
 msgid "Picture Video Production"
 msgstr "Resim Video Prodüksiyon"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.piece_goods_notions_and_other_dry_goods
-#, fuzzy
 msgid "Piece Goods Notions and Other Dry Goods"
 msgstr "Parça Mallar Nosyonlar ve Diğer Kuru Mallar"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/pause_card_warning_action.xml:0
-#, fuzzy
 msgid "Please make sure it is what you want to do."
 msgstr "Lütfen yapmak istediğiniz şeyin bu olduğundan emin olun."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense.py:0
-#, fuzzy
 msgid "Please upload the receipt."
 msgstr "Lütfen makbuzu yükleyin."
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.plumbing_heating_equipment_and_supplies
-#, fuzzy
 msgid "Plumbing Heating Equipment and Supplies"
 msgstr "Sıhhi Tesisat Isıtma Ekipmanları ve Malzemeleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.political_organizations
-#, fuzzy
 msgid "Political Organizations"
 msgstr "Siyasi Kuruluşlar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.postal_services_government_only
-#, fuzzy
 msgid "Postal Services Government Only"
 msgstr "Posta Hizmetleri Sadece Devlet"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.precious_stones_and_metals_watches_and_jewelry
-#, fuzzy
 msgid "Precious Stones and Metals Watches and Jewelry"
 msgstr "Değerli Taşlar ve Metaller Saatler ve Takılar"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/res_company.py:0
-#, fuzzy
 msgid "Private key used for Stripe Issuing"
 msgstr "Stripe Issuing için kullanılan özel anahtar"
 
@@ -3606,25 +3250,21 @@ msgstr "Profesyonel Hizmetler"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
-#, fuzzy
 msgid "Professional services and membership organisations"
 msgstr "Profesyonel hizmetler ve üyelik kuruluşları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.public_warehousing_and_storage
-#, fuzzy
 msgid "Public Warehousing and Storage"
 msgstr "Kamu Depolama ve Antrepoları"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__pull_push_funds
-#, fuzzy
 msgid "Pull Push Funds"
 msgstr "Çekme İtme Fonları"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_topup_wizard__pull_push_funds__push
-#, fuzzy
 msgid "Push Funds to a Funding Instruction"
 msgstr "Fonları Bir Fonlama Talimatına Yönlendirin"
 
@@ -3635,13 +3275,11 @@ msgstr "QR Kodu URL'si"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.quick_copy_repro_and_blueprint
-#, fuzzy
 msgid "Quick Copy Repro and Blueprint"
 msgstr "Hızlı Kopya Repro ve Blueprint"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.railroads
-#, fuzzy
 msgid "Railroads"
 msgstr "Demiryolları"
 
@@ -3653,7 +3291,6 @@ msgstr "Değerlendirmeler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.real_estate_agents_and_managers_rentals
-#, fuzzy
 msgid "Real Estate Agents and Managers Rentals"
 msgstr "Emlakçılar ve Yöneticiler Kiralamalar"
 
@@ -3664,15 +3301,13 @@ msgstr "Sebep"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.record_stores
-#, fuzzy
 msgid "Record Stores"
 msgstr "Plak Dükkanları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.recreational_vehicle_rentals
-#, fuzzy
 msgid "Recreational Vehicle Rentals"
-msgstr "Eğlence Aracı Kiralama"
+msgstr "Eğlence Amaçlı Aracı Kiralama"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.res_config_settings_view_form
@@ -3686,27 +3321,23 @@ msgstr "Kaynağın erişimini yönetmek için ilişkilendirilmiş kullanıcı."
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.religious_goods_stores
-#, fuzzy
 msgid "Religious Goods Stores"
 msgstr "Dini Eşya Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.religious_organizations
-#, fuzzy
 msgid "Religious Organizations"
 msgstr "Dini Kuruluşlar"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "Request only allowed for the cardholder or the managers."
 msgstr "Talebe yalnızca kart sahibi veya yöneticiler için izin verilir."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "Request only allowed for the cardholder."
 msgstr "Talebe yalnızca kart sahibi için izin verilir."
 
@@ -3723,7 +3354,6 @@ msgstr "Kısıtlanmış"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
-#, fuzzy
 msgid "Retail outlet services"
 msgstr "Perakende satış mağazası hizmetleri"
 
@@ -3739,7 +3369,6 @@ msgstr "Gösterim"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.roofing_siding_sheet_metal
-#, fuzzy
 msgid "Roofing Siding Sheet Metal"
 msgstr "Çatı Kaplama Siding Sac Metal"
 
@@ -3762,13 +3391,11 @@ msgstr "Beni bankacılık uygulamanızla tarayın."
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.secretarial_support_services
-#, fuzzy
 msgid "Secretarial Support Services"
 msgstr "Sekreterlik Destek Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.security_brokers_dealers
-#, fuzzy
 msgid "Security Brokers Dealers"
 msgstr "Güvenlik Brokerleri Bayileri"
 
@@ -3776,19 +3403,16 @@ msgstr "Güvenlik Brokerleri Bayileri"
 #: model:mail.template,description:hr_expense_stripe.email_template_hr_expense_stripe_card_canceled
 #: model:mail.template,description:hr_expense_stripe.email_template_hr_expense_stripe_card_ordered
 #: model:mail.template,description:hr_expense_stripe.email_template_hr_expense_stripe_card_shipped
-#, fuzzy
 msgid "Sent to the person that will handle the reception of the card"
 msgstr "Kartın kabulünü gerçekleştirecek kişiye gönderilir"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.service_stations
-#, fuzzy
 msgid "Service Stations"
 msgstr "Servis İstasyonları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.sewing_needlework_fabric_and_piece_goods_stores
-#, fuzzy
 msgid "Sewing Needlework Fabric and Piece Goods Stores"
 msgstr "Dikiş İğne Kumaş ve Parça Eşya Mağazaları"
 
@@ -3799,37 +3423,31 @@ msgstr "Gönderildi"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__shipping_status
-#, fuzzy
 msgid "Shipping Status"
 msgstr "Nakliye Durumu"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.shoe_repair_hat_cleaning
-#, fuzzy
 msgid "Shoe Repair Hat Cleaning"
 msgstr "Ayakkabı Tamiri Şapka Temizliği"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.shoe_stores
-#, fuzzy
 msgid "Shoe Stores"
 msgstr "Ayakkabı Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__show_warning_wrong_last_4
-#, fuzzy
 msgid "Show Warning Wrong Last 4"
 msgstr "Uyarı Göster Yanlış Son 4"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.small_appliance_repair
-#, fuzzy
 msgid "Small Appliance Repair"
 msgstr "Küçük Ev Aletleri Tamiri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.snowmobile_dealers
-#, fuzzy
 msgid "Snowmobile Dealers"
 msgstr "Kar Arabası Satıcıları"
 
@@ -3840,49 +3458,41 @@ msgstr "Bazen BIC ya da SWIFT olarak geçer."
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.special_trade_services
-#, fuzzy
 msgid "Special Trade Services"
 msgstr "Özel Ticaret Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.specialty_cleaning
-#, fuzzy
 msgid "Specialty Cleaning"
 msgstr "Özel Temizlik"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
-#, fuzzy
 msgid "Spending Policy"
 msgstr "Harcama Politikası"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.sporting_goods_stores
-#, fuzzy
 msgid "Sporting Goods Stores"
 msgstr "Spor Malzemeleri Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.sporting_recreation_camps
-#, fuzzy
 msgid "Sporting Recreation Camps"
 msgstr "Sportif Rekreasyon Kampları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.sports_clubs_fields
-#, fuzzy
 msgid "Sports Clubs Fields"
 msgstr "Spor Kulüpleri Sahaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.sports_and_riding_apparel_stores
-#, fuzzy
 msgid "Sports and Riding Apparel Stores"
 msgstr "Spor ve Binicilik Kıyafetleri Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.stamp_and_coin_stores
-#, fuzzy
 msgid "Stamp and Coin Stores"
 msgstr "Pul ve Madeni Para Dükkanları"
 
@@ -3893,7 +3503,6 @@ msgstr "Durum"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.stationery_stores_office_and_school_supply_stores
-#, fuzzy
 msgid "Stationery Stores Office and School Supply Stores"
 msgstr "Kırtasiye Mağazaları Ofis ve Okul Malzemeleri Mağazaları"
 
@@ -3908,7 +3517,6 @@ msgstr "Durum"
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__cancellation_reason__stolen
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card_block_wizard__cancellation_reason__stolen
-#, fuzzy
 msgid "Stolen"
 msgstr "Çalıntı"
 
@@ -3925,32 +3533,27 @@ msgstr "Adres  2"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_id
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_config_settings__stripe_id
-#, fuzzy
 msgid "Stripe Account ID"
 msgstr "Stripe Hesap Kimliği"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_account_issuing_tos_acceptance_date
-#, fuzzy
 msgid "Stripe Account Issuing Tos Acceptance Date"
 msgstr "Stripe Hesabı Veren Tos Kabul Tarihi"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_account_issuing_tos_accepted
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_config_settings__stripe_account_issuing_tos_accepted
-#, fuzzy
 msgid "Stripe Account Issuing Tos Accepted"
 msgstr "Stripe Hesabı Veren Tos Kabul Edildi"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense__stripe_authorization_id
-#, fuzzy
 msgid "Stripe Authorization ID"
 msgstr "Stripe Yetkilendirme Kimliği"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_account_journal__stripe_issuing_balance
-#, fuzzy
 msgid "Stripe Balance Available"
 msgstr "Şerit Bakiyesi Mevcut"
 
@@ -3958,35 +3561,30 @@ msgstr "Şerit Bakiyesi Mevcut"
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense.py:0
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_users__stripe_card_ids
-#, fuzzy
 msgid "Stripe Card"
 msgstr "Şerit Kart"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__stripe_id
-#, fuzzy
 msgid "Stripe Card ID"
 msgstr "Şerit Kart Kimliği"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "Stripe Card ending with %(last_4)s"
-msgstr "ile biten Şerit Kart %(last_4)s"
+msgstr "ile biten Stripe Kart %(last_4)s"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense.py:0
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_account_journal__stripe_card_ids
-#, fuzzy
 msgid "Stripe Cards"
-msgstr "Şerit Kartlar"
+msgstr "Stripe Kartlar"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense.py:0
-#, fuzzy
 msgid "Stripe Credit transfers are not implemented"
 msgstr "Stripe Alacak transferleri uygulanmıyor"
 
@@ -3995,73 +3593,62 @@ msgstr "Stripe Alacak transferleri uygulanmıyor"
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__currency_id
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_currency_id
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_config_settings__stripe_company_currency_id
-#, fuzzy
 msgid "Stripe Currency"
 msgstr "Stripe Para Birimi"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_employee__private_stripe_id
-#, fuzzy
 msgid "Stripe ID"
-msgstr "Şerit Kimliği"
+msgstr "Stripe Kimliği"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/account_chart_template.py:0
 #: code:addons/hr_expense_stripe/models/account_journal.py:0
-#, fuzzy
 msgid "Stripe Issuing"
-msgstr "Şerit Verme"
+msgstr "Stripe Verme"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_product__stripe_issuing_activated
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_issuing_activated
-#, fuzzy
 msgid "Stripe Issuing Activated"
-msgstr "Şerit Verme Etkinleştirildi"
+msgstr "Stripe Issuing Etkinleştirildi"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_issuing_db_private_key_id
-#, fuzzy
 msgid "Stripe Issuing Db Private Key"
-msgstr "Şerit Verme Db Özel Anahtarı"
+msgstr "Stripe Issuing Db Özel Anahtarı"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_issuing_iap_public_key_id
-#, fuzzy
 msgid "Stripe Issuing Iap Public Key"
 msgstr "Stripe Issuing Iap Açık Anahtar"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_issuing_iap_webhook_uuid
-#, fuzzy
 msgid "Stripe Issuing Iap Webhook Uuid"
 msgstr "Stripe Issuing Iap Webhook Uuid"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_journal_id
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_config_settings__stripe_journal_id
-#, fuzzy
 msgid "Stripe Issuing Journal"
-msgstr "Şerit Verme Dergisi"
+msgstr "Stripe Issuing Defteri"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_form
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_list
-#, fuzzy
 msgid "Stripe Issuing Merchant Category Codes"
 msgstr "Stripe Veren Üye İşyeri Kategori Kodları"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_hr_expense_stripe_topup_wizard
-#, fuzzy
 msgid "Stripe Issuing Top-up Wizard"
-msgstr "Şerit Verme Yükleme Sihirbazı"
+msgstr "Stripe Issuing Yükleme Sihirbazı"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "Stripe Issuing configuration invalid, please set it as 'live' or 'test' in "
 "the configurations."
@@ -4072,83 +3659,70 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/account_journal.py:0
-#, fuzzy
 msgid "Stripe Issuing is not available in your country."
 msgstr "Stripe Issuing ülkenizde mevcut değil."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "Stripe Issuing with Odoo is not yet implemented for the US customers."
 msgstr "Odoo ile Stripe Issuing henüz ABD müşterileri için uygulanmamaktadır."
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__journal_id
-#, fuzzy
 msgid "Stripe Journal"
-msgstr "Çizgili Dergi"
+msgstr "Stripe Defteri"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_product_mcc_stripe_tag
-#, fuzzy
 msgid "Stripe MCC Tag"
-msgstr "Çizgili MCC Etiketi"
+msgstr "Stripe MCC Etiketi"
 
 #. module: hr_expense_stripe
 #: model:ir.actions.act_window,name:hr_expense_stripe.product_mcc_stripe_tag
-#, fuzzy
 msgid "Stripe Merchant Category Codes"
 msgstr "Stripe Satıcı Kategori Kodları"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_mcc_stripe_tag__stripe_name
-#, fuzzy
 msgid "Stripe Name"
-msgstr "Şerit Adı"
+msgstr "Stripe Adı"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_topup_wizard.py:0
-#, fuzzy
 msgid "Stripe Partner Bank"
 msgstr "Stripe İş Ortağı Banka"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_form
-#, fuzzy
 msgid "Stripe Technical Name"
 msgstr "Stripe Teknik Adı"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_topup_wizard.py:0
-#, fuzzy
 msgid "Stripe Top-Up"
-msgstr "Çizgili Top-Up"
+msgstr "Stripe Top-Up"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/account_bank_statement_line.py:0
-#, fuzzy
 msgid "Stripe Top-up"
-msgstr "Şerit Tamamlama"
+msgstr "Stripe Tamamlama"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense__stripe_transaction_id
-#, fuzzy
 msgid "Stripe Transaction ID"
 msgstr "Stripe İşlem Kimliği"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__stripe_values
-#, fuzzy
 msgid "Stripe Values"
-msgstr "Şerit Değerleri"
+msgstr "Stripe Değerleri"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_account_journal__stripe_card_ids
-#, fuzzy
 msgid ""
 "Stripe cards associated with this journal. They can be used to pay for "
 "expenses, or to top up the Stripe Issuing balance."
@@ -4159,24 +3733,21 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/account_journal.py:0
-#, fuzzy
 msgid "Stripe issuing is not supported for your localization"
 msgstr "Stripe issuing yerelleştirmeniz için desteklenmiyor"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "Stripe timed-out or encountered an error when communicating with the card "
 "network"
 msgstr ""
-"Şerit zaman aşımına uğradı veya kart ağıyla iletişim kurarken bir hatayla "
+"Stripe zaman aşımına uğradı veya kart ağıyla iletişim kurarken bir hatayla "
 "karşılaştı"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_account_bank_statement_line__stripe_id
-#, fuzzy
 msgid "Stripe transaction ID"
 msgstr "Stripe işlem kimliği"
 
@@ -4187,14 +3758,12 @@ msgstr "Gönderildi"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.swimming_pools_sales
-#, fuzzy
 msgid "Swimming Pools Sales"
 msgstr "Yüzme Havuzları Satışı"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/res_company.py:0
-#, fuzzy
 msgid ""
 "System parameter '%(name)s' value is incorrect, expecting 'live', 'test' or "
 "no value"
@@ -4204,37 +3773,31 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.t_ui_travel_germany
-#, fuzzy
 msgid "TUI Travel Germany"
 msgstr "TUI Seyahat Almanya"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.tailors_alterations
-#, fuzzy
 msgid "Tailors Alterations"
 msgstr "Terzi Tadilatları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.tax_payments_government_agencies
-#, fuzzy
 msgid "Tax Payments Government Agencies"
 msgstr "Vergi Ödemeleri Devlet Kurumları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.tax_preparation_services
-#, fuzzy
 msgid "Tax Preparation Services"
 msgstr "Vergi Hazırlama Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.taxicabs_limousines
-#, fuzzy
 msgid "Taxicabs Limousines"
 msgstr "Taksiler Limuzinler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.telecommunication_equipment_and_telephone_sales
-#, fuzzy
 msgid "Telecommunication Equipment and Telephone Sales"
 msgstr "Telekomünikasyon Ekipmanları ve Telefon Satışı"
 
@@ -4245,53 +3808,45 @@ msgstr "Telekomünikasyon Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.telegraph_services
-#, fuzzy
 msgid "Telegraph Services"
 msgstr "Telgraf Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.tent_and_awning_shops
-#, fuzzy
 msgid "Tent and Awning Shops"
 msgstr "Çadır ve Tente Dükkanları"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_card_receive_terms.xml:0
-#, fuzzy
 msgid "Termination"
 msgstr "Fesih"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__is_delivered
-#, fuzzy
 msgid "Terms and Conditions acceptance"
 msgstr "Şartlar ve Koşulların kabulü"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.testing_laboratories
-#, fuzzy
 msgid "Testing Laboratories"
 msgstr "Test Laboratuvarları"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_cardholder_wizard.py:0
-#, fuzzy
 msgid "The Cardholder had been successfully created."
 msgstr "Kart Sahibi başarıyla oluşturuldu."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_cardholder_wizard.py:0
-#, fuzzy
 msgid "The Cardholder had been successfully updated."
 msgstr "Kart Sahibi başarıyla güncellenmiştir."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "The Stripe account specified in the request wasn't found. Please check your "
 "configuration"
@@ -4302,7 +3857,6 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid ""
 "The Stripe issuing account isn't properly set. Please connect to Stripe in "
 "the settings"
@@ -4312,41 +3866,35 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "The Stripe public key is missing"
 msgstr "Stripe genel anahtarı eksik"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card__delivery_address_id
-#, fuzzy
 msgid "The address where the card will be delivered."
 msgstr "Kartın teslim edileceği adres."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "The authorization failed required verification checks"
 msgstr "Yetkilendirme gerekli doğrulama kontrollerini geçemedi"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "The authorization was approved by your Odoo database"
 msgstr "Yetkilendirme Odoo veritabanınız tarafından onaylandı"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "The authorization was refused by your Odoo database"
 msgstr "Yetkilendirme Odoo veritabanınız tarafından reddedildi"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "The authorization was suspected as fraudulent by Stripe's risk controls"
 msgstr ""
 "Yetkilendirmenin Stripe'ın risk kontrolleri tarafından hileli olduğundan "
@@ -4355,14 +3903,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "The card has expired"
 msgstr "Kartın süresi doldu"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "The card is active, and there was no control setup on your Stripe account"
 msgstr ""
@@ -4372,35 +3918,30 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "The card is currently inactive, please activate it first"
 msgstr "Kart şu anda etkin değil, lütfen önce etkinleştirin"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "The card must be ordered by a user."
 msgstr "Kart bir kullanıcı tarafından sipariş edilmelidir."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "The card must have a delivery date if it is marked as delivered."
 msgstr "Teslim edildi olarak işaretlenmişse kartın bir teslim tarihi olmalıdır."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "The card used was blocked"
 msgstr "Kullanılan kart bloke edildi"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_card_block_wizard.py:0
-#, fuzzy
 msgid ""
 "The card was blocked for the following reason:\n"
 "%(reason)s"
@@ -4411,48 +3952,41 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "The card was declined because of the Stripe spending controls"
 msgstr "Kart, Stripe harcama kontrolleri nedeniyle reddedildi"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "The card's PIN is blocked"
 msgstr "Kartın PIN kodu bloke edildi"
 
 #. module: hr_expense_stripe
 #: model:mail.message.subtype,description:hr_expense_stripe.mt_stripe_cardholder_updated
-#, fuzzy
 msgid "The cardholder data was updated on Stripe"
 msgstr "Kart sahibi verileri Stripe'ta güncellendi"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "The cardholder is currently inactive"
 msgstr "Kart sahibi şu anda aktif değil"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "The cardholder is still under verification"
 msgstr "Kart sahibi hala doğrulama aşamasındadır"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "The cardholder was blocked"
 msgstr "Kart sahibi bloke edildi"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "The charge is not allowed on the Stripe network, possibly because it is an "
 "ATM withdrawal or cash advance."
@@ -4462,21 +3996,18 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model:ir.model.constraint,message:hr_expense_stripe.constraint_product_mcc_stripe_tag_constraint_code_unique
-#, fuzzy
 msgid "The code of the MCC tag must be unique!"
 msgstr "MCC etiketinin kodu benzersiz olmalıdır!"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "The code to access your Odoo Expense Card is: %(code)s"
 msgstr "Odoo Gider Kartınıza erişmek için gereken kod: %(code)s"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "The creation rate limit for this type of cards has been reached. Please try "
 "again later."
@@ -4487,21 +4018,18 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "The delivery address must be in the European Union."
 msgstr "Teslimat adresi Avrupa Birliği içinde olmalıdır."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "The delivery address must be set before activating the card."
 msgstr "Teslimat adresi, kart etkinleştirilmeden önce ayarlanmalıdır."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid ""
 "The delivery address must have a street, city, zip code and country set."
 msgstr ""
@@ -4510,14 +4038,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_topup_wizard.py:0
-#, fuzzy
 msgid "The direct top-up isn't available outside of the US."
 msgstr "Doğrudan yükleme ABD dışında mevcut değildir."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "The employee must have a user to be able to access safely their card."
 msgstr ""
 "Çalışanın kartına güvenli bir şekilde erişebilmesi için bir kullanıcıya "
@@ -4525,7 +4051,6 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__last_4_challenge
-#, fuzzy
 msgid ""
 "The last 4 digits of the card you received. This is used to confirm that you "
 "have received the correct card."
@@ -4536,7 +4061,6 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_card_receive_wizard.py:0
-#, fuzzy
 msgid ""
 "The last 4 digits you entered do not match the card you received. Please "
 "check and try again."
@@ -4546,14 +4070,12 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card__card_name
-#, fuzzy
 msgid "The name displayed on the card"
 msgstr "Kart üzerinde görüntülenen isim"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid ""
 "The phone number associated with your Odoo Expense card(s) has been updated. "
 "If it was not requested by you, please contact your administrator."
@@ -4564,14 +4086,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_cardholder_wizard.py:0
-#, fuzzy
 msgid "The phone number is invalid."
 msgstr "Telefon numarası geçersiz."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "The route '%(route)s' is not allowed to be called from the Stripe IAP proxy "
 "server."
@@ -4582,41 +4102,36 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "The sms service is currently experiencing a lot of request. Please try again "
 "in a few minutes."
 msgstr ""
-"Sms hizmeti şu anda çok fazla taleple karşılaşıyor. Lütfen birkaç dakika "
+"SMS hizmeti şu anda çok fazla taleple karşılaşıyor. Lütfen birkaç dakika "
 "içinde tekrar deneyin."
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
-#, fuzzy
 msgid ""
 "The spending limits set on this card are higher than the limits set by "
 "Stripe of 50.000 per day and per transaction."
 msgstr ""
 "Bu kartta belirlenen harcama limitleri, Stripe tarafından belirlenen günlük "
-"ve işlem başına 50.000 limitten daha yüksektir."
+"ve işlem başına 50.000 limitinden daha yüksektir."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_topup_wizard.py:0
-#, fuzzy
 msgid "The statement description can only contain 15 ASCII characters"
 msgstr "İfade açıklaması yalnızca 15 ASCII karakteri içerebilir"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.theatrical_ticket_agencies
-#, fuzzy
 msgid "Theatrical Ticket Agencies"
 msgstr "Tiyatro Bilet Acenteleri"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "There is insufficient funds on your Stripe account, please top-up your "
 "account first."
@@ -4626,7 +4141,6 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense.py:0
-#, fuzzy
 msgid ""
 "There is no product available for this expense. Please contact your "
 "administrator."
@@ -4637,7 +4151,6 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "There was an error in your Odoo database and Stripe received an invalid "
 "response"
@@ -4646,32 +4159,27 @@ msgstr "Odoo veritabanınızda bir hata oluştu ve Stripe geçersiz bir yanıt a
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "There was an unexpected error on Odoo IAP proxy server"
 msgstr "Odoo IAP proxy sunucusunda beklenmedik bir hata oluştu"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.timeshares
-#, fuzzy
 msgid "Timeshares"
 msgstr "Devre Mülkler"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_account_journal__stripe_issuing_balance_timestamp
-#, fuzzy
 msgid "Timestamp of the most recent Stripe Issuing Balance update"
 msgstr "En son Stripe Verme Bakiyesi güncellemesinin zaman damgası"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.tire_retreading_and_repair
-#, fuzzy
 msgid "Tire Retreading and Repair"
 msgstr "Lastik Kaplama ve Onarım"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/product_mcc_stripe_tag.py:0
-#, fuzzy
 msgid ""
 "To be used by Expense cards, the product '%(name)s' must have a cost of 0.00"
 msgstr ""
@@ -4680,14 +4188,12 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.tolls_bridge_fees
-#, fuzzy
 msgid "Tolls Bridge Fees"
 msgstr "Geçiş Ücretleri Köprü Ücretleri"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_topup_wizard.py:0
-#, fuzzy
 msgid "Top up payment"
 msgstr "Ek ödeme"
 
@@ -4695,14 +4201,12 @@ msgstr "Ek ödeme"
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/account_journal.py:0
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.account_journal_dashboard_kanban_view_inherit_expense_stripe
-#, fuzzy
 msgid "Top-up"
-msgstr "Top-up"
+msgstr "Bakiye Yükleme"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_topup_wizard.py:0
-#, fuzzy
 msgid ""
 "Top-up request failed with the following error sent by Stripe:\n"
 "%(stripe_error)s"
@@ -4714,7 +4218,6 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_topup_wizard.py:0
-#, fuzzy
 msgid ""
 "Top-up request successfully sent to Stripe, this can take a few days before "
 "being available"
@@ -4724,25 +4227,21 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_topup_wizard_form
-#, fuzzy
 msgid "Topup"
-msgstr "Topup"
+msgstr "Bakiye Yükleme"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.tourist_attractions_and_exhibits
-#, fuzzy
 msgid "Tourist Attractions and Exhibits"
 msgstr "Turistik Yerler ve Sergiler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.towing_services
-#, fuzzy
 msgid "Towing Services"
 msgstr "Çekici Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__tracking_number
-#, fuzzy
 msgid "Tracking Number"
 msgstr "Takip Numarası"
 
@@ -4753,84 +4252,71 @@ msgstr "Takip URL"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.trailer_parks_campgrounds
-#, fuzzy
 msgid "Trailer Parks Campgrounds"
 msgstr "Treyler Parkları Kamp Alanları"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__spending_policy_transaction_amount
-#, fuzzy
 msgid "Transaction Limit"
 msgstr "İşlem Limiti"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "Transaction accepted"
 msgstr "İşlem kabul edildi"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "Transaction amount exceeds the interval limit"
-msgstr "İşlem tutarı aralık limitini aşıyor"
+msgstr "İşlem tutarı belirlenen aralık limitini aşıyor"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "Transaction amount exceeds the maximum allowed"
 msgstr "İşlem tutarı izin verilen maksimum tutarı aşıyor"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/account_bank_statement_line.py:0
-#, fuzzy
 msgid "Transaction created from %(expense)s"
 msgstr "Şuradan oluşturulan işlem %(expense)s"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_topup_wizard_form
-#, fuzzy
 msgid "Transfer funds using the IBAN and BIC below"
 msgstr "Aşağıdaki IBAN ve BIC numaralarını kullanarak para transferi yapın"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_topup_wizard_form
-#, fuzzy
 msgid "Transfers usually take 2–3 business days"
 msgstr "Transferler genellikle 2-3 iş günü sürer"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.transportation_services
-#, fuzzy
 msgid "Transportation Services"
 msgstr "Ulaşım Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
-#, fuzzy
 msgid "Transportation services"
 msgstr "Ulaşım hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.travel_agencies_tour_operators
-#, fuzzy
 msgid "Travel Agencies Tour Operators"
 msgstr "Seyahat Acenteleri Tur Operatörleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.truck_utility_trailer_rentals
-#, fuzzy
 msgid "Truck Utility Trailer Rentals"
 msgstr "Kamyon Yardımcı Treyler Kiralama"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.xml:0
-#, fuzzy
 msgid "Two-Factor Authentification"
 msgstr "İki Faktörlü Kimlik Doğrulama"
 
@@ -4841,32 +4327,27 @@ msgstr "Tür"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.typesetting_plate_making_and_related_services
-#, fuzzy
 msgid "Typesetting Plate Making and Related Services"
 msgstr "Dizgi Plakası Yapımı ve İlgili Hizmetler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.typewriter_stores
-#, fuzzy
 msgid "Typewriter Stores"
 msgstr "Daktilo Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.u_s_federal_government_agencies_or_departments
-#, fuzzy
 msgid "U S Federal Government Agencies or Departments"
 msgstr "ABD Federal Hükümet Kurumları veya Departmanları"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "Unexpected error"
 msgstr "Beklenmeyen hata"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.uniforms_commercial_clothing
-#, fuzzy
 msgid "Uniforms Commercial Clothing"
 msgstr "Üniformalar Ticari Kıyafetler"
 
@@ -4880,19 +4361,16 @@ msgstr "Bilinmiyor"
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "Unknown Error Code"
 msgstr "Bilinmeyen Hata Kodu"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
-#, fuzzy
 msgid "Update info"
 msgstr "Güncelleme bilgileri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.used_merchandise_and_secondhand_stores
-#, fuzzy
 msgid "Used Merchandise and Secondhand Stores"
 msgstr "Kullanılmış Eşya ve İkinci El Mağazaları"
 
@@ -4904,49 +4382,41 @@ msgstr "Kullanıcı"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.utilities
-#, fuzzy
 msgid "Utilities"
 msgstr "Yardımcı Programlar"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
-#, fuzzy
 msgid "Utility services"
 msgstr "Yardımcı hizmetler"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.variety_stores
-#, fuzzy
 msgid "Variety Stores"
 msgstr "Çeşitli Mağazalar"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__res_company__stripe_account_issuing_status__verified
-#, fuzzy
 msgid "Verified"
 msgstr "Doğrulandı"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.veterinary_services
-#, fuzzy
 msgid "Veterinary Services"
 msgstr "Veterinerlik Hizmetleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.video_amusement_game_supplies
-#, fuzzy
 msgid "Video Amusement Game Supplies"
 msgstr "Video Eğlence Oyunu Malzemeleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.video_game_arcades
-#, fuzzy
 msgid "Video Game Arcades"
 msgstr "Video Oyun Salonları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.video_tape_rental_stores
-#, fuzzy
 msgid "Video Tape Rental Stores"
 msgstr "Video Kaset Kiralama Mağazaları"
 
@@ -4957,7 +4427,6 @@ msgstr "Detayları Görüntüle"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__phone_number
-#, fuzzy
 msgid ""
 "Viewing confidential card details requires 2FA authentication. Make sure the "
 "cardholder mobile number is correct."
@@ -4974,7 +4443,6 @@ msgstr "Sanal"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.vocational_trade_schools
-#, fuzzy
 msgid "Vocational Trade Schools"
 msgstr "Mesleki Ticaret Okulları"
 
@@ -4985,42 +4453,37 @@ msgstr "Uyarı"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card__has_limit_higher_than_stripe_warning
-#, fuzzy
 msgid "Warning if the limit is higher than the Stripe limit"
 msgstr "Limit Stripe limitinden yüksekse uyarı"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.watch_jewelry_repair
-#, fuzzy
 msgid "Watch Jewelry Repair"
 msgstr "Saat Takı Tamiri"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "We received the following error from Odoo IAP proxy server:\n"
 "- Missing account secret"
 msgstr ""
 "Odoo IAP proxy sunucusundan aşağıdaki hatayı aldık:\n"
-"- Eksik hesap sırrı"
+"- Eksik hesap anahtarı"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "We received the following error from Odoo IAP proxy server:\n"
 "- Missing account webhook"
 msgstr ""
 "Odoo IAP proxy sunucusundan aşağıdaki hatayı aldık:\n"
-"- Eksik hesap web kancası"
+"- Eksik hesap webhook"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "We received the following error from Odoo IAP proxy server:\n"
 "- Wrong platform setup/route is restricted"
@@ -5031,14 +4494,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "We received the following error from Stripe: %(reason)s"
 msgstr "Stripe'tan aşağıdaki hatayı aldık: %(reason)s"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "We were unable to reach Odoo IAP proxy server"
 msgstr "Odoo IAP proxy sunucusuna ulaşamadık"
 
@@ -5061,19 +4522,16 @@ msgstr "Hafta"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.welding_repair
-#, fuzzy
 msgid "Welding Repair"
-msgstr "Kaynak Onarımı"
+msgstr "Kaynak ve Onarım"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card__spending_policy_country_tag_ids
-#, fuzzy
 msgid "Whitelist of countries where payments could be authorized from."
 msgstr "Ödemelerin yetkilendirilebileceği ülkelerin beyaz listesi."
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card__spending_policy_category_tag_ids
-#, fuzzy
 msgid ""
 "Whitelist of merchant codes, to define which type of goods or services would "
 "be authorized."
@@ -5083,50 +4541,42 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.wholesale_clubs
-#, fuzzy
 msgid "Wholesale Clubs"
 msgstr "Toptan Satış Kulüpleri"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.wig_and_toupee_stores
-#, fuzzy
 msgid "Wig and Toupee Stores"
 msgstr "Peruk ve Peruk Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.wires_money_orders
-#, fuzzy
 msgid "Wires Money Orders"
 msgstr "Teller Para Havaleleri"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_hr_expense_stripe_cardholder_wizard
-#, fuzzy
 msgid "Wizard to configure the cardholder"
 msgstr "Kart sahibini yapılandırmak için sihirbaz"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.womens_accessory_and_specialty_shops
-#, fuzzy
 msgid "Women's Accessory and Specialty Shops"
 msgstr "Kadın Aksesuar ve Özel Mağazalar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.womens_ready_to_wear_stores
-#, fuzzy
 msgid "Women's Ready to Wear Stores"
 msgstr "Kadın Hazır Giyim Mağazaları"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.wrecking_and_salvage_yards
-#, fuzzy
 msgid "Wrecking and Salvage Yards"
 msgstr "Yıkım ve Kurtarma Sahaları"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "Wrong or Expired validation code"
 msgstr "Yanlış veya Süresi Dolmuş doğrulama kodu"
 
@@ -5138,23 +4588,20 @@ msgstr "Yıl"
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_expense_issuing_terms.xml:0
-#, fuzzy
 msgid ""
 "You agree to indemnify and hold Odoo, its directors and officers, and "
 "affiliates harmless\n"
 "                    from any losses, claims, or liabilities related to your "
 "use of Stripe Issuing services, including misuse or violations."
 msgstr ""
-"Odoo'yu, yöneticilerini ve görevlilerini ve bağlı kuruluşlarını tazmin "
-"etmeyi ve zararsız tutmayı kabul edersiniz\n"
-"                    kötüye kullanım veya ihlaller dahil olmak üzere Stripe "
-"Issuing hizmetlerini kullanımınızla ilgili her türlü kayıp, talep veya "
-"yükümlülükten."
+"Stripe Issuing hizmetlerini kullanımınızla ilgili her türlükötüye kullanım, "
+"kayıp, talep veya ihlaller dahil olmak üzere.\n"
+"                    Odoo'yu, yöneticilerini, görevlilerini ve bağlı "
+"kuruluşlarını tazmin etmeyi ve sorumlu tutmamayı kabul etmektesiniz"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_expense_issuing_terms.xml:0
-#, fuzzy
 msgid ""
 "You are fully liable for any negative balance on your Stripe Issuing "
 "account.\n"
@@ -5167,34 +4614,30 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_card_receive_terms.xml:0
-#, fuzzy
 msgid ""
 "You are responsible for all transactions made with your card,\n"
 "                    including unauthorized charges unless covered by law or "
 "Stripe’s policy."
 msgstr ""
-"Kartınızla yapılan tüm işlemlerden siz sorumlusunuz,\n"
-"                    yasa veya Stripe'ın politikası kapsamında olmadığı "
-"sürece yetkisiz ücretler dahil."
+"Bilgi dahilinde yapılmayan işlemler dahil (yasa tarafından ya da Stripe "
+"politikası tarafından aksi belirtilmediği sürece),\n"
+"                     yapılan tüm işlemlerden kart sahibi sorumludur."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "You can't change the card type once the card has been created."
 msgstr "Kart oluşturulduktan sonra kart türünü değiştiremezsiniz."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "You can't change the delivery address once the card has been shipped."
 msgstr "Kart gönderildikten sonra teslimat adresini değiştiremezsiniz."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid ""
 "You can't change the employee of an active card. Please create a new card "
 "instead."
@@ -5205,7 +4648,6 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid ""
 "You can't delete a card that already exists for Stripe, please block it "
 "instead"
@@ -5216,14 +4658,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "You can't set the card state back to draft."
 msgstr "Kart durumunu tekrar taslak olarak ayarlayamazsınız."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/account_payment_method_line.py:0
-#, fuzzy
 msgid ""
 "You cannot delete a payment method line that is used by an active/paused "
 "card."
@@ -5234,7 +4674,6 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense.py:0
-#, fuzzy
 msgid ""
 "You cannot delete an expense that was created from a Stripe card transaction."
 msgstr "Stripe kart işleminden oluşturulan bir masrafı silemezsiniz."
@@ -5242,13 +4681,11 @@ msgstr "Stripe kart işleminden oluşturulan bir masrafı silemezsiniz."
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense.py:0
-#, fuzzy
 msgid "You cannot edit the security fields of an expense manually"
 msgstr "Bir giderin güvenlik alanlarını manuel olarak düzenleyemezsiniz"
 
 #. module: hr_expense_stripe
 #: model:ir.model.constraint,message:hr_expense_stripe.constraint_res_company_constraint_journal_stripe_activated
-#, fuzzy
 msgid ""
 "You cannot remove the journal used by Stripe Issuing when it is activated"
 msgstr ""
@@ -5258,7 +4695,6 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/product_product.py:0
-#, fuzzy
 msgid ""
 "You cannot set a cost on a product that is used as an Expense card category. "
 "Please duplicate it instead."
@@ -5269,7 +4705,6 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/__init__.py:0
-#, fuzzy
 msgid ""
 "You cannot uninstall the 'Expense cards' module while there are active or "
 "inactive Stripe cards. Please manually block all cards before uninstalling "
@@ -5282,14 +4717,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_card_receive_terms.xml:0
-#, fuzzy
 msgid "You confirm you have received the physical expense card."
 msgstr "Fiziksel harcama kartını aldığınızı onaylıyorsunuz."
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_expense_issuing_terms.xml:0
-#, fuzzy
 msgid ""
 "You must comply with all applicable laws and regulations and you are "
 "responsible\n"
@@ -5304,21 +4737,18 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_card_receive_wizard.py:0
-#, fuzzy
 msgid "You must confirm that you have received the card before activating it."
 msgstr "Kartı etkinleştirmeden önce kartı aldığınızı onaylamanız gerekir."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "You must create a Stripe account in order to use Stripe"
 msgstr "Stripe'ı kullanmak için bir Stripe hesabı oluşturmanız gerekir"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_card_receive_terms.xml:0
-#, fuzzy
 msgid ""
 "You must report lost or stolen cards immediately.\n"
 "                    You are responsible for monitoring usage and disputing "
@@ -5326,37 +4756,32 @@ msgid ""
 msgstr ""
 "Kayıp veya çalıntı kartları derhal bildirmelisiniz.\n"
 "                    Kullanımı izlemekten ve yetkisiz ücretlendirmelere "
-"derhal itiraz etmekten siz sorumlusunuz."
+"derhal itiraz etmekten kart sahibi sorumludur."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/res_company.py:0
-#, fuzzy
 msgid "You need to be connected to stripe in order to configure your account."
-msgstr "Hesabınızı yapılandırmak için stripe'a bağlı olmanız gerekir."
+msgstr "Hesabınızı yapılandırmak için Stripe'a bağlı olmanız gerekir."
 
 #. module: hr_expense_stripe
 #: model:mail.template,subject:hr_expense_stripe.email_template_hr_expense_stripe_card_canceled
-#, fuzzy
 msgid "Your Expense Card Has Been Canceled"
 msgstr "Harcama Kartınız İptal Edildi"
 
 #. module: hr_expense_stripe
 #: model:mail.template,subject:hr_expense_stripe.email_template_hr_expense_stripe_card_shipped
-#, fuzzy
 msgid "Your Expense Card Has Been Shipped"
 msgstr "Harcama Kartınız Gönderildi"
 
 #. module: hr_expense_stripe
 #: model:mail.template,subject:hr_expense_stripe.email_template_hr_expense_stripe_card_ordered
-#, fuzzy
 msgid "Your Expense Card has been Ordered"
 msgstr "Harcama Kartınız Sipariş Edildi"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "Your Odoo database failed to respond to Stripe in time, and the "
 "authorization was refused by default"
@@ -5367,14 +4792,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "Your Stripe account is disabled"
 msgstr "Stripe hesabınız devre dışı bırakıldı"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "Your account balance isn't zero, please use any remaining funds or contact "
 "support to close your account."
@@ -5397,6 +4820,5 @@ msgstr "kimlik"
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_receive_wizard_form
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.res_config_settings_view_form
-#, fuzzy
 msgid "terms and conditions"
-msgstr "şartlar ve koşullar"
+msgstr "Şartlar ve Koşullar"

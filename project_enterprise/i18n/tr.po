@@ -13,13 +13,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:48+0000\n"
-"PO-Revision-Date: 2025-11-12 14:57+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-20 13:21+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "project_enterprise/tr/>\n"
 "Language: tr\n"
@@ -37,7 +38,6 @@ msgstr "%(partner)s aynı anda %(amount)s göreve sahiptir."
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
-#, fuzzy
 msgid ""
 "<i class=\"fa fa-exclamation-circle me-2\" role=\"img\" title=\"Dependency "
 "warning\"/>"
@@ -47,7 +47,6 @@ msgstr ""
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
-#, fuzzy
 msgid ""
 "<i class=\"fa fa-random me-2\" role=\"img\" title=\"Planning overlap\"/>"
 msgstr ""
@@ -83,7 +82,6 @@ msgstr "Atomatik Plan"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
-#, fuzzy
 msgid "Check it out <i class=\"oi oi-chevron-right ms-2\"/>"
 msgstr "Şuna bir göz atın <i class=\"oi oi-chevron-right ms-2\"/>"
 
@@ -122,9 +120,8 @@ msgstr "Görünüm Adı"
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
-#, fuzzy
 msgid "Failed to undo reschedule"
-msgstr "Yeniden zamanlama geri alınamadı"
+msgstr "Yeniden planlama geri alınamadı"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_project__id
@@ -161,9 +158,8 @@ msgstr "Planlanan Tarih"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__planned_date_start
-#, fuzzy
 msgid "Planned Date Start"
-msgstr "Planlanan Tarih Başlangıç"
+msgstr "Planlanan Başlangıç Tarihi"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_project_view_gantt
@@ -182,16 +178,14 @@ msgstr "Proje"
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/project_task_common/milestones_popover.xml:0
-#, fuzzy
 msgid "Project due"
-msgstr "Proje Yönetimi teslim tarihi"
+msgstr "Proje teslim tarihi"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/project_task_common/milestones_popover.xml:0
-#, fuzzy
 msgid "Project start"
-msgstr "Proje Yönetimi başlangıcı"
+msgstr "Proje başlangıcı"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_sharing_project_task_view_form_inherited_in_gantt
@@ -202,25 +196,22 @@ msgstr "Kaydet"
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
-#, fuzzy
 msgid ""
 "Some tasks have been successfully scheduled for the upcoming periods. Some "
 "warnings were generated. Please review them for details."
 msgstr ""
-"Bazı görevler gelecek dönemler için başarıyla zamanlandı. Bazı uyarılar "
+"Bazı görevler gelecek dönemler için başarıyla planlandı. Bazı uyarılar "
 "oluşturuldu. Detaylar için lütfen inceleyiniz."
 
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
-#, fuzzy
 msgid "Some tasks were planned after their initial deadline."
-msgstr "Bazı görevler ilk teslim tarihlerinden sonra planlanmıştır."
+msgstr "Bazı görevler ilk teslim tarihlerinden sonraya planlanmıştır."
 
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
-#, fuzzy
 msgid ""
 "Some tasks were scheduled concurrently, resulting in a conflict due to the "
 "limited availability of the assignees. The planned dates for these tasks may "
@@ -258,35 +249,30 @@ msgstr "Görev Tekrarı"
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
-#, fuzzy
 msgid "Task could not be removed"
-msgstr "Görev kaldırılamadı"
+msgstr "Görev silinemedi"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
-#, fuzzy
 msgid "Task duplicated"
-msgstr "Görev tekrarlandı"
+msgstr "Görev kopyalandı"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
-#, fuzzy
 msgid "Task removed"
 msgstr "Görev kaldırıldı"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
-#, fuzzy
 msgid "Task reschedule undone"
-msgstr "Görev yeniden zamanlama geri alındı"
+msgstr "Görevi yeniden planlama geri alındı"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
-#, fuzzy
 msgid "Task rescheduled"
 msgstr "Görev yeniden planlandı"
 
@@ -298,7 +284,6 @@ msgstr "Görev Analizi"
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
-#, fuzzy
 msgid "Tasks have been successfully scheduled for the upcoming periods."
 msgstr "Önümüzdeki dönemler için görevler başarıyla planlanmıştır."
 
@@ -317,7 +302,6 @@ msgstr "Planlanan başlangıç tarihi, planlanan bitiş tarihinden önce olmalı
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
-#, fuzzy
 msgid ""
 "The tasks could not be rescheduled due to the assignees' lack of "
 "availability at this time."
@@ -333,7 +317,6 @@ msgstr "Bu İlerleme Çubuğu uygulanmadı."
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
-#, fuzzy
 msgid ""
 "This task cannot be planned before the following tasks on which it depends: %"
 "(task_list)s"
@@ -343,13 +326,12 @@ msgstr ""
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
-#, fuzzy
 msgid ""
 "This user isn't expected to have any tasks assigned during this period "
 "because they don't have any running contract."
 msgstr ""
 "Bu kullanıcıya bu dönemde herhangi bir görev atanması beklenmez çünkü devam "
-"eden bir sözleşmesi yoktur."
+"eden bir iş sözleşmesi yoktur."
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.res_config_settings_view_form
@@ -366,7 +348,6 @@ msgstr "Planlamayı iptal et"
 
 #. module: project_enterprise
 #: model:ir.model.fields,help:project_enterprise.field_project_task__display_name
-#, fuzzy
 msgid ""
 "Use these keywords in the title to set new tasks:\n"
 "\n"
@@ -405,7 +386,6 @@ msgstr "Görevleri Görüntüle"
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/project_task_map/project_task_map_renderer.xml:0
-#, fuzzy
 msgid "View customer locations for your tasks"
 msgstr "Görevleriniz için müşteri konumlarını görüntüleyin"
 

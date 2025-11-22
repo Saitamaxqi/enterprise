@@ -3,19 +3,22 @@
 # * data_cleaning
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:51+0000\n"
-"PO-Revision-Date: 2025-10-08 18:51+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-17 03:13+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Kabyle <https://translate.odoo.com/projects/odoo-19/"
+"data_cleaning/kab/>\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: data_cleaning
 #. odoo-python
@@ -27,7 +30,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_model.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (Anɣel )"
 
 #. module: data_cleaning
 #. odoo-javascript
@@ -75,7 +78,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_model_form
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_list
 msgid "Action"
-msgstr ""
+msgstr "Tigawt"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__action_display
@@ -99,7 +102,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__active
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__active
 msgid "Active"
-msgstr ""
+msgstr "Urmid"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action_case__lower
@@ -119,7 +122,7 @@ msgstr ""
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_merge_model__removal_mode__archive
 msgid "Archive"
-msgstr ""
+msgstr "Aɣbaṛ"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_model_view_search
@@ -206,7 +209,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__company_id
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__company_id
 msgid "Company"
-msgstr ""
+msgstr "Takebbwanit"
 
 #. module: data_cleaning
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_merge_record
@@ -223,7 +226,7 @@ msgstr ""
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Anermis"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_ir_model__ref_merge_ir_act_server_id
@@ -234,7 +237,7 @@ msgstr ""
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__country_id
 msgid "Country"
-msgstr ""
+msgstr "Tamurt"
 
 #. module: data_cleaning
 #: model:ir.model,website_form_label:data_cleaning.model_res_partner
@@ -260,7 +263,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__create_uid
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Yerna-t"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__create_date
@@ -271,7 +274,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__create_date
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Yerna di"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__mix_by_company
@@ -367,7 +370,7 @@ msgstr ""
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_merge_model__removal_mode__delete
 msgid "Delete"
-msgstr ""
+msgstr "Kkes"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_storage_tree
@@ -393,7 +396,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_list
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_list
 msgid "Discard"
-msgstr ""
+msgstr "Sefsex"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_record_view_search_merge_action
@@ -424,7 +427,7 @@ msgstr ""
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__domain
 msgid "Domain"
-msgstr ""
+msgstr "Taɣult"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__removal_mode
@@ -542,7 +545,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_res_partner__id
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_list
 msgid "ID"
-msgstr ""
+msgstr "Asulay"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_ir_model__is_merge_enabled
@@ -595,7 +598,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__write_uid
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Aleqqem aneggaru sɣuṛ"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__write_date
@@ -606,7 +609,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__write_date
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Aleqqem aneggaru di"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_record__used_in
@@ -721,7 +724,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__name
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__name
 msgid "Name"
-msgstr ""
+msgstr "Isem"
 
 #. module: data_cleaning
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_cleaning_record
@@ -833,7 +836,7 @@ msgstr ""
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__rule_ids
 msgid "Rules"
-msgstr ""
+msgstr "Ilugan"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action__html
@@ -854,7 +857,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__sequence
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Agzum"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action__case
@@ -1005,7 +1008,7 @@ msgstr ""
 #: code:addons/data_cleaning/static/src/views/data_cleaning_list_view.xml:0
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_list
 msgid "Validate"
-msgstr ""
+msgstr "Seɣbel"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_model__notify_frequency_period__weeks
@@ -1040,7 +1043,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_duplicate
 #: model_terms:ir.ui.view,arch_db:data_cleaning.notification
 msgid "here"
-msgstr ""
+msgstr "dagi"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_merged

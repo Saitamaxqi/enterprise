@@ -23,13 +23,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-11-12 14:58+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/quality/"
 "tr/>\n"
 "Language: tr\n"
@@ -351,15 +352,13 @@ msgstr "Başarısız"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check__failure_location_id
-#, fuzzy
 msgid "Failure Location"
-msgstr "Arıza Konumu"
+msgstr "Arıza Lokasyonu"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point__failure_location_ids
-#, fuzzy
 msgid "Failure Locations"
-msgstr "Arıza Konumları"
+msgstr "Arıza Lokasyonları"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage__folded
@@ -461,17 +460,17 @@ msgstr "İşaretliyse, bazı mesajlar gönderi hatası içermektedir."
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_point__failure_location_ids
-#, fuzzy
 msgid ""
 "If quality check fails, a destination location is chosen from this list for\n"
 "- each failed specific product quantity if control is per quantity\n"
 " /- all quantities of a product if control is per product\n"
 " /- all quantities of products in the operation if control is per operation"
 msgstr ""
-"Kalite kontrolü başarısız olursa, bu listeden bir hedef konum seçilir.\n"
-"- kontrol miktar başına ise her başarısız belirli ürün miktarı\n"
-" /- kontrol ürün başına ise bir ürünün tüm miktarları\n"
-" /- kontrol operasyon başına ise operasyondaki tüm ürün miktarları"
+"Kalite kontrolü başarısız olursa, bu durumlara göre bu listeden bir hedef "
+"lokasyon seçilir:\n"
+"- kontrol, miktar başına ise her başarısız miktarı miktarı için\n"
+" /- kontrol, ürün başına ise bir ürünün tüm miktarları için\n"
+" /- kontrol, operasyon başına ise operasyondaki tüm ürün miktarları için"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team__alias_bounced_content
@@ -625,13 +624,12 @@ msgstr "Sonraki Aktivitie Türü"
 #. module: quality
 #. odoo-python
 #: code:addons/quality/models/quality.py:0
-#, fuzzy
 msgid ""
 "No quality teams found for this company! Head over to the configuration menu "
 "to create your first quality team."
 msgstr ""
-"Bu şirket için kalite ekibi bulunamadı! İlk kalite ekibinizi oluşturmak için "
-"yapılandırma menüsüne gidin."
+"Bu şirket için bir kalite ekibi bulunamadı! İlk kalite ekibinizi oluşturmak "
+"için ayarlar menüsüne gidin."
 
 #. module: quality
 #: model:ir.model.fields.selection,name:quality.selection__quality_alert__priority__0
@@ -840,12 +838,11 @@ msgstr "Kalite Kontrol Test Türü"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_point__product_category_ids
-#, fuzzy
 msgid ""
 "Quality Point will apply to every Products in the selected Product "
 "Categories."
 msgstr ""
-"Kalite Puanı, seçilen Ürün Kategorilerindeki tüm Ürünler için geçerli "
+"Kalite Noktası, seçilen Ürün Kategorilerindeki tüm Ürünler için geçerli "
 "olacaktır."
 
 #. module: quality
@@ -924,13 +921,11 @@ msgstr "Sıralama"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point__show_failure_location
-#, fuzzy
 msgid "Show Failure Location"
 msgstr "Arıza Konumunu Göster"
 
 #. module: quality
 #: model_terms:ir.ui.view,arch_db:quality.quality_alert_view_search
-#, fuzzy
 msgid "Show all records whose next activity date is past"
 msgstr "Bir sonraki etkinlik tarihi geçmiş olan tüm kayıtları göster"
 

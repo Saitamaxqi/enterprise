@@ -23,13 +23,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-11-12 14:58+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:30+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "marketing_automation/tr/>\n"
 "Language: tr\n"
@@ -41,25 +42,21 @@ msgstr ""
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid "\" <strong>bounced</strong>,"
 msgstr "\" <strong>sıçradı</strong>,"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid "\" did <strong>not receive a reply</strong>,"
 msgstr "\" <strong>bir yanıt alamadı mı</strong>,"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid "\" gets clicked,"
 msgstr "\" butonuna tıklanır,"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid "\" was <strong>not opened</strong>,"
 msgstr "\" <strong>açılmadı</strong>,"
 
@@ -100,7 +97,6 @@ msgstr "# test katılımcılarının yüzdesi"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid "<br/>This activity will be"
 msgstr "<br/>Bu etkinlik şu şekilde olacaktır"
 
@@ -180,7 +176,6 @@ msgstr "<i class=\"fa fa-reply\"></i>Şundan sonra yanıtlandı"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
-#, fuzzy
 msgid ""
 "<i data-trigger-type=\"activity\" class=\"fa fa-code-fork fa-rotate-180 fa-"
 "flip-vertical o_ma_text_processed o_add_child_activity text-success\" "
@@ -193,7 +188,6 @@ msgstr ""
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_view_form
-#, fuzzy
 msgid "<span class=\"d-inline-block w-25\">after</span>"
 msgstr "<span class=\"d-inline-block w-25\">sonra</span>"
 
@@ -246,7 +240,6 @@ msgstr "<span>Toplam</span>"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid ""
 "<strong>Summary</strong><br/>\n"
 "            Starting from"
@@ -261,7 +254,6 @@ msgstr "<strong>İş akışı değiştirildi!</strong>"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign__ab_testing_winner_mailing_id
-#, fuzzy
 msgid "A/B Campaign Winner Mailing"
 msgstr "A/B Kampanyası Kazanan Postalama"
 
@@ -332,7 +324,6 @@ msgstr ""
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Add Hot Category"
 msgstr "Sıcak Kategori Ekle"
 
@@ -345,7 +336,6 @@ msgstr "Etiket Ekle"
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Add To Confirmed List"
 msgstr "Onaylanmış Listeye Ekle"
 
@@ -357,7 +347,6 @@ msgstr "Yeni Aktivite Ekle"
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Add to list"
 msgstr "Listeye ekle"
 
@@ -390,7 +379,6 @@ msgstr "İlgili Kampanyaları filtrelememize olanak tanır"
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/wizard/marketing_campaign_test.py:0
-#, fuzzy
 msgid "Another test has been launched for this participant"
 msgstr "Bu katılımcı için başka bir test başlatıldı"
 
@@ -407,7 +395,6 @@ msgstr "Arşivlendi"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
-#, fuzzy
 msgid ""
 "Are you sure you want to create a new participant for each matching record "
 "that has not been used yet?"
@@ -432,14 +419,12 @@ msgstr ""
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Blacklist Bounces"
 msgstr "Kara Liste Geri Dönüşleri"
 
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Blacklist record"
 msgstr "Kara liste kaydı"
 
@@ -499,20 +484,17 @@ msgstr "İptal Edildi"
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Check Bounce Contact"
 msgstr "Karşılıksız Çek İletişim"
 
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Check Email Address"
 msgstr "E-posta Adresini Kontrol Et"
 
 #. module: marketing_automation
 #: model:ir.model.fields,help:marketing_automation.field_marketing_activity__validity_duration
-#, fuzzy
 msgid ""
 "Check this to make sure your actions are not executed after a specific "
 "amount of time after the scheduled date. (e.g. Time-limited offer, Upcoming "
@@ -579,14 +561,12 @@ msgstr "Doğrulama"
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Confirmed contacts"
 msgstr "Onaylanmış kişiler"
 
 #. module: marketing_automation
 #. odoo-javascript
 #: code:addons/marketing_automation/static/src/components/campaign_template_picker_dialog/campaign_template_picker_dialog.xml:0
-#, fuzzy
 msgid "Create Campaign"
 msgstr "Kampanya Oluştur"
 
@@ -604,7 +584,6 @@ msgstr "Bir Pazarlama Otomasyonu Kampanyası Oluşturun"
 #. module: marketing_automation
 #. odoo-javascript
 #: code:addons/marketing_automation/static/src/components/campaign_template_picker_dialog/campaign_template_picker_dialog.xml:0
-#, fuzzy
 msgid "Create one or load a template prepared by our experts."
 msgstr ""
 "Bir tane oluşturun veya uzmanlarımız tarafından hazırlanmış bir şablonu "
@@ -612,7 +591,6 @@ msgstr ""
 
 #. module: marketing_automation
 #: model_terms:ir.actions.act_window,help:marketing_automation.marketing_campaign_action
-#, fuzzy
 msgid ""
 "Create one or load a template prepared by our experts.<br>\n"
 "                            Then sit down and let Odoo handle the rest!"
@@ -675,7 +653,6 @@ msgstr "Bu aktivitenin silinmesi, TÜM alt aktivitelerini siler. Emin misin?"
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Design your own marketing campaign from the ground up."
 msgstr "Kendi pazarlama kampanyanızı sıfırdan tasarlayın."
 
@@ -728,7 +705,6 @@ msgstr "Güncelleme Yapma"
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Double Opt-in"
 msgstr "Double Opt-in"
 
@@ -743,7 +719,6 @@ msgstr "E-Posta"
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_activity.py:0
-#, fuzzy
 msgid "Email cancelled"
 msgstr "E-posta iptal edildi"
 
@@ -819,7 +794,6 @@ msgstr "Filtre"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
-#, fuzzy
 msgid "Generate Participants"
 msgstr "Katılımcı Oluşturun"
 
@@ -831,7 +805,6 @@ msgstr "Katılımcı oluşturun"
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Get 10% OFF"
 msgstr "10% OFF alın"
 
@@ -847,7 +820,6 @@ msgstr ""
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Hot"
 msgstr "Sıcak"
 
@@ -955,7 +927,6 @@ msgstr ""
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_trace__links_click_datetime
-#, fuzzy
 msgid "Links Click Datetime"
 msgstr "Bağlantılar Tıklama Tarihi"
 
@@ -1027,7 +998,6 @@ msgstr "Postalamalar"
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/mailing_mailing.py:0
-#, fuzzy
 msgid ""
 "Mailings %(mailing_names)s are used in marketing campaigns. You should take "
 "care of this before unlinking the mailings."
@@ -1199,7 +1169,6 @@ msgstr "Yeni"
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Next activity: Check Email Address"
 msgstr "Sonraki etkinlik: E-posta Adresini Kontrol Et"
 
@@ -1362,21 +1331,18 @@ msgstr "%(activity)s (%(filter)s) katılımcıları"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_view_form
-#, fuzzy
 msgid "Pick a Server Action..."
 msgstr "Bir Sunucu Eylemi Seçin..."
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
-#, fuzzy
 msgid "Pick a record..."
 msgstr "Bir plak seç."
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_view_form
-#, fuzzy
 msgid "Pick or Create a Template..."
-msgstr "Bir Şablon Topla veya Oluşturun..."
+msgstr "Bir Şablon Seçin veya Oluşturun..."
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_test_view_form
@@ -1496,7 +1462,6 @@ msgstr "Çalıştır"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
-#, fuzzy
 msgid "Run the next scheduled activity for each participant of this campaign?"
 msgstr ""
 "Bu kampanyanın her katılımcısı için bir sonraki planlanmış faaliyeti "
@@ -1560,21 +1525,18 @@ msgstr "Son Gönder"
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Send Welcome Email"
 msgstr "Hoş Geldiniz E-postası Gönderin"
 
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Send a free catalog and follow-up according to reactions."
 msgstr "Ücretsiz bir katalog gönderin ve tepkilere göre takip edin."
 
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Send a welcome email to contacts and tag them if they click in it."
 msgstr ""
 "Kişilere bir hoş geldiniz e-postası gönderin ve tıkladıklarında onları "
@@ -1583,7 +1545,6 @@ msgstr ""
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid ""
 "Send a welcome email to new subscribers, remove the addresses that bounced."
 msgstr ""
@@ -1603,7 +1564,6 @@ msgstr "Şu kadar saat sonra gönder"
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Send an email to new recipients to confirm their consent."
 msgstr "Onaylarını onaylamak için yeni alıcılara bir e-posta gönderin."
 
@@ -1655,7 +1615,6 @@ msgstr "Başla"
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Start from scratch"
 msgstr "Sıfırdan başlayın"
 
@@ -1669,7 +1628,6 @@ msgstr "İl/Eyalet"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
-#, fuzzy
 msgid "State: {{0}}"
 msgstr "Eyalet: {{0}}"
 
@@ -1719,7 +1677,6 @@ msgstr "Katılımcıların senkronizasyonu gerekiyor"
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Tag Hot Contacts"
 msgstr "Sıcak Kişileri Etiketleyin"
 
@@ -1778,7 +1735,6 @@ msgstr ""
 #. module: marketing_automation
 #. odoo-javascript
 #: code:addons/marketing_automation/static/src/components/campaign_template_picker_dialog/campaign_template_picker_dialog.xml:0
-#, fuzzy
 msgid "Then sit down and let Odoo handle the rest!"
 msgstr "Sonra oturun ve bırakın gerisini Odoo halletsin!"
 
@@ -1923,7 +1879,6 @@ msgstr "Hafta"
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Welcome Flow"
 msgstr "Hoş Geldiniz Akışı"
 
@@ -1995,20 +1950,17 @@ msgstr "Bu kampanyayı başlatmak için en az bir etkinlik ayarlamanız gerekir.
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid "after the <strong>Mailing</strong> sent by the Activity \""
 msgstr ""
 "Faaliyet tarafından gönderilen <strong>Mailing</strong> adresinden sonra \""
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid "after the <strong>beginning of the workflow</strong>,<br/>the"
 msgstr "<strong>iş akışının başlangıcından sonra</strong>,<br/>"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid ""
 "after the Participant <strong>clicked</strong>,<br/>on any link included in "
 "the <strong>Mailing</strong> sent by the Activity \""
@@ -2019,7 +1971,6 @@ msgstr ""
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid ""
 "after the Participant <strong>opened</strong> the <strong>Mailing</strong> "
 "sent by the Activity \""
@@ -2029,7 +1980,6 @@ msgstr ""
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid ""
 "after the Participant <strong>replied</strong> to the <strong>Mailing</"
 "strong> sent by the Activity \""
@@ -2039,7 +1989,6 @@ msgstr ""
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid "after the execution of the Activity \""
 msgstr "Faaliyetinin yürütülmesinden sonra \""
 
@@ -2055,13 +2004,11 @@ msgstr "iş akışının başlangıcı"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid "cancelled, if"
 msgstr "iptal edildi, eğer"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_test_view_form
-#, fuzzy
 msgid "e.g. \"Brandon Freeman\""
 msgstr "örneğin \"Brandon Freeman\""
 
@@ -2083,13 +2030,11 @@ msgstr "e-posta"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid "have passed since the scheduled date."
 msgstr "planlanan tarihten bu yana geçmiştir."
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid ""
 "if no link included in the <strong>Mailing</strong> sent by the Activity \""
 msgstr ""
@@ -2098,13 +2043,11 @@ msgstr ""
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid "if the <strong>Mailing</strong> sent by the Activity \""
 msgstr "Faaliyet tarafından gönderilen <strong>Mailing</strong> \""
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid "run"
 msgstr "koşmak"
 
@@ -2125,7 +2068,6 @@ msgstr "bir Test Katılımcısı oluşturmak için"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
-#, fuzzy
 msgid "will be"
 msgstr "olacak"
 

@@ -4,13 +4,14 @@
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
 # "Abe Manyo (abem)" <abem@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-10 20:15+0000\n"
-"PO-Revision-Date: 2025-11-06 09:03+0000\n"
-"Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
+"PO-Revision-Date: 2025-11-17 07:03+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "databases/id/>\n"
 "Language: id\n"
@@ -64,7 +65,7 @@ msgstr ""
 #. module: databases
 #: model:res.groups,name:databases.group_databases_manager
 msgid "Administrator"
-msgstr ""
+msgstr "Administrator"
 
 #. module: databases
 #: model:res.groups,comment:databases.group_databases_manager
@@ -100,17 +101,17 @@ msgstr "Pengaturan Konfigurasi"
 #. module: databases
 #: model:ir.ui.menu,name:databases.menu_configuration
 msgid "Configuration"
-msgstr ""
+msgstr "Konfigurasi"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Connect"
-msgstr ""
+msgstr "Connect"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.databases_synchronization_wizard_view_form
 msgid "Continue"
-msgstr ""
+msgstr "Lanjutkan"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__created_database_ids
@@ -122,14 +123,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__create_uid
 #: model:ir.model.fields,field_description:databases.field_databases_user__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Dibuat oleh"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__create_date
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__create_date
 #: model:ir.model.fields,field_description:databases.field_databases_user__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Dibuat pada"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__database_ids
@@ -137,7 +138,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:databases.field_databases_user__project_id
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 msgid "Database"
-msgstr ""
+msgstr "Database"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_api_key
@@ -170,7 +171,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:databases.field_project_project__database_name
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_name
 msgid "Database Name"
-msgstr ""
+msgstr "Nama Database"
 
 #. module: databases
 #: model:ir.model,name:databases.model_databases_synchronization_wizard
@@ -186,7 +187,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:databases.field_project_project__database_url
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_url
 msgid "Database URL"
-msgstr ""
+msgstr "URL database"
 
 #. module: databases
 #: model:ir.model,name:databases.model_databases_user
@@ -225,7 +226,7 @@ msgstr ""
 #: model:res.groups.privilege,name:databases.res_groups_privilege_databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
 msgid "Databases"
-msgstr ""
+msgstr "Database-Database"
 
 #. module: databases
 #: model:ir.actions.server,name:databases.ir_cron_synchronize_databases_with_odoocom_ir_actions_server
@@ -240,7 +241,7 @@ msgstr ""
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.databases_manage_users_wizard_view_form
 msgid "Discard"
-msgstr ""
+msgstr "Buang"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__display_name
@@ -256,12 +257,12 @@ msgstr "Nama Tampilan"
 #: model:ir.model.fields.selection,name:databases.selection__databases_manage_users_wizard__state__done
 #: model:project.task.type,name:databases.stage_done
 msgid "Done"
-msgstr ""
+msgstr "Selesai"
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__databases_manage_users_wizard__state__draft
 msgid "Draft"
-msgstr ""
+msgstr "Draft"
 
 #. module: databases
 #. odoo-javascript
@@ -273,7 +274,7 @@ msgstr "Entri-entri draft di jurnal %(journal_name)s"
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__error_message
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__error_message
 msgid "Error Message"
-msgstr ""
+msgstr "Pesan Kesalahan"
 
 #. module: databases
 #. odoo-python
@@ -360,7 +361,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:databases.field_project_project__database_hosting
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_hosting
 msgid "Hosting"
-msgstr ""
+msgstr "Hosting"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__id
@@ -375,17 +376,17 @@ msgstr "ID"
 #. module: databases
 #: model:project.task.type,name:databases.stage_progress
 msgid "In Progress"
-msgstr ""
+msgstr "Dalam Proses"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Inbox"
-msgstr ""
+msgstr "Kotak Pesan"
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__databases_manage_users_wizard__mode__invite
 msgid "Invitation"
-msgstr ""
+msgstr "Undangan"
 
 #. module: databases
 #. odoo-python
@@ -396,42 +397,42 @@ msgstr "Undangan selesai"
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.databases_manage_users_wizard_view_form
 msgid "Invite"
-msgstr ""
+msgstr "Undang"
 
 #. module: databases
 #: model:ir.actions.server,name:databases.action_invite_users
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Invite Users"
-msgstr ""
+msgstr "Undang User"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 msgid "KPIs"
-msgstr ""
+msgstr "KPI"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_last_synchro
 msgid "Last Synchronization"
-msgstr ""
+msgstr "Sinkronisasi Terakhir"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__write_uid
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__write_uid
 #: model:ir.model.fields,field_description:databases.field_databases_user__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Terakhir Diperbarui oleh"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__write_date
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__write_date
 #: model:ir.model.fields,field_description:databases.field_databases_user__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Terakhir Diperbarui pada"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_user__latest_authentication
 msgid "Latest Authentication"
-msgstr ""
+msgstr "Autentikasi Terakhir"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_user__local_user_id
@@ -441,7 +442,7 @@ msgstr ""
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_user__login
 msgid "Login"
-msgstr ""
+msgstr "Log masuk"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_kpi_properties
@@ -451,17 +452,17 @@ msgstr ""
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__mode
 msgid "Mode"
-msgstr ""
+msgstr "Mode"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_user__name
 msgid "Name"
-msgstr ""
+msgstr "Nama"
 
 #. module: databases
 #: model:project.task.type,name:databases.stage_new
 msgid "New"
-msgstr ""
+msgstr "Baru"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__new_properties
@@ -476,18 +477,18 @@ msgstr ""
 #. module: databases
 #: model_terms:ir.actions.act_window,help:databases.action_view_tasks_all
 msgid "No tasks found. Let's create one!"
-msgstr ""
+msgstr "Tidak ada task yang ditemukan. Ayo buat baru!"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__notify_user
 msgid "Notify User"
-msgstr ""
+msgstr "Notifikasi User"
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__project_project__database_hosting__saas
 #: model:ir.model.fields.selection,name:databases.selection__project_template_create_wizard__database_hosting__saas
 msgid "Odoo Online"
-msgstr ""
+msgstr "Odoo Online"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_res_config_settings__databases_apikey
@@ -515,13 +516,13 @@ msgstr ""
 #: model:ir.model.fields.selection,name:databases.selection__project_project__database_hosting__paas
 #: model:ir.model.fields.selection,name:databases.selection__project_template_create_wizard__database_hosting__paas
 msgid "Odoo.sh"
-msgstr ""
+msgstr "Odoo.sh"
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__project_project__database_hosting__premise
 #: model:ir.model.fields.selection,name:databases.selection__project_template_create_wizard__database_hosting__premise
 msgid "On Premise"
-msgstr ""
+msgstr "On Premise"
 
 #. module: databases
 #: model_terms:ir.actions.act_window,help:databases.action_view_tasks_all
@@ -545,17 +546,17 @@ msgstr "Kegiatan-kegiatan terencana dari tipe %(return_name)s"
 #. module: databases
 #: model:ir.model,name:databases.model_project_project
 msgid "Project"
-msgstr ""
+msgstr "Proyek"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
 msgid "Project Template"
-msgstr ""
+msgstr "Templat Project"
 
 #. module: databases
 #: model:ir.model,name:databases.model_project_template_create_wizard
 msgid "Project Template create Wizard"
-msgstr ""
+msgstr "Wizard buat Templat Project"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_res_config_settings__databases_project_template_id
@@ -580,12 +581,12 @@ msgstr ""
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__databases_manage_users_wizard__mode__remove
 msgid "Removal"
-msgstr ""
+msgstr "Pengambilan"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.databases_manage_users_wizard_view_form
 msgid "Remove"
-msgstr ""
+msgstr "Hapus"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
@@ -596,17 +597,17 @@ msgstr ""
 #: model:ir.actions.server,name:databases.action_remove_users
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Remove Users"
-msgstr ""
+msgstr "Hapus User"
 
 #. module: databases
 #: model:ir.ui.menu,name:databases.menu_reporting
 msgid "Reporting"
-msgstr ""
+msgstr "Laporan"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Responsible"
-msgstr ""
+msgstr "Penanggung Jawab"
 
 #. module: databases
 #. odoo-python
@@ -644,12 +645,12 @@ msgstr "Pilih user-user yang Anda ingin hapus dari database %(database_name)s."
 #: model:ir.actions.act_window,name:databases.action_databases_configuration
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Settings"
-msgstr ""
+msgstr "Pengaturan"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__state
 msgid "State"
-msgstr ""
+msgstr "Keadaan"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__summary_message
@@ -680,7 +681,7 @@ msgstr "Sinkronisasi database %d"
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Synchronize"
-msgstr ""
+msgstr "Sinkronisasikan"
 
 #. module: databases
 #: model:ir.actions.server,name:databases.action_synchronize_all_databases
@@ -699,7 +700,7 @@ msgstr ""
 #: model:ir.ui.menu,name:databases.menu_tasks
 #: model:project.project,label_tasks:databases.database_default_template
 msgid "Tasks"
-msgstr ""
+msgstr "Kegiatan"
 
 #. module: databases
 #. odoo-javascript
@@ -740,7 +741,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__user_ids
 #: model:res.groups,name:databases.group_databases_user
 msgid "User"
-msgstr ""
+msgstr "Pengguna"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
@@ -761,12 +762,12 @@ msgstr "Penghapusan user selesai"
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Users"
-msgstr ""
+msgstr "Pengguna"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Version"
-msgstr ""
+msgstr "Versi"
 
 #. module: databases
 #: model:ir.model.fields,help:databases.field_databases_synchronization_wizard__notify_user

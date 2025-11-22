@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-12 15:04+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/esg/tr/>"
 "\n"
 "Language: tr\n"
@@ -23,7 +24,6 @@ msgstr ""
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_emission_factor_line.py:0
-#, fuzzy
 msgid "%(gas_name)s (%(quantity)s kg)"
 msgstr "%(gas_name)s (%(quantity)s kg)"
 
@@ -35,7 +35,6 @@ msgstr "%s (kopya)"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
-#, fuzzy
 msgid ""
 "<i class=\"fa fa-exclamation-triangle me-2\"/>\n"
 "                    You are modifying an emission factor already assigned to "
@@ -51,19 +50,16 @@ msgstr ""
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_kanban_view
-#, fuzzy
 msgid "<span class=\"ms-1\">kgCO₂e</span>"
 msgstr "<span class=\"ms-1\">kgCO₂e</span>"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.other_emission_form_view
-#, fuzzy
 msgid "<span class=\"ms-2\">kgCO₂e</span>"
 msgstr "<span class=\"ms-2\">kgCO₂e</span>"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.view_move_form_inherit_esg
-#, fuzzy
 msgid "<span>kgCO₂e</span>"
 msgstr "<span>kgCO₂e</span>"
 
@@ -75,13 +71,11 @@ msgstr "Aynı ada sahip bir etiket zaten var."
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
-#, fuzzy
 msgid "ADEME data is already up to date."
 msgstr "ADEME verileri zaten günceldir."
 
 #. module: esg
 #: model:res.groups,comment:esg.esg_group_user
-#, fuzzy
 msgid ""
 "Access to ESG features including viewing data, reporting, and mapping "
 "emissions with emissions factors, but without configuration rights."
@@ -126,7 +120,6 @@ msgstr "Etkin"
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__activity_flow
 #: model_terms:ir.ui.view,arch_db:esg.emission_source_form_view
-#, fuzzy
 msgid "Activity Flow"
 msgstr "Faaliyet Akışı"
 
@@ -155,7 +148,6 @@ msgstr "Tutar"
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_assignation_line.py:0
-#, fuzzy
 msgid ""
 "An assignation with the rules (%(account_id)s, %(partner_id)s, %"
 "(product_id)s) already exists in the emission factor '%(factor_name)s'."
@@ -168,7 +160,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/esg/models/esg_assignation_line.py:0
 #: code:addons/esg/static/src/widgets/emission_factor_x2many_field/emission_factor_list_renderer.js:0
-#, fuzzy
 msgid "Any Account"
 msgstr "Herhangi Bir Hesap"
 
@@ -177,7 +168,6 @@ msgstr "Herhangi Bir Hesap"
 #. odoo-python
 #: code:addons/esg/models/esg_assignation_line.py:0
 #: code:addons/esg/static/src/widgets/emission_factor_x2many_field/emission_factor_list_renderer.js:0
-#, fuzzy
 msgid "Any Partner"
 msgstr "Herhangi Bir Ortak"
 
@@ -191,7 +181,6 @@ msgstr "Herhangi Bir Ürün"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.factors_auto_assignment_wizard_form_view
-#, fuzzy
 msgid "Application Period"
 msgstr "Başvuru Dönemi"
 
@@ -208,20 +197,17 @@ msgstr "Ata"
 #. module: esg
 #: model:ir.actions.act_window,name:esg.factors_auto_assignment_wizard_action
 #: model:ir.actions.server,name:esg.action_apply_factors_auto_assignment
-#, fuzzy
 msgid "Assign Emission Factors"
 msgstr "Emisyon Faktörlerini Atayın"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_assignation_line
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__assignation_line_ids
-#, fuzzy
 msgid "Assignation Line"
 msgstr "Atama Hattı"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
-#, fuzzy
 msgid "Assignations"
 msgstr "Görevlendirmeler"
 
@@ -234,25 +220,21 @@ msgstr "Ek Sayısı"
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/carbon_report.py:0
-#, fuzzy
 msgid "Audit Emissions"
 msgstr "Denetim Emisyonları"
 
 #. module: esg
 #: model:ir.model,name:esg.model_factors_auto_assignment_wizard
-#, fuzzy
 msgid "Auto-assignment of emission factors to move lines"
 msgstr "Hatları taşımak için emisyon faktörlerinin otomatik atanması"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_ch4b
-#, fuzzy
 msgid "Biogenic Methane (CH₄)"
 msgstr "Biyojenik Metan (CH₄)"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_ch4b
-#, fuzzy
 msgid "Biogenic Methane (CH₄) (t)"
 msgstr "Biyojenik Metan (CH₄) (t)"
 
@@ -261,65 +243,55 @@ msgstr "Biyojenik Metan (CH₄) (t)"
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 #: model:esg.activity.type,name:esg.esg_activity_type_6
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_6
-#, fuzzy
 msgid "Business Travel"
 msgstr "İş Seyahati"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c4f6
-#, fuzzy
 msgid "C4F6"
 msgstr "C4F6"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_c4f8o
-#, fuzzy
 msgid "C4F8O"
 msgstr "C4F8O"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c5f8
-#, fuzzy
 msgid "C5F8"
 msgstr "C5F8"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "CH₄"
 msgstr "CH₄"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "CO₂"
 msgstr "CO₂"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_co2
-#, fuzzy
 msgid "CO₂ (t)"
 msgstr "CO₂ (t)"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Calculation"
 msgstr "Hesaplama"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__can_be_downloaded
-#, fuzzy
 msgid "Can Be Downloaded"
 msgstr "İndirilebilir"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Can be added manually"
 msgstr "Manuel olarak eklenebilir"
 
@@ -342,21 +314,18 @@ msgstr "Sermaye Malları"
 #: code:addons/esg/static/src/views/esg_carbon_emission_pivot/esg_carbon_emission_pivot_controller.js:0
 #: model:ir.actions.act_window,name:esg.action_carbon_emission_report_analytics_views
 #: model:ir.ui.menu,name:esg.menu_esg_carbon_analytics
-#, fuzzy
 msgid "Carbon Analytics"
 msgstr "Karbon Analitiği"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_co2
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__co2
-#, fuzzy
 msgid "Carbon Dioxide (CO₂)"
 msgstr "Karbondioksit (CO₂)"
 
 #. module: esg
 #: model:ir.ui.menu,name:esg.menu_esg_carbon_emissions
 #: model:ir.ui.menu,name:esg.menu_esg_collect_carbon_emissions
-#, fuzzy
 msgid "Carbon Emissions"
 msgstr "Karbon Emisyonları"
 
@@ -372,31 +341,26 @@ msgstr "Karbon Ayak İzi"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_co
-#, fuzzy
 msgid "Carbon Monoxide"
 msgstr "Karbon Monoksit"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_carbon_report_handler
-#, fuzzy
 msgid "Carbon Report Custom Handler"
 msgstr "Karbon Raporu Özel İşleyicisi"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_cf4
-#, fuzzy
 msgid "Carbon Tetrafluoride (CF₄)"
 msgstr "Karbon Tetraflorür (CF₄)"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_cf4
-#, fuzzy
 msgid "Carbon Tetrafluoride (CF₄) (t)"
 msgstr "Karbon Tetraflorür (CF₄) (t)"
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_view_emission_source
-#, fuzzy
 msgid ""
 "Categorize your data into Scope 1, 2, and 3 to structure your carbon "
 "emission reporting."
@@ -412,7 +376,6 @@ msgstr "Kategori"
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/account_account.py:0
-#, fuzzy
 msgid ""
 "Changing the account type to anything other than %"
 "(valid_account_type_names)s will reset all emission factors linked to "
@@ -435,7 +398,6 @@ msgstr "Alt"
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_dashboard.xml:0
-#, fuzzy
 msgid "Close the onboarding tips"
 msgstr "İşe alıştırma ipuçlarını kapatın"
 
@@ -449,14 +411,12 @@ msgstr "Kod"
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_dashboard.xml:0
 #: model:ir.ui.menu,name:esg.menu_esg_collect
-#, fuzzy
 msgid "Collect"
 msgstr "Toplamak"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_carbon_analytics_box/esg_carbon_analytics_box.xml:0
-#, fuzzy
 msgid "Collect Emissions"
 msgstr "Emisyonları Toplayın"
 
@@ -475,27 +435,23 @@ msgstr "Firma"
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Company Facilities"
 msgstr "Şirket Tesisleri"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_source__activity_flow_direct_indirect__company_reporting
-#, fuzzy
 msgid "Company Reporting"
 msgstr "Şirket Raporlaması"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Company Vehicles"
 msgstr "Şirket Araçları"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Company reporting"
 msgstr "Şirket raporlaması"
 
@@ -509,7 +465,6 @@ msgstr "Tam Adı"
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__compute_method
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__compute_method
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__compute_method
-#, fuzzy
 msgid "Compute Method"
 msgstr "Hesaplama Yöntemi"
 
@@ -530,7 +485,6 @@ msgstr "Onayla"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_factors_auto_assignment_wizard__start_date
-#, fuzzy
 msgid ""
 "Correspond to the period to consider for the assignment of the factors to "
 "the move lines."
@@ -540,19 +494,16 @@ msgstr ""
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_esg_gasses_list
-#, fuzzy
 msgid "Create and configure greenhouse gases."
 msgstr "Sera gazları oluşturun ve yapılandırın."
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_view_emission_factor
-#, fuzzy
 msgid "Create emission factors."
 msgstr "Emisyon faktörleri oluşturun."
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_view_emission_source
-#, fuzzy
 msgid "Create emission sources."
 msgstr "Emisyon kaynakları oluşturun."
 
@@ -605,7 +556,6 @@ msgstr "Veritabanı"
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
-#, fuzzy
 msgid "Database file is missing"
 msgstr "Veritabanı dosyası eksik"
 
@@ -629,7 +579,6 @@ msgstr "Bitiş Tarihi"
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_esg_gasses_list
-#, fuzzy
 msgid ""
 "Define gases to convert emissions into CO₂ equivalents using Global Warming "
 "Potential values."
@@ -639,7 +588,6 @@ msgstr ""
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_view_emission_factor
-#, fuzzy
 msgid "Define how activity data translates into CO₂e."
 msgstr "Faaliyet verilerinin CO₂e'ye nasıl dönüştüğünü tanımlayın."
 
@@ -651,14 +599,12 @@ msgstr "Açıklama"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
-#, fuzzy
 msgid "Detailed by gas"
 msgstr "Gaza göre detaylı"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Direct Emissions"
 msgstr "Doğrudan Emisyonlar"
 
@@ -682,7 +628,6 @@ msgstr "İsim Göster"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.factors_auto_assignment_wizard_form_view
-#, fuzzy
 msgid ""
 "Do you want to automatically assign the selected emission factor(s) to the "
 "move lines based on your predefined assignation rules?"
@@ -698,7 +643,6 @@ msgstr "İndir"
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_view_database
-#, fuzzy
 msgid ""
 "Download a certified database we provide or upload your own in Odoo format."
 msgstr ""
@@ -707,26 +651,22 @@ msgstr ""
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_source__activity_flow_indirect_others__downstream
-#, fuzzy
 msgid "Downstream"
 msgstr "Aşağı Akış"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_downstream_5
-#, fuzzy
 msgid "Downstream Leased Assets"
 msgstr "Downstream Kiralanan Varlıklar"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_downstream_1
-#, fuzzy
 msgid "Downstream Transportation and Distribution"
 msgstr "Aşağı Akım Taşımacılık ve Dağıtım"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Downstream activities"
 msgstr "Mansap faaliyetleri"
 
@@ -738,38 +678,32 @@ msgstr "ESG"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_carbon_emission_report
-#, fuzzy
 msgid "ESG Carbon Emissions Report"
 msgstr "ESG Karbon Emisyonları Raporu"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Effortless"
 msgstr "Zahmetsiz"
 
 #. module: esg
 #: model:account.account,name:esg.account_electricity
-#, fuzzy
 msgid "Electricity"
 msgstr "Elektrik"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_indirect_1_2
-#, fuzzy
 msgid "Electricity for Cars"
 msgstr "Otomobiller için Elektrik"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_indirect_1_1
-#, fuzzy
 msgid "Electricity for Office"
 msgstr "Ofis için Elektrik"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
-#, fuzzy
 msgid "Emission"
 msgstr "Emisyon"
 
@@ -780,39 +714,33 @@ msgstr "Emisyon"
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__esg_emission_factor_id
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__esg_emission_factor_id
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__esg_emission_factor_id
-#, fuzzy
 msgid "Emission Factor"
 msgstr "Emisyon Faktörü"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_emission_factor_line
-#, fuzzy
 msgid "Emission Factor Line"
 msgstr "Emisyon Faktörü Hattı"
 
 #. module: esg
 #: model:ir.actions.act_window,name:esg.action_view_emission_factor
 #: model:ir.ui.menu,name:esg.menu_esg_emission_factors
-#, fuzzy
 msgid "Emission Factors"
 msgstr "Emisyon Faktörleri"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_emission_source
-#, fuzzy
 msgid "Emission Source"
 msgstr "Emisyon Kaynağı"
 
 #. module: esg
 #: model:ir.actions.act_window,name:esg.action_view_emission_source
 #: model:ir.ui.menu,name:esg.menu_esg_type_of_emissions
-#, fuzzy
 msgid "Emission Sources"
 msgstr "Emisyon Kaynakları"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_list_view
-#, fuzzy
 msgid "Emission source"
 msgstr "Emisyon kaynağı"
 
@@ -829,14 +757,12 @@ msgstr "Emisyon"
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__esg_emissions_value
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__esg_emissions_value
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__esg_emissions_value
-#, fuzzy
 msgid "Emissions (kgCO₂e)"
 msgstr "Emisyonlar (kgCO₂e)"
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_emitted_emission_report_views
 #: model_terms:ir.actions.act_window,help:esg.action_offset_emission_report_views
-#, fuzzy
 msgid ""
 "Emissions data will sync automatically from accounting when you receive "
 "supplier invoices.<br>\n"
@@ -851,7 +777,6 @@ msgstr ""
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/account_move.py:0
-#, fuzzy
 msgid "Emissions of %(move_name)s"
 msgstr "Emisyonları %(move_name)s"
 
@@ -859,27 +784,23 @@ msgstr "Emisyonları %(move_name)s"
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_carbon_analytics_box/esg_carbon_analytics_box.js:0
 #: code:addons/esg/static/src/components/esg_dashboard/esg_carbon_analytics_box/esg_carbon_analytics_box.xml:0
-#, fuzzy
 msgid "Emissions to define"
 msgstr "Tanımlanacak emisyonlar"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_emission_factor.py:0
-#, fuzzy
 msgid "Emissions using %(emission_factor)s"
 msgstr "Kullanılan emisyonlar %(emission_factor)s"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
-#, fuzzy
 msgid "Emitted"
 msgstr "Yayılan"
 
 #. module: esg
 #: model:ir.actions.act_window,name:esg.action_emitted_emission_report_views
 #: model:ir.ui.menu,name:esg.menu_esg_emitted_emissions
-#, fuzzy
 msgid "Emitted Emissions"
 msgstr "Yayılan Emisyonlar"
 
@@ -888,7 +809,6 @@ msgstr "Yayılan Emisyonlar"
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 #: model:esg.activity.type,name:esg.esg_activity_type_5
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_7
-#, fuzzy
 msgid "Employee Commuting"
 msgstr "Çalışan Taşımacılığı"
 
@@ -899,20 +819,17 @@ msgstr "Bitiş Tarihi"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_downstream_4
-#, fuzzy
 msgid "End-of-Life Treatment of Sold Products"
 msgstr "Satılan Ürünlerin Kullanım Ömrü Sonu İşlemleri"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "End-of-life Treatment of Sold Products"
 msgstr "Satılan Ürünlerin Kullanım Ömrü Sonu İşlemleri"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_0
-#, fuzzy
 msgid "Energy Consumption"
 msgstr "Enerji Tüketimi"
 
@@ -923,14 +840,12 @@ msgstr "Çevre"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__esg_other_emission_ids
-#, fuzzy
 msgid "Esg Other Emission"
 msgstr "Esg Diğer Emisyonlar"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_account_bank_statement_line__esg_show_emissions_button
 #: model:ir.model.fields,field_description:esg.field_account_move__esg_show_emissions_button
-#, fuzzy
 msgid "Esg Show Emissions Button"
 msgstr "Esg Emisyonları Göster Düğmesi"
 
@@ -953,19 +868,16 @@ msgstr "Takipçiler (İş ortakları)"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_8
-#, fuzzy
 msgid "Food Consumption"
 msgstr "Gıda Tüketimi"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_ch4f
-#, fuzzy
 msgid "Fossil Methane (CH₄)"
 msgstr "Fosil Metan (CH₄)"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_ch4f
-#, fuzzy
 msgid "Fossil Methane (CH₄) (t)"
 msgstr "Fosil Metan (CH₄) (t)"
 
@@ -977,31 +889,26 @@ msgstr "Bayilikler"
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Fuel and Energy Related Activities"
 msgstr "Yakıt ve Enerji ile İlgili Faaliyetler"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_3
-#, fuzzy
 msgid "Fuel and Energy-Related Activites"
 msgstr "Yakıt ve Enerji ile İlgili Faaliyetler"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_direct_4
-#, fuzzy
 msgid "Fugitive Emissions"
 msgstr "Kaçak Emisyonlar"
 
 #. module: esg
 #: model:res.groups,comment:esg.esg_group_manager
-#, fuzzy
 msgid "Full access to all ESG features including configuration rights."
 msgstr "Yapılandırma hakları dahil tüm ESG özelliklerine tam erişim."
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.esg_gas_kanban_view
-#, fuzzy
 msgid "GWP:"
 msgstr "GWP:"
 
@@ -1015,159 +922,133 @@ msgstr "Gaz"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
-#, fuzzy
 msgid "Gas Emissions"
 msgstr "Gaz Emisyonları"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__gas_line_ids
-#, fuzzy
 msgid "Gas Line"
 msgstr "Gaz Hattı"
 
 #. module: esg
 #: model:ir.actions.act_window,name:esg.action_esg_gasses_list
 #: model:ir.ui.menu,name:esg.menu_esg_configuration_carbon_emissions_gasses
-#, fuzzy
 msgid "Gases"
 msgstr "Gazlar"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_gas__global_warming_potential
-#, fuzzy
 msgid "Global Warming Potential (GWP)"
 msgstr "Küresel Isınma Potansiyeli (GWP)"
 
 #. module: esg
 #: model:ir.model.constraint,message:esg.constraint_esg_gas_non_null_gwp
-#, fuzzy
 msgid "Global Warming Potential (GWP) cannot be equal to 0."
 msgstr "Küresel Isınma Potansiyeli (GWP) 0'a eşit olamaz."
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_125
-#, fuzzy
 msgid "HFC-125"
 msgstr "HFC-125"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_134
-#, fuzzy
 msgid "HFC-134"
 msgstr "HFC-134"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_134a
-#, fuzzy
 msgid "HFC-134a"
 msgstr "HFC-134a"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_hfc_134a
-#, fuzzy
 msgid "HFC-134a (t)"
 msgstr "HFC-134a (t)"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_143
-#, fuzzy
 msgid "HFC-143"
 msgstr "HFC-143"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_143a
-#, fuzzy
 msgid "HFC-143a"
 msgstr "HFC-143a"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_152
-#, fuzzy
 msgid "HFC-152"
 msgstr "HFC-152"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_152a
-#, fuzzy
 msgid "HFC-152a"
 msgstr "HFC-152a"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_hfc_152a
-#, fuzzy
 msgid "HFC-152a (t)"
 msgstr "HFC-152a (t)"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_161
-#, fuzzy
 msgid "HFC-161"
 msgstr "HFC-161"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_227ea
-#, fuzzy
 msgid "HFC-227ea"
 msgstr "HFC-227ea"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_23
-#, fuzzy
 msgid "HFC-23"
 msgstr "HFC-23"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_hfc_23
-#, fuzzy
 msgid "HFC-23 (t)"
 msgstr "HFC-23 (t)"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_236cb
-#, fuzzy
 msgid "HFC-236cb"
 msgstr "HFC-236cb"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_32
-#, fuzzy
 msgid "HFC-32"
 msgstr "HFC-32"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_41
-#, fuzzy
 msgid "HFC-41"
 msgstr "HFC-41"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "HFCs"
 msgstr "HFC'ler"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_cf3ochf2
-#, fuzzy
 msgid "HFE-125"
 msgstr "HFE-125"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_chf2ch2ocf3
-#, fuzzy
 msgid "HFE-245fa1"
 msgstr "HFE-245fa1"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_cf3cf2ch2och3
-#, fuzzy
 msgid "HFE-365mcf3"
 msgstr "HFE-365mcf3"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_chf2_c4f9och3
-#, fuzzy
 msgid "HFE-7100"
 msgstr "HFE-7100"
 
@@ -1179,25 +1060,21 @@ msgstr "Mesaj Var"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c2f6
-#, fuzzy
 msgid "Hexafluoroethane (C₂F₆)"
 msgstr "Heksafloroetan (C₂F₆)"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_c2f6
-#, fuzzy
 msgid "Hexafluoroethane (C₂F₆) (t)"
 msgstr "Heksafloroetan (C₂F₆) (t)"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
-#, fuzzy
 msgid "High Uncertainty (20-50%)"
 msgstr "Yüksek Belirsizlik (20-50%)"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__hfc
-#, fuzzy
 msgid "Hydrofluorocarbons (HFCs)"
 msgstr "Hidroflorokarbonlar (HFC'ler)"
 
@@ -1221,13 +1098,11 @@ msgstr "ID"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_7
-#, fuzzy
 msgid "IT Operations"
 msgstr "BT Operasyonları"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_factors_auto_assignment_wizard__replace_previous_factors
-#, fuzzy
 msgid ""
 "If checked, any emission lines that already have an emission factor "
 "(manually or automatically assigned) will be reassigned if a matching factor "
@@ -1259,41 +1134,35 @@ msgstr "Görsel"
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Included in Accounting"
 msgstr "Muhasebeye Dahil Edilmiştir"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Included in Invoicing"
 msgstr "Faturalandırmaya Dahil"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Indirect Emissions"
 msgstr "Dolaylı Emisyonlar"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
-#, fuzzy
 msgid "Invalid URL."
 msgstr "Geçersiz URL."
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Investment"
 msgstr "Yatırım"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_downstream_7
-#, fuzzy
 msgid "Investments"
 msgstr "Yatırımlar"
 
@@ -1305,14 +1174,12 @@ msgstr "Takipçi mi"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_gas__is_mandatory_gas
-#, fuzzy
 msgid "Is Mandatory Gas"
 msgstr "Zorunlu Gaz mı"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
-#, fuzzy
 msgid "JSON response could not be decoded."
 msgstr "JSON yanıtı deşifre edilemedi."
 
@@ -1329,14 +1196,12 @@ msgstr "Yevmiye Kalemi"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__kanban_text
-#, fuzzy
 msgid "Kanban Text"
 msgstr "Kanban Metni"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_carbon_footprint_box/esg_carbon_footprint_box.xml:0
-#, fuzzy
 msgid "Last 6 Months"
 msgstr "Son 6 Ay"
 
@@ -1385,7 +1250,6 @@ msgstr "Son Versiyon"
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Leased Assets"
 msgstr "Kiralanan Varlıklar"
 
@@ -1396,13 +1260,11 @@ msgstr "Seviye"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
-#, fuzzy
 msgid "Low Uncertainty (< 5%)"
 msgstr "Düşük Belirsizlik (< 5%)"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_2
-#, fuzzy
 msgid "Material Production"
 msgstr "Malzeme Üretimi"
 
@@ -1415,7 +1277,6 @@ msgstr "Ölçüm"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
-#, fuzzy
 msgid "Medium Uncertainty (5-20%)"
 msgstr "Orta Belirsizlik (5-20%)"
 
@@ -1433,25 +1294,21 @@ msgstr "Mesajlar"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__ch4
-#, fuzzy
 msgid "Methane (CH₄)"
 msgstr "Metan (CH₄)"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_ch4
-#, fuzzy
 msgid "Methane (generic) (CH₄)"
 msgstr "Metan (jenerik) (CH₄)"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
-#, fuzzy
 msgid "Missing Emission Factor"
 msgstr "Eksik Emisyon Faktörü"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_direct_2
-#, fuzzy
 msgid "Mobile Combustion"
 msgstr "Mobil Yanma"
 
@@ -1464,7 +1321,6 @@ msgstr "Parasal Değeri"
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "NF₃"
 msgstr "NF₃"
 
@@ -1481,7 +1337,6 @@ msgstr "Adı"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__nb_linked_emissions
-#, fuzzy
 msgid "Nb Linked Emissions"
 msgstr "Nb Bağlantılı Emisyonlar"
 
@@ -1499,53 +1354,45 @@ msgstr "Yeni"
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_nf3
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__nf3
-#, fuzzy
 msgid "Nitrogen Trifluoride"
 msgstr "Azot Triflorür"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_n2o
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__n2o
-#, fuzzy
 msgid "Nitrous Oxide (N₂O)"
 msgstr "Azot Oksit (N₂O)"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_n2o
-#, fuzzy
 msgid "Nitrous Oxide (N₂O) (t)"
 msgstr "Azot Oksit (N₂O) (t)"
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_emitted_emission_report_views
 #: model_terms:ir.actions.act_window,help:esg.action_offset_emission_report_views
-#, fuzzy
 msgid "No Emission yet!"
 msgstr "Henüz emisyon yok!"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/wizard/factors_auto_assignment_wizard.py:0
-#, fuzzy
 msgid "No emissions were updated."
 msgstr "Hiçbir emisyon güncellenmemiştir."
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_view_database
-#, fuzzy
 msgid "No source database found."
 msgstr "Kaynak veritabanı bulunamadı."
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
-#, fuzzy
 msgid "Not detailed by gas"
 msgstr "Gaza göre detaylandırılmamıştır"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
-#, fuzzy
 msgid "Not loaded"
 msgstr "Yüklü değil"
 
@@ -1582,7 +1429,6 @@ msgstr "Teslimat hatası olan mesaj sayısı"
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "N₂O"
 msgstr "N₂O"
 
@@ -1594,7 +1440,6 @@ msgstr "Offset"
 #. module: esg
 #: model:ir.actions.act_window,name:esg.action_offset_emission_report_views
 #: model:ir.ui.menu,name:esg.menu_esg_offset_emissions
-#, fuzzy
 msgid "Offset Emissions"
 msgstr "Emisyonları Dengeleme"
 
@@ -1605,45 +1450,38 @@ msgstr "Diğer"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_other_emission
-#, fuzzy
 msgid "Other Emission"
 msgstr "Diğer Emisyonlar"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__other
-#, fuzzy
 msgid "Other Halogenated substances"
 msgstr "Diğer Halojenli maddeler"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Other Indirect Emissions"
 msgstr "Diğer Dolaylı Emisyonlar"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c3f8
-#, fuzzy
 msgid "PFC-218"
 msgstr "PFC-218"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c-c4f8
-#, fuzzy
 msgid "PFC-318"
 msgstr "PFC-318"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c6f14
-#, fuzzy
 msgid "PFC-51-14"
 msgstr "PFC-51-14"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "PFCs"
 msgstr "PFC'ler"
 
@@ -1665,44 +1503,37 @@ msgstr "İş Ortağı"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__pfc
-#, fuzzy
 msgid "Perfluorocarbons (PFCs)"
 msgstr "Perflorokarbonlar (PFC'ler)"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
-#, fuzzy
 msgid "Physically"
 msgstr "Fiziksel olarak"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_factor__compute_method__physically
-#, fuzzy
 msgid "Physically (Quantity)"
 msgstr "Fiziksel olarak (Miktar)"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__precursors
-#, fuzzy
 msgid "Precursors"
 msgstr "Öncüller"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_direct_3
-#, fuzzy
 msgid "Process Emissions"
 msgstr "Proses Emisyonları"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Processing of Sold Product"
 msgstr "Satılan Ürünün İşlenmesi"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_downstream_2
-#, fuzzy
 msgid "Processing of Sold Products"
 msgstr "Satılan Ürünlerin İşlenmesi"
 
@@ -1713,20 +1544,17 @@ msgstr "Ürün"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_4
-#, fuzzy
 msgid "Product Usage and Disposal"
 msgstr "Ürün Kullanımı ve Bertarafı"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_indirect_1
-#, fuzzy
 msgid "Purchased Electricity"
 msgstr "Satın Alınan Elektrik"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Purchased Electricity, Steam, Heating, and Cooling for own use"
 msgstr "Kendi kullanımımız için satın alınan Elektrik, Buhar, Isıtma ve Soğutma"
 
@@ -1734,13 +1562,11 @@ msgstr "Kendi kullanımımız için satın alınan Elektrik, Buhar, Isıtma ve S
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_1
-#, fuzzy
 msgid "Purchased Goods and Services"
 msgstr "Satın Alınan Mal ve Hizmetler"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_indirect_2
-#, fuzzy
 msgid "Purchased Steam, Heat or Cooling"
 msgstr "Satın Alınan Buhar, Isı veya Soğutma"
 
@@ -1759,13 +1585,11 @@ msgstr "Değerlendirmeler"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__region
-#, fuzzy
 msgid "Region / Regional Conditions"
 msgstr "Bölge / Bölgesel Koşullar"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_gas__global_warming_potential
-#, fuzzy
 msgid "Relative impact of gas on global warming compared to CO₂ over 100 years"
 msgstr ""
 "CO₂ ile karşılaştırıldığında gazın küresel ısınma üzerindeki 100 yıllık "
@@ -1773,20 +1597,17 @@ msgstr ""
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__replace_previous_factors
-#, fuzzy
 msgid "Replace Previous Factors"
 msgstr "Önceki Faktörleri Değiştirin"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.factors_auto_assignment_wizard_form_view
-#, fuzzy
 msgid "Replace existing assignations"
 msgstr "Mevcut atamaları değiştirin"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "SF₆"
 msgstr "SF₆"
 
@@ -1813,14 +1634,12 @@ msgstr "Kapsam"
 #. odoo-python
 #: code:addons/esg/controllers/esg_dashboard.py:0
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Scope 1"
 msgstr "Kapsam 1"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_source__scope__direct
 #: model_terms:ir.ui.view,arch_db:esg.emission_source_search_view
-#, fuzzy
 msgid "Scope 1: Direct"
 msgstr "Kapsam 1: Doğrudan"
 
@@ -1829,14 +1648,12 @@ msgstr "Kapsam 1: Doğrudan"
 #. odoo-python
 #: code:addons/esg/controllers/esg_dashboard.py:0
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Scope 2"
 msgstr "Kapsam 2"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_source__scope__indirect
 #: model_terms:ir.ui.view,arch_db:esg.emission_source_search_view
-#, fuzzy
 msgid "Scope 2: Indirect"
 msgstr "Kapsam 2: Dolaylı"
 
@@ -1845,21 +1662,18 @@ msgstr "Kapsam 2: Dolaylı"
 #. odoo-python
 #: code:addons/esg/controllers/esg_dashboard.py:0
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Scope 3"
 msgstr "Kapsam 3"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_source__scope__indirect_others
 #: model_terms:ir.ui.view,arch_db:esg.emission_source_search_view
-#, fuzzy
 msgid "Scope 3: Others Indirect"
 msgstr "Kapsam 3: Diğer Dolaylı"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_dashboard.xml:0
-#, fuzzy
 msgid ""
 "Seamlessly bring all your ESG data together, whether from Odoo or outside, "
 "in a simple and organized way."
@@ -1877,7 +1691,6 @@ msgstr "Sıralama"
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
-#, fuzzy
 msgid "Server returned an unexpected error: %(error)s"
 msgstr "Sunucu beklenmedik bir hata döndürdü: %(error)s"
 
@@ -1889,7 +1702,6 @@ msgstr "Ayarlar"
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_gas.py:0
-#, fuzzy
 msgid ""
 "Some gases you're trying to delete are used for data imports:\n"
 "%(gases)s"
@@ -1906,13 +1718,11 @@ msgstr "Kaynak"
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__database_id
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_list_view
-#, fuzzy
 msgid "Source Database"
 msgstr "Kaynak Veritabanı"
 
 #. module: esg
 #: model:ir.ui.menu,name:esg.menu_esg_source_databases
-#, fuzzy
 msgid "Source Databases"
 msgstr "Kaynak Veritabanları"
 
@@ -1923,78 +1733,66 @@ msgstr "Başlama Tarihi"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_direct_1
-#, fuzzy
 msgid "Stationary Combustion"
 msgstr "Sabit Yanma"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_so2
-#, fuzzy
 msgid "Sulfur Dioxide (SO2+SO3)"
 msgstr "Kükürt Dioksit (SO2+SO3)"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_sf6
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__sf6
-#, fuzzy
 msgid "Sulfur Hexafluoride (SF₆)"
 msgstr "Sülfür Heksaflorür (SF₆)"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_sf6
-#, fuzzy
 msgid "Sulfur Hexafluoride (SF₆) (t)"
 msgstr "Sülfür Heksaflorür (SF₆) (t)"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
-#, fuzzy
 msgid "The IPCC server did not return any file to import the data."
 msgstr "IPCC sunucusu verileri içe aktarmak için herhangi bir dosya döndürmedi."
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_assignation_line.py:0
-#, fuzzy
 msgid "The account type must be of type %(valid_account_type_names)s."
 msgstr "Hesap türü %(valid_account_type_names)s türünde olmalıdır."
 
 #. module: esg
 #: model:ir.model.constraint,message:esg.constraint_esg_assignation_line_at_least_one_field_filled
-#, fuzzy
 msgid "The assignation rule must have at least one field filled"
 msgstr "Atama kuralında en az bir alan doldurulmuş olmalıdır"
 
 #. module: esg
 #: model:ir.model.constraint,message:esg.constraint_esg_gas_code_unique
-#, fuzzy
 msgid "The code of a gas must be unique."
 msgstr "Bir gazın kodu benzersiz olmalıdır."
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
-#, fuzzy
 msgid "The file format doesn't seem to be correct."
 msgstr "Dosya formatı doğru görünmüyor."
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_co2e
-#, fuzzy
 msgid "Total (t CO₂e)"
 msgstr "Toplam (t CO₂e)"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_list_view
-#, fuzzy
 msgid "Total Emissions (kgCO₂e)"
 msgstr "Toplam Emisyonlar (kgCO₂e)"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_dashboard.xml:0
-#, fuzzy
 msgid ""
 "Track your ESG performance, transform data into actionable insights, and "
 "generate reports to meet compliance requirements all while making informed, "
@@ -2007,27 +1805,23 @@ msgstr ""
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Track your company's"
 msgstr "Şirketinizin"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Transportation and Distribution"
 msgstr "Taşımacılık ve Dağıtım"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_1
-#, fuzzy
 msgid "Transportation and Logistics"
 msgstr "Taşımacılık ve Lojistik"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_dashboard.xml:0
-#, fuzzy
 msgid ""
 "Turn insights into action, monitor your impact in real-time, and drive "
 "meaningful change across your organization."
@@ -2040,7 +1834,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__esg_uncertainty_value
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__esg_uncertainty_value
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__esg_uncertainty_value
-#, fuzzy
 msgid "Uncertainty (%)"
 msgstr "Belirsizlik (%)"
 
@@ -2048,19 +1841,16 @@ msgstr "Belirsizlik (%)"
 #: model:ir.model.fields,field_description:esg.field_account_move_line__esg_uncertainty_absolute_value
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__esg_uncertainty_absolute_value
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__esg_uncertainty_absolute_value
-#, fuzzy
 msgid "Uncertainty (kgCO₂e)"
 msgstr "Belirsizlik (kgCO₂e)"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_kanban_view
-#, fuzzy
 msgid "Uncertainty:"
 msgstr "Belirsizlik:"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_gas__code
-#, fuzzy
 msgid "Unique code identifying the gas"
 msgstr "Gazı tanımlayan benzersiz kod"
 
@@ -2071,7 +1861,6 @@ msgstr "Birim"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__unit_name
-#, fuzzy
 msgid "Unit Name"
 msgstr "Birim Adı"
 
@@ -2096,47 +1885,40 @@ msgstr "Güncelle"
 #. module: esg
 #. odoo-python
 #: code:addons/esg/wizard/factors_auto_assignment_wizard.py:0
-#, fuzzy
 msgid "Updated Emissions"
 msgstr "Güncellenmiş Emisyonlar"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
-#, fuzzy
 msgid "Updated on: %(date)s"
 msgstr "Güncelleme tarihi: %(date)s"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_emission_factor_line.py:0
-#, fuzzy
 msgid "Updated values for %(gas_name)s (%(activity_type_name)s)"
 msgstr "%(gas_name)s için güncellenmiş değerler (%(activity_type_name)s)"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_source__activity_flow_direct_indirect__upstream
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_source__activity_flow_indirect_others__upstream
-#, fuzzy
 msgid "Upstream"
 msgstr "Yukarı Akış"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_8
-#, fuzzy
 msgid "Upstream Leased Assets"
 msgstr "Upstream Kiralanan Varlıklar"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_4
-#, fuzzy
 msgid "Upstream Transportation and Distribution"
 msgstr "Yukarı Akım Taşımacılığı ve Dağıtımı"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid "Upstream activities"
 msgstr "Yukarı akış faaliyetleri"
 
@@ -2149,7 +1931,6 @@ msgstr "Url"
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 #: model:esg.emission.source,name:esg.esg_emission_source_downstream_3
-#, fuzzy
 msgid "Use of Sold Products"
 msgstr "Satılan Ürünlerin Kullanımı"
 
@@ -2160,31 +1941,26 @@ msgstr "Kullanıcı"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__valid_from
-#, fuzzy
 msgid "Valid From"
 msgstr "Geçerlilik Tarihi"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__valid_to
-#, fuzzy
 msgid "Valid To"
 msgstr "İçin Geçerli"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_direct_2_1
-#, fuzzy
 msgid "Vehicle Type 1"
 msgstr "Araç Tipi 1"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_direct_2_2
-#, fuzzy
 msgid "Vehicle Type 2"
 msgstr "Araç Tipi 2"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
-#, fuzzy
 msgid "Very High Uncertainty (> 50%)"
 msgstr "Çok Yüksek Belirsizlik (> 50%)"
 
@@ -2198,7 +1974,6 @@ msgstr "Uyarı"
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_5
-#, fuzzy
 msgid "Waste Generated in Operations"
 msgstr "Operasyonlarda Oluşan Atıklar"
 
@@ -2222,7 +1997,6 @@ msgstr "Websitesi iletişim geçmişi"
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/account_account.py:0
-#, fuzzy
 msgid ""
 "You can only create accounts of type %(valid_account_type_names)s in the ESG "
 "module, as emission factors can only be linked to expense or asset accounts."
@@ -2234,71 +2008,60 @@ msgstr ""
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
-#, fuzzy
 msgid "You can't delete the ADEME database."
 msgstr "ADEME veritabanını silemezsiniz."
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
-#, fuzzy
 msgid "You can't delete the IPCC database."
 msgstr "IPCC veritabanını silemezsiniz."
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/report/esg_carbon_emission_report.py:0
-#, fuzzy
 msgid "You cannot copy emissions linked to journal items."
 msgstr "Yevmiye maddelerine bağlı emisyonları kopyalayamazsınız."
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_emission_source.py:0
-#, fuzzy
 msgid "You cannot create a cyclic hierarchy of emission sources."
 msgstr "Döngüsel bir emisyon kaynakları hiyerarşisi oluşturamazsınız."
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/report/esg_carbon_emission_report.py:0
-#, fuzzy
 msgid "You cannot delete journal items from here."
 msgstr "Günlük öğelerini buradan silemezsiniz."
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.database_form_view
-#, fuzzy
 msgid "e.g. ADEME"
 msgstr "örneğin ADEME"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.other_emission_form_view
-#, fuzzy
 msgid "e.g. Bus Transportation"
 msgstr "Örn. Otobüs Taşımacılığı"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.esg_gas_form_view
-#, fuzzy
 msgid "e.g. Fossil Methane (CH₄)"
 msgstr "örneğin Fosil Metan (CH₄)"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_source_form_view
-#, fuzzy
 msgid "e.g. Mobile Combustion"
 msgstr "örneğin Mobil Yakma"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
-#, fuzzy
 msgid "e.g. Office Computer"
 msgstr "örn. ofis bilgisayarı"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.database_form_view
-#, fuzzy
 msgid "e.g. https://base-empreinte.ademe.fr/"
 msgstr "örneğin https://base-empreinte.ademe.fr/"
 
@@ -2317,7 +2080,6 @@ msgstr "kg"
 #. odoo-javascript
 #: code:addons/esg/static/src/widgets/esg_value/esg_value.xml:0
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_kanban_view
-#, fuzzy
 msgid "kgCO₂e /"
 msgstr "kgCO₂e /"
 
@@ -2331,14 +2093,12 @@ msgstr "yok"
 #. odoo-python
 #: code:addons/esg/controllers/esg_dashboard.py:0
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__esg_emissions_value_t
-#, fuzzy
 msgid "tCO₂e"
 msgstr "tCO₂e"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
-#, fuzzy
 msgid ""
 "with ease! Most emissions are seamlessly calculated from your accounting "
 "data, using account move lines to generate precise and compliant reports."

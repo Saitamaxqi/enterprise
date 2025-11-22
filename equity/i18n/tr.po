@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:40+0000\n"
-"PO-Revision-Date: 2025-11-12 15:04+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/equity/"
 "tr/>\n"
 "Language: tr\n"
@@ -24,100 +25,85 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__securities
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__securities
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
-#, fuzzy
 msgid "# Securities"
 msgstr "# Menkul Kıymetler"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__shares
-#, fuzzy
 msgid "# Shares"
 msgstr "# Hisseler"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_valuation.py:0
-#, fuzzy
 msgid "%(partner_name)s %(amount)s"
 msgstr "%(partner_name)s %(amount)s"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_ubo.py:0
-#, fuzzy
 msgid "%(partner_name)s (%(holder_name)s)"
 msgstr "%(partner_name)s (%(holder_name)s)"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/res_partner.py:0
-#, fuzzy
 msgid "%(partner_name)s's Transactions"
 msgstr "%(partner_name)s'nin İşlemleri"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/res_partner.py:0
-#, fuzzy
 msgid "%(partner_name)s's Valuations"
 msgstr "%(partner_name)s'nin Değerlemeleri"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid "%(transaction_type)s %(securities).2f %(class_name)s"
 msgstr "%(transaction_type)s %(securities).2f %(class_name)s"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/res_partner.py:0
-#, fuzzy
 msgid "(Completed through portal Form)"
 msgstr "(Portal Formu üzerinden doldurulur)"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid "(ID"
 msgstr "(KIMLIK)"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid "(Non-positive options don't expire)"
 msgstr "(Pozitif olmayan opsiyonların süresi dolmaz)"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
-#, fuzzy
 msgid "(Optional)"
 msgstr "(İsteğe bağlı)"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid "(expired)"
 msgstr "(süresi doldu)"
 
 #. module: equity
 #: model:ir.actions.report,print_report_name:equity.action_equity_ubo_report
-#, fuzzy
 msgid "(object._get_ubo_report_filename())"
 msgstr "(object._get_ubo_report_filename())"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
-#, fuzzy
 msgid "/ Security"
 msgstr "/ Güvenlik"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid ""
 "<br/>\n"
 "                                            Politically Exposed Person:"
@@ -127,13 +113,11 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid "<br/> Nationality:"
 msgstr "<br/> Uyruk:"
 
 #. module: equity
 #: model:mail.template,body_html:equity.equity_shareholder_email_template
-#, fuzzy
 msgid ""
 "<div>\n"
 "                    <p> Hello <t t-out=\"ctx.get('holder_name')\"/>,<br/>\n"
@@ -171,7 +155,6 @@ msgstr ""
 
 #. module: equity
 #: model:mail.template,body_html:equity.equity_ubo_form_email_template
-#, fuzzy
 msgid ""
 "<div>\n"
 "                    <p> Hello <t t-out=\"object.name\"/>,<br/>\n"
@@ -217,7 +200,6 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_help
-#, fuzzy
 msgid ""
 "<i class=\"fa fa-envelope ms-2 mt-1\" aria-label=\"Email Address\" "
 "title=\"Email Address\"/>"
@@ -227,7 +209,6 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_help
-#, fuzzy
 msgid ""
 "<i class=\"fa fa-phone ms-2 mt-1\" aria-label=\"Phone Number\" title=\"Phone "
 "Number\"/>"
@@ -237,7 +218,6 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_kanban
-#, fuzzy
 msgid ""
 "<i title=\"To\" class=\"fa fa-fw fa-arrow-right mx-1\" "
 "invisible=\"transaction_type != 'exercise'\"/>"
@@ -247,7 +227,6 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_kanban
-#, fuzzy
 msgid ""
 "<i title=\"To\" class=\"fa fa-fw fa-arrow-right mx-1\" "
 "invisible=\"transaction_type != 'transfer'\"/>"
@@ -257,19 +236,16 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_view_partner_form
-#, fuzzy
 msgid "<span class=\"o_stat_text\">Shareholders</span>"
 msgstr "<span class=\"o_stat_text\">Hissedarlar</span>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_dashboard_res_partner
-#, fuzzy
 msgid "<span class=\"text-muted\">Valuation</span>"
 msgstr "<span class=\"text-muted\">Değerleme</span>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_dashboard_res_partner
-#, fuzzy
 msgid ""
 "<span> Shareholder<span invisible=\"equity_shareholders_count == 1\">s</"
 "span></span>"
@@ -279,7 +255,6 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_dashboard_res_partner
-#, fuzzy
 msgid ""
 "<span> Transaction<span invisible=\"equity_transaction_count == 1\">s</"
 "span></span>"
@@ -288,13 +263,11 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
-#, fuzzy
 msgid "<span>Missing supporting documents! Attach them in the chatter.</span>"
 msgstr "<span>Destekleyici belgeler eksik! Onları sohbete ekleyin.</span>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_security_class_form
-#, fuzzy
 msgid "<span>per share</span>"
 msgstr "<span>hisse başına</span>"
 
@@ -305,33 +278,28 @@ msgstr "<strong>Adres:</strong>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid "<strong>Company Name:</strong>"
 msgstr "<strong>Şirket adı:</strong>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid "<strong>OR</strong>"
 msgstr "<strong>VEYA</strong>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid "<strong>Tax ID Number:</strong>"
 msgstr "<strong>Vergi Kimlik Numarası:</strong>"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/valuation_chart/valuation_chart.xml:0
-#, fuzzy
 msgid ""
 "= Your shares / Total number of shares (i.e., options not taken into account)"
-msgstr "= Hisseleriniz / Toplam hisse sayısı (yani, opsiyonlar dikkate alınmaz)"
+msgstr "= Hisseleriniz / Toplam hisse sayısı (opsiyonlar dikkate alınmaz)"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "A credit or financial institution located in a country listed by the Royal "
 "Decree of 19 July 2013 drawing up a third\n"
@@ -340,24 +308,21 @@ msgid ""
 msgstr ""
 "Kraliyet Kararnamesi ile listelenen bir ülkede bulunan bir alacak veya "
 "finans kuruluşu 19 Temmuz 2013 tarihinde üçüncü bir\n"
-"                            Basitleştirilmiş bir durum tespiti için ülke "
+"                            basitleştirilmiş bir durum tespiti için ülke "
 "denklik listesi (AML yasasının 37(2) maddesi, 1(2 ve 5) alt paragrafı);"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "A listed company: a company whose shares are traded on a regulated market a "
 "Member States of the European\n"
 "                            Economic Area; or"
 msgstr ""
-"Borsaya kote bir şirket: hisseleri düzenlenmiş bir piyasada işlem gören bir "
-"şirket Avrupa Üye Devletleri\n"
-"                            Ekonomik Alan; veya"
+"Borsada işlem gören bir şirket: hisseleri piyasada işlem gören bir şirket "
+"Avrupa Ekonomik Alan Üye Devletleri"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid ""
 "According to laws related to anti money laundering, the notary must identify "
 "the beneficial owners of their customer."
@@ -376,14 +341,12 @@ msgstr "Aksiyon Gerekiyor"
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
-#, fuzzy
 msgid "Add Beneficial Owner"
 msgstr "Hak Sahibi Ekle"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/valuation_chart_action/valuation_chart_action.js:0
-#, fuzzy
 msgid "Add some valuations over the past year to see some data here."
 msgstr ""
 "Burada bazı verileri görmek için geçtiğimiz yıldaki bazı değerlemeleri "
@@ -399,7 +362,6 @@ msgstr "Ek Sayısı"
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__attachment_number
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__attachment_number
-#, fuzzy
 msgid "Attachment Number"
 msgstr "Ek Numarası"
 
@@ -418,7 +380,6 @@ msgstr "Denetim"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__auditor
-#, fuzzy
 msgid "Auditor"
 msgstr "Denetçi"
 
@@ -426,7 +387,6 @@ msgstr "Denetçi"
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 #: model:ir.model.fields,help:equity.field_equity_ubo__auth_rep_role
-#, fuzzy
 msgid "Authorized Representative Role"
 msgstr "Yetkili Temsilci Rolü"
 
@@ -434,13 +394,11 @@ msgstr "Yetkili Temsilci Rolü"
 #: model:ir.actions.act_window,name:equity.action_equity_ubo
 #: model_terms:ir.ui.view,arch_db:equity.equity_view_partner_form
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_list
-#, fuzzy
 msgid "Beneficial Owners"
 msgstr "Hak Sahipleri"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "Beneficial owners are natural person(s) who ultimately own(s) or control(s) "
 "the customer or the natural person(s)\n"
@@ -452,7 +410,7 @@ msgid ""
 "company."
 msgstr ""
 "Gerçek hak sahipleri, nihai olarak müşterinin veya gerçek kişi(ler)in sahibi "
-"olan veya kontrol eden gerçek kişi(ler)dir\n"
+"olan veya kontrol eden gerçek kişi(ler)\n"
 "                    hesabına veya adına bir işlem yapılan veya bir iş "
 "ilişkisi kurulan kişi. Bu\n"
 "                    şirkette kontrol sahibi olmayan veya herhangi bir türde "
@@ -465,20 +423,17 @@ msgstr ""
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 #: model:ir.model.fields,field_description:equity.field_res_partner__ubo_birth_date
 #: model:ir.model.fields,field_description:equity.field_res_users__ubo_birth_date
-#, fuzzy
 msgid "Birth Date"
 msgstr "Doğum Tarihi"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__ubo_birth_place
 #: model:ir.model.fields,field_description:equity.field_res_users__ubo_birth_place
-#, fuzzy
 msgid "Birth Place"
 msgstr "Doğum Yeri"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__board_member
-#, fuzzy
 msgid "Board Member"
 msgstr "Yönetim Kurulu Üyesi"
 
@@ -495,7 +450,6 @@ msgstr "CEO"
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid "Can only exercise options, please select an options class"
 msgstr "Sadece opsiyonları kullanabilir, lütfen bir opsiyon sınıfı seçin"
 
@@ -508,7 +462,6 @@ msgstr "İptal"
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_security_class.py:0
-#, fuzzy
 msgid "Cannot change security class type because it has linked transactions"
 msgstr ""
 "Bağlantılı işlemlere sahip olduğu için güvenlik sınıfı türü değiştirilemiyor"
@@ -519,7 +472,6 @@ msgstr ""
 #: model:ir.actions.client,name:equity.action_equity_cap_table
 #: model:ir.model,name:equity.model_equity_cap_table
 #: model:ir.ui.menu,name:equity.menu_equity_reporting_cap_table
-#, fuzzy
 msgid "Cap Table"
 msgstr "Kapak Tablosu"
 
@@ -527,13 +479,11 @@ msgstr "Kapak Tablosu"
 #: model:ir.actions.act_window,name:equity.action_equity_cap_table_pivot
 #: model:ir.ui.menu,name:equity.menu_equity_reporting_cap_table_pivot
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_cap_table_pivot
-#, fuzzy
 msgid "Cap Table Pivot"
 msgstr "Kapak Tablosu Pivotu"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__chairman
-#, fuzzy
 msgid "Chairman of the Board"
 msgstr "Yönetim Kurulu Başkanı"
 
@@ -562,19 +512,16 @@ msgstr "Firma"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__co_1
-#, fuzzy
 msgid "Company - Cat 1. Capital Ownership or voting rights"
 msgstr "Şirket - Kedi 1. Sermaye Sahiplik veya oy hakları"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__co_2
-#, fuzzy
 msgid "Company - Cat 2. Control by other means"
 msgstr "Şirket - Kedi 2. Diğer yollarla kontrol"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__co_3
-#, fuzzy
 msgid "Company - Cat 3. Executive officer"
 msgstr "Şirket - Kat 3. İcra memuru"
 
@@ -595,7 +542,6 @@ msgstr "Kontak"
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.js:0
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__end_date
-#, fuzzy
 msgid "Control End Date"
 msgstr "Kontrol Bitiş Tarihi"
 
@@ -603,7 +549,6 @@ msgstr "Kontrol Bitiş Tarihi"
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.js:0
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__control_method
-#, fuzzy
 msgid "Control Method"
 msgstr "Kontrol Yöntemi"
 
@@ -612,47 +557,41 @@ msgstr "Kontrol Yöntemi"
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.js:0
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__start_date
-#, fuzzy
 msgid "Control Start Date"
 msgstr "Kontrol Başlangıç Tarihi"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
-#, fuzzy
 msgid "Control Start Date is mandatory"
 msgstr "Kontrol Başlangıç Tarihi zorunludur"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "Control is the legal or de facto right to exercise a decisive influence over "
 "the appointment of the majority of its\n"
 "                    directors or managers or over the direction of its "
 "operations."
 msgstr ""
-"Kontrol, şirketin çoğunluğunun atanması üzerinde belirleyici bir etkiye "
-"sahip olmak için yasal veya fiili bir haktır.\n"
-"                    yöneticiler veya müdürler veya faaliyetlerinin "
-"yönlendirilmesi üzerinde."
+"Kontrol, çoğunluk yöneticilerinin veya müdürlerinin atanması ya da "
+"faaliyetlerinin yönlendirilmesi üzerinde\n"
+"                    belirleyici bir etki kullanma konusunda yasal veya fiilî "
+"hak anlamına gelir."
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
-#, fuzzy
 msgid "Controlling Method"
 msgstr "Kontrol Yöntemi"
 
 #. module: equity
 #: model:ir.actions.act_window,name:equity.action_equity_valuation_form
-#, fuzzy
 msgid "Create Valuation"
 msgstr "Değerleme Oluşturun"
 
 #. module: equity
 #: model:ir.model,website_form_label:equity.model_res_partner
-#, fuzzy
 msgid "Create a Customer"
 msgstr "Müşteri Oluşturma"
 
@@ -691,13 +630,11 @@ msgstr "Tarih"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid "Decision maker"
 msgstr "Karar verici"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "Definitions: \"beneficial owners\", \"control\", \"shareholder holding 25% "
 "or more\", \"decision makers\""
@@ -708,20 +645,17 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__destination_class_id
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
-#, fuzzy
 msgid "Destination Class"
 msgstr "Hedef Sınıf"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid "Destination class can only be set in exercise transactions."
 msgstr "Hedef sınıfı yalnızca egzersiz işlemlerinde ayarlanabilir."
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__dilution
-#, fuzzy
 msgid "Dilution"
 msgstr "Seyreltme"
 
@@ -747,27 +681,23 @@ msgstr "İsim Göster"
 #: code:addons/equity/static/src/components/cap_table/cap_table.js:0
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__dividend_payout
 #: model:ir.model.fields,field_description:equity.field_equity_security_class__dividend_payout
-#, fuzzy
 msgid "Dividend Payout"
 msgstr "Temettü Ödemesi"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__attachment_expiration_date
-#, fuzzy
 msgid "Document Exp. Date"
 msgstr "Belge Süresi Tarih"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
-#, fuzzy
 msgid "Document Expiration Date"
 msgstr "Belge Son Geçerlilik Tarihi"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
-#, fuzzy
 msgid "Edit Beneficial Owner"
 msgstr "Hak Sahibini Düzenle"
 
@@ -786,7 +716,6 @@ msgstr "Özsermaye"
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_access_token
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_access_token
-#, fuzzy
 msgid "Equity Access Token"
 msgstr "Özkaynak Erişim Jetonu"
 
@@ -794,34 +723,29 @@ msgstr "Özkaynak Erişim Jetonu"
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__equity_currency_id
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_currency_id
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_currency_id
-#, fuzzy
 msgid "Equity Currency"
 msgstr "Özkaynak Para Birimi"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_kanban_dashboard_graph
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_kanban_dashboard_graph
-#, fuzzy
 msgid "Equity Kanban Dashboard Graph"
 msgstr "Equity Kanban Gösterge Paneli Grafiği"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_last_valuation
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_last_valuation
-#, fuzzy
 msgid "Equity Last Valuation"
 msgstr "Özkaynak Son Değerleme"
 
 #. module: equity
 #: model:mail.template,name:equity.equity_shareholder_email_template
-#, fuzzy
 msgid "Equity Shareholder Email"
 msgstr "Hisse Sahibi E-posta"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_shareholders_count
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_shareholders_count
-#, fuzzy
 msgid "Equity Shareholders Count"
 msgstr "Özkaynak Hissedar Sayısı"
 
@@ -829,33 +753,28 @@ msgstr "Özkaynak Hissedar Sayısı"
 #: model:ir.model,name:equity.model_equity_transaction
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_transaction_ids
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_transaction_ids
-#, fuzzy
 msgid "Equity Transaction"
 msgstr "Özkaynak İşlemi"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_transaction_count
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_transaction_count
-#, fuzzy
 msgid "Equity Transaction Count"
 msgstr "Özkaynak İşlem Sayısı"
 
 #. module: equity
 #: model:mail.template,name:equity.equity_ubo_form_email_template
-#, fuzzy
 msgid "Equity UBO Form Email"
 msgstr "Özkaynak UBO Formu E-posta"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_valuation_ids
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_valuation_ids
-#, fuzzy
 msgid "Equity Valuation"
 msgstr "Özkaynak Değerlemesi"
 
 #. module: equity
 #: model:mail.template,subject:equity.equity_shareholder_email_template
-#, fuzzy
 msgid "Equity notice"
 msgstr "Özkaynak bildirimi"
 
@@ -867,14 +786,12 @@ msgstr "Etkinlik"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid "Exemption from the identification of beneficial"
 msgstr "Yararlanıcıların tespitinden muafiyet"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid "Exercise transactions must have a destination 'Share' class"
 msgstr "Egzersiz işlemlerinin bir hedef 'Hisse' sınıfı olmalıdır"
 
@@ -890,19 +807,16 @@ msgstr "Son Kullanma Tarihi"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__expiration_diff
-#, fuzzy
 msgid "Expiration Diff"
 msgstr "Son Kullanma Farklılığı"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_search
-#, fuzzy
 msgid "Expired Documents"
 msgstr "Süresi Dolmuş Belgeler"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "Family members: the spouse, any person considered as equivalent to the "
 "persons considered as equivalent to the\n"
@@ -914,7 +828,6 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid "First and Last Name:"
 msgstr "Adı ve Soyadı:"
 
@@ -934,7 +847,6 @@ msgstr "Takipçiler (İş ortakları)"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "Following out legal obligations to identify clients, please report natural "
 "persons who directly or indirectly\n"
@@ -949,27 +861,23 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_formation_date
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_formation_date
-#, fuzzy
 msgid "Formation Date"
 msgstr "Oluşum Tarihi"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/cap_table/cap_table.js:0
-#, fuzzy
 msgid "Fully Diluted"
 msgstr "Tamamen Seyreltilmiş"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_end_dialog.js:0
-#, fuzzy
 msgid "Function end: %s"
 msgstr "İşlev sonu: %s"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "Governing authorities of the European Union, bodies and agencies as defined "
 "by the Royal Decree of 19 July 2013\n"
@@ -984,7 +892,6 @@ msgstr ""
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__has_auth_rep_role
-#, fuzzy
 msgid "Has Auth Rep Role"
 msgstr "Yetkili Temsilci Rolü Var"
 
@@ -997,13 +904,11 @@ msgstr "Mesaj Var"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__has_percentages
-#, fuzzy
 msgid "Has Percentages"
 msgstr "Yüzdelere Sahip"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "Heads of State, heads of government, ministers and deputy or assistant "
 "ministers; members of parliaments;\n"
@@ -1035,20 +940,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__holder_id
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__holder_id
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_form
-#, fuzzy
 msgid "Holder"
 msgstr "Tutucu"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_view_partner_form
-#, fuzzy
 msgid "Holdings"
 msgstr "Holdingler"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
-#, fuzzy
 msgid ""
 "I hereby declare on honor that the information provided is truthful and "
 "accurate."
@@ -1069,7 +971,6 @@ msgstr "ID"
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 #: model_terms:ir.ui.view,arch_db:equity.equity_view_partner_form
-#, fuzzy
 msgid "ID Number"
 msgstr "Kimlik Numarası"
 
@@ -1092,7 +993,6 @@ msgstr "İşaretliyse, bazı mesajlar gönderi hatası içermektedir."
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "If the future beneficiary(ies) have not yet been designated, the group of "
 "persons in the main interests of whom the\n"
@@ -1105,13 +1005,11 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid "If the shareholder holding more than 25% is"
 msgstr "25'ten fazla hisseye sahip hissedar ise% is"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_submit
-#, fuzzy
 msgid ""
 "If you are returning to an already submitted form, please note that your "
 "information has been securely stored."
@@ -1121,7 +1019,6 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_submit
-#, fuzzy
 msgid ""
 "If your form has been successfully submitted, our team will review it and "
 "keep you informed of any updates."
@@ -1131,20 +1028,17 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_search
-#, fuzzy
 msgid "In Control"
 msgstr "Kontrol Altında"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__invalid_securities_error
-#, fuzzy
 msgid "Invalid Securities Error"
 msgstr "Geçersiz Menkul Kıymet Hatası"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_ubo.py:0
-#, fuzzy
 msgid "Invalid data: %s"
 msgstr "Geçersiz veri: %s"
 
@@ -1157,7 +1051,6 @@ msgstr "Geçersiz jeton"
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/res_partner.py:0
-#, fuzzy
 msgid "Invite %s"
 msgstr "Davetiye %s"
 
@@ -1171,7 +1064,6 @@ msgstr "Takipçi mi"
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_transaction__transaction_type__issuance
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_search
-#, fuzzy
 msgid "Issuance"
 msgstr "İhraç"
 
@@ -1204,20 +1096,17 @@ msgstr "Hukuki Form"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid "Legal persons governed by public national laws;"
 msgstr "Ulusal kamu kanunları tarafından yönetilen tüzel kişiler;"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__liquidator
-#, fuzzy
 msgid "Liquidator"
 msgstr "Tasfiye Memuru"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/cap_table/cap_table.js:0
-#, fuzzy
 msgid "Manage transactions, equity, cap table, and shareholders."
 msgstr "İşlemleri, öz sermayeyi, sermaye tablosunu ve hissedarları yönetin."
 
@@ -1228,7 +1117,6 @@ msgstr "Yönetici"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__managing_director
-#, fuzzy
 msgid "Managing Director"
 msgstr "Genel Müdür"
 
@@ -1248,43 +1136,36 @@ msgstr "Mesajlar"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_search
-#, fuzzy
 msgid "Missing Documents"
 msgstr "Eksik Belgeler"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_equity
-#, fuzzy
 msgid "My Companies"
 msgstr "Şirketlerim"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_1
-#, fuzzy
 msgid "NGO - Cat 1. Directors"
 msgstr "STK - Kat 1. Yöneticiler"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_2
-#, fuzzy
 msgid "NGO - Cat 2. Individuals with representation authority"
 msgstr "STK - Kat 2. Temsil yetkisine sahip bireyler"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_3
-#, fuzzy
 msgid "NGO - Cat 3. Individuals responsible for day-to-day management"
 msgstr "STK - Kat 3. Günlük yönetimden sorumlu bireyler"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_4
-#, fuzzy
 msgid "NGO - Cat 4. Founders of a foundation"
 msgstr "STK - Kat 4. Vakıf kurucuları"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_5
-#, fuzzy
 msgid ""
 "NGO - Cat 5. Individuals or categories of individuals in whose main interest "
 "the association or foundation has been established or operates"
@@ -1294,7 +1175,6 @@ msgstr ""
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_6
-#, fuzzy
 msgid ""
 "NGO - Cat 6. Any other individual who ultimately exercises control by other "
 "means"
@@ -1317,7 +1197,6 @@ msgstr "Adı"
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
-#, fuzzy
 msgid "Name is mandatory"
 msgstr "İsim zorunludur"
 
@@ -1329,7 +1208,6 @@ msgstr "Uyruk (Ülke)"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "Natural Persons who have a formal mandate within the Board of the company. "
 "These are for example the person(s) who are named (or equivalent of) Chief "
@@ -1362,7 +1240,6 @@ msgstr "Yeni İşlem"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
-#, fuzzy
 msgid "New Valuation"
 msgstr "Yeni Değerleme"
 
@@ -1374,27 +1251,23 @@ msgstr "Hayır"
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid "No %s was set!"
 msgstr "Hiçbir %s ayarlanmadı!"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid "No UBOs recorded for this company."
 msgstr "Bu şirket için kaydedilmiş UBO bulunmamaktadır."
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/cap_table/cap_table.js:0
-#, fuzzy
 msgid "No shareholders yet!"
 msgstr "Henüz hissedar yok!"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/valuation_chart_action/valuation_chart_action.js:0
-#, fuzzy
 msgid "No valuations yet!"
 msgstr "Henüz değerleme yok!"
 
@@ -1435,7 +1308,6 @@ msgstr "Teslimat hatası olan mesaj sayısı"
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid ""
 "Only %(seller_options)s %(security_class_name)s options available for "
 "transfer"
@@ -1446,7 +1318,6 @@ msgstr ""
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid ""
 "Only %(seller_shares)s %(security_class_name)s shares available for transfer"
 msgstr ""
@@ -1455,7 +1326,6 @@ msgstr ""
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid ""
 "Only %(subscriber_options)s %(security_class_name)s options available for "
 "cancellation"
@@ -1466,7 +1336,6 @@ msgstr ""
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid ""
 "Only %(subscriber_options)s %(security_class_name)s options available for "
 "exercise"
@@ -1477,7 +1346,6 @@ msgstr ""
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid ""
 "Only %(subscriber_shares)s %(security_class_name)s shares available for "
 "cancellation"
@@ -1487,14 +1355,12 @@ msgstr ""
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_transaction__transaction_type__exercise
-#, fuzzy
 msgid "Option Exercise"
 msgstr "Opsiyon Kullanımı"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid "Option Pool"
 msgstr "Seçenek Havuzu"
 
@@ -1505,7 +1371,6 @@ msgstr "Seçenekler"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_search
-#, fuzzy
 msgid "Options Exercise"
 msgstr "Opsiyon Kullanımı"
 
@@ -1524,13 +1389,11 @@ msgstr "Mülkiyet"
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__ubo_pep
 #: model:ir.model.fields,field_description:equity.field_res_users__ubo_pep
-#, fuzzy
 msgid "PEP"
 msgstr "PEP"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid "PEP - Politically Exposed Person"
 msgstr "PEP - Siyasi Açığa Çıkmış Kişi"
 
@@ -1544,7 +1407,6 @@ msgstr "İş Ortağı"
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 #: model:ir.model.fields,help:equity.field_res_partner__ubo_pep
 #: model:ir.model.fields,help:equity.field_res_users__ubo_pep
-#, fuzzy
 msgid "Politically Exposed Person"
 msgstr "Siyasi Olarak İfşa Edilmiş Kişi"
 
@@ -1561,32 +1423,27 @@ msgstr "Fiyat"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_list
-#, fuzzy
 msgid "Price FD"
 msgstr "Fiyat FD"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_list
-#, fuzzy
 msgid "Price ND"
 msgstr "Fiyat ND"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__security_price
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__security_price
-#, fuzzy
 msgid "Price per Security"
 msgstr "Menkul Kıymet Başına Fiyat"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__share_price
-#, fuzzy
 msgid "Price per Share"
 msgstr "Hisse Başına Fiyat"
 
 #. module: equity
 #: model:ir.actions.report,name:equity.action_equity_ubo_report
-#, fuzzy
 msgid "Print UBO"
 msgstr "UBO Yazdır"
 
@@ -1599,21 +1456,18 @@ msgstr "Değerlendirmeler"
 
 #. module: equity
 #: model:ir.model.fields,help:equity.field_equity_transaction__subscriber_id
-#, fuzzy
 msgid "Recipient of the securities of the transaction."
 msgstr "İşlemin menkul kıymetlerinin alıcısı."
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_end_dialog.xml:0
-#, fuzzy
 msgid "Remove Shareholder"
 msgstr "Hissedar Çıkarma"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
-#, fuzzy
 msgid "Remove holder exit date."
 msgstr "Tutucu çıkış tarihini kaldırın."
 
@@ -1624,7 +1478,6 @@ msgstr "Raporlama"
 
 #. module: equity
 #: model:ir.actions.act_window,name:equity.action_equity_request_ubo_form
-#, fuzzy
 msgid "Request UBO Form"
 msgstr "UBO Talep Formu"
 
@@ -1642,7 +1495,6 @@ msgstr "SMS İleti hatası"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__secretary
-#, fuzzy
 msgid "Secretary"
 msgstr "Sekreter"
 
@@ -1655,7 +1507,6 @@ msgstr "Securities"
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid "Securities must be positive"
 msgstr "Menkul kıymetler pozitif olmalıdır"
 
@@ -1663,7 +1514,6 @@ msgstr "Menkul kıymetler pozitif olmalıdır"
 #: model:ir.model,name:equity.model_equity_security_class
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__security_class_id
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_security_class_form
-#, fuzzy
 msgid "Security Class"
 msgstr "Güvenlik Sınıfı"
 
@@ -1671,45 +1521,38 @@ msgstr "Güvenlik Sınıfı"
 #: model:ir.actions.act_window,name:equity.action_equity_security_class
 #: model:ir.ui.menu,name:equity.menu_equity_configuration_security_classes
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_security_class_list
-#, fuzzy
 msgid "Security Classes"
 msgstr "Güvenlik Sınıfları"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
-#, fuzzy
 msgid "Security Price"
 msgstr "Güvenlik Fiyatı"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_home_equity
-#, fuzzy
 msgid "See your shares and transactions"
 msgstr "Hisselerinizi ve işlemlerinizi görün"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__seller_id
-#, fuzzy
 msgid "Seller"
 msgstr "Satıcı"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__seller_name
-#, fuzzy
 msgid "Seller Name"
 msgstr "Satıcı Adı"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid "Seller and Buyer must be different."
 msgstr "Satıcı ve Alıcı farklı olmalıdır."
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid "Seller id can only be set in transfer transactions."
 msgstr "Satıcı kimliği yalnızca transfer işlemlerinde ayarlanabilir."
 
@@ -1721,13 +1564,11 @@ msgstr "Gönder"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
-#, fuzzy
 msgid "Send to Seller"
 msgstr "Satıcıya Gönder"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
-#, fuzzy
 msgid "Send to Subscriber"
 msgstr "Aboneye Gönder"
 
@@ -1738,7 +1579,6 @@ msgstr "Sıralama"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid "Shareholders who hold more than 25%"
 msgstr "25'ten fazla hisseye sahip olan hissedarlar%"
 
@@ -1750,20 +1590,17 @@ msgstr "Paylaşımlar"
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid "Shares transactions must have a subscriber"
 msgstr "Hisse işlemlerinin bir abonesi olmalıdır"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid "Signature date:"
 msgstr "İmza tarihi:"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
-#, fuzzy
 msgid "Signature of Representative"
 msgstr "Temsilcinin İmzası"
 
@@ -1774,7 +1611,6 @@ msgstr "İmza:"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
-#, fuzzy
 msgid "Strike Price"
 msgstr "Kullanım Fiyatı"
 
@@ -1786,19 +1622,16 @@ msgstr "Gönder"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__subscriber_id
-#, fuzzy
 msgid "Subscriber"
 msgstr "Abone"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__subscriber_id_placeholder
-#, fuzzy
 msgid "Subscriber Id Placeholder"
 msgstr "Abone Kimliği Yer Tutucu"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__subscriber_name
-#, fuzzy
 msgid "Subscriber Name"
 msgstr "Abone Adı"
 
@@ -1810,7 +1643,6 @@ msgstr "Destekleyici Belge"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_submit
-#, fuzzy
 msgid ""
 "Thank you for providing your Ultimate Beneficial Owner (UBO) information."
 msgstr ""
@@ -1818,7 +1650,6 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
-#, fuzzy
 msgid ""
 "The \"# Securities\" total is not counting the \"Options Exercise\" "
 "transactions (because they are counted at the time of \"Options Issuance\"). "
@@ -1832,7 +1663,6 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "The declaration must be completed by the persons authorized to represent the "
 "company or entity according to its Articles of Association."
@@ -1842,7 +1672,6 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "The natural person(s) who ultimately own(s) or control(s) this corporate "
 "entity through direct or indirect ownership or control over 25% of the "
@@ -1862,7 +1691,6 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid ""
 "The undersigned (executive officer or administrator) acting as a "
 "representative of the company:"
@@ -1872,38 +1700,33 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
-#, fuzzy
 msgid "There are currently no transactions for your account."
 msgstr "Şu anda hesabınız için herhangi bir işlem bulunmamaktadır."
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid "There are two classes of beneficial owners:"
 msgstr "İki sınıf intifa hakkı sahibi vardır:"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_equity
-#, fuzzy
 msgid "There is currently no equity for your account."
 msgstr "Şu anda hesabınız için özkaynak bulunmamaktadır."
 
 #. module: equity
 #: model:ir.model.constraint,message:equity.constraint_equity_ubo_unique_ubo
-#, fuzzy
 msgid "This contact is already a holder of this company"
 msgstr "Bu kişi zaten bu şirketin sahibidir"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "This said, where a shareholder holding more than 25% is a legal arrangement "
 "other than a registered company, beneficial owners are:"
 msgstr ""
-"Bununla birlikte, 25'ten fazla hisseye sahip olan bir hissedarın% ikayıtlı "
-"bir şirket dışında bir yasal düzenlemeye sahip olması halinde, intifa hakkı "
-"sahipleri"
+"Bununla birlikte, 25'ten fazla hisseye sahip olan bir hissedarın kayıtlı bir "
+"şirket dışında bir yasal düzenlemeye sahip olması halinde, intifa hakkı "
+"sahipleri:"
 
 #. module: equity
 #. odoo-javascript
@@ -1930,7 +1753,6 @@ msgstr "İşlem"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
-#, fuzzy
 msgid "Transaction Price"
 msgstr "İşlem Fiyatı"
 
@@ -1957,7 +1779,6 @@ msgstr "Aktarım"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__treasurer
-#, fuzzy
 msgid "Treasurer"
 msgstr "Sayman"
 
@@ -1972,33 +1793,28 @@ msgstr "Tür"
 #. module: equity
 #: model:ir.ui.menu,name:equity.menu_equity_ownership_ubos
 #: model_terms:ir.ui.view,arch_db:equity.equity_view_partner_form
-#, fuzzy
 msgid "UBO"
 msgstr "UBO"
 
 #. module: equity
 #: model:mail.activity.type,name:equity.equity_ubo_form_mail_activity
-#, fuzzy
 msgid "UBO Form Request"
 msgstr "UBO Form Talebi"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__ubo_national_identifier
 #: model:ir.model.fields,field_description:equity.field_res_users__ubo_national_identifier
-#, fuzzy
 msgid "UBO ID Number"
 msgstr "UBO Kimlik Numarası"
 
 #. module: equity
 #: model:mail.template,subject:equity.equity_ubo_form_email_template
-#, fuzzy
 msgid "UBO form"
 msgstr "UBO formu"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/res_partner.py:0
-#, fuzzy
 msgid ""
 "UBO portal form will become unavailable once this activity will be marked as "
 "done"
@@ -2009,32 +1825,27 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__ubo_owned_company_ids
 #: model:ir.model.fields,field_description:equity.field_res_users__ubo_owned_company_ids
-#, fuzzy
 msgid "Ubo Owned Company"
 msgstr "Ubo'ya Ait Şirket"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__ubo_owner_ids
 #: model:ir.model.fields,field_description:equity.field_res_users__ubo_owner_ids
-#, fuzzy
 msgid "Ubo Owner"
 msgstr "Ubo Sahibi"
 
 #. module: equity
 #: model:ir.model,name:equity.model_equity_ubo
-#, fuzzy
 msgid "Ultimate Beneficial Owner"
 msgstr "Nihai Gerçek Faydalanıcı"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid "Ultimate Beneficial Owners (UBO) Request"
 msgstr "Nihai Gerçek Faydalanıcı Sahipleri (UBO) Talebi"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid "Ultimate Beneficial Owners (UBO) statement"
 msgstr "Nihai Gerçek Faydalanıcı Sahipleri (UBO) beyanı"
 
@@ -2052,14 +1863,12 @@ msgstr "Yükle"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
-#, fuzzy
 msgid "Upload Files"
 msgstr "Dosya Yükleme"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/res_partner.py:0
-#, fuzzy
 msgid "Upload UBO Form"
 msgstr "UBO Formunu Yükle"
 
@@ -2080,13 +1889,11 @@ msgstr "Değerleme"
 #. module: equity
 #: model:ir.actions.act_window,name:equity.action_equity_valuation
 #: model:ir.ui.menu,name:equity.menu_equity_ownership_valuations
-#, fuzzy
 msgid "Valuations"
 msgstr "Değerlemeler"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
-#, fuzzy
 msgid "Vesting period, exercise deadline, etc."
 msgstr "Hakediş süresi, son egzersiz tarihi, vb."
 
@@ -2103,7 +1910,6 @@ msgstr "Oylamalar"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_security_class__share_votes
-#, fuzzy
 msgid "Votes per Share"
 msgstr "Hisse Başına Oy"
 
@@ -2115,7 +1921,6 @@ msgstr "Hisse Başına Oy"
 #: code:addons/equity/static/src/components/valuation_chart/valuation_chart.xml:0
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__voting_rights
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__voting_rights
-#, fuzzy
 msgid "Voting Rights"
 msgstr "Oy Hakları"
 
@@ -2136,13 +1941,11 @@ msgstr "Websitesi iletişim geçmişi"
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_end_dialog.xml:0
-#, fuzzy
 msgid "When did the shareholder lose its 25% stake in control or in votes?"
 msgstr "Hissedar 25% skontrolünü veya oy hakkını ne zaman kaybetti?"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "Where the future beneficiaries have already been determined, the natural "
 "person(s) who is the beneficiary of 25% or\n"
@@ -2156,7 +1959,6 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid "Who should complete and sign the declaration?"
 msgstr "Beyannameyi kim doldurmalı ve imzalamalıdır?"
 
@@ -2168,7 +1970,6 @@ msgstr "Evet"
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
-#, fuzzy
 msgid ""
 "You can remove any shareholder holding less than 25% of the shares or voting "
 "rights."
@@ -2179,7 +1980,6 @@ msgstr ""
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
-#, fuzzy
 msgid "You must provide either the date of birth, or the ID number"
 msgstr "Ya doğum tarihini ya da kimlik numarasını vermelisiniz"
 
@@ -2192,26 +1992,22 @@ msgstr "Adınız"
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
-#, fuzzy
 msgid "Your Position"
 msgstr "Sizin Pozisyonunuz"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_submit
-#, fuzzy
 msgid "Your UBO Declaration Has Been Submitted!"
 msgstr "UBO Beyannameniz Gönderilmiştir!"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/controllers/portal.py:0
-#, fuzzy
 msgid "Your Value ND"
 msgstr "Değeriniz ND"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "any natural person who has sole beneficial ownership of a legal entity or "
 "legal arrangement which is known to have\n"
@@ -2223,7 +2019,6 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
-#, fuzzy
 msgid ""
 "any natural person who is known to have joint beneficial ownership of legal "
 "entities or legal arrangements, or any\n"
@@ -2235,7 +2030,6 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid ""
 "are the following individuals who have control by other means on the "
 "direction of the company (administrators)"
@@ -2245,7 +2039,6 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid ""
 "are the following individuals who, in last resort, own or control directly "
 "or indirectly more than 25% of the shares or of the voting rights of this "
@@ -2257,13 +2050,11 @@ msgstr ""
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid "are the following publicly traded companies."
 msgstr "aşağıdaki halka açık şirketlerdir."
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid "born"
 msgstr "doğmuş"
 
@@ -2281,13 +2072,11 @@ msgstr "gün"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
-#, fuzzy
 msgid "declares that the beneficial owners of the company:"
 msgstr "şirketin intifa hakkı sahiplerini beyan eder:"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_security_class_form
-#, fuzzy
 msgid "e.g. Seed, Series A, ..."
 msgstr "Örneğin Tohum, Seri A, ..."
 
@@ -2322,7 +2111,6 @@ msgstr "veya"
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
-#, fuzzy
 msgid "please keep percentages between 0 and 100"
 msgstr "lütfen yüzdeleri 0 ile 100 arasında tutun"
 
@@ -2335,14 +2123,12 @@ msgstr "kalan"
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid "seller"
 msgstr "satıcı"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
-#, fuzzy
 msgid "subscriber"
 msgstr "abone"
 

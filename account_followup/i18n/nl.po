@@ -9,13 +9,14 @@
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2023, 2025.
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Bren Driesen <brdri@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-10 08:20+0000\n"
-"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>\n"
+"PO-Revision-Date: 2025-11-19 14:22+0000\n"
+"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "account_followup/nl/>\n"
 "Language: nl\n"
@@ -122,7 +123,7 @@ msgstr ""
 "/>,</t>\n"
 "                        <br/>\n"
 "                        Ondanks meerdere herinneringen is je rekening nog "
-"steeds niet voldaan.\n"
+"steeds niet vereffend.\n"
 "                        Als het volledige bedrag niet binnen 8 dagen wordt "
 "betaald, zullen we zonder verdere kennisgeving juridische stappen ondernemen "
 "om de schuld te innen.\n"
@@ -452,7 +453,7 @@ msgstr "Annuleren"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.missing_information_view_form
 msgid "Close"
-msgstr "Afsluiten"
+msgstr "Sluiten"
 
 #. module: account_followup
 #. odoo-python
@@ -631,7 +632,7 @@ msgstr "E-mailontvangers"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
 msgid "Email Subject"
-msgstr "E-mail onderwerp"
+msgstr "E-mail Onderwerp"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_form
@@ -665,7 +666,7 @@ msgstr "Betalingsherinneringsniveau"
 #: model:ir.actions.act_window,name:account_followup.action_account_followup_line_definition_form
 #: model:ir.ui.menu,name:account_followup.account_followup_menu
 msgid "Follow-up Levels"
-msgstr "Niveaus voor betalingsherinneringen"
+msgstr "Betalingsherinneringsniveaus"
 
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_followup_report
@@ -675,13 +676,13 @@ msgstr "Betaalherinnering"
 #. module: account_followup
 #: model:ir.model.fields.selection,name:account_followup.selection__account_followup_followup_line__activity_default_responsible_type__followup
 msgid "Follow-up Responsible"
-msgstr "Betalingsherinnering verantwoordelijke"
+msgstr "Verantwoordelijke Betalingsherinnering"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__followup_status
 #: model:ir.model.fields,field_description:account_followup.field_res_users__followup_status
 msgid "Follow-up Status"
-msgstr "Herinneringstatus"
+msgstr "Betaalherinneringstatus"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_form
@@ -692,7 +693,7 @@ msgstr "Betalingsherinneringsstappen"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.report_followup_print_all
 msgid "Follow-up details"
-msgstr "Herinneringdetails"
+msgstr "Betaalherinneringdetails"
 
 #. module: account_followup
 #. odoo-python
@@ -703,7 +704,7 @@ msgstr "Betalingsherinneringsbrief gegenereerd"
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_followup_missing_information_wizard
 msgid "Followup missing information wizard"
-msgstr "Wizard ontbrekende informatie herinnering"
+msgstr "Wizard ontbrekende informatie betaalherinnering"
 
 #. module: account_followup
 #: model_terms:ir.actions.act_window,help:account_followup.action_account_followup_line_definition_form
@@ -721,7 +722,7 @@ msgstr ""
 #. module: account_followup
 #: model:mail.template,name:account_followup.demo_followup_email_template_4
 msgid "Fourth reminder followup"
-msgstr "Opvolging vierde herinnering"
+msgstr "Vierde betaalherinnering"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__has_moves
@@ -781,7 +782,7 @@ msgstr "Boekingsregel"
 #: code:addons/account_followup/models/res_partner.py:0
 #: model_terms:ir.ui.view,arch_db:account_followup.view_partner_property_form_followup
 msgid "Journal Items"
-msgstr ""
+msgstr "Boekingsregels"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
@@ -861,8 +862,8 @@ msgid ""
 "                Sending a reminder will set this date depending on the "
 "levels configuration, and you can change it manually."
 msgstr ""
-"Er wordt geen vervolgactie ondernomen vóór deze datum.\n"
-"                Het verzenden van een herinnering stelt deze datum in "
+"Er worden geen betaalherinneringsacties ondernomen vóór deze datum.\n"
+"                Door een herinnering te verzenden wordt deze datum ingesteld "
 "afhankelijk van de configuratie van de niveaus. Je kunt deze handmatig "
 "wijzigen."
 
@@ -932,7 +933,7 @@ msgstr "Betalingsherinneringsbrief afdrukken"
 #. module: account_followup
 #: model:ir.actions.server,name:account_followup.action_account_reports_customer_statements_do_followup
 msgid "Process Follow-ups"
-msgstr "Verwerk herinneringen"
+msgstr "Verwerk betalingsherinneringen"
 
 #. module: account_followup
 #. odoo-python
@@ -964,7 +965,7 @@ msgstr "Rapport actie"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.customer_statements_search_view
 msgid "Requires Follow-up"
-msgstr "Herinnering vereist"
+msgstr "Betaalherinnering vereist"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__activity_default_responsible_type
@@ -1018,12 +1019,12 @@ msgstr "Verzenden en afdrukken"
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__show_print_button
 msgid "Show Print Button"
-msgstr "Toon afdrukknop"
+msgstr "Afdrukknop weergeven"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__show_send_button
 msgid "Show Send Button"
-msgstr "Toon verzendknop"
+msgstr "Verzendknop weergeven"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__sms
@@ -1044,7 +1045,7 @@ msgstr "Sms-inhoud"
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__sms_template_id
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__sms_template_id
 msgid "Sms Template"
-msgstr "SMS-sjabloon"
+msgstr "Sms-sjabloon"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__subject
@@ -1101,13 +1102,13 @@ msgstr "Totaal"
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__total_all_due
 #: model:ir.model.fields,field_description:account_followup.field_res_users__total_all_due
 msgid "Total All Due"
-msgstr "Totaal te betalen"
+msgstr "Totaal Alle openstaande bedragen"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__total_all_overdue
 #: model:ir.model.fields,field_description:account_followup.field_res_users__total_all_overdue
 msgid "Total All Overdue"
-msgstr "Totaal vervallen bedrag"
+msgstr "Totaal Alle vervallen bedragen"
 
 #. module: account_followup
 #. odoo-python
@@ -1115,7 +1116,7 @@ msgstr "Totaal vervallen bedrag"
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__total_due
 #: model:ir.model.fields,field_description:account_followup.field_res_users__total_due
 msgid "Total Due"
-msgstr "Totaal verschuldigd"
+msgstr "Totaal Openstaande bedragen"
 
 #. module: account_followup
 #. odoo-python
@@ -1129,7 +1130,7 @@ msgstr "Totaal vervallen"
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__total_overdue_followup
 #: model:ir.model.fields,field_description:account_followup.field_res_users__total_overdue_followup
 msgid "Total Overdue Followup"
-msgstr ""
+msgstr "Betaalherinnering Totaal vervallen"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__unpaid_invoice_ids

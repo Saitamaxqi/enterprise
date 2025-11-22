@@ -15,13 +15,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:50+0000\n"
-"PO-Revision-Date: 2025-11-12 15:00+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "web_gantt/tr/>\n"
 "Language: tr\n"
@@ -40,7 +41,6 @@ msgstr "%(hour)ss%(minute)s"
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/models.py:0
-#, fuzzy
 msgid "%s cannot be scheduled in the past"
 msgstr "%s geçmişte planlanamaz"
 
@@ -58,14 +58,12 @@ msgstr "Pencere Aksiyon Görünümü"
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer_controls.xml:0
-#, fuzzy
 msgid "Activate dense mode"
 msgstr "Yoğun modu etkinleştirin"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer_controls.xml:0
-#, fuzzy
 msgid "Activate sparse mode"
 msgstr "Seyrek modu etkinleştirin"
 
@@ -125,7 +123,6 @@ msgstr "Düzenle"
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
-#, fuzzy
 msgid "Ending date cannot be before the starting date"
 msgstr "Bitiş tarihi başlangıç tarihinden önce olamaz"
 
@@ -138,16 +135,14 @@ msgstr "Satırları genişlet"
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
-#, fuzzy
 msgid "Failed to undo reschedule"
-msgstr "Yeniden zamanlama geri alınamadı"
+msgstr "Yeniden planlama işlemi geri alınamadı"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer_controls.xml:0
-#, fuzzy
 msgid "Focus Today"
-msgstr "Bugün Odaklanın"
+msgstr "Bugüne Odaklanın"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -158,9 +153,8 @@ msgstr "Başlama"
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer_controls.js:0
-#, fuzzy
 msgid "From: %(from_date)s to: %(to_date)s"
-msgstr "Kimden: %(from_date)s adresine: %(to_date)s"
+msgstr "Başlangıç: %(from_date)s Bitiş: %(to_date)s"
 
 #. module: web_gantt
 #: model:ir.model.fields.selection,name:web_gantt.selection__ir_actions_act_window_view__view_mode__gantt
@@ -205,14 +199,12 @@ msgstr ""
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_scale_selector.js:0
-#, fuzzy
 msgid "Gantt start date"
 msgstr "Gantt başlangıç tarihi"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_scale_selector.js:0
-#, fuzzy
 msgid "Gantt stop date"
 msgstr "Gantt durma tarihi"
 
@@ -231,9 +223,8 @@ msgstr "ID"
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/models.py:0
-#, fuzzy
 msgid "Impossible to schedule in the past."
-msgstr "Geçmişte program yapmak imkansızdı."
+msgstr "Geçmiş bir tarih için planlama yapılamaz."
 
 #. module: web_gantt
 #. odoo-python
@@ -254,7 +245,6 @@ msgstr ""
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
-#, fuzzy
 msgid "Invalid default_range '%s' in gantt"
 msgstr "Gantt'ta geçersiz default_range '%s'"
 
@@ -267,14 +257,12 @@ msgstr "Gantt'ta geçersiz default_scale '%s'"
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
-#, fuzzy
 msgid "Invalid display_mode '%s' in gantt"
 msgstr "Gantt'ta geçersiz display_mode '%s'"
 
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/models.py:0
-#, fuzzy
 msgid "Invalid reschedule method %s"
 msgstr "Geçersiz yeniden zamanlama yöntemi %s"
 
@@ -324,35 +312,30 @@ msgstr "Çeyrek"
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
-#, fuzzy
 msgid "Record could not be removed"
 msgstr "Kayıt kaldırılamadı"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
-#, fuzzy
 msgid "Record duplicated"
 msgstr "Kayıt çoğaltıldı"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
-#, fuzzy
 msgid "Record removed"
 msgstr "Kayıt kaldırıldı"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
-#, fuzzy
 msgid "Record reschedule undone"
 msgstr "Kayıt yeniden planlaması geri alındı"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
-#, fuzzy
 msgid "Record rescheduled"
 msgstr "Kayıt yeniden planlandı"
 
@@ -365,7 +348,6 @@ msgstr "Başla"
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
-#, fuzzy
 msgid "Starting date cannot be after the ending date"
 msgstr "Başlangıç tarihi bitiş tarihinden sonra olamaz"
 
@@ -378,14 +360,12 @@ msgstr "Durdur"
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/models.py:0
-#, fuzzy
 msgid "Tasks rescheduled"
 msgstr "Görevler yeniden planlandı"
 
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/models.py:0
-#, fuzzy
 msgid "The dependencies are not valid, there is a cycle."
 msgstr "Bağımlılıklar geçerli değil, bir döngü var."
 
@@ -398,7 +378,6 @@ msgstr "Bugün"
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer_controls.xml:0
-#, fuzzy
 msgid "Toolbar menu"
 msgstr "Araç çubuğu menüsü"
 
@@ -436,7 +415,6 @@ msgstr "Hafta"
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_arch_parser.js:0
-#, fuzzy
 msgid "Week %(week)s, %(startDate)s - %(endDate)s"
 msgstr "Hafta %(week)s, %(startDate)s - %(endDate)s"
 

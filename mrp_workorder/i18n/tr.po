@@ -25,13 +25,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-11-12 14:58+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:30+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "mrp_workorder/tr/>\n"
 "Language: tr\n"
@@ -60,13 +61,11 @@ msgstr "<i class=\"fa fa-print\"/> barcode komutlarını yazdır"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_bom_form_view_inherited
-#, fuzzy
 msgid "<span class=\"o_stat_text order-2\">Instructions</span>"
 msgstr "<span class=\"o_stat_text order-2\">Talimatlar</span>"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_bom_form_view_inherited
-#, fuzzy
 msgid "<span class=\"o_stat_text order-2\">Operations</span>"
 msgstr "<span class=\"o_stat_text order-2\">Operasyonlar</span>"
 
@@ -97,7 +96,6 @@ msgstr "<strong>İş Merkezi\\: </strong>"
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.js:0
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.xml:0
-#, fuzzy
 msgid "Activate your Work Centers"
 msgstr "İş Merkezlerinizi Etkinleştirin"
 
@@ -152,7 +150,6 @@ msgstr "İş Emri Ekle"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/control_panel.xml:0
-#, fuzzy
 msgid "Add Workcenter"
 msgstr "İş Merkezi Ekle"
 
@@ -208,13 +205,12 @@ msgstr "Kaydetmeye İzin Ver"
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_production__picking_type_auto_close
 #: model:ir.model.fields,help:mrp_workorder.field_stock_picking_type__auto_close_production
-#, fuzzy
 msgid ""
 "Allow users to close MO in last work order operation or from the overview "
 "tab."
 msgstr ""
-"Kullanıcıların son iş emri işleminde veya genel bakış sekmesinden MO'yu "
-"kapatmasına izin verin."
+"Kullanıcıların Üretim Emrini, son iş emri operasyonunda veya Genel Bakış "
+"sekmesinden kapatmasına izin ver."
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workcenter_form_view_inherit
@@ -241,7 +237,6 @@ msgstr "Atanmış"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_employee_form_account
-#, fuzzy
 msgid "Attendance/Point of Sale/Manufacturing"
 msgstr "Katılım/Satış Noktası/Üretim"
 
@@ -312,7 +307,6 @@ msgstr "Bom Ürünü"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_record_line/stock_move.js:0
-#, fuzzy
 msgid "By-product: %(productName)s"
 msgstr "Yan ürün: %(productName)s"
 
@@ -347,7 +341,6 @@ msgstr "Kontroller"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/employees_panel.xml:0
-#, fuzzy
 msgid "Choose Operator"
 msgstr "Operatör Seçin"
 
@@ -370,7 +363,6 @@ msgstr "Kapat"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production__picking_type_auto_close
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_picking_type__auto_close_production
-#, fuzzy
 msgid "Close Manufacturing Orders"
 msgstr "Üretim Siparişlerini Kapatın"
 
@@ -399,9 +391,8 @@ msgstr "Komponent"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__component_uom_id
-#, fuzzy
 msgid "Component Unit"
-msgstr "Bileşen Birim"
+msgstr "Bileşen Birimi"
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_res_config_settings
@@ -416,7 +407,6 @@ msgstr "Ayarlar"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_workcenter_dialog.xml:0
-#, fuzzy
 msgid "Configure later"
 msgstr "Daha sonra yapılandırın"
 
@@ -451,9 +441,8 @@ msgstr "Seçili %s 'ler gösterilemiyor."
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_record_line/stock_move.js:0
-#, fuzzy
 msgid "Create Move Line for %(product)s"
-msgstr "İçin Taşıma Hattı Oluşturun %(product)s"
+msgstr "%(product)s için Hareket Satırı Oluşturun"
 
 #. module: mrp_workorder
 #: model_terms:ir.actions.act_window,help:mrp_workorder.mrp_stock_picking_type_action
@@ -463,7 +452,6 @@ msgstr "Yeni operasyon türü oluştur."
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_workcenter_dialog.xml:0
-#, fuzzy
 msgid "Create new work center"
 msgstr "Yeni iş merkezi oluşturun"
 
@@ -512,7 +500,6 @@ msgstr "Başlangıç Tarihi"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_routing_workcenter__default_picking_type_ids
-#, fuzzy
 msgid "Default Picking Type"
 msgstr "Varsayılan Toplama Türü"
 
@@ -583,7 +570,6 @@ msgstr "Kontrol Yapıldı"
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_employee_dialog.xml:0
 #: code:addons/mrp_workorder/static/src/mrp_display/employees_panel.xml:0
-#, fuzzy
 msgid "Edit Operators"
 msgstr "Operatörleri Düzenle"
 
@@ -604,7 +590,6 @@ msgstr "Çalışan Kapasitesi"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__employee_costs_hour
-#, fuzzy
 msgid "Employee Cost per hour"
 msgstr "Saat Başına Çalışan Maliyeti"
 
@@ -632,7 +617,6 @@ msgstr "Deponuzda stoklanabilir bir ürünün izlenebilirliğini sağlayın."
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/components/pin_popup.xml:0
-#, fuzzy
 msgid "Enter your pin"
 msgstr "PIN kodunuzu girin"
 
@@ -645,7 +629,6 @@ msgstr "Çıkış yaparken hata!"
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/report/mrp_report_mo_overview.py:0
-#, fuzzy
 msgid "Estimated employee cost: %(operation_name)s"
 msgstr "Tahmini çalışan maliyeti: %(operation_name)s"
 
@@ -657,7 +640,6 @@ msgstr "Öngörülen Süre"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.xml:0
-#, fuzzy
 msgid "Feedback Loop"
 msgstr "Geri Bildirim Döngüsü"
 
@@ -684,16 +666,14 @@ msgstr "Yazı tipi harika simgesi ör. fa-görevler"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_register_production_dialog.xml:0
-#, fuzzy
 msgid "Generate Lot"
 msgstr "Lot Oluştur"
 
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_register_production_dialog.xml:0
-#, fuzzy
 msgid "Generate Serial"
-msgstr "Seri Üret"
+msgstr "Seri Numarası Üret"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_change_production_qty__id
@@ -791,7 +771,6 @@ msgstr "Açıklamalar"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__quality_point_count
-#, fuzzy
 msgid "Instructions Count"
 msgstr "Talimat Sayısı"
 
@@ -851,14 +830,12 @@ msgstr "Son Güncelleme"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/employees_panel.xml:0
-#, fuzzy
 msgid "Last seen"
 msgstr "Son görülme"
 
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.xml:0
-#, fuzzy
 msgid "Load All Manufacturing Orders"
 msgstr "Tüm Üretim Siparişlerini Yükle"
 
@@ -910,15 +887,13 @@ msgstr "ÜE Genel Raporu"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_mrp_production_filter_shop_floor
-#, fuzzy
 msgid "MO Pending"
-msgstr "MO Beklemede"
+msgstr "Üretim Emri (MO) Beklemede"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_mrp_production_filter_shop_floor
-#, fuzzy
 msgid "MO Ready"
-msgstr "MO Hazır"
+msgstr "Üretim Emri (MO) Hazır"
 
 #. module: mrp_workorder
 #: model:res.groups,name:mrp_workorder.group_mrp_wo_tablet_timer
@@ -962,7 +937,6 @@ msgstr "Yapıldı Olarak İşaretle VE ÜE Kapat"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_res_config_settings__wo_shop_floor_maximum_card_count
-#, fuzzy
 msgid "Maximum number of cards per page"
 msgstr "Sayfa başına maksimum kart sayısı"
 
@@ -975,15 +949,13 @@ msgstr "Menü"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.xml:0
-#, fuzzy
 msgid "Modify Routing"
 msgstr "Yönlendirmeyi Değiştir"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__move_line_ids_picked
-#, fuzzy
 msgid "Move Line Ids Picked"
-msgstr "Toplama Hat Kimliklerini Taşı"
+msgstr "Rota Düzenleme"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -1079,7 +1051,6 @@ msgstr "Sonraki Kontrol"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/employees_panel.xml:0
-#, fuzzy
 msgid "No operators connected"
 msgstr "Bağlı operatör yok"
 
@@ -1090,7 +1061,6 @@ msgstr "Yapılacak iş emri mevcut değil!"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_point_view_form_inherit_mrp
-#, fuzzy
 msgid "No worksheet yet !"
 msgstr "Henüz çalışma sayfası yok!"
 
@@ -1219,10 +1189,8 @@ msgstr "Lütfen bir resim yükleyin."
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__picking_type_prefill_shop_floor_lots
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_picking_type__prefill_shop_floor_lots
-#, fuzzy
 msgid "Pre fill lot/serial numbers in shop floor moves "
-msgstr ""
-"Üretim alanı hareketlerinde lot/seri numaralarının önceden doldurulması "
+msgstr "Üretim Alanı hareketlerinde lot/seri numaralarını önceden doldur "
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__previous_check_id
@@ -1376,9 +1344,8 @@ msgstr "Tüketilmiş Malzemeleri Kaydet"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.xml:0
-#, fuzzy
 msgid "Register Materials"
-msgstr "Kayıt Malzemeleri"
+msgstr "Malzemeleri Kaydet"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -1390,9 +1357,8 @@ msgstr "Üretimi Kaydet"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.xml:0
-#, fuzzy
 msgid "Register Production / Serial"
-msgstr "Üretim / Seri Kayıt"
+msgstr "Üretim / Seri Kaydı Yap"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -1408,7 +1374,6 @@ msgstr "İlgili Ürün Reçetesi Aktif"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.xml:0
-#, fuzzy
 msgid "Reload Data"
 msgstr "Verileri Yeniden Yükle"
 
@@ -1462,7 +1427,6 @@ msgstr "Çalışan Seç"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.xml:0
-#, fuzzy
 msgid "Select Operator"
 msgstr "Operatör Seçin"
 
@@ -1515,9 +1479,8 @@ msgstr "İmalat Ekranı Kontrol Paneli"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.xml:0
-#, fuzzy
 msgid "Shop Floor Onboarding Image"
-msgstr "Üretim Alanı'nda İşe Alıştırma Görüntüsü"
+msgstr "Üretim Alanı Onboarding Görüntüsü"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.res_config_settings_view_form
@@ -1537,9 +1500,8 @@ msgstr "Küçük tahta tabure"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production__state_color
-#, fuzzy
 msgid "State Color"
-msgstr "Eyalet Rengi"
+msgstr "Durum Rengi"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_bom__activity_state
@@ -1609,14 +1571,12 @@ msgstr "Test Türü"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_production_kanban_view_inherit
-#, fuzzy
 msgid "The deadline of this MO is on"
-msgstr "Bu MO'nun son başvuru tarihi"
+msgstr "Bu Üretim Emrinin son teslim tarihi:"
 
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.js:0
-#, fuzzy
 msgid "The operation has been successfully moved."
 msgstr "Operasyon başarıyla taşındı."
 
@@ -1660,7 +1620,6 @@ msgstr ""
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.xml:0
-#, fuzzy
 msgid "Time Clock"
 msgstr "Zaman Saati"
 
@@ -1708,7 +1667,6 @@ msgstr "Toplam Miktar"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.xml:0
-#, fuzzy
 msgid ""
 "Track work orders, show instructions and record manufacturing operations "
 "from here:\n"
@@ -1825,7 +1783,6 @@ msgstr "İş Emri Filtreleri"
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_stock_move__picking_type_prefill_shop_floor_lots
 #: model:ir.model.fields,help:mrp_workorder.field_stock_picking_type__prefill_shop_floor_lots
-#, fuzzy
 msgid ""
 "When enabled, reserved lots for component moves will be displayed in the "
 "shop floor. When disabled, lots will always need to be selected manually "
@@ -1838,7 +1795,6 @@ msgstr ""
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_mrp_production_additional_workorder_wizard
-#, fuzzy
 msgid "Will be placed at the beginning if empty"
 msgstr "Boşsa en başa yerleştirilecektir"
 
@@ -1935,14 +1891,12 @@ msgstr "İş programları"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__worksheet_document
-#, fuzzy
 msgid "Worksheet Image/PDF"
-msgstr "Çalışma Sayfası Resim/PDF"
+msgstr "Çalışma Sayfası Görseli/PDF'i"
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/models/quality.py:0
-#, fuzzy
 msgid "Worksheet Preview"
 msgstr "Çalışma Sayfası Önizlemesi"
 
@@ -2040,7 +1994,6 @@ msgstr "Hala kalite kontrollerini yapmanız gerekiyor!"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.js:0
-#, fuzzy
 msgid "Your suggestion to delete the %s step was successfully created."
 msgstr "%s adımını silme öneriniz başarıyla oluşturuldu."
 

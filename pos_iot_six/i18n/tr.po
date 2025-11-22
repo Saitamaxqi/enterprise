@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:45+0000\n"
-"PO-Revision-Date: 2025-11-12 15:04+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "pos_iot_six/tr/>\n"
 "Language: tr\n"
@@ -61,7 +62,6 @@ msgstr "Alan Adresi"
 #. module: pos_iot_six
 #. odoo-javascript
 #: code:addons/pos_iot_six/static/src/js/payment_six.js:0
-#, fuzzy
 msgid "Failed to get balance report from the terminal. Please retry."
 msgstr "Terminalden bakiye raporu alınamadı. Lütfen tekrar deneyin."
 
@@ -103,7 +103,6 @@ msgstr "Yalnızca rakam içermelidir"
 #. module: pos_iot_six
 #. odoo-javascript
 #: code:addons/pos_iot_six/static/src/js/payment_six.js:0
-#, fuzzy
 msgid "No printer configured"
 msgstr "Yapılandırılmış yazıcı yok"
 
@@ -148,9 +147,8 @@ msgstr "Bir Six ödeme terminali kurun"
 #. module: pos_iot_six
 #. odoo-javascript
 #: code:addons/pos_iot_six/static/src/xml/balance_button.xml:0
-#, fuzzy
 msgid "Six Terminal Balance"
-msgstr "Altı Terminal Dengesi"
+msgstr "Altı Terminal Bakiyesi"
 
 #. module: pos_iot_six
 #: model:ir.model.fields,field_description:pos_iot_six.field_iot_box__six_terminal_id
@@ -161,7 +159,6 @@ msgstr "Six Terminal Kimliği (TID)"
 #. module: pos_iot_six
 #. odoo-javascript
 #: code:addons/pos_iot_six/static/src/js/payment_six.js:0
-#, fuzzy
 msgid "Six balance report error"
 msgstr "Altı bakiye raporu hatası"
 
@@ -202,7 +199,6 @@ msgstr "İşlem iptal edilemedi"
 #. module: pos_iot_six
 #. odoo-javascript
 #: code:addons/pos_iot_six/static/src/js/payment_six.js:0
-#, fuzzy
 msgid ""
 "You must select a printer in your POS config to print Six balance report"
 msgstr ""

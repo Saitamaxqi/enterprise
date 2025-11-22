@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-10-08 02:40+0000\n"
+"PO-Revision-Date: 2025-11-20 22:52+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/spreadsheet_dashboard_stock/es_419/>\n"
@@ -384,7 +384,7 @@ msgstr "Abrir recepciones a la fecha"
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Open transfers to date"
-msgstr "Abrir transferencias a la fecha"
+msgstr "Traslados abiertos a la fecha"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -494,7 +494,7 @@ msgstr "Categoría del producto"
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Qty scrapped product by category"
-msgstr "Cantidad de productos desechados por categoria"
+msgstr "Cantidad de productos desechados por categoría"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -631,7 +631,7 @@ msgstr "Transferencia de almacén a almacén"
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Weekly Stock Moves Lines by operation"
-msgstr "Líneas de movimientos semanales de Stock por operación"
+msgstr "Líneas de movimientos semanales de existencias por operación"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript

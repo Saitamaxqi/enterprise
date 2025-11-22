@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-13 13:11+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"POT-Creation-Date: 2025-11-21 18:40+0000\n"
+"PO-Revision-Date: 2025-11-20 08:14+0000\n"
+"Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/iot/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "%s is currently restarting"
-msgstr ""
+msgstr "%s 항목은 현재 재시작 중입니다"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
@@ -470,19 +470,22 @@ msgstr "식별 기호"
 msgid ""
 "If checked, this dialog won't appear the next time you print and the "
 "selected printers will be used automatically."
-msgstr "이 옵션을 선택하면 인쇄할 때 이 대화상자가 다시 나타나지 않고 선택한 "
-"프린터가 자동으로 사용됩니다."
+msgstr ""
+"이 옵션을 선택하면 인쇄할 때 이 대화상자가 다시 나타나지 않고 선택한 프린터"
+"가 자동으로 사용됩니다."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid ""
 "If your IoT Box has no access to the internet, you can pair it with your "
 "database using the pairing token."
-msgstr "IoT 박스가 인터넷에 연결되어 있지 않은 경우에는 페어링 토큰을 활용하여 "
-"데이터베이스에 연결할 수 있습니다."
+msgstr ""
+"IoT 박스가 인터넷에 연결되어 있지 않은 경우에는 페어링 토큰을 활용하여 데이터"
+"베이스에 연결할 수 있습니다."
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__version
+#: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "Image Version"
 msgstr "이미지 버전"
 
@@ -705,7 +708,8 @@ msgstr "표시할 보고서가 없습니다."
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Note: It takes ~1 minute. After that, try to pair manually."
-msgstr "참고: 약 1분 정도 소요될 예정입니다. 이후 수동으로 페어링을 시도하세요."
+msgstr ""
+"참고: 약 1분 정도 소요될 예정입니다. 이후 수동으로 페어링을 시도하세요."
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__subtype__office_printer
@@ -728,8 +732,8 @@ msgid ""
 "Printers\" and retry the operation."
 msgstr ""
 "일부 문서 인쇄용 프린터가 제거되었습니다.\n"
-"프린터 설정을 초기화하려면 IoT 앱의 환경설정 탭으로 이동하여 "
-"\"연결된 프린터 초기화\" 를 클릭한 후 작업을 다시 시도하세요."
+"프린터 설정을 초기화하려면 IoT 앱의 환경설정 탭으로 이동하여 \"연결된 프린터 "
+"초기화\" 를 클릭한 후 작업을 다시 시도하세요."
 
 #. module: iot
 #. odoo-javascript
@@ -1070,7 +1074,8 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Then click on \"Configure\" under \"Odoo database connected\" section."
-msgstr "그런 다음 \"Odoo 데이터베이스 연결됨\" 섹션에 있는 \"환경설정\"을 클릭합니다."
+msgstr ""
+"그런 다음 \"Odoo 데이터베이스 연결됨\" 섹션에 있는 \"환경설정\"을 클릭합니다."
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_device_action
@@ -1171,6 +1176,11 @@ msgid "Vat Signing Card not compatible with Fiscal Data Module."
 msgstr ""
 
 #. module: iot
+#: model:ir.model.fields,field_description:iot.field_iot_box__version_commit_url
+msgid "Version Commit Url"
+msgstr ""
+
+#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "Visible to all"
 msgstr "모든 사람에게 표시"
@@ -1233,8 +1243,8 @@ msgid ""
 "                <br/>"
 msgstr ""
 "Wi-Fi용입니다.<br/>\n"
-"                그 다음 IoT 박스를 프린터(USB 케이블 사용) 또는 스크린("
-"마이크로 HDMI 케이블 사용)에 연결하여 페어링 코드를 수신합니다.<br/>\n"
+"                그 다음 IoT 박스를 프린터(USB 케이블 사용) 또는 스크린(마이크"
+"로 HDMI 케이블 사용)에 연결하여 페어링 코드를 수신합니다.<br/>\n"
 "                <br/>"
 
 #. module: iot

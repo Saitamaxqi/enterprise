@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"POT-Creation-Date: 2025-11-21 18:40+0000\n"
 "PO-Revision-Date: 2025-11-11 23:47+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -501,6 +501,7 @@ msgstr ""
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__version
+#: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "Image Version"
 msgstr "Versión de imagen"
 
@@ -564,8 +565,8 @@ msgstr "Encontramos una caja IoT. Estableciendo conexión..."
 msgid ""
 "IoT Box local network is %(lan_quality)s and internet is %(wan_quality)s"
 msgstr ""
-"La red local de la caja IoT es %(lan_quality)s y el internet es "
-"%(wan_quality)s"
+"La red local de la caja IoT es %(lan_quality)s y el internet es %"
+"(wan_quality)s"
 
 #. module: iot
 #: model:ir.actions.act_window,name:iot.iot_box_action
@@ -1099,8 +1100,8 @@ msgid ""
 "The report you are trying to print requires an IoT Box to be printed.\n"
 "Make sure you linked the report '%s' to the corresponding IoT printer device."
 msgstr ""
-"El reporte que intentas imprimir necesita una caja IoT para poder imprimirlo."
-"\n"
+"El reporte que intentas imprimir necesita una caja IoT para poder "
+"imprimirlo.\n"
 "Asegúrate de haber vinculado el reporte \"%s\" con el dispositivo de "
 "impresión IoT correspondiente."
 
@@ -1208,6 +1209,11 @@ msgstr "Tarjeta de firma de IVA bloqueada."
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Vat Signing Card not compatible with Fiscal Data Module."
 msgstr "Tarjeta de firma de IVA incompatible con el módulo de datos fiscales."
+
+#. module: iot
+#: model:ir.model.fields,field_description:iot.field_iot_box__version_commit_url
+msgid "Version Commit Url"
+msgstr ""
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form

@@ -25,13 +25,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-12 14:57+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "documents/tr/>\n"
 "Language: tr\n"
@@ -44,7 +45,6 @@ msgstr ""
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "%(record)s (in %(parent)s)"
 msgstr "%(record)s ( %(parent)s adresinde)"
 
@@ -63,7 +63,6 @@ msgstr "%s (kalan sayfa)"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/helper/documents_draggable.js:0
-#, fuzzy
 msgid "%s document(s) sent to trash."
 msgstr "%s Çöpe gönderilen belge(ler)."
 
@@ -76,14 +75,12 @@ msgstr "%s belge taşınmıştır."
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
-#, fuzzy
 msgid "%s documents/folders have been moved to the Company root."
-msgstr "%s belgeler/klasörler Şirket kök dizinine taşınmıştır."
+msgstr "%s Belgeler ve klasörler şirketin ana dizinine taşındı."
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "%s members added."
 msgstr "%s üyeler eklendi."
 
@@ -107,15 +104,15 @@ msgstr "%s kısayol oluşturulmuştur."
 
 #. module: documents
 #: model_terms:digest.tip,tip_description:documents.digest_tip_documents_0
-#, fuzzy
 msgid ""
 ". Scanned files will appear automatically in your folder. Then, process your "
 "documents in bulk with the split tool: launch user defined actions, request "
 "a signature, convert to vendor bills with AI, etc."
 msgstr ""
-". Taranan dosyalar otomatik olarak klasörünüzde görünecektir. Ardından, "
-"belgelerinizi bölme aracıyla toplu olarak işleyin: kullanıcı tanımlı "
-"eylemleri başlatın, imza isteyin, AI ile satıcı faturalarına dönüştürün, vb."
+". Taranmış dosyalar klasörünüzde otomatik olarak görünecektir. Daha sonra "
+"bölme aracını kullanarak belgelerinizi toplu şekilde işleyebilirsiniz: "
+"kullanıcı tanımlı işlemleri başlatın, imza talep edin, yapay zeka ile "
+"tedarikçi faturalarına dönüştürün vb."
 
 #. module: documents
 #: model:documents.tag,name:documents.documents_tag_year_previous
@@ -149,9 +146,8 @@ msgstr "Devam etmek için bu sayfayı <b>Seçin</b>."
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_request_done_page
-#, fuzzy
 msgid "<b>You're done!</b>"
-msgstr "<b>İşin bitti!</b>"
+msgstr "<b>Tamamlandı!</b>"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
@@ -187,7 +183,6 @@ msgstr "<i class=\"fa fa-eye\"/> Dosya ön izleme"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_request_page
-#, fuzzy
 msgid "<i class=\"fa fa-upload fa-fw\"/> Add file"
 msgstr "<i class=\"fa fa-upload fa-fw\"/> Dosya ekle"
 
@@ -203,7 +198,6 @@ msgstr "<i class=\"fa fa-upload\"/> Dosyanın yerini değiştirin"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
-#, fuzzy
 msgid ""
 "<i class=\"fa fa-w fa-user-plus col-form-label ps-1 pe-4 fs-4\" "
 "title=\"Invite people\"/>"
@@ -218,7 +212,6 @@ msgstr "<span class=\"o_stat_text\">Belgeler</span>"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
-#, fuzzy
 msgid ""
 "<span invisible=\"is_single\">All users with access to these folders/"
 "documents or its parent will have edit permissions.</span>\n"
@@ -226,10 +219,10 @@ msgid ""
 "access to this folder/document or its parent will have edit permissions.</"
 "span>"
 msgstr ""
-"<span invisible=\"is_single\">Bu klasörlere/belgelere veya üst öğesine "
-"erişimi olan tüm kullanıcılar düzenleme izinlerine sahip olacaktır.</span>\n"
+"<span invisible=\"is_single\">Bu klasörlere/belgelere veya üst klasörüne "
+"erişimi olan tüm kullanıcılar düzenleme iznine sahip olacaktır.</span>\n"
 "                        <span invisible=\"not is_single\">Bu klasöre/belgeye "
-"veya üst öğesine erişimi olan tüm kullanıcılar düzenleme izinlerine sahip "
+"veya üst klasörüne erişimi olan tüm kullanıcılar düzenleme iznine sahip "
 "olacaktır.</span>"
 
 #. module: documents
@@ -254,25 +247,21 @@ msgstr "<span><b>İstenilen Belge</b></span>"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
-#, fuzzy
 msgid "<span>The following members access were removed:</span>"
 msgstr "<span>Aşağıdaki üyelerin erişimi kaldırılmıştır:</span>"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
-#, fuzzy
 msgid "<span>The following members gained access:</span>"
-msgstr "<span>Aşağıdaki üyeler erişim hakkı kazanmıştır:</span>"
+msgstr "<span>Aşağıdaki üyeler erişim yetkisi edinmiştir:</span>"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
-#, fuzzy
 msgid "<span>The following members had their rights changed:</span>"
-msgstr "<span>Aşağıdaki üyelerin hakları değiştirilmiştir:</span>"
+msgstr "<span>Aşağıdaki üyelerin erişim yetkileri değiştirilmiştir:</span>"
 
 #. module: documents
 #: model:mail.template,body_html:documents.mail_template_document_share
-#, fuzzy
 msgid ""
 "<t t-set=\"documents\" t-value=\"ctx.get('documents', "
 "object.env['documents.document'])\"/>\n"
@@ -543,20 +532,20 @@ msgstr ""
 "\"documents.type == 'folder'\" t-set=\"share_message\">aşağıdaki klasörü "
 "sizinle paylaştı</t>\n"
 "                                                <t t-else=\"\" t-set=\""
-"share_message\">aşağıdaki belgeyi sizinle paylaştı</t>\n"
+"share_message\">aşağıdaki belge sizinle paylaştı</t>\n"
 "                                            </t>\n"
 "                                           <t t-elif="
 "\"len(documents) &gt; 1\">\n"
 "                                                <t t-set=\"document_types\" "
 "t-value=\"set(documents.mapped('type'))\"/>\n"
 "                                               <t t-if="
-"\"document_types == {'folder'}\" t-set=\"share_message\">aşağıdaki "
-"klasörleri sizinle paylaştı</t>\n"
+"\"document_types == {'folder'}\" t-set=\"share_message\">aşağıdaki klasörler "
+"sizinle paylaştı</t>\n"
 "                                                <t t-elif="
 "\"'folder' not in document_types\" t-set=\"share_message\">aşağıdaki "
-"belgeleri sizinle paylaştı</t>\n"
+"belgeler sizinle paylaştı</t>\n"
 "                                                <t t-else=\"\" t-set=\""
-"share_message\">aşağıdaki belgeleri/klasörleri sizinle paylaştı</t>\n"
+"share_message\">aşağıdaki belgeler/klasörler sizinle paylaştı</t>\n"
 "                                            </t>\n"
 "                                           <t t-out=\"user.name or ''\""
 ">OdooBot</t> (<t t-out=\"user.email or ''\">odoobot@example.com</t>) <t "
@@ -602,8 +591,8 @@ msgstr ""
 "                                                       <a t-att-href="
 "\"document.access_url\" t-attf-style=\"color: {{"
 "user.company_id.email_secondary_color or '#875A7B'}}; font-size:13px;\">\n"
-"                                                            <b>Almak <t "
-"t-out=\"document.name\"/></b>\n"
+"                                                            <b>Alın <t t-out="
+"\"document.name\"/></b>\n"
 "                                                       </a>\n"
 "                                                    </li>\n"
 "                                               </ul>\n"
@@ -686,7 +675,6 @@ msgstr ""
 
 #. module: documents
 #: model:mail.template,body_html:documents.mail_template_document_request
-#, fuzzy
 msgid ""
 "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
 "16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
@@ -1024,7 +1012,6 @@ msgstr ""
 
 #. module: documents
 #: model:mail.template,body_html:documents.mail_template_document_request_reminder
-#, fuzzy
 msgid ""
 "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
 "16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
@@ -1249,7 +1236,7 @@ msgstr ""
 "                                                <div>\n"
 "                                                   <t t-if=\"object.name\">\n"
 "                                                        <b t-out="
-"\"object.name or ''\">Inbox Financial</b>\n"
+"\"object.name or ''\">Finansal Gelen Kutusu</b>\n"
 "                                                    </t>\n"
 "                                               </div>\n"
 "                                                <div>\n"
@@ -1373,9 +1360,8 @@ msgstr "Aynı anda birden fazla kısayol oluştururken bir hedef gereklidir."
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "A document can not be linked to itself or another document."
-msgstr "Bir belge kendisine veya başka bir belgeye bağlanamaz."
+msgstr "Bir belge kendi kendisine veya başka bir belgeye bağlanamaz."
 
 #. module: documents
 #: model:ir.model.constraint,message:documents.constraint_documents_document_folder_id_not_id
@@ -1395,7 +1381,6 @@ msgstr "Bir kısayol oluşturuldu."
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__access_internal_help
-#, fuzzy
 msgid "Access Internal Help"
 msgstr "Dahili Yardıma Erişim"
 
@@ -1407,13 +1392,11 @@ msgstr "Erişim Anahtarı"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__access_urls
-#, fuzzy
 msgid "Access URLs"
 msgstr "Erişim URL'leri"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__access_via_link_help
-#, fuzzy
 msgid "Access Via Link Help"
 msgstr "Bağlantı Yardımı ile Erişim"
 
@@ -1430,7 +1413,6 @@ msgstr "Belgelere ve partnerlere erişim değiştirilemez."
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__access_via_link
-#, fuzzy
 msgid "Access through link"
 msgstr "Bağlantı üzerinden erişim"
 
@@ -1458,13 +1440,11 @@ msgstr "Erişim bağlantısı"
 
 #. module: documents
 #: model:documents.document,name:documents.documents_insurance_contract
-#, fuzzy
 msgid "Acme_Insurance_Contract_Structured.pdf"
 msgstr "Acme_Insurance_Contract_Structured.pdf"
 
 #. module: documents
 #: model:documents.document,name:documents.documents_nda
-#, fuzzy
 msgid "Acme_NDA.pdf"
 msgstr "Acme_NDA.pdf"
 
@@ -1542,7 +1522,6 @@ msgstr "Faaliyetin atandığı kişi:"
 
 #. module: documents
 #: model_terms:ir.actions.act_window,help:documents.mail_activity_plan_action_document
-#, fuzzy
 msgid ""
 "Activity plans are used to assign a list of activities in just a few clicks\n"
 "                    (e.g. \"NDA signature process\", \"Folder "
@@ -1595,13 +1574,11 @@ msgstr "Takma ad etiketi ekle..."
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_operation__operation__add
-#, fuzzy
 msgid "Add attachment to Documents"
 msgstr "Belgelere ek ekleme"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_request_page
-#, fuzzy
 msgid "Add file"
 msgstr "Dosya ekle"
 
@@ -1610,14 +1587,12 @@ msgstr "Dosya ekle"
 #: code:addons/documents/static/src/core/common/composer_actions_patch.js:0
 #: code:addons/documents/static/src/views/view_dialogs/select_add_document_create_dialog.xml:0
 #: code:addons/documents/static/src/web/mail_composer_document_selector/mail_composer_document_selector.xml:0
-#, fuzzy
 msgid "Add from Documents"
 msgstr "Belgelerden Ekle"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
-#, fuzzy
 msgid "Add in %(folder_name)s"
 msgstr "İçeri ekle %(folder_name)s"
 
@@ -1647,28 +1622,24 @@ msgstr "Yıldız ekleyin"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/components/documents_details_panel/documents_details_panel.xml:0
-#, fuzzy
 msgid "Add tags..."
 msgstr "Etiket ekle..."
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/attachments/attachment_list_patch.xml:0
-#, fuzzy
 msgid "Add to Documents"
 msgstr "Belgelere Ekle"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/attachments/attachment_list_patch.js:0
-#, fuzzy
 msgid "Add to My Documents"
 msgstr "Belgelerime Ekle"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
-#, fuzzy
 msgid "Add to documents"
 msgstr "Belgelere ekle"
 
@@ -1722,7 +1693,6 @@ msgstr "Tümü"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/components/documents_details_panel/documents_details_panel.xml:0
-#, fuzzy
 msgid "All companies"
 msgstr "Tüm şirketler"
 
@@ -1733,7 +1703,6 @@ msgstr "İzin Verilen Erişim"
 
 #. module: documents
 #: model:res.groups,comment:documents.group_documents_user
-#, fuzzy
 msgid "Allows you to manage his documents."
 msgstr "Belgelerini yönetmenizi sağlar."
 
@@ -1746,7 +1715,6 @@ msgstr "Halihazırda bağlı olan Belgeler: %s"
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "Ambiguous shortcut target location."
 msgstr "Belirsiz kısayol hedef konumu."
 
@@ -1761,7 +1729,6 @@ msgstr ""
 
 #. module: documents
 #: model_terms:digest.tip,tip_description:documents.digest_tip_documents_0
-#, fuzzy
 msgid ""
 "An easy way to process incoming mails is to configure your scanner to send "
 "PDFs to your folder email. Scanned files will appear automatically in your "
@@ -1769,11 +1736,12 @@ msgid ""
 "user defined actions, request a signature, convert to vendor bills with AI, "
 "etc."
 msgstr ""
-"Gelen postaları işlemenin kolay bir yolu, tarayıcınızı PDF'leri klasör e-"
-"postanıza gönderecek şekilde yapılandırmaktır. Taranan dosyalar otomatik "
-"olarak klasörünüzde görünecektir. Ardından, belgelerinizi bölme aracıyla "
-"toplu olarak işleyin: kullanıcı tanımlı eylemleri başlatın, imza isteyin, AI "
-"ile satıcı faturalarına dönüştürün vb."
+"Gelen postaları işlemek için kolay bir yöntem, tarayıcınızı PDF’leri klasör "
+"e-postasına gönderecek şekilde yapılandırmaktır. Taranmış dosyalar "
+"klasörünüzde otomatik olarak görünecektir. Daha sonra bölme aracını "
+"kullanarak belgelerinizi toplu şekilde işleyebilirsiniz: kullanıcı tanımlı "
+"işlemleri başlatın, imza talep edin, yapay zekâ ile tedarikçi faturalarına "
+"dönüştürün vb."
 
 #. module: documents
 #. odoo-javascript
@@ -1783,7 +1751,6 @@ msgstr "Yükleme sırasında bir hata oluştu."
 
 #. module: documents
 #: model:documents.document,name:documents.document_finance_annual_closing_folder
-#, fuzzy
 msgid "Annual Closing"
 msgstr "Yıllık Kapanış"
 
@@ -1826,14 +1793,12 @@ msgstr "Bu eki silmek istediğinizden emin misiniz?"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/documents_model_mixin.js:0
-#, fuzzy
 msgid "Are you sure you want to permanently erase the selected document?"
 msgstr "Seçili belgeyi kalıcı olarak silmek istediğinizden emin misiniz?"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/documents_model_mixin.js:0
-#, fuzzy
 msgid "Are you sure you want to permanently erase the selected documents?"
 msgstr "Seçilen belgeleri kalıcı olarak silmek istediğinizden emin misiniz?"
 
@@ -1848,7 +1813,6 @@ msgstr ""
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
-#, fuzzy
 msgid "At least one document could not be moved due to access rights."
 msgstr "Erişim hakları nedeniyle en az bir belge taşınamadı."
 
@@ -1916,29 +1880,25 @@ msgstr "Bir klasör tanımlayarak, yükleme etkinlikleri bir belge oluşturur"
 #. odoo-python
 #: code:addons/documents/static/src/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog.xml:0
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "Can add, modify, and delete files within this folder."
 msgstr "Bu klasördeki dosyaları ekleyebilir, değiştirebilir ve silebilir."
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "Can modify, delete, and rename."
 msgstr "Değiştirebilir, silebilir ve yeniden adlandırabilir."
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__user_can_move
-#, fuzzy
 msgid "Can move it"
-msgstr "Hareket ettirebilir"
+msgstr "Taşıyabilir"
 
 #. module: documents
 #. odoo-javascript
 #. odoo-python
 #: code:addons/documents/static/src/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog.xml:0
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "Can only view contents. Cannot add, modify, or delete items."
 msgstr ""
 "Yalnızca içerikleri görüntüleyebilir. Öğe ekleyemez, değiştiremez veya "
@@ -1947,7 +1907,6 @@ msgstr ""
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "Can only view. Cannot rename, move, or delete."
 msgstr ""
 "Sadece görüntüleyebilir. Yeniden adlandırılamaz, taşınamaz veya silinemez."
@@ -1967,7 +1926,6 @@ msgstr "Değiştir"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_access_tracking__changes
-#, fuzzy
 msgid "Changes need to be tracked"
 msgstr "Değişikliklerin takip edilmesi gerekir"
 
@@ -1983,7 +1941,6 @@ msgstr "Alt"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_operation_view_form
-#, fuzzy
 msgid "Choose a destination"
 msgstr "Bir varış noktası seçin"
 
@@ -2064,7 +2021,6 @@ msgstr "Renk"
 
 #. module: documents
 #: model:documents.document,name:documents.documents_data_comercial_tenancy_agreement
-#, fuzzy
 msgid "Commercial-Tenancy-Agreement.pdf"
 msgstr "Ticari-Kiracılık-Anlaşması.pdf"
 
@@ -2108,7 +2064,6 @@ msgstr "Onayla"
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "Conflicting values passed with user_folder_id."
 msgstr "user_folder_id ile aktarılan değerler çakışıyor."
 
@@ -2148,9 +2103,8 @@ msgstr "Kısayol Oluşturun"
 
 #. module: documents
 #: model:ir.model,website_form_label:documents.model_res_partner
-#, fuzzy
 msgid "Create a Customer"
-msgstr "Müşteri Oluşturma"
+msgstr "Müşteri Oluştur"
 
 #. module: documents
 #: model_terms:ir.actions.act_window,help:documents.mail_activity_plan_action_document
@@ -2160,7 +2114,6 @@ msgstr "Belge Faaliyet Planı oluştur"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_new_folder.js:0
-#, fuzzy
 msgid "Create a folder in %(folder)s"
 msgstr "İçinde bir klasör oluşturun %(folder)s"
 
@@ -2178,34 +2131,29 @@ msgstr "Kalan sayfa için yeni bir belge oluşturun."
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
-#, fuzzy
 msgid "Create a shortcut in %(folder_name)s"
 msgstr "İçinde bir kısayol oluşturun %(folder_name)s"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
-#, fuzzy
 msgid "Create shortcut to: %(documentName)s"
 msgstr "Şunun için kısayol oluşturun: %(documentName)s"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_operation__operation__shortcut
-#, fuzzy
 msgid "Create shortcuts"
 msgstr "Kısayollar oluşturun"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
-#, fuzzy
 msgid "Create shortcuts for: %(numberOfDocuments)s items"
 msgstr "Şunlar için kısayollar oluşturun: %(numberOfDocuments)s öğeler"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
-#, fuzzy
 msgid "Create shortcuts in %(folder_name)s"
 msgstr "İçinde kısayollar oluşturun %(folder_name)s"
 
@@ -2308,31 +2256,26 @@ msgstr "Hedef"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__access_internal
-#, fuzzy
 msgid "Destination Access Internal"
 msgstr "Hedef Erişim Dahili"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__access_via_link
-#, fuzzy
 msgid "Destination Access Via Link"
 msgstr "Bağlantı Üzerinden Hedef Erişimi"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__display_name
-#, fuzzy
 msgid "Destination Display Name"
 msgstr "Hedef Görünen Adı"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__is_access_via_link_hidden
-#, fuzzy
 msgid "Destination Link Access Hidden"
 msgstr "Hedef Bağlantı Erişimi Gizli"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__user_permission
-#, fuzzy
 msgid "Destination User Permission"
 msgstr "Hedef Kullanıcı İzni"
 
@@ -2416,7 +2359,6 @@ msgstr "Belgeler / Partner"
 
 #. module: documents
 #: model:ir.model,name:documents.model_documents_access_tracking
-#, fuzzy
 msgid "Document Access Tracking"
 msgstr "Belge Erişim Takibi"
 
@@ -2471,14 +2413,12 @@ msgstr "Belge Jetonu"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
-#, fuzzy
 msgid "Document created in %(folder_name)s!"
 msgstr "Belge %(folder_name)s adresinde oluşturuldu!"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
-#, fuzzy
 msgid "Document moved to %(folder_name)s!"
 msgstr "Belge %(folder_name)s adresine taşındı!"
 
@@ -2496,7 +2436,6 @@ msgstr "Belgeyi yükleyen: %(user)s"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/editor/plugins/add_documents_attachment_plugin.js:0
-#, fuzzy
 msgid "Document(s) added!"
 msgstr "Belge(ler) eklendi!"
 
@@ -2507,14 +2446,12 @@ msgstr "Döküman: Döküman İsteği"
 
 #. module: documents
 #: model:mail.template,name:documents.mail_template_document_share
-#, fuzzy
 msgid "Document: Document Share"
 msgstr "Belge Paylaşımı Belge Paylaşımı"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/list/document_size_field.js:0
-#, fuzzy
 msgid "DocumentSizeIntegerField"
 msgstr "DocumentSizeIntegerField"
 
@@ -2543,54 +2480,46 @@ msgstr "Kayıtlara Bağlanan Belgeler"
 
 #. module: documents
 #: model:ir.model,name:documents.model_documents_operation
-#, fuzzy
 msgid "Documents Operation"
 msgstr "Belgeler Operasyon"
 
 #. module: documents
 #: model:ir.model,name:documents.model_documents_sharing
-#, fuzzy
 msgid "Documents Sharing"
 msgstr "Belge Paylaşımı"
 
 #. module: documents
 #: model:ir.actions.client,name:documents.document_action_preference
-#, fuzzy
 msgid "Documents View Preference"
 msgstr "Belgeleri Görüntüleme Tercihi"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_access_rights.js:0
-#, fuzzy
 msgid "Documents With Access Rights"
 msgstr "Erişim Hakları Olan Belgeler"
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "Documents cannot be created or moved in 'Recent'."
 msgstr "Belgeler 'Son' bölümünde oluşturulamaz veya taşınamaz."
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "Documents cannot be created or moved in 'Shared With Me'."
 msgstr "Belgeler 'Benimle Paylaşılan'da oluşturulamaz veya taşınamaz."
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "Documents cannot be created or moved in the trash."
 msgstr "Belgeler çöp kutusunda oluşturulamaz veya taşınamaz."
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
-#, fuzzy
 msgid "Documents created in %(folder_name)s!"
 msgstr "%(folder_name)s adresinde oluşturulan belgeler!"
 
@@ -2601,14 +2530,12 @@ msgstr "Belge oluşturma karması"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_operation_view_form
-#, fuzzy
 msgid "Documents currently in destination"
 msgstr "Şu anda varış noktasında bulunan belgeler"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
-#, fuzzy
 msgid "Documents moved to %(folder_name)s!"
 msgstr "Belgeler %(folder_name)s adresine taşındı!"
 
@@ -2620,13 +2547,11 @@ msgstr "Çöp kutusuna taşınan Belgeler burada görünecektir"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__documents_sharing_id
-#, fuzzy
 msgid "Documents share"
 msgstr "Belge paylaşımı"
 
 #. module: documents
 #: model:ir.model,name:documents.model_documents_sharing_access
-#, fuzzy
 msgid "Documents share access"
 msgstr "Belge paylaşım erişimi"
 
@@ -2643,7 +2568,6 @@ msgstr "Belgeleri bağlantıdan ayır karışımı"
 
 #. module: documents
 #: model:ir.actions.server,name:documents.ir_cron_documents_access_tracking_ir_actions_server
-#, fuzzy
 msgid "Documents: Access Tracking"
 msgstr "Belgeler Erişim Takibi"
 
@@ -2678,13 +2602,11 @@ msgstr "Klasörü zip olarak indir"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page
-#, fuzzy
 msgid "Download zip {{0}}"
 msgstr "İndir zip {{0}}"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page
-#, fuzzy
 msgid "Download {{0}}"
 msgstr "İndir {{0}}"
 
@@ -2716,29 +2638,25 @@ msgstr "Kopyala"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
-#, fuzzy
 msgid "Duplicate in %(folder_name)s"
 msgstr "İçinde çoğalt %(folder_name)s"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_operation__operation__copy
-#, fuzzy
 msgid "Duplicate to"
-msgstr "Çoğaltmak için"
+msgstr "Kopyalamak için"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
-#, fuzzy
 msgid "Duplicate: %(documentName)s"
-msgstr "Çoğalt: %(documentName)s"
+msgstr "Kopyala: %(documentName)s"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
-#, fuzzy
 msgid "Duplicate: %(numberOfDocuments)s items"
-msgstr "Duplicate: %(numberOfDocuments)s items"
+msgstr "Kopyala: %(numberOfDocuments)s döküman(lar)"
 
 #. module: documents
 #. odoo-javascript
@@ -2796,7 +2714,6 @@ msgstr "Gömülü Eylemler"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
-#, fuzzy
 msgid "Enable access and save"
 msgstr "Erişimi etkinleştirin ve kaydedin"
 
@@ -2814,7 +2731,6 @@ msgstr "Kaçış Önizleme/Seçimi Kaldır/Çıkış"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_server_action_evaluation_type_field.js:0
-#, fuzzy
 msgid "Evaluation type field for Documents server actions"
 msgstr "Belge sunucusu eylemleri için değerlendirme türü alanı"
 
@@ -2852,7 +2768,6 @@ msgstr "İlave yorumlar..."
 #. odoo-javascript
 #: code:addons/documents/static/src/editor/plugins/add_documents_attachment_plugin.js:0
 #: code:addons/documents/static/src/views/view_dialogs/select_add_document_create_dialog.js:0
-#, fuzzy
 msgid "Failed to add document(s): "
 msgstr "Belge(ler) eklenemedi: "
 
@@ -2860,7 +2775,6 @@ msgstr "Belge(ler) eklenemedi: "
 #. odoo-javascript
 #: code:addons/documents/static/src/editor/plugins/add_documents_attachment_plugin.js:0
 #: code:addons/documents/static/src/views/view_dialogs/select_add_document_create_dialog.js:0
-#, fuzzy
 msgid "Failed to paste link(s): "
 msgstr "Bağlantı(lar) yapıştırılamadı: "
 
@@ -2970,7 +2884,6 @@ msgstr "Dosya"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_folder_only
-#, fuzzy
 msgid "Folder Only"
 msgstr "Sadece Klasör"
 
@@ -3004,7 +2917,6 @@ msgstr "Bir dökümanda topla"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
-#, fuzzy
 msgid "General Access"
 msgstr "Genel Erişim"
 
@@ -3016,7 +2928,6 @@ msgstr "GiB"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/list/action_widget/documents_list_action_item_open_folder.js:0
-#, fuzzy
 msgid "Go inside"
 msgstr "İçeri girin."
 
@@ -3037,25 +2948,21 @@ msgstr "Mesaj Var"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__has_user
-#, fuzzy
 msgid "Has User"
 msgstr "Kullanıcı Var"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__has_warning_link_with_more_rights
-#, fuzzy
 msgid "Has Warning Link With More Rights"
 msgstr "Daha Fazla Hakla Uyarı Bağlantısı Var"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__has_warning_no_access
-#, fuzzy
 msgid "Has Warning No Access"
 msgstr "Uyarı Var Erişim Yok"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__has_warning_partners_without_access
-#, fuzzy
 msgid "Has Warning Partners Without Access"
 msgstr "Erişimi Olmayan Uyarı Ortakları Var"
 
@@ -3136,7 +3043,6 @@ msgstr "Resim/Video"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_access_tracking__documents
-#, fuzzy
 msgid "Impacted Document Ids"
 msgstr "Etkilenen Belge Kimlikleri"
 
@@ -3153,13 +3059,11 @@ msgstr "Birim"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
-#, fuzzy
 msgid "In Company"
 msgstr "Şirket içinde"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
-#, fuzzy
 msgid "In My Drive"
 msgstr "Sürücümde"
 
@@ -3171,7 +3075,6 @@ msgstr "Erişilemez"
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "Inactive user cannot create/move in 'My Drive'."
 msgstr "Etkin olmayan kullanıcı 'Sürücüm' içinde oluşturamaz/hareket ettiremez."
 
@@ -3215,20 +3118,17 @@ msgstr "Bilgi ve etiketler"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/editor/plugins/add_documents_attachment_plugin.js:0
-#, fuzzy
 msgid "Insert a file from Documents"
 msgstr "Belgeler'den dosya ekleme"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
-#, fuzzy
 msgid "Insufficient access to %(folder_name)s"
 msgstr "Yetersiz erişim %(folder_name)s"
 
 #. module: documents
 #: model:documents.document,name:documents.document_insurances_folder
-#, fuzzy
 msgid "Insurances"
 msgstr "Sigortalar"
 
@@ -3251,14 +3151,12 @@ msgstr "Dahili Kullanıcı Hakları"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__access_internal
-#, fuzzy
 msgid "Internal users"
 msgstr "Dahili kullanıcılar"
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "Invalid document token"
 msgstr "Geçersiz belge belirteci"
 
@@ -3285,25 +3183,21 @@ msgstr "Geçersiz rol."
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "Invalid search operand."
 msgstr "Geçersiz arama operandı."
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__invite_partner_ids
-#, fuzzy
 msgid "Invite Partner"
 msgstr "Ortak Davet Et"
 
 #. module: documents
 #: model:documents.document,name:documents.documents_email_as_vendor_bill
-#, fuzzy
 msgid "Invoice #INV-2025-001 - Payment Due April 24, 2025"
 msgstr "Fatura #INV-2025-001 - Ödeme Vadesi 24 Nisan 2025"
 
 #. module: documents
 #: model:documents.document,name:documents.documents_vendor_bill_inv_007
-#, fuzzy
 msgid "Invoice-INV_2018_0007.pdf"
 msgstr "Invoice-INV_2018_0007.pdf"
 
@@ -3329,7 +3223,6 @@ msgstr "Takipçi mi"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__is_on_single_document
-#, fuzzy
 msgid "Is On Single Document"
 msgstr "Tek Belge Üzerinde"
 
@@ -3340,28 +3233,24 @@ msgstr "Çok sayfalı olarak kabul edilir"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__partner_is_me
-#, fuzzy
 msgid "Is me"
 msgstr "Benim."
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "It is not possible to create documents in an archived folder."
 msgstr "Arşivlenmiş bir klasörde belge oluşturmak mümkün değildir."
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "It is not possible to move archived documents."
 msgstr "Arşivlenmiş belgeleri taşımak mümkün değildir."
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "It is not possible to move documents into archived folders."
 msgstr "Belgeleri arşivlenmiş klasörlere taşımak mümkün değildir."
 
@@ -3387,7 +3276,6 @@ msgstr "Çöp kutusundaki öğeler %s gün içinde kalıcı olarak silinecektir.
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
-#, fuzzy
 msgid ""
 "Items moved to the trash will be deleted forever after %(deletion_delay)s "
 "days."
@@ -3403,13 +3291,11 @@ msgstr "KPI Sağlayıcı"
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "Keep the values as is (multiple values)"
 msgstr "Değerleri olduğu gibi tutun (çoklu değerler)"
 
 #. module: documents
 #: model:documents.document,name:documents.documents_image_La_landscape_document
-#, fuzzy
 msgid "LA landscape.jpg"
 msgstr "LA landscape.jpg"
 
@@ -3513,7 +3399,6 @@ msgstr "Bağlantı oluştur"
 #. odoo-javascript
 #: code:addons/documents/static/src/editor/plugins/add_documents_attachment_plugin.js:0
 #: code:addons/documents/static/src/views/view_dialogs/select_add_document_create_dialog.js:0
-#, fuzzy
 msgid "Link(s) pasted!"
 msgstr "Bağlantı(lar) yapıştırıldı!"
 
@@ -3525,7 +3410,6 @@ msgstr "Bağlantılar panoya kopyalandı!"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
-#, fuzzy
 msgid "Links partially sent"
 msgstr "Bağlantılar kısmen gönderildi"
 
@@ -3563,7 +3447,6 @@ msgstr "Çıkış"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__mail_alias_domain_count
-#, fuzzy
 msgid "Mail Alias Domain Count"
 msgstr "Posta Takma Adı Etki Alanı Sayısı"
 
@@ -3575,7 +3458,6 @@ msgstr "Posta: %s"
 
 #. module: documents
 #: model:documents.document,name:documents.documents_data_multi_pdf_document
-#, fuzzy
 msgid "Mails_inbox.pdf"
 msgstr "Mails_inbox.pdf"
 
@@ -3599,7 +3481,6 @@ msgstr "Pazarlama"
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "Member added."
 msgstr "Üye eklendi."
 
@@ -3643,14 +3524,12 @@ msgstr "Eksik belge referansı."
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "Mixed rights"
 msgstr "Karma haklar"
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "Mixed values"
 msgstr "Karışık değerler"
 
@@ -3667,7 +3546,6 @@ msgstr "Modeller"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_access_modified
-#, fuzzy
 msgid "Modified"
 msgstr "Değiştirilmiş"
 
@@ -3700,7 +3578,6 @@ msgstr "Bu sayfayı çöp kutusuna taşıyın"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
-#, fuzzy
 msgid "Move to %(folder_name)s"
 msgstr "Şuraya git %(folder_name)s"
 
@@ -3730,21 +3607,18 @@ msgstr "Çöp kutusuna taşınsın mı?"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
-#, fuzzy
 msgid "Move: %(documentName)s"
 msgstr "Çekil: %(documentName)s"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
-#, fuzzy
 msgid "Move: %(numberOfDocuments)s items"
 msgstr "Taşıma: %(numberOfDocuments)s öğeler"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog.xml:0
-#, fuzzy
 msgid ""
 "Moving the document(s) will change their access rights to the following "
 "settings:"
@@ -3754,7 +3628,6 @@ msgstr ""
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog.js:0
-#, fuzzy
 msgid "Moving to: %s"
 msgstr "Taşınıyoruz: %s"
 
@@ -3868,7 +3741,6 @@ msgstr "Aktivite yok"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/components/documents_details_panel/documents_details_panel.xml:0
-#, fuzzy
 msgid "No activity assignee"
 msgstr "Faaliyet atanan kişi yok"
 
@@ -3886,14 +3758,12 @@ msgstr "Hiçbir takma ad yapılandırılmamış"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/components/documents_details_panel/documents_details_panel.xml:0
-#, fuzzy
 msgid "No alias tags"
 msgstr "Takma ad etiketi yok"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/components/documents_details_panel/documents_details_panel.xml:0
-#, fuzzy
 msgid "No contact"
 msgstr "Temas yok"
 
@@ -3906,21 +3776,18 @@ msgstr "Hiçbir belge seçilmedi"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/components/documents_details_panel/documents_details_panel.xml:0
-#, fuzzy
 msgid "No email alias"
 msgstr "E-posta takma adı yok"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/components/documents_details_panel/documents_details_panel.xml:0
-#, fuzzy
 msgid "No linked model"
 msgstr "Bağlantılı model yok"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/components/documents_details_panel/documents_details_panel.xml:0
-#, fuzzy
 msgid "No linked record"
 msgstr "Bağlantılı kayıt yok"
 
@@ -3935,14 +3802,12 @@ msgstr "İnternetten hiç kimse erişemez"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/components/documents_details_panel/documents_details_panel.xml:0
-#, fuzzy
 msgid "No owner"
 msgstr "Sahibi yok"
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "No partners"
 msgstr "Ortak yok"
 
@@ -3988,7 +3853,6 @@ msgstr "Not"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__invite_notify_message
-#, fuzzy
 msgid "Notification Message"
 msgstr "Bildirim Mesajı"
 
@@ -4066,7 +3930,6 @@ msgstr "Yalnızca erişim izni olan kişiler bağlantı ile açabilir"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page
-#, fuzzy
 msgid "Open folder {{0}}"
 msgstr "Klasörü aç {{0}}"
 
@@ -4078,7 +3941,6 @@ msgstr "Eylemler menüsünü açın"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page
-#, fuzzy
 msgid "Open {{0}}"
 msgstr "Açık {{0}}"
 
@@ -4114,7 +3976,6 @@ msgstr "Veya e-posta gönderin"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__original_expiration_date
-#, fuzzy
 msgid "Original Expiration"
 msgstr "Orijinal Son Kullanma Tarihi"
 
@@ -4128,19 +3989,16 @@ msgstr "Sahibi"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__owner_id
-#, fuzzy
 msgid "Owner of all documents"
 msgstr "Tüm belgelerin sahibi"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page
-#, fuzzy
 msgid "Owner: {{0}}"
 msgstr "Sahibi: {{0}}"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
-#, fuzzy
 msgid "PDF/Documents"
 msgstr "PDF/Belgeler"
 
@@ -4163,7 +4021,6 @@ msgstr "İş Ortağı"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/view_dialogs/select_add_document_create_dialog.xml:0
-#, fuzzy
 msgid "Paste Link(s)"
 msgstr "Bağlantı(lar)ı Yapıştır"
 
@@ -4175,7 +4032,6 @@ msgstr "Erişimi olan kişiler"
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "Please fill in the missing email addresses."
 msgstr "Lütfen eksik e-posta adreslerini doldurun."
 
@@ -4407,7 +4263,6 @@ msgstr "Kaydet"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
-#, fuzzy
 msgid "Save or Discard changes first"
 msgstr "Önce değişiklikleri kaydedin veya iptal edin"
 
@@ -4422,28 +4277,24 @@ msgstr "Ara..."
 #: code:addons/documents/static/src/core/common/composer_actions_patch.js:0
 #: code:addons/documents/static/src/editor/plugins/add_documents_attachment_plugin.js:0
 #: code:addons/documents/static/src/web/mail_composer_document_selector/mail_composer_document_selector.js:0
-#, fuzzy
 msgid "Search: Documents"
 msgstr "Arama yapın: Belgeler"
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "Searching on TRASH is not supported."
 msgstr "TRASH üzerinde arama desteklenmez."
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_add_widget_compose_message_wizard
 #: model_terms:ir.ui.view,arch_db:documents.documents_add_widget_schedule_message_form_view
-#, fuzzy
 msgid "Select Documents"
 msgstr "Belgeleri Seçin"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/components/documents_details_panel/documents_details_panel.js:0
-#, fuzzy
 msgid "Select a Record To Link"
 msgstr "Bağlanacak Bir Kayıt Seçin"
 
@@ -4463,7 +4314,6 @@ msgstr "Hepsini Seç"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/chatter/documents_chatter_overlay.xml:0
-#, fuzzy
 msgid "Select an item to open the chatter"
 msgstr "Sohbeti açmak için bir öğe seçin"
 
@@ -4511,7 +4361,6 @@ msgstr "Finans birimine gönderin"
 
 #. module: documents
 #: model:ir.actions.server,name:documents.ir_actions_server_send_to_finance
-#, fuzzy
 msgid "Send to Finance"
 msgstr "Finans'a Gönder"
 
@@ -4522,7 +4371,6 @@ msgstr "Bir belgenin partnerden talep edilmesi durumunda gönderilir"
 
 #. module: documents
 #: model:mail.template,description:documents.mail_template_document_share
-#, fuzzy
 msgid "Sent to partner when sharing a document with them"
 msgstr "Bir belgeyi paylaşırken iş ortağına gönderilir"
 
@@ -4545,7 +4393,6 @@ msgstr "Sunucu İşlemleri"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
-#, fuzzy
 msgid "Set Expiration Date"
 msgstr "Son Kullanma Tarihini Ayarla"
 
@@ -4578,7 +4425,6 @@ msgstr "Paylaş"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__share_access_ids
-#, fuzzy
 msgid "Share Access"
 msgstr "Erişim Paylaş"
 
@@ -4591,7 +4437,6 @@ msgstr "Paylaşın: %(documentName)s"
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "Share: %(numberOfDocuments)s files"
 msgstr "Paylaş: %(numberOfDocuments)s dosyaları"
 
@@ -4602,15 +4447,13 @@ msgstr "Paylaşılan"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
-#, fuzzy
 msgid "Shared with"
 msgstr "İle paylaşıldı"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
-#, fuzzy
 msgid "Shared with anyone"
-msgstr "Herhangi biriyle paylaşıldı"
+msgstr "Herkesle paylaşıldı"
 
 #. module: documents
 #. odoo-javascript
@@ -4629,7 +4472,6 @@ msgstr "Kısayol"
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
-#, fuzzy
 msgid "Shortcut created in %(folder_name)s!"
 msgstr "%(folder_name)s adresinde oluşturulan kısayol!"
 
@@ -4642,13 +4484,11 @@ msgstr "Kısayollar hedef belgeyi değiştiremez."
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
-#, fuzzy
 msgid "Shortcuts created in %(folder_name)s!"
 msgstr "%(folder_name)s adresinde oluşturulan kısayollar!"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__destination_children_ids
-#, fuzzy
 msgid "Siblings"
 msgstr "Kardeşler"
 
@@ -4670,7 +4510,6 @@ msgstr "Sosyal"
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "Some emails are missing"
 msgstr "Bazı e-postalar eksik"
 
@@ -4682,7 +4521,6 @@ msgstr "Bazı dosyalar yüklenemedi (azami büyüklük: %s)."
 
 #. module: documents
 #: model:documents.document,name:documents.documents_attachment_sorry_netsuite_document
-#, fuzzy
 msgid "Sorry Netsuite.jpg"
 msgstr "Sorry Netsuite.jpg"
 
@@ -4693,7 +4531,6 @@ msgstr "Kaynak Belge"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__shortcut_document_owner_id
-#, fuzzy
 msgid "Source Document Owner"
 msgstr "Kaynak Belge Sahibi"
 
@@ -4755,7 +4592,6 @@ msgstr "Yapı"
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "Successfully Shared"
 msgstr "Başarıyla Paylaşıldı"
 
@@ -4833,7 +4669,6 @@ msgstr "Bu belge taşınmıştır."
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
-#, fuzzy
 msgid "The document/folder has been moved to the Company root."
 msgstr "Belge/klasör Şirket kök dizinine taşındı."
 
@@ -4850,7 +4685,6 @@ msgstr ""
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid ""
 "The following documents have been restored from the trash: %(documents)s."
 msgstr "Aşağıdaki belgeler çöp kutusundan geri yüklendi: %(documents)s."
@@ -4858,19 +4692,16 @@ msgstr "Aşağıdaki belgeler çöp kutusundan geri yüklendi: %(documents)s."
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "The following documents have been sent to trash: %(documents)s."
 msgstr "Aşağıdaki belgeler çöp kutusuna gönderilmiştir: %(documents)s."
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.folder_notification_move_in
-#, fuzzy
 msgid "The following documents were moved inside this folder:"
 msgstr "Aşağıdaki belgeler bu klasörün içine taşınmıştır:"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.folder_notification_move_out
-#, fuzzy
 msgid "The following documents were moved outside this folder:"
 msgstr "Aşağıdaki belgeler bu klasörün dışına taşınmıştır:"
 
@@ -4895,7 +4726,6 @@ msgstr "Aşağıdaki kısayollar belge üst öğesi olarak ayarlanamaz: \n"
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid ""
 "The following user(s) cannot own root documents/folders: \n"
 "- %(lines)s"
@@ -4915,14 +4745,12 @@ msgstr ""
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "There are no records to link this document. Create one first."
 msgstr "Bu belgeyi bağlayacak kayıt yok. Önce bir tane oluşturun."
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/helper/documents_draggable.js:0
-#, fuzzy
 msgid ""
 "There is at least one document you cannot move to trash in your selection."
 msgstr "Seçiminizde çöpe taşıyamayacağınız en az bir belge var."
@@ -4946,7 +4774,6 @@ msgstr "Bu işlem mevcut değil."
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/ir_actions_server.py:0
-#, fuzzy
 msgid "This action was not made available on the containing folder."
 msgstr "Bu eylem, içeren klasörde kullanılabilir hale getirilmemiştir."
 
@@ -4969,7 +4796,6 @@ msgstr "Bu belge geri yüklenmiştir."
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/documents_model_mixin.js:0
-#, fuzzy
 msgid ""
 "This document is locked by %s.\n"
 "Are you sure you want to unlock it?"
@@ -5015,7 +4841,6 @@ msgstr "Bu partner zaten bu belgeye atanmış."
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_access.py:0
-#, fuzzy
 msgid "This user can not be member."
 msgstr "Bu kullanıcı üye olamaz."
 
@@ -5040,7 +4865,6 @@ msgstr "üçük Resim Durumu"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.res_config_settings_view_form
-#, fuzzy
 msgid "Time before documents in the Trash are permanently deleted."
 msgstr "Çöp Kutusundaki belgelerin kalıcı olarak silinmesinden önceki süre."
 
@@ -5128,14 +4952,12 @@ msgstr "Kullanılamayan işlem."
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "Unexpected user_folder_id value %s"
 msgstr "Beklenmeyen user_folder_id değeri %s"
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "Unknown searched value %s"
 msgstr "Bilinmeyen aranan değer %s"
 
@@ -5149,7 +4971,6 @@ msgstr "Kilidi Aç"
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_operation.py:0
-#, fuzzy
 msgid "Unsupported attachment type: %s"
 msgstr "Desteklenmeyen ek türü: %s"
 
@@ -5220,7 +5041,6 @@ msgstr ""
 
 #. module: documents
 #: model:documents.document,name:documents.documents_attachment_video_documents
-#, fuzzy
 msgid "Video: Odoo Documents"
 msgstr "Video: Odoo Belgeleri"
 
@@ -5336,7 +5156,6 @@ msgstr "Gömülü işlemleri sabitleme/kaldırma yetkiniz yok."
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "You are not allowed to update these access rights."
 msgstr "Bu erişim haklarını güncellemenize izin verilmez."
 
@@ -5377,7 +5196,6 @@ msgstr "Bu folder_id değerine erişemezsiniz."
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/helper/documents_draggable.js:0
-#, fuzzy
 msgid ""
 "You can't create shortcuts in nor move documents to this special folder."
 msgstr ""
@@ -5395,7 +5213,6 @@ msgstr ""
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
-#, fuzzy
 msgid "You can't move documents you do not own out of folders you cannot edit."
 msgstr ""
 "Sahip olmadığınız belgeleri düzenleyemeyeceğiniz klasörlerin dışına "
@@ -5404,13 +5221,11 @@ msgstr ""
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
-#, fuzzy
 msgid "You can't move this/those folder(s) to the Company root."
 msgstr "Bu/bu klasör(ler)i Şirket kök dizinine taşıyamazsınız."
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
-#, fuzzy
 msgid ""
 "You cannot change permissions because you don't have edit access to all the "
 "selected documents."
@@ -5445,7 +5260,6 @@ msgstr "Çöp Kutusundaki belge(ler)i çoğaltamazsınız."
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/helper/documents_draggable.js:0
-#, fuzzy
 msgid "You cannot move a folder into itself or a children."
 msgstr "Bir klasörü kendi içine veya alt klasörlere taşıyamazsınız."
 
@@ -5464,7 +5278,6 @@ msgstr "Bu türdeki bir işlemi sabitleyemezsiniz."
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_operation.py:0
-#, fuzzy
 msgid "You do not have editor access to any folder."
 msgstr "Herhangi bir klasöre editör erişiminiz yoktur."
 
@@ -5477,20 +5290,17 @@ msgstr "Bu belgeleri silmek için gereken erişim hakkına sahip değilsiniz."
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/helper/documents_draggable.js:0
-#, fuzzy
 msgid "You don't have the rights to write in this folder."
 msgstr "Bu klasöre yazma hakkına sahip değilsiniz."
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/helper/documents_drop_zone.xml:0
-#, fuzzy
 msgid "You must be in a specific writable folder to upload files"
 msgstr "Dosya yüklemek için belirli bir yazılabilir klasörde olmanız gerekir"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
-#, fuzzy
 msgid "You've added external users, but external sharing is disabled."
 msgstr ""
 "Harici kullanıcılar eklediniz, ancak harici paylaşım devre dışı bırakıldı."
@@ -5509,13 +5319,11 @@ msgstr "Kişisel alanınız"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_request_done_page
-#, fuzzy
 msgid "Your upload is successful"
 msgstr "Yüklemeniz başarılı"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
-#, fuzzy
 msgid "and its expiration date changed from"
 msgstr "ve son kullanma tarihi"
 
@@ -5526,7 +5334,6 @@ msgstr "bayt"
 
 #. module: documents
 #: model:documents.document,name:documents.documents_image_city_document
-#, fuzzy
 msgid "city.jpg"
 msgstr "city.jpg"
 
@@ -5538,7 +5345,6 @@ msgstr "günler."
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "discoverable"
 msgstr "keşfedilebilir"
 
@@ -5561,7 +5367,6 @@ msgstr "örn. Finans"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.ir_actions_server_view_form_documents
-#, fuzzy
 msgid "e.g. Mass archive"
 msgstr "örn. kitle arşivi"
 
@@ -5589,7 +5394,6 @@ msgstr "örn. sirketim.com"
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "edit"
 msgstr "Düzenle"
 
@@ -5601,7 +5405,6 @@ msgstr "e-posta"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
-#, fuzzy
 msgid "expiration date changed from"
 msgstr "son kullanma tarihi değiştirildi"
 
@@ -5623,25 +5426,21 @@ msgstr "klasörler"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
-#, fuzzy
 msgid "has gained access as"
 msgstr "olarak erişim kazanmıştır."
 
 #. module: documents
 #: model:documents.document,name:documents.documents_vendor_bill_extract_azure_interior_document
-#, fuzzy
 msgid "invoice Azure Interior.pdf"
 msgstr "fatura Azure Interior.pdf"
 
 #. module: documents
 #: model:documents.document,name:documents.documents_vendor_bill_extract_open_value_document
-#, fuzzy
 msgid "invoice OpenValue.pdf"
 msgstr "fatura OpenValue.pdf"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_request_page
-#, fuzzy
 msgid "is requesting"
 msgstr "talep ediyor"
 
@@ -5664,21 +5463,18 @@ msgstr "kiB"
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "link_required"
 msgstr "link_required"
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
-#, fuzzy
 msgid "mixed"
 msgstr "karışık"
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/ir_actions_server.py:0
-#, fuzzy
 msgid "model_name"
 msgstr "model_adı"
 
@@ -5691,19 +5487,16 @@ msgstr "hiçbiri"
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/ir_actions_server.py:0
-#, fuzzy
 msgid "parent_id"
 msgstr "parent_id"
 
 #. module: documents
 #: model:documents.document,name:documents.documents_image_people_document
-#, fuzzy
 msgid "people.jpg"
 msgstr "insanlar.jpg"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
-#, fuzzy
 msgid "rights changed from"
 msgstr "haklar şu şekilde değişti"
 
@@ -5743,19 +5536,16 @@ msgstr "adsız"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.folder_notification_move_out
-#, fuzzy
 msgid "was been moved outside this folder."
 msgstr "bu klasörün dışına taşınmıştır."
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.folder_notification_move_in
-#, fuzzy
 msgid "was moved inside this folder."
 msgstr "bu klasörün içine taşındı."
 
 #. module: documents
 #: model:mail.template,subject:documents.mail_template_document_share
-#, fuzzy
 msgid "{{ len(ctx.get('documents', [])) }} document(s) shared with you"
 msgstr "{{ len(ctx.get('documents', [])) }} sizinle paylaşılan belge(ler)"
 

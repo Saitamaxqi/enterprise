@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-11-12 15:06+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/esg_hr/"
 "tr/>\n"
 "Language: tr\n"
@@ -23,9 +24,8 @@ msgstr ""
 #. module: esg_hr
 #. odoo-javascript
 #: code:addons/esg_hr/static/src/components/esg_dashboard/esg_hr_sex_parity_box/esg_hr_sex_parity_box.js:0
-#, fuzzy
 msgid "%(overall_pay_gap)s%"
-msgstr "%(overall_pay_gap)s%"
+msgstr "%(overall_pay_gap)%"
 
 #. module: esg_hr
 #: model:ir.model.fields,field_description:esg_hr.field_esg_employee_report__company_id
@@ -34,7 +34,6 @@ msgstr "Firma"
 
 #. module: esg_hr
 #: model_terms:ir.actions.act_window,help:esg_hr.action_esg_employee_report_pay_gap
-#, fuzzy
 msgid ""
 "Configure employee contracts and salaries to calculate the sex median pay "
 "gap."
@@ -74,7 +73,6 @@ msgstr "İsim Göster"
 
 #. module: esg_hr
 #: model:ir.model,name:esg_hr.model_esg_employee_report
-#, fuzzy
 msgid "ESG Employee Report"
 msgstr "ESG Çalışan Raporu"
 
@@ -85,7 +83,6 @@ msgstr "Bayan"
 
 #. module: esg_hr
 #: model_terms:ir.ui.view,arch_db:esg_hr.esg_employee_report_search
-#, fuzzy
 msgid "Full-Time Workers"
 msgstr "Tam Zamanlı Çalışanlar"
 
@@ -101,9 +98,8 @@ msgstr "Tam Zamanlı mı"
 
 #. module: esg_hr
 #: model:ir.model.fields,field_description:esg_hr.field_esg_employee_report__is_team_leader
-#, fuzzy
 msgid "Is Team Leader"
-msgstr "Ekip Lideridir"
+msgstr "Ekip Lideri"
 
 #. module: esg_hr
 #: model:ir.model.fields,field_description:esg_hr.field_esg_employee_report__job_id
@@ -114,7 +110,6 @@ msgstr "İş Pozisyonu"
 #. module: esg_hr
 #: model:ir.model.fields,field_description:esg_hr.field_esg_employee_report__leadership_level
 #: model_terms:ir.ui.view,arch_db:esg_hr.esg_employee_report_search
-#, fuzzy
 msgid "Leadership Level"
 msgstr "Liderlik Seviyesi"
 
@@ -131,19 +126,16 @@ msgstr "Yok"
 
 #. module: esg_hr
 #: model_terms:ir.actions.act_window,help:esg_hr.action_esg_employee_report_sex_parity
-#, fuzzy
 msgid "No employee sex data available."
-msgstr "Çalışanların cinsiyetine ilişkin veri bulunmamaktadır."
+msgstr "Çalışanın cinsiyetine ilişkin veri bulunmamaktadır."
 
 #. module: esg_hr
 #: model_terms:ir.actions.act_window,help:esg_hr.action_esg_employee_report_pay_gap
-#, fuzzy
 msgid "No salary data available."
 msgstr "Maaş verileri mevcut değildir."
 
 #. module: esg_hr
 #: model_terms:ir.actions.act_window,help:esg_hr.action_esg_employee_report_sex_parity
-#, fuzzy
 msgid ""
 "Once configured, you'll be able to view sex distribution across your company."
 msgstr ""
@@ -157,7 +149,6 @@ msgstr "Diğer"
 
 #. module: esg_hr
 #: model_terms:ir.ui.view,arch_db:esg_hr.esg_employee_report_search
-#, fuzzy
 msgid "Part-Time Workers"
 msgstr "Yarı Zamanlı Çalışanlar"
 
@@ -166,16 +157,14 @@ msgstr "Yarı Zamanlı Çalışanlar"
 #: code:addons/esg_hr/static/src/components/esg_dashboard/esg_hr_sex_parity_box/esg_hr_sex_parity_box.xml:0
 #: model:ir.actions.act_window,name:esg_hr.action_esg_employee_report_pay_gap
 #: model:ir.ui.menu,name:esg_hr.menu_esg_pay_gap
-#, fuzzy
 msgid "Pay Gap"
-msgstr "Ücret Uçurumu"
+msgstr "Ücret Farkı"
 
 #. module: esg_hr
 #: model:ir.model.fields,field_description:esg_hr.field_esg_employee_report__sex
 #: model_terms:ir.ui.view,arch_db:esg_hr.esg_employee_report_search
-#, fuzzy
 msgid "Sex"
-msgstr "Seks"
+msgstr "Cinsiyet"
 
 #. module: esg_hr
 #. odoo-javascript
@@ -185,7 +174,6 @@ msgstr "Seks"
 #: model_terms:ir.ui.view,arch_db:esg_hr.esg_employee_report_graph
 #: model_terms:ir.ui.view,arch_db:esg_hr.esg_employee_report_pivot
 #: model_terms:ir.ui.view,arch_db:esg_hr.esg_employee_report_search
-#, fuzzy
 msgid "Sex Parity"
 msgstr "Cinsiyet Eşitliği"
 

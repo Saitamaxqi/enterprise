@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-12 15:06+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-11-20 13:21+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "accountant_knowledge/tr/>\n"
 "Language: tr\n"
@@ -22,19 +23,16 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid "(description and of the issue, uncertainty, or limitation)"
 msgstr "(sorunun, belirsizliğin veya sınırlamanın tanımı ve açıklaması)"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
-#, fuzzy
 msgid "0,00<br>"
 msgstr "0,00<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid "0.0<br>"
 msgstr "0.0<br>"
 
@@ -46,26 +44,22 @@ msgstr "0.0<br>"
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
-#, fuzzy
 msgid "<em>To be completed...</em>"
 msgstr "<em>Tamamlanacak...</em>"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_kanban
-#, fuzzy
 msgid "<i class=\"fa fa-fw fa-building me-2\" title=\"Company\"/>"
 msgstr "<i class=\"fa fa-fw fa-building me-2\" title=\"Company\"/>"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_kanban
-#, fuzzy
 msgid "<i class=\"fa fa-fw fa-calendar me-2\" title=\"Calendar\"/>"
 msgstr "<i class=\"fa fa-fw fa-calendar me-2\" title=\"Calendar\"/>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_supporting_documents
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_tax_package
-#, fuzzy
 msgid ""
 "<strong class=\"o-upload-link\">Upload files</strong> to include in the PDF "
 "report."
@@ -75,26 +69,22 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
-#, fuzzy
 msgid "<strong>Additional Information</strong><br>"
 msgstr "<strong>Ek Bilgiler</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "<strong>Buildings, Fixtures, and Fittings</strong>"
 msgstr "<strong>Binalar, Demirbaşlar ve Tesisatlar</strong>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
-#, fuzzy
 msgid "<strong>Category</strong><br>"
 msgstr "<strong>Kategori</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid ""
 "<strong>Componentized assets</strong>: The company was unable to identify "
 "componentized assets, or the decomposition of such assets does not have a "
@@ -106,97 +96,81 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid "<strong>Depreciation - Cumulative</strong><br>"
 msgstr "<strong>Amortisman - Kümülatif</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid "<strong>Depreciation - Current Year</strong><br>"
 msgstr "<strong>Amortisman - Cari Yıl</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
-#, fuzzy
 msgid "<strong>Description</strong><br>"
 msgstr "<strong>Açıklama:</strong><br/>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
-#, fuzzy
 msgid "<strong>Domestic</strong><br>"
 msgstr "<strong>Yurtiçi</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid "<strong>Entry Cost</strong><br>"
 msgstr "<strong>Giriş Ücreti</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "<strong>Equipment and Tools</strong>"
 msgstr "<strong>Ekipman ve Araçlar</strong>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "<strong>Intangible Assets</strong>"
 msgstr "<strong>Maddi Olmayan Varlıklar</strong>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
-#, fuzzy
 msgid "<strong>International</strong><br>"
 msgstr "<strong>Uluslararası</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid "<strong>Items</strong><br>"
 msgstr "<strong>Öğeler</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
-#, fuzzy
 msgid "<strong>Men</strong><br>"
 msgstr "<strong>Erkekler</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
-#, fuzzy
 msgid "<strong>Name</strong><br>"
 msgstr "<strong>İsim</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
-#, fuzzy
 msgid "<strong>Nature of Relationship</strong><br>"
 msgstr "<strong>İlişkinin Doğası</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
-#, fuzzy
 msgid "<strong>Net Exceptional Result</strong><br>"
 msgstr "<strong>Net Olağanüstü Sonuç</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid "<strong>Net Value</strong><br>"
 msgstr "<strong>Net Değer</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
-#, fuzzy
 msgid "<strong>Nominal Value per Share</strong><br>"
 msgstr "<strong>Hisse Başına Nominal Değer</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid ""
 "<strong>Non-componentized assets</strong>: Benefiting from tolerance "
 "measures, the company has chosen to maintain the existing useful life "
@@ -208,19 +182,16 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
-#, fuzzy
 msgid "<strong>Number of Shares</strong><br>"
 msgstr "<strong>Hisse Sayısı</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "<strong>Other Tangible Assets</strong>"
 msgstr "<strong>Diğer Maddi Varlıklar</strong>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
-#, fuzzy
 msgid "<strong>Share Capital</strong><br>"
 msgstr "<strong>Hisse Sermayesi</strong><br>"
 
@@ -228,19 +199,16 @@ msgstr "<strong>Hisse Sermayesi</strong><br>"
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
-#, fuzzy
 msgid "<strong>Total</strong><br>"
 msgstr "<strong>Toplam</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
-#, fuzzy
 msgid "<strong>Transaction Amount During the Period</strong><br>"
 msgstr "<strong>Dönem İçinde Yapılan İşlem Tutarı</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
-#, fuzzy
 msgid "<strong>Women</strong><br>"
 msgstr "<strong>Kadınlar</strong><br>"
 
@@ -251,13 +219,11 @@ msgstr "Muhasebe"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
-#, fuzzy
 msgid "Accounting Principles and Methods"
 msgstr "Muhasebe İlkeleri ve Yöntemleri"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
-#, fuzzy
 msgid "Accounting principles and methods"
 msgstr "Muhasebe ilke ve yöntemleri"
 
@@ -269,7 +235,6 @@ msgstr "Ek Bilgi"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
-#, fuzzy
 msgid ""
 "Advances received from public or private organizations to finance the "
 "company's activities, for which repayment is conditional, are presented "
@@ -299,19 +264,16 @@ msgstr "Tutar:"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
-#, fuzzy
 msgid "Amount<br>"
 msgstr "Tutar<br>"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_annexes
-#, fuzzy
 msgid "Annexes"
 msgstr "Ekler"
 
 #. module: accountant_knowledge
 #: model:ir.ui.menu,name:accountant_knowledge.menu_action_accountant_audit_report
-#, fuzzy
 msgid "Annual Report"
 msgstr "Yıllık Rapor"
 
@@ -322,7 +284,6 @@ msgstr "Yazı"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid ""
 "As a result of these findings, and due to their significant effect, we are "
 "unable to confirm the overall consistency and plausibility of the interim "
@@ -334,7 +295,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid ""
 "As chartered accountants, we have carried out a compilation of the interim "
 "financial statements of {{ company name }} for the period from {{ start of "
@@ -348,13 +308,11 @@ msgstr ""
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_asset_information
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
-#, fuzzy
 msgid "Asset Information"
 msgstr "Varlık Bilgileri"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
-#, fuzzy
 msgid ""
 "At each reporting date, and whenever there is an indication of impairment, "
 "the capitalized development costs are reviewed to confirm that the project "
@@ -371,7 +329,6 @@ msgstr ""
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_attestation
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid "Attestation"
 msgstr "Tasdik"
 
@@ -379,14 +336,12 @@ msgstr "Tasdik"
 #: model:ir.model,name:accountant_knowledge.model_audit_report
 #: model:ir.model.fields,field_description:accountant_knowledge.field_knowledge_article__audit_report_id
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_audit_report
-#, fuzzy
 msgid "Audit Report"
 msgstr "Denetim Raporu"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__knowledge_template_article_id
 #: model:ir.model.fields,field_description:accountant_knowledge.field_knowledge_article__is_audit_report_template
-#, fuzzy
 msgid "Audit Report Template"
 msgstr "Denetim Raporu Şablonu"
 
@@ -397,7 +352,6 @@ msgstr "Denetim Raporları"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_form
-#, fuzzy
 msgid "Audit Template"
 msgstr "Denetim Şablonu"
 
@@ -408,7 +362,6 @@ msgstr "Bilanço"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid ""
 "Based on our procedures, we have not identified any matters that would call "
 "into question the overall consistency and plausibility of the interim "
@@ -420,19 +373,16 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid "Buildings<br>"
 msgstr "Binalar<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
-#, fuzzy
 msgid "Capital Increase Costs"
 msgstr "Sermaye Artış Maliyetleri"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
-#, fuzzy
 msgid ""
 "Capital increase costs are recorded directly on the balance sheet as a "
 "deduction from the share premium."
@@ -442,7 +392,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
-#, fuzzy
 msgid "Capitalization of Development Costs"
 msgstr "Geliştirme Maliyetlerinin Aktifleştirilmesi"
 
@@ -453,50 +402,42 @@ msgstr "Nakit ve nakite eşdeğer"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
-#, fuzzy
 msgid "Cash on hand and bank balances are recorded at their nominal value"
 msgstr "Eldeki nakit ve banka bakiyeleri nominal değerleriyle kaydedilir"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_cash_flow_statement
-#, fuzzy
 msgid "Cash-Flow Statement"
 msgstr "Nakit Akış"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
-#, fuzzy
 msgid "Change in Accounting Estimate"
 msgstr "Muhasebe Tahminindeki Değişiklik"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
-#, fuzzy
 msgid "Change in Accounting Standards"
 msgstr "Muhasebe Standartlarında Değişiklik"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
-#, fuzzy
 msgid "Changes in Accounting Policies"
 msgstr "Muhasebe Politikalarındaki Değişiklikler"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
-#, fuzzy
 msgid "Changes in Fixed Assets"
 msgstr "Duran Varlıklardaki Değişimler"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
-#, fuzzy
 msgid "Comments<br>"
 msgstr "Yorumlar<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "Commercial buildings: 20 to 50 years"
 msgstr "Ticari binalar: 20 ila 50 yıl"
 
@@ -507,7 +448,6 @@ msgstr "Firma"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "Computer equipment: 5 years"
 msgstr "Bilgisayar ekipmanları: 5 yıl"
 
@@ -518,32 +458,27 @@ msgstr "Yapılandır"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
-#, fuzzy
 msgid "Consistency of accounting methods from one period to another;"
 msgstr "Muhasebe yöntemlerinin bir dönemden diğerine tutarlılığı;"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_contextual_information
-#, fuzzy
 msgid "Contextual Information"
 msgstr "Bağlamsal Bilgi"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
-#, fuzzy
 msgid "Correction of Errors"
 msgstr "Hataların Düzeltilmesi"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
-#, fuzzy
 msgid "Costs related to under-activity are excluded from the inventory value."
 msgstr "Eksik faaliyetle ilgili maliyetler envanter değerinden çıkarılır."
 
 #. module: accountant_knowledge
 #: model:ir.actions.act_window,name:accountant_knowledge.action_audit_report_quick_create
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
-#, fuzzy
 msgid "Create an Audit Report"
 msgstr "Denetim Raporu Oluşturma"
 
@@ -565,7 +500,6 @@ msgstr "Özelleştirme"
 
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
-#, fuzzy
 msgid "Customize all of its content.<br>Add sections, pages, or attachments"
 msgstr "Tüm içeriğini özelleştirin.<br>Bölümler, sayfalar veya ekler ekleyin"
 
@@ -577,13 +511,11 @@ msgstr "Tarihler"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
-#, fuzzy
 msgid "Deferred Expenses"
 msgstr "Ertelenmiş Giderler"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
-#, fuzzy
 msgid "Deferred Revenues"
 msgstr "Ertelenmiş Gelirler"
 
@@ -594,7 +526,6 @@ msgstr "Sil"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "Depreciation Period"
 msgstr "Amortisman Süresi"
 
@@ -605,13 +536,11 @@ msgstr "Depreciation Schedule"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
-#, fuzzy
 msgid "Depreciation and Impairment"
 msgstr "Amortisman ve Değer Düşüklüğü"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid ""
 "Depreciation is calculated using either the straight-line or declining "
 "balance method, based on the estimated useful life of the assets."
@@ -621,7 +550,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid ""
 "Describe the nature and amounts of commitments given, received, and "
 "reciprocal"
@@ -631,7 +559,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
-#, fuzzy
 msgid ""
 "Describe the nature of each provision recorded during the period. For each, "
 "indicate the opening balance, any additional provisions (dotations), any "
@@ -644,19 +571,16 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
-#, fuzzy
 msgid "Describe the nature of the error corrected."
 msgstr "Düzeltilen hatanın niteliğini açıklayın."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
-#, fuzzy
 msgid "Description<br>"
 msgstr "Açıklama<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
-#, fuzzy
 msgid ""
 "Detail and explain the key changes in fixed assets — purchases, sales, and "
 "adjustments — over the period for clear tracking of asset value evolution."
@@ -667,7 +591,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
-#, fuzzy
 msgid ""
 "Detail the factors affecting future tax liabilities and the impact of tax "
 "valuation adjustments."
@@ -677,13 +600,11 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
-#, fuzzy
 msgid "Details on Inventories and Work-in-Progress"
 msgstr "Envanter ve Yapılmakta Olan Çalışmalara İlişkin Bilgiler"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid ""
 "Directly attributable costs incurred to bring the asset to working condition "
 "for its intended use;"
@@ -716,14 +637,12 @@ msgstr "Yapıldı"
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/components/export_audit_report_to_pdf_dialog/export_audit_report_to_pdf_dialog.xml:0
 #: code:addons/accountant_knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
-#, fuzzy
 msgid "Download Annual Report"
 msgstr "Yıllık Raporu İndirin"
 
 #. module: accountant_knowledge
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/components/export_audit_report_to_pdf_dialog/export_audit_report_to_pdf_dialog.xml:0
-#, fuzzy
 msgid "Download PDF"
 msgstr "İndir PDF"
 
@@ -736,7 +655,6 @@ msgstr "Taslak"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid ""
 "During the course of our engagement, we identified the following matters "
 "that significantly impact the overall consistency and reliability of the "
@@ -747,7 +665,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
-#, fuzzy
 msgid ""
 "During this fiscal period, the company generated a net accounting result of  "
 "{{ net accounting result }}, broken down as follows between domestic and "
@@ -759,7 +676,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
-#, fuzzy
 msgid ""
 "During this period, the company benefited from the following tax credits, "
 "which have contributed to optimizing its tax position:"
@@ -770,19 +686,16 @@ msgstr ""
 #. module: accountant_knowledge
 #. odoo-python
 #: code:addons/accountant_knowledge/models/audit_report.py:0
-#, fuzzy
 msgid "Edit Audit Report"
 msgstr "Denetim Raporunu Düzenle"
 
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
-#, fuzzy
 msgid "Edit its content"
 msgstr "İçeriğini düzenleyin"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
-#, fuzzy
 msgid "Employees<br>"
 msgstr "Çalışanlar<BR>"
 
@@ -799,19 +712,16 @@ msgstr "Mali yıla dahil olan Bitiş Tarihi."
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_entity_information
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
-#, fuzzy
 msgid "Entity Information"
 msgstr "Varlık Bilgileri"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "Equipment: 10 years"
 msgstr "Ekipman: 10 yıl"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid ""
 "Except for the impact of the issue described above, we did not identify "
 "anything that would call into question the overall consistency and "
@@ -823,32 +733,27 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
-#, fuzzy
 msgid "Exceptional Expenses<br>"
 msgstr "İstisnai Giderler<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
-#, fuzzy
 msgid "Exceptional Income &amp; Expenses"
 msgstr "İstisnai Gelir &amp; Giderler"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
-#, fuzzy
 msgid "Exceptional Income<br>"
 msgstr "İstisnai Gelir<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
-#, fuzzy
 msgid "Expense Recognition"
 msgstr "Giderlerin Muhasebeleştirilmesi"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
-#, fuzzy
 msgid ""
 "Explain how tax changes made between the balance sheet date and the "
 "financial statement date affect this period's results."
@@ -858,7 +763,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
-#, fuzzy
 msgid ""
 "Explain the impact of the correction on the current period's financial "
 "statements."
@@ -867,69 +771,58 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid "Favorable Opinion with Comments"
 msgstr "Yorumlarla Birlikte Olumlu Görüş"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid "Finance Lease"
 msgstr "Finansal Kiralama"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
-#, fuzzy
 msgid "Financial Assets and Marketable Securities"
 msgstr "Finansal Varlıklar ve Menkul Kıymetler"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid "Financial Commitments and Guarantees"
 msgstr "Finansal Taahhütler ve Garantiler"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_financial_position
-#, fuzzy
 msgid "Financial Position"
 msgstr "Finansal Durum"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
-#, fuzzy
 msgid "Financial Resources"
 msgstr "Finansal Kaynaklar"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
-#, fuzzy
 msgid "First In, First Out (FIFO)"
 msgstr "İlk Giren İlk Çıkar (FIFO)"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
-#, fuzzy
 msgid "Fiscal Year N - 1<br>"
 msgstr "Mali Yıl N - 1<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
-#, fuzzy
 msgid "Fiscal Year N<br>"
 msgstr "Mali Yıl N<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "Fixtures and fittings: 10 years"
 msgstr "Demirbaşlar ve bağlantı parçaları: 10 yıl"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
-#, fuzzy
 msgid ""
 "For cash held in foreign currencies, amounts are converted into euros at the "
 "exchange rate prevailing on the last business day before the fiscal year-"
@@ -943,7 +836,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
-#, fuzzy
 msgid ""
 "For each member, indicate the retirement commitments and similar benefits "
 "granted to them."
@@ -953,7 +845,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
-#, fuzzy
 msgid ""
 "For each member, specify the advances and loans granted to them, including "
 "the terms agreed upon and repayments made during the period, as well as the "
@@ -965,7 +856,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
-#, fuzzy
 msgid ""
 "For tax-consolidated entities, explain the tax allocation method, tax "
 "differences, loss carryforwards, and related accounting specifics."
@@ -975,7 +865,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
-#, fuzzy
 msgid ""
 "From the Equity app, print the Capitalization Table and insert it <strong "
 "class=\"o-upload-link\">here</strong>"
@@ -985,13 +874,11 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "Furniture: 10 years"
 msgstr "Mobilya: 10 yıl"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
-#, fuzzy
 msgid ""
 "General accounting principles have been applied with due regard to the "
 "prudence principle, based on the following assumptions:"
@@ -1001,13 +888,11 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
-#, fuzzy
 msgid "Get a complete PDF file, ready to be shared"
 msgstr "Paylaşılmaya hazır eksiksiz bir PDF dosyası edinin"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
-#, fuzzy
 msgid ""
 "Given the innovative nature of the company's activities, a substantial "
 "portion of its expenses pertains to development costs as defined by "
@@ -1019,7 +904,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
-#, fuzzy
 msgid "Going concern;"
 msgstr "Devam eden endişe;"
 
@@ -1032,13 +916,11 @@ msgstr "ID"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
-#, fuzzy
 msgid "Identification Number:"
-msgstr "Kimlik Numarası"
+msgstr "Kimlik Numarası:"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
-#, fuzzy
 msgid ""
 "If applicable, specify the impact of the new accounting regulation as "
 "determined at the opening of the period, including which financial statement "
@@ -1050,7 +932,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
-#, fuzzy
 msgid ""
 "If the change has been applied prospectively, explain the reasons for "
 "prospective application and indicate the impact on key items for the period, "
@@ -1062,7 +943,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
-#, fuzzy
 msgid ""
 "If the change has been applied retrospectively, present the main items from "
 "prior periods restated under the new accounting method."
@@ -1072,7 +952,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
-#, fuzzy
 msgid ""
 "If the change was applied <strong>prospectively</strong>, describe its "
 "impact on the key items of the current period, unless such information is "
@@ -1084,7 +963,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
-#, fuzzy
 msgid ""
 "If the change was applied <strong>retrospectively</strong>, present the key "
 "items from prior periods that have been restated in accordance with the new "
@@ -1095,7 +973,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
-#, fuzzy
 msgid ""
 "If this is the first year the company holds inventories, specify the "
 "valuation method used and provide a breakdown of the products concerned."
@@ -1105,7 +982,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid ""
 "In accordance with the terms of our mission, we have prepared a summary of "
 "work performed for {{ company name }} for the period from {{ start of "
@@ -1118,20 +994,17 @@ msgstr ""
 #. module: accountant_knowledge
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/components/export_audit_report_to_pdf_dialog/export_audit_report_to_pdf_dialog.xml:0
-#, fuzzy
 msgid "Include PDF Files"
 msgstr "PDF Dosyalarını Dahil Etme"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid "Include any explanations or justifications as needed."
 msgstr "Gerektiğinde herhangi bir açıklama veya gerekçe ekleyin."
 
 #. module: accountant_knowledge
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/components/export_audit_report_to_pdf_dialog/export_audit_report_to_pdf_dialog.xml:0
-#, fuzzy
 msgid "Include child articles"
 msgstr "Çocuk makalelerini dahil edin"
 
@@ -1143,20 +1016,17 @@ msgstr "Gelir Tablosu"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
-#, fuzzy
 msgid "Independence of accounting periods."
 msgstr "Muhasebe dönemlerinin bağımsızlığı."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
-#, fuzzy
 msgid "Indicate and justify the voluntary accounting policy change."
 msgstr ""
 "Gönüllü muhasebe politikası değişikliğini belirtiniz ve gerekçelendiriniz."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
-#, fuzzy
 msgid ""
 "Indicate the number and value of shares held by the company during the year. "
 "Include acquisitions, disposals, cancellations, and the reason for holding "
@@ -1168,7 +1038,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
-#, fuzzy
 msgid ""
 "Indicate the total book value of inventories as well as the book value by "
 "relevant categories."
@@ -1178,33 +1047,28 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
-#, fuzzy
 msgid "Information on Specific Nature Operations"
 msgstr "Özel Nitelikli Faaliyetler Hakkında Bilgi"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_knowledge_article__inherited_audit_report_id
-#, fuzzy
 msgid "Inherited Audit Report"
 msgstr "Devralınan Denetim Raporu"
 
 #. module: accountant_knowledge
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/components/account_report/cog_menu/cog_menu.js:0
-#, fuzzy
 msgid "Insert in article"
 msgstr "Makaleye ekleyin"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "Intangible and Tangible Assets"
 msgstr "Maddi Olmayan ve Maddi Varlıklar"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid ""
 "Intangible assets are valued at their acquisition or production cost, "
 "including all expenses necessary to prepare these assets for their intended "
@@ -1218,7 +1082,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid ""
 "Interest on borrowings specifically related to the production of tangible "
 "assets is not included in the production cost of these assets."
@@ -1228,7 +1091,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
-#, fuzzy
 msgid "Inventories are valued using one of the following methods:"
 msgstr "Envanter aşağıdaki yöntemlerden biri kullanılarak değerlenir:"
 
@@ -1249,9 +1111,8 @@ msgstr "Yevmiye Denetimi"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
-#, fuzzy
 msgid "Justification:"
-msgstr "Gerekçe"
+msgstr "Gerekçe:"
 
 #. module: accountant_knowledge
 #: model:ir.model,name:accountant_knowledge.model_knowledge_article
@@ -1260,7 +1121,6 @@ msgstr "Bilgi Birikimi Makalesi"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid "Land<br>"
 msgstr "Arazi<br>"
 
@@ -1277,7 +1137,6 @@ msgstr "Son Güncelleme"
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
-#, fuzzy
 msgid "Liabilities Information"
 msgstr "Yükümlülük Bilgileri"
 
@@ -1288,7 +1147,6 @@ msgstr "Şablon Yükle"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
-#, fuzzy
 msgid ""
 "Loan issuance costs, where applicable, are recognized as expenses in the "
 "financial year during which the loans are granted."
@@ -1304,13 +1162,11 @@ msgstr "Krediler"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
-#, fuzzy
 msgid "Long-Term Investments Held in the Investment Portfolio"
 msgstr "Yatırım Portföyünde Bulunan Uzun Vadeli Yatırımlar"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
-#, fuzzy
 msgid ""
 "Management has chosen not to disclose remuneration information, as doing so "
 "would effectively reveal the individual compensation of executives."
@@ -1321,13 +1177,11 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
-#, fuzzy
 msgid "Managers<br>"
 msgstr "Yöneticiler<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
-#, fuzzy
 msgid ""
 "Manufactured products are valued at production cost, which includes "
 "consumables, direct and indirect production expenses, and depreciation of "
@@ -1339,7 +1193,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "Methods of Valuation"
 msgstr "Değerleme Yöntemleri"
 
@@ -1355,55 +1208,46 @@ msgstr "Adı:"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid "Net accounting result: {{ net accounting result }}"
 msgstr "Net muhasebe sonucu: {{ net accounting result }}"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
-#, fuzzy
 msgid "Non-Managers<br>"
 msgstr "Yönetici Olmayanlar<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
-#, fuzzy
 msgid "Non-Pro Rata Recognition"
 msgstr "Oransal Olmayan Tanınma"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
-#, fuzzy
 msgid "Non-Standard Transaction"
 msgstr "Standart Dışı İşlem"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
-#, fuzzy
 msgid "Non-Standard Transactions"
 msgstr "Standart Dışı İşlemler"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
-#, fuzzy
 msgid "Non-disclosure"
 msgstr "İfşa etmeme"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid "Off-Balance Sheet Commitments"
 msgstr "Bilanço Dışı Taahhütler"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "Offices: 25 years"
 msgstr "Ofisler: 25 yıl"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
-#, fuzzy
 msgid ""
 "Only include events occurring between the end of the reporting period and "
 "the date the financial statements are approved, if they are significant "
@@ -1415,25 +1259,21 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
-#, fuzzy
 msgid "Operating subsidies are recorded as income as soon as they are granted."
 msgstr "İşletme sübvansiyonları, verildikleri anda gelir olarak kaydedilir."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
-#, fuzzy
 msgid "Other Significant Events"
 msgstr "Diğer Önemli Olaylar"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid "Other off-balance-sheet transactions"
 msgstr "Diğer bilanço dışı işlemler"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid "Other tangible fixed assets<br>"
 msgstr "Diğer maddi duran varlıklar<br>"
 
@@ -1444,19 +1284,16 @@ msgstr "Diğerleri"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
-#, fuzzy
 msgid "Others (including tax consolidation)"
 msgstr "Diğerleri (vergi konsolidasyonu dahil)"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "Others: To be specified..."
 msgstr "Diğerleri: Belirtilecek..."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid ""
 "Our work was conducted in accordance with the professional standard "
 "applicable to compilation engagements, as issued by the professional body of "
@@ -1469,7 +1306,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
-#, fuzzy
 msgid "Parent Company Details"
 msgstr "Ana Şirket Bilgileri"
 
@@ -1480,19 +1316,16 @@ msgstr "İş Ortağı Defteri"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "Patents: To be specified..."
 msgstr "Patentler: Belirtilecek..."
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_performance_and_operations
-#, fuzzy
 msgid "Performance & Operations"
 msgstr "Performans ve Operasyonlar"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
-#, fuzzy
 msgid ""
 "Please provide details of your share of results from joint operations of a "
 "specific nature"
@@ -1502,7 +1335,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
-#, fuzzy
 msgid "Please specify the method used to calculate inventory write-downs."
 msgstr ""
 "Lütfen envanter değer düşüklüklerini hesaplamak için kullanılan yöntemi "
@@ -1510,20 +1342,17 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
-#, fuzzy
 msgid "Post-Closing Events"
 msgstr "Kapanış Sonrası Olaylar"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_preamble
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
-#, fuzzy
 msgid "Preamble"
 msgstr "Önsöz"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
-#, fuzzy
 msgid ""
 "Present the main items of prior period's financial statements that have been "
 "restated to correct the error."
@@ -1538,13 +1367,11 @@ msgstr "Yazdırın"
 
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
-#, fuzzy
 msgid "Print your Report"
 msgstr "Raporunuzu Yazdırın"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
-#, fuzzy
 msgid "Pro rata recognition"
 msgstr "Orantılı tanıma"
 
@@ -1555,13 +1382,11 @@ msgstr "Gelir Tablosu"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_additional_information
-#, fuzzy
 msgid "Provide any additional information necessary here..."
 msgstr "Gerekli ek bilgileri burada belirtin..."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid ""
 "Provide details of any significant off-balance-sheet transactions or "
 "commitments not recorded in the financial statements"
@@ -1571,7 +1396,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
-#, fuzzy
 msgid ""
 "Provide details on loan issuance costs and any loan redemption premiums."
 msgstr ""
@@ -1580,7 +1404,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
-#, fuzzy
 msgid ""
 "Provide details on the carryback and carryforward of tax losses, and the "
 "split of income tax between current and exceptional results."
@@ -1590,7 +1413,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
-#, fuzzy
 msgid ""
 "Provide information on the estimated value of long-term investments held in "
 "the portfolio and any changes in their value over the financial year."
@@ -1600,31 +1422,26 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
-#, fuzzy
 msgid "Provisions"
 msgstr "Hükümler"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
-#, fuzzy
 msgid "R&D cost"
 msgstr "Ar-Ge maliyeti"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
-#, fuzzy
 msgid "Receivables and Payables"
 msgstr "Alacaklar ve Borçlar"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
-#, fuzzy
 msgid "Receivables and payables are recorded at their nominal value."
 msgstr "Alacaklar ve borçlar nominal değerleriyle kaydedilir."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
-#, fuzzy
 msgid ""
 "Receivables and payables denominated in foreign currencies are converted "
 "into euros using the exchange rate at the invoice date."
@@ -1634,43 +1451,36 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid "Refusal to Attest"
 msgstr "Tasdiki Reddetme"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
-#, fuzzy
 msgid "Registered Office:"
 msgstr "Kayıtlı ofis:"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
-#, fuzzy
 msgid "Related-Party Transactions"
 msgstr "İlişkili Taraf İşlemleri"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
-#, fuzzy
 msgid "Remuneration due for the fiscal year<br>"
 msgstr "Mali yıl için ödenmesi gereken ücret<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
-#, fuzzy
 msgid "Remuneration for Services"
 msgstr "Hizmetler için Ücretlendirme"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "Renovations: 10 years"
 msgstr "Tadilatlar: 10 yıl"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
-#, fuzzy
 msgid "Repayable Advances"
 msgstr "Geri Ödenebilir Avanslar"
 
@@ -1681,13 +1491,11 @@ msgstr "Rapor işlemi"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid "Report on Work Conducted"
 msgstr "Yürütülen Çalışmalar Hakkında Rapor"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid "Report on Work Performed"
 msgstr "Gerçekleştirilen Çalışmalar Hakkında Rapor"
 
@@ -1698,7 +1506,6 @@ msgstr "ARAŞTIRMA VE GELIŞTIRME GIDERLERI"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
-#, fuzzy
 msgid ""
 "Research and development costs are recognized as expenses in the period in "
 "which they are incurred."
@@ -1708,19 +1515,16 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__responsible_user_ids
-#, fuzzy
 msgid "Responsibles"
 msgstr "Sorumlular"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
-#, fuzzy
 msgid "Result breakdown by region"
 msgstr "Bölgelere göre sonuç dağılımı"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid "Revenue: {{ revenue }}"
 msgstr "Gelir: {{ revenue }}"
 
@@ -1731,13 +1535,11 @@ msgstr "Kaydet"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
-#, fuzzy
 msgid "Self-Held Shares"
 msgstr "Kendine Ait Hisseler"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_kanban
-#, fuzzy
 msgid "Set to Done"
 msgstr "Bitti olarak ayarla"
 
@@ -1753,25 +1555,21 @@ msgstr "Sermaye"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
-#, fuzzy
 msgid "Shares Issues<br>"
 msgstr "Hisse Sorunları<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
-#, fuzzy
 msgid "Shares Redeemed/Cancelled<br>"
 msgstr "İntifa Edilen/İptal Edilen Hisseler<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
-#, fuzzy
 msgid "Shares at End of Year<br>"
 msgstr "Yıl Sonu Hisseleri<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
-#, fuzzy
 msgid "Shares at Start of Year<br>"
 msgstr "Yıl Başındaki Hisseler<br>"
 
@@ -1785,19 +1583,16 @@ msgstr "İmza"
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_significant_events
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
-#, fuzzy
 msgid "Significant Events"
 msgstr "Önemli Olaylar"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "Software: 3 years"
 msgstr "Yazılım: 3 yıl"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid ""
 "Specify details for executives, subsidiaries, investments, related "
 "companies, and others."
@@ -1807,7 +1602,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
-#, fuzzy
 msgid ""
 "Specify the impact of the change as determined at the opening of the period, "
 "identifying the affected financial statement items."
@@ -1817,7 +1611,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
-#, fuzzy
 msgid "Standard Cost"
 msgstr "Standart Maliyet"
 
@@ -1833,13 +1626,11 @@ msgstr "Mali yıla dahil olan Başlangıç Tarihi."
 
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
-#, fuzzy
 msgid "Start from our ready-to-use templates"
 msgstr "Kullanıma hazır şablonlarımızdan başlayın"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
-#, fuzzy
 msgid "State and justify the change in estimate."
 msgstr "Tahmindeki değişikliği belirtiniz ve gerekçelendiriniz."
 
@@ -1850,20 +1641,17 @@ msgstr "Durum"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
-#, fuzzy
 msgid "Subsidiaries and Equity Interests"
 msgstr "Bağlı Ortaklıklar ve Özkaynak Payları"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
-#, fuzzy
 msgid "Subsidiary Details"
 msgstr "Bağlı Ortaklık Detayları"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_subventions
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
-#, fuzzy
 msgid "Subventions"
 msgstr "Sübvansiyonlar"
 
@@ -1875,7 +1663,6 @@ msgstr "Destekleyici Belgeler"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid ""
 "Tangible assets are also valued at their production cost where applicable."
 msgstr ""
@@ -1884,45 +1671,38 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "Tangible assets are valued at their acquisition cost, which includes:"
 msgstr "Maddi duran varlıklar, elde etme maliyetleri üzerinden değerlenir:"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_tax_and_compliance
-#, fuzzy
 msgid "Tax & Compliance"
 msgstr "Vergi ve Uyum"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
-#, fuzzy
 msgid "Tax Credits"
 msgstr "Vergi Alacakları"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_tax_package
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_tax_package
-#, fuzzy
 msgid "Tax Package"
 msgstr "Vergi Paketi"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_taxation
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
-#, fuzzy
 msgid "Taxation"
 msgstr "Vergilendirme"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
-#, fuzzy
 msgid "Technical installations, equipment, and tools<br>"
 msgstr "Teknik kurulumlar, ekipmanlar ve araçlar<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
-#, fuzzy
 msgid ""
 "The annual financial statements have been prepared in accordance with "
 "applicable accounting standards."
@@ -1932,7 +1712,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
-#, fuzzy
 msgid ""
 "The company has received subsidies that are recognized in operating income "
 "in proportion to the expenses incurred. As a result, subsidies receivable "
@@ -1946,20 +1725,17 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
-#, fuzzy
 msgid "The consolidated financial statements can be obtained via..."
 msgstr "Konsolide mali tablolara şu adresten ulaşılabilir..."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
-#, fuzzy
 msgid "The equity method is used for valuation where applicable."
 msgstr ""
 "Uygulanabilir olduğu durumlarda değerleme için özkaynak yöntemi kullanılır."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
-#, fuzzy
 msgid ""
 "The exemption for valuation of securities in case of abnormal and temporary "
 "decline is applied."
@@ -1969,7 +1745,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
-#, fuzzy
 msgid ""
 "The fiscal year ended on {{ end of period }} covers a period of 12 months."
 msgstr ""
@@ -1978,7 +1753,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid ""
 "The following decisions have been made regarding the presentation of the "
 "annual financial statements:"
@@ -1989,14 +1763,12 @@ msgstr ""
 #. module: accountant_knowledge
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/editor/embedded_components/core/account_report/account_report.xml:0
-#, fuzzy
 msgid "The full report will be included in the final document."
 msgstr "Raporun tamamı nihai belgede yer alacaktır."
 
 #. module: accountant_knowledge
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/editor/embedded_components/backend/account_report/account_report.xml:0
-#, fuzzy
 msgid ""
 "The full report will be included in the final document. Feel free to tailor "
 "the result using filters and options from the report."
@@ -2006,7 +1778,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
-#, fuzzy
 msgid ""
 "The gross value consists of the purchase cost, excluding incidental "
 "expenses. When the inventory value is lower than the gross value, a "
@@ -2018,7 +1789,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
-#, fuzzy
 msgid ""
 "The gross value of goods and supplies includes the purchase price and "
 "related incidental costs."
@@ -2028,19 +1798,16 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid "The key figures are as follows:"
 msgstr "Kilit rakamlar aşağıdaki gibidir:"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
-#, fuzzy
 msgid "The net accounting result is a {{ net accounting result }}."
 msgstr "Net muhasebe sonucu bir {{ net accounting result }}."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
-#, fuzzy
 msgid ""
 "The notes and tables provided below form an integral part of the annual "
 "financial statements."
@@ -2050,7 +1817,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
-#, fuzzy
 msgid ""
 "The portion of subsidies that finance capital expenditures is recognized in "
 "operating income over the same period as the depreciation of the related "
@@ -2064,7 +1830,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
-#, fuzzy
 msgid ""
 "The primary method used to value the items recorded in the accounts is the "
 "historical cost method."
@@ -2074,7 +1839,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid ""
 "The purchase price (including customs duties and non-recoverable taxes, less "
 "any trade discounts, rebates, or settlement discounts);"
@@ -2084,7 +1848,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
-#, fuzzy
 msgid ""
 "The total balance sheet amount before allocation of the result is {{ total "
 "balance sheet }}."
@@ -2094,13 +1857,11 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
-#, fuzzy
 msgid "This company is part of a group, and owns the following subsidiaries"
 msgstr "Bu şirket bir grubun parçasıdır ve aşağıdaki iştiraklere sahiptir"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
-#, fuzzy
 msgid "This company is part of a group, under the following parent company."
 msgstr "Bu şirket, aşağıdaki ana şirket altında bir grubun parçasıdır."
 
@@ -2112,74 +1873,62 @@ msgstr "Başlık"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "Tools: 10 years"
 msgstr "Aletler: 10 yıl"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid "Total assets: {{ total balance sheet }}"
 msgstr "Toplam varlıklar: {{ total balance sheet }}"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
-#, fuzzy
 msgid "Total<br>"
 msgstr "Toplam<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
-#, fuzzy
 msgid "Transactions with Major Shareholders"
 msgstr "Büyük Hissedarlarla Yapılan İşlemler"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
-#, fuzzy
 msgid "Transactions with Management"
 msgstr "Yönetim ile İşlemler"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid "Transport equipment: 5 years"
 msgstr "Taşıma ekipmanları: 5 yıl"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid "Unqualified Attestation"
 msgstr "Niteliksiz Tasdik"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
-#, fuzzy
 msgid "Valuation of free shares granted<br>"
 msgstr "Verilen bedelsiz hisselerin değerlemesi<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
-#, fuzzy
 msgid "Valuation of multi-year variable compensation<br>"
 msgstr "Çok yıllı değişken ücretlerin değerlemesi<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
-#, fuzzy
 msgid "Valuation of stock options granted during the year<br>"
 msgstr "Yıl içinde verilen hisse senedi opsiyonlarının değerlemesi<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
-#, fuzzy
 msgid "Voluntary Change in Accounting Policy"
 msgstr "Muhasebe Politikasında Gönüllü Değişiklik"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
-#, fuzzy
 msgid ""
 "We are making the following comment regarding a matter that may affect the "
 "overall consistency and reliability of the financial statements:"
@@ -2189,13 +1938,11 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
-#, fuzzy
 msgid "Weighted Average Cost"
 msgstr "Ağırlıklı Ortalama Maliyet"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
-#, fuzzy
 msgid ""
 "When applicable, the initial estimate of dismantling, removal, and site "
 "restoration costs related to the asset's location."
@@ -2205,7 +1952,6 @@ msgstr ""
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
-#, fuzzy
 msgid ""
 "Where applicable, receivables are depreciated through provisions to account "
 "for potential collection difficulties. These provisions for impairment are "
@@ -2220,18 +1966,15 @@ msgstr ""
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_workforce
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
-#, fuzzy
 msgid "Workforce"
 msgstr "İş Gücü"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
-#, fuzzy
 msgid "Workforce employed during the Period"
 msgstr "Dönem içinde istihdam edilen işgücü"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_form
-#, fuzzy
 msgid "e.g. Annual Financial Overview"
 msgstr "örneğin Yıllık Finansal Genel Bakış"

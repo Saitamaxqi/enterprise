@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-12 15:06+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "ai_livechat/tr/>\n"
 "Language: tr\n"
@@ -30,13 +31,11 @@ msgstr "Yapay Zeka Aracısı"
 #. module: ai_livechat
 #: model:ir.model.fields,field_description:ai_livechat.field_discuss_channel_member__ai_agent_id
 #: model:ir.model.fields,field_description:ai_livechat.field_im_livechat_channel_member_history__ai_agent_id
-#, fuzzy
 msgid "Ai Agent"
 msgstr "Ai Ajan"
 
 #. module: ai_livechat
 #: model_terms:ir.ui.view,arch_db:ai_livechat.im_livechat_channel_rule_view_form
-#, fuzzy
 msgid ""
 "As both a scripted chatbot and an AI Agent are configured, the priority will "
 "be given to the AI Agent."
@@ -82,7 +81,6 @@ msgstr "ID"
 
 #. module: ai_livechat
 #: model:ir.model,name:ai_livechat.model_im_livechat_channel_member_history
-#, fuzzy
 msgid "Keep the channel member history"
 msgstr "Kanal üye geçmişini saklayın"
 
@@ -93,7 +91,6 @@ msgstr "Canlı Yardım Kanalı"
 
 #. module: ai_livechat
 #: model:ir.model.fields,field_description:ai_livechat.field_ai_agent__livechat_channel_rule_ids
-#, fuzzy
 msgid "Livechat Channel Rule"
 msgstr "Livechat Kanal Kuralı"
 
@@ -104,28 +101,24 @@ msgstr "Canlı Yardım Kanal Kuralları"
 
 #. module: ai_livechat
 #: model:ir.model.fields,field_description:ai_livechat.field_im_livechat_channel__ai_agent_count
-#, fuzzy
 msgid "Number of AI Agents"
 msgstr "Yapay Zeka Ajanlarının Sayısı"
 
 #. module: ai_livechat
 #: model:ir.model.fields,field_description:ai_livechat.field_im_livechat_channel_rule__chatbot_script_id
 #: model_terms:ir.ui.view,arch_db:ai_livechat.im_livechat_channel_rule_view_form
-#, fuzzy
 msgid "Scripted Bot"
 msgstr "Komut Dosyalı Bot"
 
 #. module: ai_livechat
 #. odoo-python
 #: code:addons/ai_livechat/controllers/main.py:0
-#, fuzzy
 msgid "The conversation has been forwarded successfully."
 msgstr "Görüşme başarıyla iletildi."
 
 #. module: ai_livechat
 #. odoo-python
 #: code:addons/ai_livechat/controllers/main.py:0
-#, fuzzy
 msgid ""
 "There is no human agent available at the moment. Please try again later."
 msgstr ""

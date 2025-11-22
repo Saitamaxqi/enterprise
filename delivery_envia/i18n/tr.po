@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-11-12 15:01+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "delivery_envia/tr/>\n"
 "Language: tr\n"
@@ -24,20 +25,17 @@ msgstr ""
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
-#, fuzzy
 msgid "%(field_name)s must be set on Partner: %(partner_name)s."
 msgstr "%(field_name)s Partner: %(partner_name)s adresinde ayarlanmalıdır."
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid ". This link will give you personalized attention plus lower prices."
 msgstr ""
 ". Bu bağlantı size kişiselleştirilmiş ilgi ve daha düşük fiyatlar sunacaktır."
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_shipping_method_envia
-#, fuzzy
 msgid ""
 "<i class=\"fa fa-info-circle\"/> Available shipping services depend on "
 "enabled carriers in your Envia account."
@@ -47,7 +45,6 @@ msgstr ""
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid ""
 "A note, some countries support unique additional services for pallet "
 "shipments or boxes. For example, Canada has the option to handle missed "
@@ -64,13 +61,11 @@ msgstr ""
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
-#, fuzzy
 msgid "A phone number must be set on Partner: %(partner_name)s"
 msgstr "Partner'da bir telefon numarası ayarlanmalıdır: %(partner_name)s"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid "Add New Carriers in Envia"
 msgstr "Envia'da Yeni Taşıyıcılar Ekleyin"
 
@@ -97,14 +92,12 @@ msgstr "Nakliyeci Kodu"
 #. module: delivery_envia
 #. odoo-javascript
 #: code:addons/delivery_envia/static/src/components/envia_service_selection_widget.xml:0
-#, fuzzy
 msgid "Carrier:"
 msgstr "Taşıyıcı:"
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/wizard/envia_shipping_wizard.py:0
-#, fuzzy
 msgid ""
 "Carriers and Services must be selected from the list of available shipping "
 "methods."
@@ -114,7 +107,6 @@ msgstr ""
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_residential_delivery
-#, fuzzy
 msgid ""
 "Certain carriers like UPS will charge an extra fee to deliver to a "
 "residential zone (United States Only)"
@@ -124,7 +116,6 @@ msgstr ""
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_residential_pickup
-#, fuzzy
 msgid ""
 "Certain carriers like UPS will charge an extra fee to pickup from "
 "residential zones (United States Only)"
@@ -135,13 +126,11 @@ msgstr ""
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/delivery_carrier.py:0
-#, fuzzy
 msgid "Choose an Envia.com Shipping Service"
 msgstr "Bir Envia.com Kargo Hizmeti Seçin"
 
 #. module: delivery_envia
 #: model:ir.model,name:delivery_envia.model_envia_shipping_wizard
-#, fuzzy
 msgid "Choose from the available Envia.com shipping methods"
 msgstr "Mevcut Envia.com gönderim yöntemlerinden birini seçin"
 
@@ -152,7 +141,6 @@ msgstr "Onayla"
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_envia_shipping_wizard__available_services
-#, fuzzy
 msgid ""
 "Contains the list of available services for the Envia.com account to select "
 "from."
@@ -162,7 +150,6 @@ msgstr ""
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid ""
 "Copy over the API Key from Envia into either the sandbox or production field "
 "in Delivery Methods."
@@ -172,13 +159,11 @@ msgstr ""
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid "Create an Account"
 msgstr "Bir Hesap Oluşturun"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid ""
 "Create and edit a package for this delivery method to be used as reference "
 "for quotations and labels. This package can be of type <b>box</b>, "
@@ -202,7 +187,6 @@ msgstr "Oluşturuldu"
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_currency_id
-#, fuzzy
 msgid "Currency set in Envia"
 msgstr "Envia'da para birimi seti"
 
@@ -213,7 +197,6 @@ msgstr "Teslimat"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_residential_delivery
-#, fuzzy
 msgid "Delivery Residential Zone"
 msgstr "Teslimat Konut Bölgesi"
 
@@ -231,7 +214,6 @@ msgstr "İsim Göster"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid ""
 "Don't worry about the printing options, just note which ones exist for your "
 "favorite carrier as we will select them in Odoo."
@@ -246,53 +228,45 @@ msgstr "EPL"
 
 #. module: delivery_envia
 #: model:ir.model.fields.selection,name:delivery_envia.selection__stock_package_type__envia_mail_type__envelope
-#, fuzzy
 msgid "Envelope"
 msgstr "Zarf"
 
 #. module: delivery_envia
 #: model:ir.model.fields.selection,name:delivery_envia.selection__delivery_carrier__delivery_type__envia
 #: model:ir.model.fields.selection,name:delivery_envia.selection__stock_package_type__package_carrier_type__envia
-#, fuzzy
 msgid "Envia"
 msgstr "Envia"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_currency_id
-#, fuzzy
 msgid "Envia Account Main Currency"
 msgstr "Envia Hesabı Ana Para Birimi"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid "Envia Configuration"
 msgstr "Envia Konfigürasyonu"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_default_package_type_id
-#, fuzzy
 msgid "Envia Default Package"
 msgstr "Envia Varsayılan Paket"
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
-#, fuzzy
 msgid "Envia Documents:"
 msgstr "Envia Belgeleri:"
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
-#, fuzzy
 msgid "Envia Error: %(description)s - %(message)s"
 msgstr "Envia Hatası: %(description)s - %(message)s"
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
-#, fuzzy
 msgid ""
 "Envia Error: %(message)s - %(description)s %(location)s (Reference code: %"
 "(reference)s)"
@@ -303,7 +277,6 @@ msgstr ""
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
-#, fuzzy
 msgid ""
 "Envia Error: The API key you entered for %(carrier_name)s seems to be invalid"
 msgstr ""
@@ -313,7 +286,6 @@ msgstr ""
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
-#, fuzzy
 msgid ""
 "Envia Error: The Envia Mail Type (%(package_types)s) set on the package(s) "
 "does not match the type set on the carrier (%(carrier_package_type)s). Use a "
@@ -327,7 +299,6 @@ msgstr ""
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
-#, fuzzy
 msgid ""
 "Envia Error: The following products don't have weights set: %(product_names)s"
 msgstr ""
@@ -335,51 +306,43 @@ msgstr ""
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_label_file_type
-#, fuzzy
 msgid "Envia Label File Type"
 msgstr "Envia Label Dosya Tipi"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_label_stock_type
-#, fuzzy
 msgid "Envia Label Type"
 msgstr "Envia Etiket Türü"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_mail_type
 #: model:ir.model.fields,field_description:delivery_envia.field_stock_package_type__envia_mail_type
-#, fuzzy
 msgid "Envia Package Type"
 msgstr "Envia Paket Tipi"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_production_api_key
-#, fuzzy
 msgid "Envia Production Access Token"
 msgstr "Envia Üretim Erişim Simgesi"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_sandbox_api_key
-#, fuzzy
 msgid "Envia Sandbox Access Token"
 msgstr "Envia Sandbox Erişim Simgesi"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid "Envia Setup"
 msgstr "Envia Kurulumu"
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/delivery_carrier.py:0
-#, fuzzy
 msgid "Envia order(s) not found to cancel shipment!"
 msgstr "Gönderiyi iptal etmek için Envia sipariş(ler)i bulunamadı!"
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_default_package_type_id
-#, fuzzy
 msgid ""
 "Envia requires package dimensions for getting accurate rate, you can define "
 "these in a package type that you set as default"
@@ -390,7 +353,6 @@ msgstr ""
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
-#, fuzzy
 msgid ""
 "Envia was unable to locate a postal code for the partner: %(partner_name)s. "
 "Make sure city/commune and state/region are set otherwise enter a postal "
@@ -403,46 +365,39 @@ msgstr ""
 #. module: delivery_envia
 #: model:delivery.carrier,name:delivery_envia.delivery_carrier_envia
 #: model:product.template,name:delivery_envia.product_product_delivery_envia_product_template
-#, fuzzy
 msgid "Envia.com"
 msgstr "Envia.com"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_carrier_code
-#, fuzzy
 msgid "Envia.com Carrier Code"
 msgstr "Envia.com Taşıyıcı Kodu"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_service_code
-#, fuzzy
 msgid "Envia.com Service Code"
 msgstr "Envia.com Hizmet Kodu"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_service_name
-#, fuzzy
 msgid "Envia.com Service Name"
 msgstr "Envia.com Hizmet Adı"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.res_config_settings_view_form_sale_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.res_config_settings_view_form_stock_envia
-#, fuzzy
 msgid "Envia.com Shipping Methods"
 msgstr "Envia.com Nakliye Yöntemleri"
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/delivery_carrier.py:0
-#, fuzzy
 msgid "Failed to fetch Envia Carriers, Please try again later."
 msgstr "Envia Carriers alınamadı, Lütfen daha sonra tekrar deneyin."
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
-#, fuzzy
 msgid ""
 "For LTL shipments in Mexico, a Bill of Landing (Carta Porte) is required, in "
 "order to send the required information you need to set the UNSPSC code in "
@@ -454,7 +409,6 @@ msgstr ""
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid ""
 "For any carriers you'd like to use that are not activated, be sure to "
 "activate it here."
@@ -464,7 +418,6 @@ msgstr ""
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid ""
 "For your available carriers you'll need to make sure that they are available "
 "through Envia (make sure to select all available countries):<br/>"
@@ -474,13 +427,11 @@ msgstr ""
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_production_api_key
-#, fuzzy
 msgid "Generate an Access Token from within the Production Portal of Envia"
 msgstr "Envia'nın Üretim Portalı içinden bir Erişim Simgesi oluşturun"
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_sandbox_api_key
-#, fuzzy
 msgid "Generate an Access Token from within the Sandbox Portal of Envia"
 msgstr "Envia'nın Sandbox Portalı içinden bir Erişim Simgesi oluşturun"
 
@@ -493,7 +444,6 @@ msgstr "ID"
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_return_at_senders_expense
-#, fuzzy
 msgid ""
 "If the carrier is unable to deliver the package, the package can be returned "
 "to the shipper or abandoned at the door. (Canada only)"
@@ -503,13 +453,11 @@ msgstr ""
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid "If you don't have an account"
 msgstr "Eğer bir hesabınız yoksa"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid "If you don't have an account, we recommend heading to"
 msgstr "Eğer bir hesabınız yoksa, şu adrese gitmenizi öneririz"
 
@@ -525,7 +473,6 @@ msgstr "Son Güncelleme"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid ""
 "Lastly, head to the Developers / API Keys section and generate a new API "
 "Key. This will be used by Odoo to communicate with Envia so note it down for "
@@ -538,25 +485,21 @@ msgstr ""
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/stock_package_type.py:0
-#, fuzzy
 msgid "Length, Width, and Height is necessary for a Envia Package."
 msgstr "Bir Envia Paketi için Uzunluk, Genişlik ve Yükseklik gereklidir."
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_lift_delivery
-#, fuzzy
 msgid "Lift Assistance on Delivery"
 msgstr "Teslimatta Asansör Yardımı"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_lift_pickup
-#, fuzzy
 msgid "Lift Assistance on Pickup"
 msgstr "Pikapta Asansör Yardımı"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid ""
 "Make sure to select the appropriate country for your main billing, if you "
 "have multi country operations you can also create two separate accounts, "
@@ -569,7 +512,6 @@ msgstr ""
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
-#, fuzzy
 msgid ""
 "Missing Fields:\n"
 "%s"
@@ -580,7 +522,6 @@ msgstr ""
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/delivery_carrier.py:0
-#, fuzzy
 msgid ""
 "No carrier is set on \"%(delivery_method)s\". To use Envia.com, you'll need "
 "to sync your carriers with your account."
@@ -592,13 +533,11 @@ msgstr ""
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
-#, fuzzy
 msgid "No rate found"
 msgstr "Oran bulunamadı"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid ""
 "Once your delivery method is properly configured, you can sync the carriers "
 "Envia provides for your country of origin: <br/>"
@@ -628,13 +567,11 @@ msgstr "KAĞIT_7X4.75"
 
 #. module: delivery_envia
 #: model:ir.model.fields.selection,name:delivery_envia.selection__delivery_carrier__envia_label_stock_type__paper_8_27x11_67
-#, fuzzy
 msgid "PAPER_8.27X11.67"
 msgstr "PAPER_8.27X11.67"
 
 #. module: delivery_envia
 #: model:ir.model.fields.selection,name:delivery_envia.selection__delivery_carrier__envia_label_stock_type__paper_8_5x11
-#, fuzzy
 msgid "PAPER_8.5X11"
 msgstr "KAĞIT_8.5X11"
 
@@ -660,13 +597,11 @@ msgstr "Palet"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_residential_pickup
-#, fuzzy
 msgid "Pickup Residential Zone"
 msgstr "Pikap Konut Bölgesi"
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_lift_delivery
-#, fuzzy
 msgid ""
 "Provide liftgate assistance if the recipient doesn't have a dock or forklift "
 "to unload the shipment. (United States and Mexico Only)"
@@ -676,7 +611,6 @@ msgstr ""
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_lift_pickup
-#, fuzzy
 msgid ""
 "Provide liftgate assitance if the supplier doesn't have a dock or forklift "
 "to load the shipment. (United States and Mexico Only)"
@@ -692,37 +626,31 @@ msgstr "Sağlayıcı"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_return_at_senders_expense
-#, fuzzy
 msgid "Returned at Shippers Expense"
 msgstr "Gönderici Masrafıyla İade Edildi"
 
 #. module: delivery_envia
 #: model:ir.model.fields.selection,name:delivery_envia.selection__delivery_carrier__envia_label_stock_type__stock_2_4x6
-#, fuzzy
 msgid "STOCK_2.4X6"
 msgstr "STOK_2.4X6"
 
 #. module: delivery_envia
 #: model:ir.model.fields.selection,name:delivery_envia.selection__delivery_carrier__envia_label_stock_type__stock_2_9x5
-#, fuzzy
 msgid "STOCK_2.9X5"
 msgstr "STOK_2.9X5"
 
 #. module: delivery_envia
 #: model:ir.model.fields.selection,name:delivery_envia.selection__delivery_carrier__envia_label_stock_type__stock_3_8x4_2
-#, fuzzy
 msgid "STOCK_3.8X4.2"
 msgstr "STOK_3.8X4.2"
 
 #. module: delivery_envia
 #: model:ir.model.fields.selection,name:delivery_envia.selection__delivery_carrier__envia_label_stock_type__stock_3_9x7
-#, fuzzy
 msgid "STOCK_3.9X7"
 msgstr "STOK_3.9X7"
 
 #. module: delivery_envia
 #: model:ir.model.fields.selection,name:delivery_envia.selection__delivery_carrier__envia_label_stock_type__stock_4x4
-#, fuzzy
 msgid "STOCK_4X4"
 msgstr "STOCK_4X4"
 
@@ -733,7 +661,6 @@ msgstr "STOCK_4X6"
 
 #. module: delivery_envia
 #: model:ir.model.fields.selection,name:delivery_envia.selection__delivery_carrier__envia_label_stock_type__stock_4x6_5
-#, fuzzy
 msgid "STOCK_4X6.5"
 msgstr "STOCK_4X6.5"
 
@@ -744,7 +671,6 @@ msgstr "STOCK_4X6.75_LEADING_DOC_TAB"
 
 #. module: delivery_envia
 #: model:ir.model.fields.selection,name:delivery_envia.selection__delivery_carrier__envia_label_stock_type__stock_4x7_5
-#, fuzzy
 msgid "STOCK_4X7.5"
 msgstr "STOCK_4X7.5"
 
@@ -756,14 +682,12 @@ msgstr "STOCK_4X8"
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
-#, fuzzy
 msgid "Sale Order is required to get rate."
 msgstr "Fiyat almak için Satış Siparişi gereklidir."
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
-#, fuzzy
 msgid "Sale Order or Picking is required to convert currency."
 msgstr "Para birimini dönüştürmek için Satış Siparişi veya Toplama gereklidir."
 
@@ -775,44 +699,37 @@ msgstr "Bu teslimat yöntemi için kullanılacak ülkeyi seçin"
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_mail_type
 #: model:ir.model.fields,help:delivery_envia.field_stock_package_type__envia_mail_type
-#, fuzzy
 msgid "Select the package type for the shipment"
 msgstr "Gönderi için paket türünü seçin"
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_label_stock_type
-#, fuzzy
 msgid "Select the size of the label"
 msgstr "Etiket boyutunu seçin"
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_label_file_type
-#, fuzzy
 msgid "Select the printing format of the label"
 msgstr "Etiketin yazdırma biçimini seçin"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_envia_shipping_wizard__selected_carrier_code
-#, fuzzy
 msgid "Selected Carrier"
 msgstr "Seçilmiş Taşıyıcı"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_envia_shipping_wizard__selected_service_code
-#, fuzzy
 msgid "Selected Service"
 msgstr "Seçilmiş Hizmet"
 
 #. module: delivery_envia
 #. odoo-javascript
 #: code:addons/delivery_envia/static/src/components/envia_service_selection_widget.xml:0
-#, fuzzy
 msgid "Service:"
 msgstr "Servis:"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid "Setup In Odoo"
 msgstr "Odoo'da Kurulum"
 
@@ -824,7 +741,6 @@ msgstr "Gönderen"
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
-#, fuzzy
 msgid "Shipment created into Envia"
 msgstr "Envia'da oluşturulan gönderi"
 
@@ -840,7 +756,6 @@ msgstr "Gönderim Ürünü"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid ""
 "Specify the Origin country that this connector will ship from. By default "
 "this is the company's country."
@@ -850,7 +765,6 @@ msgstr ""
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid ""
 "Specify the currency your Envia account is configured in. By default this is "
 "the company's currency."
@@ -865,13 +779,11 @@ msgstr "Stok Paket Türü"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid "Sync Carriers/Services from Envia"
 msgstr "Envia'dan Taşıyıcıları/Hizmetleri Senkronize Edin"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid "Sync Envia Carriers"
 msgstr "Sync Envia Taşıyıcılar"
 
@@ -887,7 +799,6 @@ msgstr ""
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_service_code
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_service_name
-#, fuzzy
 msgid ""
 "The service that will be used for this carrier. This is set when you select "
 "a carrier from the wizard."
@@ -898,7 +809,6 @@ msgstr ""
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/delivery_carrier.py:0
-#, fuzzy
 msgid "This action requires an Envia.com carrier."
 msgstr "Bu işlem bir Envia.com taşıyıcısı gerektirir."
 
@@ -911,13 +821,11 @@ msgstr "Takip Numaraları:"
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/delivery_carrier.py:0
-#, fuzzy
 msgid "Unable to cancel order: %(order_number)s"
 msgstr "Sipariş iptal edilemiyor: %(order_number)s"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid ""
 "You can also preselect which services will be used, our recommendation is to "
 "not limit this as we will pick them in Odoo anyway."
@@ -928,7 +836,6 @@ msgstr ""
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid ""
 "You should also make sure that if you export to other countries, you have to "
 "select who will pay for customs duties."
@@ -938,7 +845,6 @@ msgstr ""
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid ""
 "You will be able to specify a specific Envia carrier and service that you "
 "intend to use in this region. Note that each service can have different "
@@ -968,6 +874,5 @@ msgstr "ZPLII"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
-#, fuzzy
 msgid "our personalized link"
 msgstr "kişiselleştirilmiş bağlantımız"

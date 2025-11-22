@@ -3,12 +3,13 @@
 # * sign_emsigner
 #
 # "Abe Manyo (abem)" <abem@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-10-31 07:19+0000\n"
+"PO-Revision-Date: 2025-11-20 08:15+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "sign_emsigner/id/>\n"
@@ -83,7 +84,7 @@ msgstr "Lanjutkan"
 #. module: sign_emsigner
 #: model:iap.service,unit_name:sign_emsigner.iap_service_emsigner_proxy
 msgid "Credits"
-msgstr ""
+msgstr "Kredit"
 
 #. module: sign_emsigner
 #: model:ir.model.fields,field_description:sign_emsigner.field_sign_item_role__display_name
@@ -97,13 +98,13 @@ msgstr "Nama Tampilan"
 #. odoo-python
 #: code:addons/sign_emsigner/controllers/main.py:0
 msgid "ERROR: Invalid PDF file! %s"
-msgstr ""
+msgstr "ERROR: File PDF Tidak valid! %s"
 
 #. module: sign_emsigner
 #. odoo-python
 #: code:addons/sign_emsigner/controllers/main.py:0
 msgid "Emsigner only supports signing a single document at a time."
-msgstr ""
+msgstr "Emsigner hanya mendukung menandatangani dokumen satu per satu."
 
 #. module: sign_emsigner
 #. odoo-python
@@ -111,6 +112,8 @@ msgstr ""
 msgid ""
 "Emsigner role cannot be signed first. Please keep emsigner as last signer."
 msgstr ""
+"Peran emSigner tidak dapat ditandatangani terlebih dahulu. Silakan simpan "
+"emSigner sebagai penandatangan terakhir."
 
 #. module: sign_emsigner
 #. odoo-python
@@ -119,22 +122,26 @@ msgid ""
 "Emsigner role cannot be used for signing directly. Please send the request "
 "instead."
 msgstr ""
+"Peran Emsigner tidak dapat digunakan untuk menandatangani secara langsung. "
+"Silakan alih-alih kirim permintaan."
 
 #. module: sign_emsigner
 #. odoo-javascript
 #: code:addons/sign_emsigner/static/src/components/document_signable.js:0
 msgid "Error"
-msgstr ""
+msgstr "Error!"
 
 #. module: sign_emsigner
 #: model:ir.model.fields,field_description:sign_emsigner.field_sign_item_role__auth_method
 msgid "Extra Authentication Step"
-msgstr ""
+msgstr "Langkah Autentikasi Ekstra"
 
 #. module: sign_emsigner
 #: model:ir.model.fields,help:sign_emsigner.field_sign_item_role__auth_method
 msgid "Force the signatory to identify using a second authentication method"
 msgstr ""
+"Paksa penandatangan untuk mengidentifikasi mereka menggunakan metode "
+"autentikasi kedua"
 
 #. module: sign_emsigner
 #: model:ir.model.fields,field_description:sign_emsigner.field_sign_item_role__id
@@ -148,56 +155,56 @@ msgstr "ID"
 #. odoo-javascript
 #: code:addons/sign_emsigner/static/src/backend_components/sign_template_action.js:0
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #. module: sign_emsigner
 #. odoo-javascript
 #: code:addons/sign_emsigner/static/src/dialogs/emsigner_dialog.xml:0
 msgid "Proceed to eSign"
-msgstr ""
+msgstr "Lanjutkan ke eSign"
 
 #. module: sign_emsigner
 #. odoo-javascript
 #: code:addons/sign_emsigner/static/src/dialogs/emsigner_dialog.xml:0
 msgid "Redirecting to complete the Aadhaar eSign process."
-msgstr ""
+msgstr "Mengalihkan ulang untuk menyelesaikan proses Aadhaar eSign."
 
 #. module: sign_emsigner
 #. odoo-python
 #: code:addons/sign_emsigner/models/sign_request_item.py:0
 msgid "Sign request item is not validated yet."
-msgstr ""
+msgstr "Item permintaan tandatangan belum divalidasi."
 
 #. module: sign_emsigner
 #: model:ir.model,name:sign_emsigner.model_sign_send_request
 msgid "Sign send request"
-msgstr ""
+msgstr "Tandatangani permintaan pengiriman"
 
 #. module: sign_emsigner
 #: model:ir.model,name:sign_emsigner.model_sign_item_role
 msgid "Signature Item Role"
-msgstr ""
+msgstr "Peran Item Tandatangan"
 
 #. module: sign_emsigner
 #: model:ir.model,name:sign_emsigner.model_sign_request
 msgid "Signature Request"
-msgstr ""
+msgstr "Permintaan Tanda Tangan"
 
 #. module: sign_emsigner
 #: model:ir.model,name:sign_emsigner.model_sign_request_item
 msgid "Signature Request Item"
-msgstr ""
+msgstr "Tandatangan Permintaan Item"
 
 #. module: sign_emsigner
 #. odoo-javascript
 #: code:addons/sign_emsigner/static/src/backend_components/sign_template_action.js:0
 msgid "Signer Edition"
-msgstr ""
+msgstr "Edisi Penandatangan"
 
 #. module: sign_emsigner
 #: model_terms:ir.ui.view,arch_db:sign_emsigner.sign_request_logs_user
 msgid "Status:"
-msgstr ""
+msgstr "Status:"
 
 #. module: sign_emsigner
 #. odoo-javascript
@@ -206,6 +213,8 @@ msgid ""
 "The emSigner identification data could not be forwarded to Odoo, the "
 "signature could not be saved."
 msgstr ""
+"Data identifikasi emSigner tidak dapat diteruskan ke Odoo, tandatangan tidak "
+"dapat disimpan."
 
 #. module: sign_emsigner
 #: model:ir.model.fields.selection,name:sign_emsigner.selection__sign_item_role__auth_method__emsigner
@@ -216,13 +225,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sign_emsigner/static/src/backend_components/sign_template_action.js:0
 msgid "Warning"
-msgstr ""
+msgstr "Peringatan"
 
 #. module: sign_emsigner
 #. odoo-python
 #: code:addons/sign_emsigner/controllers/main.py:0
 msgid "emSigner IAP service could not be found."
-msgstr ""
+msgstr "Layanan IAP emSigner tidak dapat ditemukan."
 
 #. module: sign_emsigner
 #: model:ir.model.fields,field_description:sign_emsigner.field_sign_request_item__emsigner_reference_number

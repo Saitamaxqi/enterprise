@@ -7,13 +7,14 @@
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Maitê Dietze (madi)" <madi@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-11-13 17:15+0000\n"
-"Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
+"PO-Revision-Date: 2025-11-16 17:51+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/marketing_automation_sms/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -202,7 +203,7 @@ msgstr "Modelo de SMS"
 #. odoo-python
 #: code:addons/marketing_automation_sms/models/marketing_activity.py:0
 msgid "SMS cancelled"
-msgstr ""
+msgstr "SMS cancelado"
 
 #. module: marketing_automation_sms
 #. odoo-python
@@ -259,7 +260,7 @@ msgstr "Tipo de disparo"
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_activity_summary_template_sms
 msgid "after the <strong>SMS text message</strong> sent by the Activity \""
-msgstr ""
+msgstr "após a mensagem de <strong>SMS</strong> enviada pela Atividade \""
 
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_activity_summary_template_sms
@@ -267,6 +268,8 @@ msgid ""
 "after the Participant <strong>clicked</strong>,<br/>on any link included in "
 "the <strong>SMS text message</strong> sent by the Activity \""
 msgstr ""
+"após o Participante <strong>clicar</strong> <br/>em qualquer link incluído "
+"na mensagem de <strong>SMS</strong> enviada pela Atividade \""
 
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_activity_summary_template_sms
@@ -274,6 +277,8 @@ msgid ""
 "if no link included in the <strong>SMS text message</strong> sent by the "
 "Activity \""
 msgstr ""
+"se nenhum link estiver incluído na mensagem de texto <strong>SMS</strong> "
+"enviada pela Atividade \""
 
 #~ msgid "Bounced"
 #~ msgstr "Rejeitado"

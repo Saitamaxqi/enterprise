@@ -20,13 +20,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:42+0000\n"
-"PO-Revision-Date: 2025-11-12 13:02+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-11-20 13:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "account_batch_payment/tr/>\n"
 "Language: tr\n"
@@ -39,14 +40,12 @@ msgstr ""
 #. module: account_batch_payment
 #. odoo-python
 #: code:addons/account_batch_payment/wizard/create_batch_error.py:0
-#, fuzzy
 msgid "\"In Process\""
 msgstr "\"İşlem Devam Ediyor\""
 
 #. module: account_batch_payment
 #. odoo-python
 #: code:addons/account_batch_payment/wizard/create_batch_error.py:0
-#, fuzzy
 msgid "\"In Process, and Paid\""
 msgstr "\"İşlemde ve Ödemesi Yapıldı\""
 
@@ -143,7 +142,6 @@ msgstr "Toplu transferdeki tüm ödemeler aynı ödeme yöntemini paylaşmalıd�
 #. module: account_batch_payment
 #. odoo-python
 #: code:addons/account_batch_payment/models/account_batch_payment.py:0
-#, fuzzy
 msgid "All payments must either have an entry or not at all."
 msgstr "Tüm ödemelerin ya bir girişi olmalı ya da hiç olmamalıdır."
 
@@ -271,9 +269,8 @@ msgstr "Çek Ödemeleri"
 
 #. module: account_batch_payment
 #: model_terms:ir.ui.view,arch_db:account_batch_payment.create_batch_error_wizard
-#, fuzzy
 msgid "Check them."
-msgstr "Onları kontrol et"
+msgstr "Kontrol et."
 
 #. module: account_batch_payment
 #: model_terms:ir.ui.view,arch_db:account_batch_payment.batch_error_wizard_form
@@ -317,7 +314,6 @@ msgstr "Toplu Ödeme Oluştur"
 
 #. module: account_batch_payment
 #: model:ir.model,name:account_batch_payment.model_account_create_batch_error_wizard
-#, fuzzy
 msgid "Create Batch Payment Error Wizard"
 msgstr "Toplu Ödeme Oluşturma Hata Sihirbazı"
 
@@ -472,7 +468,6 @@ msgstr "Mesaj Var"
 
 #. module: account_batch_payment
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_create_batch_error_wizard__has_valid_payments
-#, fuzzy
 msgid "Has Valid Payments"
 msgstr "Geçerli Ödemeleri Var"
 
@@ -528,22 +523,19 @@ msgstr "Gelen Toplu Ödeme Sırası"
 #. module: account_batch_payment
 #. odoo-python
 #: code:addons/account_batch_payment/models/account_batch_payment.py:0
-#, fuzzy
 msgid "Invalid Partners"
-msgstr "Geçersiz Ortaklar"
+msgstr "Geçersiz İş Ortakları"
 
 #. module: account_batch_payment
 #. odoo-python
 #: code:addons/account_batch_payment/wizard/create_batch_error.py:0
-#, fuzzy
 msgid "Invalid Payments"
 msgstr "Geçersiz Ödemeler"
 
 #. module: account_batch_payment
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_payment__invalid_sct_partners_ids
-#, fuzzy
 msgid "Invalid Sct Partners"
-msgstr "Geçersiz Sct Ortakları"
+msgstr "Geçersiz ÖTV İş Ortakları"
 
 #. module: account_batch_payment
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_payment__message_is_follower
@@ -648,7 +640,6 @@ msgstr "Sonraki Aktivitie Türü"
 
 #. module: account_batch_payment
 #: model_terms:ir.ui.view,arch_db:account_batch_payment.view_account_payment_search_inherit_account_batch_payment
-#, fuzzy
 msgid "Not in batch"
 msgstr "Parti içinde değil"
 
@@ -685,7 +676,6 @@ msgstr "Odoo Payments LLC"
 #. module: account_batch_payment
 #. odoo-python
 #: code:addons/account_batch_payment/wizard/create_batch_error.py:0
-#, fuzzy
 msgid "Only %s payments can be added to a batch. Invalid ones will be ignored."
 msgstr ""
 "Yalnızca %s ödemeleri bir toplu işe eklenebilir. Geçersiz olanlar dikkate "
@@ -911,7 +901,6 @@ msgstr ""
 
 #. module: account_batch_payment
 #: model_terms:ir.ui.view,arch_db:account_batch_payment.view_batch_payment_form
-#, fuzzy
 msgid "The country or city of"
 msgstr "Ülkesi veya şehri"
 
@@ -1035,7 +1024,6 @@ msgstr "Çakışan ödemeler içeren gruplar oluşturamazsınız."
 
 #. module: account_batch_payment
 #: model_terms:ir.ui.view,arch_db:account_batch_payment.view_batch_payment_form
-#, fuzzy
 msgid "is not set, which could cause the file to be refused by the bank."
 msgstr ""
 "ayarlanmamışsa, bu durum dosyanın banka tarafından reddedilmesine neden "
@@ -1043,7 +1031,6 @@ msgstr ""
 
 #. module: account_batch_payment
 #: model_terms:ir.ui.view,arch_db:account_batch_payment.view_batch_payment_form
-#, fuzzy
 msgid "these partners"
 msgstr "bu ortaklar"
 

@@ -5,13 +5,14 @@
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-10 20:15+0000\n"
-"PO-Revision-Date: 2025-11-12 15:07+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "databases/tr/>\n"
 "Language: tr\n"
@@ -24,14 +25,12 @@ msgstr ""
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
-#, fuzzy
 msgid "%(nb_new_dbs)s new databases, %(nb_updated_dbs)s updated."
 msgstr "%(nb_new_dbs)s yeni veritabanları, %(nb_updated_dbs)s güncellendi."
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 #: model_terms:ir.ui.view,arch_db:databases.project_project_view_form_simplified_template
-#, fuzzy
 msgid "<span class=\"o_wrap_label\"><span class=\"o_form_label\">Fetch</span></span>"
 msgstr ""
 "<span class=\"o_wrap_label\"><span class=\"o_form_label\">Getir</span></span>"
@@ -39,33 +38,28 @@ msgstr ""
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 #: model_terms:ir.ui.view,arch_db:databases.project_project_view_form_simplified_template
-#, fuzzy
 msgid "<span>Documents</span>"
 msgstr "<span>Belgeler</span>"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 #: model_terms:ir.ui.view,arch_db:databases.project_project_view_form_simplified_template
-#, fuzzy
 msgid "<span>Draft Journal Entries</span>"
 msgstr "<span>Taslak Yevmiye Defteri Girişleri</span>"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 #: model_terms:ir.ui.view,arch_db:databases.project_project_view_form_simplified_template
-#, fuzzy
 msgid "<span>Tax Returns</span>"
 msgstr "<span>Vergi İadeleri</span>"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
-#, fuzzy
 msgid "API credentials to Odoo.com"
 msgstr "Odoo.com'a API kimlik bilgileri"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
-#, fuzzy
 msgid "Add a user"
 msgstr "Kullanıcı ekleme"
 
@@ -76,26 +70,22 @@ msgstr "Yönetici"
 
 #. module: databases
 #: model:res.groups,comment:databases.group_databases_manager
-#, fuzzy
 msgid "Administrator can manage the client databases"
 msgstr "Yönetici istemci veritabanlarını yönetebilir"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_nb_users
-#, fuzzy
 msgid "Amount of Users"
 msgstr "Kullanıcı Sayısı"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_nb_documents
-#, fuzzy
 msgid "Amount of documents in Inbox"
 msgstr "Gelen Kutusundaki belge miktarı"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
-#, fuzzy
 msgid "An error occurred: %s"
 msgstr "Bir hata oluştu: %s"
 
@@ -126,7 +116,6 @@ msgstr "Devam edin"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__created_database_ids
-#, fuzzy
 msgid "Created Database"
 msgstr "Oluşturulan Veritabanı"
 
@@ -155,32 +144,27 @@ msgstr "Veritabanı"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_api_key
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_api_key
-#, fuzzy
 msgid "Database API Key"
 msgstr "Veritabanı API Anahtarı"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_api_login
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_api_login
-#, fuzzy
 msgid "Database API Login"
 msgstr "Veritabanı API Girişi"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_api_key_to_use
-#, fuzzy
 msgid "Database Api Key To Use"
 msgstr "Kullanılacak Veritabanı Api Anahtarı"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_can_access
-#, fuzzy
 msgid "Database Can Access"
 msgstr "Veritabanı Erişebilir"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_kpi_base_definition_id
-#, fuzzy
 msgid "Database Kpi Base Definition"
 msgstr "Veritabanı Kpi Temel Tanımı"
 
@@ -192,13 +176,11 @@ msgstr "Veritaban Adı"
 
 #. module: databases
 #: model:ir.model,name:databases.model_databases_synchronization_wizard
-#, fuzzy
 msgid "Database Synchronization Wizard"
 msgstr "Veritabanı Senkronizasyon Sihirbazı"
 
 #. module: databases
 #: model:project.project,name:databases.database_default_template
-#, fuzzy
 msgid "Database Template"
 msgstr "Veritabanı Şablonu"
 
@@ -210,32 +192,27 @@ msgstr "Veri tabanı URL"
 
 #. module: databases
 #: model:ir.model,name:databases.model_databases_user
-#, fuzzy
 msgid "Database User"
 msgstr "Veritabanı Kullanıcısı"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_user_ids
-#, fuzzy
 msgid "Database Users"
 msgstr "Veritabanı Kullanıcıları"
 
 #. module: databases
 #: model:ir.model,name:databases.model_databases_manage_users_wizard
-#, fuzzy
 msgid "Database Users Invitation Wizard"
 msgstr "Veritabanı Kullanıcıları Davet Sihirbazı"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_version
-#, fuzzy
 msgid "Database Version"
 msgstr "Veritabanı Sürümü"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
-#, fuzzy
 msgid ""
 "Database synchronization is running in the background. You will be notified "
 "upon completion."
@@ -254,13 +231,11 @@ msgstr "Veritabanları"
 
 #. module: databases
 #: model:ir.actions.server,name:databases.ir_cron_synchronize_databases_with_odoocom_ir_actions_server
-#, fuzzy
 msgid "Databases: pull databases from Odoo.com and synchronize"
 msgstr "Veritabanları: Odoo.com'dan veritabanlarını çekin ve senkronize edin"
 
 #. module: databases
 #: model:ir.actions.server,name:databases.ir_cron_synchronize_databases_ir_actions_server
-#, fuzzy
 msgid "Databases: synchronize"
 msgstr "Veritabanları: senkronize et"
 
@@ -293,7 +268,6 @@ msgstr "Taslak"
 #. module: databases
 #. odoo-javascript
 #: code:addons/databases/static/src/views/databases_project_list/databases_project_list_renderer.js:0
-#, fuzzy
 msgid "Draft entries in journal %(journal_name)s"
 msgstr "Yevmiye defterine taslak girişler %(journal_name)s"
 
@@ -307,7 +281,6 @@ msgstr "Hata Mesajı"
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
-#, fuzzy
 msgid ""
 "Error while connecting to %(url)s: We are missing the database name, the api"
 " login or the api key\n"
@@ -318,28 +291,24 @@ msgstr ""
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
-#, fuzzy
 msgid "Error while creating users on %(dbname)s: %(message)s\n"
 msgstr "%(dbname)s adresinde kullanıcı oluştururken hata oluştu: %(message)s\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
-#, fuzzy
 msgid "Error while getting KPIs from %(dbname)s: %(message)s\n"
 msgstr "%(dbname)s adresinden KPI'lar alınırken hata oluştu: %(message)s\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
-#, fuzzy
 msgid "Error while getting users from %(dbname)s: %(message)s\n"
 msgstr "%(dbname)s adresinden kullanıcı alınırken hata oluştu: %(message)s\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
-#, fuzzy
 msgid "Error while listing databases from %(dbname)s: %(message)s\n"
 msgstr ""
 "%(dbname)s adresinden veritabanları listelenirken hata oluştu: %(message)s\n"
@@ -347,47 +316,40 @@ msgstr ""
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
-#, fuzzy
 msgid "Error while removing users from %(dbname)s: %(message)s\n"
 msgstr ""
 "Kullanıcıları %(dbname)s adresinden kaldırırken hata oluştu: %(message)s\n"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__everywhere_user_ids
-#, fuzzy
 msgid "Everywhere User"
 msgstr "Her Yerde Kullanıcı"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_fetch_documents
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_fetch_documents
-#, fuzzy
 msgid "Fetch Documents"
 msgstr "Belgeleri Getir"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_fetch_draft_entries
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_fetch_draft_entries
-#, fuzzy
 msgid "Fetch Draft Journal Entries"
 msgstr "Taslak Yevmiye Defteri Girişlerini Getir"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_fetch_tax_returns
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_fetch_tax_returns
-#, fuzzy
 msgid "Fetch Tax Returns"
 msgstr "Vergi İadelerini Getir"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__fetched_values
-#, fuzzy
 msgid "Fetched Values"
 msgstr "Getirilen Değerler"
 
 #. module: databases
 #: model_terms:ir.actions.act_window,help:databases.action_view_databases_all
-#, fuzzy
 msgid ""
 "Get all your Odoo databases summarized, and perform mass action like "
 "inviting users."
@@ -397,7 +359,6 @@ msgstr ""
 
 #. module: databases
 #: model:ir.model.constraint,message:databases.constraint_project_project_database_url_unique
-#, fuzzy
 msgid "Hey, this URL is already hooked up to a database!"
 msgstr "Hey, bu URL zaten bir veritabanına bağlı!"
 
@@ -435,7 +396,6 @@ msgstr "Davet"
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
-#, fuzzy
 msgid "Invitation is done"
 msgstr "Davetiye hazır"
 
@@ -481,7 +441,6 @@ msgstr "En Son Kimlik Doğrulama"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_user__local_user_id
-#, fuzzy
 msgid "Local User"
 msgstr "Yerel Kullanıcı"
 
@@ -492,7 +451,6 @@ msgstr "Oturum aç"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_kpi_properties
-#, fuzzy
 msgid "Metrics"
 msgstr "Metrikler"
 
@@ -513,13 +471,11 @@ msgstr "Yeni"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__new_properties
-#, fuzzy
 msgid "New KPIs to add:"
 msgstr "Eklenecek yeni KPI'lar:"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
-#, fuzzy
 msgid "New databases will be based on the selected project template."
 msgstr "Yeni veritabanları seçilen proje şablonuna dayalı olacaktır."
 
@@ -541,19 +497,16 @@ msgstr "Odoo Çevrim İçi"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_res_config_settings__databases_apikey
-#, fuzzy
 msgid "Odoo.com API Key"
 msgstr "Odoo.com API Anahtarı"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_res_config_settings__databases_apiuser
-#, fuzzy
 msgid "Odoo.com API User"
 msgstr "Odoo.com API Kullanıcısı"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
-#, fuzzy
 msgid ""
 "Odoo.com API keys are managed in the <em>Developer API Keys</em> section of "
 "your"
@@ -563,7 +516,6 @@ msgstr ""
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
-#, fuzzy
 msgid "Odoo.com Connection &amp; Security page"
 msgstr "Odoo.com Bağlantısı &amp; Güvenlik sayfası"
 
@@ -581,26 +533,23 @@ msgstr "Lokal"
 
 #. module: databases
 #: model_terms:ir.actions.act_window,help:databases.action_view_tasks_all
-#, fuzzy
 msgid ""
 "Organize your tasks by dispatching them across the pipeline.<br>\n"
 "                Collaborate efficiently by chatting in real-time or via email."
 msgstr ""
-"Görevlerinizi boru hattı üzerinden göndererek düzenleyin.<br>\n"
+"Görevlerinizi fırsat havuzu üzerinden göndererek düzenleyin.<br>\n"
 "                Gerçek zamanlı sohbet ederek veya e-posta yoluyla verimli "
 "bir şekilde işbirliği yapın."
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__project_project__database_hosting__other
 #: model:ir.model.fields.selection,name:databases.selection__project_template_create_wizard__database_hosting__other
-#, fuzzy
 msgid "Outside of Odoo"
 msgstr "Odoo dışında"
 
 #. module: databases
 #. odoo-javascript
 #: code:addons/databases/static/src/views/databases_project_list/databases_project_list_renderer.js:0
-#, fuzzy
 msgid "Planned activities of type %(return_name)s"
 msgstr "Planlanan faaliyet türü %(return_name)s"
 
@@ -616,31 +565,26 @@ msgstr "Proje Şablonu"
 
 #. module: databases
 #: model:ir.model,name:databases.model_project_template_create_wizard
-#, fuzzy
 msgid "Project Template create Wizard"
 msgstr "Proje Yönetimi Şablonu Oluşturma Sihirbazı"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_res_config_settings__databases_project_template_id
-#, fuzzy
 msgid "Project template"
 msgstr "Proje Yönetimi şablonu"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__property_definition
-#, fuzzy
 msgid "Property Definition"
 msgstr "Mülkiyet Tanımı"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
-#, fuzzy
 msgid "Regular Project"
 msgstr "Düzenli Proje Yönetimi"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__removable_user_ids
-#, fuzzy
 msgid "Removable User"
 msgstr "Çıkarılabilir Kullanıcı"
 
@@ -656,7 +600,6 @@ msgstr "Kaldır"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
-#, fuzzy
 msgid "Remove User"
 msgstr "Kullanıcı Kaldır"
 
@@ -679,7 +622,6 @@ msgstr "Sorumlu"
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
-#, fuzzy
 msgid ""
 "Select the users you want to invite to the %(nb_databases)s selected "
 "databases."
@@ -690,7 +632,6 @@ msgstr ""
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
-#, fuzzy
 msgid "Select the users you want to invite to the database %(database_name)s."
 msgstr ""
 "Veritabanına davet etmek istediğiniz kullanıcıları seçin %(database_name)s."
@@ -698,7 +639,6 @@ msgstr ""
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
-#, fuzzy
 msgid ""
 "Select the users you want to remove from the %(nb_databases)s selected "
 "databases."
@@ -709,7 +649,6 @@ msgstr ""
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
-#, fuzzy
 msgid ""
 "Select the users you want to remove from the database %(database_name)s."
 msgstr ""
@@ -729,20 +668,17 @@ msgstr "Durum"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__summary_message
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__summary_message
-#, fuzzy
 msgid "Summary Message"
 msgstr "Özet Mesaj"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_nb_synchro_errors
-#, fuzzy
 msgid "Synchronization Errors Count"
 msgstr "Senkronizasyon Hataları Sayısı"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
-#, fuzzy
 msgid "Synchronization done successfully!"
 msgstr "Senkronizasyon başarıyla tamamlandı!"
 
@@ -750,7 +686,6 @@ msgstr "Senkronizasyon başarıyla tamamlandı!"
 #. odoo-python
 #: code:addons/databases/models/project_project.py:0
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
-#, fuzzy
 msgid "Synchronization of %d databases"
 msgstr "%d veritabanlarının senkronizasyonu"
 
@@ -763,13 +698,11 @@ msgstr "Senkronize edin"
 
 #. module: databases
 #: model:ir.actions.server,name:databases.action_synchronize_all_databases
-#, fuzzy
 msgid "Synchronize all the Databases"
 msgstr "Tüm Veritabanlarını Senkronize Edin"
 
 #. module: databases
 #: model_terms:ir.actions.act_window,help:databases.action_view_databases_all
-#, fuzzy
 msgid ""
 "Synchronize to automatically fetch Odoo Online databases, or set an API Key "
 "to connect to On Premise or Odoo.sh ones."
@@ -788,14 +721,12 @@ msgstr "Görevler"
 #. module: databases
 #. odoo-javascript
 #: code:addons/databases/static/src/views/databases_project_list/databases_project_list_renderer.js:0
-#, fuzzy
 msgid "Tax return %(return_name)s"
 msgstr "Vergi iadesi %(return_name)s"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
-#, fuzzy
 msgid ""
 "The database %(url)s is registered as a saas database in odoo.com. As it "
 "seems to be configured we have left it as is.\n"
@@ -806,7 +737,6 @@ msgstr ""
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
-#, fuzzy
 msgid "These users were successfully invited to %(nb_databases)s databases."
 msgstr ""
 "Bu kullanıcılar %(nb_databases)s veritabanlarına başarıyla davet edilmiştir."
@@ -814,14 +744,12 @@ msgstr ""
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
-#, fuzzy
 msgid "These users were successfully removed from %(nb_databases)s databases."
 msgstr ""
 "Bu kullanıcılar %(nb_databases)s veritabanlarından başarıyla kaldırılmıştır."
 
 #. module: databases
 #: model:ir.model.constraint,message:databases.constraint_project_project_database_url_required
-#, fuzzy
 msgid "Uh-oh! It seems we are missing a url for a database!"
 msgstr "Uh-oh! Görünüşe göre bir veritabanı için bir url eksik!"
 
@@ -833,20 +761,17 @@ msgstr "Kullanıcı"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
-#, fuzzy
 msgid "User Management"
 msgstr "Kullanıcı Yönetimi"
 
 #. module: databases
 #: model:res.groups,comment:databases.group_databases_user
-#, fuzzy
 msgid "User can access the client databases"
 msgstr "Kullanıcı istemci veritabanlarına erişebilir"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
-#, fuzzy
 msgid "User removal is done"
 msgstr "Kullanıcı kaldırma işlemi tamamlandı"
 
@@ -862,7 +787,6 @@ msgstr "Sürüm"
 
 #. module: databases
 #: model:ir.model.fields,help:databases.field_databases_synchronization_wizard__notify_user
-#, fuzzy
 msgid ""
 "Whether the user should be notified once the cron has finished synchronizing"
 " the databases"

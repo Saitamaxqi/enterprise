@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-11-12 15:03+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/room/tr/>"
 "\n"
 "Language: tr\n"
@@ -24,7 +25,6 @@ msgstr ""
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
-#, fuzzy
 msgid "1 hour"
 msgstr "1 saat"
 
@@ -42,43 +42,36 @@ msgstr "30 dk"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_kanban
-#, fuzzy
 msgid "<i class=\"fa fa-long-arrow-right mx-1\" title=\"Until\"/>"
 msgstr "<i class=\"fa fa-long-arrow-right mx-1\" title=\"Until\"/>"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_gantt
-#, fuzzy
 msgid "<i class=\"fa fa-long-arrow-right\" title=\"Until\"/>"
 msgstr "<i class=\"fa fa-long-arrow-right\" title=\"Until\"/>"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
-#, fuzzy
 msgid "<span class=\"o_stat_text\">Next Meeting</span>"
 msgstr "<span class=\"o_stat_text\">Bir Sonraki Toplantı</span>"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
-#, fuzzy
 msgid "<span invisible=\"next_booking_start\">No Upcoming Meetings</span>"
 msgstr "<span invisible=\"next_booking_start\">Yaklaşan Toplantı Yok</span>"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_kanban
-#, fuzzy
 msgid "<strong>Date: </strong>"
 msgstr "<strong>Tarih: </strong>"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_gantt
-#, fuzzy
 msgid "<strong>Organizer: </strong>"
 msgstr "<strong>Organizatör: </strong>"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_kanban
-#, fuzzy
 msgid "<strong>Room: </strong>"
 msgstr "<strong>Oda: </strong>"
 
@@ -107,14 +100,12 @@ msgstr "Ekle"
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
-#, fuzzy
 msgid "Add a Booking"
 msgstr "Rezervasyon Ekleme"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__description
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
-#, fuzzy
 msgid "Amenities"
 msgstr "Olanaklar"
 
@@ -132,14 +123,12 @@ msgstr "Arşivlendi"
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
-#, fuzzy
 msgid "Are you sure you want to delete this booking?"
 msgstr "Bu rezervasyonu silmek istediğinizden emin misiniz?"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
-#, fuzzy
 msgid "Are you sure you want to end the current booking ?"
 msgstr "Mevcut rezervasyonu sonlandırmak istediğinizden emin misiniz?"
 
@@ -159,7 +148,6 @@ msgstr "Uygun"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__bookable_background_color
-#, fuzzy
 msgid "Available Background Color"
 msgstr "Mevcut Arka Plan Rengi"
 
@@ -176,9 +164,8 @@ msgstr "Rezerve edildi"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__booked_background_color
-#, fuzzy
 msgid "Booked Background Color"
-msgstr "Rezervasyonlu Arka Plan Rengi"
+msgstr "Rezerve Edilen Arka Plan Rengi"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_search
@@ -196,7 +183,6 @@ msgstr "Rezervasyon Adı"
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
-#, fuzzy
 msgid "Booking Now"
 msgstr "Şimdi Rezervasyon Yap"
 
@@ -218,7 +204,6 @@ msgstr "Meşgul"
 
 #. module: room
 #: model_terms:room.room,description:room.room_room_main_office_room_3
-#, fuzzy
 msgid "Capacity: 6 people"
 msgstr "Kapasite: 6 kişi"
 
@@ -231,7 +216,6 @@ msgstr "Firma"
 
 #. module: room
 #: model_terms:ir.actions.act_window,help:room.room_room_action
-#, fuzzy
 msgid "Create Rooms"
 msgstr "Odalar Oluşturun"
 
@@ -291,7 +275,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
-#, fuzzy
 msgid "End Booking"
 msgstr "Rezervasyon Sonu"
 
@@ -325,7 +308,6 @@ msgstr "Mesaj Var"
 
 #. module: room
 #: model:room.office,name:room.room_office_head_office
-#, fuzzy
 msgid "Head Office"
 msgstr "Merkez Ofis"
 
@@ -357,7 +339,6 @@ msgstr "Uygulama Yükle"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_list
-#, fuzzy
 msgid "Is Currently Available"
 msgstr "Şu Anda Mevcut"
 
@@ -369,7 +350,6 @@ msgstr "Takipçi mi"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__is_available
-#, fuzzy
 msgid "Is Room Currently Available"
 msgstr "Oda Şu Anda Müsait mi"
 
@@ -389,13 +369,11 @@ msgstr "Son Güncelleme"
 
 #. module: room
 #: model:room.office,name:room.room_office_main_office
-#, fuzzy
 msgid "Main Office"
 msgstr "Ana Ofis"
 
 #. module: room
 #: model_terms:ir.actions.act_window,help:room.room_booking_action
-#, fuzzy
 msgid "Make meeting room sharing easy by centralizing all meetings in this App"
 msgstr ""
 "Tüm toplantıları bu uygulamada merkezileştirerek toplantı odası paylaşımını "
@@ -403,7 +381,6 @@ msgstr ""
 
 #. module: room
 #: model:res.groups,name:room.group_room_manager
-#, fuzzy
 msgid "Manage Rooms"
 msgstr "Odaları Yönet"
 
@@ -414,7 +391,6 @@ msgstr "Toplantı Odaları"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_search
-#, fuzzy
 msgid "Meeting name"
 msgstr "Toplantı adı"
 
@@ -442,7 +418,6 @@ msgstr "Adı"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__next_booking_start
-#, fuzzy
 msgid "Next Booking Start"
 msgstr "Sonraki Rezervasyon Başlangıcı"
 
@@ -455,20 +430,17 @@ msgstr "Sonraki Hafta"
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
-#, fuzzy
 msgid "No Bookings Planned"
 msgstr "Planlanan Rezervasyon Yok"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
-#, fuzzy
 msgid "No Bookings for Today"
 msgstr "Bugün için Rezervasyon Yok"
 
 #. module: room
 #: model_terms:ir.actions.act_window,help:room.room_booking_action
-#, fuzzy
 msgid "No Bookings found. Let’s schedule one!"
 msgstr "Rezervasyon bulunamadı. Bir tane planlayalım!"
 
@@ -505,7 +477,6 @@ msgstr "Ofis"
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_office__name
 #: model_terms:ir.ui.view,arch_db:room.room_office_view_form
-#, fuzzy
 msgid "Office Name"
 msgstr "Ofis Adı"
 
@@ -538,7 +509,6 @@ msgstr "Projektör"
 
 #. module: room
 #: model_terms:room.room,description:room.room_room_main_office_room_1
-#, fuzzy
 msgid "Projector, whiteboard"
 msgstr "Projektör, beyaz tahta"
 
@@ -551,9 +521,8 @@ msgstr "Özellikler"
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
-#, fuzzy
 msgid "Public Booking"
-msgstr "Halka Açık Rezervasyon"
+msgstr "Herkese Açık Rezervasyon"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__rating_ids
@@ -573,19 +542,16 @@ msgstr "Oda"
 #. module: room
 #. odoo-python
 #: code:addons/room/models/room_booking.py:0
-#, fuzzy
 msgid "Room %(room_name)s is already booked during the selected time slot."
 msgstr "Oda %(room_name)s seçilen zaman aralığında zaten rezerve edilmiştir."
 
 #. module: room
 #: model:ir.model,name:room.model_room_booking
-#, fuzzy
 msgid "Room Booking"
 msgstr "Oda Rezervasyonu"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__room_booking_url
-#, fuzzy
 msgid "Room Link"
 msgstr "Oda Bağlantısı"
 
@@ -596,13 +562,11 @@ msgstr "Oda Adı"
 
 #. module: room
 #: model:ir.model,name:room.model_room_office
-#, fuzzy
 msgid "Room Office"
-msgstr "Oda Ofis"
+msgstr "Ofis Odası"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_office__room_properties_definition
-#, fuzzy
 msgid "Room Properties"
 msgstr "Oda Özellikleri"
 
@@ -613,7 +577,6 @@ msgstr "Odalar"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_form
-#, fuzzy
 msgid "Select a Room..."
 msgstr "Bir Oda Seçin..."
 
@@ -635,49 +598,42 @@ msgstr "Şimdi başla"
 
 #. module: room
 #: model:ir.model.constraint,message:room.constraint_room_room_uniq_access_token
-#, fuzzy
 msgid "The access token must be unique"
 msgstr "Erişim belirteci benzersiz olmalıdır"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
-#, fuzzy
 msgid "The booking you were editing has been updated or deleted."
-msgstr "Düzenlemekte olduğunuz rezervasyon güncellendi veya silindi."
+msgstr "Düzenlediğiniz rezervasyon güncellenmiş veya silinmiş."
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
-#, fuzzy
 msgid "The next booking is starting soon."
 msgstr "Bir sonraki rezervasyon yakında başlıyor."
 
 #. module: room
 #: model:ir.model.constraint,message:room.constraint_room_room_uniq_short_code
-#, fuzzy
 msgid "The short code must be unique."
 msgstr "Kısa kod benzersiz olmalıdır."
 
 #. module: room
 #. odoo-python
 #: code:addons/room/models/room_booking.py:0
-#, fuzzy
 msgid "The start date of %(booking_name)s must be earlier than the end date."
-msgstr ""
-"%(booking_name)s adresinin başlangıç tarihi bitiş tarihinden önce olmalıdır."
+msgstr "%(booking_name)s in başlangıç tarihi bitiş tarihinden önce olmalıdır."
 
 #. module: room
 #: model_terms:ir.actions.act_window,help:room.room_room_action
-#, fuzzy
 msgid "They can then be booked for meetings from a Tablet or the back-end."
 msgstr ""
-"Daha sonra bir Tablet veya arka uçtan toplantılar için rezerve edilebilirler."
+"Daha sonra bir tablet veya arka uç üzerinden toplantılar için rezerve "
+"edilebilirler."
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
-#, fuzzy
 msgid "This room is as free as a fish in a sea of endless possibilities"
 msgstr "Bu oda sonsuz olasılıklar denizindeki bir balık kadar özgür"
 
@@ -689,37 +645,31 @@ msgstr "Bitiş"
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
-#, fuzzy
 msgid "Update Meeting"
 msgstr "Güncelleme Toplantısı"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
-#, fuzzy
 msgid "e.g. Blue Meeting Room"
 msgstr "ör. Mavi Toplantı Odası"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
-#, fuzzy
 msgid "e.g. Headquarters"
 msgstr "örneğin Genel Müdürlük"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_form
-#, fuzzy
 msgid "e.g. Team Meeting"
-msgstr "Örn. Ekip Toplantısı"
+msgstr "örn. Ekip Toplantısı"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
-#, fuzzy
 msgid "e.g. projector, capacity 6 people"
 msgstr "örn. projektör, kapasite 6 kişi"
 
 #. module: room
 #. odoo-python
 #: code:addons/room/models/room_room.py:0
-#, fuzzy
 msgid "room_id"
 msgstr "oda_id"

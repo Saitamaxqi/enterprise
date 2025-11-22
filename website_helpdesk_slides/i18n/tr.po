@@ -10,13 +10,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.5alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-11-12 15:00+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "website_helpdesk_slides/tr/>\n"
 "Language: tr\n"
@@ -29,7 +30,6 @@ msgstr ""
 #. module: website_helpdesk_slides
 #. odoo-python
 #: code:addons/website_helpdesk_slides/models/slide_channel.py:0
-#, fuzzy
 msgid "%(name)s's Helpdesk Teams"
 msgstr "%(name)s'in Yardım Masası Ekipleri"
 
@@ -41,13 +41,11 @@ msgstr ", tarafından"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.channel_search_result
-#, fuzzy
 msgid "<i class=\"fa fa-2x fa-mortar-board\" title=\"eLearning Course\"/>"
 msgstr "<i class=\"fa fa-2x fa-mortar-board\" title=\"eLearning Course\"/>"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.search_result
-#, fuzzy
 msgid "<i class=\"fa fa-2x fa-mortar-board\" title=\"eLearning\"/>"
 msgstr "<i class=\"fa fa-2x fa-mortar-board\" title=\"eLearning\"/>"
 
@@ -80,7 +78,6 @@ msgstr "Kurslar"
 
 #. module: website_helpdesk_slides
 #: model:ir.model.fields,help:website_helpdesk_slides.field_helpdesk_team__website_slide_channel_ids
-#, fuzzy
 msgid ""
 "Customers will see only the content from chosen courses in the help center. "
 "If you want all courses to be accessible, just leave the field empty. "
@@ -88,9 +85,9 @@ msgid ""
 "internal users."
 msgstr ""
 "Müşteriler yardım merkezinde yalnızca seçilen kursların içeriğini "
-"görecektir. Tüm kursların erişilebilir olmasını istiyorsanız alanı boş "
-"bırakın. Alternatif olarak, bu özelliği dahili kullanıcılarla kısıtlamak "
-"için kursları özel yapabilirsiniz."
+"görecektir. Tüm kursların erişilebilir olmasını istiyorsanız, alanı boş "
+"bırakmanız yeterlidir. Alternatif olarak, bu özelliği yalnızca dahili "
+"kullanıcılarla sınırlandırmak için kursları özel yapabilirsiniz."
 
 #. module: website_helpdesk_slides
 #: model:ir.model.fields,field_description:website_helpdesk_slides.field_helpdesk_team__display_name
@@ -112,12 +109,11 @@ msgstr "Destek Ekibi"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.channel_search_result
-#, fuzzy
 msgid ""
 "Hours to Complete\n"
 "                    |"
 msgstr ""
-"Tamamlamak için Saatler\n"
+"Tamamlama Süresi (Saat)\n"
 "                    |"
 
 #. module: website_helpdesk_slides
@@ -134,7 +130,6 @@ msgstr "Dersler"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.knowledge_base_slides_card
-#, fuzzy
 msgid "Level up your skills with our training videos and tutorials"
 msgstr "Eğitim videolarımız ve öğreticilerimizle becerilerinizi geliştirin"
 
@@ -173,13 +168,11 @@ msgstr "Slaytlar"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.knowledge_base_slides_card
-#, fuzzy
 msgid "Take courses"
 msgstr "Kurslara katılın"
 
 #. module: website_helpdesk_slides
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_slides.search_result
-#, fuzzy
 msgid ""
 "Views\n"
 "                    |"

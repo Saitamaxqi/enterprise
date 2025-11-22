@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-14 18:41+0000\n"
-"PO-Revision-Date: 2025-11-08 19:49+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-11-20 08:14+0000\n"
+"Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/sign/"
 "id/>\n"
 "Language: id\n"
@@ -220,7 +220,7 @@ msgstr "<b>Dokumen:</b>"
 #. odoo-javascript
 #: code:addons/sign/static/src/js/tours/sign.js:0
 msgid "<b>Drag & drop \"Signature\"</b> into the bottom of the document."
-msgstr ""
+msgstr "<b> Tarik & lepas \"Tandatangan\"</b> ke bagian bawah dokumen."
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -868,6 +868,10 @@ msgid ""
 "electronic representation of my hand-written signature/initials for all "
 "purposes when it is used on documents, including legally binding contracts."
 msgstr ""
+"Dengan menandatangani, saya menyetujui bahwa tandatangan/inisial terpilih "
+"akan menjadi wakil elektronik valid dari tandatangan/inisial saya untuk "
+"semua tujuan saat digunakan di dokumen, termasuk kontrak-kontrak yang "
+"sepenuhnya mengikat."
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
@@ -2134,6 +2138,8 @@ msgid ""
 "It seems that we're not able to process one of the uploaded pdf. It is "
 "either encrypted, or encoded in a format we do not support."
 msgstr ""
+"Sepertinya kita tidak dapat memproses satu dari pdf yang diunggah. Antara "
+"dienkripsi, atau dienkode dalam format yang tidak kita dukung."
 
 #. module: sign
 #. odoo-javascript
@@ -2448,6 +2454,10 @@ msgid ""
 "44654 Millersburg Ohio United States\n"
 "+1 555-555-5556"
 msgstr ""
+"Perusahaan AS Saya\n"
+"1034 Wildwood Street\n"
+"44654 Millersburg Ohio Amerika Serikat\n"
+"+1 555-555-5556"
 
 #. module: sign
 #: model:sign.template.tag,name:sign.sign_template_tag_2
@@ -3370,13 +3380,13 @@ msgstr "Permintaan Tandatangan"
 #. odoo-python
 #: code:addons/sign/wizard/sign_send_request.py:0
 msgid "Sign Request "
-msgstr ""
+msgstr "Permintaan Tanda Tangan "
 
 #. module: sign
 #. odoo-python
 #: code:addons/sign/wizard/sign_send_request.py:0
 msgid "Sign Request - %s"
-msgstr ""
+msgstr "Permintaan Tanda Tangan - %s"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_log__sign_request_item_id
@@ -3591,7 +3601,7 @@ msgstr "Permintaan Tandatangan - %(file_name)s"
 #. odoo-python
 #: code:addons/sign/wizard/sign_send_request.py:0
 msgid "Signature Request - %(template_name)s - %(res_name)s"
-msgstr ""
+msgstr "Permintaan Tanda Tangan - %(template_name)s - %(res_name)s"
 
 #. module: sign
 #: model:ir.model,name:sign.model_sign_request_item
@@ -3704,6 +3714,8 @@ msgid ""
 "Signed documents cannot be deleted for legal reasons. Please archive them "
 "instead."
 msgstr ""
+"Dokumen yang ditandatangani tidak dapat dihapus oleh karena alasan hukum. "
+"Silakan arsip mereka."
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request_item__signing_date
@@ -3729,7 +3741,7 @@ msgstr "Penandatanga"
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_action.js:0
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_sidebar.js:0
 msgid "Signer %s"
-msgstr ""
+msgstr "Penandatangan %s"
 
 #. module: sign
 #. odoo-javascript
@@ -3741,7 +3753,7 @@ msgstr "Penandatangan One2Many"
 #. odoo-javascript
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_sidebar_role_items.js:0
 msgid "Signer Settings"
-msgstr ""
+msgstr "Pengaturan Penandatangan"
 
 #. module: sign
 #. odoo-javascript
@@ -4262,6 +4274,8 @@ msgid ""
 "The template model %(t_name)s is incompatible with the signature fields %"
 "(model_name)s."
 msgstr ""
+"Model templat %(t_name)s tidak kompatibel dengan field-field tanda tangan "
+"%(model_name)s."
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -4730,6 +4744,9 @@ msgid ""
 "                Your refusal reason will be included to keep things clear "
 "and transparent for everyone."
 msgstr ""
+"Kami akan menotifikasi pengirim, penandatangan dan kontak tersalin.\n"
+"                Alasan penolakan Anda akan diikutsertakan untuk menjaga "
+"semuanya jelas dan transparan untuk semeua orang."
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__website_message_ids

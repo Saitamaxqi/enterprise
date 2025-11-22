@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-11-13 10:23+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:42+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "spreadsheet_dashboard_purchase_stock/tr/>\n"
 "Language: tr\n"
@@ -30,7 +31,6 @@ msgstr "Satıcı tarafından % Zamanında teslimat"
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
-#, fuzzy
 msgid "% of On Time Deliveries"
 msgstr "% of Zamanında Teslimatlar"
 
@@ -246,7 +246,6 @@ msgstr "Sipariş tarihi"
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
-#, fuzzy
 msgid "Order date Filter"
 msgstr "Sipariş tarihi Filtresi"
 
@@ -304,7 +303,6 @@ msgstr "Ürün düzeyi genel görünüm"
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
-#, fuzzy
 msgid "Products Purchased cost"
 msgstr "Satın alınan ürünlerin maliyeti"
 
@@ -328,7 +326,6 @@ msgstr "Alım değeri"
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
-#, fuzzy
 msgid "Purchase Value by confirmation date"
 msgstr "Onay tarihine göre Satın Alma Değeri"
 
@@ -380,7 +377,6 @@ msgstr "Seçilen dönem"
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
-#, fuzzy
 msgid "Supplier Dependency Chart"
 msgstr "Tedarikçi Bağımlılık Tablosu"
 

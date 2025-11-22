@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-11-12 15:05+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "hr_contract_salary_payroll/tr/>\n"
 "Language: tr\n"
@@ -23,13 +24,11 @@ msgstr ""
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_employee_view_form
-#, fuzzy
 msgid "/ 10 days"
 msgstr "/ 10 gün"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_employee_view_form
-#, fuzzy
 msgid "/ 14 days"
 msgstr "/ 14 gün"
 
@@ -104,7 +103,6 @@ msgstr "İş Başvurusu Yapın"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_benefit__source
-#, fuzzy
 msgid "Benefit Source"
 msgstr "Fayda Kaynağı"
 
@@ -132,19 +130,16 @@ msgstr "Kod"
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form_inherit
-#, fuzzy
 msgid "Company cost"
 msgstr "Şirket maliyeti"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
-#, fuzzy
 msgid "Company's Working Schedule"
 msgstr "Şirketin Çalışma Takvimi"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
-#, fuzzy
 msgid "Configure Benefits"
 msgstr "Avantajları Yapılandırma"
 
@@ -203,13 +198,11 @@ msgstr "İstihdam Türleri"
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form_inherit
-#, fuzzy
 msgid "Gross <span invisible=\"is_full_time\">(Part Time)</span>"
 msgstr "Brüt <span invisible=\"is_full_time\">(Yarı Zamanlı)</span>"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields.selection,name:hr_contract_salary_payroll.selection__hr_contract_salary_offer__budget_type__monthly_gross
-#, fuzzy
 msgid "Gross Per Month"
 msgstr "Aylık Brüt"
 
@@ -221,7 +214,6 @@ msgstr "Brüt ücret"
 #. module: hr_contract_salary_payroll
 #: model:ir.actions.act_window,name:hr_contract_salary_payroll.action_hr_salary_simulator
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
-#, fuzzy
 msgid "Gross-Net Salary Calculator"
 msgstr "Brüt-Net Maaş Hesaplayıcı"
 
@@ -254,15 +246,13 @@ msgstr "Tam Zamanlı mı"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__is_simulation_offer
-#, fuzzy
 msgid "Is Simulation Offer"
-msgstr "Simülasyon Teklifi mi"
+msgstr "Simülasyon Teklifi"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__monthly_benefits
-#, fuzzy
 msgid "Monthly Benefits"
-msgstr "Aylık Faydalar"
+msgstr "Aylık Menfaatler"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_employee__monthly_yearly_costs
@@ -272,7 +262,6 @@ msgstr "Aylık Maliyet"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__monthly_employer_cost
-#, fuzzy
 msgid "Monthly Employer Cost"
 msgstr "Aylık İşveren Maliyeti"
 
@@ -301,7 +290,6 @@ msgstr "İsteğe bağlı"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.actions.server,name:hr_contract_salary_payroll.ir_cron_remove_simulation_offers_ir_actions_server
-#, fuzzy
 msgid "Payroll Salary Configurator: Remove Simulation Offers"
 msgstr "Bordro Maaş Yapılandırıcı: Simülasyon Tekliflerini Kaldır"
 
@@ -317,7 +305,6 @@ msgstr "Ücret Bordrosu Çalışılan Günler"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,help:hr_contract_salary_payroll.field_hr_contract_salary_resume__value_type
-#, fuzzy
 msgid ""
 "Pick how the value of the information is computed:\n"
 "Fixed value: Set a determined value static for all links\n"
@@ -328,7 +315,7 @@ msgid ""
 "Monthly Total: The information will be a total of all the information in the "
 "category Monthly Benefits"
 msgstr ""
-"Bilginin değerinin nasıl hesaplanacağını seçin:\n"
+"Değerin nasıl hesaplanacağını seçin:\n"
 "Sabit değer: Tüm bağlantılar için belirlenmiş bir değeri statik olarak "
 "ayarlayın\n"
 "Çalışan Kaydı değeri: Çalışan Kaydındaki bir alandan değeri alın\n"
@@ -336,7 +323,7 @@ msgstr ""
 "Faydaların Toplamı değeri: Tüm faydaları toplama yaparak "
 "hesaplayabilirsiniz\n"
 "Aylık Toplam: Bilgiler, Aylık Faydalar kategorisindeki tüm bilgilerin "
-"toplamı olacaktır."
+"toplamı olacaktır"
 
 #. module: hr_contract_salary_payroll
 #. odoo-javascript
@@ -350,7 +337,6 @@ msgstr ""
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form_inherit
-#, fuzzy
 msgid ""
 "Please note that this information may be inaccurate and should be used for "
 "reference only. The amounts are calculated based on a full time permanent "
@@ -363,7 +349,6 @@ msgstr ""
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form_inherit
-#, fuzzy
 msgid ""
 "Please note that this information may be inaccurate and should be used for "
 "reference only. The amounts are calculated based on a full time permanent "
@@ -383,7 +368,6 @@ msgstr "Ücret"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.ui.menu,name:hr_contract_salary_payroll.menu_hr_payroll_salary_calculator
-#, fuzzy
 msgid "Salary Calculator"
 msgstr "Maaş Hesaplayıcı"
 
@@ -410,9 +394,8 @@ msgstr "Maaş Kuralı"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form_inherit
-#, fuzzy
 msgid "Salary Simulation Preview"
-msgstr "Maaş Simülasyonu Önizlemesi"
+msgstr "Maaş Simülasyonu Ön izlemesi"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__structure_id
@@ -427,13 +410,11 @@ msgstr "Sözleşme için bir <strong>İK Yetkilisi</strong> seçin."
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,help:hr_contract_salary_payroll.field_hr_contract_salary_benefit__salary_rule_id
-#, fuzzy
 msgid "Select the salary rule associated with this benefit"
-msgstr "Bu fayda ile ilişkili maaş kuralını seçin"
+msgstr "Bu menfaatler ile ilişkili maaş kuralını seçin"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__simulation_employee_id
-#, fuzzy
 msgid "Simulation Employee"
 msgstr "Simülasyon Çalışanı"
 
@@ -482,7 +463,6 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #. odoo-python
 #: code:addons/hr_contract_salary_payroll/controllers/main.py:0
-#, fuzzy
 msgid "This offer is a simulation. You cannot submit this salary package."
 msgstr "Bu teklif bir simülasyondur. Bu maaş paketini sunamazsınız."
 
@@ -499,7 +479,6 @@ msgstr "Değer Türü"
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_employee__wage_on_signature
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_version__wage_on_signature
-#, fuzzy
 msgid "Wage on Signature"
 msgstr "İmza Ücreti"
 
@@ -517,7 +496,6 @@ msgstr "Çalışma Saatleri"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__yearly_benefits
-#, fuzzy
 msgid "Yearly Benefits"
 msgstr "Yıllık Faydalar"
 
@@ -530,7 +508,6 @@ msgstr "Yıllık Maliyet"
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__yearly_employer_cost
 #: model:ir.model.fields.selection,name:hr_contract_salary_payroll.selection__hr_contract_salary_offer__budget_type__yearly_employer
-#, fuzzy
 msgid "Yearly Employer Cost"
 msgstr "Yıllık İşveren Maliyeti"
 

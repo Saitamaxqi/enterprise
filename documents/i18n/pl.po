@@ -34,7 +34,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-14 15:22+0000\n"
+"PO-Revision-Date: 2025-11-21 14:07+0000\n"
 "Last-Translator: \"Marta (wacm)\" <wacm@odoo.com>\n"
 "Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/documents/"
 "pl/>\n"
@@ -3064,7 +3064,7 @@ msgstr "W firmie"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
 msgid "In My Drive"
-msgstr "Na \"Moim dysku\""
+msgstr "Na moim dysku"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__thumbnail_status__restricted
@@ -3093,13 +3093,13 @@ msgid ""
 "Incorrect values. Use one of the following for the following fields: %"
 "(hints)s.)"
 msgstr ""
-"Nieprawidłowe wartości. Użyj jednego z poniższych dla poniższych pól: %"
-"(hints)s.)"
+"Nieprawidłowe wartości. Użyj jednego z poniższych dla poniższych pól: "
+"%(hints)s.)"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__index_content
 msgid "Indexed Content"
-msgstr "Indeksowana zawartość"
+msgstr "Indeksowane treści"
 
 #. module: documents
 #. odoo-javascript
@@ -3146,7 +3146,7 @@ msgstr "Wewnętrzni użytkownicy"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__access_internal
 msgid "Internal Users Rights"
-msgstr "Prawa wewnętrznych użytkowników"
+msgstr "Uprawnienia wewnętrznych użytkowników"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__access_internal
@@ -3203,7 +3203,7 @@ msgstr "Faktura-FAK_2018_0007.pdf"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__is_deleted
 msgid "Is Deleted"
-msgstr "Usunięty"
+msgstr "Usunięto"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__is_editable_attachment
@@ -3279,8 +3279,8 @@ msgid ""
 "Items moved to the trash will be deleted forever after %(deletion_delay)s "
 "days."
 msgstr ""
-"Elementy przeniesione do kosza będą trwale usunięte po upływie %"
-"(deletion_delay)s dni."
+"Elementy przeniesione do kosza będą trwale usunięte po upływie "
+"%(deletion_delay)s dni."
 
 #. module: documents
 #: model:ir.model,name:documents.model_kpi_provider
@@ -3346,7 +3346,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/js/tours/documents.js:0
 msgid "Let's process documents in this folder.<br/>"
-msgstr "Przeróbmy dokumenty w tym folderze.<br/>"
+msgstr "Przetwórzmy dokumenty w tym folderze.<br/>"
 
 #. module: documents
 #. odoo-javascript
@@ -3366,7 +3366,7 @@ msgstr "Przetwórzmy ten dokument pochodzący z naszego skanera."
 #: code:addons/documents/static/src/views/fields/documents_type_icon/documents_type_icon.xml:0
 #: model_terms:ir.ui.view,arch_db:documents.documents_link_to_record_form_view
 msgid "Link"
-msgstr "Odnośnik"
+msgstr "Link"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__is_access_via_link_hidden
@@ -3646,7 +3646,7 @@ msgstr "Moje czynności"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr "Ostateczny terminin moich aktywności"
+msgstr "Ostateczny termin moich aktywności"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
@@ -3710,22 +3710,22 @@ msgstr "Nowa grupa"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr "Następna Czynność wydarzenia w kalendarzu"
+msgstr "Następna aktywność z kalendarza"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr "Termin kolejnej czynności"
+msgstr "Termin kolejnej aktywności"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__activity_summary
 msgid "Next Activity Summary"
-msgstr "Podsumowanie kolejnej czynności"
+msgstr "Podsumowanie kolejnej aktywności"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__activity_type_id
 msgid "Next Activity Type"
-msgstr "Typ następnej czynności"
+msgstr "Typ następnej aktywności"
 
 #. module: documents
 #. odoo-python
@@ -3748,7 +3748,7 @@ msgstr "Nie ma przypisanej osoby do aktywności"
 #. module: documents
 #: model_terms:ir.actions.act_window,help:documents.mail_activity_type_action_document
 msgid "No activity types found. Let's create one!"
-msgstr "Nie znaleziono typów aktywności. Stwórzmy jeden!"
+msgstr "Nie znaleziono typów aktywności. Stwórzmy jakiś!"
 
 #. module: documents
 #. odoo-javascript
@@ -3913,13 +3913,13 @@ msgstr "Tylko Menadżerowie Dokumentów mogą tworzyć firmowe foldery."
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Only Documents Managers can set aliases."
-msgstr "Tylko Menadzerowie Dokumentów mogą ustawiać aliasy."
+msgstr "Tylko Menadżerowie Dokumentów mogą ustawiać aliasy."
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Only Documents managers can set an alias."
-msgstr "Tylko Menadzerowie Dokumentów mogą ustawić alias."
+msgstr "Tylko Menadżerowie Dokumentów mogą ustawić alias."
 
 #. module: documents
 #. odoo-javascript
@@ -4017,7 +4017,7 @@ msgstr "Ścieżka rodzica"
 #: model:ir.model.fields,field_description:documents.field_documents_access__partner_id
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__partner_id
 msgid "Partner"
-msgstr "Kontrahent"
+msgstr "Partner"
 
 #. module: documents
 #. odoo-javascript
@@ -4043,7 +4043,7 @@ msgid ""
 "information."
 msgstr ""
 "Zaloguj się lub skontaktuj się z osobą, która udostępniła ten link, aby "
-"uzyskać więcej informaji."
+"uzyskać więcej informacji."
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__thumbnail_status__present
@@ -4053,7 +4053,7 @@ msgstr "Obecny(a)"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_file
 msgid "Preview files"
-msgstr "Przeglądaj pliki"
+msgstr "Podgląd plików"
 
 #. module: documents
 #. odoo-javascript
@@ -4129,7 +4129,7 @@ msgstr "Usuń dostęp"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
 msgid "Remove Member"
-msgstr "Usuń Członka"
+msgstr "Usuń członka"
 
 #. module: documents
 #. odoo-javascript
@@ -4316,7 +4316,7 @@ msgstr "Wybierz wszystkie"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/chatter/documents_chatter_overlay.xml:0
 msgid "Select an item to open the chatter"
-msgstr "Wybierz element do otwarcia w chatterze"
+msgstr "Wybierz element do otwarcia w czacie"
 
 #. module: documents
 #. odoo-javascript
@@ -4533,7 +4533,7 @@ msgstr "Dokument źródłowy"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__shortcut_document_owner_id
 msgid "Source Document Owner"
-msgstr "Właściciel dokumentu docelowego"
+msgstr "Właściciel dokumentu źródłowego"
 
 #. module: documents
 #. odoo-javascript
@@ -4574,10 +4574,10 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
-"Status na podstawie czynności\n"
+"Status na podstawie aktywności\n"
 "Zaległe: Termin już minął\n"
-"Dzisiaj: Data czynności przypada na dzisiaj\n"
-"Zaplanowane: Przyszłe czynności."
+"Dzisiaj: Data aktywności przypada na dzisiaj\n"
+"Zaplanowane: Przyszłe aktywności."
 
 #. module: documents
 #. odoo-javascript
@@ -4647,7 +4647,7 @@ msgstr "Podatki"
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_tag__tooltip
 msgid "Text shown when hovering on this tag"
-msgstr "Tekst wyświetlany po najechaniu kursorem na ten"
+msgstr "Tekst pokazywany po najechaniu kursorem na ten tag"
 
 #. module: documents
 #: model:ir.model.constraint,message:documents.constraint_res_config_settings_check_deletion_delay
@@ -4722,8 +4722,7 @@ msgstr "Następujące dokumenty/skróty mają niepasujący typ: \n"
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "The following shortcuts cannot be set as documents parents: \n"
-msgstr ""
-"Następujących skrótów nie można ustawić jako dokumentów nadrzędnych: \n"
+msgstr "Następujących skrótów nie można ustawić jako dokumentów nadrzędnych: \n"
 
 #. module: documents
 #. odoo-python
@@ -4854,8 +4853,8 @@ msgid ""
 "Those represent the different categories of things you have to do (e.g. "
 "\"Call\" or \"Send email\")."
 msgstr ""
-"Reprezentują one różne kategorie rzeczy, które musisz zrobić (np. "
-"\"Zadzwoń\" lub \"Wyślij e-mail\")."
+"Reprezentują one różne kategorie rzeczy, które musisz zrobić (np. \"Zadzwoń\""
+" lub \"Wyślij e-mail\")."
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__thumbnail
@@ -4888,13 +4887,13 @@ msgstr "Wskazówka: Stań się firmą bez papieru"
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__last_access_date_group__3_day
 msgid "Today"
-msgstr "Na dzisiaj"
+msgstr "Dzisiaj"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/kanban/documents_kanban_renderer.js:0
 msgid "Toggle favorite"
-msgstr "Przełącznik ulubionych"
+msgstr "Przełącz ulubione"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_tag__tooltip
@@ -4995,8 +4994,8 @@ msgid ""
 "Upload <span class=\"fw-normal\">a file or</span> drag <span class=\"fw-"
 "normal\">it here.</span>"
 msgstr ""
-"Prześlij <span class=\"fw-normal\">plik</span> lub przeciągnij go <span "
-"class=\"fw-normal\">tutaj.</span>"
+"Prześlij <span class=\"fw-normal\">plik</span> lub przeciągnij go <span class"
+"=\"fw-normal\">tutaj.</span>"
 
 #. module: documents
 #. odoo-javascript
@@ -5042,8 +5041,8 @@ msgid ""
 "                    If you delete the most recent version, the previous one "
 "is automatically restored as the current one."
 msgstr ""
-"Wersje są wyświetlane w kolejności, w jakiej zostały przesłane do "
-"Dokumentów.\n"
+"Wersje są wyświetlane w kolejności, w jakiej zostały przesłane do Dokumentów."
+"\n"
 "                    Jeśli usuniesz najnowszą wersję, poprzednia zostanie "
 "automatycznie przywrócona jako aktualna."
 
@@ -5065,14 +5064,14 @@ msgstr "Wideo: Dokumenty Odoo"
 #: model:ir.model.fields.selection,name:documents.selection__documents_sharing__invite_role__view
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
 msgid "Viewer"
-msgstr "Widz"
+msgstr "Oglądający"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/js/tours/documents.js:0
 msgid ""
 "Want to become a <b>paperless company</b>? Let's discover Odoo Documents."
-msgstr "Chcesz stać się <b>firmą bez papieru</b>? Odkryjmy Odoo Documents."
+msgstr "Chcesz stać się <b>firmą bez papieru</b>? Poznaj Odoo Dokumenty."
 
 #. module: documents
 #. odoo-javascript
@@ -5108,8 +5107,8 @@ msgid ""
 "Wow... 6 documents processed in a few seconds, You're good.<br>The tour is "
 "complete. Try uploading your own documents now."
 msgstr ""
-"Wow... 6 dokumentów przetworzonych w kilka sekund, bez obaw. <br> Wycieczka "
-"została zakończona. Spróbuj teraz przesłać własne dokumenty."
+"Wow... 6 dokumentów przetworzonych w kilka sekund, dobra robota. <br> "
+"Wycieczka została zakończona. Spróbuj teraz przesłać własne dokumenty."
 
 #. module: documents
 #. odoo-python
@@ -5127,19 +5126,22 @@ msgstr "Ty"
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "You are not allowed to (un)archive documents."
-msgstr "Nie możesz archiwizować ani cofać archiwizowania dokumentów."
+msgstr ""
+"Nie masz uprawnień do archiwizowania ani cofania archiwizacji dokumentów."
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "You are not allowed to change ownerships of documents you do not own."
-msgstr "Nie możesz zmieniać właścicieli dokumentów, jeśli sam nim nie jesteś."
+msgstr ""
+"Nie masz uprawnień do zmieniania właścicieli dokumentów, jeśli sam nim nie "
+"jesteś."
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "You are not allowed to delete all these items."
-msgstr "Nie możesz usunąć tych elementów."
+msgstr "Nie masz uprawnień do usunięcia tych elementów."
 
 #. module: documents
 #. odoo-python
@@ -5151,13 +5153,13 @@ msgstr "Nie możesz wykonywać osadzonych akcji."
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "You are not allowed to move (some of) these documents."
-msgstr "Nie możesz przenosić (niektórych) tych dokumentów."
+msgstr "Nie możesz przenieść (niektórych z) tych dokumentów."
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "You are not allowed to pin/unpin embedded Actions."
-msgstr "Nie wolno przypinać/odpinać osadzonych działań."
+msgstr "Nie masz uprawnień do przypinania/odpinania osadzonych działań."
 
 #. module: documents
 #. odoo-python
@@ -5169,7 +5171,7 @@ msgstr "Nie masz upoważnienia do aktualizacji praw dostępu."
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "You are not allowed to write in this folder."
-msgstr "Nie możesz zapisywać w tym folderze."
+msgstr "Nie masz uprawnień do zapisywania w tym folderze."
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_document__attachment_type
@@ -5245,7 +5247,8 @@ msgstr ""
 #: code:addons/documents/models/documents_document.py:0
 msgid "You cannot change the owner of documents you do not own."
 msgstr ""
-"Nie możesz zmienić właściciela dokumentów, których nie jesteś właścicielem."
+"Nie możesz zmienić właściciela dokumentów, jeśli sam nie jesteś ich "
+"właścicielem."
 
 #. module: documents
 #. odoo-python

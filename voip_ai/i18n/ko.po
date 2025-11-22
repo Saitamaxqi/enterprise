@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:50+0000\n"
-"PO-Revision-Date: 2025-10-28 07:57+0000\n"
+"PO-Revision-Date: 2025-11-20 08:15+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/voip_ai/"
 "ko/>\n"
@@ -23,7 +23,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip_ai/static/src/session_patch.js:0
 msgid "Call successfully scheduled for transcription."
-msgstr ""
+msgstr "성공적으로 통화 녹음 예약이 완료되었습니다."
 
 #. module: voip_ai
 #: model_terms:ir.ui.view,arch_db:voip_ai.voip_call_view_form_transcript

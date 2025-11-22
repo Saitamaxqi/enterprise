@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-11-12 15:01+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "esg_hr_fleet/tr/>\n"
 "Language: tr\n"
@@ -23,15 +24,13 @@ msgstr ""
 #. module: esg_hr_fleet
 #. odoo-javascript
 #: code:addons/esg_hr_fleet/static/src/views/esg_employee_commuting_report_pivot/esg_employee_commuting_report_pivot_view.xml:0
-#, fuzzy
 msgid "Add Emissions"
-msgstr "Emisyon Ekleme"
+msgstr "Emisyon Değeri Ekleme"
 
 #. module: esg_hr_fleet
 #: model:ir.actions.act_window,name:esg_hr_fleet.employee_commuting_emissions_wizard_action
-#, fuzzy
 msgid "Add Employee Commuting Emissions"
-msgstr "Çalışanların İşe Gidiş Geliş Emisyonlarını Ekleyin"
+msgstr "Çalışanların İşe Gidiş Geliş Emisyon Değerlerini Ekleyin"
 
 #. module: esg_hr_fleet
 #. odoo-javascript
@@ -47,9 +46,8 @@ msgstr "ok simgesi"
 
 #. module: esg_hr_fleet
 #: model_terms:ir.ui.view,arch_db:esg_hr_fleet.res_config_settings_view_form
-#, fuzzy
 msgid "Average number of days per week employees commute to the office."
-msgstr "Çalışanların haftada ortalama kaç gün ofise gidip geldiği."
+msgstr "Çalışanların haftalık ortalama ofise gidiş-geliş sayısı"
 
 #. module: esg_hr_fleet
 #: model:ir.model,name:esg_hr_fleet.model_res_company
@@ -70,9 +68,8 @@ msgstr "Yapılandırma Ayarları"
 #. module: esg_hr_fleet
 #. odoo-python
 #: code:addons/esg_hr_fleet/wizard/employee_commuting_emissions_wizard.py:0
-#, fuzzy
 msgid "Conflicting Emissions"
-msgstr "Çakışan Emisyonlar"
+msgstr "Çelişkili Emisyon Değerleri"
 
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_employee_commuting_emissions_wizard__create_uid
@@ -111,7 +108,6 @@ msgstr "İsim Göster"
 
 #. module: esg_hr_fleet
 #: model_terms:ir.ui.view,arch_db:esg_hr_fleet.employee_commuting_emissions_wizard_form
-#, fuzzy
 msgid "Do you want to generate an Emitted Emission for Employee Commuting?"
 msgstr ""
 "Çalışanların işe gidip gelmeleri için bir Emisyon Salınımı oluşturmak "
@@ -134,20 +130,17 @@ msgstr "ESG"
 
 #. module: esg_hr_fleet
 #: model:ir.model,name:esg_hr_fleet.model_esg_employee_commuting_report
-#, fuzzy
 msgid "ESG Employee Commuting Report"
 msgstr "ESG Çalışan İşe Gidiş Geliş Raporu"
 
 #. module: esg_hr_fleet
 #. odoo-python
 #: code:addons/esg_hr_fleet/wizard/employee_commuting_emissions_wizard.py:0
-#, fuzzy
 msgid "Emission successfully created"
 msgstr "Emisyon başarıyla oluşturuldu"
 
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_employee_commuting_emissions_wizard__date_start
-#, fuzzy
 msgid "Emissions Period"
 msgstr "Emisyon Dönemi"
 
@@ -157,26 +150,22 @@ msgstr "Emisyon Dönemi"
 #: model:ir.actions.act_window,name:esg_hr_fleet.action_employee_commuting_report_views
 #: model:ir.ui.menu,name:esg_hr_fleet.menu_esg_employee_commuting
 #: model_terms:ir.ui.view,arch_db:esg_hr_fleet.employee_commuting_report_pivot
-#, fuzzy
 msgid "Employee Commuting"
 msgstr "Çalışan Taşımacılığı"
 
 #. module: esg_hr_fleet
 #: model_terms:ir.ui.view,arch_db:esg_hr_fleet.res_config_settings_view_form
-#, fuzzy
 msgid "Employee Commuting Emission"
 msgstr "Çalışan İşe Gidiş Geliş Emisyonu"
 
 #. module: esg_hr_fleet
 #. odoo-python
 #: code:addons/esg_hr_fleet/wizard/employee_commuting_emissions_wizard.py:0
-#, fuzzy
 msgid "Employee commuting from %(start_date)s to %(end_date)s"
-msgstr "Çalışan %(start_date)s adresinden %(end_date)s"
+msgstr "Çalışan %(start_date)s tarihinden %(end_date)s"
 
 #. module: esg_hr_fleet
 #: model:ir.model,name:esg_hr_fleet.model_employee_commuting_emissions_wizard
-#, fuzzy
 msgid "Generate emitted emissions from employee commuting"
 msgstr "Çalışanların işe gidip gelmesinden kaynaklanan emisyonlar"
 
@@ -197,9 +186,8 @@ msgstr "ID"
 
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_esg_other_emission__is_fleet
-#, fuzzy
 msgid "Is Fleet"
-msgstr "Is Filo Yönetimi"
+msgstr "Filo"
 
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_employee_commuting_emissions_wizard__write_uid
@@ -213,13 +201,11 @@ msgstr "Son Güncelleme"
 
 #. module: esg_hr_fleet
 #: model_terms:ir.actions.act_window,help:esg_hr_fleet.action_employee_commuting_report_views
-#, fuzzy
 msgid "No commuting data available."
 msgstr "İşe gidip gelme verileri mevcut değildir."
 
 #. module: esg_hr_fleet
 #: model:ir.model,name:esg_hr_fleet.model_esg_other_emission
-#, fuzzy
 msgid "Other Emission"
 msgstr "Diğer Emisyonlar"
 
@@ -231,9 +217,8 @@ msgstr "Kaydet"
 #. module: esg_hr_fleet
 #. odoo-javascript
 #: code:addons/esg_hr_fleet/static/src/fields/conflicting_emission_ids_field.xml:0
-#, fuzzy
 msgid "See conflicting emissions"
-msgstr "Çelişkili emisyonlara bakın"
+msgstr "Çelişkili emisyonları görün"
 
 #. module: esg_hr_fleet
 #: model:ir.actions.act_window,name:esg_hr_fleet.action_esg_configuration
@@ -243,14 +228,12 @@ msgstr "Ayarlar"
 
 #. module: esg_hr_fleet
 #: model:ir.model.constraint,message:esg_hr_fleet.constraint_res_company_weekly_days_at_office_check
-#, fuzzy
 msgid "The Weekly Days at the Office must be a value between 0 and 7."
 msgstr "Ofisteki Haftalık Gün sayısı 0 ile 7 arasında bir değer olmalıdır."
 
 #. module: esg_hr_fleet
 #. odoo-javascript
 #: code:addons/esg_hr_fleet/static/src/fields/conflicting_emission_ids_field.xml:0
-#, fuzzy
 msgid ""
 "There are already employee commuting emissions covering the following dates:"
 msgstr ""
@@ -259,13 +242,12 @@ msgstr ""
 
 #. module: esg_hr_fleet
 #: model_terms:ir.actions.act_window,help:esg_hr_fleet.action_employee_commuting_report_views
-#, fuzzy
 msgid ""
 "Track commuting emissions based on each employee’s distance from home to the "
 "office and the emission factor of their vehicle model."
 msgstr ""
-"Her çalışanın evden ofise olan mesafesine ve araç modelinin emisyon "
-"faktörüne dayalı olarak işe gidip gelme emisyonlarını takip edin."
+"Çalışanların evden ofise olan mesafesine ve araç modelinin emisyon faktörüne "
+"dayalı olarak işe gidip gelme emisyonlarını takip edin."
 
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_esg_employee_commuting_report__vehicle_id
@@ -275,19 +257,16 @@ msgstr "Araç"
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_res_company__weekly_days_at_office
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_res_config_settings__weekly_days_at_office
-#, fuzzy
 msgid "Weekly Days At Office"
-msgstr "Ofiste Haftalık Günler"
+msgstr "Ofis Günleri"
 
 #. module: esg_hr_fleet
 #: model_terms:ir.ui.view,arch_db:esg_hr_fleet.res_config_settings_view_form
-#, fuzzy
 msgid "Weekly Office Attendance"
 msgstr "Haftalık Ofis Devamlılığı"
 
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_esg_employee_commuting_report__co2
-#, fuzzy
 msgid "gCO₂/km"
 msgstr "gCO₂/km"
 
@@ -298,6 +277,5 @@ msgstr "km"
 
 #. module: esg_hr_fleet
 #: model:ir.model.fields,field_description:esg_hr_fleet.field_esg_employee_commuting_report__total_co2
-#, fuzzy
 msgid "tCO₂"
 msgstr "tCO₂"

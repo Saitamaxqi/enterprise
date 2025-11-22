@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-12 15:06+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "ai_website/tr/>\n"
 "Language: tr\n"
@@ -29,14 +30,12 @@ msgstr "Yapay Zeka"
 
 #. module: ai_website
 #: model_terms:ir.ui.view,arch_db:ai_website.snippets
-#, fuzzy
 msgid "AI Livechat"
 msgstr "AI Livechat"
 
 #. module: ai_website
 #. odoo-javascript
 #: code:addons/ai_website/static/src/components/dialog/add_page_dialog.js:0
-#, fuzzy
 msgid "Concise"
 msgstr "Kısa ve öz"
 
@@ -49,14 +48,12 @@ msgstr "Oluştur"
 #. module: ai_website
 #. odoo-javascript
 #: code:addons/ai_website/static/src/components/dialog/add_page_dialog.js:0
-#, fuzzy
 msgid "Create with AI"
 msgstr "Yapay zeka ile yaratın"
 
 #. module: ai_website
 #. odoo-javascript
 #: code:addons/ai_website/static/src/components/dialog/add_page_dialog.xml:0
-#, fuzzy
 msgid "Describe the page with keywords..."
 msgstr "Sayfayı anahtar kelimelerle tanımlayın..."
 
@@ -68,21 +65,18 @@ msgstr "İsim Göster"
 #. module: ai_website
 #. odoo-javascript
 #: code:addons/ai_website/static/src/components/dialog/add_page_dialog.js:0
-#, fuzzy
 msgid "Friendly"
 msgstr "Dostça"
 
 #. module: ai_website
 #. odoo-javascript
 #: code:addons/ai_website/static/src/components/dialog/add_page_dialog.xml:0
-#, fuzzy
 msgid "Generate text"
 msgstr "Metin oluşturun"
 
 #. module: ai_website
 #. odoo-javascript
 #: code:addons/ai_website/static/src/components/dialog/add_page_dialog.xml:0
-#, fuzzy
 msgid "Generating content..."
 msgstr "İçerik üretme..."
 
@@ -94,7 +88,6 @@ msgstr "ID"
 #. module: ai_website
 #. odoo-javascript
 #: code:addons/ai_website/static/src/components/dialog/add_page_dialog.js:0
-#, fuzzy
 msgid "Informative"
 msgstr "Bilgilendirici"
 
@@ -112,7 +105,6 @@ msgstr "Sayfa"
 #. module: ai_website
 #. odoo-javascript
 #: code:addons/ai_website/static/src/components/dialog/add_page_dialog.js:0
-#, fuzzy
 msgid "Persuasive"
 msgstr "İkna edici"
 
@@ -125,6 +117,5 @@ msgstr "Profesyonel"
 #. module: ai_website
 #. odoo-javascript
 #: code:addons/ai_website/static/src/components/dialog/add_page_dialog.xml:0
-#, fuzzy
 msgid "Tone Selection"
 msgstr "Ton Seçimi"

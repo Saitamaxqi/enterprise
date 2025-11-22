@@ -3,12 +3,13 @@
 # * ai_website_livechat
 #
 # "Kwanghee Park (kwpa)" <kwpa@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-12 06:09+0000\n"
+"PO-Revision-Date: 2025-11-20 08:15+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "ai_website_livechat/ko/>\n"
@@ -22,7 +23,7 @@ msgstr ""
 #. module: ai_website_livechat
 #: model_terms:ir.ui.view,arch_db:ai_website_livechat.s_ai_livechat
 msgid "<span class=\"text-muted flex-grow-1\">Ask AI</span>"
-msgstr ""
+msgstr "<span class=\"text-muted flex-grow-1\">AI에 질문하기</span>"
 
 #. module: ai_website_livechat
 #: model_terms:ir.ui.view,arch_db:ai_website_livechat.snippets
@@ -54,7 +55,7 @@ msgstr "AI에게 물어보기"
 #: code:addons/ai_website_livechat/static/src/website/components/ai_livechat_component/ai_livechat.xml:0
 #: code:addons/ai_website_livechat/static/src/website/interactions/edit/ai_livechat.edit.xml:0
 msgid "Ask a Human"
-msgstr ""
+msgstr "상담원과 대화"
 
 #. module: ai_website_livechat
 #. odoo-javascript

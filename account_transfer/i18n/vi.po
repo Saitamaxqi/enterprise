@@ -1,24 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_auto_transfer
+# * account_auto_transfer
 #
 # Translators:
 # Martin Trigaux, 2022
 # Nancy Momoland <thanhnguyen.icsc@gmail.com>, 2023
-#
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Nancy Momoland <thanhnguyen.icsc@gmail.com>, 2023\n"
-"Language-Team: Vietnamese (https://app.transifex.com/odoo/teams/41243/vi/)\n"
+"PO-Revision-Date: 2025-11-16 05:24+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
+"account_transfer/vi/>\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
@@ -41,12 +43,12 @@ msgstr ""
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Account"
-msgstr ""
+msgstr "Tài khoản"
 
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_chart_template
 msgid "Account Chart Template"
-msgstr ""
+msgstr "Mẫu sơ đồ tài khoản"
 
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_transfer_model
@@ -66,18 +68,18 @@ msgstr ""
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Accounts"
-msgstr ""
+msgstr "Các tài khoản"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__active
 msgid "Active"
-msgstr ""
+msgstr "Đang hoạt động"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_search
 msgid "Archived"
-msgstr ""
+msgstr "Đã lưu trữ"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__company_id
@@ -97,7 +99,7 @@ msgstr "Tính toàn kết chuyển"
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__conditions
 msgid "Conditions"
-msgstr ""
+msgstr "Điều kiện"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__create_uid
@@ -119,7 +121,7 @@ msgstr "Mô tả"
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Destination"
-msgstr ""
+msgstr "Điểm đến"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__account_id
@@ -159,7 +161,7 @@ msgstr "Tên hiển thị"
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Enable"
-msgstr ""
+msgstr "Bật"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__frequency
@@ -201,12 +203,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_transfer/demo/account_demo.py:0
 msgid "IFRS rent expense transfer"
-msgstr ""
+msgstr "Luân chuyển chi phí thuê IRRS"
 
 #. module: account_transfer
 #: model:ir.model.fields.selection,name:account_transfer.selection__account_transfer_model__state__in_progress
 msgid "In Progress"
-msgstr ""
+msgstr "Đang thực hiện"
 
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_journal
@@ -222,12 +224,12 @@ msgstr "Bút toán sổ nhật ký"
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Hạng mục bút toán"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Keep Original"
-msgstr ""
+msgstr "Giữ lại Bản gốc"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__write_uid
@@ -323,7 +325,7 @@ msgstr "Hàng quý"
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Rate (%)"
-msgstr ""
+msgstr "Tỷ lệ (%)"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__sequence
@@ -349,7 +351,7 @@ msgstr "Ngày dừng"
 #. odoo-python
 #: code:addons/account_transfer/models/transfer_model.py:0
 msgid "The total percentage (%s) should be less or equal to 100!"
-msgstr ""
+msgstr "Tổng tỷ lệ phần trăm (%s) phải nhỏ hơn hoặc bằng 100!"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__total_percent
@@ -389,7 +391,7 @@ msgstr "Hàng năm"
 #. odoo-python
 #: code:addons/account_transfer/demo/account_demo.py:0
 msgid "Yearly liabilites auto transfers"
-msgstr ""
+msgstr "Luân chuyển tự động nợ hàng năm"
 
 #. module: account_transfer
 #. odoo-python
@@ -420,7 +422,7 @@ msgstr "ví dụ. Chi phí kết chuyển hàng tháng"
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "forever"
-msgstr ""
+msgstr "mãi mãi"
 
 #~ msgid "Activate"
 #~ msgstr "Kích hoạt"

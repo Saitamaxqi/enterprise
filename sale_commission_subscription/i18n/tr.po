@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:51+0000\n"
-"PO-Revision-Date: 2025-11-12 15:07+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:42+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "sale_commission_subscription/tr/>\n"
 "Language: tr\n"
@@ -22,7 +23,6 @@ msgstr ""
 
 #. module: sale_commission_subscription
 #: model:ir.model,name:sale_commission_subscription.model_sale_commission_plan_achievement
-#, fuzzy
 msgid "Commission Plan Achievement"
 msgstr "Komisyon Planı Başarısı"
 
@@ -50,7 +50,6 @@ msgstr "Yinelenen Plan"
 
 #. module: sale_commission_subscription
 #: model:ir.model,name:sale_commission_subscription.model_sale_commission_achievement_report
-#, fuzzy
 msgid "Sales Achievement Report"
 msgstr "Satış Başarı Raporu"
 
@@ -62,13 +61,15 @@ msgstr "Tür"
 #. module: sale_commission_subscription
 #. odoo-python
 #: code:addons/sale_commission_subscription/model/commission_plan_achievement.py:0
-#, fuzzy
 msgid "You cannot have Product or Category constraints on MRR achievements."
-msgstr "MRR başarılarında Ürün veya Kategori kısıtlamalarınız olamaz."
+msgstr ""
+"MRR (Aylik Tekrar Eden Abonelik Geliri) başarılarında Ürün veya Kategori "
+"kısıtlamalarınız olamaz."
 
 #. module: sale_commission_subscription
 #. odoo-python
 #: code:addons/sale_commission_subscription/model/commission_plan_achievement.py:0
-#, fuzzy
 msgid "You cannot have Recurring Plan constraint on SO achievements."
-msgstr "SO başarıları üzerinde Yinelenen Plan kısıtlamasına sahip olamazsınız."
+msgstr ""
+"Satis emri başarıları üzerinde Yinelenen Plan kısıtlamasına sahip "
+"olamazsınız."

@@ -20,13 +20,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-11-12 14:56+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "industry_fsm/tr/>\n"
 "Language: tr\n"
@@ -82,7 +83,6 @@ msgstr "5 gün"
 
 #. module: industry_fsm
 #: model:mail.template,body_html:industry_fsm.mail_template_data_intervention_details
-#, fuzzy
 msgid ""
 "<div>\n"
 "    <t t-set=\"date_begin\" t-"
@@ -125,12 +125,12 @@ msgstr ""
 "    Sayın <t t-out=\"object.partner_id.name or 'customer'\">müşterisi</t>,<"
 "br/><br/>\n"
 "   <t t-if=\"date_begin and date_end\">\n"
-"        <t t-out=\"object.name or ''\"> Kombi bakım</t> müdahaleniz <t t-out="
+"        <t t-out=\"object.name or ''\"> Kombi bakım</t> işleminiz <t t-out="
 "\"date_begin or ''\">05/31/2021 12:30:00</t> ile <t t-out=\"date_end or ''\">"
 "05/31/2021 14:30:00</t> arasında planlanmıştır.\n"
 "   </t>\n"
 "    <t t-else=\"\">\n"
-"        <t t-out=\"object.name or ''\"> Kazan bakımınız</t> müdahalesi "
+"        <t t-out=\"object.name or ''\"> Kombi bakımınız</t> işleminiz "
 "planlanmıştır.\n"
 "   </t>\n"
 "    <br/><br/>\n"
@@ -187,7 +187,6 @@ msgstr ""
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.view_task_form2_inherit
-#, fuzzy
 msgid "<span class=\"o_stat_text text-wrap\">Customer Preview</span>"
 msgstr "<span class=\"o_stat_text text-wrap\">Müşteri Önizlemesi</span>"
 
@@ -238,7 +237,6 @@ msgstr "<strong>Müşteri: </strong>"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.worksheet_custom_page
-#, fuzzy
 msgid "<strong>Technician: </strong>"
 msgstr "<strong>Teknisyen: </strong>"
 
@@ -278,7 +276,6 @@ msgstr "Tüm Görevler Sunucu Eylemi"
 #. module: industry_fsm
 #. odoo-python
 #: code:addons/industry_fsm/models/project_task.py:0
-#, fuzzy
 msgid "All running timers should be linked to a timesheet and a task."
 msgstr ""
 "Çalışan tüm zamanlayıcılar bir çalışma çizelgesine ve bir göreve "
@@ -296,7 +293,6 @@ msgstr "Analitik Satırı"
 
 #. module: industry_fsm
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_user_action_report_fsm
-#, fuzzy
 msgid ""
 "Analyze the progress of your tasks and the performance of your technicians."
 msgstr ""
@@ -401,7 +397,6 @@ msgstr ""
 
 #. module: industry_fsm
 #: model:ir.model,name:industry_fsm.model_hr_timesheet_stop_timer_confirmation_wizard
-#, fuzzy
 msgid "Confirm timesheet creation when stop timer"
 msgstr "Zamanlayıcıyı durdurduğunuzda Çalışma Çizelgeleri oluşturmayı onaylayın"
 
@@ -434,7 +429,6 @@ msgstr "Oluşturma Tarihi"
 
 #. module: industry_fsm
 #: model:ir.model,website_form_label:industry_fsm.model_res_partner
-#, fuzzy
 msgid "Create a Customer"
 msgstr "Müşteri Oluşturma"
 
@@ -653,14 +647,12 @@ msgstr "Sonraki Aktiviteler"
 #. module: industry_fsm
 #. odoo-python
 #: code:addons/industry_fsm/models/project_task.py:0
-#, fuzzy
 msgid "GPS Coordinates: %(localisation_start)s (%(latitude)s, %(longitude)s)"
 msgstr "GPS Koordinatları: %(localisation_start)s (%(latitude)s, %(longitude)s)"
 
 #. module: industry_fsm
 #. odoo-python
 #: code:addons/industry_fsm/wizard/hr_timesheet_stop_timer_confirmation_wizard.py:0
-#, fuzzy
 msgid "GPS Coordinates: %(localisation_stop)s (%(latitude)s, %(longitude)s)"
 msgstr "GPS Koordinatları: %(localisation_stop)s (%(latitude)s, %(longitude)s)"
 
@@ -682,7 +674,6 @@ msgstr ""
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__has_template_ancestor
-#, fuzzy
 msgid "Has Template Ancestor"
 msgstr "Şablon Atası Var"
 
@@ -738,7 +729,6 @@ msgstr "Şablon"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.worksheet_custom_page
-#, fuzzy
 msgid "Jane Technician"
 msgstr "Jane Teknisyen"
 
@@ -810,7 +800,6 @@ msgstr "İlk <b>görevimizi</b> oluşturalım."
 #. module: industry_fsm
 #. odoo-javascript
 #: code:addons/industry_fsm/static/src/js/tours/industry_fsm_tour.js:0
-#, fuzzy
 msgid "Let's start from scratch."
 msgstr "Sıfırdan başlayalım."
 
@@ -823,14 +812,12 @@ msgstr "Satır"
 #. odoo-python
 #: code:addons/industry_fsm/models/project_task.py:0
 #: code:addons/industry_fsm/wizard/hr_timesheet_stop_timer_confirmation_wizard.py:0
-#, fuzzy
 msgid "Location error"
 msgstr "Konum hatası"
 
 #. module: industry_fsm
 #. odoo-javascript
 #: code:addons/industry_fsm/static/src/services/timer_geolocation_service.js:0
-#, fuzzy
 msgid "Location error: %s"
 msgstr "Konum hatası: %s"
 
@@ -1110,7 +1097,6 @@ msgstr "Raporlama"
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_action_fsm_planning_groupby_user2
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_action_to_schedule_fsm
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_action_to_schedule_fsm2
-#, fuzzy
 msgid "Schedule your tasks and assign them to your technicians."
 msgstr "Görevlerinizi planlayın ve teknisyenlerinize atayın."
 
@@ -1153,7 +1139,6 @@ msgstr "Ayarlar"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_view_search_fsm
-#, fuzzy
 msgid "Show all records whose next activity date is past"
 msgstr "Bir sonraki etkinlik tarihi geçmiş olan tüm kayıtları göster"
 
@@ -1448,7 +1433,6 @@ msgstr "Bugünkü Aktiviteler"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_view_form_inherit
-#, fuzzy
 msgid "Track technician location when running the timer"
 msgstr "Zamanlayıcıyı çalıştırırken teknisyenin konumunu takip edin"
 
@@ -1456,7 +1440,6 @@ msgstr "Zamanlayıcıyı çalıştırırken teknisyenin konumunu takip edin"
 #: model:ir.model.fields,help:industry_fsm.field_hr_timesheet_stop_timer_confirmation_wizard__allow_geolocation
 #: model:ir.model.fields,help:industry_fsm.field_project_project__allow_geolocation
 #: model:ir.model.fields,help:industry_fsm.field_project_task__allow_geolocation
-#, fuzzy
 msgid "Track technician location when running the timer."
 msgstr "Zamanlayıcıyı çalıştırırken teknisyenin konumunu takip edin."
 
@@ -1474,7 +1457,6 @@ msgstr "Okunmamış Mesajlar"
 
 #. module: industry_fsm
 #: model:ir.model.fields,help:industry_fsm.field_project_task__display_name
-#, fuzzy
 msgid ""
 "Use these keywords in the title to set new tasks:\n"
 "\n"
@@ -1492,13 +1474,13 @@ msgstr ""
 "\n"
 "        30h Göreve 30 saat ayırın\n"
 "        #tags Görevdeki etiketleri ayarlayın\n"
-"        kullanıcı Görevi bir kullanıcıya atayın\n"
+"        @user Görevi bir kullanıcıya atayın\n"
 "        ! Görevi orta öncelikli olarak ayarlayın\n"
 "        !! Görevi yüksek öncelikli olarak ayarlayın\n"
 "        !!! Görevi acil bir öncelik olarak belirleyin\n"
 "\n"
 "        Doğru formatı ve sırayı kullandığınızdan emin olun, örneğin "
-"Yapılandırma ekranını iyileştirin 5h #özellik #v16 @Mitchell !"
+"Yapılandırma ekranını iyileştirin 5h #feature #v16 @Mitchell !"
 
 #. module: industry_fsm
 #: model:res.groups,name:industry_fsm.group_fsm_user
@@ -1514,7 +1496,6 @@ msgstr "Programı Görüntüle"
 #. odoo-python
 #: code:addons/industry_fsm/models/project_task.py:0
 #: code:addons/industry_fsm/wizard/hr_timesheet_stop_timer_confirmation_wizard.py:0
-#, fuzzy
 msgid "View on Map"
 msgstr "Haritada Görüntüle"
 

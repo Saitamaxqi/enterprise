@@ -3,13 +3,14 @@
 # * voip_ai
 #
 # "Manon Rondou (ronm)" <ronm@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:50+0000\n"
-"PO-Revision-Date: 2025-10-15 09:13+0000\n"
-"Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
+"PO-Revision-Date: 2025-11-17 03:09+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/voip_ai/"
 "fr/>\n"
 "Language: fr\n"
@@ -39,7 +40,7 @@ msgstr ""
 #. module: voip_ai
 #: model:ir.model.fields.selection,name:voip_ai.selection__voip_provider__transcription_policy__disabled
 msgid "Disable"
-msgstr ""
+msgstr "Désactiver"
 
 #. module: voip_ai
 #: model:ir.model.fields,field_description:voip_ai.field_res_users__display_name
@@ -51,12 +52,12 @@ msgstr "Nom d'affichage"
 #. module: voip_ai
 #: model:ir.model.fields.selection,name:voip_ai.selection__voip_call__transcription_status__done
 msgid "Done"
-msgstr ""
+msgstr "Fait"
 
 #. module: voip_ai
 #: model:ir.model.fields.selection,name:voip_ai.selection__voip_call__transcription_status__error
 msgid "Error"
-msgstr ""
+msgstr "Erreur"
 
 #. module: voip_ai
 #: model:ir.model.fields.selection,name:voip_ai.selection__voip_provider__transcription_policy__always
@@ -78,23 +79,23 @@ msgstr ""
 #. module: voip_ai
 #: model:ir.model.fields.selection,name:voip_ai.selection__voip_call__transcription_status__pending
 msgid "Pending"
-msgstr ""
+msgstr "En attente"
 
 #. module: voip_ai
 #: model:ir.model,name:voip_ai.model_voip_call
 msgid "Phone call"
-msgstr ""
+msgstr "Appel téléphonique"
 
 #. module: voip_ai
 #: model:ir.model.fields.selection,name:voip_ai.selection__voip_call__transcription_status__queued
 msgid "Queued"
-msgstr ""
+msgstr "En file d'attente"
 
 #. module: voip_ai
 #: model:ir.model.fields,field_description:voip_ai.field_voip_call__summary
 #: model_terms:ir.ui.view,arch_db:voip_ai.voip_call_view_form_summary
 msgid "Summary"
-msgstr ""
+msgstr "Résumé"
 
 #. module: voip_ai
 #. odoo-javascript
@@ -154,9 +155,9 @@ msgstr ""
 #. module: voip_ai
 #: model:ir.model,name:voip_ai.model_res_users
 msgid "User"
-msgstr ""
+msgstr "Utilisateur"
 
 #. module: voip_ai
 #: model:ir.model,name:voip_ai.model_voip_provider
 msgid "VoIP Provider"
-msgstr ""
+msgstr "Fournisseur VoIP"

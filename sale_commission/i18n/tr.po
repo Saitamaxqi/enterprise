@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:51+0000\n"
-"PO-Revision-Date: 2025-11-12 15:06+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "sale_commission/tr/>\n"
 "Language: tr\n"
@@ -24,7 +25,6 @@ msgstr ""
 #. module: sale_commission
 #. odoo-python
 #: code:addons/sale_commission/model/commission_plan_achievement.py:0
-#, fuzzy
 msgid "%(plan)s - %(type)s %(product)s %(categ)s"
 msgstr "%(plan)s - %(type)s %(product)s %(categ)s"
 
@@ -42,7 +42,6 @@ msgstr "%s (kopya)"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_plan_view_form
-#, fuzzy
 msgid "<span class=\"o_stat_text\">Commissions</span>"
 msgstr "<span class=\"o_stat_text\">Komisyonlar</span>"
 
@@ -56,19 +55,16 @@ msgstr "Gerçekleşen"
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_achievement_report__target_rate
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_report__achieved_rate
-#, fuzzy
 msgid "Achieved Rate"
 msgstr "Ulaşılan Oran"
 
 #. module: sale_commission
 #: model:ir.model.fields,help:sale_commission.field_sale_commission_achievement_report__commission_rate
-#, fuzzy
 msgid "Achieved over the commission target amount"
 msgstr "Komisyon hedef tutarının üzerinde gerçekleşti"
 
 #. module: sale_commission
 #: model:ir.model.fields,help:sale_commission.field_sale_commission_achievement_report__target_rate
-#, fuzzy
 msgid "Achieved over the target of that period, meaningless in group by"
 msgstr "O dönemin hedefine ulaşıldı, grup içinde anlamsız"
 
@@ -79,13 +75,11 @@ msgstr "Başarı"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_res_config_settings__group_commission_forecast
-#, fuzzy
 msgid "Achievement Forecast"
 msgstr "Başarı Tahmini"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_achievement_report_view_search
-#, fuzzy
 msgid "Achievement Report"
 msgstr "Başarı Raporu"
 
@@ -110,38 +104,32 @@ msgstr "Etkin"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_report_view_search
-#, fuzzy
 msgid "Active Plans"
 msgstr "Aktif Planlar"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_plan_user_wizard
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_plan_view_form
-#, fuzzy
 msgid "Add Multiple Salespersons"
 msgstr "Birden Fazla Satış Elemanı Ekleme"
 
 #. module: sale_commission
 #: model:ir.actions.act_window,name:sale_commission.sale_subscription_change_customer_wizard_action
-#, fuzzy
 msgid "Add Salespersons"
 msgstr "Satış Elemanı Ekleme"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_plan_view_form
-#, fuzzy
 msgid "Add a new Sales Person"
 msgstr "Yeni bir Satış Personeli Ekleme"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_plan_view_form
-#, fuzzy
 msgid "Add a new achievement"
 msgstr "Yeni bir başarı ekleyin"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_plan_view_form
-#, fuzzy
 msgid "Add a new commission level"
 msgstr "Yeni bir komisyon seviyesi ekleyin"
 
@@ -153,14 +141,12 @@ msgstr "Ekle:"
 #. module: sale_commission
 #. odoo-python
 #: code:addons/sale_commission/model/commission_achievement.py:0
-#, fuzzy
 msgid "Adjustment %s"
 msgstr "Ayarlama %s"
 
 #. module: sale_commission
 #. odoo-python
 #: code:addons/sale_commission/model/commission_achievement.py:0
-#, fuzzy
 msgid "Adjustment: %s"
 msgstr "Ayarlama: %s"
 
@@ -182,7 +168,6 @@ msgstr "Tüm Ürünler"
 
 #. module: sale_commission
 #: model_terms:ir.actions.act_window,help:sale_commission.sale_commission_action_achievement
-#, fuzzy
 msgid ""
 "Allows you to manually adjust a salesperson's achievements\n"
 "                for a specific period and commission plan."
@@ -192,7 +177,6 @@ msgstr ""
 
 #. module: sale_commission
 #: model_terms:ir.actions.act_window,help:sale_commission.sale_commission_action_forecast
-#, fuzzy
 msgid ""
 "Allows you to manually set a salesperson's forecast\n"
 "                for a specific period and commission plan."
@@ -202,7 +186,6 @@ msgstr ""
 
 #. module: sale_commission
 #: model_terms:ir.actions.act_window,help:sale_commission.sale_commission_action_my_forecast
-#, fuzzy
 msgid ""
 "Allows you to manually set your sales' forecast\n"
 "                for a specific period and commission plan."
@@ -212,13 +195,11 @@ msgstr ""
 
 #. module: sale_commission
 #: model:ir.model.fields.selection,name:sale_commission.selection__sale_commission_plan_achievement__type__amount_invoiced
-#, fuzzy
 msgid "Amount Invoiced"
 msgstr "Faturalanan Tutar"
 
 #. module: sale_commission
 #: model:ir.model.fields.selection,name:sale_commission.selection__sale_commission_plan_achievement__type__amount_sold
-#, fuzzy
 msgid "Amount Sold"
 msgstr "Satılan Miktar"
 
@@ -274,14 +255,12 @@ msgstr "Komisyon"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_achievement_view_search
-#, fuzzy
 msgid "Commission Achievement"
 msgstr "Komisyon Başarısı"
 
 #. module: sale_commission
 #. odoo-python
 #: code:addons/sale_commission/report/commission_report.py:0
-#, fuzzy
 msgid "Commission Detail: %(name)s"
 msgstr "Komisyon detayı: %(name)s"
 
@@ -299,32 +278,27 @@ msgstr "Komisyon Planı"
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_commission_plan_achievement
-#, fuzzy
 msgid "Commission Plan Achievement"
 msgstr "Komisyon Planı Başarısı"
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_commission_plan_target
-#, fuzzy
 msgid "Commission Plan Target"
 msgstr "Komisyon Planı Hedefi"
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_commission_plan_target_commission
-#, fuzzy
 msgid "Commission Plan Target Commission"
 msgstr "Komisyon Plan Hedef Komisyon"
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_commission_plan_target_forecast
-#, fuzzy
 msgid "Commission Plan Target Forecast"
 msgstr "Komisyon Planı Hedef Tahmini"
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_commission_plan_user
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_plan_user_view_search
-#, fuzzy
 msgid "Commission Plan User"
 msgstr "Komisyon Planı Kullanıcısı"
 
@@ -336,25 +310,21 @@ msgstr "Komisyon Planları"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_achievement_report__commission_rate
-#, fuzzy
 msgid "Commission Rate"
 msgstr "Komisyon Oranı"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_report_view_search
-#, fuzzy
 msgid "Commission Report"
 msgstr "Komisyon Raporu"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_achievement_report_view_list
-#, fuzzy
 msgid "Commission Target"
 msgstr "Komisyon Hedefi"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_achievement_report__commission_target_amount
-#, fuzzy
 msgid "Commission Target Amount"
 msgstr "Komisyon Hedef Tutarı"
 
@@ -365,7 +335,6 @@ msgstr "Komisyon planları"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_plan_view_form
-#, fuzzy
 msgid "Commission table"
 msgstr "Komisyon tablosu"
 
@@ -397,7 +366,6 @@ msgstr "Tamamlandı"
 
 #. module: sale_commission
 #: model_terms:ir.actions.act_window,help:sale_commission.sale_commission_action_plan
-#, fuzzy
 msgid ""
 "Compute commissions of your sales people based on their achievements and "
 "targets"
@@ -412,20 +380,17 @@ msgstr "Yapılandırma Ayarları"
 
 #. module: sale_commission
 #: model_terms:ir.actions.act_window,help:sale_commission.sale_commission_action_plan
-#, fuzzy
 msgid "Create a new commission plan"
 msgstr "Yeni bir komisyon planı oluşturun"
 
 #. module: sale_commission
 #: model_terms:ir.actions.act_window,help:sale_commission.sale_commission_action_achievement
-#, fuzzy
 msgid "Create an adjustment"
 msgstr "Bir ayarlama oluşturun"
 
 #. module: sale_commission
 #: model_terms:ir.actions.act_window,help:sale_commission.sale_commission_action_forecast
 #: model_terms:ir.actions.act_window,help:sale_commission.sale_commission_action_my_forecast
-#, fuzzy
 msgid "Create an forecast"
 msgstr "Bir tahmin oluşturun"
 
@@ -473,9 +438,8 @@ msgstr "Geçerli Kur"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_achievement_report_view_search
-#, fuzzy
 msgid "Current Period"
-msgstr "Cari Dönem"
+msgstr "Cari/Mevcut Dönem"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_achievement_report__partner_id
@@ -541,13 +505,11 @@ msgstr "Taslak"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_plan_view_form
-#, fuzzy
 msgid "Effective Period"
-msgstr "Geçerli Dönem"
+msgstr "Geçerli/Planda olan Dönem"
 
 #. module: sale_commission
 #: model:res.groups,name:sale_commission.group_commission_forecast
-#, fuzzy
 msgid "Enable Commission Forecast"
 msgstr "Komisyon Tahminini Etkinleştirin"
 
@@ -560,7 +522,6 @@ msgstr "Bitiş Tarihi"
 #: model_terms:ir.actions.act_window,help:sale_commission.sale_commission_action_my_report
 #: model_terms:ir.actions.act_window,help:sale_commission.sale_commission_action_report
 #: model_terms:ir.actions.act_window,help:sale_commission.sale_commission_action_report_sale
-#, fuzzy
 msgid ""
 "Ensure you are assigned to a commission plan and have made sales that "
 "qualify for commissions"
@@ -571,14 +532,12 @@ msgstr ""
 #. module: sale_commission
 #. odoo-python
 #: code:addons/sale_commission/model/commission_plan.py:0
-#, fuzzy
 msgid "Exporting targets is only available for plans based on targets"
 msgstr ""
 "Hedefleri dışa aktarma yalnızca hedeflere dayalı planlar için kullanılabilir"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_res_users__filtered_commission_plan_users_ids
-#, fuzzy
 msgid "Filtered Commission Plan Users"
 msgstr "Filtrelenmiş Komisyon Planı Kullanıcıları"
 
@@ -614,7 +573,6 @@ msgstr "Başlama"
 #. module: sale_commission
 #. odoo-python
 #: code:addons/sale_commission/model/commission_plan_user.py:0
-#, fuzzy
 msgid "From must be before To"
 msgstr "Kimden, Kime'den önce olmalıdır"
 
@@ -696,7 +654,6 @@ msgstr ""
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_commission_achievement
-#, fuzzy
 msgid "Manual Commission Achievement"
 msgstr "Manuel Komisyon Başarısı"
 
@@ -722,7 +679,6 @@ msgstr "Aylık"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_achievement_report_view_search
-#, fuzzy
 msgid "My Achievements"
 msgstr "Başarılarım"
 
@@ -730,13 +686,11 @@ msgstr "Başarılarım"
 #: model:ir.actions.act_window,name:sale_commission.sale_commission_action_my_report
 #: model:ir.ui.menu,name:sale_commission.sale_commission_my_menu
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_report_view_search
-#, fuzzy
 msgid "My Commissions"
 msgstr "Komisyonlarım"
 
 #. module: sale_commission
 #: model:ir.actions.act_window,name:sale_commission.sale_commission_action_my_forecast
-#, fuzzy
 msgid "My Forecast"
 msgstr "Benim Tahminim"
 
@@ -784,19 +738,16 @@ msgstr "OTC"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_plan_target_commission__amount_rate
-#, fuzzy
 msgid "OTC %"
-msgstr "OTC %"
+msgstr "OTC (Hedeflenen Komisyon Oranı) %"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_plan__commission_amount
-#, fuzzy
 msgid "On Target Commission"
 msgstr "Hedef Komisyonda"
 
 #. module: sale_commission
 #: model:ir.model.fields,help:sale_commission.field_sale_commission_plan_target_commission__amount_rate
-#, fuzzy
 msgid "On Target Commission rate"
 msgstr "Hedeflenen Komisyon Oranı"
 
@@ -807,7 +758,6 @@ msgstr "Devam eden"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_plan_user__other_plans
-#, fuzzy
 msgid "Other plans"
 msgstr "Diğer planlar"
 
@@ -869,7 +819,6 @@ msgstr "Ürün"
 
 #. module: sale_commission
 #: model:ir.model.fields.selection,name:sale_commission.selection__sale_commission_plan_achievement__type__qty_invoiced
-#, fuzzy
 msgid "Quantity Invoiced"
 msgstr "Faturalanan Miktar"
 
@@ -895,7 +844,6 @@ msgstr "Değerlendirmeler"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_achievement__reduce_user_id
-#, fuzzy
 msgid "Reduce From"
 msgstr "Şuradan Azaltın"
 
@@ -906,14 +854,12 @@ msgstr "İlişkili"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_achievement_report__related_res_model
-#, fuzzy
 msgid "Related Res Model"
 msgstr "İlgili Res Modeli"
 
 #. module: sale_commission
 #. odoo-python
 #: code:addons/sale_commission/model/commission_plan.py:0
-#, fuzzy
 msgid "Related commissions"
 msgstr "İlgili komisyonlar"
 
@@ -929,25 +875,21 @@ msgstr "SMS İleti hatası"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_plan__team_id
-#, fuzzy
 msgid "Sale team"
 msgstr "Satış ekibi"
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_commission_achievement_report
-#, fuzzy
 msgid "Sales Achievement Report"
 msgstr "Satış Başarı Raporu"
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_commission_report
-#, fuzzy
 msgid "Sales Commission Report"
 msgstr "Satış Komisyonu Raporu"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_plan_view_form
-#, fuzzy
 msgid "Sales People"
 msgstr "Satış Elemanları"
 
@@ -977,7 +919,6 @@ msgstr "Satış Temsilcisi"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_report_view_list
-#, fuzzy
 msgid "See associated achievements"
 msgstr "İlgili başarıları görün"
 
@@ -1003,13 +944,11 @@ msgstr "Gönder"
 
 #. module: sale_commission
 #: model:ir.model.fields,help:sale_commission.field_sale_commission_plan_target__payment_amount
-#, fuzzy
 msgid "Sum of amounts paid on the same payment date"
 msgstr "Aynı ödeme tarihinde ödenen tutarların toplamı"
 
 #. module: sale_commission
 #: model:ir.model.fields,help:sale_commission.field_sale_commission_achievement_report__commission_target_amount
-#, fuzzy
 msgid "Sum of target amount per plan paid on the same date"
 msgstr "Aynı tarihte ödenen plan başına hedef tutar toplamı"
 
@@ -1024,65 +963,55 @@ msgstr "Hedef"
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_achievement_report__target_amount
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_report__target_amount
-#, fuzzy
 msgid "Target Amount"
 msgstr "Hedef Miktar"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_plan__target_commission_ids
-#, fuzzy
 msgid "Target Commission"
 msgstr "Hedef Komisyon"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_plan__target_commission_graph
-#, fuzzy
 msgid "Target Commission Graph"
 msgstr "Hedef Komisyon Grafiği"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_plan_view_form
-#, fuzzy
 msgid "Target Frequency"
 msgstr "Hedef Frekans"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_plan_target_commission__target_rate
-#, fuzzy
 msgid "Target completion (%)"
 msgstr "Hedef tamamlama (%)"
 
 #. module: sale_commission
 #: model:ir.model.fields.selection,name:sale_commission.selection__sale_commission_plan__type__target
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_plan_view_form
-#, fuzzy
 msgid "Targets"
 msgstr "Hedefler"
 
 #. module: sale_commission
 #. odoo-python
 #: code:addons/sale_commission/model/commission_plan.py:0
-#, fuzzy
 msgid "The plan should have at least one target with an achievement rate of 0%"
-msgstr "Planda, gerçekleşme oranı %0 olan en az bir hedef bulunmalıdır%"
+msgstr "Planda, gerçekleşme oranı %0 olan en az bir hedef bulunmalıdır"
 
 #. module: sale_commission
 #. odoo-python
 #: code:addons/sale_commission/model/commission_plan.py:0
-#, fuzzy
 msgid "The start date must be before the end date."
 msgstr "Başlangıç tarihi bitiş tarihinden önce olmalıdır."
 
 #. module: sale_commission
 #. odoo-python
 #: code:addons/sale_commission/model/commission_plan.py:0
-#, fuzzy
 msgid "The team is required in team plan."
 msgstr "Ekip planında ekip gereklidir."
 
 #. module: sale_commission
 #: model:ir.model.constraint,message:sale_commission.constraint_sale_commission_plan_user_user_uniq
-#, fuzzy
 msgid "The user is already present in the plan"
 msgstr "Kullanıcı planda zaten mevcut"
 
@@ -1113,19 +1042,16 @@ msgstr "Toplam Gerçekleşen"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_report_view_list
-#, fuzzy
 msgid "Total Target"
 msgstr "Toplam Hedef"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_report_view_list
-#, fuzzy
 msgid "Total achieved"
 msgstr "Toplam elde edilen"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_report_view_list
-#, fuzzy
 msgid "Total commission"
 msgstr "Toplam komisyon"
 
@@ -1140,7 +1066,6 @@ msgstr "Tip"
 #: model_terms:ir.actions.act_window,help:sale_commission.sale_commission_action_my_report
 #: model_terms:ir.actions.act_window,help:sale_commission.sale_commission_action_report
 #: model_terms:ir.actions.act_window,help:sale_commission.sale_commission_action_report_sale
-#, fuzzy
 msgid "Unfortunately, there are no commissions for you"
 msgstr "Ne yazık ki, sizin için komisyon yok"
 
@@ -1171,14 +1096,12 @@ msgstr "Kullanıcı Türü"
 #. module: sale_commission
 #. odoo-python
 #: code:addons/sale_commission/model/commission_plan_user.py:0
-#, fuzzy
 msgid "User period cannot end after the plan."
 msgstr "Kullanıcı dönemi plandan sonra sona eremez."
 
 #. module: sale_commission
 #. odoo-python
 #: code:addons/sale_commission/model/commission_plan_user.py:0
-#, fuzzy
 msgid "User period cannot start before the plan."
 msgstr "Kullanıcı dönemi plandan önce başlayamaz."
 
@@ -1194,7 +1117,6 @@ msgstr "Websitesi iletişim geçmişi"
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_commission_plan_user_wizard
-#, fuzzy
 msgid "Wizard for selecting multiple users"
 msgstr "Birden fazla kullanıcı seçme sihirbazı"
 
@@ -1206,21 +1128,18 @@ msgstr "Yıllık"
 #. module: sale_commission
 #. odoo-python
 #: code:addons/sale_commission/model/commission_plan_target_forecast.py:0
-#, fuzzy
 msgid "You cannot create a forecast for an user that is not in the plan."
 msgstr "Planda olmayan bir kullanıcı için tahmin oluşturamazsınız."
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_report__forecast_id
-#, fuzzy
 msgid "fc"
 msgstr "fc"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_plan_view_form
-#, fuzzy
 msgid "i.e. Commissions plan 2025"
-msgstr "yani Komisyon planı 2025"
+msgstr "ornek: Komisyon planı 2025"
 
 #. module: sale_commission
 #: model_terms:ir.ui.view,arch_db:sale_commission.sale_commission_plan_view_form

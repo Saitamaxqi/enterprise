@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:47+0000\n"
+"POT-Creation-Date: 2025-11-21 18:42+0000\n"
 "PO-Revision-Date: 2025-10-30 17:23+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -470,21 +470,6 @@ msgid "Set employee on account line"
 msgstr "Asignar empleado en la línea de la cuenta"
 
 #. module: hr_payroll_account
-#. odoo-python
-#: code:addons/hr_payroll_account/models/hr_payslip.py:0
-msgid "Some contracts for these payslips have no structure type, employees: %s"
-msgstr ""
-"Algunos contratos de estos recibos de nómina no tienen tipo de estructura, "
-"empleados: %s"
-
-#. module: hr_payroll_account
-#. odoo-python
-#: code:addons/hr_payroll_account/models/hr_payslip.py:0
-msgid "Some payroll structures have no account journal defined on it: %s"
-msgstr ""
-"Algunas estructuras de los recibos de nómina no tienen un diario definido: %s"
-
-#. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_salary_rule__split_move_lines
 msgid "Split on names"
 msgstr "Dividir por nombres"
@@ -562,3 +547,14 @@ msgstr "No puede crear un asiento contable para un recibo de nómina pagado."
 #: code:addons/hr_payroll_account/models/account_journal.py:0
 msgid "You cannot delete the journal linked to a Salary Structure"
 msgstr "No puede eliminar el diario vinculado a una estructura salarial"
+
+#~ msgid ""
+#~ "Some contracts for these payslips have no structure type, employees: %s"
+#~ msgstr ""
+#~ "Algunos contratos de estos recibos de nómina no tienen tipo de "
+#~ "estructura, empleados: %s"
+
+#~ msgid "Some payroll structures have no account journal defined on it: %s"
+#~ msgstr ""
+#~ "Algunas estructuras de los recibos de nómina no tienen un diario "
+#~ "definido: %s"

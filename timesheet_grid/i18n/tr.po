@@ -19,13 +19,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-11-12 15:01+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "timesheet_grid/tr/>\n"
 "Language: tr\n"
@@ -42,13 +43,11 @@ msgstr "<i class=\"fa fa-play text-success\" title=\"Timer is Running\"/>"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
-#, fuzzy
 msgid "<span class=\"col-auto ms-2\">min</span>"
 msgstr "<span class=\"col-auto ms-2\">min</span>"
 
 #. module: timesheet_grid
 #: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_user
-#, fuzzy
 msgid ""
 "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
 "16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
@@ -320,7 +319,6 @@ msgstr ""
 
 #. module: timesheet_grid
 #: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder
-#, fuzzy
 msgid ""
 "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
 "16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
@@ -570,9 +568,8 @@ msgstr ""
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
-#, fuzzy
 msgid "A timer is running in another company."
-msgstr "Başka bir şirkette bir zamanlayıcı çalışıyor."
+msgstr "Bir zamanlayıcı başka bir şirkette çalışıyor."
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_all_timesheets
@@ -603,7 +600,6 @@ msgstr "Onaylayıcı Hatırlatma"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_interval
-#, fuzzy
 msgid "Approver Reminder Frequency"
 msgstr "Onaylayıcı Hatırlatma Sıklığı"
 
@@ -621,7 +617,6 @@ msgstr ""
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
-#, fuzzy
 msgid "Click on the cell to set the number of hours you spent on this project."
 msgstr ""
 "Bu proje için harcadığınız saat sayısını ayarlamak için hücreye tıklayın."
@@ -638,7 +633,6 @@ msgstr "Yapılandırma Ayarları"
 
 #. module: timesheet_grid
 #: model:mail.template,description:timesheet_grid.mail_template_timesheet_reminder
-#, fuzzy
 msgid ""
 "Configure reminders in timesheet settings to remind approvers to validate "
 "timesheets"
@@ -654,7 +648,6 @@ msgstr "Harcanan Zamanı Onayla"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_hr_timesheet_stop_timer_confirmation_wizard
-#, fuzzy
 msgid "Confirm timesheet creation when stop timer"
 msgstr "Zamanlayıcıyı durdurduğunuzda Çalışma Çizelgeleri oluşturmayı onaylayın"
 
@@ -683,7 +676,6 @@ msgstr "Oluşturuldu"
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timer_timesheet_grid/timer_timesheet_grid_renderer.xml:0
-#, fuzzy
 msgid "Daily overtime"
 msgstr "Günlük fazla mesai"
 
@@ -701,7 +693,6 @@ msgstr "Gün"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_delay
-#, fuzzy
 msgid "Days to Remind Approver"
 msgstr "Onaylayana Hatırlatılacak Günler"
 
@@ -745,29 +736,26 @@ msgstr "Açıklama"
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_overtime_indication/timesheet_overtime_indication.js:0
-#, fuzzy
 msgid ""
 "Difference between the allocated %(uom)s (%(allocated_hours)s) and the %"
 "(uom)s spent (%(worked_hours)s) on the project"
 msgstr ""
-"Tahsis edilen %(uom)s (%(allocated_hours)s) ile proje için harcanan %(uom)s "
+"Projede tahsis edilen %(uom)s (%(allocated_hours)s) ile harcanan %(uom)s "
 "(%(worked_hours)s) arasındaki fark"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_overtime_indication/timesheet_overtime_indication.js:0
-#, fuzzy
 msgid ""
 "Difference between the allocated %(uom)s (%(allocated_hours)s) and the %"
 "(uom)s spent (%(worked_hours)s) on the task"
 msgstr ""
-"Tahsis edilen %(uom)s (%(allocated_hours)s) ile görev için harcanan %(uom)s "
+"Görevde tahsis edilen %(uom)s (%(allocated_hours)s) ile harcanan %(uom)s "
 "(%(worked_hours)s) arasındaki fark"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/employee_overtime_indication/employee_overtime_indication.xml:0
-#, fuzzy
 msgid ""
 "Difference between the number of hours recorded and the number of hours the "
 "employee was supposed to work according to his contract"
@@ -778,7 +766,6 @@ msgstr ""
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_overtime_indication/timesheet_overtime_indication.js:0
-#, fuzzy
 msgid "Difference between the time allocated and the time recorded"
 msgstr "Tahsis edilen süre ile kaydedilen süre arasındaki fark"
 
@@ -864,7 +851,6 @@ msgstr "ID"
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timesheet_grid/timesheet_grid_renderer.js:0
-#, fuzzy
 msgid ""
 "Keep track of your working hours by project every day and bill your "
 "customers for that time."
@@ -874,7 +860,6 @@ msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_previous_week
-#, fuzzy
 msgid "Last Period"
 msgstr "Son Dönem"
 
@@ -923,7 +908,6 @@ msgstr "Gösterge"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.hr_timesheet_stop_timer_confirmation_wizard_view_form
-#, fuzzy
 msgid "Log Time"
 msgstr "Günlük Süresi"
 
@@ -965,7 +949,6 @@ msgstr "Ay"
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/project_task.py:0
-#, fuzzy
 msgid ""
 "Moving this task to a project without timesheet support will retain "
 "timesheet drafts in the original project. Although they won't be visible "
@@ -1004,7 +987,6 @@ msgstr "Adı"
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timesheet_grid/timesheet_grid_renderer.js:0
-#, fuzzy
 msgid "No timesheets found. Let's create one!"
 msgstr "Çalışma Çizelgeleri bulunamadı. Hadi bir tane oluşturalım!"
 
@@ -1048,7 +1030,6 @@ msgstr ""
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
-#, fuzzy
 msgid "Open Form"
 msgstr "Açık Form"
 
@@ -1099,7 +1080,6 @@ msgstr "Taslağa Ayarla"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.hr_timesheet_stop_timer_confirmation_wizard_view_form
-#, fuzzy
 msgid "Resume Timer"
 msgstr "Zamanlayıcıya Devam Et"
 
@@ -1265,14 +1245,12 @@ msgstr "Bu İlerleme Çubuğu uygulanmadı."
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/project_task.py:0
-#, fuzzy
 msgid "This project isn't expected to have task during this period."
 msgstr "Bu proje yönetiminin bu süre zarfında görev alması beklenmemektedir."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/project_project.py:0
-#, fuzzy
 msgid ""
 "This user isn't expected to have any projects assigned during this period "
 "because they don't have any running contract."
@@ -1282,7 +1260,6 @@ msgstr ""
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
-#, fuzzy
 msgid "Time Rounding"
 msgstr "Zaman Yuvarlama"
 
@@ -1316,13 +1293,11 @@ msgstr "Çalışma Çizelgesi Grid karışımı"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_project_task__timesheet_unit_amount
-#, fuzzy
 msgid "Timesheet Unit Amount"
 msgstr "Çalışma Çizelgeleri Birim Tutarı"
 
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.timesheet_reminder_ir_actions_server
-#, fuzzy
 msgid "Timesheet: Approvers Email Reminder"
 msgstr "Çalışma Çizelgeleri: Onaylayanlar E-posta Hatırlatıcısı"
 
@@ -1346,23 +1321,21 @@ msgstr "Çalışma Çizelgeleri Analiz Raporu"
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
-#, fuzzy
 msgid ""
 "Timesheets before the %(date)s (included) have been validated, and can no "
 "longer be deleted."
 msgstr ""
-"%(date)s (dahil) adresinden önceki Çalışma Çizelgeleri onaylanmıştır ve "
+"%(date)s (dahil) tarihinden önceki Çalışma Çizelgeleri onaylanmıştır ve "
 "artık silinemez."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
-#, fuzzy
 msgid ""
 "Timesheets before the %(date)s (included) have been validated, and can no "
 "longer be modified."
 msgstr ""
-"%(date)s (dahil) adresinden önceki Çalışma Çizelgeleri onaylanmıştır ve "
+"%(date)s (dahil) tarihinden önceki Çalışma Çizelgeleri onaylanmıştır ve "
 "artık değiştirilemez."
 
 #. module: timesheet_grid
@@ -1390,13 +1363,11 @@ msgstr "Doğrulanacak Çalışma Çizelgeleri"
 
 #. module: timesheet_grid
 #: model:mail.template,name:timesheet_grid.mail_template_timesheet_reminder
-#, fuzzy
 msgid "Timesheets: Approver Reminder"
 msgstr "Çalışma Çizelgeleri: Onaylayan Hatırlatıcısı"
 
 #. module: timesheet_grid
 #: model:mail.template,name:timesheet_grid.mail_template_timesheet_reminder_user
-#, fuzzy
 msgid "Timesheets: Employee Reminder"
 msgstr "Çalışma Çizelgeleri: Çalışan Hatırlatma"
 
@@ -1414,7 +1385,6 @@ msgstr ""
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_project_task__display_name
-#, fuzzy
 msgid ""
 "Use these keywords in the title to set new tasks:\n"
 "\n"
@@ -1510,7 +1480,6 @@ msgstr "Hafta"
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timer_timesheet_grid/timer_timesheet_grid_renderer.xml:0
-#, fuzzy
 msgid "Weekly overtime"
 msgstr "Haftalık fazla mesai"
 
@@ -1552,7 +1521,6 @@ msgstr ""
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
-#, fuzzy
 msgid "You can't encode numbers with more than six digits."
 msgstr "Altıdan fazla basamaklı sayıları kodlayamazsınız."
 
@@ -1575,7 +1543,6 @@ msgstr ""
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
-#, fuzzy
 msgid ""
 "You cannot delete a validated entry. Please contact your manager or your "
 "timesheet approver."
@@ -1602,7 +1569,6 @@ msgstr "Zamanlayıcıyı doğrulanmış çalışma çizelgelerinde kullanamazsı
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
-#, fuzzy
 msgid ""
 "You cannot validate the selected timesheets as they either belong to "
 "employees who are not part of your team or are not in a state that can be "
@@ -1615,7 +1581,6 @@ msgstr ""
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
-#, fuzzy
 msgid ""
 "Your timesheet entry is missing a project. Please either group the Grid view "
 "by project or enter your timesheets by adding a line via the Form view."
@@ -1639,7 +1604,6 @@ msgstr "haftanın bitiminden sonra"
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
-#, fuzzy
 msgid "and click on"
 msgstr "ve üzerine tıklayın"
 
@@ -1664,7 +1628,6 @@ msgstr "veya"
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
-#, fuzzy
 msgid "or click on"
 msgstr "veya üzerine tıklayın"
 
@@ -1679,7 +1642,6 @@ msgstr "ekle"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/grid_timesheet_timer_header/grid_timesheet_timer_header.xml:0
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
-#, fuzzy
 msgid "to launch the timer"
 msgstr "zamanlayıcıyı başlatmak için"
 

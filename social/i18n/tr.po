@@ -25,13 +25,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-11-12 15:00+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/social/"
 "tr/>\n"
 "Language: tr\n"
@@ -82,7 +83,6 @@ msgstr "<i class=\"fa fa-globe ms-1\" title=\"Gönderiyi görün\"/>"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_http_error_view
-#, fuzzy
 msgid "<i class=\"oi oi-arrow-left\"/> Go back to Odoo"
 msgstr "<i class=\"oi oi-arrow-left\"/> Odoo'ya geri dönün"
 
@@ -140,7 +140,6 @@ msgstr "Gönderi Ekle"
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-#, fuzzy
 msgid "Add Stream"
 msgstr "Akış Ekle"
 
@@ -279,7 +278,6 @@ msgstr ""
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__can_link_accounts
-#, fuzzy
 msgid "Can link accounts?"
 msgstr "Hesapları bağlayabilir miyim?"
 
@@ -346,7 +344,6 @@ msgstr "Bağlantı Sorunu"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__social_account_handle
-#, fuzzy
 msgid ""
 "Contains the social media handle of the person that created this account. "
 "E.g: '@odoo.official' for the 'Odoo' X account"
@@ -534,7 +531,6 @@ msgstr "Düzenle"
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-#, fuzzy
 msgid "Edit Your Post"
 msgstr "Gönderinizi Düzenleyin"
 
@@ -545,7 +541,6 @@ msgstr "Demo Modunu Etkinleştir"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
-#, fuzzy
 msgid ""
 "Enable this option and load demo data to test the social module. This must "
 "never be used on a production database!"
@@ -807,7 +802,6 @@ msgstr "Son Güncelleme"
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/tours/social.js:0
-#, fuzzy
 msgid "Let's <b>connect</b> to Facebook, LinkedIn or X."
 msgstr "<b></b> adresini Facebook, LinkedIn veya X'e bağlayalım."
 
@@ -1030,7 +1024,6 @@ msgstr "Yeni Gönderi"
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-#, fuzzy
 msgid "New comments are disabled"
 msgstr "Yeni yorumlar devre dışı bırakıldı"
 
@@ -1150,7 +1143,6 @@ msgstr ""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__stories
-#, fuzzy
 msgid "Number of stories created from your posts (Shares, Reposts, ...)."
 msgstr ""
 "Gönderilerinizden oluşturulan hikaye sayısı (Paylaşımlar, Repostlar, ...)."
@@ -1168,7 +1160,6 @@ msgstr ""
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-#, fuzzy
 msgid ""
 "Number of times people who have engaged with your channel have created "
 "stories on their friends' or followers' feed (Shares, Reposts...)"
@@ -1302,7 +1293,6 @@ msgstr "Gönderi Önizlemesi"
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-#, fuzzy
 msgid "Press Enter to edit. Press Shift+Enter to insert a Line Break."
 msgstr ""
 "Düzenlemek için Enter tuşuna basın. Satır Sonu eklemek için Shift+Enter "
@@ -1365,7 +1355,6 @@ msgstr "İlgili Sosyal Medya"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__media_id
-#, fuzzy
 msgid "Related Social Media (Facebook, X, ...)."
 msgstr "İlgili Sosyal Medya (Facebook, X, ...)."
 
@@ -1688,7 +1677,6 @@ msgstr "Seçilen her sosyal medya hesabında yayınlanacak alt yayınlar."
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-#, fuzzy
 msgid "Sync"
 msgstr "Senkronizasyon"
 
@@ -1791,7 +1779,6 @@ msgstr "UTM Kaynak"
 #. module: social
 #. odoo-python
 #: code:addons/social/controllers/main.py:0
-#, fuzzy
 msgid "Uh-oh! It looks like this message has been deleted from X."
 msgstr "Uh-oh! Görünüşe göre bu mesaj X'ten silinmiş."
 
@@ -1809,7 +1796,6 @@ msgstr "Yüklenen dosya geçerli bir resim gibi görünmüyor."
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
-#, fuzzy
 msgid ""
 "Use your own Developer Accounts on our Social app. Those credentials are "
 "provided in the developer section of your professional social media account."
@@ -1839,7 +1825,6 @@ msgstr "Görüntüle"
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_account_view_form
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
-#, fuzzy
 msgid "Visible to all"
 msgstr "Herkes tarafından görülebilir"
 

@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:45+0000\n"
-"PO-Revision-Date: 2025-11-08 19:55+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"POT-Creation-Date: 2025-11-21 18:43+0000\n"
+"PO-Revision-Date: 2025-11-20 08:14+0000\n"
+"Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "pos_urban_piper/id/>\n"
 "Language: id\n"
@@ -40,12 +40,15 @@ msgid ""
 "\"%s\" is not synchronized with the UrbanPiper. Please sync it before "
 "proceeding."
 msgstr ""
+"\"%s\" tidak disinkronisasi dengan UrbanPiper. Silakan sinkronisasikan "
+"sebelum melanjutkan."
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
 msgid "%s is %s online food delivery for all platform in this locations."
 msgstr ""
+"%s adalah pengiriman makanan online %s untuk semua platform di lokasi ini."
 
 #. module: pos_urban_piper
 #. odoo-python
@@ -422,7 +425,7 @@ msgstr "Error untuk mengirim tampilan persiapan."
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/product_info_popup/product_info_popup.js:0
 msgid "Failed to update food delivery availability."
-msgstr ""
+msgstr "Gagal untuk mengupdate ketersediaan pengiriman makanan."
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
@@ -620,7 +623,7 @@ msgstr "Min"
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/components/order_display/order_display.xml:0
 msgid "Min(s)"
-msgstr ""
+msgstr "Menit"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields.selection,name:pos_urban_piper.selection__product_template__urbanpiper_meal_type__4
@@ -699,13 +702,13 @@ msgstr "Penyedia Pengiriman Online"
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/product_info_popup/product_info_popup.xml:0
 msgid "Online Food Delivery:"
-msgstr ""
+msgstr "Pengiriman Makanan Online:"
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
 msgid "Online Order"
-msgstr ""
+msgstr "Pesanan Online"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -716,6 +719,8 @@ msgid ""
 "Online orders cannot be deleted. If needed, reject the order instead or "
 "contact the food delivery provider."
 msgstr ""
+"Pesanan online tidak dapat dihapus. Bila dibutuhkan, tolak pesanan atau "
+"hubungi provider pengiriman makanan."
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -1211,6 +1216,13 @@ msgid "There are no active delivery providers(s)."
 msgstr "Tidak ada provider pengiriman yang aktif."
 
 #. module: pos_urban_piper
+#: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
+msgid ""
+"This action will flush(delete) the entire menu from Atlas for this store and "
+"re-sync it if any menu data is available."
+msgstr ""
+
+#. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/ticket_screen/ticket_screen.js:0
 msgid "Today"
@@ -1386,10 +1398,10 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
 msgid "disabled"
-msgstr ""
+msgstr "dinonaktifkan"
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
 msgid "enabled"
-msgstr ""
+msgstr "diaktifkan"

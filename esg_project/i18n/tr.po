@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-11-12 15:03+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-20 13:21+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "esg_project/tr/>\n"
 "Language: tr\n"
@@ -23,7 +24,6 @@ msgstr ""
 #. module: esg_project
 #. odoo-python
 #: code:addons/esg_project/models/project_project.py:0
-#, fuzzy
 msgid ""
 "\n"
 "                <a class=\"btn btn-secondary mt-3\" type=\"action\" "
@@ -38,7 +38,6 @@ msgstr ""
 #. module: esg_project
 #. odoo-python
 #: code:addons/esg_project/models/project_project.py:0
-#, fuzzy
 msgid ""
 "\n"
 "            <p class=\"o_view_nocontent_smiling_face\">No tasks found. Let's "
@@ -51,10 +50,9 @@ msgstr ""
 "\n"
 "            <p class=\"o_view_nocontent_smiling_face\">Görev bulunamadı. Bir "
 "tane oluşturalım!</p>\n"
-"            <p>Oluşturma aşamasından tamamlanma aşamasına kadar etkiniz "
-"üzerinde harekete geçmek için girişimlerinizin ilerlemesini takip edin.<br/"
-">Gerçek zamanlı olarak veya e-posta yoluyla sohbet ederek verimli bir "
-"şekilde işbirliği yapın.</p>\n"
+"            <p>Etki yaratan girişimlerinizin ilerlemesini, başlangıcından "
+"tamamlanmasına kadar takip edin.<br/>Gerçek zamanlı sohbet veya e-posta "
+"yoluyla verimli bir şekilde işbirliği yapın.</p>\n"
 "        "
 
 #. module: esg_project
@@ -64,13 +62,11 @@ msgstr "Hareket"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_12
-#, fuzzy
 msgid "Awareness"
 msgstr "Farkındalık"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_11
-#, fuzzy
 msgid "Business Travel"
 msgstr "İş Seyahati"
 
@@ -81,20 +77,17 @@ msgstr "Karbon Ayak İzi"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_1
-#, fuzzy
 msgid "Circular Economy"
 msgstr "Döngüsel Ekonomi"
 
 #. module: esg_project
 #. odoo-javascript
 #: code:addons/esg_project/static/src/components/esg_dashboard/esg_project_initiatives_box/esg_project_initiatives_box.xml:0
-#, fuzzy
 msgid "Create Initiative"
 msgstr "İnisiyatif Oluşturun"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_10
-#, fuzzy
 msgid "Digital Efficiency"
 msgstr "Dijital Verimlilik"
 
@@ -105,9 +98,8 @@ msgstr "İsim Göster"
 
 #. module: esg_project
 #: model:project.task.type,name:esg_project.esg_project_stage_2
-#, fuzzy
 msgid "Done 🌳🌲"
-msgstr "Bitti 🌳🌲"
+msgstr "Tamamlandı 🌳🌲"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_2
@@ -116,15 +108,13 @@ msgstr "Enerji Verimliliği"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_6
-#, fuzzy
 msgid "GHG Reduction"
 msgstr "Sera Gazı Azaltımı"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_7
-#, fuzzy
 msgid "Governance"
-msgstr "Yönetişim"
+msgstr "Yönetim"
 
 #. module: esg_project
 #: model:ir.model.fields,field_description:esg_project.field_project_project__id
@@ -133,19 +123,16 @@ msgstr "ID"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_4
-#, fuzzy
 msgid "IT Policy"
 msgstr "BT Politikası"
 
 #. module: esg_project
 #: model:project.task.type,name:esg_project.esg_project_stage_0
-#, fuzzy
 msgid "Ideas 🌱"
 msgstr "Fikirler 🌱"
 
 #. module: esg_project
 #: model:project.task.type,name:esg_project.esg_project_stage_1
-#, fuzzy
 msgid "In Progress 🌳"
 msgstr "Devam Ediyor 🌳"
 
@@ -154,31 +141,26 @@ msgstr "Devam Ediyor 🌳"
 #: code:addons/esg_project/static/src/components/esg_dashboard/esg_project_initiatives_box/esg_project_initiatives_box.xml:0
 #: model:ir.ui.menu,name:esg_project.menu_esg_initiatives
 #: model:project.project,name:esg_project.esg_project_project_0
-#, fuzzy
 msgid "Initiatives"
 msgstr "Girişimler"
 
 #. module: esg_project
 #: model:ir.actions.server,name:esg_project.esg_initiatives_server_action
-#, fuzzy
 msgid "Initiatives Server Action"
-msgstr "İnisiyatifler Sunucu Eylemi"
+msgstr "İnsiyatifler Sunucu İşlemi"
 
 #. module: esg_project
 #: model:ir.actions.server,name:esg_project.action_load_demo_data
-#, fuzzy
 msgid "Load ESG Project demo data"
 msgstr "ESG Proje Yönetimi demo verilerini yükle"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_8
-#, fuzzy
 msgid "Mobility"
 msgstr "Hareketlilik"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_9
-#, fuzzy
 msgid "Operational Excellence"
 msgstr "Operasyonel Mükemmellik"
 
@@ -189,13 +171,11 @@ msgstr "Proje"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_3
-#, fuzzy
 msgid "Scope 2"
 msgstr "Kapsam 2"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_0
-#, fuzzy
 msgid "Scope 3"
 msgstr "Kapsam 3"
 
@@ -213,6 +193,5 @@ msgstr "Toplam"
 #. module: esg_project
 #. odoo-python
 #: code:addons/esg_project/models/project_project.py:0
-#, fuzzy
 msgid "You cannot delete the ESG Project."
 msgstr "ESG Proje Yönetimini silemezsiniz."

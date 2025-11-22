@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-11-14 15:25+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-11-20 03:04+0000\n"
+"Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "knowledge/id/>\n"
 "Language: id\n"
@@ -102,13 +102,13 @@ msgstr "%s telah dikirim ke Tong Sampah"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "(Guest)"
-msgstr ""
+msgstr "(Tamu)"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "(You)"
-msgstr ""
+msgstr "(Anda)"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_mail_invite
@@ -2266,7 +2266,7 @@ msgstr "Tambahkan komentar..."
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/foldable_section_plugin/foldable_section_plugin.js:0
 msgid "Add a foldable section."
-msgstr ""
+msgstr "Tambahkan bagian yang dapat dilipat."
 
 #. module: knowledge
 #. odoo-javascript
@@ -2278,13 +2278,13 @@ msgstr "Tambahkan ikon acak"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/foldable_section_plugin/foldable_section_plugin.js:0
 msgid "Add a title to your section"
-msgstr ""
+msgstr "Tambahkan judul ke bagian Anda"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 msgid "Add an Article"
-msgstr ""
+msgstr "Tambahkan Artikel"
 
 #. module: knowledge
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_stage_action
@@ -2313,7 +2313,7 @@ msgstr "Tambahkan orang atau alamat email"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "Add people..."
-msgstr ""
+msgstr "Tambahkan orang..."
 
 #. module: knowledge
 #. odoo-javascript
@@ -3395,7 +3395,7 @@ msgstr "Buat artikel baru di ruangkerja"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar_section.xml:0
 msgid "Create a new private article"
-msgstr ""
+msgstr "Buat artikel privat baru"
 
 #. module: knowledge
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_product_catalog
@@ -3415,7 +3415,7 @@ msgstr "Buat Item Artikel"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar_row.xml:0
 msgid "Create an Article inside"
-msgstr ""
+msgstr "Buat Artikel di dalam"
 
 #. module: knowledge
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_action
@@ -3542,7 +3542,7 @@ msgstr "Hapus Templat"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index_list.xml:0
 msgid "Delete article"
-msgstr ""
+msgstr "Hapus artikel"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3825,13 +3825,13 @@ msgstr "Cari semua artikel yang dibagikan dengan Anda"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar_section.xml:0
 msgid "Fold/unfold the section"
-msgstr ""
+msgstr "Tutup/buka bagian"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/foldable_section_plugin/foldable_section_plugin.js:0
 msgid "Foldable Section"
-msgstr ""
+msgstr "Bagian yang Dapat Dilipat"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_stage__fold
@@ -3901,7 +3901,7 @@ msgstr "Jenis Kelamin: W"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "General Access"
-msgstr ""
+msgstr "Akses Umum"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_hr_faq
@@ -4022,7 +4022,7 @@ msgstr "Sembunyikkan Properti"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 msgid "Hide sub-articles"
-msgstr ""
+msgstr "Sembunyikkan sub-artikel"
 
 #. module: knowledge
 #. odoo-javascript
@@ -6010,7 +6010,7 @@ msgstr "Bagikan"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel_dialog/permission_panel_dialog.xml:0
 msgid "Share settings"
-msgstr ""
+msgstr "Bagikan pengaturan"
 
 #. module: knowledge
 #. odoo-javascript
@@ -6080,7 +6080,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "Show in Workspace"
-msgstr ""
+msgstr "Tunjukkan di Workspace"
 
 #. module: knowledge
 #. odoo-javascript
@@ -6092,7 +6092,7 @@ msgstr "Tunjukkan nested articles"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 msgid "Show sub-articles"
-msgstr ""
+msgstr "Tunjukkan sub-artikel"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -6720,7 +6720,7 @@ msgstr "Jenis dari aktivitas pengecualian pada rekaman data."
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/foldable_section_plugin/foldable_section_plugin.js:0
 msgid "Type something inside this section"
-msgstr ""
+msgstr "Ketik sesuatu di dalam bagian ini"
 
 #. module: knowledge
 #. odoo-javascript
@@ -7166,7 +7166,7 @@ msgstr "Anda tidak memiliki akses ke artikel ini"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar_section.xml:0
 msgid "You have no private Article."
-msgstr ""
+msgstr "Anda tidak memiliki Artikel privat."
 
 #. module: knowledge
 #. odoo-python

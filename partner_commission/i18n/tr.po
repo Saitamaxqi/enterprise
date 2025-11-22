@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-11-12 15:05+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "partner_commission/tr/>\n"
 "Language: tr\n"
@@ -54,7 +55,6 @@ msgstr "Arşivlendi"
 
 #. module: partner_commission
 #: model_terms:ir.ui.view,arch_db:partner_commission.res_config_settings_view_form
-#, fuzzy
 msgid "Automatic PO frequency"
 msgstr "Otomatik PO frekansı"
 
@@ -95,9 +95,8 @@ msgstr "Komisyon Planları"
 #. module: partner_commission
 #. odoo-python
 #: code:addons/partner_commission/models/account_move.py:0
-#, fuzzy
 msgid "Commission on %(invoice)s, %(partner)s, %(amount)s"
-msgstr "Komisyon %(invoice)s, %(partner)s, %(amount)s"
+msgstr "Komisyon üzerine%(invoice)s, %(partner)s, %(amount)s"
 
 #. module: partner_commission
 #: model:ir.model,name:partner_commission.model_commission_plan
@@ -107,7 +106,6 @@ msgstr "Komisyon Planı"
 #. module: partner_commission
 #. odoo-python
 #: code:addons/partner_commission/models/account_move.py:0
-#, fuzzy
 msgid "Commission refunded. Invoice: %(link)s. Amount: %(amount)s."
 msgstr "Komisyon iade edildi. Fatura: %(link)s. Tutar: %(amount)s."
 
@@ -138,9 +136,8 @@ msgstr "Kontak"
 
 #. module: partner_commission
 #: model:ir.model,website_form_label:partner_commission.model_res_partner
-#, fuzzy
 msgid "Create a Customer"
-msgstr "Müşteri Oluşturma"
+msgstr "Müşteri Oluştur"
 
 #. module: partner_commission
 #: model:ir.model,website_form_label:partner_commission.model_crm_lead
@@ -280,7 +277,6 @@ msgstr "Verilmişse, fiyat listesinin para biriminde belirtilen maksimum tutar."
 
 #. module: partner_commission
 #: model_terms:ir.ui.view,arch_db:partner_commission.res_config_settings_view_form
-#, fuzzy
 msgid "Minimum PO amount total"
 msgstr "Minimum PO tutarı toplamı"
 
@@ -303,7 +299,6 @@ msgstr "Adı"
 #. module: partner_commission
 #. odoo-python
 #: code:addons/partner_commission/models/account_move.py:0
-#, fuzzy
 msgid "New commission. Invoice: %(link)s. Amount: %(amount)s."
 msgstr "Yeni komisyon. Fatura: %(link)s. Tutar: %(amount)s."
 
@@ -470,7 +465,6 @@ msgstr "İş ortağının komisyon planına göre önceliklidir."
 #. module: partner_commission
 #. odoo-python
 #: code:addons/partner_commission/models/account_move.py:0
-#, fuzzy
 msgid ""
 "The commission partner order %s must be checked manually (especially refund "
 "lines which can be duplicated)."

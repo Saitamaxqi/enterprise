@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-14 18:42+0000\n"
-"PO-Revision-Date: 2025-11-14 02:13+0000\n"
+"PO-Revision-Date: 2025-11-21 15:38+0000\n"
 "Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/vi/>\n"
@@ -5444,6 +5444,9 @@ msgid ""
 "services delivered in the next period, estimate the revenue that should be "
 "recognized later (accrued income), and document how this was determined."
 msgstr ""
+"Kiểm tra doanh thu được ghi nhận trong tháng cuối cùng của kỳ, xác định các "
+"dịch vụ được cung cấp trong kỳ tiếp theo, ước tính doanh thu cần được ghi "
+"nhận sau này (doanh thu dồn tích) và ghi chép cách thức xác định này."
 
 #. module: account_reports
 #. odoo-python

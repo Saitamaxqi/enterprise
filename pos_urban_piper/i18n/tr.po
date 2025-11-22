@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:45+0000\n"
-"PO-Revision-Date: 2025-11-12 15:01+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"POT-Creation-Date: 2025-11-21 18:43+0000\n"
+"PO-Revision-Date: 2025-11-21 14:41+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "pos_urban_piper/tr/>\n"
 "Language: tr\n"
@@ -23,21 +24,18 @@ msgstr ""
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
-#, fuzzy
 msgid " is offline on ."
-msgstr " 'de çevrimdışıdır."
+msgstr " 'de çevrimdışı."
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
-#, fuzzy
 msgid " is online on ."
-msgstr " 'da yayında."
+msgstr " 'da çevrimiçi."
 
 #. module: pos_urban_piper
 #. odoo-python
 #: code:addons/pos_urban_piper/models/product.py:0
-#, fuzzy
 msgid ""
 "\"%s\" is not synchronized with the UrbanPiper. Please sync it before "
 "proceeding."
@@ -48,7 +46,6 @@ msgstr ""
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
-#, fuzzy
 msgid "%s is %s online food delivery for all platform in this locations."
 msgstr ""
 "%s bu konumlardaki tüm platformlar için %s çevrimiçi yemek teslimatıdır."
@@ -104,7 +101,6 @@ msgstr "Mevcut Ülkeler"
 #. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_product_product__urbanpiper_pos_platform_ids
 #: model:ir.model.fields,field_description:pos_urban_piper.field_product_template__urbanpiper_pos_platform_ids
-#, fuzzy
 msgid "Available on"
 msgstr "Mevcut"
 
@@ -152,7 +148,6 @@ msgstr "Kanal"
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_product_product__urbanpiper_pos_platform_ids
 #: model:ir.model.fields,help:pos_urban_piper.field_product_template__urbanpiper_pos_platform_ids
-#, fuzzy
 msgid "Check this if the product is available for following platform."
 msgstr "Ürün aşağıdaki platform için mevcutsa bunu kontrol edin."
 
@@ -265,7 +260,6 @@ msgstr "Teslimat Kanalı"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__delivery_charge
-#, fuzzy
 msgid "Delivery Charge"
 msgstr "Teslimat Ücreti"
 
@@ -281,7 +275,6 @@ msgstr "Teslimat Kimliği"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__delivery_instruction
-#, fuzzy
 msgid "Delivery Instructions"
 msgstr "Teslimat Talimatları"
 
@@ -337,7 +330,6 @@ msgstr "Teslimat Zamanı/Zaman Aralığı"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__delivery_charge
-#, fuzzy
 msgid "Delivery charges for test order."
 msgstr "Test siparişi için teslimat ücretleri."
 
@@ -403,13 +395,11 @@ msgstr "Yumurta yiyen vejetaryen"
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
-#, fuzzy
 msgid "Enter your API Key"
 msgstr "API Anahtarınızı girin"
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
-#, fuzzy
 msgid "Enter your username"
 msgstr "Kullanıcı adınızı girin"
 
@@ -422,7 +412,6 @@ msgstr "Hata"
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
-#, fuzzy
 msgid "Error occurred while updating  status."
 msgstr "Durum güncellenirken hata oluştu."
 
@@ -435,7 +424,6 @@ msgstr "Hazırlık ekranına gönderme hatası"
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/product_info_popup/product_info_popup.js:0
-#, fuzzy
 msgid "Failed to update food delivery availability."
 msgstr "Yemek teslimatı kullanılabilirliği güncellenemedi."
 
@@ -456,19 +444,16 @@ msgstr "Urban Piper senkronizasyon menüsü için mali konum."
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__discount_amount
-#, fuzzy
 msgid "Fixed Discount Amount"
 msgstr "Sabit İskonto Tutarı"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__discount_amount
-#, fuzzy
 msgid "Fixed discount value for test order."
 msgstr "Test siparişi için sabit indirim değeri."
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.product_template_search_view_inherit_pos_urban_piper
-#, fuzzy
 msgid "Food Delivery Location"
 msgstr "Yemek Teslim Yeri"
 
@@ -543,7 +528,6 @@ msgstr "Ürünün alkol içerip içermediğini belirtir"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__delivery_instruction
-#, fuzzy
 msgid "Instructions for test order."
 msgstr "Test siparişi için talimatlar."
 
@@ -562,9 +546,8 @@ msgstr "Geçersiz Varyant/Eklentiler"
 #. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_product_product__is_alcoholic_on_urbanpiper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_product_template__is_alcoholic_on_urbanpiper
-#, fuzzy
 msgid "Is Alcoholic"
-msgstr "Alkolik mi"
+msgstr "Alkol içerir mi"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_product_urban_piper_status__is_product_linked
@@ -639,7 +622,6 @@ msgstr "Min"
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/components/order_display/order_display.xml:0
-#, fuzzy
 msgid "Min(s)"
 msgstr "Min(ler)"
 
@@ -696,7 +678,6 @@ msgstr "Çevrim içi siparişler için mevcut değil."
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.product_template_only_form_view_inherit_pos_urban_piper
-#, fuzzy
 msgid "Not available on any platforms."
 msgstr "Hiçbir platformda mevcut değildir."
 
@@ -720,14 +701,12 @@ msgstr "Çevrim İçi Teslimat Sağlayıcıları"
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/product_info_popup/product_info_popup.xml:0
-#, fuzzy
 msgid "Online Food Delivery:"
 msgstr "Online Yemek Teslimatı:"
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
-#, fuzzy
 msgid "Online Order"
 msgstr "Online Sipariş"
 
@@ -736,7 +715,6 @@ msgstr "Online Sipariş"
 #. odoo-python
 #: code:addons/pos_urban_piper/models/pos_order.py:0
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
-#, fuzzy
 msgid ""
 "Online orders cannot be deleted. If needed, reject the order instead or "
 "contact the food delivery provider."
@@ -764,7 +742,6 @@ msgstr "Sipariş OTP'si"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_prep_order__order_otp
-#, fuzzy
 msgid "Order Otp"
 msgstr "Sipariş Otp"
 
@@ -811,13 +788,11 @@ msgstr "POS Kimliği"
 #. module: pos_urban_piper
 #. odoo-python
 #: code:addons/pos_urban_piper/wizard/pos_urban_piper_test_order.py:0
-#, fuzzy
 msgid "POS ID is required to place test order.\n"
 msgstr "Test siparişi vermek için Satış Noktası kimliği gereklidir.\n"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__packaging_charge
-#, fuzzy
 msgid "Packaging Charge"
 msgstr "Paketleme Ücreti"
 
@@ -828,7 +803,6 @@ msgstr "Paketleme Ücretleri"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__packaging_charge
-#, fuzzy
 msgid "Packaging charge for test order."
 msgstr "Test siparişi için paketleme ücreti."
 
@@ -874,7 +848,6 @@ msgstr "Yerleştirildi"
 #. module: pos_urban_piper
 #. odoo-python
 #: code:addons/pos_urban_piper/wizard/pos_urban_piper_test_order.py:0
-#, fuzzy
 msgid "Please start a POS session first.\n"
 msgstr "Lütfen önce bir Satış Noktası oturumu başlatın.\n"
 
@@ -920,15 +893,13 @@ msgstr "Urban Piper (Atlas) kaynaklı POS kimliği"
 
 #. module: pos_urban_piper
 #: model:ir.model,name:pos_urban_piper.model_pos_prep_display
-#, fuzzy
 msgid "Pos Preparation Display"
 msgstr "Satış Noktası Hazırlama Ekranı"
 
 #. module: pos_urban_piper
 #: model:ir.model,name:pos_urban_piper.model_pos_prep_order
-#, fuzzy
 msgid "Pos Preparation Order"
-msgstr "Satış Noktası Hazırlama Sırası"
+msgstr "Satış Noktası Hazırlık Siparişi"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -1050,7 +1021,6 @@ msgstr ""
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__delivery_provider_id
-#, fuzzy
 msgid "Responsible delivery provider for test order, e.g., UberEats, Zomato."
 msgstr ""
 "Test siparişi için sorumlu teslimat sağlayıcısı, örneğin UberEats, Zomato."
@@ -1069,7 +1039,6 @@ msgstr "Kurye uygun değil"
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
-#, fuzzy
 msgid "Select Delivery Platform"
 msgstr "Teslimat Platformunu Seçin"
 
@@ -1080,7 +1049,6 @@ msgstr "Mali Koşulu Seçin"
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
-#, fuzzy
 msgid "Select Pricelist"
 msgstr "Fiyat Listesini Seçin"
 
@@ -1170,32 +1138,27 @@ msgstr "UrbanPiper tarafından kullanılan sağlayıcının teknik adı"
 #. module: pos_urban_piper
 #. odoo-python
 #: code:addons/pos_urban_piper/models/res_config_settings.py:0
-#, fuzzy
 msgid "Test Food Delivery Order"
 msgstr "Yemek Siparişini Test Edin"
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
-#, fuzzy
 msgid "Test Order"
 msgstr "Test Siparişi"
 
 #. module: pos_urban_piper
 #. odoo-python
 #: code:addons/pos_urban_piper/wizard/pos_urban_piper_test_order.py:0
-#, fuzzy
 msgid "Test order generated successfully."
 msgstr "Test emri başarıyla oluşturuldu."
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__product_id
-#, fuzzy
 msgid "Test order product"
 msgstr "Test siparişi ürünü"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__quantity
-#, fuzzy
 msgid "Test order quantity"
 msgstr "Test sipariş miktarı"
 
@@ -1243,16 +1206,21 @@ msgstr "UrbanPiper siparişleri için kullanılan fiyat listesi."
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_res_company__pos_urbanpiper_username
 #: model:ir.model.fields,help:pos_urban_piper.field_res_config_settings__urbanpiper_username
-#, fuzzy
 msgid "The username of the UrbanPiper api account."
 msgstr "UrbanPiper api hesabının kullanıcı adı."
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/delivery_button/delivery_button.xml:0
-#, fuzzy
 msgid "There are no active delivery providers(s)."
 msgstr "Aktif teslimat sağlayıcı(lar)ı bulunmamaktadır."
+
+#. module: pos_urban_piper
+#: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
+msgid ""
+"This action will flush(delete) the entire menu from Atlas for this store and "
+"re-sync it if any menu data is available."
+msgstr ""
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -1311,7 +1279,6 @@ msgstr "Urban Piper Fiyat Listesi"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_prep_order__urban_piper_test
-#, fuzzy
 msgid "Urban Piper Test"
 msgstr "Urban Piper Testi"
 
@@ -1379,7 +1346,6 @@ msgstr "UrbanPiper Kullanıcı Adı gereklidir.\n"
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/receipt_screen/receipt/receipt_header/receipt_header.xml:0
-#, fuzzy
 msgid "UrbanPiper:"
 msgstr "UrbanPiper:"
 
@@ -1390,7 +1356,6 @@ msgstr "Urbanpiper"
 
 #. module: pos_urban_piper
 #: model:ir.model,name:pos_urban_piper.model_pos_urbanpiper_test_order_wizard
-#, fuzzy
 msgid "Urbanpiper test order wizard"
 msgstr "Urbanpiper test sipariş sihirbazı"
 
@@ -1433,13 +1398,11 @@ msgstr ""
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
-#, fuzzy
 msgid "disabled"
 msgstr "devre dışı"
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
-#, fuzzy
 msgid "enabled"
 msgstr "etkin"

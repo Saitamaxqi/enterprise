@@ -3,19 +3,22 @@
 # * documents_account
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-10-08 18:46+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-19 12:40+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Kabyle <https://translate.odoo.com/projects/odoo-19/"
+"documents_account/kab/>\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: documents_account
 #. odoo-python
@@ -48,7 +51,7 @@ msgstr ""
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.res_config_settings_view_form
 msgid "Accounting"
-msgstr ""
+msgstr "tasiḍent"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__company_account_folder_id
@@ -65,13 +68,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Action"
-msgstr ""
+msgstr "Tigawt"
 
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "All"
-msgstr ""
+msgstr "Akkw"
 
 #. module: documents_account
 #. odoo-python
@@ -151,12 +154,12 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Tikebbaniyin"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__company_id
 msgid "Company"
-msgstr ""
+msgstr "Takebbwanit"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_res_config_settings
@@ -172,7 +175,7 @@ msgstr ""
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.view_server_action_form_template
 msgid "Create"
-msgstr ""
+msgstr "Rnu"
 
 #. module: documents_account
 #. odoo-python
@@ -239,12 +242,12 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Yerna-t"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Yerna di"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_out_refund
@@ -254,7 +257,7 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_out_invoice
 msgid "Customer Invoice"
-msgstr ""
+msgstr "Tafaturt n Umsaɣ"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_journal__display_name
@@ -274,7 +277,7 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_documents_document
 msgid "Document"
-msgstr ""
+msgstr "Arrat"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_ir_actions_server__documents_account_create_model
@@ -304,7 +307,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents_account/models/account_report.py:0
 msgid "Export"
-msgstr ""
+msgstr "Sifeḍ"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_account_reports_export_wizard_format
@@ -372,31 +375,31 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents_account.field_res_company__id
 #: model:ir.model.fields,field_description:documents_account.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "Asulay"
 
 #. module: documents_account
 #: model:ir.actions.server,name:documents_account.ir_actions_server_bank_statement
 #: model:ir.actions.server,name:documents_account.ir_actions_server_bank_statement_code
 msgid "Import Bank Statement"
-msgstr ""
+msgstr "sifeḍ agzul Adriman"
 
 #. module: documents_account
 #. odoo-python
 #: code:addons/documents_account/models/documents_document.py:0
 msgid "Invoices"
-msgstr ""
+msgstr "Tifaturin"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_account_journal
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__journal_id
 #: model_terms:ir.ui.view,arch_db:documents_account.view_server_action_form_template
 msgid "Journal"
-msgstr ""
+msgstr "Aɣemis"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Taceqquft n tsiḍent"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_documents_account_folder_setting
@@ -416,12 +419,12 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Aleqqem aneggaru sɣuṛ"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Aleqqem aneggaru di"
 
 #. module: documents_account
 #. odoo-javascript
@@ -521,13 +524,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents_account.field_account_reports_export_wizard__tag_ids
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__tag_ids
 msgid "Tags"
-msgstr ""
+msgstr "Tibzimin"
 
 #. module: documents_account
 #. odoo-python
 #: code:addons/documents_account/models/documents_document.py:0
 msgid "Taxes"
-msgstr ""
+msgstr "Tiẓeṭṭaḍin"
 
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.view_account_move_form_inherit_documents_account
@@ -544,7 +547,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents_account.field_ir_actions_server__state
 #: model:ir.model.fields,field_description:documents_account.field_ir_cron__state
 msgid "Type"
-msgstr ""
+msgstr "Tawsit"
 
 #. module: documents_account
 #: model:ir.model.fields,help:documents_account.field_ir_actions_server__state

@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-12 15:03+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "appointment_hr_recruitment/tr/>\n"
 "Language: tr\n"
@@ -23,7 +24,6 @@ msgstr ""
 
 #. module: appointment_hr_recruitment
 #: model:mail.template,body_html:appointment_hr_recruitment.email_template_data_applicant_schedule_interview
-#, fuzzy
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "    <h2>Hello,</h2>\n"
@@ -112,7 +112,6 @@ msgstr "ID"
 
 #. module: appointment_hr_recruitment
 #: model:ir.model.fields,field_description:appointment_hr_recruitment.field_hr_applicant__interview_invite_code
-#, fuzzy
 msgid "Interview Invite Code"
 msgstr "Mülakat Davet Kodu"
 
@@ -128,8 +127,6 @@ msgstr "İşe Alım: Mülakat planla"
 
 #. module: appointment_hr_recruitment
 #: model:mail.template,description:appointment_hr_recruitment.email_template_data_applicant_schedule_interview
-#, fuzzy
 msgid ""
 "Send this email when you want to schedule an interview with an applicant"
-msgstr ""
-"Bir başvuru sahibiyle görüşme planlamak istediğinizde bu e-postayı gönderin"
+msgstr "Bir adayla mülakat planlamak istediğinizde bu e-postayı gönderin"

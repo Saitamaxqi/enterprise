@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:45+0000\n"
-"PO-Revision-Date: 2025-10-23 02:41+0000\n"
+"PO-Revision-Date: 2025-11-20 03:04+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "pos_iot_six/id/>\n"
@@ -61,7 +61,7 @@ msgstr "Alamat Domain"
 #. odoo-javascript
 #: code:addons/pos_iot_six/static/src/js/payment_six.js:0
 msgid "Failed to get balance report from the terminal. Please retry."
-msgstr ""
+msgstr "Gagal untuk mendapatkan laporan saldo dari terminal. Silakan coba lagi."
 
 #. module: pos_iot_six
 #. odoo-javascript
@@ -102,7 +102,7 @@ msgstr "Harus hanya memiliki digit"
 #. odoo-javascript
 #: code:addons/pos_iot_six/static/src/js/payment_six.js:0
 msgid "No printer configured"
-msgstr ""
+msgstr "Tidak ada printer yang dikonfigurasi"
 
 #. module: pos_iot_six
 #. odoo-javascript
@@ -146,7 +146,7 @@ msgstr "Setup Terminal Pembayaran Six"
 #. odoo-javascript
 #: code:addons/pos_iot_six/static/src/xml/balance_button.xml:0
 msgid "Six Terminal Balance"
-msgstr ""
+msgstr "Enam Saldo Terminal"
 
 #. module: pos_iot_six
 #: model:ir.model.fields,field_description:pos_iot_six.field_iot_box__six_terminal_id
@@ -158,7 +158,7 @@ msgstr "Terminal ID Six (TID)"
 #. odoo-javascript
 #: code:addons/pos_iot_six/static/src/js/payment_six.js:0
 msgid "Six balance report error"
-msgstr ""
+msgstr "Enam error laporan saldo"
 
 #. module: pos_iot_six
 #: model:ir.model.fields,field_description:pos_iot_six.field_pos_iot_six_add_six_terminal__terminal_device_id
@@ -200,3 +200,5 @@ msgstr "Transaksi tidak dapat dibatalkan"
 msgid ""
 "You must select a printer in your POS config to print Six balance report"
 msgstr ""
+"Anda harus memilih printer di konfig POS ANda untuk mencetak Enam laporan "
+"saldo"

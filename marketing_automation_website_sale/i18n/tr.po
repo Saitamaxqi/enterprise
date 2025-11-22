@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:44+0000\n"
-"PO-Revision-Date: 2025-11-12 15:05+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-21 14:30+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "marketing_automation_website_sale/tr/>\n"
 "Language: tr\n"
@@ -28,7 +29,6 @@ msgstr "! Alışverişinizin üzerinden birkaç gün geçti. Umarız memnunsunu
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_purchase_followup_arch
-#, fuzzy
 msgid ""
 "-\n"
 "            <span style=\"color: rgb(183, 191, 199); font-size: "
@@ -40,7 +40,6 @@ msgstr ""
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_purchase_followup_arch
-#, fuzzy
 msgid ""
 "<br/>\n"
 "            <span style=\"font-size: 12px\">\n"
@@ -54,13 +53,11 @@ msgstr ""
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
-#, fuzzy
 msgid "<em>\" Cheers to more great years ahead!</em><br/>\""
 msgstr "<em>\" Önümüzdeki daha güzel yılların şerefine!</em><br/>\""
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
-#, fuzzy
 msgid "<font class=\"text-o-color-1\">HBD20</font>"
 msgstr "<font class=\"text-o-color-1\">HBD20</font>"
 
@@ -78,7 +75,6 @@ msgstr ""
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
-#, fuzzy
 msgid ""
 "<span style=\"font-size: 0.857143rem;\"><font style=\"color: inherit;"
 "\"><strong>BUY YOURSELF A GIFT</strong></font></span><span style=\"font-"
@@ -97,7 +93,6 @@ msgstr ""
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_purchase_arch
-#, fuzzy
 msgid ""
 "<span style=\"font-size: 1.07143rem\">YOU MAKE OUR SUCCESS POSSIBLE</span>\n"
 "              <font style=\"font-size: 12px\"/><br/>"
@@ -108,7 +103,6 @@ msgstr ""
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_purchase_followup_arch
-#, fuzzy
 msgid ""
 "<span style=\"font-size: 12px\">\n"
 "              <font style=\"color: rgb(183, 191, 199)\">8000 Marina Blvd, "
@@ -136,7 +130,6 @@ msgstr ""
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_purchase_followup_arch
-#, fuzzy
 msgid ""
 "<span style=\"font-size: 12px\"><font style=\"color: rgb(183, 191, 199)\">.</"
 "font></span>"
@@ -146,7 +139,6 @@ msgstr ""
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_purchase_followup_arch
-#, fuzzy
 msgid ""
 "<span style=\"font-size: 12px\"><font style=\"color: rgb(183, 191, "
 "199)\">click here</font></span>"
@@ -156,7 +148,6 @@ msgstr ""
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_purchase_followup_arch
-#, fuzzy
 msgid ""
 "<span style=\"font-size: 12px\"><font style=\"color: rgb(183, 191, "
 "199)\">info@mycompany.com</font></span>"
@@ -166,7 +157,6 @@ msgstr ""
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
-#, fuzzy
 msgid ""
 "<span style=\"font-size: 14px\"><strong>John DOE</strong> • CEO of "
 "MyCompany</span>"
@@ -176,7 +166,6 @@ msgstr ""
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
-#, fuzzy
 msgid ""
 "<span style=\"font-size: 1rem;\">You've been with us for a whole year—thank "
 "you for being here! 🎈</span>"
@@ -186,9 +175,9 @@ msgstr ""
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
-#, fuzzy
 msgid "<span style=\"font-size: 3.5rem;\">Happy Non-birthday!</span>"
-msgstr "<span style=\"font-size: 3.5rem;\">Mutlu olmayan doğum günleri!</span>"
+msgstr ""
+"<span style=\"font-size: 3.5rem;\">Doğum günün değil ama kutlu olsun!!</span>"
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_arrivals_arch
@@ -198,43 +187,37 @@ msgstr "<strong>MAĞAZAYI ZIYARET EDİN</strong>"
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Add Coupon Recipient Tag"
 msgstr "Kupon Alıcısı Etiketi Ekleme"
 
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Anniversary Discount"
 msgstr "Yıldönümü İndirimi"
 
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Anniversary Discount Coupon Recipient"
 msgstr "Yıldönümü İndirim Kuponu Alıcısı"
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_arrivals_arch
-#, fuzzy
 msgid "CHECK OUT OUR LATEST ARRIVALS"
-msgstr "SON GELİŞLERİMİZE GÖZ ATIN"
+msgstr "SON GELENLERE GÖZ ATIN"
 
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Celebrate contacts that registered one year ago."
 msgstr "Bir yıl önce kayıt olan kişileri kutlayın."
 
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Check out these new arrivals!"
-msgstr "Şu yeni gelenlere bir göz atın!"
+msgstr "Yeni gelenlere bir göz atın!"
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_purchase_followup_arch
@@ -249,9 +232,8 @@ msgstr "Kontak"
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Create Repeat Customers"
-msgstr "Tekrar Müşteriler Yaratın"
+msgstr "Düzenli Müşteriler Yaratın"
 
 #. module: marketing_automation_website_sale
 #: model:ir.model.fields,field_description:marketing_automation_website_sale.field_marketing_campaign__display_name
@@ -269,9 +251,8 @@ msgstr "Facebook"
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Happy non-birthday!"
-msgstr "Doğum günün kutlu olsun!"
+msgstr "Doğum günün değil ama kutlu olsun!"
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_purchase_followup_arch
@@ -281,7 +262,6 @@ msgstr "Merhaba"
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid "How is everything going?"
 msgstr "Her şey nasıl gidiyor?"
 
@@ -302,7 +282,6 @@ msgstr ""
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_purchase_followup_arch
-#, fuzzy
 msgid ""
 "If you need a hand or have any questions, please don't hesitate to\n"
 "                get in touch with our awesome customer service team. They "
@@ -316,7 +295,7 @@ msgstr ""
 "çekinmeyin\n"
 "                harika müşteri hizmetleri ekibimizle iletişime geçin. Onlar "
 "burada\n"
-"                sorularınız veya endişeleriniz için size yardımcı olmaya "
+"                sorularınız veya önerileriniz için size yardımcı olmaya "
 "hazırız. Sadece\n"
 "                Onlara ulaşın, size yardımcı olmaktan mutluluk duyacaklardır."
 
@@ -347,7 +326,6 @@ msgstr "Pazarlama Kampanyası"
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_purchase_arch
-#, fuzzy
 msgid ""
 "Michael Fletcher<br/>\n"
 "              <span style=\"font-size: 12px\"><strong>CEO</strong></span>"
@@ -369,16 +347,14 @@ msgstr "Yeni gelenler"
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Purchase Follow-up"
 msgstr "Satın Alma Takibi"
 
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Purchase Thanks"
-msgstr "Satın Alma Teşekkürler"
+msgstr "Satın Alma Teşekkürü"
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_purchase_arch
@@ -388,32 +364,28 @@ msgstr "DEVAMINI OKU"
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Recent Purchase Follow-up"
 msgstr "Son Satın Alma Takibi"
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
-#, fuzzy
 msgid "Redeem coupon now"
 msgstr "Kuponu şimdi kullanın"
 
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Send Anniversary Email"
-msgstr "Yıldönümü E-postası Gönder"
+msgstr "Yıldönümü E-postası Gönderin"
 
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid ""
 "Send an email to customers that bought a specific product after their "
 "purchase."
 msgstr ""
-"Belirli bir ürünü satın alan müşterilere satın alma işlemlerinden sonra bir "
+"Belirli bir ürünü satın alan müşterilere, satın alma işlemlerinden sonra bir "
 "e-posta gönderin."
 
 #. module: marketing_automation_website_sale
@@ -429,7 +401,6 @@ msgstr "Yani...<strong>Bizi seçtiğiniz için tekrar teşekkür ederiz</strong>
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Tag User With Promotion"
 msgstr "Kullanıcıyı Promosyonla Etiketleyin"
 
@@ -441,7 +412,6 @@ msgstr "Bizi seçtiğiniz için tekrar teşekkür ederiz!"
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Thank you for your purchase"
 msgstr "Satın aldığınız için teşekkür ederiz"
 
@@ -454,16 +424,14 @@ msgstr "TikTok"
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
-#, fuzzy
 msgid "To celebrate, here's a little something for you."
-msgstr "Kutlamak için, işte size küçük bir şey."
+msgstr "Kutlamak için, size küçük bir hediyemiz var."
 
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid "Turn one-time visitors into repeat buyers."
-msgstr "Tek seferlik ziyaretçileri sürekli alıcılara dönüştürün."
+msgstr "Tek seferlik ziyaretçilerinizi, düzenli müşterilerinize dönüştürün."
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
@@ -484,7 +452,6 @@ msgstr "Saygılarımızla,"
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_arrivals_arch
-#, fuzzy
 msgid ""
 "We are thrilled to announce that we have just received some\n"
 "              amazing new arrivals in our store that we know you're going "
@@ -496,13 +463,12 @@ msgid ""
 "shopping!\n"
 "              🛍️✨"
 msgstr ""
-"Az önce elimize ulaşan bazı belgeleri duyurmaktan heyecan duyuyoruz.\n"
+"Az önce elimize ulaşan yeni ürünleri duyurmaktan heyecan duyuyoruz.\n"
 "              Mağazamıza yeni gelen muhteşem ürünleri çok seveceğinizi "
 "biliyoruz.\n"
-"              aşk! 🎉 Modaya uygun parçalardan olmazsa olmaz aksesuarlara "
-"kadar,\n"
-"              sadece sizin için özel bir şeyimiz var. İçeri gelin ve kontrol "
-"edin\n"
+"               🎉 Modaya uygun parçalardan olmazsa olmaz aksesuarlara kadar,"
+"\n"
+"              sadece size özel süprizler var.\n"
 "              son koleksiyonumuz - sizi görmek için sabırsızlanıyoruz! Mutlu "
 "alışverişler!\n"
 "              🛍️✨"
@@ -582,9 +548,8 @@ msgstr "© 2024 Tüm Hakları Saklıdır"
 #. module: marketing_automation_website_sale
 #. odoo-python
 #: code:addons/marketing_automation_website_sale/models/marketing_campaign.py:0
-#, fuzzy
 msgid "✨ We have a surprise for you ✨"
-msgstr "✨ Sana bir sürprizimiz var ✨"
+msgstr "✨ Size bir sürprizimiz var ✨"
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_repeat_customer_new_arrivals_arch

@@ -4,12 +4,13 @@
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Kwanghee Park (kwpa)" <kwpa@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-24 02:06+0000\n"
+"PO-Revision-Date: 2025-11-20 08:15+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "hr_work_entry_enterprise/ko/>\n"
@@ -23,7 +24,8 @@ msgstr ""
 #. module: hr_work_entry_enterprise
 #: model_terms:ir.ui.view,arch_db:hr_work_entry_enterprise.hr_work_entry_gantt
 msgid "<i class=\"fa fa-lock me-1\"/> You cannot edit a validated work entry"
-msgstr ""
+msgstr "<i class=\"fa fa-lock me-1\"/> 작업 항목에 승인이 완료된 경우에는 편집할 수 "
+"없습니다"
 
 #. module: hr_work_entry_enterprise
 #: model_terms:ir.ui.view,arch_db:hr_work_entry_enterprise.hr_work_entry_gantt
@@ -59,7 +61,7 @@ msgstr "표시명"
 #. module: hr_work_entry_enterprise
 #: model:ir.model,name:hr_work_entry_enterprise.model_hr_work_entry
 msgid "HR Work Entry"
-msgstr ""
+msgstr "인사 근로 항목"
 
 #. module: hr_work_entry_enterprise
 #: model:ir.model.fields,field_description:hr_work_entry_enterprise.field_hr_work_entry__id

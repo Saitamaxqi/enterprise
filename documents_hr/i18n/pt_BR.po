@@ -7,12 +7,13 @@
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Maitê Dietze (madi)" <madi@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-11-14 11:44+0000\n"
+"PO-Revision-Date: 2025-11-19 16:32+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/documents_hr/pt_BR/>\n"
@@ -173,12 +174,12 @@ msgstr "Pasta do Funcionário"
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__employee_subfolders
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__employee_subfolders
 msgid "Employees Subfolder"
-msgstr ""
+msgstr "Subpasta Funcionários"
 
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.res_config_settings_view_form
 msgid "Employees Subfolders"
-msgstr ""
+msgstr "Subpastas de Funcionários"
 
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_hr_employee__hr_employee_contract_folder_id
@@ -188,7 +189,7 @@ msgstr "Pasta de contratos de funcionários do RH"
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_hr_employee__hr_employee_folder_id
 msgid "HR Employee Folder"
-msgstr ""
+msgstr "Pasta de Funcionário – RH"
 
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__documents_hr_settings
@@ -205,38 +206,40 @@ msgstr "Recursos Humanos"
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__id
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: documents_hr
 #. odoo-python
 #: code:addons/documents_hr/models/documents_document.py:0
 msgid "Impossible to delete employee folder or employee 'Contract' folder"
 msgstr ""
+"Não é possível excluir a pasta do Funcionário ou a pasta \"Contrato\" do "
+"Funcionário"
 
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.documents_hr_portal_view
 msgid "My documents"
-msgstr ""
+msgstr "Meus documentos"
 
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_hr_employee_public
 msgid "Public Employee"
-msgstr ""
+msgstr "Funcionário público"
 
 #. module: documents_hr
 #: model:documents.tag,name:documents_hr.document_tag_signature_request
 msgid "Signature Request"
-msgstr ""
+msgstr "Solicitar assinatura"
 
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.documents_hr_portal_view
 msgid "Size:"
-msgstr ""
+msgstr "Tamanho:"
 
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_documents_tag
 msgid "Tag"
-msgstr ""
+msgstr "Marcador"
 
 #. module: documents_hr
 #. odoo-python
@@ -251,6 +254,8 @@ msgid ""
 "You cannot delete this tag as it is used to link employee contracts and "
 "signatures."
 msgstr ""
+"Você não pode excluir esse marcador, pois ele é usada para vincular "
+"contratos e assinaturas de funcionários."
 
 #. module: documents_hr
 #. odoo-python
@@ -259,6 +264,8 @@ msgid ""
 "You must configure the HR Employee folder in document settings to use "
 "Document's features."
 msgstr ""
+"Você deve configurar a pasta HR Employee nas configurações do documento para "
+"usar os recursos do documento."
 
 #. module: documents_hr
 #. odoo-python
@@ -267,6 +274,8 @@ msgid ""
 "You must have a contact linked to the employee in order to use Document's "
 "features."
 msgstr ""
+"É necessário ter um contato vinculado ao funcionário para usar os recursos "
+"do documento."
 
 #~ msgid ""
 #~ "<span name=\"documents_hr_tags\" class=\"o_form_label\" invisible=\"1\" "

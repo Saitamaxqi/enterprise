@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:48+0000\n"
-"PO-Revision-Date: 2025-11-08 20:21+0000\n"
+"PO-Revision-Date: 2025-11-16 13:35+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Burmese <https://translate.odoo.com/projects/odoo-19/"
 "project_enterprise/my/>\n"
@@ -122,7 +122,7 @@ msgstr "နံပါတ်"
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view_no_title
 msgid "Milestone"
-msgstr ""
+msgstr "မိုင်စတုန်း"
 
 #. module: project_enterprise
 #. odoo-python
@@ -344,7 +344,7 @@ msgstr "အသုံးပြုသူ"
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_project_view_gantt
 msgid "View Tasks"
-msgstr ""
+msgstr "တာဝန်များကို ကြည့်ရန်"
 
 #. module: project_enterprise
 #. odoo-javascript

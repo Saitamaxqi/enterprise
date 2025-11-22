@@ -3,24 +3,27 @@
 # * account_transfer
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-08 18:45+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-17 03:15+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Slovak <https://translate.odoo.com/projects/odoo-19/"
+"account_transfer/sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "<span> to </span>"
-msgstr ""
+msgstr "<span> do</span>"
 
 #. module: account_transfer
 #. odoo-python
@@ -38,22 +41,22 @@ msgstr ""
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Account"
-msgstr ""
+msgstr "Účet"
 
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_chart_template
 msgid "Account Chart Template"
-msgstr ""
+msgstr "Účtovná osnova"
 
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_transfer_model
 msgid "Account Transfer Model"
-msgstr ""
+msgstr "Model prevodu účtu"
 
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_transfer_model_line
 msgid "Account Transfer Model Line"
-msgstr ""
+msgstr "Modelová čiara prevodu účtu"
 
 #. module: account_transfer
 #: model:ir.actions.server,name:account_transfer.ir_cron_auto_transfer_ir_actions_server
@@ -63,85 +66,85 @@ msgstr ""
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Accounts"
-msgstr ""
+msgstr "Účty"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__active
 msgid "Active"
-msgstr ""
+msgstr "Aktívne"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_search
 msgid "Archived"
-msgstr ""
+msgstr "Archivovaný"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__company_id
 msgid "Company"
-msgstr ""
+msgstr "Spoločnosť"
 
 #. module: account_transfer
 #: model:ir.model.fields,help:account_transfer.field_account_transfer_model__company_id
 msgid "Company related to this journal"
-msgstr ""
+msgstr "Spoločnosť vzťahujúca sa k tejto účtovnej knihe"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Compute Transfer"
-msgstr ""
+msgstr "Výpočetný prenos"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__conditions
 msgid "Conditions"
-msgstr ""
+msgstr "Podmienky"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__create_uid
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Vytvoril"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__create_date
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Vytvorené"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Description"
-msgstr ""
+msgstr "Popis"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Destination"
-msgstr ""
+msgstr "Cieľ"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__account_id
 msgid "Destination Account"
-msgstr ""
+msgstr "Cieľový účet"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__line_ids
 msgid "Destination Accounts"
-msgstr ""
+msgstr "Cieľové účty"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__journal_id
 msgid "Destination Journal"
-msgstr ""
+msgstr "Denník cieľov"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Disable"
-msgstr ""
+msgstr "Zakázať"
 
 #. module: account_transfer
 #: model:ir.model.fields.selection,name:account_transfer.selection__account_transfer_model__state__disabled
 msgid "Disabled"
-msgstr ""
+msgstr "Blokovaný"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_chart_template__display_name
@@ -151,7 +154,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__display_name
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Zobrazovaný názov"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
@@ -161,17 +164,17 @@ msgstr ""
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__frequency
 msgid "Frequency"
-msgstr ""
+msgstr "Frekvencia"
 
 #. module: account_transfer
 #: model:ir.actions.act_window,name:account_transfer.generated_transfers_action
 msgid "Generated Entries"
-msgstr ""
+msgstr "Generované záznamy"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__move_ids
 msgid "Generated Moves"
-msgstr ""
+msgstr "Generované pohyby"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__has_draft_moves
@@ -186,7 +189,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__id
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_transfer
 #. odoo-python
@@ -203,98 +206,98 @@ msgstr ""
 #. module: account_transfer
 #: model:ir.model.fields.selection,name:account_transfer.selection__account_transfer_model__state__in_progress
 msgid "In Progress"
-msgstr ""
+msgstr "Spracováva sa"
 
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_journal
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Journal"
-msgstr ""
+msgstr "Účtovný denník"
 
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Vstup účtovnej knihy"
 
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Položka účtovnej knihy"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Keep Original"
-msgstr ""
+msgstr "Uchovať originál"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__write_uid
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Naposledy upravoval"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__write_date
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Naposledy upravované"
 
 #. module: account_transfer
 #: model:ir.model.fields.selection,name:account_transfer.selection__account_transfer_model__frequency__month
 msgid "Monthly"
-msgstr ""
+msgstr "Mesačne"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__move_ids_count
 msgid "Move Ids Count"
-msgstr ""
+msgstr "Move Ids Count"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Move Model"
-msgstr ""
+msgstr "Presunúť model"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_tree
 msgid "Move Models"
-msgstr ""
+msgstr "Presunúť modely"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__name
 msgid "Name"
-msgstr ""
+msgstr "Meno"
 
 #. module: account_transfer
 #: model:ir.model.constraint,message:account_transfer.constraint_account_transfer_model_line_unique_account_by_transfer_model
 msgid "Only one account occurrence by transfer model"
-msgstr ""
+msgstr "Podľa modelu prevodu sa vyskytne iba jeden účet"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__account_ids
 msgid "Origin Accounts"
-msgstr ""
+msgstr "Účty pôvodu"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_bank_statement_line__transfer_model_id
 #: model:ir.model.fields,field_description:account_transfer.field_account_move__transfer_model_id
 msgid "Originating Model"
-msgstr ""
+msgstr "Pôvodný model"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__percent
 msgid "Percent"
-msgstr ""
+msgstr "Percento"
 
 #. module: account_transfer
 #: model:ir.model.fields,help:account_transfer.field_account_transfer_model_line__percent
 msgid ""
 "Percentage of the sum of lines from the origin accounts will be transferred "
 "to the destination account"
-msgstr ""
+msgstr "Percento zo súčtu riadkov z pôvodných účtov sa prevedie na cieľový účet"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Period"
-msgstr ""
+msgstr "Obdobie"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
@@ -313,32 +316,32 @@ msgstr ""
 #. module: account_transfer
 #: model:ir.model.fields.selection,name:account_transfer.selection__account_transfer_model__frequency__quarter
 msgid "Quarterly"
-msgstr ""
+msgstr "Štvrťročne"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Rate (%)"
-msgstr ""
+msgstr "Stupeň (%)"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Postupnosť"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__date_start
 msgid "Start Date"
-msgstr ""
+msgstr "Dátum začiatku"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__state
 msgid "State"
-msgstr ""
+msgstr "Štát"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__date_stop
 msgid "Stop Date"
-msgstr ""
+msgstr "Dátum zastavenia"
 
 #. module: account_transfer
 #. odoo-python
@@ -349,7 +352,7 @@ msgstr ""
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__total_percent
 msgid "Total Percent"
-msgstr ""
+msgstr "Celkové percento"
 
 #. module: account_transfer
 #. odoo-python
@@ -366,19 +369,19 @@ msgstr ""
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__transfer_model_id
 msgid "Transfer Model"
-msgstr ""
+msgstr "Prenosový model"
 
 #. module: account_transfer
 #: model:ir.actions.act_window,name:account_transfer.transfer_model_action
 #: model:ir.ui.menu,name:account_transfer.menu_auto_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Transfers"
-msgstr ""
+msgstr "Prevody"
 
 #. module: account_transfer
 #: model:ir.model.fields.selection,name:account_transfer.selection__account_transfer_model__frequency__year
 msgid "Yearly"
-msgstr ""
+msgstr "Ročne"
 
 #. module: account_transfer
 #. odoo-python

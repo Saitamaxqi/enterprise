@@ -23,13 +23,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-14 18:41+0000\n"
-"PO-Revision-Date: 2025-11-12 14:54+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-20 13:21+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "account_accountant/tr/>\n"
 "Language: tr\n"
@@ -42,30 +43,26 @@ msgstr ""
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_move.py:0
-#, fuzzy
 msgid "%(display_name_html)s will be entirely paid by the transaction."
 msgstr "%(display_name_html)s tamamen işlem tarafından ödenecektir."
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_move.py:0
-#, fuzzy
 msgid "%(display_name_html)s will be fully reconciled by the transaction."
-msgstr "%(display_name_html)s işlem tarafından tamamen uzlaştırılacaktır."
+msgstr "%(display_name_html)s işlem tarafından tamamen denkleştirilecektir."
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_move.py:0
-#, fuzzy
 msgid "%(display_name_html)s will be reduced by %(amount)s."
 msgstr "%(display_name_html)s %(amount)s tarafından azaltılacaktır."
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
-#, fuzzy
 msgid ") doesn't match the specified ending balance."
-msgstr ") belirtilen bitiş bakiyesiyle eşleşmiyorsa."
+msgstr ") belirtilen bitiş bakiyesiyle mütabakatlandırılamıyor."
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_form
@@ -203,7 +200,6 @@ msgstr ""
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
-#, fuzzy
 msgid ""
 "<span class=\"text-muted\" "
 "invisible=\"min_fiscalyear_lock_date_exception_for_me_id or "
@@ -212,8 +208,8 @@ msgid ""
 "i>\n"
 "                                </span>"
 msgstr ""
-"<span class=\"text-muted\" "
-"invisible=\"min_fiscalyear_lock_date_exception_for_me_id or "
+"<span class=\"text-muted\" invisible="
+"\"min_fiscalyear_lock_date_exception_for_me_id or "
 "min_fiscalyear_lock_date_exception_for_everyone_id\">\n"
 "                                    <i class=\"ms-2\">ancak istisnalara izin "
 "verin</i>\n"
@@ -221,7 +217,6 @@ msgstr ""
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
-#, fuzzy
 msgid ""
 "<span class=\"text-muted\" invisible=\"min_tax_lock_date_exception_for_me_id "
 "or min_tax_lock_date_exception_for_everyone_id\">\n"
@@ -277,7 +272,6 @@ msgstr "<span>İstisna</span>"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
-#, fuzzy
 msgid ""
 "A posted tax return closing entry exists after this tax lock date. You might "
 "want to reset the related tax return to non-submitted."
@@ -485,7 +479,6 @@ msgstr ""
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.js:0
-#, fuzzy
 msgid "Are you sure you want to delete this statement line?"
 msgstr "Bu ifade satırını silmek istediğinizden emin misiniz?"
 
@@ -556,7 +549,6 @@ msgstr "Bank Fees"
 #: code:addons/account_accountant/models/account_bank_statement.py:0
 #: model:ir.actions.act_window,name:account_accountant.action_bank_statement_line_transactions
 #: model:ir.actions.act_window,name:account_accountant.action_bank_statement_line_transactions_kanban
-#, fuzzy
 msgid "Bank Matching"
 msgstr "Banka Eşleştirme"
 
@@ -575,7 +567,6 @@ msgstr "Hesap Ekstresi %s.pdf"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_bank_statement_line__bank_statement_attachment_ids
-#, fuzzy
 msgid "Bank Statement Attachment"
 msgstr "Banka Hesap Özeti Eki"
 
@@ -658,7 +649,6 @@ msgstr ""
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/js/tours/account_accountant.js:0
-#, fuzzy
 msgid "Click on the statement to unfold it."
 msgstr "Açmak için ifadenin üzerine tıklayın."
 
@@ -700,7 +690,6 @@ msgstr "Bankanızı bağlayın ve en son işlemlerinizi alın."
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/journal_create_wizard/journal_create_wizard.js:0
-#, fuzzy
 msgid ""
 "Connect your bank and payment gateways (Paypal, Stripe, ...) or record your "
 "transactions manually"
@@ -711,9 +700,8 @@ msgstr ""
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/journal_create_wizard/journal_create_wizard.js:0
-#, fuzzy
 msgid "Connect your credit card accounts and manage your payouts"
-msgstr "Alaçakma kartı hesaplarınızı bağlayın ve ödemelerinizi yönetin"
+msgstr "Kredi kartı hesaplarınızı bağlayın ve ödemelerinizi yönetin"
 
 #. module: account_accountant
 #: model:ir.actions.act_window,name:account_accountant.action_bank_statement_form_bank_rec_widget
@@ -734,14 +722,12 @@ msgstr "Yeni bir işlem oluştur."
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/journal_create_wizard/journal_create_wizard.js:0
-#, fuzzy
 msgid "Create a separate journal for specific sales activities"
 msgstr "Belirli satış faaliyetleri için ayrı bir günlük oluşturun"
 
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/journal_create_wizard/journal_create_wizard.js:0
-#, fuzzy
 msgid "Create a separate journal to organize vendor bills"
 msgstr "Satıcı faturalarını düzenlemek için ayrı bir günlük oluşturun"
 
@@ -758,7 +744,6 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_model__created_automatically
 #: model_terms:ir.ui.view,arch_db:account_accountant.account_accountant_view_account_reconcile_model_search
-#, fuzzy
 msgid "Created Automatically"
 msgstr "Otomatik Olarak Oluşturuldu"
 
@@ -847,7 +832,6 @@ msgstr "%s'nin Ertelenmesi"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_form_inherit
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_tree
-#, fuzzy
 msgid "Deferred Date"
 msgstr "Ertelenmiş Tarih"
 
@@ -940,7 +924,6 @@ msgstr "Bir yıldan daha uzun ya da kısa mali yıl tanımlayın"
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.xml:0
-#, fuzzy
 msgid "Delete Transaction"
 msgstr "İşlemi Sil"
 
@@ -1027,9 +1010,8 @@ msgstr "Taslak Kayıt"
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/line_to_reconcile/line_to_reconcile.js:0
-#, fuzzy
 msgid "Edit Line"
-msgstr "Hattı Düzenle"
+msgstr "Satırı Düzenle"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__edit_mode
@@ -1053,13 +1035,11 @@ msgstr "Düzenleme modu tutarı"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__module_account_auto_transfer
-#, fuzzy
 msgid "Enable Auto Transfer"
 msgstr "Otomatik Aktarımı Etkinleştir"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
-#, fuzzy
 msgid "Enable Auto Transfers"
 msgstr "Otomatik Aktarımları Etkinleştir"
 
@@ -1201,7 +1181,6 @@ msgstr ""
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_move_line__full_amount_switch_html
-#, fuzzy
 msgid "Full Amount Switch Html"
 msgstr "Tam Tutar Anahtarı Html"
 
@@ -1321,16 +1300,14 @@ msgstr "Sigorta 12 ay"
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_bank_statement.py:0
-#, fuzzy
 msgid "Invalid Bank Statements"
 msgstr "Geçersiz Banka Ekstreleri"
 
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/statement_summary/statement_summary.xml:0
-#, fuzzy
 msgid "Invalid Statement(s)"
-msgstr "Geçersiz İfade(ler)"
+msgstr "Geçersiz Ekstre(ler)"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
@@ -1425,9 +1402,8 @@ msgstr "Yevmiye Kalemleri"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_move_line_list_bank_rec_widget
-#, fuzzy
 msgid "Journal Items to Match"
-msgstr "Eşleştirilecek Günlük Öğeleri"
+msgstr "Eşleştirilecek Yevmiye Kayıtları"
 
 #. module: account_accountant
 #: model:ir.actions.act_window,name:account_accountant.action_move_line_posted_unreconciled
@@ -1513,7 +1489,6 @@ msgstr "Satır"
 
 #. module: account_accountant
 #: model:ir.ui.menu,name:account_accountant.menu_action_change_lock_date
-#, fuzzy
 msgid "Lock Dates…"
 msgstr "Tarihleri Kilitle…"
 
@@ -1591,7 +1566,6 @@ msgstr "Ana Ek"
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.xml:0
-#, fuzzy
 msgid "Manage Models"
 msgstr "Modelleri Yönet"
 
@@ -1689,9 +1663,8 @@ msgstr "Benim İçin Asgari Vergi Kilit Tarihi İstisnası"
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/journal_create_wizard/journal_create_wizard.js:0
-#, fuzzy
 msgid "Miscellaneous Journal"
-msgstr "Çeşitli Günlükler"
+msgstr "Çeşitli İşlemler Yevmiyesi"
 
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__res_company__deferred_expense_amount_computation_method__month
@@ -1731,7 +1704,6 @@ msgstr "Yeni İşlem"
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/kanban_renderer.js:0
-#, fuzzy
 msgid "No Bank Statement"
 msgstr "Banka Hesap Özeti Yok"
 
@@ -1777,9 +1749,8 @@ msgstr "Yapacak bir iş yok!"
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/wizard/account_auto_reconcile_wizard.py:0
-#, fuzzy
 msgid "Nothing to reconcile."
-msgstr "Uzlaşacak bir şey yok."
+msgstr "Mütabakatlanacak bir şey yok."
 
 #. module: account_accountant
 #. odoo-javascript
@@ -1849,9 +1820,8 @@ msgstr "Form görünümünde aç"
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_reconcile_model_line.py:0
-#, fuzzy
 msgid "Open reconcile model"
-msgstr "Açık uzlaştırma modeli"
+msgstr "Denkleştirme modelini aç"
 
 #. module: account_accountant
 #. odoo-python
@@ -1933,7 +1903,6 @@ msgstr "Ödemeleri Eşleştirme"
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/journal_create_wizard/journal_create_wizard.js:0
-#, fuzzy
 msgid "Payroll, depreciation, closing entries, deferred revenues, ...etc"
 msgstr "Bordro, amortisman, kapanış kayıtları, ertelenmiş gelirler, ...vb."
 
@@ -1982,9 +1951,8 @@ msgstr ""
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/journal_create_wizard/journal_create_wizard.js:0
-#, fuzzy
 msgid "Purchases Journal"
-msgstr "Satın Alma Günlüğü"
+msgstr "Satın Alımlar Yevmiyesi"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_bank_statement__rating_ids
@@ -2058,14 +2026,12 @@ msgstr "Denkleştirme Modeli"
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_reconcile_model.py:0
-#, fuzzy
 msgid "Reconciliation model %s applied"
-msgstr "Uzlaşma modeli %s uygulandı"
+msgstr "Mütabakat modeli %s uygulandı"
 
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/journal_create_wizard/journal_create_wizard.js:0
-#, fuzzy
 msgid "Record your cash movements and transfers"
 msgstr "Nakit hareketlerinizi ve transferlerinizi kaydedin"
 
@@ -2107,7 +2073,6 @@ msgstr "İnceleme"
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.js:0
-#, fuzzy
 msgid "Reviewed"
 msgstr "Gözden geçirildi"
 
@@ -2156,21 +2121,18 @@ msgstr "Mutabakat için Yevmiye Kayıtları Ara"
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.js:0
-#, fuzzy
 msgid "Search: Account"
 msgstr "Arama Hesap"
 
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.js:0
-#, fuzzy
 msgid "Search: Journal Items to Match"
 msgstr "Arama yapın: Eşleşecek Dergi Öğeleri"
 
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.js:0
-#, fuzzy
 msgid "Search: Partner"
 msgstr "Arama yapın: Ortak"
 
@@ -2186,14 +2148,12 @@ msgstr ""
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.js:0
-#, fuzzy
 msgid "Set Account"
 msgstr "Hesap Ayarla"
 
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.js:0
-#, fuzzy
 msgid "Set Partner"
 msgstr "Set Ortağı"
 
@@ -2216,7 +2176,6 @@ msgstr "Taslak Kayıt Uyarısını Göster"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__show_posted_tax_closing_warning
-#, fuzzy
 msgid "Show Posted Tax Closing Warning"
 msgstr "Yayınlanan Vergi Kapanış Uyarısını Göster"
 
@@ -2284,7 +2243,6 @@ msgstr "Hesap Ekstresi Satırı"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
-#, fuzzy
 msgid "Statement Lines"
 msgstr "Açıklama Hatları"
 
@@ -2366,7 +2324,6 @@ msgstr "Ertelenmiş kayıtları oluşturan orijinal faturalar"
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_reconcile_model_line.py:0
-#, fuzzy
 msgid ""
 "The regular expression for capturing the counterpart amount appears to be "
 "incorrectly formatted.\n"
@@ -2376,14 +2333,13 @@ msgid ""
 msgstr ""
 "Karşı tutarı yakalamak için kullanılan düzenli ifade yanlış biçimlendirilmiş "
 "gibi görünüyor.\n"
-"Lütfen regex'in tutarı yakalayan kısmının (parantez içinde) boş bir değeri "
-"(genellikle yanlış ? veya * kullanımıyla) veya rakam içermeyen herhangi bir "
+"Lütfen regex'in tutarı yakalayan kısmının (parantez içinde) boş bir değeri ("
+"genellikle yanlış ? veya * kullanımıyla) veya rakam içermeyen herhangi bir "
 "değeri yakalayamadığından emin olun. Örneğin: BRT: ([\\d,.]+)."
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_reconcile_model_line.py:0
-#, fuzzy
 msgid ""
 "The regular expression for capturing the counterpart amount appears to be "
 "incorrectly formatted.\n"
@@ -2398,7 +2354,6 @@ msgstr ""
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
-#, fuzzy
 msgid "The running balance ("
 msgstr "Çalışan denge ("
 
@@ -2424,7 +2379,6 @@ msgstr ""
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
-#, fuzzy
 msgid "There are one or more"
 msgstr "Bir veya daha fazla"
 
@@ -2562,17 +2516,14 @@ msgstr "Denkleştirilmiş ekstre satırları"
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.xml:0
-#, fuzzy
 msgid "Upload Bills"
 msgstr "Faturaları Yükle"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_bank_statement.py:0
-#, fuzzy
 msgid "Validated entries can only be changed by your accountant."
-msgstr ""
-"Onaylanmış girişler yalnızca muhasebeciniz tarafından değiştirilebilir."
+msgstr "Onaylanmış girişler yalnızca muhasebeciniz tarafından değiştirilebilir."
 
 #. module: account_accountant
 #. odoo-javascript
@@ -2594,13 +2545,11 @@ msgstr "Websitesi iletişim geçmişi"
 
 #. module: account_accountant
 #: model:ir.actions.client,name:account_accountant.action_journal_create_wizard
-#, fuzzy
 msgid "What type of journal do you want to add?"
-msgstr "Ne tür bir günlük eklemek istiyorsunuz?"
+msgstr "Ne tür bir yevmiye eklemek istiyorsunuz?"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
-#, fuzzy
 msgid "With Activities"
 msgstr "Etkinliklerle"
 
@@ -2611,7 +2560,6 @@ msgstr "Kalan ile"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_quick_create_form_bank_rec_widget
-#, fuzzy
 msgid "Write a label ..."
 msgstr "Bir etiket yazın ..."
 
@@ -2640,7 +2588,6 @@ msgstr ""
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/js/tours/account_accountant.js:0
-#, fuzzy
 msgid "You can now go back to the dashboard."
 msgstr "Artık gösterge paneline geri dönebilirsiniz."
 
@@ -2790,13 +2737,11 @@ msgstr "kimlik"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_create_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
-#, fuzzy
 msgid "invalid statement(s)"
-msgstr "geçersiz ifade(ler)"
+msgstr "geçersiz ekstre(ler)"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_edit_line
-#, fuzzy
 msgid "secondary currency"
 msgstr "ikincil para birimi"
 

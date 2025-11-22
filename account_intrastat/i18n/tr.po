@@ -16,13 +16,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-12 14:54+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-20 13:20+0000\n"
+"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "account_intrastat/tr/>\n"
 "Language: tr\n"
@@ -74,7 +75,6 @@ msgstr ""
 #. module: account_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_product_product__account_fiscal_country_group_codes
 #: model:ir.model.fields,field_description:account_intrastat.field_product_template__account_fiscal_country_group_codes
-#, fuzzy
 msgid "Account Fiscal Country Group Codes"
 msgstr "Hesap Mali Ülke Grubu Kodları"
 
@@ -85,13 +85,11 @@ msgstr "Yevmiye kalemi"
 
 #. module: account_intrastat
 #: model:ir.model,name:account_intrastat.model_account_return
-#, fuzzy
 msgid "Accounting Return"
 msgstr "Muhasebe İadesi"
 
 #. module: account_intrastat
 #: model:ir.model,name:account_intrastat.model_account_return_type
-#, fuzzy
 msgid "Accounting Return Type"
 msgstr "Muhasebe İade Türü"
 
@@ -157,7 +155,6 @@ msgstr "Ürün Kodu"
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
-#, fuzzy
 msgid "Commodity codes configuration"
 msgstr "Emtia kodları yapılandırması"
 
@@ -229,21 +226,18 @@ msgstr "İsim Göster"
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
-#, fuzzy
 msgid "Exclude any domestic or extra-EU sales from the Intrastat report."
 msgstr "Yurtiçi veya AB dışı satışları Intrastat raporundan hariç tutun."
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
-#, fuzzy
 msgid "Exclude sales made to private individuals from the listing."
 msgstr "Özel şahıslara yapılan satışları listeden hariç tutun."
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
-#, fuzzy
 msgid "Exclude services from the report."
 msgstr "Hizmetleri rapordan hariç tutun."
 
@@ -308,7 +302,6 @@ msgstr "Intrastat (Mal)"
 
 #. module: account_intrastat
 #: model:account.report,name:account_intrastat.intrastat_report_services
-#, fuzzy
 msgid "Intrastat (Services)"
 msgstr "Intrastat (Hizmetler)"
 
@@ -341,7 +334,6 @@ msgstr "Intrastat Ülkesi"
 
 #. module: account_intrastat
 #: model:ir.model,name:account_intrastat.model_account_intrastat_goods_report_handler
-#, fuzzy
 msgid "Intrastat Goods Report Custom Handler"
 msgstr "Intrastat Mal Raporu Özel İşleyici"
 
@@ -352,7 +344,6 @@ msgstr "Intrastat Raporu Özel Yöneticisi"
 
 #. module: account_intrastat
 #: model:ir.model,name:account_intrastat.model_account_intrastat_services_report_handler
-#, fuzzy
 msgid "Intrastat Services Report Custom Handler"
 msgstr "Intrastat Hizmetleri Raporu Özel İşleyici"
 
@@ -369,7 +360,6 @@ msgstr "Intrastat Ek Birim Miktarı"
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
-#, fuzzy
 msgid "Intrastat Thresholds"
 msgstr "Intrastat Eşikleri"
 
@@ -399,7 +389,6 @@ msgstr "Intrastat bölge"
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
-#, fuzzy
 msgid ""
 "Intrastat thresholds may change annually. Verify that your transactions "
 "exceed the threshold for reporting."
@@ -438,7 +427,6 @@ msgstr "Fatura Satırları"
 #. module: account_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_account_return__is_intrastat_return
 #: model:ir.model.fields,field_description:account_intrastat.field_account_return_type__is_intrastat_return_type
-#, fuzzy
 msgid "Is an Intrastat Return Type"
 msgstr "Bir Intrastat Dönüş Tipidir"
 
@@ -472,21 +460,18 @@ msgstr "Eksik ürün"
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
-#, fuzzy
 msgid "Only business customers"
 msgstr "Sadece ticari müşteriler"
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
-#, fuzzy
 msgid "Only goods included"
 msgstr "Yalnızca mallar dahildir"
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
-#, fuzzy
 msgid "Only intra-EU transactions"
 msgstr "Sadece AB içi işlemler"
 
@@ -558,7 +543,6 @@ msgstr "Hizmet"
 
 #. module: account_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.product_template_form_view_inherit_account_intrastat
-#, fuzzy
 msgid "Service Code"
 msgstr "Hizmet Kodu"
 
@@ -646,7 +630,6 @@ msgstr "Her ürün miktarı için tamamlayıcı birim sayısı."
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
-#, fuzzy
 msgid "The value of goods should be VAT exclusive."
 msgstr "Malların değeri KDV hariç olmalıdır."
 
@@ -689,14 +672,12 @@ msgstr "Ağırlığı tanımlanmamış ürünler."
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
-#, fuzzy
 msgid "Unit of measure configuration"
 msgstr "Ölçü birimi yapılandırması"
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
-#, fuzzy
 msgid "VAT exclusive"
 msgstr "KDV hariç"
 
@@ -714,19 +695,17 @@ msgstr "Değer Para Birimi"
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
-#, fuzzy
 msgid "Verify that each good is assigned the right unit of measure."
 msgstr "Her bir mala doğru ölçü biriminin atandığını doğrulayın."
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
-#, fuzzy
 msgid ""
 "Verify that each item has the appropriate code and description according to "
 "the CN (Combined Nomenclature) codes."
 msgstr ""
-"Her bir kalemin CN (Kombine Nomenklatür) kodlarına göre uygun kod ve "
+"Her bir kalemin KN (Kombine Nomenklatür) kodlarına göre uygun kod ve "
 "açıklamaya sahip olduğunu doğrulayın."
 
 #. module: account_intrastat
@@ -874,9 +853,8 @@ msgstr "ürün mal kodları"
 #. module: account_intrastat
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
-#, fuzzy
 msgid "product service codes"
-msgstr "ürün hi̇zmet kodlari"
+msgstr "ürün hizmet kodları"
 
 #. module: account_intrastat
 #. odoo-javascript
@@ -887,16 +865,14 @@ msgstr "ürünün mal kodları"
 #. module: account_intrastat
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
-#, fuzzy
 msgid "product's service codes"
-msgstr "ürün hi̇zmet kodlari"
+msgstr "ürün hizmet kodları"
 
 #. module: account_intrastat
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
-#, fuzzy
 msgid "service codes"
-msgstr "servi̇s kodlari"
+msgstr "hizmet kodları"
 
 #. module: account_intrastat
 #. odoo-javascript

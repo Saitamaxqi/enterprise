@@ -3,13 +3,14 @@
 # * ai_documents
 #
 # "Abe Manyo (abem)" <abem@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-06 07:14+0000\n"
-"Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
+"PO-Revision-Date: 2025-11-16 18:01+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "ai_documents/id/>\n"
 "Language: id\n"
@@ -97,7 +98,7 @@ msgstr ""
 #. module: ai_documents
 #: model:ir.model,name:ai_documents.model_ai_documents_sort
 msgid "Ai Documents Sort"
-msgstr ""
+msgstr "Sortir Dokumen AI"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__allowed_tools_ids
@@ -141,22 +142,22 @@ msgstr "Tutup"
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Dibuat oleh"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Dibuat pada"
 
 #. module: ai_documents
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
 msgid "Delete"
-msgstr ""
+msgstr "Hapus"
 
 #. module: ai_documents
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
 msgid "Discard"
-msgstr ""
+msgstr "Buang"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__display_name
@@ -169,7 +170,7 @@ msgstr "Nama Tampilan"
 #. module: ai_documents
 #: model:ir.model,name:ai_documents.model_documents_document
 msgid "Document"
-msgstr ""
+msgstr "Dokumen"
 
 #. module: ai_documents
 #. odoo-python
@@ -185,7 +186,7 @@ msgstr ""
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__folder_id
 msgid "Folder"
-msgstr ""
+msgstr "Folder"
 
 #. module: ai_documents
 #. odoo-python
@@ -219,12 +220,12 @@ msgstr ""
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Terakhir Diperbarui oleh"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Terakhir Diperbarui pada"
 
 #. module: ai_documents
 #. odoo-python
@@ -235,7 +236,7 @@ msgstr "Mimetype"
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__model
 msgid "Model"
-msgstr ""
+msgstr "Model"
 
 #. module: ai_documents
 #: model:ir.actions.server,ai_tool_description:ai_documents.ir_actions_server_move_in_folder
@@ -273,7 +274,7 @@ msgstr ""
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__relation
 msgid "Relation"
-msgstr ""
+msgstr "Hubungan"
 
 #. module: ai_documents
 #: model:ir.actions.server,ai_tool_description:ai_documents.ir_actions_server_rename_documents
@@ -283,12 +284,12 @@ msgstr ""
 #. module: ai_documents
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
 msgid "Save"
-msgstr ""
+msgstr "Simpan"
 
 #. module: ai_documents
 #: model:ir.model,name:ai_documents.model_ir_actions_server
 msgid "Server Action"
-msgstr ""
+msgstr "Tindakan Server"
 
 #. module: ai_documents
 #. odoo-javascript

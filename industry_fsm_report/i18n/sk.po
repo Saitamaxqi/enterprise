@@ -3,19 +3,22 @@
 # * industry_fsm_report
 #
 # Odoo Translation Bot <c3p@odoo.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-10-08 18:47+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-11-16 13:37+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Slovak <https://translate.odoo.com/projects/odoo-19/"
+"industry_fsm_report/sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: industry_fsm_report
 #. odoo-javascript
@@ -75,12 +78,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_4_ir_model_fields_7
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.report_custom_x_project_task_worksheet_template_3
 msgid "Comments"
-msgstr ""
+msgstr "Komentáre"
 
 #. module: industry_fsm_report
 #: model:ir.model,name:industry_fsm_report.model_base_document_layout
 msgid "Company Document Layout"
-msgstr ""
+msgstr "Rozloženie firemného dokumentu"
 
 #. module: industry_fsm_report
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.project_project_form_inherit_industry_fsm_report
@@ -90,7 +93,7 @@ msgstr ""
 #. module: industry_fsm_report
 #: model:ir.model,website_form_label:industry_fsm_report.model_project_task
 msgid "Create a Task"
-msgstr ""
+msgstr "Vytvorte požiadavku"
 
 #. module: industry_fsm_report
 #: model:ir.model.fields,help:industry_fsm_report.field_project_task__worksheet_template_id
@@ -104,7 +107,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_3_ir_model_fields_2
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_4_ir_model_fields_2
 msgid "Created by"
-msgstr ""
+msgstr "Vytvoril"
 
 #. module: industry_fsm_report
 #: model:ir.model.fields,field_description:industry_fsm_report.field_worksheet_template_load_wizard__create_date
@@ -113,7 +116,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.x_project_task_worksheet_template_3_ir_ui_view_3
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.x_project_task_worksheet_template_4_ir_ui_view_3
 msgid "Created on"
-msgstr ""
+msgstr "Vytvorené"
 
 #. module: industry_fsm_report
 #. odoo-javascript
@@ -125,7 +128,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_report.fsm_template_field6
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.report_custom_x_project_task_worksheet_template_4
 msgid "Date"
-msgstr ""
+msgstr "Dátum"
 
 #. module: industry_fsm_report
 #: model:ir.model,name:industry_fsm_report.x_project_task_worksheet_template_3_ir_model_1
@@ -151,7 +154,7 @@ msgstr ""
 #. module: industry_fsm_report
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.worksheet_template_view_form_footer_design_button
 msgid "Discard"
-msgstr ""
+msgstr "Zrušiť"
 
 #. module: industry_fsm_report
 #: model:ir.model.fields,field_description:industry_fsm_report.field_base_document_layout__display_name
@@ -167,7 +170,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_3_ir_model_fields_3
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_4_ir_model_fields_3
 msgid "Display Name"
-msgstr ""
+msgstr "Zobrazovaný Názov"
 
 #. module: industry_fsm_report
 #. odoo-python
@@ -216,7 +219,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_3_ir_model_fields_4
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_4_ir_model_fields_4
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: industry_fsm_report
 #: model:ir.model.fields,field_description:industry_fsm_report.fsm_template_field1
@@ -235,14 +238,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_3_ir_model_fields_6
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_4_ir_model_fields_6
 msgid "Last Updated by"
-msgstr ""
+msgstr "Naposledy upravoval"
 
 #. module: industry_fsm_report
 #: model:ir.model.fields,field_description:industry_fsm_report.field_worksheet_template_load_wizard__write_date
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_3_ir_model_fields_5
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_4_ir_model_fields_5
 msgid "Last Updated on"
-msgstr ""
+msgstr "Naposledy upravované"
 
 #. module: industry_fsm_report
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.view_worksheet_template_load_form
@@ -258,24 +261,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_report.fsm_template_field3
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.report_custom_x_project_task_worksheet_template_4
 msgid "Manufacturer"
-msgstr ""
+msgstr "Výrobca"
 
 #. module: industry_fsm_report
 #: model:ir.model,name:industry_fsm_report.model_ir_model
 msgid "Models"
-msgstr ""
+msgstr "Modely"
 
 #. module: industry_fsm_report
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_3_field_x_name
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_4_field_x_name
 msgid "Name"
-msgstr ""
+msgstr "Meno"
 
 #. module: industry_fsm_report
 #: model_terms:ir.actions.act_window,help:industry_fsm_report.project_task_action_fsm_planning_groupby_worksheet
 #: model_terms:ir.actions.act_window,help:industry_fsm_report.project_task_action_fsm_planning_groupby_worksheet2
 msgid "No tasks found. Let's create one!"
-msgstr ""
+msgstr "Neboli nájdené žiadne úlohy. Vytvorme si jeden!"
 
 #. module: industry_fsm_report
 #: model_terms:ir.actions.act_window,help:industry_fsm_report.fsm_worksheets_action_settings
@@ -304,12 +307,12 @@ msgstr ""
 #. module: industry_fsm_report
 #: model:ir.model,name:industry_fsm_report.model_project_project
 msgid "Project"
-msgstr ""
+msgstr "Projekt"
 
 #. module: industry_fsm_report
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.worksheet_template_view_form_footer_design_button
 msgid "Save & Close"
-msgstr ""
+msgstr "Uložiť & Zatvoriť"
 
 #. module: industry_fsm_report
 #. odoo-javascript
@@ -326,13 +329,13 @@ msgstr ""
 #. module: industry_fsm_report
 #: model:ir.actions.server,name:industry_fsm_report.action_fsm_task_send_report
 msgid "Send Report"
-msgstr ""
+msgstr "Poslať výkaz"
 
 #. module: industry_fsm_report
 #: model:ir.model.fields,field_description:industry_fsm_report.fsm_template_field5
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.report_custom_x_project_task_worksheet_template_4
 msgid "Serial Number"
-msgstr ""
+msgstr "Sériové číslo"
 
 #. module: industry_fsm_report
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.view_worksheet_template_load_form
@@ -361,12 +364,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_3_ir_model_fields_9
 #: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_4_ir_model_fields_9
 msgid "Task"
-msgstr ""
+msgstr "Požiadavka"
 
 #. module: industry_fsm_report
 #: model:ir.model,name:industry_fsm_report.model_project_task_recurrence
 msgid "Task Recurrence"
-msgstr ""
+msgstr "Opakovanie úlohy"
 
 #. module: industry_fsm_report
 #: model:ir.model,name:industry_fsm_report.model_report_industry_fsm_worksheet_custom
@@ -376,7 +379,7 @@ msgstr ""
 #. module: industry_fsm_report
 #: model:ir.model,name:industry_fsm_report.model_report_project_task_user
 msgid "Tasks Analysis"
-msgstr ""
+msgstr "Analýza úloh"
 
 #. module: industry_fsm_report
 #: model:ir.model.fields,field_description:industry_fsm_report.fsm_template_field7
@@ -415,7 +418,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.portal_my_task
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.worksheet_custom_page
 msgid "Worksheet"
-msgstr ""
+msgstr "Pracovný list"
 
 #. module: industry_fsm_report
 #: model:ir.model,name:industry_fsm_report.model_worksheet_template
@@ -443,7 +446,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_report.field_project_project__allow_worksheets
 #: model:ir.model.fields,field_description:industry_fsm_report.field_project_task__allow_worksheets
 msgid "Worksheets"
-msgstr ""
+msgstr "Pracovné výkazy"
 
 #. module: industry_fsm_report
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.project_project_form_inherit_industry_fsm_report
