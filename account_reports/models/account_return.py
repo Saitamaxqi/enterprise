@@ -978,7 +978,7 @@ class AccountReturn(models.Model):
     @api.model
     def get_next_return_for_dashboard(self, journal_id=False):
         additional_domain = [
-            ('date_deadline', '<=', fields.Date.today() + relativedelta(months=1)),
+            ('date_to', '<', fields.Date.context_today(self)),
             ('return_type_category', '=', 'account_return'),
         ]
         return_ids = self.get_next_returns_ids(journal_id=journal_id, additional_domain=additional_domain, allow_multiple_by_types=True)
@@ -999,6 +999,7 @@ class AccountReturn(models.Model):
                     'date_deadline': returns[0].date_deadline,
                     'name': return_type.name,
                     'type_id': return_type.id,
+                    'matched_returns_count': len(returns),
                 })
         return dashboard_return_dicts
 
