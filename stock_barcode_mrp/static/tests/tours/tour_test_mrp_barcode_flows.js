@@ -1398,20 +1398,16 @@ registry.category("web_tour.tours").add("test_no_split_uncompleted_done_move", {
     steps: () => [
         { trigger: ".o_stock_barcode_main_menu", run: "scan TBPCSNS mo" },
         {
-            trigger:
-                '.o_barcode_line:has(.o_barcode_line_title .o_product_label:contains("Final Product")) .o_edit',
+            trigger: '.o_barcode_line:has(.o_barcode_line_title:text("Final Product")) .o_edit',
             run: "click",
         },
         { trigger: "input", run: "clear" },
         { trigger: "input", run: "edit 1" },
         { trigger: ".o_save", run: "click" },
+        { trigger: ".o_barcode_line" },
+        { trigger: '.o_barcode_line:has(.o_barcode_line_title:text("Compo 01")) .o_edit' },
         {
-            trigger:
-                '.o_barcode_line:has(.o_barcode_line_title .o_product_label:contains("Compo 01")) .o_edit',
-        },
-        {
-            trigger:
-                '.o_barcode_line:has(.o_barcode_line_title .o_product_label:contains("Compo 01")) .o_edit' ,
+            trigger: '.o_barcode_line:has(.o_barcode_line_title:text("Compo 01")) .o_edit',
             run: "click",
         },
         { trigger: "input", run: "clear" },
