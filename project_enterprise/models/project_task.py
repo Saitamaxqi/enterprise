@@ -1141,7 +1141,7 @@ class ProjectTask(models.Model):
 
         flex_resources = self.env["resource.resource"].browse(flex_resources_ids)
         flex_resources_work_intervals, hours_per_day, hours_per_week = flex_resources._get_flexible_resource_valid_work_intervals(start_date, end_date)
-        users_work_intervals, calendar_work_intervals = regular_resources_users._get_valid_work_intervals(start_date, end_date)
+        users_work_intervals, calendar_work_intervals = regular_resources_users.sudo()._get_valid_work_intervals(start_date, end_date)
 
         locale = babel_locale_parse(get_lang(self.env).code)
         if flex_resources:
