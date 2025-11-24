@@ -167,6 +167,7 @@ export class ReportEditorWysiwyg extends Component {
                 reportResModel: this.reportEditorModel.reportResModel,
                 allowVideo: false,
                 allowImageTransform: false,
+                allowImageResize: false,
             },
             this.env.services
         );
