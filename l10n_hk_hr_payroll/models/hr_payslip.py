@@ -118,7 +118,8 @@ class HrPayslip(models.Model):
             adw = 0
             average_daily_wage = sum(slip.input_line_ids.filtered(lambda line: line.code == 'AVERAGE_DAILY_WAGE').mapped('amount'))
             if average_daily_wage:
-                adw = average_daily_wage
+                slip.l10n_hk_average_daily_wage = average_daily_wage
+                continue
 
             last_year_payslips = slip._get_previous_year_payslips(order='date_from')
             if last_year_payslips:
