@@ -294,6 +294,9 @@ class HrPayslip(models.Model):
         cfdi_values['fecha'] = fields.Datetime.now().astimezone(mx_tz).strftime(CFDI_DATE_FORMAT)
         cfdi_values['tipo_de_comprobante'] = 'N'
         cfdi_values['serie'], _, cfdi_values['folio'] = self.move_id.name.rpartition('/')
+        periodicity = self.version_id.l10n_mx_payment_periodicity if self.struct_id.l10n_mx_payroll_type == 'O' else '99'
+        periodicity_label = dict(self.version_id._fields['l10n_mx_payment_periodicity'].selection).get(periodicity)
+        cfdi_values['periodo'] = f'{periodicity} - {periodicity_label}'
 
         cfdi_values['receptor'] = {
             'rfc': self.employee_id.l10n_mx_rfc,
@@ -330,7 +333,7 @@ class HrPayslip(models.Model):
             'tipo_jornada': self.version_id.l10n_mx_shift_type,
             'num_empleado': self.employee_id.registration_number,
             'riesgo_puesto': self.company_id.l10n_mx_risk_type,
-            'periodicidad_pago': self.version_id.l10n_mx_payment_periodicity,
+            'periodicidad_pago': periodicity,
             'puesto': self.version_id.job_title,
             'departamento': self.version_id.department_id.name if self.version_id.department_id else False,
             'salario_base_cot_apor': integrated_daily_wage,
