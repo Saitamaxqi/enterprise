@@ -1589,7 +1589,8 @@ class ProjectTask(models.Model):
         # to anticipate the case of a resource added later for the same employee and company
         user_resource_mapping = {resource.user_id.id: resource.id for resource in resources}
         leaves_mapping = resources._get_unavailable_intervals(start, stop)
-        company_leaves = self.env.company.resource_calendar_id._unavailable_intervals(start.replace(tzinfo=utc), stop.replace(tzinfo=utc))
+        company_calendar = self.env.company.resource_calendar_id
+        company_leaves = [] if company_calendar.flexible_hours else company_calendar._unavailable_intervals(start.replace(tzinfo=utc), stop.replace(tzinfo=utc))
 
         cell_dt = timedelta(hours=1) if scale in ['day', 'week'] else timedelta(hours=12)
 
