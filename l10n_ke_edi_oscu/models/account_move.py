@@ -75,7 +75,8 @@ class AccountMove(models.Model):
         super()._compute_show_reset_to_draft_button()
         self.filtered(lambda m: m.l10n_ke_oscu_invoice_number).show_reset_to_draft_button = False
 
-    @api.depends('invoice_line_ids.product_id',
+    @api.depends('invoice_date',
+                 'invoice_line_ids.product_id',
                  'invoice_line_ids.product_uom_id',
                  'reversed_entry_id',
                  'l10n_ke_reason_code_id',
@@ -115,6 +116,12 @@ class AccountMove(models.Model):
                         'blocking': True,
                     }
 
+                if move.reversed_entry_id and move.reversed_entry_id.invoice_date > move.invoice_date:
+                    messages['credit_date_error'] = {
+                        'message': _("eTims does not accept credit notes with a date earlier than the corresponding invoice."),
+                        'blocking': True,
+                    }
+
             if product_lines.filtered(lambda line: not line.product_id):
                 messages['no_product_warning'] = {
                     'message': _("Some lines are missing a product where one must be set. "),
@@ -133,7 +140,7 @@ class AccountMove(models.Model):
 
             if lines_not_single_tax:
                 messages['lines_not_single_vat_tax'] = {
-                    'message': _("All invoice lines must have Tax line and exactly one VAT tax (on which the KRA Tax Code is set)!"),
+                    'message': _("All invoice lines must include a tax line and exactly one VAT tax, with the KRA Tax Code properly set."),
                     'blocking': True,
                 }
 
@@ -487,6 +494,7 @@ class AccountMove(models.Model):
         if self.l10n_ke_oscu_invoice_number:
             error, data = self._l10n_ke_oscu_fetch_invoice_details()
             if not error:
+                data = data['receipt']
                 date_str = data['sdcDateTime'].split('.')[0]  # Remove microseconds
                 signing_date = datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S').replace(tzinfo=ZoneInfo('Africa/Nairobi')).astimezone(ZoneInfo('UTC')).replace(tzinfo=None)
                 self.write({
@@ -499,6 +507,23 @@ class AccountMove(models.Model):
                 return data, error
             elif error['code'] == 'TIM':
                 return data, error
+
+        if self.move_type == 'out_refund' and company.l10n_ke_server_mode != 'demo':
+            error, data = self.reversed_entry_id._l10n_ke_oscu_fetch_invoice_details()
+            if error:
+                return data, error
+            # Normalize None to False to avoid None != False when customer had no PIN on invoice
+            invoice_customer_pin = data['custTin'] or False
+            if invoice_customer_pin != self.partner_id.vat:
+                error = {
+                    'code': 'WRONG_PIN',
+                    'message': _(
+                        "The customer PIN on the credit note differs from the PIN on the original invoice submitted to the KRA.\n"
+                        "The KRA only accepts credit notes with matching PINs.\n"
+                        "Customer PIN on the invoice: %s", invoice_customer_pin or ''
+                    ),
+                }
+                return {}, error
 
         content = self._l10n_ke_oscu_json_from_move()
 
@@ -582,7 +607,7 @@ class AccountMove(models.Model):
             else:
                 _logger.error("Error retrieving invoice details from the OSCU: %s: %s", error['code'], error['message'])
             return error, None
-        return [], data['salesList'][0]['receipt'] if data['salesList'] else None
+        return [], data['salesList'][0] if data['salesList'] else None
 
     # === Fetching from eTIMS: vendor bills === #
 

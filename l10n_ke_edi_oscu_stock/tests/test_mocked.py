@@ -28,6 +28,7 @@ class TestKeEdiStockMocked(TestKeEdiStock):
             ('insertStockIO', 'save_stock_io_sale_1', 'success'),
             ('saveStockMaster', 'save_stock_master_19', 'success'),
             ('saveStockMaster', 'save_stock_master_19', 'success'),
+            ('selectInvoiceDetails', 'get_invoice_details_1', 'get_invoice_details_success'),
             ('saveTrnsSalesOsdc', 'save_refund_2', 'save_sale_success'),
             ('insertStockIO', 'save_stock_io_refund', 'success'),
             ('saveStockMaster', 'save_stock_master_20', 'success'),
