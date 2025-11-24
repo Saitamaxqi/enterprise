@@ -54,16 +54,15 @@ export class IotHttpService {
     ];
     cachedIotBoxes = {};
 
+    constructor() {
+        this.setup(...arguments);
+    }
+
     /**
-     *
-     * @param {import("@iot_base/network_utils/longpolling").IotLongpolling} longpolling Longpolling service
-     * @param {import("@iot/network_utils/iot_websocket").IotWebsocket} websocket Websocket service
-     * @param {import("@iot/network_utils/iot_webrtc").IotWebRtc} webRtc WebRTC service
-     * @param notification Notification service
-     * @param orm ORM service
+     * @param {import("services").ServiceFactories & { websocket: IotWebsocket } & { webRtc: IotWebRtc } }} services
      */
-    constructor(longpolling, websocket, webRtc, notification, orm) {
-        this.longpolling = longpolling;
+    setup({ iot_longpolling, websocket, webRtc, notification, orm }) {
+        this.longpolling = iot_longpolling;
         this.websocket = websocket;
         this.webRtc = webRtc;
         this.notification = notification;
@@ -91,7 +90,7 @@ export class IotHttpService {
     _ensureLongpollingEnabled() {
         if (
             this.longpollingFailedTimestamp &&
-            Date.now() - this.longpollingFailedTimestamp < 20 * 60 * 1000
+            Date.now() - this.longpollingFailedTimestamp < 5 * 60 * 1000
         ) {
             throw new Error("Longpolling is temporarily disabled due to a recent failure.");
         }
@@ -242,8 +241,9 @@ export class IotHttpService {
 export const iotHttpService = {
     dependencies: ["notification", "orm", "bus_service", "iot_longpolling", "lazy_session"],
 
-    start(env, { notification, orm, bus_service, iot_longpolling, lazy_session }) {
-        const iotWebsocket = new IotWebsocket({ bus_service, orm, lazy_session });
+    start(env, services) {
+        const { iot_longpolling, bus_service } = services;
+        const iotWebsocket = new IotWebsocket(services);
         const iotWebRtc = new IotWebRtc(bus_service, iotWebsocket);
 
         const webRtc = {
@@ -261,13 +261,7 @@ export const iotHttpService = {
             onMessage: iotWebsocket.onMessage.bind(iotWebsocket),
         };
 
-        const iot = new IotHttpService(
-            iot_longpolling,
-            iotWebsocket,
-            iotWebRtc,
-            notification,
-            orm
-        );
+        const iot = new IotHttpService({ ...services, websocket: iotWebsocket, webRtc: iotWebRtc });
         const cacheIotBoxRecords = iot.cacheIotBoxRecords.bind(iot);
         const action = iot.action.bind(iot);
         const onMessage = iot.onMessage.bind(iot);

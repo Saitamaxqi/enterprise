@@ -13,6 +13,7 @@ patch(PosStore.prototype, {
     async setup(env, { iot_http }) {
         this.iotHttp = iot_http;
         await super.setup(...arguments);
+        this.env.services.iot_longpolling.setLna(odoo.use_lna);
     },
     async processServerData(loadedData) {
         await super.processServerData(...arguments);

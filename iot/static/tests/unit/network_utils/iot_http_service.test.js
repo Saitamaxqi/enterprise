@@ -156,7 +156,7 @@ beforeEach(async () => {
         calledCallback = "onFailure";
     };
 
-    iotHttpService = new IotHttpService(longpolling, websocket, webRtc, notification, orm);
+    iotHttpService = new IotHttpService({ iot_longpolling: longpolling, websocket, webRtc, notification, orm } );
 });
 
 describe("action", () => {
