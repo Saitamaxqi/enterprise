@@ -311,12 +311,15 @@ class HrPayslip(models.Model):
         The way it is done is by finding the last monthly payslip before that date, and getting the value from it.
         """
         employee_salary_struct = self.env.ref('l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary')
-        latest_payslip = next(iter(self.employee_id.slip_ids.filtered(
+        relevant_payslips = self.employee_id.slip_ids.filtered(
             lambda s: s.struct_id == employee_salary_struct and s.date_to < request_date
-        ).sorted()))
-        if not latest_payslip:
-            return 0.0
-        return latest_payslip._get_line_values(['713_GROSS'])['713_GROSS'][latest_payslip.id]['total']
+        )
+        if relevant_payslips:
+            latest_payslip = next(iter(relevant_payslips.sorted()))
+            if not latest_payslip:
+                return 0.0
+            return latest_payslip._get_line_values(['713_GROSS'])['713_GROSS'][latest_payslip.id]['total']
+        return 0.0
 
     def _get_years_of_services_per_period(self):
         """
