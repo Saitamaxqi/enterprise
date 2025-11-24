@@ -312,7 +312,12 @@ class HrExpenseStripeCard(models.Model):
                 'currency': currency_name or False,
                 'cardholder': self.employee_id.private_stripe_id,
             })
-        if self.card_type == 'physical' and self.shipping_status in (False, 'pending') and self.state in ('draft', 'pending'):
+        if (
+            self.card_type == 'physical'
+            and self.shipping_status in {False, 'pending'}
+            and self.state in {'draft', 'pending'}
+            and state in {'draft', 'inactive'}
+        ):
             payload.update({
                 "shipping[name]": self.delivery_address_id.name or self.employee_id.name,
                 "shipping[address][line1]": self.delivery_address_id.street,
@@ -374,11 +379,15 @@ class HrExpenseStripeCard(models.Model):
             new_vals['expiration'] = f'{exp_month:02}/{exp_year:02}'
         if self.card_type == 'physical':
             if stripe_object['shipping']['status'] != self.shipping_status:
-                new_vals['shipping_status'] = stripe_object['shipping']['status']
-                if new_vals['shipping_status'] in ('canceled', 'failure', 'returned'):
-                    emails_to_send.append('canceled')
-                elif new_vals['shipping_status'] == 'shipped':
-                    emails_to_send.append('shipped')
+                # Since it's not possible to go back in shipping status, we only update it if it's a progression.
+                # In case the webhooks are received out of order.
+                states = {False: 0, 'submitted': 1, 'pending': 2, 'shipped': 3, 'delivered': 4, 'failure': 4, 'returned': 4, 'canceled': 4}
+                if states[stripe_object['shipping']['status']] > states[self.shipping_status]:
+                    new_vals['shipping_status'] = stripe_object['shipping']['status']
+                    if new_vals['shipping_status'] in {'canceled', 'failure', 'returned'}:
+                        emails_to_send.append('canceled')
+                    elif new_vals['shipping_status'] == 'shipped':
+                        emails_to_send.append('shipped')
             if not self.tracking_url:
                 new_vals['tracking_url'] = stripe_object['shipping']['tracking_url']
             if not self.tracking_number:
