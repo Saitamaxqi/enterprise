@@ -577,6 +577,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
                 'amount': 1,
                 'amount_type': 'percent',
                 'price_include_override': 'tax_included' if tax_detail['taxImpact']['impactOnNetAmount'] == 'Included' else 'tax_excluded',
+                **({'type_tax_use': self.invoice_filter_type_domain} if 'invoice_filter_type_domain' in self._fields else {})
             },
             {'tax_amount_currency': tax_amount, 'base_amount_currency': base_amount_currency},
         )
