@@ -177,26 +177,30 @@ class StripeIssuingController(Controller):
     def _process_transaction_event(self, env, event):
         tr_object = event['data']['object']
         authorization_id = tr_object['authorization']
-        if authorization_id:
-            existing_expenses = env['hr.expense'].search([('stripe_authorization_id', '=', authorization_id)])
-        else:
-            existing_expenses = env['hr.expense'].search([('stripe_transaction_id', '=', tr_object['id'])])
+        transaction_id = tr_object['id']
 
-        expense_authorization_id = existing_expenses.stripe_authorization_id
-        expense_transaction_ids = {tr_id for tr_id in existing_expenses.mapped('stripe_transaction_id') if tr_id}
         split_id = False
-        if expense_authorization_id == authorization_id and expense_transaction_ids and tr_object['id'] not in expense_transaction_ids:
-            if len(existing_expenses) == 1:
-                split_id = (existing_expenses.split_expense_origin_id or existing_expenses).id
-            else:
-                split_id = next(
-                    s_id
-                    for s_id
-                    in (*existing_expenses.mapped('split_expense_origin_id'), min(existing_expenses.ids))
-                    if s_id
-                )
-            existing_expenses.split_expense_origin_id = split_id
-            existing_expenses = env['hr.expense']  # If double transaction is detected, create a new existing_expenses
+        if transaction_id and not authorization_id:
+            # In case of a force capture
+            existing_expenses = env['hr.expense'].search([('stripe_transaction_id', '=', transaction_id)])
+
+        elif authorization_id:
+            existing_expenses = env['hr.expense'].search([('stripe_authorization_id', '=', authorization_id)])
+            expense_transaction_ids = set(existing_expenses.mapped('stripe_transaction_id')) - {False}
+            if expense_transaction_ids and transaction_id not in expense_transaction_ids:
+                if len(existing_expenses) == 1:
+                    split_id = (existing_expenses.split_expense_origin_id or existing_expenses).id
+                else:
+                    split_id = next(
+                        s_id
+                        for s_id
+                        in (*existing_expenses.mapped('split_expense_origin_id').ids, min(existing_expenses.ids))
+                        if s_id
+                    )
+                existing_expenses.split_expense_origin_id = split_id
+                existing_expenses = env['hr.expense']  # If double transaction is detected, create a new existing_expenses
+            elif expense_transaction_ids:
+                existing_expenses = existing_expenses.filtered(lambda exp: exp.stripe_transaction_id == transaction_id)
 
         if tr_object['type'] == 'capture' and not existing_expenses:
             env['hr.expense']._create_from_stripe_transaction(tr_object, split_id=split_id)
@@ -205,14 +209,14 @@ class StripeIssuingController(Controller):
         elif tr_object['type'] == 'refund' and existing_expenses:
             existing_expenses._stripe_cancel_expense_or_reverse_move(tr_object)
         if event['type'] == 'issuing_transaction.created':
-            existing_statement_line = env['account.bank.statement.line'].search([('stripe_id', '=', tr_object['id'])])
+            existing_statement_line = env['account.bank.statement.line'].search([('stripe_id', '=', transaction_id)])
             if existing_statement_line:
                 # if the event is sent twice
                 existing_statement_line._update_from_stripe_transaction(tr_object)
             else:
                 env['account.bank.statement.line']._create_from_stripe_transaction(tr_object)
         elif event['type'] == 'issuing_transaction.updated':
-            statement_line = env['account.bank.statement.line'].search([('stripe_id', '=', tr_object['id'])])
+            statement_line = env['account.bank.statement.line'].search([('stripe_id', '=', transaction_id)])
             statement_line._update_from_stripe_transaction(tr_object)
         return {'message': 'Expense & Bank Statement Line Created/Updated'}
 
