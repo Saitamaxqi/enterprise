@@ -333,11 +333,11 @@ class HrPayslip(models.Model):
         contract_end_date = contracts[0].date_end or self.date_to
         # Starts by calculating the pre-transition years of service.
         pre_transition_end_date = transition_date - relativedelta(days=1)  # April 30, 2025
-        pre_transition_years = self.employee_id._get_years_of_service(self.employee_id.contract_date_start, pre_transition_end_date)
+        pre_transition_years = self.employee_id._get_years_of_service(self.employee_id._get_first_version_date(), pre_transition_end_date)
 
         # Continues by calculating the post-transition years of service.
         post_transition_start_date = transition_date
-        post_transition_years = self.employee_id._get_years_of_service(max(self.employee_id.contract_date_start, post_transition_start_date), contract_end_date)
+        post_transition_years = self.employee_id._get_years_of_service(max(self.employee_id._get_first_version_date(), post_transition_start_date), contract_end_date)
 
         return pre_transition_years, post_transition_years
 
