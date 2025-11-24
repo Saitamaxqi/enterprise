@@ -2959,7 +2959,7 @@ class AccountReport(models.Model):
 
         for line in lines:
             model, id = self._get_model_info_from_id(line['id'])
-            if id in account_statuses:
+            if model == 'account.account' and id in account_statuses:
                 line['account_status'] = account_statuses[id]
 
         return lines
