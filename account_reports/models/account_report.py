@@ -5313,7 +5313,7 @@ class AccountReport(models.Model):
             dates_domain = self._adjust_domain_for_unjoined_comparison(options, dates_domain)
             domain &= dates_domain
 
-        order = 'create_date DESC' if options['export_mode'] else ''
+        order = 'create_date ASC' if options['export_mode'] else ''
         annotations = self.env['account.report.annotation'].search(domain, order=order)
         for annotation in annotations:
             message = annotation.message_id
