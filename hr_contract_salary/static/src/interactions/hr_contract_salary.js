@@ -621,7 +621,7 @@ export class SalaryPackage extends Interaction {
         // For example, we don't want to require driving license
         // when it is not displayed. As it will be conditionally hidden if car advantage is not set.
         const requiredEmptyInput = $("input:required").toArray().find(input => input.value === "" && input.name !== "" && input.type !== "checkbox" && input.offsetParent !== null);
-        const requiredEmptySelect = $("select:required").toArray().find(select => $(select).val() === "");
+        const requiredEmptySelect = $("select:required").toArray().find(select => $(select).val() === "" && select.offsetParent !== null);
         const requiredEmptyTextArea = $("textarea:required").toArray().find(textarea => textarea.value === "" && textarea.offsetParent !== null);
         const email = $("input[name='private_email']").val();
         const atpos = email.indexOf("@");
