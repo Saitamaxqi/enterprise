@@ -772,7 +772,7 @@ class AccountReturn(models.Model):
         delay = return_type_delay if return_type_delay else company.account_return_reminder_day
         return date_to + relativedelta(days=delay)
 
-    @api.depends('date_to', 'company_id.account_return_reminder_day', 'type_id.deadline_days_delay')
+    @api.depends('date_to', 'company_id.account_return_reminder_day', 'type_id.deadline_days_delay', 'is_completed')
     def _compute_deadline(self):
         for account_return in self:
             if account_return.is_completed:
