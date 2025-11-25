@@ -2652,3 +2652,38 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
 
         self.assertEqual(statement_line.partner_id, self.partner_a)
         self.assertEqual(statement_line.line_ids[-1].reconciled_lines_ids, prior_move_line)
+
+    def test_edit_statement_line_with_exchange_diff(self):
+        """ When editing a bank statement line with an exchange diff, like setting the invoice
+            as fully paid, the exchange diff should be replaced by a new one, and the invoice
+            should be marked as fully paid.
+
+            That's what we do, but when the currency rate decrease, the exchange diff is first
+            reverted and reconcile, then we try to reconcile the other lines. But the reconciled
+            exchange diff line is interfering with the other one's.
+
+            It shouldn't be the case, and the reconciled exchange diff lines should be filtered
+            out of the lines to edit.
+        """
+        chf_currency = self.setup_other_currency('CHF', rates=[('2016-01-01', 2.0), ('2016-06-20', 1.0)])
+        chf_journal = self.env['account.journal'].create({
+            'name': 'Test Bank CHF',
+            'type': 'bank',
+            'code': 'TBCHF',
+            'currency_id': chf_currency.id,
+        })
+        invoice_line = self._create_invoice_line(
+            'out_invoice',
+            invoice_date='2016-06-15',
+            invoice_line_ids=[{'price_unit': 1000.0}],
+            currency_id=chf_currency.id,
+        )
+        st_line = self._create_st_line(950.0, date='2016-06-21', update_create_date=False, foreign_currency_id=chf_currency.id, journal_id=chf_journal.id)
+        st_line.set_line_bank_statement_line(invoice_line.ids)
+        st_line.edit_reconcile_line(st_line.line_ids[1].id, {'balance': -1000, 'amount_currency': -1000})
+        self.assertEqual(invoice_line.move_id.status_in_payment, 'paid')
+        self.assertRecordValues(st_line.line_ids, [
+            {'balance': 950.0,      'reconciled': False},
+            {'balance': -1000.0,    'reconciled': True},
+            {'balance': 50.0,       'reconciled': False},
+        ])

@@ -1421,9 +1421,17 @@ class AccountBankStatementLine(models.Model):
             raise ValidationError(_("Validated entries can only be changed by your accountant."))
 
         move_line_to_edit = self.env['account.move.line'].browse(move_line_id)
+
+        # When the currency rate decrease between the account.move and the statement line date, we have a reconciled exchange_move line
+        # linked to the move_line_to_edit, but this will raise an error during the _check_amls_exigibility_for_reconciliation.
+        # We need to filter this line out as it has been reverted and reconciled, so it shouldn't interfere with the line we're trying to reconcile.
+        exchange_line = self.env['account.move.line']
+        if any(record_data.get(key) for key in ['balance', 'amount_currency']) and (exchange_move := move_line_to_edit._get_matched_move_ids().exchange_move_id):
+            exchange_line |= exchange_move.line_ids.filtered(lambda line: line in move_line_to_edit.reconciled_lines_ids)
+
         liquidity_lines, _suspense_lines, other_lines = self._seek_for_lines()
 
-        edited_move_reconciled_line_ids = move_line_to_edit.reconciled_lines_ids.ids
+        edited_move_reconciled_line_ids = (move_line_to_edit.reconciled_lines_ids - exchange_line).ids
         move_line_to_edit.remove_move_reconcile()
         move_line_to_edit_vals = move_line_to_edit._get_aml_values(**record_data)
         if edited_move_reconciled_line_ids:
