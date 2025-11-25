@@ -465,14 +465,15 @@ class AccountBankStatementLine(models.Model):
                     processed_st_line_ids.add(st_line.id)
         remaining_st_line_ids = set(self.ids) - processed_st_line_ids
 
-        # early return if we already processed everything
-        if not remaining_st_line_ids:
-            self.write({'cron_last_check': fields.Datetime.now()})
-            return
-
         # Then try to match invoices and payments where we can't be wrong, using the statement lines payment_ref
         # At this point, we're not trying to search for outstanding payments anymore
         account_ids = list(set(account_ids) - set(outstanding_accounts.ids))
+
+        # early return if we already processed everything
+        if not (remaining_st_line_ids and account_ids):
+            self.write({'cron_last_check': fields.Datetime.now()})
+            return
+
         query = SQL("""
                 SELECT st_line.id,
                        ARRAY_AGG(word_aml.id) aml_ids,
