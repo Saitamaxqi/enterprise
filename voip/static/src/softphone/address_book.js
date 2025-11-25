@@ -29,7 +29,7 @@ export class AddressBook extends Component {
         this.voip = useService("voip");
         this.ui = useService("ui");
         this.state = useState(this.voip.softphone.addressBook);
-        onMounted(() => this.voip.fetchContacts());
+        onMounted(() => this.voip.fetchContacts(this.state.searchInputValue));
         this.onInputSearch = useDebounced(
             () => this.voip.fetchContacts(this.state.searchInputValue),
             300

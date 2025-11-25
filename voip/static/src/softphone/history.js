@@ -23,8 +23,11 @@ export class History extends Component {
         this.ui = useService("ui");
         this.softphone = useState(this.voip.softphone);
         this.state = useState(this.voip.softphone.history);
-        onMounted(() => this.voip.fetchRecentCalls());
-        this.onInputSearch = useDebounced(() => this.voip.fetchRecentCalls(), 300);
+        onMounted(() => this.voip.fetchRecentCalls(this.state.searchInputValue));
+        this.onInputSearch = useDebounced(
+            () => this.voip.fetchRecentCalls(this.state.searchInputValue),
+            300
+        );
     }
 
     get callsByDate() {
