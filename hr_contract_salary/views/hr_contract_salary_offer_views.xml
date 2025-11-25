@@ -22,7 +22,7 @@
             </p><p>
                 Offers are sent to employee with a predefined selection of data.
                 It allows to reflect on the proposition and discuss it.<br/><br/>
-                <a name="hr_contract_salary.action_hr_offer_new" type="action" class="btn btn-secondary">Create a Offer</a>
+                <a name="hr_contract_salary.action_hr_offer_new" type="action" class="btn btn-secondary">Create an Offer</a>
             </p>
         </field>
     </record>

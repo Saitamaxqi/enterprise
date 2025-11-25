@@ -46,18 +46,16 @@ class HrEmployee(models.Model):
         offer_values = self._get_offer_values()
         offer_values['default_validity_days_count'] = offer_validity_period
 
-        return {
-            'type': 'ir.actions.act_window',
-            'view_mode': 'form',
-            'res_model': 'hr.contract.salary.offer',
-            'views': [(False, 'form')],
-            'context': {
-                'active_model': 'hr.version',
-                'default_employee_version_id': self.version_id.id,
-                'default_employee_id': self.id,
-                **offer_values
-            }
+        action = self.env['ir.actions.act_window']._for_xml_id('hr_contract_salary.action_hr_offer_new')
+        action['domain'] = [('employee_id', 'in', self.id)]
+        action['context'] = {
+            'active_model': 'hr.version',
+            'default_employee_version_id': self.version_id.id,
+            'default_employee_id': self.id,
+            'is_simulation_offer': True,
+            **offer_values
         }
+        return action
 
     def _get_offer_values(self):
         self.ensure_one()
