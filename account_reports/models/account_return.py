@@ -904,7 +904,7 @@ class AccountReturn(models.Model):
     def _compute_days_to_deadline(self):
         today = fields.Date.context_today(self)
         for record in self:
-            record.days_to_deadline = (record.date_deadline - today).days
+            record.days_to_deadline = (record.date_deadline - today).days if record.date_deadline else 0
 
     @api.depends('audit_account_status_ids')
     def _compute_audit_balances_count(self):
