@@ -281,6 +281,22 @@ class AccountMove(models.Model):
             if not periods:
                 continue
 
+            start_date = line.deferred_start_date
+            end_date = line.deferred_end_date
+            accounting_date = line.date
+
+            # When using the 'full_months' computation method, every consumed month counts as a full month.
+            # We therefore need to subtract one month from the end date for the following check on dates.
+            if line.company_id.deferred_expense_amount_computation_method == 'full_months':
+                # We need to add one day to the end date since it's excluded by _get_deferred_diff_dates().
+                if self._get_deferred_diff_dates(start_date.replace(day=1), end_date + relativedelta(days=1)) < 2:
+                    end_date += relativedelta(months=-1)
+
+            # When all move line dates (start, end, accounting) are within the same month, we skip the line.
+            # It would otherwise lead to the creation of both a reversal and a deferral move that would cancel each other out.
+            if start_date.replace(day=1) == end_date.replace(day=1) == accounting_date.replace(day=1):
+                continue
+
             ref = _("Deferral of %s", line.move_id.name or '')
 
             moves_vals_to_create.append({
@@ -337,20 +353,10 @@ class AccountMove(models.Model):
                 line_vals['move_id'] = deferral_move.id
         self.env['account.move.line'].create(list(chain(*deferral_moves_line_vals)))
 
+        # Avoid having deferral moves with a total amount of 0.
         to_unlink = deferral_moves.filtered(lambda move: move.currency_id.is_zero(move.amount_total))
-        for move_fully_deferred in moves_fully_deferred:
-            # If, after calculation, we have 2 deferral entries in the same month, it means that
-            # they simply cancel out each other, so there is no point in creating them.
-            deferred_move_ids = move_fully_deferred + deferral_moves
-            cancelling_moves = deferred_move_ids.filtered(lambda move:
-                move_fully_deferred.date.replace(day=1) == move.date.replace(day=1)
-                and move.amount_total == move_fully_deferred.amount_total
-            )
-            if len(cancelling_moves) == 2:
-                to_unlink |= cancelling_moves
-                continue
-
         to_unlink.unlink()
+
         (moves_fully_deferred + deferral_moves - to_unlink)._post(soft=True)
 
     def open_deferred_entries(self):

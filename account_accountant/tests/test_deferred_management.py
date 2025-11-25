@@ -760,3 +760,18 @@ class TestDeferredManagement(AccountTestInvoicingCommon):
             self.expense_accounts[0],
             self.company_data['default_account_deferred_expense']
         )
+
+    def test_deferred_moves_from_same_move_different_lines(self):
+        """
+        Test that fully deferred move and deferral move from different lines are not cancelling each other
+        when having the same amount.
+        """
+        move = self.create_invoice('in_invoice', [(self.expense_accounts[0], amount, '2025-10-01', '2025-11-30') for amount in (1000, 500)], date='2025-11-30')
+        self.assertRecordValues(move.deferred_move_ids.sorted('date'), [
+            {'date': fields.Date.to_date('2025-10-31'), 'amount_total': 500},
+            {'date': fields.Date.to_date('2025-10-31'), 'amount_total': 250},
+            {'date': fields.Date.to_date('2025-11-30'), 'amount_total': 1000},
+            {'date': fields.Date.to_date('2025-11-30'), 'amount_total': 500},
+            {'date': fields.Date.to_date('2025-11-30'), 'amount_total': 500},
+            {'date': fields.Date.to_date('2025-11-30'), 'amount_total': 250},
+        ])
