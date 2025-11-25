@@ -1630,7 +1630,8 @@ class SaleOrder(models.Model):
                         subscription.payment_exception = True
                     # We still update the next_invoice_date if it is due
                     elif updatable_invoice_date:
-                        updatable_invoice_date._update_next_invoice_date()
+                        # increment next invoice date, even for non invoiced postpaid contracts
+                        updatable_invoice_date.with_context(force_postpaid_next_invoice=True)._update_next_invoice_date()
                         if invoice_is_free:
                             for line in invoiceable_lines:
                                 line.qty_invoiced = line.product_uom_qty

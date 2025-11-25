@@ -351,6 +351,8 @@ class SaleOrderLine(models.Model):
         start_date = self.order_id.start_date or today
         first_contract_date = self.order_id.first_contract_date or start_date
         is_upsell = self.order_id.subscription_state == '7_upsell'
+        # TODO MASTER: create a parameter
+        force_postpaid_next_invoice = self.env.context.get('force_postpaid_next_invoice')
         if is_upsell:
             # We start at the beginning of the upsell as it's a part of recurrence
             new_period_start = max(start_date, first_contract_date)
@@ -359,7 +361,7 @@ class SaleOrderLine(models.Model):
             # We need to invoice the next period: last_invoice_date will be today once this invoice is created. We use get_timedelta to avoid gaps
             # We always use next_invoice_date as the recurrence are synchronized with the invoicing periods.
             # Next invoice date is required and is equal to start_date at the creation of a subscription
-            if self._is_postpaid_line():
+            if self._is_postpaid_line() and not force_postpaid_next_invoice:
                 # fallback on self.order_id.last_invoice_date to allow invoicing correctly the first period after an upsell.
                 new_period_start = self.last_invoiced_date and self.last_invoiced_date + relativedelta(days=1) or self.order_id.last_invoice_date or start_date
                 theoretical_stop = new_period_start and new_period_start + self.order_id.plan_id.billing_period
