@@ -15,6 +15,9 @@ from odoo.addons.account.tools.structured_reference import is_valid_structured_r
 
 _logger = logging.getLogger(__name__)
 
+AUTO_STATEMENT_PROCESSING_NUMBER = 80
+AUTO_STATEMENT_PROCESSING_BATCH_SIZE = 100
+
 
 class AccountBankStatement(models.Model):
     _name = 'account.bank.statement'
@@ -126,7 +129,11 @@ class AccountBankStatementLine(models.Model):
 
         action.update({
             'name': name or _("Bank Matching"),
-            'context': {**default_context, 'bank_statements_source': default_journal.exists().bank_statements_source},
+            'context': {
+                **default_context,
+                'bank_statements_source': default_journal.exists().bank_statements_source,
+                'auto_statement_processing': True,
+            },
             'domain': [('state', '!=', 'cancel')] + (extra_domain or []),
         })
 
@@ -1661,7 +1668,10 @@ class AccountBankStatementLine(models.Model):
 
         # process automatically the new lines in case we pass some context key (i.e coming from the bank reconciliation widget)
         if self.env.context.get('auto_statement_processing', False) and statement_lines:
-            statement_lines._try_auto_reconcile_statement_lines()
+            if len(statement_lines) <= AUTO_STATEMENT_PROCESSING_NUMBER:
+                statement_lines._try_auto_reconcile_statement_lines()
+            else:
+                statement_lines._cron_try_auto_reconcile_statement_lines(batch_size=AUTO_STATEMENT_PROCESSING_BATCH_SIZE)
         return statement_lines
 
     @api.deprecated("Use _format_statement_line_data instead")

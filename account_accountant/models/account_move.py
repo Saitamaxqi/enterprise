@@ -116,13 +116,6 @@ class AccountMove(models.Model):
                 move._generate_deferred_entries()
         return posted
 
-    def action_post(self):
-        # EXTENDS 'account' to trigger the CRON auto-reconciling the statement lines.
-        res = super().action_post()
-        if self.statement_line_id and not self.env.context.get('skip_statement_line_cron_trigger'):
-            self.env.ref('account_accountant.auto_reconcile_bank_statement_line')._trigger()
-        return res
-
     def button_draft(self):
         if any(len(deferral_move.deferred_original_move_ids) > 1 for deferral_move in self.deferred_move_ids):
             raise UserError(_("You cannot reset to draft an invoice that is grouped in deferral entry. You can create a credit note instead."))

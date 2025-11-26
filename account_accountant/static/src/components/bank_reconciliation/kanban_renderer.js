@@ -157,7 +157,6 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
     get quickCreateContext() {
         return {
             ...this.globalState.context,
-            auto_statement_processing: true,
         };
     }
 
