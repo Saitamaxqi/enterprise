@@ -167,15 +167,19 @@ class HrPayslip(models.Model):
                 continue
             payslip.l10n_ch_avs_status = contract.l10n_ch_avs_status
 
-    @api.depends('version_id.l10n_ch_is_model')
+    @api.depends("l10n_ch_is_code")
     def _compute_l10n_ch_is_model(self):
         for payslip in self:
-            if payslip.struct_id.country_id.code != "CH":
+            if payslip.struct_id.code != "CHMONTHLYELM":
                 continue
-            contract = payslip.version_id
-            if payslip.state != 'draft':
-                continue
-            payslip.l10n_ch_is_model = contract.l10n_ch_is_model
+            if payslip.l10n_ch_is_code:
+                st_canton = payslip.l10n_ch_is_code.split("-")[0]
+                if st_canton in ["GE", "FR", "TI", "VS", "VD"]:
+                    payslip.l10n_ch_is_model = "yearly"
+                else:
+                    payslip.l10n_ch_is_model = "monthly"
+            else:
+                payslip.l10n_ch_is_model = False
 
     @api.depends('version_id.l10n_ch_lpp_not_insured', 'state')
     def _compute_l10n_ch_lpp_not_insured(self):
@@ -884,20 +888,6 @@ class HrPayslip(models.Model):
             if compute_total:
                 result["total"][canton][code] += total
         return result
-
-    @api.depends("l10n_ch_is_code")
-    def _compute_l10n_ch_is_model(self):
-        for payslip in self:
-            if payslip.struct_id.code != "CHMONTHLYELM":
-                continue
-            if payslip.l10n_ch_is_code:
-                st_canton = payslip.l10n_ch_is_code.split("-")[0]
-                if st_canton in ["GE", "FR", "TI", "VS", "VD"]:
-                    payslip.l10n_ch_is_model = "yearly"
-                else:
-                    payslip.l10n_ch_is_model = "monthly"
-            else:
-                payslip.l10n_ch_is_model = False
 
     def action_refresh_from_work_entries(self):
         swiss_slips = self.filtered(lambda p: p.struct_id.code == "CHMONTHLYELM" and p.state == 'draft')

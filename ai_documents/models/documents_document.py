@@ -9,7 +9,7 @@ from collections.abc import Iterable
 from markupsafe import Markup
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError
 from odoo.fields import Domain
 from odoo.tools import is_html_empty
 
@@ -50,11 +50,6 @@ class DocumentsDocument(models.Model):
             # If the user moved the documents, remove the flag
             vals["ai_to_sort"] = False
         return super().write(vals)
-
-    @api.constrains("type", "ai_sort_prompt")
-    def _check_ai_sort_prompt(self):
-        if any(d.type != "folder" and d.ai_sort_prompt for d in self):
-            raise ValidationError(_("The AI Sort Prompt can only be set on folder."))
 
     @api.depends("shortcut_document_id", "type", "attachment_id")
     def _compute_ai_sortable(self):

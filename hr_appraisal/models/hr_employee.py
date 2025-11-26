@@ -31,7 +31,7 @@ class HrEmployee(models.Model):
 
     def _get_appraisal_plan_starting_date(self):
         self.ensure_one()
-        return self.contract_date_start or self.date_version
+        return self.create_date
 
     def action_send_appraisal_request(self):
         return {
@@ -152,10 +152,6 @@ class HrEmployee(models.Model):
             else:
                 dates[employee.id] = today + relativedelta(months=months)
         return dates
-
-    def _get_appraisal_plan_starting_date(self):
-        self.ensure_one()
-        return self.create_date
 
     def action_open_goals(self):
         self.ensure_one()
