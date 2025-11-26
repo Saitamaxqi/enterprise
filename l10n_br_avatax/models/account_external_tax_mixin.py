@@ -476,18 +476,29 @@ class AccountExternalTaxMixin(models.AbstractModel):
         self._l10n_br_repr_amounts(lines)
 
         partner_shipping_id = params['partner_shipping']
-        rendered_address = {}
-        if is_service and partner_shipping_id != partner:
-            rendered_address['rendered'] = {
+        partner_shipping_location = {}
+        if partner_shipping_id != partner:
+            partner_shipping_content = {
+                'name': partner_shipping_id.display_name,
+                'businessName': partner_shipping_id.display_name,
+                'type': self._l10n_br_get_partner_type(partner_shipping_id),
+                'federalTaxId': partner_shipping_id.vat,
+                'cityTaxId': partner_shipping_id.l10n_br_im_code,
+                'suframa': partner_shipping_id.l10n_br_isuf_code or '',
                 'address': {
                     'number': partner_shipping_id.street_number,
+                    'complement': partner_shipping_id.street_number2,
                     'street': partner_shipping_id.street,
                     'neighborhood': partner_shipping_id.street2,
                     'zipcode': partner_shipping_id.zip,
                     'cityName': partner_shipping_id.city,
                     'state': partner_shipping_id.state_id.code,
+                    'phone': partner_shipping_id.phone,
+                    'email': partner_shipping_id.email
                 }
             }
+            key = 'rendered' if is_service else 'delivery'
+            partner_shipping_location[key] = partner_shipping_content
 
         taxes_settings_customer = self._l10n_br_get_taxes_settings(is_service, partner)
         taxes_settings_company = self._l10n_br_get_taxes_settings(is_service, company_partner)
@@ -547,7 +558,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
                         'federalTaxId': company_partner.vat,
                         'suframa': company_partner.l10n_br_isuf_code or '',
                     },
-                    **rendered_address,
+                    **partner_shipping_location,
                 },
                 **payments,
             },

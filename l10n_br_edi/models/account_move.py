@@ -711,8 +711,8 @@ class AccountMove(models.Model):
         company_partner = self.company_id.partner_id
         transporter = self._l10n_br_get_transporter()
         partner_shipping_id = service_params['partner_shipping']
-        if rendered := payload['header']['locations'].get('rendered', {}):
-            rendered['address']['countryCode'] = partner_shipping_id.country_id.l10n_br_edi_code
+        if partner_shipping_location := (payload['header']['locations'].get('rendered', {}) or payload['header']['locations'].get('delivery', {})):
+            partner_shipping_location['address']['countryCode'] = partner_shipping_id.country_id.l10n_br_edi_code
 
         tax_data_to_include, tax_data_header = self._l10n_br_edi_get_tax_data()
         extra_payload = {
@@ -726,7 +726,6 @@ class AccountMove(models.Model):
                     company_partner,
                     transporter,
                     ),
-                    **rendered,
                 },
                 "payment": {
                     "paymentInfo": {

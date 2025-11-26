@@ -170,6 +170,17 @@ class TestAvalaraBrCommon(AccountTestInvoicingCommon, TestBRMockedRequests):
             'l10n_br_tax_regime': 'individual',
         })
 
+        cls.partner_shipping_id = cls.env['res.partner'].create({
+            'type': 'delivery',
+            'street_name': 'Avenida Europa',
+            'street_number': '2048',
+            'street2': 'Jardim São Domingos',
+            'state_id': cls.env.ref('base.state_br_sp').id,
+            'city_id': cls.env.ref('l10n_br.city_br_124').id,
+            'country_id': cls.env.ref('base.br').id,
+            'city': 'Americana',
+        })
+
     @classmethod
     def _setup_products(cls):
         common = {
@@ -290,6 +301,25 @@ class TestAvalaraBrCommon(AccountTestInvoicingCommon, TestBRMockedRequests):
             ],
         })
 
+        return invoice
+
+    @classmethod
+    def _create_invoice_with_diff_partner_shipping(cls):
+        invoice = cls._create_invoice_02(operation_types=(False, ) * 4)
+        # Create a delivery address for partner
+        partner_shipping_id = cls.partner_shipping_id
+        invoice.partner_id.write({
+            'child_ids': (4, partner_shipping_id.id),
+            'l10n_br_tax_regime': 'realProfit',
+            'city_id': cls.env.ref("l10n_br.city_br_002"),
+        })
+        # Default document type is NF-e
+        invoice.write({
+            'invoice_date': TEST_DATETIME,
+            'l10n_latam_document_type_id': cls.env.ref('l10n_br.dt_55').id,
+            'l10n_br_cnae_code_id': cls.env.ref("l10n_br_avatax.cnae_6209100").id,
+            'partner_shipping_id': partner_shipping_id.id
+        })
         return invoice
 
 
@@ -626,7 +656,8 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
         rio_city = self.env.ref("l10n_br.city_br_002")
         ncm_code_id = self.env.ref('l10n_br_avatax.service_1_07')
         # Make a service invoice
-        invoice = self._create_invoice_02(operation_types=(False, ) * 4)
+        invoice = self._create_invoice_with_diff_partner_shipping()
+        invoice.l10n_latam_document_type_id = self.env.ref('l10n_br.dt_SE').id
         # Configure the product to be a service type for rendered address
         invoice.invoice_line_ids.mapped('product_id').write(
             {
@@ -637,33 +668,17 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
                 "l10n_br_ncm_code_id": ncm_code_id,
             },
         )
-        # Create a delivery address for partner
-        partner_shipping_id = self.env['res.partner'].create({
-            'type': 'delivery',
-            'street_name': 'Avenida Europa',
-            'street_number': '2048',
-            'street2': 'Jardim São Domingos',
-            'state_id': self.env.ref('base.state_br_sp').id,
-            'city_id': self.env.ref('l10n_br.city_br_124').id,
-            'country_id': self.env.ref('base.br').id,
-            'city': 'Americana',
-        })
-        invoice.partner_id.write({
-            'child_ids': (4, partner_shipping_id.id),
-            'l10n_br_tax_regime': 'realProfit',
-            'city_id': rio_city,
-        })
-        invoice.write({
-            'invoice_date': TEST_DATETIME,
-            'l10n_latam_document_type_id': self.env.ref('l10n_br.dt_SE').id,
-            'l10n_br_cnae_code_id': self.env.ref("l10n_br_avatax.cnae_6209100").id,
-            'partner_shipping_id': partner_shipping_id.id
-        })
 
         with self._with_mocked_l10n_br_iap_request([
             ("calculate_tax", "nfse_rendered_address_request", "nfse_rendered_address_response"),
         ]):
             invoice.action_post()
+
+    def test_14_goods_invoice_with_delivery_address(self):
+        invoice = self._create_invoice_with_diff_partner_shipping()
+        payload = invoice._prepare_l10n_br_avatax_document_service_call(invoice._get_l10n_br_avatax_service_params())
+        delivery = payload['header']['locations'].get('delivery')
+        self.assertTrue(delivery, "Delivery address should be sent in request when partner_shipping_id is not the same as partner_id")
 
 
 @tagged('post_install_l10n', '-at_install', 'post_install')
