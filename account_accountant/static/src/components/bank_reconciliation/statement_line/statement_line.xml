@@ -24,16 +24,16 @@
                                 </div>
                                 <div t-on-click.stop="openChatter" t-if="!ui.isSmall" class="o_chatter_icon btn-link text-action" t-att-class="{'visible': activityNumber or hasAttachment}">
                                     <div t-if="activityNumber" class="activity-container position-relative">
-                                        <i class="fa fa-lg fa-fw fa-clock-o" role="img" aria-label="Activities"/>
+                                        <i class="fa fa-lg fa-clock-o" role="img" aria-label="Activities"/>
                                         <span class="activity-badge badge rounded-pill" t-esc="activityNumber"/>
                                     </div>
                                     <i t-elif="hasAttachment"
-                                       class="fa fa-lg fa-fw fa-paperclip"
+                                       class="fa fa-lg fa-paperclip"
                                        role="img"
                                        aria-label="Attachment"
                                     />
                                     <i t-elif="!isChatterOpen"
-                                       class="fa fa-lg fa-fw fa-comments-o"
+                                       class="fa fa-lg fa-comments-o"
                                        role="img"
                                        aria-label="Journal Entry"
                                     />
