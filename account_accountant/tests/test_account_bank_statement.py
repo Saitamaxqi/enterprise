@@ -2632,3 +2632,23 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         statement_line._try_auto_reconcile_statement_lines()
         # move_line_2 will be selected because it's the one with the closer prior or equal date.
         self.assertEqual(statement_line.line_ids[-1].reconciled_lines_ids, move_line_2)
+
+    def test_set_partner_on_statement_line_reconciles_with_move_line_missing_invoice_date(self):
+        """Test that setting a partner on statement line reconciles it with a move line missing an
+        invoice_date."""
+        # Draft invoice (no invoice_date set)
+        draft_move = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_line_ids': [Command.create({'name': 'line', 'price_unit': 100})],
+        })
+        self.assertFalse(draft_move.line_ids[0].invoice_date)
+
+        prior_move_line = self._create_invoice_line(
+            'out_invoice', invoice_date='2017-01-08', invoice_line_ids=[{'price_unit': 100}]
+        )
+        statement_line = self._create_st_line(100.0, date='2017-01-10')
+        statement_line.set_partner_bank_statement_line(self.partner_a.id)
+
+        self.assertEqual(statement_line.partner_id, self.partner_a)
+        self.assertEqual(statement_line.line_ids[-1].reconciled_lines_ids, prior_move_line)

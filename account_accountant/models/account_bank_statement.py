@@ -247,7 +247,7 @@ class AccountBankStatementLine(models.Model):
             return candidate_amls
 
         # if we have multiple candidates we take the invoice with the closer prior or equal date
-        if prior_amls := candidate_amls.filtered(lambda aml: aml.invoice_date <= st_line.date):
+        if prior_amls := candidate_amls.filtered(lambda aml: aml.invoice_date and aml.invoice_date <= st_line.date):
             return max(prior_amls, key=lambda aml: aml.invoice_date)
         return None
 
