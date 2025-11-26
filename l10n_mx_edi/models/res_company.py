@@ -36,7 +36,7 @@ class ResCompany(models.Model):
 
     # == PAC web-services ==
     l10n_mx_edi_pac = fields.Selection(
-        selection=[('finkok', 'Quadrum (formerly finkok)'), ('solfact', 'Solucion Factible'),
+        selection=[('finkok', 'Quadrum'), ('solfact', 'Solucion Factible'),
                    ('sw', 'SW sapien-SmarterWEB')],
         string='PAC',
         help='The PAC that will sign/cancel the invoices',
