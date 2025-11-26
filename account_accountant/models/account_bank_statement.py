@@ -175,6 +175,7 @@ class AccountBankStatementLine(models.Model):
             if company_id is not None:
                 domain &= Domain(self.env['account.reconcile.model']._check_company_domain(company_id))
             st_lines = self.search(domain, limit=limit, order="cron_last_check ASC NULLS FIRST, id")
+            _logger.info("_cron_try_auto_reconcile_statement_lines found %s statement lines", len(st_lines))
             if batch_size and len(st_lines) > batch_size:
                 remaining_line_id = st_lines[batch_size].id
                 st_lines = st_lines[:batch_size]
@@ -200,17 +201,19 @@ class AccountBankStatementLine(models.Model):
 
                 st_lines._try_auto_reconcile_statement_lines(company_id=company_id)
             except Exception as e:  # noqa: BLE001
+                _logger.warning("Error while processing statement lines: %s", e)
                 if not isinstance(e, UserError) and not modules.module.current_test:
+                    _logger.warning("_cron_try_auto_reconcile_statement_lines will rollback the cursor")
                     self.env.cr.rollback()
                 if st_lines.exists():
                     st_lines.cron_last_check = fields.Datetime.now()
-                _logger.warning("Error while processing statement lines: %s", e)
 
             # Commit if we can, in case an issue arises later.
             if not modules.module.current_test:
                 self.env.cr.commit()
 
         if remaining_line_id:
+            _logger.info("_cron_try_auto_reconcile_statement_lines remaining line found (%s), the cron will be triggered again", remaining_line_id)
             # If some statement lines couldn't be processed because of the cron limits, manually re-trigger the cron
             self.env.ref('account_accountant.auto_reconcile_bank_statement_line')._trigger()
 
@@ -317,6 +320,7 @@ class AccountBankStatementLine(models.Model):
         for st_line_id, mapped_partner_id in self.env.cr.fetchall():
             st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
             st_line.partner_id = mapped_partner_id
+            _logger.info("try_auto_reconcile - partner mapping done for st_line: %s and partner %s", st_line.id, mapped_partner_id)
 
         # global flushing of tables that should not be updated between the different SQL queries
         self.env['account.account'].flush_model(['account_type', 'active'])
@@ -456,6 +460,7 @@ class AccountBankStatementLine(models.Model):
             for st_line_id, aml_id in self.env.cr.fetchall():
                 st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
                 st_line.set_line_bank_statement_line(aml_id)
+                _logger.info("try_auto_reconcile - outstanding - st_line: %s set line %s", st_line.id, aml_id)
                 if st_line.currency_id.is_zero(st_line.amount_residual):
                     processed_st_line_ids.add(st_line.id)
         remaining_st_line_ids = set(self.ids) - processed_st_line_ids
@@ -545,6 +550,7 @@ class AccountBankStatementLine(models.Model):
                 else:
                     ref_amls_sum[st_line_id] = st_line.amount - aml_amount_residual
                 st_line.with_user(SUPERUSER_ID).set_line_bank_statement_line(aml_id)
+                _logger.info("try_auto_reconcile - payment ref - st_line: %s set line %s", st_line.id, aml_id)
                 if st_line.currency_id.is_zero(st_line.amount_residual):
                     processed_st_line_ids.add(st_line.id)
         remaining_st_line_ids -= processed_st_line_ids
@@ -581,11 +587,13 @@ class AccountBankStatementLine(models.Model):
             if total_residual == st_line.amount:
                 # the total open amount for the partner equals the paid amount
                 st_line.with_user(SUPERUSER_ID).set_line_bank_statement_line(all_aml_ids)
+                _logger.info("try_auto_reconcile - match amount - st_line: %s set lines %s", st_line.id, all_aml_ids)
             elif all_aml_ids:
                 amls = self.env['account.move.line'].browse(all_aml_ids)
                 candidate_amls = self._invoice_matching_post_process(st_line, amls)
                 if candidate_amls:
                     st_line.with_user(SUPERUSER_ID).set_line_bank_statement_line(candidate_amls.ids)
+                    _logger.info("try_auto_reconcile - _invoice_matching_post_process - st_line: %s set lines %s", st_line.id, candidate_amls.ids)
 
             if st_line.currency_id.is_zero(st_line.amount_residual):
                 processed_st_line_ids.add(st_line.id)
@@ -600,6 +608,7 @@ class AccountBankStatementLine(models.Model):
         # try to apply reco models on the remaining statement lines
         remaining_st_lines = self.browse(list(remaining_st_line_ids)).with_prefetch(self._prefetch_ids)
         reco_models._apply_reconcile_models(remaining_st_lines)
+        _logger.info("try_auto_reconcile - apply reco models - st_lines: %s - reco models %s", remaining_st_lines.ids, reco_models.ids)
 
         self.write({'cron_last_check': self.env.cr.now()})
 
