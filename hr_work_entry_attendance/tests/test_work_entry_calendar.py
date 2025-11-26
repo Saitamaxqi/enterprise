@@ -1,10 +1,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.addons.hr_work_entry_attendance.tests.common import HrWorkEntryAttendanceCommon
-
 from datetime import datetime, date
-
 from odoo.tests import tagged
+from odoo import Command
 
 
 @tagged('-at_install', 'post_install', 'work_entry_overtime')
@@ -23,6 +22,21 @@ class TestPayslipOvertime(HrWorkEntryAttendanceCommon):
             'name': 'Public Time Off',
             'code': 'PUBLIC',
             'is_leave': True,
+        })
+
+        cls.overtime_ruleset = cls.env['hr.attendance.overtime.ruleset'].create({
+            'name': "Overtime Ruleset",
+            'rate_combination_mode': 'max',
+            'rule_ids': [Command.create({
+                'name': "Overtime after 8h/day",
+                'base_off': 'quantity',
+                'quantity_period': 'day',
+                'expected_hours_from_contract': True,
+                'work_entry_type_id': cls.overtime_type.id,
+                'expected_hours': 8.0,
+                'paid': True,
+                'amount_rate': 1.5,
+            })],
         })
 
     def _check_work_entry(self, entry, expected_date, expected_duration, expected_type):
@@ -53,7 +67,7 @@ class TestPayslipOvertime(HrWorkEntryAttendanceCommon):
 
     def test_02_overtime_classic_day_before_after(self):
         self._test_02_overtime_classic_day_before_after(True, [
-            (date(2022, 12, 12), 7, self.attendance_type),
+            (date(2022, 12, 12), 8, self.attendance_type),
             (date(2022, 12, 12), 5, self.overtime_type),
         ])
 
@@ -74,7 +88,7 @@ class TestPayslipOvertime(HrWorkEntryAttendanceCommon):
 
     def test_03_overtime_classic_day_before(self):
         self._test_03_overtime_classic_day_before(True, [
-            (date(2022, 12, 12), 7, self.attendance_type),
+            (date(2022, 12, 12), 8, self.attendance_type),
             (date(2022, 12, 12), 1, self.overtime_type),
         ])
 
@@ -284,3 +298,30 @@ class TestPayslipOvertime(HrWorkEntryAttendanceCommon):
         self._test_12_overtime_classic_day_below_threshold(False, [
             (date(2022, 12, 12), 8, self.attendance_type),
         ])
+
+    def test_13_overtime_approval(self):
+        self.contract.company_id.write({'attendance_overtime_validation': 'by_manager'})
+        self.contract.ruleset_id = self.overtime_ruleset
+        self.env['hr.attendance'].create({
+            'employee_id': self.employee.id,
+            'check_in': datetime(2022, 12, 26, 5),
+            'check_out': datetime(2022, 12, 26, 20),
+        })
+        work_entries = self.contract.generate_work_entries(date(2022, 12, 26), date(2022, 12, 26))
+        self.assertEqual(1, len(work_entries))
+        self.assertEqual('Attendance', work_entries.work_entry_type_id.name)
+        overtime_line = self.env['hr.attendance.overtime.line'].search([('employee_id', '=', self.employee.id)])
+        self.assertEqual(1, len(overtime_line))
+        self.assertEqual('to_approve', overtime_line.status)
+        overtime_line.action_approve()
+        self.assertEqual('approved', overtime_line.status)
+        work_entries = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id)])
+        self.assertEqual(2, len(work_entries))
+        self.assertTrue(any(we.work_entry_type_id == self.overtime_type for we in work_entries))
+
+        overtime_line.action_refuse()
+        self.assertEqual(1, len(overtime_line))
+        self.assertEqual('refused', overtime_line.status)
+        work_entries = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id)])
+        self.assertEqual(1, len(work_entries))
+        self.assertFalse(any(we.work_entry_type_id == self.overtime_type for we in work_entries))
