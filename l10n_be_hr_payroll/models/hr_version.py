@@ -341,18 +341,6 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
             time_credit = any(attendance.work_entry_type_id.l10n_be_is_time_credit for attendance in version.resource_calendar_id.attendance_ids)
             version.l10n_be_time_credit = time_credit
 
-    @api.depends('l10n_be_time_credit')
-    def _compute_work_time_rate(self):
-        computed_by_super = self.env['hr.version']
-        for version in self:
-            if not version.l10n_be_time_credit or not version.structure_type_id.default_resource_calendar_id:
-                computed_by_super |= version
-                continue
-            hours_per_week = version.resource_calendar_id.hours_per_week
-            hours_per_week_ref = version.structure_type_id.default_resource_calendar_id.hours_per_week
-            version.work_time_rate = hours_per_week / hours_per_week_ref if hours_per_week_ref else 1
-        super(HrVersion, computed_by_super)._compute_work_time_rate()
-
     @api.depends(
         'wage', 'contract_date_start', 'contract_date_end', 'employee_id.l10n_be_scale_seniority', 'job_id.l10n_be_scale_category',
         'work_time_rate', 'l10n_be_time_credit', 'resource_calendar_id.work_time_rate')
