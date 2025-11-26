@@ -3,6 +3,8 @@
 from datetime import date
 from odoo.tests import tagged, TransactionCase
 
+from freezegun import freeze_time
+
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
 class TestEgyptianHrEmployee(TransactionCase):
@@ -37,6 +39,7 @@ class TestEgyptianHrEmployee(TransactionCase):
             'resource_calendar_id': cls.calendar.id,
         })
 
+    @freeze_time("2025-12-31")
     def test_get_annual_remaining_leaves_no_allocation(self):
         result = self.employee._l10n_eg_get_annual_remaining_leaves()
         self.assertIsInstance(result, dict)
