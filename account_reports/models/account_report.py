@@ -820,7 +820,7 @@ class AccountReport(models.Model):
                 'months_per_period': return_type._get_periodicity_months_delay(main_company),
                 'start_day': start_day,
                 'start_month': start_month,
-                'return_type_id': self.return_type_ids.id,
+                'return_type_id': return_type.id,
                 'report_id': self.id,
             }
 
