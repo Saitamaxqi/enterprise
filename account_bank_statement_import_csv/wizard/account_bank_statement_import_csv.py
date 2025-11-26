@@ -15,7 +15,7 @@ class Base_ImportImport(models.TransientModel):
     @api.model
     def get_fields_tree(self, model, depth=FIELDS_RECURSION_LIMIT):
         fields_list = super().get_fields_tree(model, depth=depth)
-        if self.env.context.get('bank_stmt_import', False):
+        if model == 'account.bank.statement.line' and self.env.context.get('bank_stmt_import', False):
             add_fields = [{
                 'id': 'balance',
                 'name': 'balance',
@@ -24,23 +24,28 @@ class Base_ImportImport(models.TransientModel):
                 'fields': [],
                 'type': 'monetary',
                 'model_name': model,
-            }, {
-                'id': 'debit',
-                'name': 'debit',
-                'string': 'Debit',
-                'required': False,
-                'fields': [],
-                'type': 'monetary',
-                'model_name': model,
-            }, {
-                'id': 'credit',
-                'name': 'credit',
-                'string': 'Credit',
-                'required': False,
-                'fields': [],
-                'type': 'monetary',
-                'model_name': model,
             }]
+            if not 'debit' in self.env['account.bank.statement.line'].fields_get():
+                add_fields.extend([
+                    {
+                        'id': 'debit',
+                        'name': 'debit',
+                        'string': 'Debit',
+                        'required': False,
+                        'fields': [],
+                        'type': 'monetary',
+                        'model_name': model,
+                    },
+                    {
+                        'id': 'credit',
+                        'name': 'credit',
+                        'string': 'Credit',
+                        'required': False,
+                        'fields': [],
+                        'type': 'monetary',
+                        'model_name': model,
+                    },
+                ])
             fields_list.extend(add_fields)
         return fields_list
 
