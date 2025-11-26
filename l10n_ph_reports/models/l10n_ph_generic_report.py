@@ -97,18 +97,11 @@ class L10n_PhGenericReportHandler(models.AbstractModel):
 
         return query
 
-    def _get_custom_display_config(self):
-        return {
-            **super()._get_custom_display_config(),
-            'components': {
-                'AccountReportFilters': 'L10nPHReportFilters',
-            }
-        }
-
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
         # Initialise the custom options for this report.
         options['include_no_tin'] = previous_options.get('include_no_tin', True)
+        options.setdefault('custom_display_config', {}).setdefault('components', {})['AccountReportFilters'] = 'L10nPHReportFilters'
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):
         report_lines = self._build_month_lines(report, options)
