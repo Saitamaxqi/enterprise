@@ -775,10 +775,11 @@ class AIAgent(models.Model):
                     current_action = self.env['ir.actions.client'].browse(action_id)
                 if current_action:
                     current_action_name = current_action.name
-                    search_view = self.env[current_action.res_model].get_view(current_action.search_view_id.id, 'search')
-                    search_view_xml = clean_search_view_xml(search_view['arch']) if search_view else ""
-                    if search_view_xml:
-                        context_lines.append(f"  {search_view_xml}")
+                    if action.type == 'ir.actions.act_window':
+                        search_view = self.env[current_action.res_model].get_view(current_action.search_view_id.id, 'search')
+                        search_view_xml = clean_search_view_xml(search_view['arch']) if search_view else ""
+                        if search_view_xml:
+                            context_lines.append(f"  {search_view_xml}")
 
                 context_lines.append(
                     f'  <current_view id="{current_view_info.get("view_id")}" '
