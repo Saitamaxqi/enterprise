@@ -53,11 +53,17 @@ class HrVersion(models.Model):
         minimum_wage = self.env['hr.rule.parameter']._get_parameter_from_code('cp200_min_gross_wage', fields.Date.today(), raise_if_not_found=False)
         for version in self:
             if version.l10n_be_mobility_budget:
-                base = version.wage_with_holidays
+                base = self.env.context.get(
+                    'salary_simulation_full_time_wage_on_holidays',
+                    version.wage_with_holidays
+                )
                 raw_mb = min(mobility_budget_max, base * 13.0 / 5.0)
 
                 # Iteratively find the right budget to not get under the minimum wage
-                current_yearly_cost = version._get_yearly_cost_from_wage_with_holidays() if version._is_salary_sacrifice() else version.final_yearly_costs
+                current_yearly_cost = self.env.context.get(
+                    'salary_simulation_full_time_yearly_cost',
+                    version._get_yearly_cost_from_wage_with_holidays() if version._is_salary_sacrifice() else version.final_yearly_costs
+                )
                 wage_with_mobility_budget = version._get_gross_from_employer_costs(current_yearly_cost - raw_mb)
                 while wage_with_mobility_budget < minimum_wage and minimum_wage:
                     raw_mb -= 10

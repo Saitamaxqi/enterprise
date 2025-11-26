@@ -98,6 +98,8 @@ class HrVersion(models.Model):
         payslip = payslip.with_context(
             salary_simulation=True,
             salary_simulation_full_time=is_full_time,
+            salary_simulation_full_time_wage_on_holidays=self.wage_with_holidays,
+            salary_simulation_full_time_yearly_cost=self.final_yearly_costs,
             origin_version_id=self.env.context.get('origin_version_id', False),
             lang=None
         )
