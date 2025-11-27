@@ -159,7 +159,7 @@ class StripeIssuingController(Controller):
             raise ValidationError(env._("A card that doesn't exist on the database was used"))
 
         if (
-            card_object.get('shipping', {}).get('status') in {'canceled', 'failure', 'returned'}
+            card_object['shipping'] and card_object['shipping'].get('status') in {'canceled', 'failure', 'returned'}
             and event['data']["previous_attributes"].get("shipping", {}).get("status")
         ):
             existing_card.with_context(skip_local_update=True)._create_or_update_card(state='canceled')
