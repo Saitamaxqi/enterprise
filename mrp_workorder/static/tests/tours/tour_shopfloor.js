@@ -417,7 +417,8 @@ registry.category("web_tour.tours").add("test_shop_floor_my_wo_filter_with_pin_u
         ...stepUtils.clickOnWorkcenterButton("My WO"),
         // Check the right WO is displayed.
         {
-            trigger: ".o_mrp_display_content",
+            trigger:
+                ".o_mrp_display_content:not(:has(.o_mrp_display_record:contains(TWH/MO/00001)))",
             run: () => {
                 const currentEmployeeEl = document.querySelector(".o_admin_user div span.fw-bold");
                 assert(currentEmployeeEl.innerText, "John Snow");
@@ -439,8 +440,9 @@ registry.category("web_tour.tours").add("test_shop_floor_my_wo_filter_with_pin_u
         // Select the second employee and check only the right WO is shown.
         { trigger: ".o_mrp_employees_panel li:contains(Queen Elsa)", run: "click" },
         ...stepUtils.enterPIN("41213"),
+        { trigger: ".o_admin_user:contains(Queen Elsa)" },
         {
-            trigger: ".o_admin_user:contains(Queen Elsa)",
+            trigger: ".o_mrp_display_record:contains(TWH/MO/00001)",
             run: () => {
                 const currentEmployeeEl = document.querySelector(".o_admin_user div span.fw-bold");
                 assert(currentEmployeeEl.innerText, "Queen Elsa");
@@ -461,8 +463,9 @@ registry.category("web_tour.tours").add("test_shop_floor_my_wo_filter_with_pin_u
         },
         // Select again the first employee and check again only its WO is displayed.
         { trigger: ".o_mrp_employees_panel li:contains(John Snow)", run: "click" },
+        { trigger: ".o_admin_user:contains(John Snow)" },
         {
-            trigger: ".o_admin_user:contains(John Snow)",
+            trigger: ".o_mrp_display_record:contains(TWH/MO/00002)",
             run: () => {
                 const currentEmployeeEl = document.querySelector(".o_admin_user div span.fw-bold");
                 assert(currentEmployeeEl.innerText, "John Snow");
