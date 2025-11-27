@@ -120,6 +120,7 @@ class WebStudioController(http.Controller):
             "delivery_iot.report_shipping_labels",
             "delivery_iot.report_shipping_docs",
             "l10n_co_reports.report_libro_diario",
+            "account.report_original_vendor_bill",
         ]
         report_domain = Domain.AND([
             # One can edit only reports backed by persisting models
