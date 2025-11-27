@@ -930,7 +930,8 @@ class AccountMove(models.Model):
             m.state == 'draft' and
             not m.posted_before and
             m.journal_id.l10n_uy_edi_type == 'electronic' and
-            m.partner_id.l10n_latam_identification_type_id == self.env.ref('l10n_uy.it_rut')):
+            m.partner_id.l10n_latam_identification_type_id == self.env.ref('l10n_uy.it_rut') and
+            not m.debit_origin_id):
             uy_einvoices.l10n_latam_document_type_id = self.env.ref('l10n_uy.dc_e_inv')
         super(AccountMove, self - uy_einvoices)._compute_l10n_latam_document_type()
 
