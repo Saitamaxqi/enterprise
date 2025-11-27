@@ -66,7 +66,7 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         }
         if (
             this.env.isSmall &&
-            this.props.list.groupByField?.name == "last_access_date_group"
+            this.props.groupByField?.name == "last_access_date_group"
         ) {
             result += " flex-grow-1";
         }
