@@ -1,6 +1,5 @@
 from odoo import api, fields, models
 from odoo.fields import Domain
-from odoo.addons.fleet.models.fleet_vehicle_model import FUEL_TYPES
 
 
 class HrVersion(models.Model):
@@ -94,7 +93,7 @@ class HrVersion(models.Model):
     max_unused_cars = fields.Integer(compute='_compute_max_unused_cars', groups='hr.group_hr_user')
     acquisition_date = fields.Date(related='car_id.acquisition_date', readonly=False, groups="fleet.fleet_group_manager")
     car_value = fields.Float(related="car_id.car_value", readonly=False, groups="fleet.fleet_group_manager")
-    fuel_type = fields.Selection(selection=lambda self: FUEL_TYPES, compute="_compute_fuel_type", readonly=False, groups="fleet.fleet_group_manager")
+    fuel_type = fields.Selection(selection=lambda self: self.env['fleet.vehicle']._fields['fuel_type']._description_selection(self.env), compute="_compute_fuel_type", readonly=False, groups="fleet.fleet_group_manager")
     co2 = fields.Float(related="car_id.co2", readonly=False, groups="fleet.fleet_group_manager")
     driver_id = fields.Many2one('res.partner', related="car_id.driver_id", readonly=False, groups="fleet.fleet_group_manager")
     car_open_contracts_count = fields.Integer(compute='_compute_car_open_contracts_count', groups="fleet.fleet_group_manager")
