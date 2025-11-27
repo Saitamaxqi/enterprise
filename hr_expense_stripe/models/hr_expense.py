@@ -45,6 +45,10 @@ class HrExpense(models.Model):
         else:
             return super()._get_default_responsible_for_approval()
 
+    def _can_be_autovalidated(self):
+        # EXTEND hr_expense to bypass approval for expenses created from a stripe authorization
+        return super()._can_be_autovalidated() or bool(self.sudo().card_id)
+
     def _do_approve(self, check=True):
         # EXTEND hr_expense to bypass approval for expenses created from a stripe authorization
         expenses_from_stripe = self.filtered(lambda exp: exp.sudo().card_id and exp.state in {'submitted', 'draft'})
