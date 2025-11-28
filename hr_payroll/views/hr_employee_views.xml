@@ -29,6 +29,10 @@
             <xpath expr="//page[@name='personal_information']//group[@name='hr_birth_group']" position="inside">
                 <field name="lang" string="Payslip Language" placeholder="User Language"/>
             </xpath>
+            <group name="hr_document_group" position="inside">
+                <field name="sim_card"/>
+                <field name="internet_invoice"/>
+            </group>
             <field name="marital" position="before">
                 <field name="disabled"/>
             </field>
