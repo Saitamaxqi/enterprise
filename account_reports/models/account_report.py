@@ -4074,7 +4074,7 @@ class AccountReport(models.Model):
         self._check_groupby_fields((next_groupby.split(',') if next_groupby else []) + ([current_groupby] if current_groupby else []))
         prefilter = self.env['account.account']._check_company_domain(self.get_report_company_ids(options))
 
-        accounts = self.env['account.account'].search_read([*prefilter, ('code', '!=', False)], ['code', 'tag_ids'])
+        accounts = self.env['account.account'].with_context(active_test=False).search_read([*prefilter, ('code', '!=', False)], ['code', 'tag_ids'])
         accounts.sort(key=lambda acc: acc['code'])
         tags_map = defaultdict(list)
         for acc in accounts:
@@ -4622,6 +4622,9 @@ class AccountReport(models.Model):
                 'res_model': 'account.move.line',
                 'view_mode': 'list',
                 'views': [(False, 'list')],
+                'context': {
+                    'active_test': False,
+                },
             }
 
         action = clean_action(action_dict, env=self.env)
