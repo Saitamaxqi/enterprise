@@ -21,6 +21,10 @@ _logger = logging.getLogger(__name__)
 class DocumentsDocument(models.Model):
     _inherit = "documents.document"
 
+    # Field used when inserting records in a prompt
+    # (will not show "Restricted" if we have no access)
+    _ai_rec_name = "name"
+
     AI_DOCUMENTS_CRON_BATCH_SIZE = 10
 
     ai_sortable = fields.Boolean(
