@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:42+0000\n"
+"POT-Creation-Date: 2025-11-28 18:41+0000\n"
 "PO-Revision-Date: 2025-11-18 13:22+0000\n"
 "Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/ai/fr/>\n"
@@ -98,10 +98,10 @@ msgid ""
 msgstr ""
 "\n"
 "            Répertorie UNIQUEMENT les champs recherchables d’un seul modèle "
-"pouvant être utilisés dans les filtres de domaine et dans les regroupements."
-"\n"
-"            Indispensable pour créer des domaines valides : si un champ n’"
-"est pas listé ici, il NE PEUT PAS être utilisé.\n"
+"pouvant être utilisés dans les filtres de domaine et dans les "
+"regroupements.\n"
+"            Indispensable pour créer des domaines valides : si un champ "
+"n’est pas listé ici, il NE PEUT PAS être utilisé.\n"
 "\n"
 "            Format retourné :\n"
 "            ```\n"
@@ -120,8 +120,8 @@ msgstr ""
 "peuvent pas être utilisés dans les domaines\n"
 "            - Pour les champs de relation : affiche le modèle lié entre "
 "parenthèses (many2one, one2many, many2many)\n"
-"            - Seuls les champs de relation permettent la traversée vers d’"
-"autres modèles\n"
+"            - Seuls les champs de relation permettent la traversée vers "
+"d’autres modèles\n"
 "            - Les champs littéraux tels que char/text/float NE PEUVENT PAS "
 "servir pour la traversée\n"
 "            - 'sortable' indique si le champ peut être utilisé dans le "
@@ -163,8 +163,8 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"            Répertorie les champs numériques (mesures) disponibles pour l’"
-"agrégation dans les vues pivot/graph.\n"
+"            Répertorie les champs numériques (mesures) disponibles pour "
+"l’agrégation dans les vues pivot/graph.\n"
 "            DOIT être appelé avant d’utiliser des mesures dans "
 "open_menu_pivot() ou open_menu_graph().\n"
 "\n"
@@ -431,10 +431,10 @@ msgstr ""
 "            Retourne un CSV avec délimiteur pipe (|) :\n"
 "            ```\n"
 "            menu_id|model_name|context|domain|search_view\n"
-"            389|sale.order|{\"search_default_my_quotation\": "
-"1}|[]|<search><fields>...</fields></search>\n"
-"            172|account.move|{\"search_default_draft\": 1}|"
-"[[\"type\", \"=\", \"out_invoice\"]]|<search>...</search>\n"
+"            389|sale.order|{\"search_default_my_quotation\": 1}|[]|"
+"<search><fields>...</fields></search>\n"
+"            172|account.move|{\"search_default_draft\": 1}|[[\"type\", "
+"\"=\", \"out_invoice\"]]|<search>...</search>\n"
 "            ```\n"
 "\n"
 "            Informations clés :\n"
@@ -524,8 +524,9 @@ msgstr ""
 "le tri des résultats dans la vue graphique actuelle.\n"
 "            - `stacked` - Vue graphique uniquement : indiquer \"stacked\" "
 "modifie l’empilement des résultats dans la vue graphique actuelle.\n"
-"            - `cumulated` - Vue graphique uniquement : indiquer \"cumulated\""
-" modifie le cumul des résultats dans la vue graphique actuelle.\n"
+"            - `cumulated` - Vue graphique uniquement : indiquer "
+"\"cumulated\" modifie le cumul des résultats dans la vue graphique "
+"actuelle.\n"
 "            - `custom_domain` - Les éléments de la vue de recherche peuvent "
 "ne pas suffire à exprimer le domaine requis. Dans ce cas, vous pouvez "
 "fournir un domaine personnalisé sous forme de chaîne JSON.\n"
@@ -556,9 +557,9 @@ msgid ""
 "ai_tool_show_warning\" aria-hidden=\"true\" title=\"The AI will not be "
 "limited by the groups defined on tools\"/>"
 msgstr ""
-"<i class=\"fa fa-warning text-warning me-2\" invisible="
-"\"not ai_tool_show_warning\" aria-hidden=\"true\" title="
-"\"L’IA ne sera pas limitée par les groupes définis sur les outils\"/>"
+"<i class=\"fa fa-warning text-warning me-2\" invisible=\"not "
+"ai_tool_show_warning\" aria-hidden=\"true\" title=\"L’IA ne sera pas limitée "
+"par les groupes définis sur les outils\"/>"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
@@ -607,7 +608,8 @@ msgstr "Sources de l’agent IA : traiter les sources"
 #. module: ai
 #: model:ir.model.constraint,message:ai.constraint_discuss_channel_ai_channel_type_check
 msgid "AI Agent can only be set for ai_chat or livechat channels."
-msgstr "L’agent IA ne peut être défini que pour les canaux ai_chat ou livechat."
+msgstr ""
+"L’agent IA ne peut être défini que pour les canaux ai_chat ou livechat."
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_cron_generate_embedding_ir_actions_server
@@ -1144,6 +1146,12 @@ msgstr "Détails de l’erreur"
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__status__failed
 msgid "Failed"
 msgstr "Échec"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/ai_agent_source.py:0
+msgid "Failed to fetch the content of the source."
+msgstr ""
 
 #. module: ai
 #. odoo-python
@@ -1785,8 +1793,8 @@ msgid ""
 "The type of the parameter '%(name)s' is incorrect. It should be '%"
 "(expected_param_type)s'."
 msgstr ""
-"Le type du paramètre '%(name)s' est incorrect. Il devrait être "
-"'%(expected_param_type)s'."
+"Le type du paramètre '%(name)s' est incorrect. Il devrait être '%"
+"(expected_param_type)s'."
 
 #. module: ai
 #. odoo-python
@@ -1845,8 +1853,8 @@ msgstr "Titre"
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
 msgid "To return a result to the AI agent, do <code>ai['result'] = ...</code>"
 msgstr ""
-"Pour renvoyer un résultat à l’agent IA, faites <code>ai['result'] = "
-"...</code>"
+"Pour renvoyer un résultat à l’agent IA, faites <code>ai['result'] = ...</"
+"code>"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_ids
@@ -1923,12 +1931,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__type__url
 msgid "URL"
 msgstr "URL"
-
-#. module: ai
-#. odoo-python
-#: code:addons/ai/models/ai_agent_source.py:0
-msgid "URL content cannot be extracted."
-msgstr "Le contenu de l’URL ne peut pas être extrait."
 
 #. module: ai
 #. odoo-javascript
@@ -2029,8 +2031,8 @@ msgid ""
 "You must allow the access to your microphone to start the recording. Try "
 "refreshing the page and start again."
 msgstr ""
-"Vous devez autoriser l’accès à votre microphone pour démarrer l’"
-"enregistrement. Essayez de rafraîchir la page et de recommencer."
+"Vous devez autoriser l’accès à votre microphone pour démarrer "
+"l’enregistrement. Essayez de rafraîchir la page et de recommencer."
 
 #. module: ai
 #. odoo-javascript
@@ -2066,6 +2068,9 @@ msgstr "exécuté."
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "fa-hashtag"
 msgstr "fa-hashtag"
+
+#~ msgid "URL content cannot be extracted."
+#~ msgstr "Le contenu de l’URL ne peut pas être extrait."
 
 #~ msgid ""
 #~ "No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, and "

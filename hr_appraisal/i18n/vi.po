@@ -8,12 +8,13 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Thi Huong Nguyen (thng)" <thng@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-11-20 16:08+0000\n"
+"PO-Revision-Date: 2025-11-28 07:26+0000\n"
 "Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "hr_appraisal/vi/>\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: hr_appraisal
 #. odoo-python
@@ -2146,6 +2147,8 @@ msgid ""
 "Long term (&gt; 6 months) career discussion: Where does the employee\n"
 "                    want to go, and how can you help them reach that goal?"
 msgstr ""
+"Thảo luận nghề nghiệp dài hạn (&gt; 6 tháng): Nhân viên muốn\n"
+"phát triển đến đâu, và bạn có thể hỗ trợ họ đạt được mục tiêu đó như thế nào?"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_request_appraisal__template_id
@@ -2443,7 +2446,7 @@ msgid ""
 "usually be a placeholder expression that provides the appropriate language, "
 "e.g. {{ object.partner_id.lang }}."
 msgstr ""
-"Ngôn ngữ dịch thuật tùy chọn (mã ISO) để chọn khi gửi email. Nếu không được "
+"Ngôn ngữ dịch thuật tùy chọn (mã ISO) cần chọn khi gửi email. Nếu không được "
 "thiết lập, ngôn ngữ của đối tác chính sẽ được sử dụng. Đây thường là một "
 "biểu thức giữ chỗ cung cấp ngôn ngữ phù hợp, ví dụ: {{ "
 "object.partner_id.lang }}."
@@ -2542,6 +2545,9 @@ msgid ""
 "employee can achieve it. Which benefit he will get from it. Maybe some "
 "process                             or steps to help her/him."
 msgstr ""
+"Cung cấp thông tin rõ ràng về mục tiêu, cách nhân viên có thể đạt được mục "
+"tiêu đó, lợi ích mà họ sẽ nhận được. Có thể bao gồm một số quy trình hoặc "
+"bước hướng dẫn để hỗ trợ họ."
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_view_form

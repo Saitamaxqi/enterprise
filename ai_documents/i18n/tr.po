@@ -5,13 +5,14 @@
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
 # Odoo Turkish Import <dyki+tr@odoo.com>, 2025.
+# "Malaz Siddig Elsayed Abuidris (msea)" <msea@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-21 14:20+0000\n"
-"Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
+"POT-Creation-Date: 2025-11-28 18:41+0000\n"
+"PO-Revision-Date: 2025-11-28 12:47+0000\n"
+"Last-Translator: \"Malaz Siddig Elsayed Abuidris (msea)\" <msea@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "ai_documents/tr/>\n"
 "Language: tr\n"
@@ -19,14 +20,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: ai_documents
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
 msgid "<strong class=\"mt-3\">What actions can the AI take?</strong>"
 msgstr ""
-"<strong class=\"mt-3\">Yapay zeka hangi eylemleri "
-"gerçekleştirebilir?</strong>"
+"<strong class=\"mt-3\">Yapay zeka hangi eylemleri gerçekleştirebilir?</"
+"strong>"
 
 #. module: ai_documents
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
@@ -265,6 +266,11 @@ msgid "No document suitable for AI sorting."
 msgstr "Yapay zeka sıralamasına uygun belge yok."
 
 #. module: ai_documents
+#: model:ir.model.constraint,message:ai_documents.constraint_documents_document_check_ai_sort_prompt
+msgid "Only folders can be auto-sorted."
+msgstr ""
+
+#. module: ai_documents
 #: model:ir.model.constraint,message:ai_documents.constraint_base_automation_unique_ai_autosort_folder_id
 msgid "Only one automation rule can be used to sort with AI a given folder"
 msgstr ""
@@ -331,12 +337,6 @@ msgstr "Etiketler bulunamadı: %s"
 #. module: ai_documents
 #. odoo-python
 #: code:addons/ai_documents/models/documents_document.py:0
-msgid "The AI Sort Prompt can only be set on folder."
-msgstr "AI Sıralama İstemi yalnızca klasör üzerinde ayarlanabilir."
-
-#. module: ai_documents
-#. odoo-python
-#: code:addons/ai_documents/models/documents_document.py:0
 msgid "This document cannot be auto-sorted."
 msgstr "Bu belge otomatik olarak sıralanamaz."
 
@@ -370,3 +370,6 @@ msgstr ""
 msgid "⚠️ Tell the AI where to sort your documents with /record."
 msgstr ""
 "⚠️ Yapay zekaya /record ile belgelerinizi nerede sıralayacağını söyleyin."
+
+#~ msgid "The AI Sort Prompt can only be set on folder."
+#~ msgstr "AI Sıralama İstemi yalnızca klasör üzerinde ayarlanabilir."

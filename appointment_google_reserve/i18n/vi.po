@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-13 17:17+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-11-28 04:37+0000\n"
+"Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "appointment_google_reserve/vi/>\n"
 "Language: vi\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: appointment_google_reserve
 #. odoo-python
@@ -64,6 +64,9 @@ msgid ""
 "being synchronized with Google Reserve.<br/>\n"
 "                                This can take up to 24 hours to be active."
 msgstr ""
+"<span class=\"fa fa-check fa-hourglass me-1\"/>Loại lịch hẹn của bạn đang "
+"được đồng bộ với Google Reserve.<br/>\n"
+"Quá trình này có thể mất đến 24 giờ để có hiệu lực."
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_needaction
@@ -233,6 +236,8 @@ msgid ""
 "Hold a second — are you sure you want to stop showing on Google Reserve? "
 "Changes can take up to 24 hours to take effect."
 msgstr ""
+"Chờ chút — bạn có chắc chắn muốn ngừng hiển thị trên Google Reserve không? "
+"Các thay đổi có thể mất tới 24 giờ để có hiệu lực."
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
@@ -375,6 +380,9 @@ msgid ""
 "Ready to synchronize your Appointment Type with Google Reserve? Make sure "
 "your setup is complete — changes may take up to 24 hours to appear once live."
 msgstr ""
+"Bạn đã sẵn sàng đồng bộ Loại lịch hẹn của bạn với Google Reserve? Hãy đảm "
+"bảo hoàn tất cài đặt và lưu ý rằng các thay đổi có thể mất tới 24 giờ để "
+"hiển thị sau khi được áp dụng."
 
 #. module: appointment_google_reserve
 #: model:ir.model,name:appointment_google_reserve.model_resource_calendar_leaves

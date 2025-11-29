@@ -9,21 +9,22 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Kwanghee Park (kwpa)" <kwpa@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:40+0000\n"
-"PO-Revision-Date: 2025-11-15 12:50+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
-"Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/voip/ko/"
-">\n"
+"PO-Revision-Date: 2025-11-27 14:14+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
+"Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/voip/ko/>"
+"\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: voip
 #. odoo-javascript
@@ -267,7 +268,7 @@ msgstr "통화 녹음"
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Call Status Badge"
-msgstr ""
+msgstr "통화 상태 배지"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
@@ -543,7 +544,7 @@ msgstr "일자"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__how_to_call_on_mobile
 msgid "Default phone app"
-msgstr ""
+msgstr "기본 전화 앱"
 
 #. module: voip
 #. odoo-javascript
@@ -873,7 +874,7 @@ msgstr "수신 전화가 음소거됩니다."
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Incoming call…"
-msgstr ""
+msgstr "전화 수신 중…"
 
 #. module: voip
 #. odoo-javascript
@@ -1172,7 +1173,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Outgoing call…"
-msgstr ""
+msgstr "전화 발신 중…"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__pbx_ip

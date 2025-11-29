@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:45+0000\n"
+"POT-Creation-Date: 2025-11-28 18:41+0000\n"
 "PO-Revision-Date: 2025-09-25 17:34+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
@@ -48,6 +48,12 @@ msgstr "Adicionar do Conhecimento"
 #: model:ir.model.fields,field_description:ai_knowledge.field_ai_composer__display_name
 msgid "Display Name"
 msgstr "Nome exibido"
+
+#. module: ai_knowledge
+#. odoo-python
+#: code:addons/ai_knowledge/models/ai_agent_source.py:0
+msgid "Failed to extract content from the articles."
+msgstr ""
 
 #. module: ai_knowledge
 #. odoo-javascript

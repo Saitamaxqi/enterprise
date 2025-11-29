@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:51+0000\n"
+"POT-Creation-Date: 2025-11-28 18:46+0000\n"
 "PO-Revision-Date: 2025-11-16 13:53+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Hebrew <https://translate.odoo.com/projects/odoo-19/"
@@ -191,12 +191,6 @@ msgstr "יעד"
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__id
 msgid "ID"
 msgstr "מזהה"
-
-#. module: hr_appraisal_skills
-#. odoo-javascript
-#: code:addons/hr_appraisal_skills/static/src/js/appraisal_skills_one2many.xml:0
-msgid "If skills are missing, they can be created by an HR officer."
-msgstr "אם מיומנויות חסרות, ניתן ליצור אותן על ידי קצין משאבי אנוש."
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields.selection,name:hr_appraisal_skills.selection__hr_appraisal_skill_report__evolution__improvement
@@ -434,12 +428,6 @@ msgid ""
 msgstr "צפה בהתפתחות המיומנויות של העובד בין שני תהליכי ההערכה האחרונים."
 
 #. module: hr_appraisal_skills
-#. odoo-javascript
-#: code:addons/hr_appraisal_skills/static/src/js/appraisal_skills_one2many.xml:0
-msgid "You can add skills from our library to the employee profile."
-msgstr "באפשרותך להוסיף מיומנויות מהספרייה שלנו לפרופיל העובד"
-
-#. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.appraisal_skills_update_template
 msgid "has been added."
 msgstr "נוסף."
@@ -464,3 +452,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.view_hr_appraisal_form
 msgid "infinite"
 msgstr ""
+
+#~ msgid "If skills are missing, they can be created by an HR officer."
+#~ msgstr "אם מיומנויות חסרות, ניתן ליצור אותן על ידי קצין משאבי אנוש."
+
+#~ msgid "You can add skills from our library to the employee profile."
+#~ msgstr "באפשרותך להוסיף מיומנויות מהספרייה שלנו לפרופיל העובד"

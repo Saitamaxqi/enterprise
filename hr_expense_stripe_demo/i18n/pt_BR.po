@@ -4,13 +4,14 @@
 #
 # "Maitê Dietze (madi)" <madi@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-11-19 16:33+0000\n"
-"Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
+"PO-Revision-Date: 2025-11-27 14:17+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/hr_expense_stripe_demo/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__amount_currency
@@ -212,67 +213,67 @@ msgstr "Online"
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_shipping_wizard__card_shipping_status
 msgid "Shipping Status"
-msgstr ""
+msgstr "Status da remessa"
 
 #. module: hr_expense_stripe_demo
 #. odoo-python
 #: code:addons/hr_expense_stripe_demo/models/hr_expense_stripe_card.py:0
 msgid "Simulate Card Purchase"
-msgstr ""
+msgstr "Simular compra com cartão"
 
 #. module: hr_expense_stripe_demo
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe_demo.hr_expense_stripe_test_purchase_wizard
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe_demo.view_hr_expense_stripe_card_form_inherit_demo
 msgid "Simulate Purchase"
-msgstr ""
+msgstr "Simular compra"
 
 #. module: hr_expense_stripe_demo
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe_demo.hr_expense_stripe_test_shipping_wizard_form
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe_demo.view_hr_expense_stripe_card_form_inherit_demo
 msgid "Simulate Shipping"
-msgstr ""
+msgstr "Simular envio"
 
 #. module: hr_expense_stripe_demo
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe_demo.hr_expense_stripe_topup_wizard_inherit_demo
 msgid "Simulate Topup"
-msgstr ""
+msgstr "Simular recarga"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__force_capture
 msgid "Simulate a Force Capture"
-msgstr ""
+msgstr "Simule uma captura à força"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__card_currency_id
 msgid "Stripe Currency"
-msgstr ""
+msgstr "Moeda Stripe"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model,name:hr_expense_stripe_demo.model_hr_expense_stripe_topup_wizard
 msgid "Stripe Issuing Top-up Wizard"
-msgstr ""
+msgstr "Assistente de recarga do Stripe Issuing"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields.selection,name:hr_expense_stripe_demo.selection__hr_expense_stripe_test_shipping_wizard__new_shipping_status__submit
 msgid "Submit for shipping"
-msgstr ""
+msgstr "Enviar para envio"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model,name:hr_expense_stripe_demo.model_hr_expense_stripe_test_purchase_wizard
 msgid "Test Purchase Wizard for Stripe"
-msgstr ""
+msgstr "Assistente de teste de compras do Stripe"
 
 #. module: hr_expense_stripe_demo
 #. odoo-python
 #: code:addons/hr_expense_stripe_demo/wizard/hr_expense_stripe_test_purchase_wizard.py:0
 msgid "Test purchase cannot be used on a live system"
-msgstr ""
+msgstr "A compra de teste não pode ser usada em um sistema ativo"
 
 #. module: hr_expense_stripe_demo
 #. odoo-python
 #: code:addons/hr_expense_stripe_demo/wizard/hr_expense_stripe_test_shipping_wizard.py:0
 msgid "Test shipping cannot be used on a live system"
-msgstr ""
+msgstr "A remessa de teste não pode ser usada em um sistema ativo"
 
 #. module: hr_expense_stripe_demo
 #. odoo-python

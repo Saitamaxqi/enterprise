@@ -5,13 +5,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Thi Huong Nguyen (thng)" <thng@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-11-21 15:39+0000\n"
-"Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
+"PO-Revision-Date: 2025-11-27 14:16+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "hr_contract_salary_payroll/vi/>\n"
 "Language: vi\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_employee_view_form
@@ -130,7 +131,7 @@ msgstr "Mã"
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form_inherit
 msgid "Company cost"
-msgstr ""
+msgstr "Chi phí của công ty"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
@@ -342,7 +343,7 @@ msgid ""
 msgstr ""
 "Lưu ý rằng thông tin này có thể không chính xác và chỉ nên được sử dụng để "
 "tham khảo. Các khoản tiền được tính dựa trên hợp đồng lao động toàn thời "
-"gian cố định, và các phúc lợi được tính toán dựa trên mẫu hợp đồng đã chọn."
+"gian cố định, và các phúc lợi được tính toán dựa trên mẫu hợp đồng đã chọn"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form_inherit
@@ -355,7 +356,7 @@ msgstr ""
 "Lưu ý rằng thông tin này có thể không chính xác và chỉ nên được sử dụng để "
 "tham khảo. Các khoản tiền được tính dựa trên hợp đồng lao động toàn thời "
 "gian cố định, và các phúc lợi được tính toán dựa trên nhân viên được chọn và/"
-"hoặc mẫu hợp đồng được chọn."
+"hoặc mẫu hợp đồng được chọn"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form

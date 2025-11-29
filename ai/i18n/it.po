@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:42+0000\n"
+"POT-Creation-Date: 2025-11-28 18:41+0000\n"
 "PO-Revision-Date: 2025-11-12 08:52+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/ai/it/>\n"
@@ -431,10 +431,10 @@ msgstr ""
 "            Restituisce CSV con delimitatore pipe (|):\n"
 "            ```\n"
 "            menu_id|model_name|context|domain|search_view\n"
-"            389|sale.order|{\"search_default_my_quotation\": "
-"1}|[]|<search><fields>...</fields></search>\n"
-"            172|account.move|{\"search_default_draft\": 1}|"
-"[[\"type\", \"=\", \"out_invoice\"]]|<search>...</search>\n"
+"            389|sale.order|{\"search_default_my_quotation\": 1}|[]|"
+"<search><fields>...</fields></search>\n"
+"            172|account.move|{\"search_default_draft\": 1}|[[\"type\", "
+"\"=\", \"out_invoice\"]]|<search>...</search>\n"
 "            ```\n"
 "\n"
 "            Informazioni chiave:\n"
@@ -519,8 +519,8 @@ msgstr ""
 "e si fornisce la ricerca \"name=Jane\", la ricerca risultante sarà "
 "\"name=John OR name=Jane\".\n"
 "            - `measures` - Specificando le misure si attiveranno le misure "
-"selezionate nella vista corrente, se si tratta di una vista pivot o grafico."
-"\n"
+"selezionate nella vista corrente, se si tratta di una vista pivot o "
+"grafico.\n"
 "            - `mode` - Solo per la vista grafico: è il tipo di grafico. "
 "Scegli tra \"linea\", \"barra\" o \"torta\" per cambiare il tipo di grafico "
 "nella vista grafico corrente.\n"
@@ -529,12 +529,12 @@ msgstr ""
 "            - `stacked` - Solo per la vista grafico: specificando stacked si "
 "cambia l'impilamento dei risultati nella vista grafico corrente.\n"
 "            - `cumulated` - Solo per la vista grafico: specificando "
-"cumulativa si cambierà l'accumulo dei risultati nella vista grafico corrente."
-"\n"
+"cumulativa si cambierà l'accumulo dei risultati nella vista grafico "
+"corrente.\n"
 "            - `custom_domain` - Gli elementi della vista di ricerca "
 "potrebbero non essere sufficienti per esprimere il dominio richiesto. In "
-"questo caso, è possibile fornire un dominio personalizzato come stringa JSON."
-"\n"
+"questo caso, è possibile fornire un dominio personalizzato come stringa "
+"JSON.\n"
 "            - `switch_view_type` - Cambiando il tipo di vista, la vista "
 "corrente passerà al tipo specificato. Seleziona uno dei tipi di vista "
 "disponibili nelle informazioni sulla vista corrente.\n"
@@ -1151,6 +1151,12 @@ msgstr "Dettagli errore"
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__status__failed
 msgid "Failed"
 msgstr "Con errore"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/ai_agent_source.py:0
+msgid "Failed to fetch the content of the source."
+msgstr ""
 
 #. module: ai
 #. odoo-python
@@ -1792,8 +1798,8 @@ msgid ""
 "The type of the parameter '%(name)s' is incorrect. It should be '%"
 "(expected_param_type)s'."
 msgstr ""
-"Il tipo di parametro '%(name)s' non è corretto. Deve essere "
-"'%(expected_param_type)s'."
+"Il tipo di parametro '%(name)s' non è corretto. Deve essere '%"
+"(expected_param_type)s'."
 
 #. module: ai
 #. odoo-python
@@ -1851,8 +1857,8 @@ msgstr "Titolo"
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
 msgid "To return a result to the AI agent, do <code>ai['result'] = ...</code>"
 msgstr ""
-"Per restituire un risultato all'agente AI, esegui <code>ai['result'] = "
-"...</code>"
+"Per restituire un risultato all'agente AI, esegui <code>ai['result'] = ...</"
+"code>"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_ids
@@ -1876,7 +1882,8 @@ msgstr "Trascrizione"
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_natural_language_service.js:0
 msgid "Tried to switch to %s but the app is no longer in an action window."
-msgstr "Ho provato a passare a %s ma l'app non è più in una finestra di azione."
+msgstr ""
+"Ho provato a passare a %s ma l'app non è più in una finestra di azione."
 
 #. module: ai
 #. odoo-javascript
@@ -1923,12 +1930,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__type__url
 msgid "URL"
 msgstr "URL"
-
-#. module: ai
-#. odoo-python
-#: code:addons/ai/models/ai_agent_source.py:0
-msgid "URL content cannot be extracted."
-msgstr "Il contenuto dell'URL non può essere estratto."
 
 #. module: ai
 #. odoo-javascript
@@ -2066,3 +2067,6 @@ msgstr "eseguito."
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "fa-hashtag"
 msgstr "fa-hashtag"
+
+#~ msgid "URL content cannot be extracted."
+#~ msgstr "Il contenuto dell'URL non può essere estratto."

@@ -5,13 +5,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Bren Driesen <brdri@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:43+0000\n"
-"PO-Revision-Date: 2025-11-08 19:55+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-11-27 14:15+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "pos_urban_piper/nl/>\n"
 "Language: nl\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -40,12 +41,14 @@ msgid ""
 "\"%s\" is not synchronized with the UrbanPiper. Please sync it before "
 "proceeding."
 msgstr ""
+"\"%s\" is niet gesynchroniseerd met UrbanPiper. Synchroniseer voor je verder "
+"gaat."
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
 msgid "%s is %s online food delivery for all platform in this locations."
-msgstr ""
+msgstr "%s is %s online etensbestelling voor alle platformen in deze locaties."
 
 #. module: pos_urban_piper
 #. odoo-python
@@ -422,6 +425,7 @@ msgstr "Fout om te verzenden in voorbereidingsdisplay."
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/product_info_popup/product_info_popup.js:0
 msgid "Failed to update food delivery availability."
 msgstr ""
+"Het is niet gelukt om de beschikbaarheid van voedselleveringen bij te werken."
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
@@ -619,7 +623,7 @@ msgstr "Min"
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/components/order_display/order_display.xml:0
 msgid "Min(s)"
-msgstr ""
+msgstr "Minu(u)t(en)"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields.selection,name:pos_urban_piper.selection__product_template__urbanpiper_meal_type__4
@@ -698,13 +702,13 @@ msgstr "Online bezorgers"
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/product_info_popup/product_info_popup.xml:0
 msgid "Online Food Delivery:"
-msgstr ""
+msgstr "Online bestelling voor bezorging:"
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
 msgid "Online Order"
-msgstr ""
+msgstr "Online bestelling"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -715,6 +719,8 @@ msgid ""
 "Online orders cannot be deleted. If needed, reject the order instead or "
 "contact the food delivery provider."
 msgstr ""
+"Online bestellingen kunnen niet verwijderd worden. Indien nodig kan je de "
+"bestelling wel afwijzen of de bezorgdienst contacteren."
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -1391,10 +1397,10 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
 msgid "disabled"
-msgstr ""
+msgstr "uitgeschakeld"
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
 msgid "enabled"
-msgstr ""
+msgstr "ingeschakeld"

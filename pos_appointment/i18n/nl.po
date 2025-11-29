@@ -5,13 +5,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Bren Driesen <brdri@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-17 14:02+0000\n"
-"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
+"PO-Revision-Date: 2025-11-27 14:15+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "pos_appointment/nl/>\n"
 "Language: nl\n"
@@ -19,13 +20,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
-#, fuzzy
 msgid "<span> hours</span>"
-msgstr "<span> uren</span>"
+msgstr "<span> uur</span>"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
@@ -172,7 +172,7 @@ msgstr "Boeking bewerken"
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_controller.xml:0
 msgid "Evening: 5:00 PM - 12:00 AM"
-msgstr ""
+msgstr "Avond: 17:00 – 00:00"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_gantt_booking_resource
@@ -197,7 +197,7 @@ msgstr "ID"
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_controller.xml:0
 msgid "Lunch: 11:00 AM - 5:00 PM"
-msgstr ""
+msgstr "Lunch: 11:00 – 17:00"
 
 #. module: pos_appointment
 #. odoo-python
@@ -209,7 +209,7 @@ msgstr "Reserveringen beheren"
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_controller.xml:0
 msgid "Morning: 12:00 AM - 11:00 AM"
-msgstr ""
+msgstr "Ochtend: 00:00 - 11:00"
 
 #. module: pos_appointment
 #. odoo-javascript
@@ -274,7 +274,7 @@ msgstr "Resources selecteren"
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_controller.xml:0
 msgid "Select hour"
-msgstr ""
+msgstr "Uur selecteren"
 
 #. module: pos_appointment
 #. odoo-javascript

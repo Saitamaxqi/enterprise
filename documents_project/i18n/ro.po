@@ -8,22 +8,23 @@
 # Foldi Robert <foldirobert@nexterp.ro>, 2022
 # Dorin Hongu <dhongu@gmail.com>, 2023
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-11-16 17:46+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-11-27 14:13+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Romanian <https://translate.odoo.com/projects/odoo-19/"
 "documents_project/ro/>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
-"20)) ? 1 : 2;\n"
-"X-Generator: Weblate 5.12.2\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : "
+"(n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: documents_project
 #: model:ir.model,name:documents_project.model_ir_attachment
@@ -41,6 +42,7 @@ msgstr "Companii"
 #: code:addons/documents_project/models/res_company.py:0
 msgid "Company Project Folders cannot be linked to another company.%s"
 msgstr ""
+"Dosarele de proiect ale companiei nu pot fi legate de o altă companie.%s"
 
 #. module: documents_project
 #: model:ir.model,name:documents_project.model_res_config_settings
@@ -50,17 +52,17 @@ msgstr "Setări de configurare"
 #. module: documents_project
 #: model:documents.document,name:documents_project.project_1_document_1
 msgid "Daily Meeting Notes (today)"
-msgstr ""
+msgstr "Note de întâlnire zilnică (astăzi)"
 
 #. module: documents_project
 #: model:documents.document,name:documents_project.project_1_document_2
 msgid "Daily Meeting Notes (yesterday)"
-msgstr ""
+msgstr "Note de întâlnire zilnică (ieri)"
 
 #. module: documents_project
 #: model_terms:ir.ui.view,arch_db:documents_project.res_config_settings_view_form_inherit_documents_project
 msgid "Default Project Folder"
-msgstr ""
+msgstr "Dosar de Proiect Implicit"
 
 #. module: documents_project
 #: model:ir.model.fields,field_description:documents_project.field_documents_document__display_name
@@ -89,28 +91,28 @@ msgstr "Documente"
 #. module: documents_project
 #: model:ir.model.fields,field_description:documents_project.field_project_project__documents_folder_id
 msgid "Documents Folder"
-msgstr ""
+msgstr "Dosar documente"
 
 #. module: documents_project
 #: model:documents.document,name:documents_project.project_1_document_3
 msgid "First Floor Plan"
-msgstr ""
+msgstr "Planul etajului întâi"
 
 #. module: documents_project
 #: model_terms:ir.ui.view,arch_db:documents_project.res_config_settings_view_form_inherit_documents_project
 msgid "Folder"
-msgstr "Folder"
+msgstr "Dosar"
 
 #. module: documents_project
 #: model:ir.model.fields,help:documents_project.field_project_project__documents_folder_id
 msgid ""
 "Folder in which all of the documents of this project will be categorized."
-msgstr ""
+msgstr "Dosar în care vor fi clasificate toate documentele acestui proiect."
 
 #. module: documents_project
 #: model_terms:ir.ui.view,arch_db:documents_project.res_config_settings_view_form_inherit_documents_project
 msgid "Folder where new projects are created"
-msgstr ""
+msgstr "Dosar în care sunt create noi proiecte"
 
 #. module: documents_project
 #: model:ir.model.fields,field_description:documents_project.field_documents_document__id
@@ -125,7 +127,7 @@ msgstr "ID"
 #. module: documents_project
 #: model:documents.document,name:documents_project.project_1_document_4
 msgid "Important Customer Letter"
-msgstr ""
+msgstr "Scrisoare importantă către client"
 
 #. module: documents_project
 #: model:ir.model,name:documents_project.model_project_project
@@ -136,7 +138,7 @@ msgstr "Proiect"
 #: model:ir.model.fields,field_description:documents_project.field_res_company__documents_project_folder_id
 #: model:ir.model.fields,field_description:documents_project.field_res_config_settings__documents_project_folder_id
 msgid "Project Folder"
-msgstr ""
+msgstr "Dosar proiect"
 
 #. module: documents_project
 #: model:documents.document,name:documents_project.document_project_folder
@@ -166,6 +168,7 @@ msgid ""
 "The \"%s\" folder is required by the Project application and cannot be "
 "archived."
 msgstr ""
+"Dosarul \"%s\" este necesar de aplicația Proiect și nu poate fi arhivat."
 
 #. module: documents_project
 #. odoo-python
@@ -176,6 +179,10 @@ msgid ""
 "%(projects)s\n"
 "To continue, choose different folders for these projects."
 msgstr ""
+"Această acțiune nu poate fi efectuată, deoarece ar elimina dosarele "
+"utilizate de următoarele proiecte:\n"
+"%(projects)s\n"
+"Pentru a continua, alegeți dosare diferite pentru aceste proiecte."
 
 #. module: documents_project
 #. odoo-python
@@ -185,6 +192,10 @@ msgid ""
 "to which it is linked. Please update the company of the \"%(project)s\" "
 "project, or leave the company of this folder empty."
 msgstr ""
+"Acest dosar ar trebui să rămână în aceeași companie ca și proiectul "
+"\"%(project)s\" la care este legat. Vă rugăm să actualizați compania "
+"proiectului \"%(project)s\" sau să lăsați compania acestui dosar "
+"necompletată."
 
 #. module: documents_project
 #. odoo-python
@@ -197,18 +208,26 @@ msgid ""
 "Please update the company of those projects, or leave the company of this "
 "folder empty."
 msgstr ""
+"Acest dosar ar trebui să rămână în aceeași companie ca și următoarele "
+"proiecte la care este legat:\n"
+"%s\n"
+"\n"
+"Vă rugăm să actualizați compania acelor proiecte sau să lăsați compania "
+"acestui dosar necompletată."
 
 #. module: documents_project
 #. odoo-python
 #: code:addons/documents_project/models/documents_document.py:0
 msgid "Uh-oh! The project app needs the \"%s\" folder, so you can’t delete it."
 msgstr ""
+"Ups! Aplicația de proiect are nevoie de dosarul \"%s\", deci nu îl puteți "
+"șterge."
 
 #. module: documents_project
 #. odoo-python
 #: code:addons/documents_project/models/documents_document.py:0
 msgid "You cannot archive the project base folder (%s)."
-msgstr ""
+msgstr "Nu puteți arhiva dosarul de bază al proiectului (%s)."
 
 #. module: documents_project
 #. odoo-python
@@ -223,6 +242,14 @@ msgid ""
 "company as their folder, or leave the company of the \"%(folder)s\" folder "
 "blank."
 msgstr ""
+"Nu puteți schimba compania acestui proiect, deoarece dosarul său este legat "
+"de celelalte proiecte următoare care sunt încă în compania "
+"\"%(other_company)s\":\n"
+"%(other_folders)s\n"
+"\n"
+"Vă rugăm să actualizați compania tuturor proiectelor astfel încât să rămână "
+"în aceeași companie ca și dosarul lor sau să lăsați compania dosarului "
+"\"%(folder)s\" necompletată."
 
 #. module: documents_project
 #. odoo-python

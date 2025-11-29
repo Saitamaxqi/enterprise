@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"POT-Creation-Date: 2025-11-28 18:40+0000\n"
 "PO-Revision-Date: 2025-11-08 19:43+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Lithuanian <https://translate.odoo.com/projects/odoo-19/"
@@ -37,8 +37,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
-"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 :"
-" n % 1 != 0 ? 2: 3);\n"
+"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
+"1 : n % 1 != 0 ? 2: 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_payroll
@@ -298,8 +298,8 @@ msgid ""
 "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
 "title=\"Arrow\"/>"
 msgstr ""
-"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" title="
-"\"Arrow\"/>"
+"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
+"title=\"Arrow\"/>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -563,8 +563,8 @@ msgid ""
 "</tbody></table>\n"
 "            "
 msgstr ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
-"\"width:100%; margin:0px auto;\"><tbody>\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; "
+"margin:0px auto;\"><tbody>\n"
 "    <tr><td valign=\"top\" style=\"text-align: left; font-size: 14px;\">\n"
 "        Gerb. <t t-esc=\"object.employee_id.name\"/>, jums sugeneruotas "
 "naujas atlyginimo lapelis.<br/><br/>\n"
@@ -659,6 +659,7 @@ msgid "Activity type"
 msgstr "Veiklos tipas"
 
 #. module: hr_payroll
+#: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Add Inputs"
@@ -3009,8 +3010,8 @@ msgid ""
 msgstr ""
 "Tai naudojama procentinės ir fiksuotos sumos apskaičiavimui. Pavyzdžiui, "
 "taisyklė dėl maitinimo kupono su fiksuota 1€ suma už dirbtą dieną gali "
-"turėti jos kiekį apibrėžtą išraiškoje, pvz., worked_days['WORK100']"
-".number_of_days."
+"turėti jos kiekį apibrėžtą išraiškoje, pvz., "
+"worked_days['WORK100'].number_of_days."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_input__amount
@@ -5849,8 +5850,8 @@ msgid ""
 msgstr ""
 "Atkreipkite dėmesį į spragas %(employee_name)s kelendoriuje\n"
 "\n"
-" Prašome užpildyti trūkstamus %(employee_name)s darbo "
-"įrašus:%(time_intervals_str)s \n"
+" Prašome užpildyti trūkstamus %(employee_name)s darbo įrašus:%"
+"(time_intervals_str)s \n"
 "\n"
 " Trūkstami darbo įrašai yra kaip Bermudų trikampis algalapiams. Išsaugokime "
 "jūsų kolegos uždarbį nuo dingimo!"
@@ -6093,8 +6094,8 @@ msgid ""
 "Wrong rule parameter value for %(rule_parameter_name)s at date %(date)s.\n"
 "%(error)s"
 msgstr ""
-"Neteisinga taisyklės parametro reikšmė %(rule_parameter_name)s datai "
-"%(date)s.\n"
+"Neteisinga taisyklės parametro reikšmė %(rule_parameter_name)s datai %"
+"(date)s.\n"
 "%(error)s"
 
 #. module: hr_payroll
@@ -6235,8 +6236,8 @@ msgstr ""
 #: code:addons/hr_payroll/models/hr_work_entry_export_mixin.py:0
 msgid "You must be logged in a %(country_code)s company to use this feature"
 msgstr ""
-"Kad galėtumėte naudotis šia funkcija, turite būti prisijungę prie "
-"%(country_code)s įmonės"
+"Kad galėtumėte naudotis šia funkcija, turite būti prisijungę prie %"
+"(country_code)s įmonės"
 
 #. module: hr_payroll
 #. odoo-python

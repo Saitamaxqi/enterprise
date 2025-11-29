@@ -13,13 +13,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Maitê Dietze (madi)" <madi@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-19 16:33+0000\n"
-"Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
+"POT-Creation-Date: 2025-11-28 18:40+0000\n"
+"PO-Revision-Date: 2025-11-27 14:14+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/hr_payroll/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -28,7 +29,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
 "1000000 == 0) ? 1 : 2);\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__work_entry_source
@@ -278,7 +279,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "<code>result_qty</code>: float, quantity, which defaults to 1."
-msgstr ""
+msgstr "<code>result_qty</code>: float, quantidade, cujo padrão é 1."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -286,6 +287,8 @@ msgid ""
 "<code>result_rate</code>: float, rate between -100.0 and 100.0, which "
 "defaults to 100.0 (%)."
 msgstr ""
+"<code>result_rate</code>: float, taxa entre -100,0 e 100,0, cujo padrão é "
+"100,0 (%)."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -293,21 +296,24 @@ msgid ""
 "<code>result_rules</code>: dict containing the rules amounts, quantities, "
 "rates and totals (previously computed)"
 msgstr ""
+"<code>result_rules</code>: ditado contendo as regras de valores, "
+"quantidades, taxas e totais (previamente computados)"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "<code>total = result * result_rate / 100 * result_qty</code>"
-msgstr ""
+msgstr "<code>total = result * result_rate / 100 * result_qty</code>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "<code>version</code>: hr.version object"
-msgstr ""
+msgstr "<code>versão</code>: objeto hr.version"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "<code>worked_days</code>: dict containing the computed worked days"
 msgstr ""
+"<code>worked_days</code>: dicionário contendo os dias trabalhados calculados"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_form
@@ -315,8 +321,8 @@ msgid ""
 "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
 "title=\"Arrow\"/>"
 msgstr ""
-"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" title="
-"\"Arrow\"/>"
+"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
+"title=\"Arrow\"/>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -586,8 +592,8 @@ msgid ""
 "</tbody></table>\n"
 "            "
 msgstr ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
-"\"width:100%; margin:0px auto;\"><tbody>\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; "
+"margin:0px auto;\"><tbody>\n"
 "    <tr><td valign=\"top\" style=\"text-align: left; font-size: 14px;\">\n"
 "        Olá, <t t-esc=\"object.employee_id.name\"/>, um novo holerite está "
 "disponível para você.<br/><br/>\n"
@@ -685,6 +691,7 @@ msgid "Activity type"
 msgstr "Tipo de atividade"
 
 #. module: hr_payroll
+#: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Add Inputs"
@@ -843,8 +850,8 @@ msgid ""
 msgstr ""
 "Um relatório de Quadro de Funcionários fornece a quantidade de contratos em "
 "andamentos<br>\n"
-"            em um período de tempo específico, agrupados por "
-"Departamento.<br><br>"
+"            em um período de tempo específico, agrupados por Departamento."
+"<br><br>"
 
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_payroll_employee_declaration_unique_employee_sheet
@@ -3060,8 +3067,8 @@ msgid ""
 msgstr ""
 "É usado no cálculo de porcentagem e valor fixo. Por exemplo, uma regra para "
 "vale-refeição com valor fixo de 1 real por dia trabalhado pode ter sua "
-"quantidade definida em uma expressão como worked_days['WORK100']"
-".number_of_days."
+"quantidade definida em uma expressão como "
+"worked_days['WORK100'].number_of_days."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_input__amount
@@ -3557,8 +3564,8 @@ msgstr ""
 #: code:addons/hr_payroll/models/hr_rule_parameter.py:0
 msgid "No rule parameter with code \"%(code)s\" was found for %(date)s"
 msgstr ""
-"Nenhum parâmetro de regra com o código \"%(code)s\" foi encontrado para "
-"%(date)s"
+"Nenhum parâmetro de regra com o código \"%(code)s\" foi encontrado para %"
+"(date)s"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5179,9 +5186,8 @@ msgid ""
 "Still looking for more ? Here is a video to help you <i class=\"fa fa-video-"
 "camera fa-2\" aria-hidden=\"true\" contenteditable=\"false\">​</i>"
 msgstr ""
-"Still looking for more ? Here is a video to help you <i class="
-"\"fa fa-video-camera fa-2\" aria-hidden=\"true\" contenteditable=\"false\""
-">​</i>"
+"Still looking for more ? Here is a video to help you <i class=\"fa fa-video-"
+"camera fa-2\" aria-hidden=\"true\" contenteditable=\"false\">​</i>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
@@ -5941,8 +5947,8 @@ msgid ""
 msgstr ""
 "Fique atento às lacunas no calendário de %(employee_name)s\n"
 "\n"
-"Complete os registros de trabalho que faltam de "
-"%(employee_name)s:%(time_intervals_str)s \n"
+"Complete os registros de trabalho que faltam de %(employee_name)s:%"
+"(time_intervals_str)s \n"
 "\n"
 "Registros de trabalho ausentes são como o Triângulo das Bermudas dos "
 "holerites. Vamos evitar que os ganhos do seu colega evaporem!"
@@ -6190,8 +6196,8 @@ msgid ""
 "Wrong rule parameter value for %(rule_parameter_name)s at date %(date)s.\n"
 "%(error)s"
 msgstr ""
-"Valor de parâmetro de regra incorreto para %(rule_parameter_name)s na data "
-"%(date)s.\n"
+"Valor de parâmetro de regra incorreto para %(rule_parameter_name)s na data %"
+"(date)s.\n"
 "%(error)s"
 
 #. module: hr_payroll
@@ -6324,7 +6330,8 @@ msgstr "You cannot delete work entry type(s). Instead archive it."
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "You cannot record a payment on multi employees attachments."
-msgstr "Não é possível registrar um pagamento em anexos de vários funcionários."
+msgstr ""
+"Não é possível registrar um pagamento em anexos de vários funcionários."
 
 #. module: hr_payroll
 #. odoo-python

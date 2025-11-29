@@ -8,12 +8,13 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Junko Augias (juau)" <juau@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:40+0000\n"
-"PO-Revision-Date: 2025-11-21 06:33+0000\n"
+"PO-Revision-Date: 2025-11-28 01:36+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/voip/ja/"
 ">\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: voip
 #. odoo-javascript
@@ -60,18 +61,18 @@ msgstr "%s その他…"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/keypad.js:0
 msgid "1 other…"
-msgstr "1 その他…"
+msgstr "他１名…"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/keypad.js:0
 msgid "2 others…"
-msgstr "2 その他…"
+msgstr "他2名…"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
 msgid "<i class=\"fa fa-fw me-1 fa-phone text-primary\" title=\"Phone\"/>"
-msgstr "<i class=\"fa fa-fw me-1 fa-phone text-primary\" title=\"Phone\"/>"
+msgstr "<i class=\"fa fa-fw me-1 fa-phone text-primary\" title=\"電話\"/>"
 
 #. module: voip
 #. odoo-javascript
@@ -324,7 +325,7 @@ msgstr "%(phone_number)sへの通話"
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__voip
 msgid "Call with Odoo Phone"
-msgstr "Odoo電話で通話"
+msgstr "Odoo Phoneで通話"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__phone
@@ -447,12 +448,12 @@ msgstr "確定"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "Confirm Transfer"
-msgstr ""
+msgstr "転送を確定"
 
 #. module: voip
 #: model_terms:ir.actions.act_window,help:voip.action_voip_provider_view
 msgid "Connect Odoo to your VoIP service by adding a provider."
-msgstr ""
+msgstr "プロバイダーを追加してOdooをVoIPサービスに接続します。"
 
 #. module: voip
 #. odoo-javascript
@@ -479,7 +480,7 @@ msgstr "連絡先"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
 msgid "Contact Avatar"
-msgstr ""
+msgstr "アバターへのお問い合わせ"
 
 #. module: voip
 #. odoo-javascript
@@ -543,7 +544,7 @@ msgstr "日付"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__how_to_call_on_mobile
 msgid "Default phone app"
-msgstr ""
+msgstr "デフォルトの電話アプリ"
 
 #. module: voip
 #. odoo-javascript
@@ -566,13 +567,13 @@ msgstr "デモモード"
 #. odoo-javascript
 #: code:addons/voip/static/src/core/session.js:0
 msgid "Demo call"
-msgstr ""
+msgstr "デモコール"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/transfer_confirmation.xml:0
 msgid "Direct transfer"
-msgstr ""
+msgstr "直接転送"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__direction
@@ -684,7 +685,7 @@ msgstr "予期せず終了"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/in_call_view.js:0
 msgid "Enforced by admin"
-msgstr ""
+msgstr "管理者にる強制"
 
 #. module: voip
 #. odoo-javascript
@@ -693,24 +694,26 @@ msgid ""
 "Error message:\n"
 "%s"
 msgstr ""
+"エラーメッセージ：\n"
+"%s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/core/session.js:0
 msgid "Error putting the call on hold:"
-msgstr ""
+msgstr "通話を保留状態にする際にエラーが発生しました："
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/core/session.js:0
 msgid "Error resuming the call:"
-msgstr ""
+msgstr "呼び出しの再開中にエラーが発生しました:"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.xml:0
 msgid "Expand history"
-msgstr ""
+msgstr "履歴を展開"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
@@ -757,7 +760,7 @@ msgstr "すべてのユーザに強制"
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy_option__always
 msgid "Force recording of all calls. Users can't disable it."
-msgstr ""
+msgstr "すべての通話を強制的に録音します。ユーザは無効化できません。"
 
 #. module: voip
 #. odoo-javascript
@@ -781,7 +784,7 @@ msgstr "非表示"
 #. odoo-javascript
 #: code:addons/voip/static/src/web/voip_systray_item.js:0
 msgid "Hide Softphone"
-msgstr ""
+msgstr "ソフトフォンを非表示"
 
 #. module: voip
 #: model:ir.actions.act_window,name:voip.voip_call_action_history
@@ -831,8 +834,9 @@ msgstr "選択されている場合、一部のメッセージで配信エラー
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__do_not_disturb_until_dt
+#, fuzzy
 msgid "If set, Odoo Phone will be in Do Not Disturb mode until this time."
-msgstr ""
+msgstr "設定すると、Odoo Phoneはこの時刻まで「おやすみモード」になります。"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__image_1920
@@ -855,13 +859,13 @@ msgstr "入荷"
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Incoming call"
-msgstr "着信"
+msgstr "着信中…"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 msgid "Incoming call (%(duration)s)"
-msgstr ""
+msgstr "着信 (%(duration)s)"
 
 #. module: voip
 #. odoo-javascript
@@ -873,7 +877,7 @@ msgstr "着信はミュートされます"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Incoming call…"
-msgstr ""
+msgstr "着信中…"
 
 #. module: voip
 #. odoo-javascript
@@ -1107,7 +1111,7 @@ msgstr "配信エラーが発生したメッセージ数"
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__voip
 msgid "Odoo Phone"
-msgstr ""
+msgstr "Odoo Phone"
 
 #. module: voip
 #: model:res.groups,name:voip.group_voip_officer
@@ -1482,7 +1486,8 @@ msgid ""
 "Specify a phone number so that placing a call in Odoo Phone will ring your "
 "preferred device (your desk phone or cell phone) and then connect you to the "
 "recipient."
-msgstr ""
+msgstr "Odoo Phoneで発信した際に、指定した電話番号(デスクフォンまたは携帯電話)が鳴り"
+"、その後相手先に接続されるように設定します。"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__start_date
@@ -1699,7 +1704,7 @@ msgstr "静的フラグ画像のURL"
 #. odoo-javascript
 #: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
 msgid "Use Odoo Phone"
-msgstr ""
+msgstr "Odoo Phoneを使用する"
 
 #. module: voip
 #. odoo-javascript

@@ -3,22 +3,23 @@
 # * stock_accountant
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:46+0000\n"
-"PO-Revision-Date: 2025-11-08 19:54+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-11-27 14:15+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Romanian <https://translate.odoo.com/projects/odoo-19/"
 "stock_accountant/ro/>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
-"20)) ? 1 : 2;\n"
-"X-Generator: Weblate 5.12.2\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : "
+"(n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: stock_accountant
 #: model:ir.model,name:stock_accountant.model_res_config_settings
@@ -45,17 +46,17 @@ msgstr "ID"
 #. module: stock_accountant
 #: model_terms:ir.ui.view,arch_db:stock_accountant.res_config_settings_view_form
 msgid "Inventory Accounting"
-msgstr ""
+msgstr "Contabilitatea stocurilor"
 
 #. module: stock_accountant
 #: model:ir.model.fields,field_description:stock_accountant.field_res_config_settings__cost_method
 msgid "Inventory Cost Method"
-msgstr ""
+msgstr "Metoda de cost a inventarului"
 
 #. module: stock_accountant
 #: model:ir.model.fields,field_description:stock_accountant.field_res_config_settings__inventory_period
 msgid "Inventory Period"
-msgstr ""
+msgstr "Perioada de inventar"
 
 #. module: stock_accountant
 #: model:ir.model.fields,field_description:stock_accountant.field_res_config_settings__valuation_method
@@ -75,11 +76,13 @@ msgid ""
 "Other accounts can be defined on \"Inventory Loss\" and \"Production\" on "
 "dedicated"
 msgstr ""
+"Alte conturi pot fi definite pe \"Pierdere de inventar\" și \"Producție\" pe "
+"dedicat"
 
 #. module: stock_accountant
 #: model_terms:ir.ui.view,arch_db:stock_accountant.res_config_settings_view_form
 msgid "Periodic Valuation"
-msgstr ""
+msgstr "Evaluare periodică"
 
 #. module: stock_accountant
 #: model:ir.model.fields,field_description:stock_accountant.field_res_config_settings__stock_journal
@@ -94,7 +97,7 @@ msgstr "Cont Evaluare Stoc"
 #. module: stock_accountant
 #: model_terms:ir.ui.view,arch_db:stock_accountant.res_config_settings_view_form
 msgid "Valuation Account"
-msgstr ""
+msgstr "Cont de evaluare"
 
 #. module: stock_accountant
 #: model_terms:ir.ui.view,arch_db:stock_accountant.res_config_settings_view_form

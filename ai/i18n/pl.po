@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:42+0000\n"
-"PO-Revision-Date: 2025-10-23 09:21+0000\n"
+"POT-Creation-Date: 2025-11-28 18:41+0000\n"
+"PO-Revision-Date: 2025-11-28 16:16+0000\n"
 "Last-Translator: \"Marta (wacm)\" <wacm@odoo.com>\n"
 "Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/ai/pl/>\n"
 "Language: pl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_read_group
@@ -1141,6 +1141,12 @@ msgstr "Niepowodzenie"
 
 #. module: ai
 #. odoo-python
+#: code:addons/ai/models/ai_agent_source.py:0
+msgid "Failed to fetch the content of the source."
+msgstr ""
+
+#. module: ai
+#. odoo-python
 #: code:addons/ai/models/ai_agent.py:0
 msgid "Failed to get embeddings for the prompt."
 msgstr "Nie udało się uzyskać osadzeń dla promptu."
@@ -1459,6 +1465,8 @@ msgid ""
 "No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, CSV, and "
 "OpenDocument files are allowed."
 msgstr ""
+"Brak prawidłowych plików do przesłania. Dozwolone są wyłącznie pliki PDF, "
+"Word, PowerPoint, Excel, Text, CSV i OpenDocument."
 
 #. module: ai
 #. odoo-javascript
@@ -1657,6 +1665,8 @@ msgid ""
 "Some files have invalid formats and were skipped: %s. Only PDF, Word, "
 "PowerPoint, Excel, Text, CSV, and OpenDocument files are allowed."
 msgstr ""
+"Niektóre pliki mają nieprawidłowe formaty i zostały pominięte: %s. Dozwolone "
+"są tylko pliki PDF, Word, PowerPoint, Excel, Text, CSV i OpenDocument."
 
 #. module: ai
 #. odoo-javascript
@@ -1907,12 +1917,6 @@ msgid "URL"
 msgstr "URL"
 
 #. module: ai
-#. odoo-python
-#: code:addons/ai/models/ai_agent_source.py:0
-msgid "URL content cannot be extracted."
-msgstr "Nie można wyodrębnić zawartości URL."
-
-#. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 msgid "Unable to start the recording."
@@ -2048,6 +2052,9 @@ msgstr "wykonano."
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "fa-hashtag"
 msgstr "fa-hashtag"
+
+#~ msgid "URL content cannot be extracted."
+#~ msgstr "Nie można wyodrębnić zawartości URL."
 
 #~ msgid ""
 #~ "No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, and "

@@ -4,13 +4,14 @@
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# "Noemi Pla Garcia (nopl)" <nopl@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-11-16 18:07+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-11-28 10:56+0000\n"
+"Last-Translator: \"Noemi Pla Garcia (nopl)\" <nopl@odoo.com>\n"
 "Language-Team: Spanish <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll_holidays/es/>\n"
 "Language: es\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: hr_payroll_holidays
 #: model_terms:ir.actions.act_window,help:hr_payroll_holidays.hr_leave_work_entry_action
@@ -106,7 +107,7 @@ msgstr "Referencia del empleado"
 #. odoo-python
 #: code:addons/hr_payroll_holidays/models/hr_payslip.py:0
 msgid "Employee has time off to defer"
-msgstr ""
+msgstr "El empleado tiene días de permiso que deben diferirse"
 
 #. module: hr_payroll_holidays
 #: model:ir.model.fields,field_description:hr_payroll_holidays.field_hr_employee__id
@@ -156,8 +157,8 @@ msgstr ""
 #: code:addons/hr_payroll_holidays/models/hr_leave.py:0
 msgid "Only an employee time off to defer can be reported to next month"
 msgstr ""
-"Sólo la ausencia de un empleado para aplazar puede ser traslada al próximo "
-"mes."
+"Solo pueden trasladarse al mes siguiente las ausencias de un empleado que se "
+"hayan tenido que aplazar"
 
 #. module: hr_payroll_holidays
 #: model:ir.model,name:hr_payroll_holidays.model_hr_payslip
@@ -173,7 +174,7 @@ msgstr "Estado del recibo de nómina"
 #. odoo-python
 #: code:addons/hr_payroll_holidays/models/hr_leave.py:0
 msgid "Please create manually the work entry for %s"
-msgstr "Cree la entrada de trabajo para %s manualmente."
+msgstr "Crea manualmente la entrada de trabajo para %s"
 
 #. module: hr_payroll_holidays
 #: model_terms:ir.ui.view,arch_db:hr_payroll_holidays.res_config_settings_view_form

@@ -9,17 +9,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:42+0000\n"
-"PO-Revision-Date: 2025-11-15 10:22+0000\n"
+"POT-Creation-Date: 2025-11-28 18:41+0000\n"
+"PO-Revision-Date: 2025-11-28 01:36+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
-"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/ai/ja/>"
-"\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/ai/ja/"
+">\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_read_group
@@ -97,40 +97,38 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"            "
-"ドメインフィルターやグルーピングで使用可能な、単一モデルの検索可能なフィール"
-"ドのみを一覧表示します。\n"
-"            "
-"有効なドメインを構築するために不可欠です。ここに記載されていないフィールドは"
-"、使用できません。\n"
+"            ドメインフィルターやグルーピングで使用可能な、単一モデルの検索可"
+"能なフィールドのみを一覧表示します。\n"
+"            有効なドメインを構築するために不可欠です。ここに記載されていない"
+"フィールドは、使用できません。\n"
 "\n"
 "            返却フォーマット:\n"
 "            ```\n"
 "            field_name|display_name|type|sortable|groupable|description\n"
-"            partner_id|Customer|many2one(res.partner)|true|true|"
-"このオーダの顧客\n"
+"            partner_id|Customer|many2one(res.partner)|true|true|このオーダの"
+"顧客\n"
 "            date_order|Order Date|datetime|true|true|オーダの日付\n"
-"            order_line|Order Lines|one2many(sale.order.line)|false|false|"
-"このオーダの明細行\n"
+"            order_line|Order Lines|one2many(sale.order.line)|false|false|この"
+"オーダの明細行\n"
 "            state|Status|selection|true|true|オーダのステータス\n"
 "            ```\n"
 "\n"
 "            重要なポイント:\n"
-"            - ⚠️返されるのは 検索可能なフィールドのみ です - "
-"その他のフィールドは ドメインで使用できません\n"
-"            - リレーション型フィールド: 括弧内に関連モデルが表示されます ("
-"many2one, one2many, many2many)\n"
-"            - 他のモデルへ参照(トラバース)できるのは、"
-"リレーション型のフィールドのみです\n"
-"            - char、text、float "
-"などのリテラル型フィールドを使って他のモデルへ参照することはできません\n"
-"            - 'sortable' このフィールドを order_by "
-"パラメータで使用できるかどうか\n"
-"            - 'groupable' 検索ビューに無くても、"
-"このフィールドでグルーピング可能かどうか\n"
+"            - ⚠️返されるのは 検索可能なフィールドのみ です - その他のフィール"
+"ドは ドメインで使用できません\n"
+"            - リレーション型フィールド: 括弧内に関連モデルが表示されます "
+"(many2one, one2many, many2many)\n"
+"            - 他のモデルへ参照(トラバース)できるのは、リレーション型のフィー"
+"ルドのみです\n"
+"            - char、text、float などのリテラル型フィールドを使って他のモデル"
+"へ参照することはできません\n"
+"            - 'sortable' このフィールドを order_by パラメータで使用できるかど"
+"うか\n"
+"            - 'groupable' 検索ビューに無くても、このフィールドでグルーピング"
+"可能かどうか\n"
 "\n"
-"            💡 パフォーマンステクニック: 複数モデルを調べたい場合は、"
-"1件のメッセージで複数のモデルに対して並列呼び出しを行いましょう\n"
+"            💡 パフォーマンステクニック: 複数モデルを調べたい場合は、1件の"
+"メッセージで複数のモデルに対して並列呼び出しを行いましょう\n"
 "            例: sale.order, product.product, and res.partnerを調べたい場合 → "
 "3つを一緒に呼び出すことで効率的。\n"
 "        "
@@ -794,7 +792,8 @@ msgstr "今後のミーティングに関するメモを追加する"
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.xml:0
 msgid "Add sources to your AI Agent to get answers based on specific content."
-msgstr "AIエージェントにソースを追加して、特定のコンテンツに基づいた回答を得ることが"
+msgstr ""
+"AIエージェントにソースを追加して、特定のコンテンツに基づいた回答を得ることが"
 "できます。"
 
 #. module: ai
@@ -869,12 +868,12 @@ msgstr "分析機能"
 #: code:addons/ai/static/src/mail_composer_chatgpt.xml:0
 #: code:addons/ai/static/src/web/systray_action.xml:0
 msgid "Ask AI"
-msgstr "AIに質問する"
+msgstr "Ask AI"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__systray_ai_button
 msgid "Ask AI for help"
-msgstr "AIにサポートを依頼する"
+msgstr "Ask AIにサポートを依頼する"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ir_attachment
@@ -1141,6 +1140,12 @@ msgstr "不合格"
 
 #. module: ai
 #. odoo-python
+#: code:addons/ai/models/ai_agent_source.py:0
+msgid "Failed to fetch the content of the source."
+msgstr ""
+
+#. module: ai
+#. odoo-python
 #: code:addons/ai/models/ai_agent.py:0
 msgid "Failed to get embeddings for the prompt."
 msgstr "プロンプトの埋め込み取得に失敗しました。"
@@ -1323,7 +1328,8 @@ msgstr "LLMが返すことができる値とそのプロパティ(型、長さ�
 msgid ""
 "JSON schema for the parameters of the action (leave empty if no arguments "
 "are needed)"
-msgstr "アクションのパラメータ用のJSONスキーマ(引数が不要な場合は空にしておくこと)"
+msgstr ""
+"アクションのパラメータ用のJSONスキーマ(引数が不要な場合は空にしておくこと)"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
@@ -1416,7 +1422,8 @@ msgstr "プロバイダー '%s' に対してAPIキーが設定されていませ
 #. odoo-python
 #: code:addons/ai/models/ai_agent.py:0
 msgid "No configured Ask AI agent. Please contact your administrator."
-msgstr "「AIに聞く」エージェントが設定されていません。管理者にお問い合わせください。"
+msgstr ""
+"「Ask AI」エージェントが設定されていません。管理者にお問い合わせください。"
 
 #. module: ai
 #. odoo-python
@@ -1454,8 +1461,8 @@ msgid ""
 "No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, CSV, and "
 "OpenDocument files are allowed."
 msgstr ""
-"アップロード可能なファイルはありません。PDF、Word、PowerPoint、Excel、Text、C"
-"SV、OpenDocumentファイルのみアップロード可能です。"
+"アップロード可能なファイルはありません。PDF、Word、PowerPoint、Excel、Text、"
+"CSV、OpenDocumentファイルのみアップロード可能です。"
 
 #. module: ai
 #. odoo-javascript
@@ -1641,8 +1648,9 @@ msgstr "この機能の簡単な説明"
 msgid ""
 "Some URLs are invalid and were skipped. URLs must start with http://, "
 "https://, or ftp://"
-msgstr "一部のURLは無効であり、スキップされました。URLは、http://、https://、またはft"
-"p:// で始まる必要があります"
+msgstr ""
+"一部のURLは無効であり、スキップされました。URLは、http://、https://、または"
+"ftp:// で始まる必要があります"
 
 #. module: ai
 #. odoo-javascript
@@ -1651,9 +1659,8 @@ msgid ""
 "Some files have invalid formats and were skipped: %s. Only PDF, Word, "
 "PowerPoint, Excel, Text, CSV, and OpenDocument files are allowed."
 msgstr ""
-"一部のファイルは無効な形式を持つため、スキップされました:%s "
-"。PDF、Word、PowerPoint、Excel、Text、CSV、OpenDocumentファイルのみが許可され"
-"ます。"
+"一部のファイルは無効な形式を持つため、スキップされました:%s 。PDF、Word、"
+"PowerPoint、Excel、Text、CSV、OpenDocumentファイルのみが許可されます。"
 
 #. module: ai
 #. odoo-javascript
@@ -1743,7 +1750,8 @@ msgstr "アクション「%s」はAIツールとして使用できません。"
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_composer__name
 msgid "The identifier for the interface component to agent rule"
-msgstr "インターフェースコンポーネントをエージェントルールに関連付けるための識別子"
+msgstr ""
+"インターフェースコンポーネントをエージェントルールに関連付けるための識別子"
 
 #. module: ai
 #. odoo-javascript
@@ -1768,8 +1776,9 @@ msgstr "クリックするとAIに送られるプロンプト"
 msgid ""
 "The type of the parameter '%(name)s' is incorrect. It should be '%"
 "(expected_param_type)s'."
-msgstr "パラメータ '%(name)s'の型が間違っています。'%(expected_param_type)s' "
-"にしてください。"
+msgstr ""
+"パラメータ '%(name)s'の型が間違っています。'%(expected_param_type)s' にしてく"
+"ださい。"
 
 #. module: ai
 #. odoo-python
@@ -1778,8 +1787,8 @@ msgid ""
 "The value '%(value)s' of the parameter '%(name)s' doesn't match the expected "
 "pattern '%(expected_pattern)s'."
 msgstr ""
-"パラメータ '%(name)s' の値 '%(value)s' は、期待されるパターン "
-"'%(expected_pattern)s' と一致しません。"
+"パラメータ '%(name)s' の値 '%(value)s' は、期待されるパターン '%"
+"(expected_pattern)s' と一致しません。"
 
 #. module: ai
 #. odoo-python
@@ -1791,7 +1800,8 @@ msgstr "このアクションはAIでは実行できません。"
 #. odoo-python
 #: code:addons/ai/models/ir_actions_server.py:0
 msgid "This action is interactive and cannot be executed by the agent."
-msgstr "このアクションはインタラクティブであり、エージェントが実行することはできませ"
+msgstr ""
+"このアクションはインタラクティブであり、エージェントが実行することはできませ"
 "ん。"
 
 #. module: ai
@@ -1800,8 +1810,9 @@ msgstr "このアクションはインタラクティブであり、エージェ
 msgid ""
 "This tool is automatically provided with `__end_message` param which when "
 "provided, the LLM processing loop is terminated."
-msgstr "このツールは自動的に `__end_message` "
-"パラメータを提供し、このパラメータが提供されるとLLMの処理ループが終了します。"
+msgstr ""
+"このツールは自動的に `__end_message` パラメータを提供し、このパラメータが提供"
+"されるとLLMの処理ループが終了します。"
 
 #. module: ai
 #. odoo-javascript
@@ -1814,8 +1825,9 @@ msgstr "これらのパラメータは、アクションのグローバル変数
 msgid ""
 "Tip: Write /field to insert values or /prompt to integrate AI-generated "
 "dynamic content!"
-msgstr "ヒント：値を挿入するには/fieldを、AIが生成した動的コンテンツを統合するには/pr"
-"omptを記述してください!"
+msgstr ""
+"ヒント：値を挿入するには/fieldを、AIが生成した動的コンテンツを統合するには/"
+"promptを記述してください!"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_topic__name
@@ -1825,8 +1837,9 @@ msgstr "タイトル"
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
 msgid "To return a result to the AI agent, do <code>ai['result'] = ...</code>"
-msgstr "AIエージェントに結果を返すには、<code>ai['result'] = ...</code> "
-"を実行してください"
+msgstr ""
+"AIエージェントに結果を返すには、<code>ai['result'] = ...</code> を実行してく"
+"ださい"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_ids
@@ -1850,9 +1863,9 @@ msgstr "書き起こし"
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_natural_language_service.js:0
 msgid "Tried to switch to %s but the app is no longer in an action window."
-msgstr "%s "
-"に切り替えようとしましたが、アプリがアクションウィンドウに表示されなくなりま"
-"した。"
+msgstr ""
+"%s に切り替えようとしましたが、アプリがアクションウィンドウに表示されなくなり"
+"ました。"
 
 #. module: ai
 #. odoo-javascript
@@ -1884,27 +1897,20 @@ msgstr ""
 "- レコードの更新: レコードの値を更新します。\n"
 "- 活動の作成: 活動を作成します(ディスカス)\n"
 "- メール送信: メッセージやメモを投稿したり、メールを送信したりします。\n"
-"- 'SMSの送信': SMSを送信し、ドキュメント(SMS)にそれらを記録します - "
-"'フォロワーの追加/削除': "
-"レコードにフォロワーを追加または削除します(ディスカス)\n"
+"- 'SMSの送信': SMSを送信し、ドキュメント(SMS)にそれらを記録します - 'フォロ"
+"ワーの追加/削除': レコードにフォロワーを追加または削除します(ディスカス)\n"
 "- レコードの作成': 新しい値で新しいレコードを作成します\n"
 "- コードの実行': 実行されるPythonコードのブロックします\n"
-"- 'Webhook通知の送信': "
-"Webhookとしても知られるPOSTリクエストを外部システムに送信します\n"
-"- '複数アクション': "
-"他のサーバーアクションをトリガするアクションを定義します\n"
+"- 'Webhook通知の送信': Webhookとしても知られるPOSTリクエストを外部システムに"
+"送信します\n"
+"- '複数アクション': 他のサーバーアクションをトリガするアクションを定義しま"
+"す\n"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__url
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__type__url
 msgid "URL"
 msgstr "URL"
-
-#. module: ai
-#. odoo-python
-#: code:addons/ai/models/ai_agent_source.py:0
-msgid "URL content cannot be extracted."
-msgstr "URLのコンテンツを抽出できません。"
 
 #. module: ai
 #. odoo-javascript
@@ -1996,7 +2002,8 @@ msgstr "HTMLフィールドに書き込む"
 #. odoo-python
 #: code:addons/ai/utils/tools_schema/validators.py:0
 msgid "Wrong value %(value)s, should be in: %(enum)s"
-msgstr "値%(value)sが正しくありません。次のいずれかである必要があります: %(enum)s"
+msgstr ""
+"値%(value)sが正しくありません。次のいずれかである必要があります: %(enum)s"
 
 #. module: ai
 #. odoo-javascript
@@ -2004,7 +2011,8 @@ msgstr "値%(value)sが正しくありません。次のいずれかである必
 msgid ""
 "You must allow the access to your microphone to start the recording. Try "
 "refreshing the page and start again."
-msgstr "録音を開始するには、マイクへのアクセスを許可する必要があります。ページをリフ"
+msgstr ""
+"録音を開始するには、マイクへのアクセスを許可する必要があります。ページをリフ"
 "レッシュして、もう一度やり直してください。"
 
 #. module: ai
@@ -2041,3 +2049,6 @@ msgstr "を実行しました。"
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "fa-hashtag"
 msgstr "fa-hashtag"
+
+#~ msgid "URL content cannot be extracted."
+#~ msgstr "URLのコンテンツを抽出できません。"

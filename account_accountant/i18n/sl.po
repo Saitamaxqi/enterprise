@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"POT-Creation-Date: 2025-11-28 18:40+0000\n"
 "PO-Revision-Date: 2025-11-08 19:31+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Slovenian <https://translate.odoo.com/projects/odoo-19/"
@@ -32,6 +32,12 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
 "X-Generator: Weblate 5.12.2\n"
+
+#. module: account_accountant
+#. odoo-python
+#: code:addons/account_accountant/models/account_bank_statement.py:0
+msgid " - %(reconcile_model_name)s"
+msgstr ""
 
 #. module: account_accountant
 #. odoo-python
@@ -1571,6 +1577,18 @@ msgid "Matching"
 msgstr "Ujemanje"
 
 #. module: account_accountant
+#. odoo-python
+#: code:addons/account_accountant/models/account_bank_statement.py:0
+msgid "Matching done"
+msgstr ""
+
+#. module: account_accountant
+#. odoo-python
+#: code:addons/account_accountant/models/account_bank_statement.py:0
+msgid "Matching unreconciled"
+msgstr ""
+
+#. module: account_accountant
 #: model:ir.model,name:account_accountant.model_ir_ui_menu
 msgid "Menu"
 msgstr "Meni"
@@ -1850,7 +1868,6 @@ msgstr "Partnerji"
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.js:0
-#: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.xml:0
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_move_line_reconcile_search
 msgid "Payable"
 msgstr "Obveznosti"
@@ -1945,7 +1962,6 @@ msgstr "Razlogi..."
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.js:0
-#: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.xml:0
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_move_line_reconcile_search
 msgid "Receivable"
 msgstr "Terjatve"
@@ -1999,12 +2015,6 @@ msgstr "Usklajen"
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__reco_model_id
 msgid "Reconciliation model"
 msgstr "Model usklajevanja"
-
-#. module: account_accountant
-#. odoo-python
-#: code:addons/account_accountant/models/account_reconcile_model.py:0
-msgid "Reconciliation model %s applied"
-msgstr ""
 
 #. module: account_accountant
 #. odoo-javascript
@@ -2195,6 +2205,12 @@ msgid "Single Currency Mode"
 msgstr "Način ene valute"
 
 #. module: account_accountant
+#. odoo-javascript
+#: code:addons/account_accountant/static/src/components/bank_reconciliation/statement_line/statement_line.xml:0
+msgid "Some lines have invalid analytic distribution"
+msgstr ""
+
+#. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_fiscal_year__date_from
 #: model:ir.model.fields,field_description:account_accountant.field_account_move_line__deferred_start_date
 msgid "Start Date"
@@ -2364,6 +2380,17 @@ msgstr ""
 #: code:addons/account_accountant/wizard/account_reconcile_wizard.py:0
 msgid "This can only be used on journal items"
 msgstr "To se lahko uporablja samo za postavke dnevnika"
+
+#. module: account_accountant
+#. odoo-javascript
+#: code:addons/account_accountant/static/src/components/bank_reconciliation/line_to_reconcile/line_to_reconcile.xml:0
+msgid "This line has invalid analytic distribution"
+msgstr ""
+
+#. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_edit_line
+msgid "This line requires analytic distribution."
+msgstr ""
 
 #. module: account_accountant
 #. odoo-python

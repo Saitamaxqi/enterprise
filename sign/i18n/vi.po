@@ -9,13 +9,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Thi Huong Nguyen (thng)" <thng@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-14 18:41+0000\n"
-"PO-Revision-Date: 2025-11-08 19:50+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"POT-Creation-Date: 2025-11-28 18:40+0000\n"
+"PO-Revision-Date: 2025-11-28 07:26+0000\n"
+"Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/sign/"
 "vi/>\n"
 "Language: vi\n"
@@ -23,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_res_partner__signature_count
@@ -43,6 +44,8 @@ msgid ""
 "%(company_address)s\n"
 "%(phone)s"
 msgstr ""
+"%(company_address)s\n"
+"%(phone)s"
 
 #. module: sign
 #. odoo-python
@@ -825,12 +828,6 @@ msgstr ""
 "Dựa trên nhiều trang web khác nhau, đây là các phép so sánh của chúng tôi:"
 
 #. module: sign
-#. odoo-javascript
-#: code:addons/sign/static/src/editor/plugins/signature.js:0
-msgid "Basic Bloc"
-msgstr "Khối cơ bản"
-
-#. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_log__request_state__sent
 msgid "Before Signature"
 msgstr "Trước khi ký tên"
@@ -853,6 +850,10 @@ msgid ""
 "electronic representation of my hand-written signature/initials for all "
 "purposes when it is used on documents, including legally binding contracts."
 msgstr ""
+"Bằng việc ký tên, tôi đồng ý rằng chữ ký/chữ ký nháy được chọn sẽ là đại "
+"diện điện tử hợp lệ cho chữ ký/chữ ký nháy bằng tay của tôi cho mọi mục đích "
+"khi được sử dụng trên các tài liệu, bao gồm cả các hợp đồng có giá trị pháp "
+"lý."
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
@@ -2111,6 +2112,8 @@ msgid ""
 "It seems that we're not able to process one of the uploaded pdf. It is "
 "either encrypted, or encoded in a format we do not support."
 msgstr ""
+"Có vẻ chúng tôi không thể xử lý một trong các tệp PDF đã tải lên. Tệp này có "
+"thể bị mã hóa hoặc được lưu ở định dạng mà chúng tôi không hỗ trợ."
 
 #. module: sign
 #. odoo-javascript
@@ -4697,6 +4700,10 @@ msgid ""
 "                Your refusal reason will be included to keep things clear "
 "and transparent for everyone."
 msgstr ""
+"Chúng tôi sẽ thông báo cho người gửi, người ký và các liên hệ được sao "
+"chép.\n"
+"Lý do từ chối của bạn sẽ được ghi lại để mọi thứ minh bạch và rõ ràng cho "
+"tất cả mọi người."
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__website_message_ids
@@ -4828,6 +4835,14 @@ msgstr "Bạn nên chọn ít nhất một tài liệu để tải xuống."
 #: code:addons/sign/static/src/dialogs/thank_you_dialog.js:0
 msgid "You will get the signed document by email."
 msgstr "Bạn sẽ nhận được tài liệu đã ký qua email."
+
+#. module: sign
+#. odoo-javascript
+#: code:addons/sign/static/src/dialogs/thank_you_dialog.js:0
+msgid ""
+"You will get the signed document by email. You may also request a paper copy "
+"from the sender."
+msgstr ""
 
 #. module: sign
 #: model_terms:ir.actions.act_window,help:sign.sign_all_request_action
@@ -5194,6 +5209,9 @@ msgstr "bạn"
 #: model_terms:ir.ui.view,arch_db:sign.green_report_el_pdf
 msgid "{{0}} Summary"
 msgstr "{{0}} Tóm tắt"
+
+#~ msgid "Basic Bloc"
+#~ msgstr "Khối cơ bản"
 
 #~ msgid "<b>Drag & drop “Signature”</b> into the bottom of the document."
 #~ msgstr "<b>Kéo và thả “Chữ ký”</b> vào phần dưới của tài liệu."

@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"POT-Creation-Date: 2025-11-28 18:40+0000\n"
 "PO-Revision-Date: 2025-11-08 19:32+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Portuguese <https://translate.odoo.com/projects/odoo-19/"
@@ -620,6 +620,11 @@ msgid "From:"
 msgstr "De:"
 
 #. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
+msgid "Future Activities"
+msgstr ""
+
+#. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_general_approval
 msgid "General Approval"
 msgstr "Aprovação geral"
@@ -816,6 +821,11 @@ msgstr "Última Atualização por"
 #: model:ir.model.fields,field_description:approvals.field_approval_request__write_date
 msgid "Last Updated on"
 msgstr "Última Atualização em"
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
+msgid "Late Activities"
+msgstr ""
 
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action
@@ -1387,6 +1397,11 @@ msgstr "A revisar:"
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__request_status__new
 msgid "To Submit"
 msgstr "Por Submeter"
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
+msgid "Today Activities"
+msgstr ""
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__activity_exception_decoration

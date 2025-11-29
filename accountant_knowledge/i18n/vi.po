@@ -4,12 +4,13 @@
 #
 # "Thi Huong Nguyen (thng)" <thng@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-21 15:39+0000\n"
+"PO-Revision-Date: 2025-11-28 07:26+0000\n"
 "Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "accountant_knowledge/vi/>\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
@@ -87,6 +88,9 @@ msgid ""
 "componentized assets, or the decomposition of such assets does not have a "
 "material impact."
 msgstr ""
+"<strong>Tài sản theo thành phần</strong>: Công ty không thể xác định các tài "
+"sản theo thành phần, hoặc việc phân tách các tài sản này không có ảnh hưởng "
+"đáng kể."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -170,6 +174,9 @@ msgid ""
 "measures, the company has chosen to maintain the existing useful life "
 "periods for the depreciation of non-componentized assets."
 msgstr ""
+"<strong>Tài sản không phân tách thành thành phần</strong>: Nhờ áp dụng các "
+"biện pháp dung sai, công ty đã chọn duy trì các kỳ sử dụng hiện có để khấu "
+"hao những tài sản không phân tách thành thành phần."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
@@ -233,11 +240,11 @@ msgid ""
 "interest expenses are recorded as liabilities under \"Loans and Other "
 "Financial Debts.\""
 msgstr ""
-"Các khoản vay nhận được từ các tổ chức công hoặc tư nhân để tài trợ cho hoạt "
-"động của công ty, với điều kiện phải trả lại, được trình bày trong phần vốn "
-"chủ sở hữu của bảng cân đối kế toán dưới mục \"Vốn chủ sở hữu khác\". Các "
-"chi phí lãi vay tương ứng được ghi nhận là nợ phải trả dưới mục "
-"\"Vay và các khoản nợ tài chính khác\"."
+"Các khoản tạm ứng nhận được từ các tổ chức công hoặc tư để tài trợ cho hoạt "
+"động của công ty, mà việc hoàn trả có điều kiện, được trình bày trong vốn "
+"chủ sở hữu trên bảng cân đối kế toán dưới mục \"Vốn chủ sở hữu khác\". Các "
+"chi phí lãi suất tương ứng được ghi nhận là nợ phải trả dưới mục "
+"\"Vay và nợ tài chính khác\"."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
@@ -281,6 +288,9 @@ msgid ""
 "unable to confirm the overall consistency and plausibility of the interim "
 "financial statements attached to this statement."
 msgstr ""
+"Do những phát hiện này và tác động đáng kể của chúng, chúng tôi không thể "
+"xác nhận tính nhất quán và hợp lý tổng thể của các báo cáo tài chính tạm "
+"thời kèm theo báo cáo này."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
@@ -289,10 +299,9 @@ msgid ""
 "financial statements of {{ company name }} for the period from {{ start of "
 "period }} to {{ end of period }}, which include the following key figures:"
 msgstr ""
-"Với tư cách là kế toán viên công chứng, chúng tôi đã thực hiện việc lập báo "
-"cáo tài chính tạm thời của Công ty TNHH Công nghệ Thông tin và Truyền thông ("
-" {{ company name }} ) cho kỳ từ {{ start of period }} đến {{ end of period }}"
-", bao gồm các số liệu chính sau:"
+"Với tư cách là kế toán công chứng, chúng tôi đã thực hiện việc lập báo cáo "
+"tài chính tạm thời của {{ company name }} cho kỳ từ {{ start of period }} "
+"đến {{ end of period }}, bao gồm các số liệu chính sau:"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_asset_information
@@ -356,6 +365,9 @@ msgid ""
 "into question the overall consistency and plausibility of the interim "
 "financial statements as attached to this statement."
 msgstr ""
+"Theo quy trình của chúng tôi, chúng tôi không phát hiện vấn đề nào có thể "
+"đặt nghi vấn về tính nhất quán và hợp lý tổng thể của báo cáo tài chính giữa "
+"niên độ đính kèm theo tuyên bố này."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -566,6 +578,8 @@ msgid ""
 "Detail and explain the key changes in fixed assets — purchases, sales, and "
 "adjustments — over the period for clear tracking of asset value evolution."
 msgstr ""
+"Chi tiết và giải thích các thay đổi chính về tài sản cố định — mua, bán và "
+"điều chỉnh — trong kỳ để theo dõi rõ ràng sự biến động giá trị tài sản."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
@@ -634,6 +648,9 @@ msgid ""
 "that significantly impact the overall consistency and reliability of the "
 "financial statements:"
 msgstr ""
+"Trong quá trình thực hiện công việc, chúng tôi đã xác định các vấn đề sau "
+"đây có ảnh hưởng đáng kể đến tính nhất quán và độ tin cậy tổng thể của báo "
+"cáo tài chính:"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
@@ -642,6 +659,9 @@ msgid ""
 "{{ net accounting result }}, broken down as follows between domestic and "
 "international operations."
 msgstr ""
+"Trong kỳ tài chính này, công ty đã tạo ra kết quả kế toán ròng là {{ net "
+"accounting result }}, được phân chia giữa các hoạt động trong nước và quốc "
+"tế như sau."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
@@ -694,6 +714,9 @@ msgid ""
 "anything that would call into question the overall consistency and "
 "plausibility of the interim financial statements attached to this statement."
 msgstr ""
+"Ngoại trừ tác động của vấn đề đã nêu ở trên, chúng tôi không phát hiện điều "
+"gì có thể làm nghi ngờ tính nhất quán và hợp lý tổng thể của các báo cáo tài "
+"chính tạm thời kèm theo báo cáo này."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
@@ -793,7 +816,7 @@ msgstr ""
 "Đối với tiền mặt được giữ bằng ngoại tệ, các khoản tiền này được chuyển đổi "
 "sang euro theo tỷ giá hối đoái áp dụng vào ngày làm việc cuối cùng trước khi "
 "kết thúc năm tài chính. Mọi chênh lệch tỷ giá phát sinh được ghi nhận ngay "
-"lập tức vào báo cáo kết quả kinh doanh dưới dạng lợi nhuận hoặc lỗ hối đoái."
+"lập tức vào báo cáo kết quả kinh doanh dưới dạng lãi hoặc lỗ tỷ giá hối đoái."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
@@ -809,6 +832,9 @@ msgid ""
 "the terms agreed upon and repayments made during the period, as well as the "
 "amount of commitments made on their behalf."
 msgstr ""
+"Đối với từng thành viên, hãy chỉ rõ các khoản ứng trước và khoản vay được "
+"cấp cho họ, bao gồm các điều khoản đã thỏa thuận và các khoản đã hoàn trả "
+"trong kỳ, cũng như số tiền cam kết được thực hiện thay cho họ."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
@@ -848,6 +874,9 @@ msgid ""
 "portion of its expenses pertains to development costs as defined by "
 "applicable accounting standards"
 msgstr ""
+"Với tính chất đổi mới của các hoạt động của công ty, một phần lớn chi phí "
+"của công ty liên quan đến chi phí phát triển theo như được quy định bởi các "
+"chuẩn mực kế toán hiện hành"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
@@ -873,6 +902,8 @@ msgid ""
 "determined at the opening of the period, including which financial statement "
 "items are affected."
 msgstr ""
+"Nếu áp dụng, hãy chỉ rõ tác động của quy định kế toán mới được xác định tại "
+"thời điểm đầu kỳ, bao gồm những mục trong báo cáo tài chính bị ảnh hưởng."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -881,6 +912,9 @@ msgid ""
 "prospective application and indicate the impact on key items for the period, "
 "unless impracticable to determine."
 msgstr ""
+"Nếu thay đổi được áp dụng theo hướng dự kiến, hãy giải thích lý do áp dụng "
+"theo hướng này và chỉ ra tác động đối với các mục quan trọng trong kỳ, trừ "
+"khi việc xác định là không khả thi."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -896,6 +930,9 @@ msgid ""
 "impact on the key items of the current period, unless such information is "
 "impracticable to obtain."
 msgstr ""
+"Nếu thay đổi được áp dụng <strong>theo hướng dự kiến</strong>, hãy mô tả tác "
+"động của nó đến các khoản mục chính của kỳ hiện tại, trừ khi việc thu thập "
+"thông tin này là không khả thi."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -904,6 +941,8 @@ msgid ""
 "items from prior periods that have been restated in accordance with the new "
 "method."
 msgstr ""
+"Nếu thay đổi được áp dụng <strong>hồi tố</strong>, hãy trình bày các khoản "
+"mục chính từ những kỳ trước đã được điều chỉnh lại theo phương pháp mới."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
@@ -911,6 +950,8 @@ msgid ""
 "If this is the first year the company holds inventories, specify the "
 "valuation method used and provide a breakdown of the products concerned."
 msgstr ""
+"Nếu đây là năm đầu tiên công ty có tồn kho, hãy chỉ định phương pháp định "
+"giá được sử dụng và cung cấp chi tiết các sản phẩm liên quan."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
@@ -919,9 +960,9 @@ msgid ""
 "work performed for {{ company name }} for the period from {{ start of "
 "period }} to {{ end of period }}"
 msgstr ""
-"Theo các điều khoản của nhiệm vụ của chúng tôi, chúng tôi đã chuẩn bị một "
-"bản tóm tắt về công việc đã thực hiện cho {{ company name }} trong khoảng "
-"thời gian từ {{ start of period }} đến {{ end of period }}"
+"Theo các điều khoản về nhiệm vụ của chúng tôi, chúng tôi đã chuẩn bị một bản "
+"tóm tắt về công việc đã thực hiện cho {{ company name }} trong khoảng thời "
+"gian từ {{ start of period }} đến {{ end of period }}"
 
 #. module: accountant_knowledge
 #. odoo-javascript
@@ -963,6 +1004,9 @@ msgid ""
 "Include acquisitions, disposals, cancellations, and the reason for holding "
 "these shares (e.g. employee plans, market operations)."
 msgstr ""
+"Cho biết số lượng và giá trị cổ phiếu mà công ty nắm giữ trong năm. Bao gồm "
+"các giao dịch mua, bán, hủy cổ phiếu, cũng như lý do nắm giữ các cổ phiếu "
+"này (ví dụ: chương trình cho nhân viên, giao dịch trên thị trường)."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
@@ -1001,10 +1045,11 @@ msgid ""
 "use. This valuation is net of any trade discounts, rebates, or settlement "
 "discounts obtained."
 msgstr ""
-"Tài sản vô hình được định giá theo chi phí mua sắm hoặc sản xuất, bao gồm "
-"tất cả các chi phí cần thiết để chuẩn bị các tài sản này cho mục đích sử "
-"dụng dự kiến. Giá trị này được tính sau khi trừ đi các khoản chiết khấu "
-"thương mại, hoàn tiền hoặc chiết khấu thanh toán đã nhận."
+"Tài sản vô hình được ghi nhận theo giá mua hoặc chi phí sản xuất, bao gồm "
+"toàn bộ các chi phí cần thiết để đưa tài sản vào trạng thái sẵn sàng sử dụng "
+"cho mục đích dự kiến. Giá trị ghi nhận này được khấu trừ các khoản chiết "
+"khấu thương mại, giảm giá hoặc chiết khấu thanh toán mà doanh nghiệp nhận "
+"được."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -1106,6 +1151,9 @@ msgid ""
 "consumables, direct and indirect production expenses, and depreciation of "
 "assets used in production."
 msgstr ""
+"Sản phẩm sản xuất được định giá theo chi phí sản xuất, bao gồm vật tư tiêu "
+"hao, chi phí sản xuất trực tiếp và gián tiếp, cũng như khấu hao tài sản sử "
+"dụng trong quá trình sản xuất."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -1169,6 +1217,9 @@ msgid ""
 "the date the financial statements are approved, if they are significant "
 "enough to affect the fair presentation of the accounts."
 msgstr ""
+"Chỉ bao gồm các sự kiện xảy ra giữa ngày kết thúc kỳ báo cáo và ngày báo cáo "
+"tài chính được phê duyệt, nếu chúng đủ quan trọng để ảnh hưởng đến việc "
+"trình bày trung thực các khoản mục trong báo cáo."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
@@ -1213,9 +1264,10 @@ msgid ""
 "chartered accountants. This engagement is however not an audit or a limited "
 "review."
 msgstr ""
-"Công việc của chúng tôi được thực hiện theo tiêu chuẩn chuyên môn áp dụng "
-"cho các nhiệm vụ lập báo cáo, do Hiệp hội Kế toán viên Chứng chỉ ban hành. "
-"Tuy nhiên, nhiệm vụ này không phải là kiểm toán hoặc kiểm tra giới hạn."
+"Công việc của chúng tôi được thực hiện theo chuẩn mực nghề nghiệp áp dụng "
+"cho các công việc tổng hợp, do tổ chức nghề nghiệp của các kế toán công "
+"chứng ban hành. Tuy nhiên, công việc này không phải là kiểm toán hay xem xét "
+"hạn chế."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
@@ -1318,6 +1370,8 @@ msgid ""
 "Provide information on the estimated value of long-term investments held in "
 "the portfolio and any changes in their value over the financial year."
 msgstr ""
+"Cung cấp thông tin về giá trị ước tính của các khoản đầu tư dài hạn trong "
+"danh mục và bất kỳ thay đổi nào về giá trị của chúng trong năm tài chính."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
@@ -1605,10 +1659,10 @@ msgid ""
 "may be recorded when the grant agreement is signed and eligible expenses "
 "have been incurred, even if the funds have not yet been received."
 msgstr ""
-"Công ty đã nhận được các khoản trợ cấp được ghi nhận vào thu nhập hoạt động "
-"theo tỷ lệ với chi phí đã phát sinh. Do đó, các khoản trợ cấp phải thu có "
-"thể được ghi nhận khi thỏa thuận cấp trợ cấp được ký kết và các chi phí đủ "
-"điều kiện đã phát sinh, ngay cả khi các khoản tiền chưa được nhận."
+"Công ty đã nhận được các khoản trợ cấp và ghi nhận chúng vào thu nhập hoạt "
+"động theo tỷ lệ với các chi phí đã phát sinh. Do đó, khoản trợ cấp phải thu "
+"có thể được ghi nhận ngay khi thỏa thuận trợ cấp được ký kết và các chi phí "
+"đủ điều kiện đã phát sinh, ngay cả khi tiền chưa được nhận."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
@@ -1653,6 +1707,8 @@ msgid ""
 "The full report will be included in the final document. Feel free to tailor "
 "the result using filters and options from the report."
 msgstr ""
+"Báo cáo đầy đủ sẽ được đưa vào tài liệu cuối cùng. Bạn có thể tùy chỉnh kết "
+"quả bằng cách sử dụng các bộ lọc và tùy chọn trong báo cáo."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -1661,6 +1717,9 @@ msgid ""
 "expenses. When the inventory value is lower than the gross value, a "
 "provision for impairment is recorded for the amount of the difference."
 msgstr ""
+"Giá trị gộp bao gồm chi phí mua hàng, không tính các chi phí phát sinh phụ. "
+"Khi giá trị tồn kho thấp hơn giá trị gộp, một khoản dự phòng giảm giá trị sẽ "
+"được ghi nhận bằng số chênh lệch."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
@@ -1694,10 +1753,10 @@ msgid ""
 "assets. The acquired portion not yet recognized in income is recorded under "
 "equity as investment grants."
 msgstr ""
-"Phần trợ cấp tài chính cho chi phí đầu tư được ghi nhận vào thu nhập hoạt "
-"động trong cùng kỳ với việc khấu hao tài sản liên quan. Phần trợ cấp đã nhận "
-"nhưng chưa được ghi nhận vào thu nhập được ghi nhận dưới dạng vốn chủ sở hữu "
-"dưới dạng trợ cấp đầu tư."
+"Phần trợ cấp dùng để tài trợ cho chi phí vốn được ghi nhận vào thu nhập hoạt "
+"động trong cùng kỳ với khấu hao của tài sản liên quan. Phần đã nhận nhưng "
+"chưa được ghi nhận vào thu nhập được hạch toán trong vốn chủ sở hữu dưới "
+"dạng trợ cấp đầu tư."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
@@ -1819,6 +1878,9 @@ msgid ""
 "determined by comparing the acquisition value with the probable realizable "
 "value."
 msgstr ""
+"Nếu áp dụng, các khoản phải thu sẽ được trích lập dự phòng để phản ánh khả "
+"năng khó thu hồi. Các khoản dự phòng tổn thất này được xác định bằng cách so "
+"sánh giữa giá trị ghi sổ và giá trị có thể thu hồi hợp lý."
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_workforce

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:42+0000\n"
-"PO-Revision-Date: 2025-11-19 10:33+0000\n"
+"POT-Creation-Date: 2025-11-28 18:41+0000\n"
+"PO-Revision-Date: 2025-11-28 16:16+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/ai/de/>\n"
 "Language: de\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_read_group
@@ -1157,6 +1157,12 @@ msgstr "Fehlgeschlagen"
 
 #. module: ai
 #. odoo-python
+#: code:addons/ai/models/ai_agent_source.py:0
+msgid "Failed to fetch the content of the source."
+msgstr ""
+
+#. module: ai
+#. odoo-python
 #: code:addons/ai/models/ai_agent.py:0
 msgid "Failed to get embeddings for the prompt."
 msgstr ""
@@ -1481,8 +1487,8 @@ msgid ""
 "No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, CSV, and "
 "OpenDocument files are allowed."
 msgstr ""
-"Keine gültigen Dateien zum Hochladen. Es werden nur PDF-, Word-, PowerPoint-"
-", Excel-, Text-, CSV- und OpenDocument-Dateien akzeptiert."
+"Keine gültigen Dateien zum Hochladen. Es werden nur PDF-, Word-, "
+"PowerPoint-, Excel-, Text-, CSV- und OpenDocument-Dateien akzeptiert."
 
 #. module: ai
 #. odoo-javascript
@@ -1944,12 +1950,6 @@ msgid "URL"
 msgstr "URL"
 
 #. module: ai
-#. odoo-python
-#: code:addons/ai/models/ai_agent_source.py:0
-msgid "URL content cannot be extracted."
-msgstr "Der Inhalt der URL kann nicht extrahiert werden."
-
-#. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 msgid "Unable to start the recording."
@@ -2085,6 +2085,9 @@ msgstr "ausgeführt."
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "fa-hashtag"
 msgstr "fa-hashtag"
+
+#~ msgid "URL content cannot be extracted."
+#~ msgstr "Der Inhalt der URL kann nicht extrahiert werden."
 
 #~ msgid ""
 #~ "No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, and "

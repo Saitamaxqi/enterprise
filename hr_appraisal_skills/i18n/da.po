@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:51+0000\n"
+"POT-Creation-Date: 2025-11-28 18:46+0000\n"
 "PO-Revision-Date: 2025-11-17 03:20+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
@@ -191,12 +191,6 @@ msgstr "Mål"
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__id
 msgid "ID"
 msgstr "ID"
-
-#. module: hr_appraisal_skills
-#. odoo-javascript
-#: code:addons/hr_appraisal_skills/static/src/js/appraisal_skills_one2many.xml:0
-msgid "If skills are missing, they can be created by an HR officer."
-msgstr "Manglende kompetencer kan oprettes af en HR-medarbejder."
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields.selection,name:hr_appraisal_skills.selection__hr_appraisal_skill_report__evolution__improvement
@@ -436,13 +430,6 @@ msgstr ""
 "medarbejdersamtaler."
 
 #. module: hr_appraisal_skills
-#. odoo-javascript
-#: code:addons/hr_appraisal_skills/static/src/js/appraisal_skills_one2many.xml:0
-msgid "You can add skills from our library to the employee profile."
-msgstr ""
-"Du kan tilføje kompetencer fra vores bibliotek til medarbejderprofilen."
-
-#. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.appraisal_skills_update_template
 msgid "has been added."
 msgstr "er blevet tilføjet."
@@ -467,3 +454,10 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.view_hr_appraisal_form
 msgid "infinite"
 msgstr "uendelig"
+
+#~ msgid "If skills are missing, they can be created by an HR officer."
+#~ msgstr "Manglende kompetencer kan oprettes af en HR-medarbejder."
+
+#~ msgid "You can add skills from our library to the employee profile."
+#~ msgstr ""
+#~ "Du kan tilføje kompetencer fra vores bibliotek til medarbejderprofilen."

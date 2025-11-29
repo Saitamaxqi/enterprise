@@ -10,13 +10,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# "Malaz Siddig Elsayed Abuidris (msea)" <msea@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-11-12 14:58+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-28 12:47+0000\n"
+"Last-Translator: \"Malaz Siddig Elsayed Abuidris (msea)\" <msea@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "snailmail_account_followup/tr/>\n"
 "Language: tr\n"
@@ -24,11 +25,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: snailmail_account_followup
 #: model_terms:ir.ui.view,arch_db:snailmail_account_followup.manual_reminder_view_form_inherit_snailmail
-#, fuzzy
 msgid ""
 "<i class=\"fa fa-info-circle\" role=\"img\" aria-label=\"Warning\" "
 "title=\"The letter will be sent using the IAP service from Odoo.&#10;Make "
@@ -40,7 +40,6 @@ msgstr ""
 
 #. module: snailmail_account_followup
 #: model_terms:ir.ui.view,arch_db:snailmail_account_followup.manual_reminder_view_form_inherit_snailmail
-#, fuzzy
 msgid "By post"
 msgstr "Posta ile"
 
@@ -51,7 +50,6 @@ msgstr "Kontak"
 
 #. module: snailmail_account_followup
 #: model:ir.model,website_form_label:snailmail_account_followup.model_res_partner
-#, fuzzy
 msgid "Create a Customer"
 msgstr "Müşteri Oluşturma"
 
@@ -93,7 +91,6 @@ msgstr "Snailmail"
 
 #. module: snailmail_account_followup
 #: model:ir.model.fields,field_description:snailmail_account_followup.field_account_followup_manual_reminder__snailmail_cost
-#, fuzzy
 msgid "Stamps"
 msgstr "Pullar"
 
@@ -105,7 +102,6 @@ msgstr "Müşterilere manuel hatırlatma göndermek için sihirbaz"
 #. module: snailmail_account_followup
 #. odoo-python
 #: code:addons/snailmail_account_followup/models/account_followup_report.py:0
-#, fuzzy
 msgid ""
 "You are trying to send a letter by post, but no follow-up contact has any "
 "address set"

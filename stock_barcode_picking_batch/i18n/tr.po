@@ -5,13 +5,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# "Malaz Siddig Elsayed Abuidris (msea)" <msea@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:46+0000\n"
-"PO-Revision-Date: 2025-11-12 15:02+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-28 12:48+0000\n"
+"Last-Translator: \"Malaz Siddig Elsayed Abuidris (msea)\" <msea@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "stock_barcode_picking_batch/tr/>\n"
 "Language: tr\n"
@@ -19,17 +20,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_barcode_picking_batch.stock_move_line_product_selector_inherit
-#, fuzzy
 msgid "<i class=\"fa fa-lg fa-truck\" title=\"Transfer\"/>"
 msgstr "<i class=\"fa fa-lg fa-truck\" title=\"Transfer\"/>"
 
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_barcode_picking_batch.stock_picking_view_kanban
-#, fuzzy
 msgid ""
 "<span class=\"fa fa-external-link-square ms-1\" title=\"Open Batch Picking\"/"
 ">"
@@ -49,7 +48,6 @@ msgstr "Barkod"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.actions.client,name:stock_barcode_picking_batch.stock_barcode_picking_batch_client_action
-#, fuzzy
 msgid "Barcode Batch Picking Client Action"
 msgstr "Barkodlu Toplu Toplama Müşteri İşlemi"
 
@@ -61,7 +59,6 @@ msgstr "Toplu Transfer"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_barcode_cancel_operation__batch_name
-#, fuzzy
 msgid "Batch Transfer Name"
 msgstr "Toplu Transfer Adı"
 
@@ -79,7 +76,6 @@ msgstr "Toplu Bordrolar"
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
-#, fuzzy
 msgid "Cancel Batch Transfer"
 msgstr "Toplu Aktarımı İptal Et"
 
@@ -91,7 +87,6 @@ msgstr "İşlemi İptal Et"
 #. module: stock_barcode_picking_batch
 #. odoo-python
 #: code:addons/stock_barcode_picking_batch/models/stock_picking_batch.py:0
-#, fuzzy
 msgid "Cancel this batch transfer?"
 msgstr "Bu toplu transferi iptal edeyim mi?"
 
@@ -112,7 +107,6 @@ msgstr "Sil"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_picking__display_batch_button
-#, fuzzy
 msgid "Display Batch Button"
 msgstr "Toplu İş Düğmesini Göster"
 
@@ -127,7 +121,6 @@ msgstr "İsim Göster"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_picking_type__group_lines_by_product
-#, fuzzy
 msgid "Group batch lines"
 msgstr "Grup parti hatları"
 
@@ -147,7 +140,6 @@ msgstr "Satırlar"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.model.fields,help:stock_barcode_picking_batch.field_stock_picking_type__group_lines_by_product
-#, fuzzy
 msgid ""
 "Lines of same product at same location appear grouped. Not to use for "
 "cluster picking"
@@ -157,14 +149,12 @@ msgstr ""
 
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.actions.act_window,help:stock_barcode_picking_batch.stock_barcode_batch_picking_action_kanban
-#, fuzzy
 msgid "No batch transfer found"
 msgstr "Toplu aktarım bulunamadı"
 
 #. module: stock_barcode_picking_batch
 #. odoo-python
 #: code:addons/stock_barcode_picking_batch/models/stock_picking_batch.py:0
-#, fuzzy
 msgid "Open picking batch form"
 msgstr "Toplama toplu alım formunu açın"
 
@@ -176,14 +166,12 @@ msgstr "Toplama Türü"
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
-#, fuzzy
 msgid "Print Batch Transfer"
 msgstr "Toplu Aktarımı Yazdır"
 
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
-#, fuzzy
 msgid "Print Product Labels"
 msgstr "Ürün Etiketleri Yazdırın"
 
@@ -201,14 +189,12 @@ msgstr "%s paketini tarayın"
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
-#, fuzzy
 msgid "The Batch Transfer has been validated"
 msgstr "Toplu Aktarım doğrulandı"
 
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
-#, fuzzy
 msgid "The batch picking has been cancelled"
 msgstr "Toplu toplama işlemi iptal edildi"
 
@@ -236,21 +222,18 @@ msgstr "Paketlemesi yapılmış stok operasyonu"
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
-#, fuzzy
 msgid "This batch is already cancelled"
 msgstr "Bu parti zaten iptal edildi"
 
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
-#, fuzzy
 msgid "This batch is already done"
 msgstr "Bu parti çoktan tamamlandı"
 
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
-#, fuzzy
 msgid ""
 "This batch transfer is still in draft, scans are disabled until the batch is "
 "confirmed"
@@ -278,14 +261,12 @@ msgstr "Operasyon Türü"
 
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_barcode_picking_batch.stock_barcode_batch_picking_view_info
-#, fuzzy
 msgid "Unbatch Transfer"
 msgstr "Parti Dışı Aktarım"
 
 #. module: stock_barcode_picking_batch
 #. odoo-python
 #: code:addons/stock_barcode_picking_batch/models/stock_picking.py:0
-#, fuzzy
 msgid ""
 "You cannot validate a transfer if no quantities are reserved nor done. You "
 "can use the info button on the top right corner of your screen to remove the "

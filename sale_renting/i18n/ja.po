@@ -5,12 +5,13 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Junko Augias (juau)" <juau@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-20 08:15+0000\n"
+"PO-Revision-Date: 2025-11-28 01:36+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "sale_renting/ja/>\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: sale_renting
 #. odoo-python
@@ -438,7 +439,7 @@ msgstr "日次金額"
 #: model:ir.model.fields,field_description:sale_renting.field_product_product__extra_daily
 #: model:ir.model.fields,field_description:sale_renting.field_product_template__extra_daily
 msgid "Daily Fine"
-msgstr ""
+msgstr "1日あたりの延滞料"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__quantity
@@ -509,7 +510,7 @@ msgstr "表示名"
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__displayed_unit
 msgid "Displayed Unit"
-msgstr ""
+msgstr "表示単位"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__duration
@@ -549,13 +550,13 @@ msgstr "想定: %(date)s"
 #: model:ir.model.fields,help:sale_renting.field_product_product__extra_daily
 #: model:ir.model.fields,help:sale_renting.field_product_template__extra_daily
 msgid "Fine per day late"
-msgstr ""
+msgstr "1日あたりの延滞料金"
 
 #. module: sale_renting
 #: model:ir.model.fields,help:sale_renting.field_product_product__extra_hourly
 #: model:ir.model.fields,help:sale_renting.field_product_template__extra_hourly
 msgid "Fine per hour late"
-msgstr ""
+msgstr "時間単位の遅延料金"
 
 #. module: sale_renting
 #: model:ir.model.fields,help:sale_renting.field_product_product__display_price
@@ -604,7 +605,7 @@ msgstr "時間毎"
 #: model:ir.model.fields,field_description:sale_renting.field_product_product__extra_hourly
 #: model:ir.model.fields,field_description:sale_renting.field_product_template__extra_hourly
 msgid "Hourly Fine"
-msgstr ""
+msgstr "時間単位の延滞料金"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__hour
@@ -771,7 +772,7 @@ msgstr "1泊ごと"
 #. odoo-python
 #: code:addons/sale_renting/models/product_pricing.py:0
 msgid "Nightly periods cannot be mixed with other rental periods."
-msgstr ""
+msgstr "夜間料金は他のレンタル期間と併用できません。"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__night
@@ -828,7 +829,7 @@ msgstr "オーダ"
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__overnight
 msgid "Overnight"
-msgstr ""
+msgstr "一晩"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_res_company__extra_day
@@ -1072,7 +1073,7 @@ msgstr "レンタル分析レポート"
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__rental_color
 msgid "Rental Color"
-msgstr ""
+msgstr "レンタルカラー"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__rental_order_wizard_id
@@ -1352,18 +1353,18 @@ msgstr "レンタル期間の残時間。"
 #. odoo-python
 #: code:addons/sale_renting/models/sale_order_line.py:0
 msgid "The order is already picked-up."
-msgstr ""
+msgstr "オーダはすでに受取済です。"
 
 #. module: sale_renting
 #. odoo-python
 #: code:addons/sale_renting/models/sale_order_line.py:0
 msgid "The order is already returned."
-msgstr ""
+msgstr "オーダはすでに返却済です。"
 
 #. module: sale_renting
 #: model:ir.model.constraint,message:sale_renting.constraint_sale_temporal_recurrence_check_pickup_time
 msgid "The pickup time has to be between 0 and 24."
-msgstr ""
+msgstr "受取時間は0から24の間でなければなりません。"
 
 #. module: sale_renting
 #: model:ir.model.constraint,message:sale_renting.constraint_sale_temporal_recurrence_temporal_recurrence_duration
@@ -1381,7 +1382,8 @@ msgstr "プロダクトは販売オーダに費用を追加するために使用
 msgid ""
 "The products haven't been picked-up or returned in time. This excludes any "
 "grace period before late fees apply."
-msgstr ""
+msgstr "プロダクトの受け取りまたは返却が期限内に行われていません。これは、延滞料金が"
+"適用される前の猶予期間を含みません。"
 
 #. module: sale_renting
 #. odoo-javascript
@@ -1393,7 +1395,7 @@ msgstr "レンタル設定はここで使用できます。"
 #. odoo-python
 #: code:addons/sale_renting/models/sale_order_line.py:0
 msgid "The rental prices have been updated."
-msgstr ""
+msgstr "レンタル料金が更新されました。"
 
 #. module: sale_renting
 #: model:ir.model.constraint,message:sale_renting.constraint_sale_order_rental_period_coherence
@@ -1404,7 +1406,7 @@ msgstr ""
 #. module: sale_renting
 #: model:ir.model.constraint,message:sale_renting.constraint_sale_temporal_recurrence_check_return_time
 msgid "The return time has to be between 0 and 24."
-msgstr ""
+msgstr "返却時間は0から24の間でなければなりません。"
 
 #. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.rental_order_today_pickup_action

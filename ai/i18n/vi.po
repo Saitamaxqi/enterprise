@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:42+0000\n"
+"POT-Creation-Date: 2025-11-28 18:41+0000\n"
 "PO-Revision-Date: 2025-11-11 09:09+0000\n"
 "Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/ai/vi/"
@@ -168,8 +168,8 @@ msgstr ""
 "- __count luôn có sẵn (đếm số bản ghi)\n"
 "- Chỉ trả về các trường số có bộ tổng hợp\n"
 "- Sử dụng field_name trong tham số chỉ số\n"
-"- Với xếp hạng trong pivot: Thêm thứ tự sắp xếp (ví dụ: \"amount_total desc\""
-")\n"
+"- Với xếp hạng trong pivot: Thêm thứ tự sắp xếp (ví dụ: \"amount_total "
+"desc\")\n"
 "- Gọi nhiều lần song song nếu muốn so sánh các menu khác nhau\n"
 "        "
 
@@ -408,10 +408,10 @@ msgstr ""
 "Trả về dữ liệu CSV, phân tách bằng dấu gạch đứng (|):\n"
 "```\n"
 "menu_id|model_name|context|domain|search_view  \n"
-"389|sale.order|{\"search_default_my_quotation\": "
-"1}|[]|<search><fields>...</fields></search>  \n"
-"172|account.move|{\"search_default_draft\": 1}|"
-"[[\"type\", \"=\", \"out_invoice\"]]|<search>...</search>  \n"
+"389|sale.order|{\"search_default_my_quotation\": 1}|[]|<search><fields>...</"
+"fields></search>  \n"
+"172|account.move|{\"search_default_draft\": 1}|[[\"type\", \"=\", "
+"\"out_invoice\"]]|<search>...</search>  \n"
 "```\n"
 "\n"
 "Thông tin chính:\n"
@@ -1106,6 +1106,12 @@ msgstr ""
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__status__failed
 msgid "Failed"
 msgstr "Không đạt"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/ai_agent_source.py:0
+msgid "Failed to fetch the content of the source."
+msgstr ""
 
 #. module: ai
 #. odoo-python
@@ -1852,12 +1858,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__type__url
 msgid "URL"
 msgstr "URL"
-
-#. module: ai
-#. odoo-python
-#: code:addons/ai/models/ai_agent_source.py:0
-msgid "URL content cannot be extracted."
-msgstr ""
 
 #. module: ai
 #. odoo-javascript

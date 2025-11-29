@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"POT-Creation-Date: 2025-11-28 18:40+0000\n"
 "PO-Revision-Date: 2025-11-08 19:47+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/hr_payroll/"
@@ -293,8 +293,8 @@ msgid ""
 "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
 "title=\"Arrow\"/>"
 msgstr ""
-"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" title="
-"\"ลูกศร\"/>"
+"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
+"title=\"ลูกศร\"/>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -559,11 +559,11 @@ msgid ""
 "</tbody></table>\n"
 "            "
 msgstr ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
-"\"width:100%; margin:0px auto;\"><tbody>\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; "
+"margin:0px auto;\"><tbody>\n"
 "    <tr><td valign=\"top\" style=\"text-align: left; font-size: 14px;\">\n"
-"        เรียน <t t-esc=\"object.employee_id.name\"/>สลิบเงินเดือนใหม่พร้อมแล้ว<br/><"
-"br/>\n"
+"        เรียน <t t-esc=\"object.employee_id.name\"/>สลิบเงินเดือนใหม่พร้อมแล้ว<br/"
+"><br/>\n"
 "       โปรดดู PDF ในพอทัลพนักงานของคุณ<br/><br/>\n"
 "        ขอให้เป็นวันที่ดี<br/>\n"
 "        ทีม HR\n"
@@ -658,6 +658,7 @@ msgid "Activity type"
 msgstr "ประเภทกิจกรรม"
 
 #. module: hr_payroll
+#: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Add Inputs"
@@ -703,8 +704,7 @@ msgstr "ข้อมูลเพิ่มเติม"
 msgid ""
 "Adds a column in the payslip that shows the accumulated amount paid for "
 "different rules during the year"
-msgstr ""
-"เพิ่มคอลัมน์ในสลิปเงินเดือนที่แสดงยอดเงินสะสมที่ชำระสำหรับกฎเกณฑ์ต่างๆ ในแต่ละปี"
+msgstr "เพิ่มคอลัมน์ในสลิปเงินเดือนที่แสดงยอดเงินสะสมที่ชำระสำหรับกฎเกณฑ์ต่างๆ ในแต่ละปี"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -2285,8 +2285,7 @@ msgstr ""
 msgid ""
 "Enable this option if you don't want to display the Basic Salary on the "
 "printed pdf."
-msgstr ""
-"เปิดใช้งานตัวเลือกนี้หากคุณไม่ต้องการแสดงเงินเดือนพื้นฐานในรูปแบบ pdf ที่พิมพ์ออกมา"
+msgstr "เปิดใช้งานตัวเลือกนี้หากคุณไม่ต้องการแสดงเงินเดือนพื้นฐานในรูปแบบ pdf ที่พิมพ์ออกมา"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_payrun
@@ -2753,8 +2752,7 @@ msgid ""
 "rule computation using this input."
 msgstr ""
 "หากตั้งค่า "
-"ให้ซ่อนสกุลเงินและพิจารณาการป้อนข้อมูลด้วยตนเองเป็นปริมาณสำหรับการคำนวณกฎทุกข้อที่ใช้การป้อนข้อมู"
-"ลนี้"
+"ให้ซ่อนสกุลเงินและพิจารณาการป้อนข้อมูลด้วยตนเองเป็นปริมาณสำหรับการคำนวณกฎทุกข้อที่ใช้การป้อนข้อมูลนี้"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__active
@@ -2993,8 +2991,9 @@ msgid ""
 "Meal Voucher having fixed amount of 1€ per worked day can have its quantity "
 "defined in expression like worked_days['WORK100'].number_of_days."
 msgstr ""
-"ใช้ในการคำนวณหาเปอร์เซ็นต์และจำนวนคงที่ เช่น กฎสำหรับบัตรรับประทานอาหารที่มีจำนวนเงินคงที่ 1€"
-" ต่อวันทำงานสามารถกำหนดปริมาณได้ในตัวสั่งงาน เช่น work_days['WORK100'].number_of_days"
+"ใช้ในการคำนวณหาเปอร์เซ็นต์และจำนวนคงที่ เช่น กฎสำหรับบัตรรับประทานอาหารที่มีจำนวนเงินคงที่ "
+"1€ ต่อวันทำงานสามารถกำหนดปริมาณได้ในตัวสั่งงาน เช่น "
+"work_days['WORK100'].number_of_days"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_input__amount
@@ -5216,8 +5215,8 @@ msgid ""
 "The YTD reset day must be a valid day of the month : since the current month "
 "is %(month)s, it should be between 1 and %(day)s."
 msgstr ""
-"วันรีเซ็ต YTD จะต้องเป็นวันที่ถูกต้องของเดือน เนื่องจากเดือนปัจจุบันคือ %(month)s จึงควรอยู่ระหว่"
-"าง 1 ถึง %(day)s"
+"วันรีเซ็ต YTD จะต้องเป็นวันที่ถูกต้องของเดือน เนื่องจากเดือนปัจจุบันคือ %(month)s "
+"จึงควรอยู่ระหว่าง 1 ถึง %(day)s"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_edit_payslip_line__code
@@ -5540,8 +5539,7 @@ msgstr "ชั่วโมงการทำงานทั้งหมด"
 msgid ""
 "Total amount must be strictly positive and greater than or equal to the "
 "payslip amount."
-msgstr ""
-"ยอดเงินรวมต้องเป็นบวกอย่างเคร่งครัดและมากกว่าหรือเท่ากับยอดเงินในสลิปเงินเดือน"
+msgstr "ยอดเงินรวมต้องเป็นบวกอย่างเคร่งครัดและมากกว่าหรือเท่ากับยอดเงินในสลิปเงินเดือน"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_attachment__total_amount

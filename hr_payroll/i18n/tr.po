@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"POT-Creation-Date: 2025-11-28 18:40+0000\n"
 "PO-Revision-Date: 2025-11-21 14:20+0000\n"
 "Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
@@ -245,8 +245,8 @@ msgid ""
 "<code>categories</code>: dict containing the computed salary rule categories "
 "(sum of amount of all rules belonging to that category)."
 msgstr ""
-"<code>kategoriler</code>: hesaplanan maaş kuralı kategorilerini içeren dict ("
-"o kategoriye ait tüm kuralların tutarının toplamı)."
+"<code>kategoriler</code>: hesaplanan maaş kuralı kategorilerini içeren dict "
+"(o kategoriye ait tüm kuralların tutarının toplamı)."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -426,14 +426,14 @@ msgstr ""
 "<span invisible=\"schedule_pay != 'annually'\">/ yıl</span>\n"
 "                <span invisible=\"schedule_pay != 'semi-annually'\">/ yarı "
 "yıl</span>\n"
-"                <span invisible=\"schedule_pay != 'quarterly'\">/ "
-"çeyrek</span>\n"
-"                <span invisible=\"schedule_pay != 'bi-monthly'\">/ iki "
-"ay</span>\n"
+"                <span invisible=\"schedule_pay != 'quarterly'\">/ çeyrek</"
+"span>\n"
+"                <span invisible=\"schedule_pay != 'bi-monthly'\">/ iki ay</"
+"span>\n"
 "                <span invisible=\"schedule_pay != 'semi-monthly'\">/ yarım "
 "ay</span>\n"
-"                <span invisible=\"schedule_pay != 'bi-weekly'\">/ iki "
-"hafta</span>\n"
+"                <span invisible=\"schedule_pay != 'bi-weekly'\">/ iki hafta</"
+"span>\n"
 "                <span invisible=\"schedule_pay != 'weekly'\">/ hafta</span>\n"
 "                <span invisible=\"schedule_pay != 'daily'\">/ gün</span>"
 
@@ -636,8 +636,8 @@ msgid ""
 "specific pay period, including wages, taxes, and deductions.<br><br>"
 msgstr ""
 "Ödeme Çalışması, ücretler, vergiler ve kesintiler dahil olmak üzere belirli "
-"bir ödeme dönemi için birlikte işlenen bireysel maaş bordroları "
-"grubudur.<br><br>"
+"bir ödeme dönemi için birlikte işlenen bireysel maaş bordroları grubudur."
+"<br><br>"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_salary_attachment_action
@@ -720,6 +720,7 @@ msgid "Activity type"
 msgstr "Aktivite  Türü"
 
 #. module: hr_payroll
+#: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Add Inputs"
@@ -3103,8 +3104,8 @@ msgid ""
 "inputs['SALEURO'].amount * version.wage * 0.01."
 msgstr ""
 "Hesaplamada kullanılır. Örneğin, ürün başına temel maaşın 1%% komisyonuna "
-"sahip satışçılar için bir kural şu ifadede tanımlanabilir: result = inputs"
-"['SALEURO'].amount * version.wage * 0.01."
+"sahip satışçılar için bir kural şu ifadede tanımlanabilir: result = "
+"inputs['SALEURO'].amount * version.wage * 0.01."
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__italic
@@ -5213,8 +5214,8 @@ msgid ""
 "camera fa-2\" aria-hidden=\"true\" contenteditable=\"false\">​</i>"
 msgstr ""
 "Hala daha fazlasını mı arıyorsunuz? İşte size yardımcı olacak bir video <i "
-"class=\"fa fa-video-camera fa-2\" aria-hidden=\"true\" contenteditable="
-"\"false\"></i>"
+"class=\"fa fa-video-camera fa-2\" aria-hidden=\"true\" "
+"contenteditable=\"false\"></i>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form

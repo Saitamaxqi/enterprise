@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"POT-Creation-Date: 2025-11-28 18:40+0000\n"
 "PO-Revision-Date: 2025-11-08 19:48+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Spanish <https://translate.odoo.com/projects/odoo-19/sign/es/"
@@ -841,12 +841,6 @@ msgstr "Basado en"
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
 msgid "Based on various websites, here are our comparisons:"
 msgstr "Basándonos en varios sitios web, estas son nuestras comparaciones:"
-
-#. module: sign
-#. odoo-javascript
-#: code:addons/sign/static/src/editor/plugins/signature.js:0
-msgid "Basic Bloc"
-msgstr "Bloque básico"
 
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_log__request_state__sent
@@ -4869,6 +4863,14 @@ msgid "You will get the signed document by email."
 msgstr "Recibirá el documento firmado por correo electrónico."
 
 #. module: sign
+#. odoo-javascript
+#: code:addons/sign/static/src/dialogs/thank_you_dialog.js:0
+msgid ""
+"You will get the signed document by email. You may also request a paper copy "
+"from the sender."
+msgstr ""
+
+#. module: sign
 #: model_terms:ir.actions.act_window,help:sign.sign_all_request_action
 #: model_terms:ir.actions.act_window,help:sign.sign_request_action
 #: model_terms:ir.actions.act_window,help:sign.sign_template_action
@@ -5233,6 +5235,9 @@ msgstr "usted"
 #: model_terms:ir.ui.view,arch_db:sign.green_report_el_pdf
 msgid "{{0}} Summary"
 msgstr "Resumen {{0}}"
+
+#~ msgid "Basic Bloc"
+#~ msgstr "Bloque básico"
 
 #~ msgid "<b>Drag & drop “Signature”</b> into the bottom of the document."
 #~ msgstr "<b>Arrastre y suelte la “Firma”</b> al final del documento."

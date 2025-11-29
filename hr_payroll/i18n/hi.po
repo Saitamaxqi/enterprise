@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo 9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"POT-Creation-Date: 2025-11-28 18:40+0000\n"
 "PO-Revision-Date: 2025-11-16 13:37+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Hindi <https://translate.odoo.com/projects/odoo-19/hr_payroll/"
@@ -42,8 +42,8 @@ msgstr ""
 "जाएंगी.\n"
 "        उपस्थिति: काम की एंट्री, कर्मचारी की उपस्थिति के अनुसार जनरेट की जाएंगी. (इसके "
 "लिए अटेंडेंस ऐप ज़रूरी है)\n"
-"        प्लानिंग: काम की एंट्री, कर्मचारी की प्लानिंग के अनुसार जनरेट की जाएंगी. (इसके लि"
-"ए प्लानिंग ऐप ज़रूरी है)\n"
+"        प्लानिंग: काम की एंट्री, कर्मचारी की प्लानिंग के अनुसार जनरेट की जाएंगी. (इसके "
+"लिए प्लानिंग ऐप ज़रूरी है)\n"
 "    "
 
 #. module: hr_payroll
@@ -396,8 +396,8 @@ msgid ""
 msgstr ""
 "<span><strong>सलाह:</strong> लाइन में मात्रा या रकम बदलने पर उसके नीचे की लाइनों का "
 "हिसाब खुद-ब-खुद हो जाता है. इसलिए ऊपर से नीचे बदलाव करें ताकि सिस्टम आपकी एडिटिंग को "
-"मिटा न दे. यह भी ध्यान रखें कि लाइनों का क्रम बदलने पर उनकी गणना फिर से नहीं होती "
-"है.</span>"
+"मिटा न दे. यह भी ध्यान रखें कि लाइनों का क्रम बदलने पर उनकी गणना फिर से नहीं होती है.</"
+"span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -553,11 +553,11 @@ msgid ""
 "</tbody></table>\n"
 "            "
 msgstr ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
-"\"width:100%; margin:0px auto;\"><tbody>\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; "
+"margin:0px auto;\"><tbody>\n"
 "    <tr><td valign=\"top\" style=\"text-align: left; font-size: 14px;\">\n"
-"        प्रिय <t t-esc=\"object.employee_id.name\"/>, आपके लिए एक नई पेस्लिप उपलब्"
-"ध है.<br/><br/>\n"
+"        प्रिय <t t-esc=\"object.employee_id.name\"/>, आपके लिए एक नई पेस्लिप "
+"उपलब्ध है.<br/><br/>\n"
 "        कृपया इसे अपने कर्मचारी पोर्टल में पीडीएफ़ फ़ॉर्मेट में देखें.<br/><br/>\n"
 "        आपका दिन शुभ हो,<br/>\n"
 "        एचआर टीम\n"
@@ -585,8 +585,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_work_entry_type_is_unforeseen_is_leave
 msgid "A unforeseen absence must be a leave."
-msgstr ""
-"बिना सूचना के अचानक हुई अनुपस्थिति को छुट्टी के रूप में दर्ज किया जाना चाहिए।"
+msgstr "बिना सूचना के अचानक हुई अनुपस्थिति को छुट्टी के रूप में दर्ज किया जाना चाहिए।"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
@@ -650,6 +649,7 @@ msgid "Activity type"
 msgstr "ऐक्टिविटी टाइप"
 
 #. module: hr_payroll
+#: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Add Inputs"
@@ -696,8 +696,8 @@ msgid ""
 "Adds a column in the payslip that shows the accumulated amount paid for "
 "different rules during the year"
 msgstr ""
-"पेस्लिप में एक नया कॉलम जोड़ना है, जो यह दिखाता है कि साल भर में अलग-अलग नियमों के तहत कु"
-"ल कितनी राशि का भुगतान किया गया है"
+"पेस्लिप में एक नया कॉलम जोड़ना है, जो यह दिखाता है कि साल भर में अलग-अलग नियमों के तहत "
+"कुल कितनी राशि का भुगतान किया गया है"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -797,8 +797,8 @@ msgid ""
 "Amount to pay for this payslip, Payslip Amount or less depending on the "
 "Remaining Amount."
 msgstr ""
-"इस पेस्लिप के लिए भुगतान की जाने वाली राशि, यह शेष राशि के आधार पर पेस्लिप राशि या उससे"
-" कम होगी।"
+"इस पेस्लिप के लिए भुगतान की जाने वाली राशि, यह शेष राशि के आधार पर पेस्लिप राशि या "
+"उससे कम होगी।"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_payroll_headcount_action
@@ -830,8 +830,7 @@ msgstr "सालाना"
 msgid ""
 "Another refund payslip with the same amount has been found. Do you want to "
 "create a new one?"
-msgstr ""
-"समान राशि वाली एक और रिफ़ंड पेस्लिप मिली है. क्या आप एक नई बनाना चाहते हैं?"
+msgstr "समान राशि वाली एक और रिफ़ंड पेस्लिप मिली है. क्या आप एक नई बनाना चाहते हैं?"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_line__appears_on_payslip
@@ -907,8 +906,7 @@ msgstr "सैलरी का असाइनमेंट"
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid ""
 "At least one previous negative net could be reported on this payslip for %s"
-msgstr ""
-"%s के लिए, इस पेस्लिप पर पिछले किसी पेस्लिप का नकारात्मक नेट बैलेंस दिख सकता है"
+msgstr "%s के लिए, इस पेस्लिप पर पिछले किसी पेस्लिप का नकारात्मक नेट बैलेंस दिख सकता है"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__message_attachment_count

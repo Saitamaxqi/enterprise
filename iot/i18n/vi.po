@@ -9,13 +9,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Thi Huong Nguyen (thng)" <thng@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:40+0000\n"
-"PO-Revision-Date: 2025-11-08 19:34+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-11-27 18:17+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/iot/"
 "vi/>\n"
 "Language: vi\n"
@@ -23,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: iot
 #. odoo-javascript
@@ -113,6 +114,9 @@ msgid ""
 "disconnected. Please check its cable connection and its power supply. "
 "Restart if necessary."
 msgstr ""
+"Blackbox không phản hồi yêu cầu của bạn. Thông thường điều này nghĩa là "
+"thiết bị đã bị ngắt kết nối. Vui lòng kiểm tra cáp kết nối và nguồn điện của "
+"thiết bị. Khởi động lại nếu cần."
 
 #. module: iot
 #. odoo-javascript
@@ -867,6 +871,10 @@ msgid ""
 "                and local network. If it's unintended, click on \"Disable\" "
 "below."
 msgstr ""
+"Chế độ gỡ lỗi từ xa đã được bật, chủ sở hữu token bạn cung cấp có quyền truy "
+"cập cả vào Hộp IoT\n"
+"và mạng nội bộ của bạn. Nếu thao tác này là do vô tình, hãy nhấp vào \"Tắt\" "
+"bên dưới."
 
 #. module: iot
 #. odoo-javascript
@@ -1067,6 +1075,8 @@ msgid ""
 "The report you are trying to print requires an IoT Box to be printed.\n"
 "Make sure you linked the report '%s' to the corresponding IoT printer device."
 msgstr ""
+"Báo cáo bạn đang muốn in yêu cầu sử dụng Hộp IoT.\n"
+"Hãy đảm bảo bạn đã liên kết báo cáo '%s' với thiết bị máy in IoT tương ứng."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:40+0000\n"
-"PO-Revision-Date: 2025-11-19 16:33+0000\n"
+"PO-Revision-Date: 2025-11-27 16:39+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/equity/pt_BR/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__securities
@@ -319,6 +319,9 @@ msgid ""
 "Member States of the European\n"
 "                            Economic Area; or"
 msgstr ""
+"Uma empresa cotada: uma empresa cujas ações são negociadas em um mercado "
+"regulamentado de um Estado-Membro do\n"
+"Espaço Econômico Europeu; ou"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -326,6 +329,9 @@ msgid ""
 "According to laws related to anti money laundering, the notary must identify "
 "the beneficial owners of their customer."
 msgstr ""
+"De acordo com as leis relacionadas com o combate ao branqueamento de "
+"capitais, o notário deve identificar os beneficiários efetivos dos seus "
+"clientes."
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__message_needaction
@@ -339,13 +345,13 @@ msgstr "Requer ação"
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
 msgid "Add Beneficial Owner"
-msgstr ""
+msgstr "Adicionar proprietário beneficiário"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/valuation_chart_action/valuation_chart_action.js:0
 msgid "Add some valuations over the past year to see some data here."
-msgstr ""
+msgstr "Adicione valorações do último ano para ver alguns dados aqui."
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__message_attachment_count
@@ -358,7 +364,7 @@ msgstr "Total de anexos"
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__attachment_number
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__attachment_number
 msgid "Attachment Number"
-msgstr ""
+msgstr "Número do anexo"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__attachment_ids
@@ -390,7 +396,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:equity.equity_view_partner_form
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_list
 msgid "Beneficial Owners"
-msgstr ""
+msgstr "Proprietários beneficiários"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -404,6 +410,14 @@ msgid ""
 "                    but who are de facto exercising similar control over the "
 "company."
 msgstr ""
+"Os beneficiários efetivos são pessoas físicas que, em última instância, "
+"possuem ou controlam o cliente ou as pessoas físicas\n"
+"                    em cuja conta ou em nome das quais uma transação está "
+"sendo realizada ou uma relação comercial está sendo estabelecida. Isso\n"
+"                    inclui as pessoas físicas que não possuem participação "
+"controladora na empresa ou qualquer tipo de mandato formal,\n"
+"                    mas que, de fato, exercem controle semelhante sobre a "
+"empresa."
 
 #. module: equity
 #. odoo-javascript

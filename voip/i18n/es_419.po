@@ -6,13 +6,14 @@
 # "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 # "Patricia Gutiérrez (pagc)" <pagc@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:40+0000\n"
-"PO-Revision-Date: 2025-11-15 11:29+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-11-27 14:15+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/voip/es_419/>\n"
 "Language: es_419\n"
@@ -20,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: voip
 #. odoo-javascript
@@ -881,7 +882,7 @@ msgstr "Las llamadas entrantes se silenciarán"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Incoming call…"
-msgstr ""
+msgstr "Llamada entrante…"
 
 #. module: voip
 #. odoo-javascript
@@ -1186,7 +1187,7 @@ msgstr "Llamada saliente (%(duration)s)"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Outgoing call…"
-msgstr ""
+msgstr "Llamando…"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__pbx_ip

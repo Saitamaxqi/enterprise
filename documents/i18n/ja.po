@@ -11,13 +11,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Junko Augias (juau)" <juau@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-21 06:33+0000\n"
-"Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
+"PO-Revision-Date: 2025-11-27 18:16+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "documents/ja/>\n"
 "Language: ja\n"
@@ -25,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: documents
 #. odoo-python
@@ -1503,6 +1504,9 @@ msgid ""
 "                    (e.g. \"NDA signature process\", \"Folder "
 "workflow\", ...)"
 msgstr ""
+"活動プランを使うと、数クリックで活動の一覧を割り当てられます\n"
+"                    （例：「NDA 署名プロセス」「フォルダワークフロー」など）"
+"。"
 
 #. module: documents
 #. odoo-javascript
@@ -1548,7 +1552,7 @@ msgstr "エイリアスタグを追加..."
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_operation__operation__add
 msgid "Add attachment to Documents"
-msgstr ""
+msgstr "ドキュメントに添付ファイルを追加"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_request_page
@@ -1567,7 +1571,7 @@ msgstr "ドキュメントから追加"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Add in %(folder_name)s"
-msgstr ""
+msgstr "追加%(folder_name)s"
 
 #. module: documents
 #. odoo-javascript
@@ -1602,19 +1606,19 @@ msgstr "タグを追加..."
 #. odoo-javascript
 #: code:addons/documents/static/src/attachments/attachment_list_patch.xml:0
 msgid "Add to Documents"
-msgstr ""
+msgstr "ドキュメントに追加"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/attachments/attachment_list_patch.js:0
 msgid "Add to My Documents"
-msgstr ""
+msgstr "マイ ドキュメントに追加"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
 msgid "Add to documents"
-msgstr ""
+msgstr "ドキュメントに追加"
 
 #. module: documents
 #. odoo-python
@@ -1689,7 +1693,7 @@ msgstr "既にリンク済のドキュメント: %s"
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Ambiguous shortcut target location."
-msgstr ""
+msgstr "ショートカットのターゲット先があいまいです。"
 
 #. module: documents
 #: model_terms:digest.tip,tip_description:documents.digest_tip_documents_0
@@ -1709,6 +1713,11 @@ msgid ""
 "user defined actions, request a signature, convert to vendor bills with AI, "
 "etc."
 msgstr ""
+"受信メールを処理する簡単な方法は、スキャナーが PDF をフォルダ用のメールアドレ"
+"スに送信するよう設定することです。スキャンされたファイルは自動的にそのフォル"
+"ダに表示されます。その後、分割ツールを使ってドキュメントを一括処理できます。"
+"ユーザ定義アクションの実行、署名依頼、AI を使った仕入先請求書への変換などが可"
+"能です。"
 
 #. module: documents
 #. odoo-javascript
@@ -1761,13 +1770,13 @@ msgstr "本当にこの添付を削除しますか?"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/documents_model_mixin.js:0
 msgid "Are you sure you want to permanently erase the selected document?"
-msgstr ""
+msgstr "選択したドキュメントを完全に削除してよろしいですか?"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/documents_model_mixin.js:0
 msgid "Are you sure you want to permanently erase the selected documents?"
-msgstr ""
+msgstr "選択したドキュメントを完全に削除してよろしいですか?"
 
 #. module: documents
 #. odoo-javascript
@@ -1859,7 +1868,7 @@ msgstr "変更、削除、および名前の変更が可能です。"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__user_can_move
 msgid "Can move it"
-msgstr ""
+msgstr "移動できます"
 
 #. module: documents
 #. odoo-javascript
@@ -1891,7 +1900,7 @@ msgstr "お釣り"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_access_tracking__changes
 msgid "Changes need to be tracked"
-msgstr ""
+msgstr "変更は追跡する必要があります"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__checksum
@@ -1906,7 +1915,7 @@ msgstr "子"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_operation_view_form
 msgid "Choose a destination"
-msgstr ""
+msgstr "移動先を選択"
 
 #. module: documents
 #. odoo-python
@@ -2029,7 +2038,7 @@ msgstr "確定"
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Conflicting values passed with user_folder_id."
-msgstr ""
+msgstr "user_folder_id と一緒に矛盾する値が渡されました。"
 
 #. module: documents
 #: model:ir.model,name:documents.model_res_partner
@@ -2079,7 +2088,7 @@ msgstr "ドキュメント活動計画の作成"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_new_folder.js:0
 msgid "Create a folder in %(folder)s"
-msgstr ""
+msgstr "%(folder)sにフォルダを作成"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__create_activity_option
@@ -2096,30 +2105,30 @@ msgstr "残りのページに新しいドキュメントを作成してくださ
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Create a shortcut in %(folder_name)s"
-msgstr ""
+msgstr "%(folder_name)sにショートカットを作成"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
 msgid "Create shortcut to: %(documentName)s"
-msgstr ""
+msgstr "ショートカットを作成:%(documentName)s"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_operation__operation__shortcut
 msgid "Create shortcuts"
-msgstr ""
+msgstr "ショートカットを作成"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
 msgid "Create shortcuts for: %(numberOfDocuments)s items"
-msgstr ""
+msgstr "以下へのショートカットを作成: %(numberOfDocuments)sの項目"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Create shortcuts in %(folder_name)s"
-msgstr ""
+msgstr "%(folder_name)sにショートカットを作成"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__create_uid

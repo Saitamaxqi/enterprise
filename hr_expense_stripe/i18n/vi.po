@@ -4,13 +4,14 @@
 #
 # "Thi Huong Nguyen (thng)" <thng@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:42+0000\n"
-"PO-Revision-Date: 2025-11-18 07:06+0000\n"
-"Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
+"PO-Revision-Date: 2025-11-27 16:40+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "hr_expense_stripe/vi/>\n"
 "Language: vi\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -916,7 +917,6 @@ msgstr "Số tiền"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.amusement_parks_carnivals
-#, fuzzy
 msgid "Amusement Parks Carnivals"
 msgstr "Công viên giải trí và lễ hội"
 
@@ -970,7 +970,6 @@ msgstr "Số lượng khấu trừ"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.auto_body_repair_shops
-#, fuzzy
 msgid "Auto Body Repair Shops"
 msgstr "Cửa hàng sửa chữa thân xe ô tô"
 
@@ -1001,7 +1000,6 @@ msgstr "Hiệp hội ô tô"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.automotive_parts_and_accessories_stores
-#, fuzzy
 msgid "Automotive Parts and Accessories Stores"
 msgstr "Cửa hàng phụ tùng và phụ kiện ô tô"
 
@@ -1137,7 +1135,6 @@ msgstr "Dịch vụ mua sắm"
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_card_receive_terms.xml:0
-#, fuzzy
 msgid "By ticking the box, you agree:"
 msgstr "Bằng cách đánh dấu vào ô này, bạn đồng ý:"
 
@@ -1175,7 +1172,6 @@ msgstr "Cửa hàng kẹo, hạt và bánh kẹo"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.car_and_truck_dealers_new_used
-#, fuzzy
 msgid "Car and Truck Dealers New Used"
 msgstr "Đại lý ô tô và xe tải mới và đã qua sử dụng"
 
@@ -1344,13 +1340,11 @@ msgstr "Caterers"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.charitable_and_social_service_organizations_fundraising
-#, fuzzy
 msgid "Charitable and Social Service Organizations Fundraising"
 msgstr "Quỹ gây quỹ cho các tổ chức từ thiện và dịch vụ xã hội"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.chemicals_and_allied_products
-#, fuzzy
 msgid "Chemicals and Allied Products"
 msgstr "Hóa chất và các sản phẩm liên quan"
 
@@ -1451,7 +1445,6 @@ msgstr "Nhiếp ảnh thương mại, nghệ thuật và đồ họa"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.commuter_transport_and_ferries
-#, fuzzy
 msgid "Commuter Transport and Ferries"
 msgstr "Giao thông công cộng và phà"
 
@@ -1506,7 +1499,6 @@ msgstr "Cửa hàng phần mềm máy tính"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.computers_peripherals_and_software
-#, fuzzy
 msgid "Computers Peripherals and Software"
 msgstr "Thiết bị ngoại vi và phần mềm máy tính"
 
@@ -1589,7 +1581,6 @@ msgstr "Quốc gia không được phép"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.courier_services
-#, fuzzy
 msgid "Courier Services"
 msgstr "Dịch vụ chuyển phát nhanh"
 
@@ -1690,7 +1681,6 @@ msgstr "Nha sĩ và bác sĩ chỉnh nha"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.department_stores
-#, fuzzy
 msgid "Department Stores"
 msgstr "Cửa hàng bách hóa"
 
@@ -1826,7 +1816,6 @@ msgstr "Hoàn tất"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.door_to_door_sales
-#, fuzzy
 msgid "Door To Door Sales"
 msgstr "Bán hàng tận nhà"
 
@@ -1840,7 +1829,6 @@ msgstr "Nháp"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.drapery_window_covering_and_upholstery_stores
-#, fuzzy
 msgid "Drapery Window Covering and Upholstery Stores"
 msgstr "Cửa hàng rèm cửa và bọc ghế sofa"
 
@@ -2054,7 +2042,6 @@ msgstr "Dịch vụ diệt côn trùng"
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.js:0
-#, fuzzy
 msgid "Failed to fetch StripeJS initialization params."
 msgstr "Không thể lấy được các tham số khởi tạo của StripeJS."
 
@@ -2357,7 +2344,6 @@ msgstr "IBAN"
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__id
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_config_settings__id
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_users__id
-#, fuzzy
 msgid "ID"
 msgstr "ID"
 
@@ -2600,7 +2586,6 @@ msgstr "Cửa hàng bán vali và đồ da"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.lumber_building_materials_stores
-#, fuzzy
 msgid "Lumber Building Materials Stores"
 msgstr "Cửa hàng vật liệu xây dựng gỗ"
 
@@ -2632,7 +2617,6 @@ msgstr "Sàn thương mại điện tử"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.masonry_stonework_and_plaster
-#, fuzzy
 msgid "Masonry Stonework and Plaster"
 msgstr "Công trình xây dựng bằng đá và vữa"
 
@@ -2653,7 +2637,6 @@ msgstr "Thiết bị và vật tư y tế, nha khoa, nhãn khoa và bệnh việ
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.medical_services
-#, fuzzy
 msgid "Medical Services"
 msgstr "Dịch vụ y tế"
 
@@ -2787,7 +2770,6 @@ msgstr "Tháng"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.motion_picture_theaters_cinema
-#, fuzzy
 msgid "Motion Picture Theaters Cinema"
 msgstr "Rạp chiếu phim"
 
@@ -2963,7 +2945,6 @@ msgstr "Chăm sóc cá nhân và điều dưỡng"
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_expense_issuing_terms.xml:0
-#, fuzzy
 msgid ""
 "Odoo cannot be held liable for any consequences arising from the use of\n"
 "                    your Stripe Issuing account, including lost funds, "
@@ -3006,7 +2987,6 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid "Only licenses databases can use Odoo Stripe Issuing services."
 msgstr ""
 "Chỉ các cơ sở dữ liệu có giấy phép mới có thể sử dụng dịch vụ Odoo Stripe "
@@ -3072,7 +3052,6 @@ msgstr "Mã PIN:"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.package_stores_beer_wine_and_liquor
-#, fuzzy
 msgid "Package Stores Beer Wine and Liquor"
 msgstr "Cửa hàng bán lẻ bia, rượu vang và rượu mạnh"
 
@@ -3174,7 +3153,6 @@ msgstr "Phát triển ảnh"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.photographic_photocopy_microfilm_equipment_and_supplies
-#, fuzzy
 msgid "Photographic Photocopy Microfilm Equipment and Supplies"
 msgstr "Thiết bị và vật tư cho máy chụp ảnh, máy photocopy và phim microfilm"
 
@@ -3203,7 +3181,6 @@ msgstr "Vật liệu may mặc, phụ kiện và các mặt hàng khô khác"
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/pause_card_warning_action.xml:0
-#, fuzzy
 msgid "Please make sure it is what you want to do."
 msgstr "Vui lòng đảm bảo rằng đây là điều bạn muốn làm."
 
@@ -3215,7 +3192,6 @@ msgstr "Vui lòng tải lên hóa đơn."
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.plumbing_heating_equipment_and_supplies
-#, fuzzy
 msgid "Plumbing Heating Equipment and Supplies"
 msgstr "Thiết bị và vật tư cấp thoát nước và sưởi ấm"
 
@@ -3495,7 +3471,6 @@ msgstr "Sân vận động của CLB thể thao"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.sports_and_riding_apparel_stores
-#, fuzzy
 msgid "Sports and Riding Apparel Stores"
 msgstr "Cửa hàng quần áo thể thao và cưỡi ngựa"
 
@@ -3580,7 +3555,6 @@ msgstr "ID thẻ Stripe"
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "Stripe Card ending with %(last_4)s"
 msgstr "Thẻ Stripe kết thúc bằng %(last_4)s"
 
@@ -3614,7 +3588,6 @@ msgstr "ID Stripe"
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/account_chart_template.py:0
 #: code:addons/hr_expense_stripe/models/account_journal.py:0
-#, fuzzy
 msgid "Stripe Issuing"
 msgstr "Stripe Issuing"
 
@@ -3631,7 +3604,6 @@ msgstr "Khóa riêng tư của cơ sở dữ liệu Stripe Issuing"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_issuing_iap_public_key_id
-#, fuzzy
 msgid "Stripe Issuing Iap Public Key"
 msgstr "Khóa công khai IAP của Stripe Issuing"
 
@@ -3998,7 +3970,6 @@ msgstr "Chủ thẻ đã bị chặn"
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "The charge is not allowed on the Stripe network, possibly because it is an "
 "ATM withdrawal or cash advance."
@@ -4008,7 +3979,6 @@ msgstr ""
 
 #. module: hr_expense_stripe
 #: model:ir.model.constraint,message:hr_expense_stripe.constraint_product_mcc_stripe_tag_constraint_code_unique
-#, fuzzy
 msgid "The code of the MCC tag must be unique!"
 msgstr "Mã của thẻ MCC phải là duy nhất!"
 
@@ -4030,14 +4000,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "The delivery address must be in the European Union."
 msgstr "Địa chỉ giao hàng phải nằm trong Liên minh Châu Âu."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "The delivery address must be set before activating the card."
 msgstr "Địa chỉ giao hàng phải được thiết lập trước khi kích hoạt thẻ."
 
@@ -4053,14 +4021,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_topup_wizard.py:0
-#, fuzzy
 msgid "The direct top-up isn't available outside of the US."
 msgstr "Dịch vụ nạp tiền trực tiếp không khả dụng bên ngoài Hoa Kỳ."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "The employee must have a user to be able to access safely their card."
 msgstr ""
 "Nhân viên phải có tài khoản người dùng để có thể truy cập an toàn vào thẻ "
@@ -4166,7 +4132,6 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
-#, fuzzy
 msgid ""
 "There was an error in your Odoo database and Stripe received an invalid "
 "response"
@@ -4187,7 +4152,6 @@ msgstr "Sở hữu kỳ nghỉ"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_account_journal__stripe_issuing_balance_timestamp
-#, fuzzy
 msgid "Timestamp of the most recent Stripe Issuing Balance update"
 msgstr "Thời gian cập nhật gần nhất của số dư Stripe Issuing"
 
@@ -4389,7 +4353,6 @@ msgstr "Cập nhật thông tin"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.used_merchandise_and_secondhand_stores
-#, fuzzy
 msgid "Used Merchandise and Secondhand Stores"
 msgstr "Hàng đã qua sử dụng và cửa hàng đồ cũ"
 
@@ -4546,7 +4509,6 @@ msgstr "Sửa chữa hàn"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card__spending_policy_country_tag_ids
-#, fuzzy
 msgid "Whitelist of countries where payments could be authorized from."
 msgstr "Danh sách các quốc gia được phép thực hiện thanh toán."
 
@@ -4586,7 +4548,6 @@ msgstr "Cửa hàng phụ kiện và sản phẩm chuyên dụng dành cho phụ
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.womens_ready_to_wear_stores
-#, fuzzy
 msgid "Women's Ready to Wear Stores"
 msgstr "Cửa hàng thời trang may sẵn cho phụ nữ"
 
@@ -4680,7 +4641,6 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
-#, fuzzy
 msgid "You can't set the card state back to draft."
 msgstr "Bạn không thể đặt trạng thái thẻ trở lại chế độ nháp."
 
@@ -4761,7 +4721,6 @@ msgstr ""
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_card_receive_wizard.py:0
-#, fuzzy
 msgid "You must confirm that you have received the card before activating it."
 msgstr "Bạn phải xác nhận rằng đã nhận được thẻ trước khi kích hoạt nó."
 

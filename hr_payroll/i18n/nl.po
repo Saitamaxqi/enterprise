@@ -10,13 +10,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Bren Driesen <brdri@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-19 07:48+0000\n"
-"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
+"POT-Creation-Date: 2025-11-28 18:40+0000\n"
+"PO-Revision-Date: 2025-11-27 14:14+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/hr_payroll/"
 "nl/>\n"
 "Language: nl\n"
@@ -24,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__work_entry_source
@@ -68,21 +69,18 @@ msgstr "# Loonstroken"
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
-#, fuzzy
 msgid "%(display_name)s %(duration_type)s"
 msgstr "%(display_name)s %(duration_type)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payslip_correction_wizard.py:0
-#, fuzzy
 msgid "%(employee)s Correction %(date)s"
 msgstr "%(employee)s Correctie %(date)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payslip_correction_wizard.py:0
-#, fuzzy
 msgid "%(employee)s Correction %(date_start)s - %(date_end)s"
 msgstr "%(employee)s Correctie %(date_start)s - %(date_end)s"
 
@@ -705,6 +703,7 @@ msgid "Activity type"
 msgstr "Soort activiteit"
 
 #. module: hr_payroll
+#: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Add Inputs"
@@ -792,7 +791,7 @@ msgstr "Toegewezen bedragen zijn lager dan het nettoloon."
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Allocated amounts surpass the net salary."
-msgstr ""
+msgstr "Toegewezen bedragen overschrijden het nettoloon."
 
 #. module: hr_payroll
 #: model:hr.salary.rule.category,name:hr_payroll.ALW
@@ -1144,7 +1143,7 @@ msgstr "Een gevalideerde loonstrook kan niet geannuleerd worden."
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_index_wizard.py:0
 msgid "Cannot index a wage with a null or negative percentage."
-msgstr ""
+msgstr "Kan geen loon indexeren met een nul of negatief percentage."
 
 #. module: hr_payroll
 #. odoo-python
@@ -2343,7 +2342,7 @@ msgstr "Werknemers met lopende contracten die bijna eindigen"
 #. module: hr_payroll
 #: model:hr.payroll.dashboard.warning,name:hr_payroll.hr_payroll_dashboard_warning_untrusted_bank_accounts
 msgid "Employees with untrusted Bank Account numbers"
-msgstr "Werknemers met onbetrouwbare bankrekeningnummers"
+msgstr "Werknemers met niet-vertrouwde bankrekeningnummers"
 
 #. module: hr_payroll
 #. odoo-python
@@ -2945,7 +2944,7 @@ msgstr "Invoertype"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
 msgid "Input Type Code"
-msgstr ""
+msgstr "Code van het invoertype"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_usage_employee
@@ -3324,7 +3323,7 @@ msgstr "Berichten"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Missing bank account on employee"
-msgstr ""
+msgstr "Bankrekeningnummer ontbreekt bij werknemer"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__mobile_invoice
@@ -3590,7 +3589,7 @@ msgstr "Geen regelparameter met de code \"%(code)s\" gevonden voor %(date)s"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "No running contract over payslip period"
-msgstr ""
+msgstr "Geen lopend contract in deze loonstrookperiode"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__is_non_resident
@@ -3830,7 +3829,7 @@ msgstr "Overige invoerregel"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_view_search_report
 msgid "Other Input Type"
-msgstr ""
+msgstr "Ander invoertype"
 
 #. module: hr_payroll
 #: model:ir.ui.menu,name:hr_payroll.menu_hr_payslip_entry_type_view
@@ -4185,7 +4184,7 @@ msgstr ""
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_correction_wizard_form
 msgid "Payslip Correction"
-msgstr ""
+msgstr "Correctie loonstrook"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payslip_correction_wizard
@@ -4581,7 +4580,7 @@ msgstr "Referentiejaar"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Refund Payslip"
-msgstr ""
+msgstr "Terugbetaling loonstrook"
 
 #. module: hr_payroll
 #. odoo-python
@@ -4611,7 +4610,7 @@ msgstr "Vergoeden"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Related Payslip"
-msgstr ""
+msgstr "Gerelateerde loonstrook"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__related_payslip_ids
@@ -5111,7 +5110,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Similar payslips found"
-msgstr ""
+msgstr "Gelijkaardige loonstroken gevonden"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5424,6 +5423,8 @@ msgid ""
 "The following %(model_name)s are missing a %(field_name)s:\n"
 "    • %(names)s"
 msgstr ""
+"Op de volgende %(model_name)s ontbreekt een %(field_name)s:\n"
+"    •  %(names)s"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5449,7 +5450,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "The payslip's company doesn't match the batch's"
-msgstr ""
+msgstr "Het bedrijf op de loonstrook komt niet overeen met dat van de batch"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5470,6 +5471,8 @@ msgid ""
 "The salary adjustment you're trying to remove is still running. You can’t "
 "delete unless you change it to completed or cancelled."
 msgstr ""
+"De loonaanpassing die je probeert te verwijderen loopt nog. Je kunt deze "
+"niet verwijderen, tenzij je deze voltooit of annuleert."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5504,6 +5507,8 @@ msgid ""
 "There are previous payslips with a negative amount for a total of %s to "
 "report."
 msgstr ""
+"Er zijn eerdere loonstroken met een negatief bedrag voor een totaal van %s "
+"om te rapporteren."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5517,6 +5522,8 @@ msgstr "Er is geen aangifte te genereren voor de gegeven periode"
 msgid ""
 "There is no valid payslip (validated and net wage > 0) to generate the file."
 msgstr ""
+"Er is geen geldige loonstrook (gevalideerd en nettoloon > 0) om het bestand "
+"te genereren."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5534,7 +5541,7 @@ msgstr "Deze actie is verboden op gevalideerde loonstroken."
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "This action is restricted to payroll officers only."
-msgstr ""
+msgstr "Deze actie is enkel bedoeld voor loonadministratieverantwoordelijken."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_rule_parameter__code
@@ -5559,6 +5566,8 @@ msgid ""
 "This is a corrected payslip.\n"
 "Find the correction under this name: %(payslip)s"
 msgstr ""
+"Dit is een gecorrigeerde loonstrook.\n"
+"Je kan de correctie vinden onder deze naam: %(payslip)s"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5602,6 +5611,8 @@ msgid ""
 "This work entry cannot be modified because it is already associated with a "
 "generated payslip."
 msgstr ""
+"Deze werkboeking kan niet worden gewijzigd omdat deze al is gekoppeld aan "
+"een gegenereerde loonstrook."
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -5770,7 +5781,7 @@ msgstr "Onbetaald in structuurtypes"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_rule.py:0
 msgid "Unsupported operator %s"
-msgstr ""
+msgstr "Niet-ondersteunde operator %s"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_tree
@@ -5781,7 +5792,7 @@ msgstr "T/m"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Untrusted bank accounts"
-msgstr ""
+msgstr "Niet-vertrouwde bankrekeningen"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_type__round_days_type__up
@@ -6271,12 +6282,14 @@ msgstr "Jaar tot datum berekening"
 msgid ""
 "You can only split a salary adjustment if it has more than one employee."
 msgstr ""
+"Je kunt een loonaanpassing alleen splitsen als deze meer dan één werknemer "
+"betreft."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "You can't confirm cancelled payslips."
-msgstr ""
+msgstr "Je kunt geannuleerde loonstroken niet bevestigen."
 
 #. module: hr_payroll
 #. odoo-python
@@ -6300,6 +6313,8 @@ msgid ""
 "You cannot archive an input type if there exists a running salary adjustment "
 "of this type."
 msgstr ""
+"Je kunt een invoertype niet archiveren als er een lopende loonaanpassing van "
+"dit type bestaat."
 
 #. module: hr_payroll
 #. odoo-python
@@ -6333,6 +6348,8 @@ msgstr ""
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "You cannot delete a salary adjustment that is linked to a payslip!"
 msgstr ""
+"Je kunt een loonaanpassing die gekoppeld is aan een loonstrook niet "
+"verwijderen!"
 
 #. module: hr_payroll
 #. odoo-python
@@ -6444,7 +6461,7 @@ msgstr "bijv. Regulier loon"
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payrun_card/payrun_card.xml:0
 msgid "employer cost"
-msgstr ""
+msgstr "Loonkost"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
@@ -6455,7 +6472,7 @@ msgstr "eindigt over"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "few days"
-msgstr ""
+msgstr "enkele dagen"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form

@@ -44,7 +44,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-21 14:07+0000\n"
+"PO-Revision-Date: 2025-11-27 14:13+0000\n"
 "Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/helpdesk/"
 "fi/>\n"
@@ -53,7 +53,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__answered_customer_message_count
@@ -1871,9 +1871,9 @@ msgid ""
 "followers. Employees automatically get access to the tickets they are "
 "assigned to."
 msgstr ""
-"Anna työntekijöille pääsy helpdesk-tiimiin tai tukipyyntöihin lisäämällä "
-"heidät seuraajiksi. Työntekijät saavat automaattisesti pääsyn niihin "
-"tukipyyntöihin, joihin heidät on osoitettu."
+"Myönnä työntekijöille pääsy Asiakaspalvelu-tiimiin tai tukipyyntöihin "
+"lisäämällä heidät seuraajiksi. Työntekijät saavat automaattisesti pääsyn "
+"heille määritettyihin tukipyyntöihin."
 
 #. module: helpdesk
 #. odoo-python
@@ -1883,9 +1883,9 @@ msgid ""
 "followers. Customers automatically get access to their tickets in their "
 "portal."
 msgstr ""
-"Anna portaalin käyttäjille pääsy helpdesk-tiimiin tai tukipyyntöihin "
-"lisäämällä heidät seuraajiksi. Asiakkaat saavat automaattisesti pääsyn "
-"tukipyyntöihinsä portaalissaan."
+"Myönnä portaalin käyttäjille pääsy Asiakaspalvelu-tiimiisi tai "
+"tukipyyntöihin lisäämällä heidät seuraajiksi. Asiakkaat saavat "
+"automaattisesti pääsyn tukipyyntöihinsä portaalissaan."
 
 #. module: helpdesk
 #: model:ir.model.fields.selection,name:helpdesk.selection__helpdesk_sla_report_analysis__kanban_state__done

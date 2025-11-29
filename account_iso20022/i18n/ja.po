@@ -8,13 +8,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Junko Augias (juau)" <juau@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-14 18:42+0000\n"
-"PO-Revision-Date: 2025-11-10 13:15+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-11-27 14:13+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "account_iso20022/ja/>\n"
 "Language: ja\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: account_iso20022
 #. odoo-python
@@ -498,7 +499,7 @@ msgstr "1つのファイルに対して取引の数が多すぎます。"
 #. module: account_iso20022
 #: model:account.payment.method,name:account_iso20022.account_payment_method_iso20022_us
 msgid "U.S. ISO20022"
-msgstr ""
+msgstr "U.S. ISO20022"
 
 #. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_payment__iso20022_uetr
@@ -515,7 +516,7 @@ msgstr "URGP - 緊急"
 #: model:ir.model.fields,help:account_iso20022.field_account_bank_statement_line__end_to_end_uuid
 #: model:ir.model.fields,help:account_iso20022.field_account_payment__end_to_end_uuid
 msgid "Unique end-to-end assigned by the initiating party"
-msgstr ""
+msgstr "送金依頼者によって割り当てられる一意のエンドツーエンド識別子"
 
 #. module: account_iso20022
 #: model:ir.model.fields,help:account_iso20022.field_account_payment__iso20022_uetr

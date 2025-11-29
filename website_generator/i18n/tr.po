@@ -4,13 +4,14 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# "Malaz Siddig Elsayed Abuidris (msea)" <msea@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:50+0000\n"
-"PO-Revision-Date: 2025-11-12 15:01+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-28 12:47+0000\n"
+"Last-Translator: \"Malaz Siddig Elsayed Abuidris (msea)\" <msea@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "website_generator/tr/>\n"
 "Language: tr\n"
@@ -18,11 +19,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: website_generator
 #: model:mail.template,body_html:website_generator.email_template_website_scrapped
-#, fuzzy
 msgid ""
 "<div>\n"
 "            <p><b>Great news!</b> Your website conversion is complete and "
@@ -52,7 +52,6 @@ msgstr ""
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__additional_urls
-#, fuzzy
 msgid "Additional URLs"
 msgstr "Ek URL'ler"
 
@@ -65,21 +64,18 @@ msgstr "Bir hata oluştu"
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
-#, fuzzy
 msgid "Attachment not found"
 msgstr "Ek bulunamadı"
 
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
-#, fuzzy
 msgid "Banned url"
 msgstr "Yasaklı url"
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
-#, fuzzy
 msgid ""
 "By clicking \"Import my website\", you confirm that you are the owner of the "
 "website and all associated components (such as images and other content), "
@@ -94,7 +90,6 @@ msgstr ""
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
-#, fuzzy
 msgid "Could not fetch result, invalid output uuid or result expired"
 msgstr "Sonuç alınamadı, geçersiz çıktı uuid'si veya sonucun süresi doldu"
 
@@ -138,7 +133,6 @@ msgstr "ID"
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
-#, fuzzy
 msgid "If you require more, you can contact us at"
 msgstr ""
 "Daha fazlasına ihtiyacınız varsa, bizimle şu adresten iletişime "
@@ -159,21 +153,18 @@ msgstr "Web sitemi içe aktar"
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
-#, fuzzy
 msgid "Import your"
 msgstr "İçe aktar"
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/builder/imported_footer_template_choice.xml:0
-#, fuzzy
 msgid "Imported"
 msgstr "İthal"
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/builder/imported_footer_plugin.js:0
-#, fuzzy
 msgid "Imported Footer"
 msgstr "İçe Aktarılan Altbilgi"
 
@@ -186,7 +177,6 @@ msgstr "Web siteniz içe aktarılıyor."
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
-#, fuzzy
 msgid "Invalid dbuuid"
 msgstr "Geçersiz dbuuid"
 
@@ -226,14 +216,12 @@ msgstr "Bildirildi"
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
-#, fuzzy
 msgid "Number of allowed requests exhausted"
 msgstr "İzin verilen talep sayısı tükendi"
 
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
-#, fuzzy
 msgid "Number of concurrent requests exceeded"
 msgstr "Eşzamanlı istek sayısı aşıldı"
 
@@ -244,7 +232,6 @@ msgstr "Sayfa sayısı"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__uuid
-#, fuzzy
 msgid "Output UUID generated from Website Scraper Server"
 msgstr "Web Sitesi Kazıyıcı Sunucusundan oluşturulan çıktı UUID'si"
 
@@ -274,7 +261,6 @@ msgstr "Ürünler"
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
-#, fuzzy
 msgid "Request is still processing, result not available yet"
 msgstr "Talep hala işleniyor, sonuç henüz mevcut değil"
 
@@ -293,7 +279,6 @@ msgstr "Bir şeyler yanlış gitti"
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.js:0
-#, fuzzy
 msgid "Something went wrong while importing your website."
 msgstr "Web sitenizi içe aktarırken bir şeyler ters gitti."
 
@@ -316,28 +301,24 @@ msgstr "Başarılı"
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/systray_items/generator_request.js:0
-#, fuzzy
 msgid "The import of your website has started!"
 msgstr "Web sitenizin içe aktarımı başladı!"
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
-#, fuzzy
 msgid "The maximum number of pages is 200 by default."
 msgstr "Maksimum sayfa sayısı varsayılan olarak 200'dür."
 
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
-#, fuzzy
 msgid "The request asks for too many pages"
 msgstr "Talep çok fazla sayfa istiyor"
 
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
-#, fuzzy
 msgid ""
 "The requested url redirected to another url, try again with the redirected "
 "url"
@@ -348,7 +329,6 @@ msgstr ""
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
-#, fuzzy
 msgid ""
 "The requested url took too long to load and is probably unreachable from the "
 "server"
@@ -359,7 +339,6 @@ msgstr ""
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
-#, fuzzy
 msgid ""
 "The same request has just been made, please wait before sending another "
 "identical request"
@@ -370,7 +349,6 @@ msgstr ""
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
-#, fuzzy
 msgid "This can take a few minutes."
 msgstr "Bu işlem birkaç dakika sürebilir."
 
@@ -382,7 +360,6 @@ msgstr "%s Web Sitesi için En İyi Menü"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__target_url
-#, fuzzy
 msgid "URL to scrape"
 msgstr "Kazınacak URL"
 
@@ -400,21 +377,18 @@ msgstr "Desteklenmeyen sürüm"
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
-#, fuzzy
 msgid "Waiting for the server to process the request"
 msgstr "Sunucunun isteği işlemesini bekleme"
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
-#, fuzzy
 msgid "We could not convert your website, please try again later"
 msgstr "Web sitenizi dönüştüremedik, lütfen daha sonra tekrar deneyin"
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/systray_items/generator_request.js:0
-#, fuzzy
 msgid "We will notify %(email)s when everything is ready."
 msgstr "Her şey hazır olduğunda %(email)s adresini bilgilendireceğiz."
 
@@ -431,19 +405,16 @@ msgstr "Web Sitesi Oluşturucu"
 
 #. module: website_generator
 #: model:ir.actions.server,name:website_generator.action_convert_scraping_request_ICP
-#, fuzzy
 msgid "Website Generator After Install"
 msgstr "Kurulumdan Sonra Web Sitesi Oluşturucu"
 
 #. module: website_generator
 #: model:ir.model,name:website_generator.model_website_generator_request
-#, fuzzy
 msgid "Website Generator Request"
 msgstr "Web Sitesi Oluşturucu Talebi"
 
 #. module: website_generator
 #: model:ir.actions.server,name:website_generator.cron_get_result_ir_actions_server
-#, fuzzy
 msgid "Website Generator: Get website scraper results"
 msgstr "Web Sitesi Oluşturucu: Web sitesi kazıyıcı sonuçları alın"
 
@@ -473,14 +444,12 @@ msgstr "Web sitesi desteklenmiyor"
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
-#, fuzzy
 msgid "You will be redirected once your website is ready."
 msgstr "Web siteniz hazır olduğunda yönlendirileceksiniz."
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
-#, fuzzy
 msgid "You'll be able to create additional pages later on."
 msgstr "Daha sonra ek sayfalar oluşturabileceksiniz."
 
@@ -498,7 +467,6 @@ msgstr "ve"
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
-#, fuzzy
 msgid "https://www.odoo.com/"
 msgstr "https://www.odoo.com/"
 

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-14 18:41+0000\n"
+"POT-Creation-Date: 2025-11-28 18:40+0000\n"
 "PO-Revision-Date: 2025-11-21 14:41+0000\n"
 "Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/sign/nl/>\n"
@@ -848,12 +848,6 @@ msgstr "Gebaseerd op"
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
 msgid "Based on various websites, here are our comparisons:"
 msgstr "Op basis van verschillende websites zijn hier onze vergelijkingen:"
-
-#. module: sign
-#. odoo-javascript
-#: code:addons/sign/static/src/editor/plugins/signature.js:0
-msgid "Basic Bloc"
-msgstr "Basisblok"
 
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_log__request_state__sent
@@ -4651,8 +4645,8 @@ msgid ""
 "Validate <span class=\"o_sign_validate_text\"> &amp; Send Completed "
 "Document</span>"
 msgstr ""
-"Valideer <span class=\"o_sign_validate_text\">& verstuur voltooid "
-"document</span>"
+"Valideer <span class=\"o_sign_validate_text\">& verstuur voltooid document</"
+"span>"
 
 #. module: sign
 #. odoo-javascript
@@ -4907,6 +4901,14 @@ msgstr "Je moet ten minsten een te downloaden document selecteren."
 #: code:addons/sign/static/src/dialogs/thank_you_dialog.js:0
 msgid "You will get the signed document by email."
 msgstr "Je ontvangt het ondertekende document via e-mail."
+
+#. module: sign
+#. odoo-javascript
+#: code:addons/sign/static/src/dialogs/thank_you_dialog.js:0
+msgid ""
+"You will get the signed document by email. You may also request a paper copy "
+"from the sender."
+msgstr ""
 
 #. module: sign
 #: model_terms:ir.actions.act_window,help:sign.sign_all_request_action
@@ -5276,6 +5278,9 @@ msgstr "jij"
 #: model_terms:ir.ui.view,arch_db:sign.green_report_el_pdf
 msgid "{{0}} Summary"
 msgstr "{{0}} Samenvatting"
+
+#~ msgid "Basic Bloc"
+#~ msgstr "Basisblok"
 
 #~ msgid "<b>Drag & drop “Signature”</b> into the bottom of the document."
 #~ msgstr "<b>Sleep “Handtekening”</b> naar de onderkant van het document."

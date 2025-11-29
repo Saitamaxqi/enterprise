@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:50+0000\n"
-"PO-Revision-Date: 2025-11-19 16:33+0000\n"
+"PO-Revision-Date: 2025-11-27 16:39+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/web_gantt/pt_BR/>\n"
@@ -22,9 +22,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
-"1000000 == 0) ? 1 : 2);\n"
-"X-Generator: Weblate 5.12.2\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : "
+"((n != 0 && n % 1000000 == 0) ? 1 : 2);\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -233,12 +233,14 @@ msgid ""
 "Invalid attributes (%(invalid_attributes)s) in gantt view. Attributes must "
 "be in (%(valid_attributes)s)"
 msgstr ""
+"Atributos inválidos (%(invalid_attributes)s) na visualização de Gantt. Os "
+"atributos devem estar em (%(valid_attributes)s)"
 
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Invalid default_range '%s' in gantt"
-msgstr ""
+msgstr "default_range '%s' inválido no Gantt"
 
 #. module: web_gantt
 #. odoo-python
@@ -250,13 +252,13 @@ msgstr "Default_scale \"%s\" inválida em Gantt"
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Invalid display_mode '%s' in gantt"
-msgstr ""
+msgstr "Display_mode '%s' inválido em gantt"
 
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/models.py:0
 msgid "Invalid reschedule method %s"
-msgstr ""
+msgstr "Método de reagedamento inválido %s"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -280,7 +282,7 @@ msgstr "Novo"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_controller.js:0
 msgid "No, keep it"
-msgstr ""
+msgstr "Não, manter"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -299,13 +301,13 @@ msgstr "Plano"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_arch_parser.js:0
 msgid "Quarter"
-msgstr ""
+msgstr "Trimestre"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
 msgid "Record could not be removed"
-msgstr ""
+msgstr "Não foi possível remover o registro"
 
 #. module: web_gantt
 #. odoo-javascript

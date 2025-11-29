@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"POT-Creation-Date: 2025-11-28 18:40+0000\n"
 "PO-Revision-Date: 2025-11-08 20:05+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -27,8 +27,8 @@ msgid ""
 "few minutes...</span>"
 msgstr ""
 "<i class=\"fa fa-clock-o me-2\"/>\n"
-"                            "
-"<span>正在理解你的資料來源，可能需要幾分鐘⋯</span>"
+"                            <span>正在理解你的資料來源，可能需要幾分鐘⋯</"
+"span>"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_form
@@ -179,6 +179,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ai_app.res_config_settings_view_form
 msgid "Providers"
 msgstr "服務商"
+
+#. module: ai_app
+#: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_form
+msgid "Reprocess"
+msgstr ""
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_form

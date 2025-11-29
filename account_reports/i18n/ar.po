@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-14 18:42+0000\n"
-"PO-Revision-Date: 2025-11-19 13:45+0000\n"
+"PO-Revision-Date: 2025-11-27 16:38+0000\n"
 "Last-Translator: \"Malaz Siddig Elsayed Abuidris (msea)\" <msea@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/ar/>\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: account_reports
 #. odoo-javascript
@@ -1388,7 +1388,7 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.bank_information_customer_report
 msgid "Bank:"
-msgstr ""
+msgstr "البنك:"
 
 #. module: account_reports
 #. odoo-javascript
@@ -1572,7 +1572,7 @@ msgstr "إيرادات"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_cash_inventory_reconciliation
 msgid "Cash inventory reconciliation"
-msgstr ""
+msgstr "تسوية المخزون النقدي"
 
 #. module: account_reports
 #. odoo-python
@@ -1651,7 +1651,7 @@ msgstr "حالة التحقق"
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_view_account_return_check_templates
 msgid "Check Templates"
-msgstr ""
+msgstr "قوالب الشيكات"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_aged_payable_review
@@ -1659,6 +1659,8 @@ msgid ""
 "Check for payables overdue by more than 60 days and validate that all "
 "amounts due are properly recorded."
 msgstr ""
+"تحقق من المستحقات المتأخرة لأكثر من 60 يوم وتأكد من أن جميع المبالغ المستحقة "
+"مسجلة بشكل صحيح."
 
 #. module: account_reports
 #. odoo-javascript
@@ -1676,18 +1678,18 @@ msgstr "الفحوصات"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__check_count
 msgid "Checks Count"
-msgstr ""
+msgstr "عدد الشيكات"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Checks Validated"
-msgstr ""
+msgstr "الشيكات التي تم تصديقها"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_clear_internal_transfer_account
 msgid "Clear Internal Transfer Accounts"
-msgstr ""
+msgstr "تصفية حسابات التحويلات الداخلية"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
@@ -1738,7 +1740,7 @@ msgstr "تم حذف قيد الإقفال للشركة %s"
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Closing entry posted and lock date applied."
-msgstr ""
+msgstr "تم نشر القيد الختامي وتطبيق تاريخ الإغلاق."
 
 #. module: account_reports
 #. odoo-python
@@ -1760,6 +1762,8 @@ msgid ""
 "Collect missing bank statements and reconcile them with internal records, "
 "resolving any discrepancies."
 msgstr ""
+"قم بجمع كشوف الحسابات البنكية المفقودة ومطابقتها مع السجلات الداخلية، وتسوية "
+"أي اختلافات."
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
@@ -1834,6 +1838,8 @@ msgid ""
 "Compare current vs prior year expense trends and justify significant "
 "deviations."
 msgstr ""
+"قارن بين اتجاهات النفقات في العام الحالي والعام الماضي وبرر الانحرافات "
+"الكبيرة."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_cash_inventory_reconciliation
@@ -1841,6 +1847,8 @@ msgid ""
 "Compare the general ledger cash account with the physical cash inventory "
 "provided by the client. Investigate and explain any discrepancies."
 msgstr ""
+"قارن حساب النقدية في دفتر الأستاذ العام مع المخزون النقدي الفعلي المقدم من "
+"العميل. تحقق من أي اختلافات ووضحها."
 
 #. module: account_reports
 #. odoo-javascript
@@ -1854,6 +1862,8 @@ msgid ""
 "Compile a complete list of all guarantees received or granted (pledges, "
 "mortgages, collateral)."
 msgstr ""
+"قم بتجميع قائمة كاملة بجميع الضمانات المستلمة أو الممنوحة "
+"(الرهونات، الرهون العقارية، الضمانات)."
 
 #. module: account_reports
 #. odoo-python
@@ -1864,7 +1874,7 @@ msgstr "قم بإكمال أي تعديلات يدوية وفحوصات داخل
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__audit_balances_completed_count
 msgid "Completed Balances Count"
-msgstr ""
+msgstr "إجمالي الأرصدة المكتملة"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_analytical_review
@@ -1872,13 +1882,15 @@ msgid ""
 "Conduct a comparative account review to identify key variances, analyze "
 "trends, and assess performance versus prior periods."
 msgstr ""
+"قم بإجراء مراجعة مقارنة للحسابات لتحديد الاختلافات الرئيسية وتحليل الاتجاهات "
+"وتقييم الأداء مقارنة بالفترات السابقة."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_trade_payables_analytical_review
 msgid ""
 "Conduct a year-over-year analysis of trade payables and explain significant "
 "changes."
-msgstr ""
+msgstr "أجرِ تحليلاً سنوياً للذمم التجارية الدائنة ووضح التغييرات الهامة."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_bank_fees_analytical_review
@@ -1886,6 +1898,8 @@ msgid ""
 "Conduct an analytical review of banking fees. Ensure consistent accounting "
 "treatment and explain major changes."
 msgstr ""
+"قم بإجراء مراجعة تحليلية للرسوم البنكية. تأكّد من اتساق المعالجة المحاسبية "
+"واشرح التغييرات الرئيسية."
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_res_config_settings
@@ -1909,6 +1923,8 @@ msgid ""
 "Confirm proper classification, fair value measurement, and disposal "
 "treatment of marketable securities."
 msgstr ""
+"قم بتأكيد التصنيف الصحيح، وقياس القيمة العادلة، ومعالجة التصرف في الأوراق "
+"المالية القابلة للتداول."
 
 #. module: account_reports
 #. odoo-javascript
@@ -2166,12 +2182,12 @@ msgstr "المعالج المخصص لكشف حساب العميل"
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_search_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_template_search_view
 msgid "Cycle"
-msgstr ""
+msgstr "دورة"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.return_creation_wizard_form
 msgid "Cycles"
-msgstr ""
+msgstr "الدورات"
 
 #. module: account_reports
 #: model:account.report.column,name:account_reports.bank_reconciliation_report_date
@@ -2256,17 +2272,17 @@ msgstr "قابل للاستقطاع"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_type__default_deadline_days_delay
 msgid "Default Deadline"
-msgstr ""
+msgstr "الموعد النهائي الافتراضي"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_type__default_deadline_periodicity
 msgid "Default Periodicity"
-msgstr ""
+msgstr "التكرار الافتراضي"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_type__default_deadline_start_date
 msgid "Default Start Date"
-msgstr ""
+msgstr "تاريخ البدء الافتراضي"
 
 #. module: account_reports
 #. odoo-javascript
@@ -2477,12 +2493,12 @@ msgstr "المستند"
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_template_search_view
 msgid "Document Upload"
-msgstr ""
+msgstr "رفع المستند"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_audit_accounting_process
 msgid "Document current accounting processes (especially if done in-house)."
-msgstr ""
+msgstr "قم بتوثيق العمليات المحاسبية الحالية (خاصة إذا كانت تتم داخليًا)."
 
 #. module: account_reports
 #: model:account.report.column,name:account_reports.journal_report_count
@@ -2531,7 +2547,7 @@ msgstr "القيود في حالة المسودة"
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_journal_report_audit_move_line_search
 msgid "Draft To Review"
-msgstr ""
+msgstr "المسودة المراد مراجعتها"
 
 #. module: account_reports
 #. odoo-python
@@ -2694,6 +2710,8 @@ msgid ""
 "Ensure all intercompany or internal bank transfer accounts are cleared and "
 "justified."
 msgstr ""
+"تأكد من أن جميع حسابات التحويلات المصرفية الداخلية أو بين الشركات قد تمت "
+"تسويتها وتبريرها."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_payables_settlement

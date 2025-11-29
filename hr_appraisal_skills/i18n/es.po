@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:51+0000\n"
+"POT-Creation-Date: 2025-11-28 18:46+0000\n"
 "PO-Revision-Date: 2025-11-17 07:02+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Spanish <https://translate.odoo.com/projects/odoo-19/"
@@ -191,12 +191,6 @@ msgstr "Meta"
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__id
 msgid "ID"
 msgstr "ID"
-
-#. module: hr_appraisal_skills
-#. odoo-javascript
-#: code:addons/hr_appraisal_skills/static/src/js/appraisal_skills_one2many.xml:0
-msgid "If skills are missing, they can be created by an HR officer."
-msgstr "Si faltan habilidades, un gerente de RR. HH. puede crearlas."
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields.selection,name:hr_appraisal_skills.selection__hr_appraisal_skill_report__evolution__improvement
@@ -392,8 +386,8 @@ msgstr "La fecha de finalización debe ser posterior a la fecha de inicio."
 #: code:addons/hr_appraisal_skills/models/hr_appraisal_skill.py:0
 msgid "The skill level %(level)s is not valid for skill type: %(type)s"
 msgstr ""
-"El nivel de habilidad %(level)s no es válido para el tipo de habilidad: "
-"%(type)s"
+"El nivel de habilidad %(level)s no es válido para el tipo de habilidad: %"
+"(type)s"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,help:hr_appraisal_skills.field_hr_appraisal_goal__current_goal_skill_ids
@@ -438,13 +432,6 @@ msgstr ""
 "evaluaciones."
 
 #. module: hr_appraisal_skills
-#. odoo-javascript
-#: code:addons/hr_appraisal_skills/static/src/js/appraisal_skills_one2many.xml:0
-msgid "You can add skills from our library to the employee profile."
-msgstr ""
-"Puede añadir habilidades desde nuestra biblioteca al perfil del empleado"
-
-#. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.appraisal_skills_update_template
 msgid "has been added."
 msgstr "se ha añadido."
@@ -471,3 +458,10 @@ msgstr "indefinido"
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.view_hr_appraisal_form
 msgid "infinite"
 msgstr "infinito"
+
+#~ msgid "If skills are missing, they can be created by an HR officer."
+#~ msgstr "Si faltan habilidades, un gerente de RR. HH. puede crearlas."
+
+#~ msgid "You can add skills from our library to the employee profile."
+#~ msgstr ""
+#~ "Puede añadir habilidades desde nuestra biblioteca al perfil del empleado"

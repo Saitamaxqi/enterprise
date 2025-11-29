@@ -11,13 +11,14 @@
 # Dorin Hongu <dhongu@gmail.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-08 19:46+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"POT-Creation-Date: 2025-11-28 18:40+0000\n"
+"PO-Revision-Date: 2025-11-27 14:14+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Romanian <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll/ro/>\n"
 "Language: ro\n"
@@ -26,7 +27,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__work_entry_source
@@ -295,8 +296,8 @@ msgid ""
 "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
 "title=\"Arrow\"/>"
 msgstr ""
-"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" title="
-"\"Arrow\"/>"
+"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
+"title=\"Arrow\"/>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -562,8 +563,8 @@ msgid ""
 "</tbody></table>\n"
 "            "
 msgstr ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
-"\"width:100%; margin:0px auto;\"><tbody>\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; "
+"margin:0px auto;\"><tbody>\n"
 "    <tr><td valign=\"top\" style=\"text-align: left; font-size: 14px;\">\n"
 "        Dragă <t t-esc=\"object.employee_id.name\"/>, un nou fluturaș de "
 "salariu este disponibil pentru dumneavoastră.<br/><br/>\n"
@@ -658,6 +659,7 @@ msgid "Activity type"
 msgstr "Tip activitate"
 
 #. module: hr_payroll
+#: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Add Inputs"
@@ -2231,8 +2233,8 @@ msgid ""
 msgstr ""
 "Programul de lucru al angajatului.\n"
 "Dacă este lăsat gol, angajatul este considerat a avea un program complet "
-"flexibil, permițându-i să lucreze fără limită de timp, oricând în săptămână."
-"\n"
+"flexibil, permițându-i să lucreze fără limită de timp, oricând în "
+"săptămână.\n"
 "        "
 
 #. module: hr_payroll
@@ -5368,7 +5370,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "The payslips should be in Draft or Waiting state."
-msgstr "Fluturașii de salariu trebuie să fie în starea Ciornă sau În așteptare."
+msgstr ""
+"Fluturașii de salariu trebuie să fie în starea Ciornă sau În așteptare."
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -5788,7 +5791,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_rule_parameter__parameter_version_ids
 msgid "Versions"
-msgstr "Versiuni:"
+msgstr "Versiuni"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_form
@@ -5875,8 +5878,8 @@ msgid ""
 msgstr ""
 "Atenție la golurile din calendarul lui %(employee_name)s\n"
 "\n"
-"Vă rugăm să completați intrările de muncă lipsă ale "
-"%(employee_name)s:%(time_intervals_str)s \n"
+"Vă rugăm să completați intrările de muncă lipsă ale %(employee_name)s:%"
+"(time_intervals_str)s \n"
 "\n"
 "Intrările de muncă lipsă sunt ca Triunghiul Bermudelor pentru salarii. Să nu "
 "dispară veniturile colegului dumneavoastră!"
@@ -6121,8 +6124,8 @@ msgid ""
 "Wrong rule parameter value for %(rule_parameter_name)s at date %(date)s.\n"
 "%(error)s"
 msgstr ""
-"Valoare parametru de regulă greșită pentru %(rule_parameter_name)s la data "
-"%(date)s.\n"
+"Valoare parametru de regulă greșită pentru %(rule_parameter_name)s la data %"
+"(date)s.\n"
 "%(error)s"
 
 #. module: hr_payroll

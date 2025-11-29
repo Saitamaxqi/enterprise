@@ -10,12 +10,13 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Thi Huong Nguyen (thng)" <thng@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-17 06:57+0000\n"
+"PO-Revision-Date: 2025-11-28 07:26+0000\n"
 "Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "documents/vi/>\n"
@@ -24,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: documents
 #. odoo-python
@@ -93,6 +94,10 @@ msgid ""
 "documents in bulk with the split tool: launch user defined actions, request "
 "a signature, convert to vendor bills with AI, etc."
 msgstr ""
+". Các tệp đã quét sẽ tự động xuất hiện trong thư mục của bạn. Sau đó, xử lý "
+"tài liệu hàng loạt với công cụ tách: khởi chạy các hành động do người dùng "
+"định nghĩa, yêu cầu ký tên, chuyển đổi thành hóa đơn nhà cung cấp với AI, "
+"v.v."
 
 #. module: documents
 #: model:documents.tag,name:documents.documents_tag_year_previous
@@ -195,6 +200,10 @@ msgid ""
 "access to this folder/document or its parent will have edit permissions.</"
 "span>"
 msgstr ""
+"<span invisible=\"is_single\">Tất cả người dùng có quyền truy cập vào các "
+"thư mục/tài liệu này hoặc thư mục chính sẽ có quyền chỉnh sửa.</span>\n"
+"<span invisible=\"not is_single\">Tất cả người dùng có quyền truy cập vào "
+"thư mục/tài liệu này hoặc thư mục chính sẽ có quyền chỉnh sửa.</span>"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page
@@ -1488,6 +1497,9 @@ msgid ""
 "                    (e.g. \"NDA signature process\", \"Folder "
 "workflow\", ...)"
 msgstr ""
+"Kế hoạch hoạt động được sử dụng để gán danh sách các hoạt động chỉ trong vài "
+"cú nhấp chuột\n"
+"(ví dụ: \"Quy trình ký NDA\", \"Quy trình làm việc với thư mục\", ...)."
 
 #. module: documents
 #. odoo-javascript
@@ -3010,7 +3022,7 @@ msgstr "Trong"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
 msgid "In Company"
-msgstr ""
+msgstr "Trong công ty"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search

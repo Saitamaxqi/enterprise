@@ -8,13 +8,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Junko Augias (juau)" <juau@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-20 08:14+0000\n"
-"Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
+"PO-Revision-Date: 2025-11-27 14:13+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "account_intrastat/ja/>\n"
 "Language: ja\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: account_intrastat
 #. odoo-javascript
@@ -418,7 +419,7 @@ msgstr "請求明細"
 #: model:ir.model.fields,field_description:account_intrastat.field_account_return__is_intrastat_return
 #: model:ir.model.fields,field_description:account_intrastat.field_account_return_type__is_intrastat_return_type
 msgid "Is an Intrastat Return Type"
-msgstr ""
+msgstr "Intrastat申告タイプ"
 
 #. module: account_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.account_move_tree_view_account_intrastat_transport_codes
@@ -457,13 +458,13 @@ msgstr "法人顧客のみ"
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Only goods included"
-msgstr ""
+msgstr "商品のみ含む"
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Only intra-EU transactions"
-msgstr ""
+msgstr "EU域内取引のみ"
 
 #. module: account_intrastat
 #. odoo-javascript
@@ -621,7 +622,7 @@ msgstr "プロダクト数量毎の補足単位"
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "The value of goods should be VAT exclusive."
-msgstr ""
+msgstr "商品の価格は付加価値税抜きにしてください。"
 
 #. module: account_intrastat
 #. odoo-javascript
@@ -663,13 +664,13 @@ msgstr "定義されていない重量プロダクト。"
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Unit of measure configuration"
-msgstr ""
+msgstr "単位の設定"
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "VAT exclusive"
-msgstr ""
+msgstr "消費税別"
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_services_value
@@ -686,7 +687,7 @@ msgstr "価値通貨"
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Verify that each good is assigned the right unit of measure."
-msgstr ""
+msgstr "各商品に正しい単位が割り当てられていることを確認してください。"
 
 #. module: account_intrastat
 #. odoo-python
@@ -694,7 +695,8 @@ msgstr ""
 msgid ""
 "Verify that each item has the appropriate code and description according to "
 "the CN (Combined Nomenclature) codes."
-msgstr ""
+msgstr "各品目が、CN(統合品目分類)コードに基づく適切なコードおよび説明を持っているこ"
+"とを確認してください。"
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_weight

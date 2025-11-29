@@ -10,22 +10,23 @@
 # Dorin Hongu <dhongu@gmail.com>, 2023, 2025.
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-14 08:32+0000\n"
-"Last-Translator: Dorin Hongu <dhongu@gmail.com>\n"
+"PO-Revision-Date: 2025-11-27 14:14+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Romanian <https://translate.odoo.com/projects/odoo-19/"
 "helpdesk/ro/>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
-"20)) ? 1 : 2;\n"
-"X-Generator: Weblate 5.12.2\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : "
+"(n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__answered_customer_message_count
@@ -112,6 +113,8 @@ msgstr "<b>Trageți și plasați</b> cardul pentru a schimba stadiul ticketului.
 msgid ""
 "<b>Log internal notes</b> and use @<b>mentions</b> to notify your colleagues."
 msgstr ""
+"<b>Înregistrați note interne</b> și folosiți @<b>mențiuni</b> pentru a vă "
+"notifica colegii."
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.solved_ticket_request_email_template
@@ -136,21 +139,24 @@ msgid ""
 "        "
 msgstr ""
 "<div>\n"
-"        Dear <t t-out=\"object.sudo().partner_id.name or 'Madam/Sir'\">Madam/"
-"Sir</t>,<br/><br/>\n"
-"        We would like to inform you that we have closed your ticket ("
-"reference <t t-out=\"object.id or ''\">15</t>). \n"
-"        We trust that the services provided have met your expectations and "
-"that you have found a satisfactory resolution to your issue.<br/><br/>\n"
-"        However, if you have any further questions or comments, please do "
-"not hesitate to reply to this email to re-open your ticket. \n"
-"        Our team is always here to help you and we will be happy to assist "
-"you with any further concerns you may have.<br/><br/>\n"
-"        Thank you for choosing our services and for your cooperation "
-"throughout this process. We truly value your business and appreciate the "
-"opportunity to serve you.<br/><br/>\n"
-"        Kind regards,<br/><br/>\n"
-"        <t t-out=\"object.team_id.name or 'Helpdesk'\">Helpdesk</t> Team.\n"
+"        Stimată <t t-out="
+"\"object.sudo().partner_id.name or 'Doamnă/Domnule'\">Doamnă/Domnule</t>,<br/"
+"><br/>\n"
+"        Dorim să vă informăm că am închis tichetul dvs. "
+"(referință <t t-out=\"object.id or ''\">15</t>). \n"
+"        Avem încredere că serviciile furnizate au îndeplinit așteptările "
+"dvs. și că ați găsit o rezolvare satisfăcătoare a problemei dvs.<br/><br/>\n"
+"        Cu toate acestea, dacă aveți întrebări sau comentarii suplimentare, "
+"vă rugăm să nu ezitați să răspundeți la acest e-mail pentru a redeschide "
+"tichetul dvs. \n"
+"        Echipa noastră este întotdeauna aici pentru a vă ajuta și vom fi "
+"bucuroși să vă asistăm cu orice alte preocupări pe care le-ați putea avea.<"
+"br/><br/>\n"
+"        Vă mulțumim că ați ales serviciile noastre și pentru colaborarea "
+"dvs. pe tot parcursul acestui proces. Apreciem cu adevărat afacerea dvs. și "
+"apreciem oportunitatea de a vă servi.<br/><br/>\n"
+"        Cu stimă,<br/><br/>\n"
+"        <t t-out=\"object.team_id.name or 'Helpdesk'\">Echipa Helpdesk</t>.\n"
 "    </div>\n"
 "        "
 
@@ -234,6 +240,83 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<div>\n"
+"    <t t-set=\"access_token\" t-value=\"object._rating_get_access_token()\"/>"
+"\n"
+"    <t t-set=\"partner\" t-value=\"object._rating_get_partner()\"/>\n"
+"    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
+"\"width:100%; margin:0;\">\n"
+"    <tbody>\n"
+"        <tr><td valign=\"top\" style=\"font-size: 14px;\">\n"
+"            <t t-if=\"partner.name\">\n"
+"                Bună <t t-out=\"partner.name or ''\">Brandon Freeman</t>,<br/"
+"><br/>\n"
+"            </t>\n"
+"            <t t-else=\"\">\n"
+"                Bună,<br/>\n"
+"            </t>\n"
+"            Vă rugăm să acordați un moment pentru a evalua serviciile "
+"noastre legate de tichetul \"<strong t-out=\"object.name or ''"
+"\">Picioarele mesei sunt dezechilibrate</strong>\"\n"
+"            <t t-if=\"object._rating_get_operator().name\">\n"
+"                atribuit lui <strong t-out="
+"\"object._rating_get_operator().name or ''\">Mitchell Admin</strong>.<br/>\n"
+"            </t>\n"
+"            <t t-else=\"\">\n"
+"                .<br/><br/>\n"
+"            </t>\n"
+"        </td></tr>\n"
+"        <tr><td style=\"text-align: center;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
+"\"width:100%; margin: 32px 0px 32px 0px; display: inline-table;\">\n"
+"                <tr><td style=\"font-size: 14px; text-align:center;\">\n"
+"                    <strong>Spuneți-ne cum vă simțiți în legătură cu "
+"serviciile noastre</strong><br/>\n"
+"                    <span style=\"text-color: #888888\">"
+"(faceți clic pe unul dintre aceste smiley-uri)</span>\n"
+"                </td></tr>\n"
+"                <tr><td style=\"font-size: 14px;\">\n"
+"                    <table style="
+"\"width:100%;text-align:center;margin-top:2rem;\">\n"
+"                        <tr>\n"
+"                            <td>\n"
+"                                <a t-attf-href=\"/rate/{{ access_token }}/5\""
+" t-att-class=\"'pe-none' if object._rating_get_operator() else ''\">\n"
+"                                    <img alt=\"Fericit\" src="
+"\"/rating/static/src/img/rating_5.png\" title=\"Fericit\"/>\n"
+"                                </a>\n"
+"                            </td>\n"
+"                            <td>\n"
+"                                <a t-attf-href=\"/rate/{{ access_token }}/3\""
+" t-att-class=\"'pe-none' if object._rating_get_operator() else ''\">\n"
+"                                    <img alt=\"Neutru\" src="
+"\"/rating/static/src/img/rating_3.png\" title=\"Neutru\"/>\n"
+"                                </a>\n"
+"                            </td>\n"
+"                            <td>\n"
+"                                <a t-attf-href=\"/rate/{{ access_token }}/1\""
+" t-att-class=\"'pe-none' if object._rating_get_operator() else ''\">\n"
+"                                    <img alt=\"Nefericit\" src="
+"\"/rating/static/src/img/rating_1.png\" title=\"Nefericit\"/>\n"
+"                                </a>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                    </table>\n"
+"                </td></tr>\n"
+"            </table>\n"
+"        </td></tr>\n"
+"        <tr><td valign=\"top\" style=\"font-size: 14px;\">\n"
+"            Apreciem feedback-ul dvs. Ne ajută să ne îmbunătățim continuu.\n"
+"            <br/><br/><span style="
+"\"margin: 0px 0px 0px 0px; font-size: 12px; opacity: 0.5; color: #454748;\""
+">Acest sondaj pentru clienți a fost trimis deoarece tichetul dvs. a fost "
+"mutat în stadiul <b t-out=\"object.stage_id.name or ''\">În curs</b>.</span>"
+"\n"
+"        </td></tr>\n"
+"    </tbody>\n"
+"    </table>\n"
+"</div>\n"
+"        "
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.new_ticket_request_email_template
@@ -407,8 +490,8 @@ msgid ""
 "<i class=\"fa fa-envelope-o\" title=\"Domain alias\" role=\"img\" aria-"
 "label=\"Domain alias\"/>&amp;nbsp;"
 msgstr ""
-"<i class=\"fa fa-envelope-o\" title=\"Domain alias\" role=\"img\" aria-"
-"label=\"Domain alias\"/>&amp;nbsp;"
+"<i class=\"fa fa-envelope-o\" title=\"Alias domeniu\" role=\"img\" aria-"
+"label=\"Alias domeniu\"/>&amp;nbsp;"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -422,6 +505,14 @@ msgid ""
 "                            <i class=\"fa fa-fw o_button_icon fa-frown-o "
 "text-danger\" invisible=\"rating_avg &gt;= 2.33\" title=\"Unhappy\"/>"
 msgstr ""
+"<i class=\"fa fa-fw o_button_icon fa-smile-o text-success\" invisible="
+"\"rating_avg &lt; 3.66\" title=\"Fericit\"/>\n"
+"                            <i class="
+"\"fa fa-fw o_button_icon fa-meh-o text-warning\" invisible="
+"\"rating_avg &lt; 2.33 or rating_avg &gt;= 3.66\" title=\"Neutru\"/>\n"
+"                            <i class="
+"\"fa fa-fw o_button_icon fa-frown-o text-danger\" invisible="
+"\"rating_avg &gt;= 2.33\" title=\"Nefericit\"/>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
@@ -562,7 +653,7 @@ msgstr "<span class=\"o_stat_text\"> Tichete</span>"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 msgid "<span class=\"o_stat_text\">Rating</span>"
-msgstr "<span class=\"o_stat_text\">Rating</span>"
+msgstr "<span class=\"o_stat_text\">Evaluare</span>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -661,7 +752,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.constraint,message:helpdesk.constraint_helpdesk_tag_assignment_tag_team_unique
 msgid "A tag can only be used once per team."
-msgstr ""
+msgstr "O etichetă poate fi utilizată o singură dată pe echipă."
 
 #. module: helpdesk
 #: model:ir.model.constraint,message:helpdesk.constraint_helpdesk_tag_name_uniq
@@ -1223,12 +1314,12 @@ msgstr "Configurare"
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.action_helpdesk_tag_assignment
 msgid "Configure Tags Handled by Team Members"
-msgstr ""
+msgstr "Configurează etichetele gestionate de membrii echipei"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Configure tags handled by team members"
-msgstr ""
+msgstr "Configurează etichetele gestionate de membrii echipei"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_helpdesk_stage_delete_confirmation_wizard
@@ -1245,7 +1336,7 @@ msgstr "Confirmare"
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_sla
 msgid "Congratulations!"
-msgstr "Felicitări"
+msgstr "Felicitări!"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_res_partner
@@ -1271,7 +1362,7 @@ msgstr "Creează un client"
 #. module: helpdesk
 #: model:ir.model,website_form_label:helpdesk.model_helpdesk_ticket
 msgid "Create a Ticket"
-msgstr ""
+msgstr "Creează un tichet"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.email_template_action_helpdesk
@@ -1421,7 +1512,7 @@ msgstr "Data la care a fost atins pentru prima dată stagiu SLA"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__rotting_days
 msgid "Day count since this resource was last updated"
-msgstr ""
+msgstr "Număr de zile de la ultima actualizare a acestei resurse"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla_report_analysis__sla_exceeded_hours
@@ -1434,12 +1525,12 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rotting_days
 msgid "Days Rotting"
-msgstr ""
+msgstr "Zile de învechire"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage__rotting_threshold_days
 msgid "Days to rot"
-msgstr ""
+msgstr "Zile până la învechire"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_status__deadline
@@ -1512,7 +1603,7 @@ msgstr "Abandonează"
 #. module: helpdesk
 #: model:ir.model.fields.selection,name:helpdesk.selection__helpdesk_team__assign_method__tags
 msgid "Dispatch tickets based on tags"
-msgstr ""
+msgstr "Distribuie tichetele pe baza etichetelor"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_digest_digest__display_name
@@ -1722,6 +1813,8 @@ msgid ""
 "Get in touch with your website visitors, and engage them with scripted "
 "chatbot conversations. Create and search tickets from your conversations."
 msgstr ""
+"Luați legătura cu vizitatorii site-ului dvs. și angajați-i în conversații "
+"scriptate cu chatbot-ul. Creați și căutați tichete din conversațiile dvs."
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_analysis_action
@@ -1830,7 +1923,7 @@ msgstr "Bună"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Help Center"
-msgstr "Centru  de ajutor"
+msgstr "Centru de ajutor"
 
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.menu_helpdesk_root
@@ -1862,7 +1955,7 @@ msgstr "Asistent de ștergere a etapelor"
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_tag_assignment
 msgid "Helpdesk Tag Assignment"
-msgstr ""
+msgstr "Atribuire etichetă HelpDesk"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_tag
@@ -1951,7 +2044,7 @@ msgstr "Prioritate ridicată"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage__rotting_threshold_days
 msgid "Highlight tickets that haven't been updated for this many days."
-msgstr ""
+msgstr "Evidențiați tichetele care nu au fost actualizate de atâtea zile."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
@@ -2007,7 +2100,7 @@ msgstr ""
 #. module: helpdesk
 #: model:helpdesk.team,name:helpdesk.helpdesk_team2
 msgid "IT Support (Auto Assignment by Tags)"
-msgstr ""
+msgstr "Asistență IT (Atribuire automată după etichete)"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__activity_exception_icon
@@ -2204,7 +2297,7 @@ msgstr "Ultimele evaluări"
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/js/tours/helpdesk.js:0
 msgid "Let's create your first <b>ticket</b>."
-msgstr "Să creăm un prim  <b>tichet</b>."
+msgstr "Să creăm un prim <b>tichet</b>."
 
 #. module: helpdesk
 #. odoo-javascript
@@ -2416,7 +2509,7 @@ msgid ""
 "New tickets will automatically be assigned to the team members that are "
 "available, according to their working hours and their time off."
 msgstr ""
-"Ticketele noi vor fi automat atribuite membrilor echipei care sunt "
+"Tichetele noi vor fi automat atribuite membrilor echipei care sunt "
 "disponibili, în funcție de orele de lucru și de concediile lor."
 
 #. module: helpdesk
@@ -2491,7 +2584,7 @@ msgstr "Nu au fost găsite etichete. Să creăm una!"
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.action_helpdesk_tag_assignment
 msgid "No tags or team members found. Let's create them!"
-msgstr ""
+msgstr "Nicio etichetă sau membru al echipei găsit. Haideți să le creăm!"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_team_dashboard_action_main
@@ -2531,7 +2624,7 @@ msgstr "Număr de acțiuni"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_report_analysis__sla_status_failed
 msgid "Number of SLAs Failed"
-msgstr ""
+msgstr "Număr de SLA-uri eșuate"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_delete_wizard__ticket_count
@@ -2609,7 +2702,7 @@ msgstr "Timp deschis (ore)"
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/js/tours/helpdesk.js:0
 msgid "Open the ticket."
-msgstr ""
+msgstr "Deschideți tichetul."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_force_thread_id
@@ -2775,7 +2868,7 @@ msgstr "Vă rugăm să introduceți o valoare pozitivă."
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/components/helpdesk_team_target/helpdesk_team_target.js:0
 msgid "Please enter a value less than or equal to 5."
-msgstr ""
+msgstr "Vă rugăm să introduceți o valoare mai mică sau egală cu 5."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_contact
@@ -2954,7 +3047,7 @@ msgstr "Returnări"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Reimburse customers with a voucher code for future purchases"
-msgstr ""
+msgstr "Rambursează clienții cu un cod de voucher pentru achiziții viitoare"
 
 #. module: helpdesk
 #: model:helpdesk.tag,name:helpdesk.tag_repair
@@ -2974,7 +3067,7 @@ msgstr "Reparații"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_product_replacements
 msgid "Replacements"
-msgstr ""
+msgstr "Înlocuiri"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
@@ -3015,7 +3108,7 @@ msgstr "Retururi"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__is_rotting
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Rotting"
-msgstr ""
+msgstr "Învechire"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_report_analysis__sla_id
@@ -3180,7 +3273,7 @@ msgstr "Căutare în Clienți"
 #. odoo-python
 #: code:addons/helpdesk/controllers/portal.py:0
 msgid "Search in Helpdesk Team"
-msgstr ""
+msgstr "Căutare în Echipa de asistență tehnică"
 
 #. module: helpdesk
 #. odoo-python
@@ -3192,7 +3285,7 @@ msgstr "Căutare în Stagiu"
 #. odoo-python
 #: code:addons/helpdesk/controllers/portal.py:0
 msgid "Search%(left)s Tickets%(right)s"
-msgstr ""
+msgstr "Căutare%(left)s Tichete%(right)s"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__access_token
@@ -3238,6 +3331,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Send customers a replacement for a lost, damaged, or returned item"
 msgstr ""
+"Trimite clienților un înlocuitor pentru un articol pierdut, deteriorat sau "
+"returnat"
 
 #. module: helpdesk
 #: model:helpdesk.tag,name:helpdesk.tag_service
@@ -3266,7 +3361,7 @@ msgstr "Setări"
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.portal_share_action
 msgid "Share Ticket"
-msgstr ""
+msgstr "Partajează tichet"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -3448,7 +3543,7 @@ msgstr "Echipă"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_helpdesk_tag_assignment_search
 msgid "Team Member"
-msgstr ""
+msgstr "Membru echipă"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag_assignment__user_ids
@@ -3459,7 +3554,7 @@ msgstr "Membrii echipei"
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_stage_team_action
 msgid "Team Stages"
-msgstr ""
+msgstr "Etapele echipei"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.email_template_action_helpdesk
@@ -3470,7 +3565,7 @@ msgstr "Șabloane"
 #. odoo-python
 #: code:addons/helpdesk/models/helpdesk_ticket.py:0
 msgid "The customer cannot belong to a different company than the ticket."
-msgstr ""
+msgstr "Clientul nu poate aparține unei companii diferite de tichet."
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_model_id
@@ -3636,7 +3731,7 @@ msgstr "Tichet creat"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_report_analysis__create_date
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_report_analysis__create_date
 msgid "Ticket Creation Date"
-msgstr ""
+msgstr "Data creării tichetului"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_report_analysis__sla_deadline
@@ -3669,7 +3764,7 @@ msgstr "Stare SLA tichet"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_tag_assignment__tag_id
 msgid "Ticket Tag"
-msgstr ""
+msgstr "Etichetă tichet"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.quick_create_ticket_form
@@ -3801,7 +3896,7 @@ msgstr "Activitățile de astăzi"
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/components/helpdesk_team_dashboard/helpdesk_team_dashboard.xml:0
 msgid "Today's Average Rating"
-msgstr ""
+msgstr "Evaluarea medie de astăzi"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__total_response_hours
@@ -3869,13 +3964,13 @@ msgstr "Tichete neatribuite"
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search_base
 #: model_terms:ir.ui.view,arch_db:helpdesk.team_rating_progress_data
 msgid "Unhappy"
-msgstr ""
+msgstr "Nefericit"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
 msgid "Unhappy face"
-msgstr ""
+msgstr "Față nefericită"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
@@ -3912,7 +4007,7 @@ msgstr "Folosiți cupoane"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__use_giftcards
 msgid "Use Gift Cards"
-msgstr ""
+msgstr "Folosiți carduri cadou"
 
 #. module: helpdesk
 #. odoo-javascript
@@ -3964,6 +4059,9 @@ msgid ""
 "Want to use the website form? Just adjust your team's visibility to "
 "\"Invited portal users and all internal users\" and watch the magic happen!"
 msgstr ""
+"Doriți să utilizați formularul web? Doar ajustați vizibilitatea echipei dvs. "
+"la \"Utilizatorii portalului invitați și toți utilizatorii interni\" și "
+"urmăriți cum se întâmplă magia!"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
@@ -4042,7 +4140,7 @@ msgstr "Ore de lucru de închis"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__sla_deadline_hours
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_report_analysis__ticket_deadline_hours
 msgid "Working Hours until SLA Deadline"
-msgstr ""
+msgstr "Ore de lucru până la termenul limită SLA"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla_status__exceeded_hours
@@ -4101,6 +4199,8 @@ msgid ""
 "You cannot update the company of this partner because it would lead to "
 "inconsistency with some of its tickets."
 msgstr ""
+"Nu puteți actualiza compania acestui partener deoarece ar duce la "
+"inconsistență cu unele dintre tichetele sale."
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_sla
@@ -4116,7 +4216,7 @@ msgstr "Ați fost invitat să urmăriți %s"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.ticket_invitation_follower
 msgid "You have been invited to follow Ticket Document :"
-msgstr ""
+msgstr "Ați fost invitat să urmăriți Documentul tichet:"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -4127,7 +4227,7 @@ msgstr "alias"
 #. odoo-python
 #: code:addons/helpdesk/controllers/portal.py:0
 msgid "close_date"
-msgstr ""
+msgstr "close_date"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -4179,7 +4279,7 @@ msgstr "căutare echipă"
 #. odoo-python
 #: code:addons/helpdesk/models/helpdesk_team.py:0
 msgid "team_id"
-msgstr ""
+msgstr "team_id"
 
 #. module: helpdesk
 #. odoo-python
@@ -4191,7 +4291,7 @@ msgstr "tichete"
 #. odoo-python
 #: code:addons/helpdesk/controllers/portal.py:0
 msgid "user_id"
-msgstr ""
+msgstr "user_id"
 
 #. module: helpdesk
 #: model:mail.template,subject:helpdesk.rating_ticket_request_email_template

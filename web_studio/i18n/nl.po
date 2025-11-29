@@ -9,13 +9,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Bren Driesen <brdri@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-17 12:53+0000\n"
-"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
+"PO-Revision-Date: 2025-11-27 14:15+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/web_studio/"
 "nl/>\n"
 "Language: nl\n"
@@ -23,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: web_studio
 #. odoo-python
@@ -889,7 +890,7 @@ msgstr "Wijzig afbeelding"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor_wysiwyg/editor_plugins/report_editor_plugin.js:0
 msgid "Change the placeholder or the expression for an existing field"
-msgstr ""
+msgstr "Wijzig de placeholder of de expression voor een bestaand veld"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1628,7 +1629,7 @@ msgstr "Wijzig waardes"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor_wysiwyg/editor_plugins/report_editor_plugin.js:0
 msgid "Edit field"
-msgstr ""
+msgstr "Veld bewerken"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2508,7 +2509,7 @@ msgstr "Lijst"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/model_configurator/model_configurator.js:0
 msgid "Manually sort records in the kanban and list view"
-msgstr ""
+msgstr "Handmatig records sorteren in de Kanban- en lijstweergave"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2966,7 +2967,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor_wysiwyg/editor_plugins/studio_dynamic_placeholder_popover.xml:0
 msgid "Only visible during the edition of the report"
-msgstr ""
+msgstr "Alleen zichtbaar tijdens het bewerken van het rapport"
 
 #. module: web_studio
 #. odoo-javascript

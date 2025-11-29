@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:42+0000\n"
+"POT-Creation-Date: 2025-11-28 18:41+0000\n"
 "PO-Revision-Date: 2025-11-21 14:20+0000\n"
 "Last-Translator: Odoo Turkish Import <dyki+tr@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/ai/tr/>\n"
@@ -116,8 +116,8 @@ msgstr ""
 "            Önemli noktalar:\n"
 "            - ⚠️ Yalnızca ARANABİLİR alanları döndürür - diğerleri etki "
 "alanlarında kullanılamaz\n"
-"            - İlişkiler için: İlgili modeli parantez içinde gösterir ("
-"many2one, one2many, many2many)\n"
+"            - İlişkiler için: İlgili modeli parantez içinde gösterir "
+"(many2one, one2many, many2many)\n"
 "            - Diğer modellere geçiş yapmak için yalnızca ilişki alanları "
 "kullanılabilir\n"
 "            - char/text/float gibi literal alanlar çapraz geçiş için "
@@ -370,8 +370,8 @@ msgstr ""
 "\n"
 "            💡 Geçerli ölçümleri almak için önce compute_report_measures() "
 "işlevini HER ZAMAN çağırın\n"
-"            💡 Sıralamalar için: Hesaplamalara sıralamayı dahil edin ("
-"örneğin, [\"amount_total desc\"])\n"
+"            💡 Sıralamalar için: Hesaplamalara sıralamayı dahil edin "
+"(örneğin, [\"amount_total desc\"])\n"
 "            💡 Özel alan adlarını dikkate almadan ÖNCE herhangi bir "
 "aranabilir alana göre filtrelemek için arama parametresini kullanın\n"
 "            ⚠️ En iyi pivot deneyimi için \"Raporlama\" uygulama menülerini "
@@ -426,10 +426,10 @@ msgstr ""
 "            Boru (|) sınırlayıcılı CSV döndürür:\n"
 "            ```\n"
 "            menu_id|model_name|context|domain|search_view\n"
-"            389|sale.order|{\"search_default_my_quotation\": "
-"1}|[]|<search><fields>...</fields></search>\n"
-"            172|account.movess|{\"search_default_draft\": 1}|"
-"[\"type\", \"=\", \"out_invoice\"]]|<search>...</search>\n"
+"            389|sale.order|{\"search_default_my_quotation\": 1}|[]|"
+"<search><fields>...</fields></search>\n"
+"            172|account.movess|{\"search_default_draft\": 1}|[\"type\", "
+"\"=\", \"out_invoice\"]]|<search>...</search>\n"
 "            ```\n"
 "\n"
 "            Anahtar bilgiler:\n"
@@ -497,8 +497,8 @@ msgstr ""
 "\n"
 "            Komut isteminin <session_info_context> bölümünde, etkin arama "
 "fasetlerini içeren geçerli bir görünüm bilgisi sağlanır.\n"
-"            Bir faset `OR`lanmış filtreler grubu, grupbys grubu veya `OR`"
-"lanmış arama terimleri grubu olabilir.\n"
+"            Bir faset `OR`lanmış filtreler grubu, grupbys grubu veya "
+"`OR`lanmış arama terimleri grubu olabilir.\n"
 "\n"
 "            **Parametreleri anlama**:\n"
 "            - `remove_facets` - Bir fasetin kaldırılması tüm filtre/grup/"
@@ -555,9 +555,9 @@ msgid ""
 "ai_tool_show_warning\" aria-hidden=\"true\" title=\"The AI will not be "
 "limited by the groups defined on tools\"/>"
 msgstr ""
-"<i class=\"fa fa-warning text-warning me-2\" invisible="
-"\"not ai_tool_show_warning\" aria-hidden=\"true\" title="
-"\"The AI will not be limited by the groups defined on tools\"/>"
+"<i class=\"fa fa-warning text-warning me-2\" invisible=\"not "
+"ai_tool_show_warning\" aria-hidden=\"true\" title=\"The AI will not be "
+"limited by the groups defined on tools\"/>"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
@@ -982,7 +982,8 @@ msgstr "E-postadaki bir istemi dönüştürme"
 msgid ""
 "Could you please provide info about '%s' as it is required to process your "
 "request"
-msgstr "Talebinizi işleme koyabilmek için '%s' hakkında bilgi verebilir misiniz"
+msgstr ""
+"Talebinizi işleme koyabilmek için '%s' hakkında bilgi verebilir misiniz"
 
 #. module: ai
 #: model:ir.model,website_form_label:ai.model_res_partner
@@ -1139,6 +1140,12 @@ msgstr "Hata Detayları"
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__status__failed
 msgid "Failed"
 msgstr "Başarısız"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/ai_agent_source.py:0
+msgid "Failed to fetch the content of the source."
+msgstr ""
 
 #. module: ai
 #. odoo-python
@@ -1908,12 +1915,6 @@ msgid "URL"
 msgstr "URL"
 
 #. module: ai
-#. odoo-python
-#: code:addons/ai/models/ai_agent_source.py:0
-msgid "URL content cannot be extracted."
-msgstr "URL içeriği çıkarılamıyor."
-
-#. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 msgid "Unable to start the recording."
@@ -2049,3 +2050,6 @@ msgstr "Uygulandı."
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "fa-hashtag"
 msgstr "fa-hashtag"
+
+#~ msgid "URL content cannot be extracted."
+#~ msgstr "URL içeriği çıkarılamıyor."

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"POT-Creation-Date: 2025-11-28 18:40+0000\n"
 "PO-Revision-Date: 2025-11-08 19:48+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -660,6 +660,7 @@ msgid "Activity type"
 msgstr "活動類型"
 
 #. module: hr_payroll
+#: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Add Inputs"
@@ -3000,9 +3001,8 @@ msgid ""
 "basic salary per product can defined in expression like: result = "
 "inputs['SALEURO'].amount * version.wage * 0.01."
 msgstr ""
-"用於計算用途。舉例：假設銷售員每件產品可獲基本薪金 1%% "
-"的佣金，相關規則可用以下表達式定義：result = inputs['SALEURO'].amount * "
-"version.wage * 0.01。"
+"用於計算用途。舉例：假設銷售員每件產品可獲基本薪金 1%% 的佣金，相關規則可用以"
+"下表達式定義：result = inputs['SALEURO'].amount * version.wage * 0.01。"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__italic

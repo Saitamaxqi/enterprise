@@ -10,22 +10,23 @@
 # Foldi Robert <foldirobert@nexterp.ro>, 2022
 # Dorin Hongu <dhongu@gmail.com>, 2023
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-08 19:50+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-11-27 14:15+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Romanian <https://translate.odoo.com/projects/odoo-19/"
 "web_studio/ro/>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
-"20)) ? 1 : 2;\n"
-"X-Generator: Weblate 5.12.2\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : "
+"(n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: web_studio
 #. odoo-python
@@ -631,7 +632,7 @@ msgstr "Sigur doriți să eliminați valorile de selecție?"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/sidebar_properties_toolbox/sidebar_properties_toolbox.js:0
 msgid "Are you sure you want to remove this %s from the view?"
-msgstr "Sigur doriți să eliminați acest lucru  %s din vedere?"
+msgstr "Sigur doriți să eliminați acest %s din vizualizare?"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1249,17 +1250,17 @@ msgstr "Câmpuri Personalizate:"
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.view_base_module_uninstall_studio
 msgid "Custom models:"
-msgstr "Modele Personalizate"
+msgstr "Modele Personalizate:"
 
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.view_base_module_uninstall_studio
 msgid "Custom reports:"
-msgstr "Rapoarte Personalizate"
+msgstr "Rapoarte Personalizate:"
 
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.view_base_module_uninstall_studio
 msgid "Custom views:"
-msgstr "Vizualizări Personalizate"
+msgstr "Vizualizări Personalizate:"
 
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.view_base_module_uninstall_studio
@@ -3971,7 +3972,7 @@ msgstr "Etichete"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/field_properties/field_properties.xml:0
 msgid "Technical Name"
-msgstr "Nume tehnic:"
+msgstr "Nume tehnic"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4072,7 +4073,7 @@ msgid ""
 "field was deleted, but still used somewhere else."
 msgstr ""
 "Modificarea solicitată a provocat o eroare în vizualizare. Ar putea fi din "
-"cauză că un câmp a fost șters, dar totuși este  folosit în altă parte."
+"cauză că un câmp a fost șters, dar totuși este folosit în altă parte."
 
 #. module: web_studio
 #. odoo-javascript
@@ -4247,7 +4248,7 @@ msgstr "Vizualizări cronologie"
 #: code:addons/web_studio/static/src/js/tours/web_studio_tour.js:0
 msgid "To <b>customize a field</b>, click on its <i>label</i>."
 msgstr ""
-"Pentru <b>a personaliza un câmp</b>, Click  <i>pe eticheta acestuia.</i>."
+"Pentru <b>a personaliza un câmp</b>, Click <i>pe eticheta acestuia.</i>."
 
 #. module: web_studio
 #. odoo-javascript

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:42+0000\n"
+"POT-Creation-Date: 2025-11-28 18:41+0000\n"
 "PO-Revision-Date: 2025-11-21 14:41+0000\n"
 "Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/ai/nl/>\n"
@@ -368,9 +368,9 @@ msgid ""
 "ai_tool_show_warning\" aria-hidden=\"true\" title=\"The AI will not be "
 "limited by the groups defined on tools\"/>"
 msgstr ""
-"<i class=\"fa fa-warning text-warning me-2\" invisible="
-"\"not ai_tool_show_warning\" aria-hidden=\"true\" title="
-"\"AI wordt niet beperkt door groepen gebaseerd op tools\"/>"
+"<i class=\"fa fa-warning text-warning me-2\" invisible=\"not "
+"ai_tool_show_warning\" aria-hidden=\"true\" title=\"AI wordt niet beperkt "
+"door groepen gebaseerd op tools\"/>"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
@@ -953,6 +953,12 @@ msgstr "Foutgegevens"
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__status__failed
 msgid "Failed"
 msgstr "Mislukt"
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/ai_agent_source.py:0
+msgid "Failed to fetch the content of the source."
+msgstr ""
 
 #. module: ai
 #. odoo-python
@@ -1645,8 +1651,8 @@ msgstr "Titel"
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
 msgid "To return a result to the AI agent, do <code>ai['result'] = ...</code>"
 msgstr ""
-"Om een resultaat terug te sturen naar de AI-agent, doe je <code>ai"
-"['resultaat'] = ...</code>"
+"Om een resultaat terug te sturen naar de AI-agent, doe je "
+"<code>ai['resultaat'] = ...</code>"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_ids
@@ -1704,8 +1710,8 @@ msgstr ""
 "Type van serveractie. De volgende waarden zijn beschikbaar:\n"
 "- 'Werk een record bij': werk de waarden van een record bij\n"
 "- 'Activiteit aanmaken': maak een activiteit (Chat)\n"
-"- 'E-mail sturen': plaats een bericht, een notitie of stuur een e-mail (Chat)"
-"\n"
+"- 'E-mail sturen': plaats een bericht, een notitie of stuur een e-mail "
+"(Chat)\n"
 "- 'Sms sturen': stuur een sms, log ze op documenten (sms)\n"
 "- 'Volgers toevoegen/verwijderen': voeg volgers toe of verwijder volgers van "
 "een record (Chat)\n"
@@ -1721,12 +1727,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__type__url
 msgid "URL"
 msgstr "URL"
-
-#. module: ai
-#. odoo-python
-#: code:addons/ai/models/ai_agent_source.py:0
-msgid "URL content cannot be extracted."
-msgstr "URL-inhoud kan niet worden geëxtraheerd."
 
 #. module: ai
 #. odoo-javascript
@@ -1864,6 +1864,9 @@ msgstr "uitgevoerd."
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "fa-hashtag"
 msgstr "fa-hashtag"
+
+#~ msgid "URL content cannot be extracted."
+#~ msgstr "URL-inhoud kan niet worden geëxtraheerd."
 
 #~ msgid ""
 #~ "No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, and "

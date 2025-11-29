@@ -19,13 +19,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # Saara Hakanen <sahak@odoo.com>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-19 09:12+0000\n"
-"Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
+"PO-Revision-Date: 2025-11-27 14:13+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
 "account_intrastat/fi/>\n"
 "Language: fi\n"
@@ -33,7 +34,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: account_intrastat
 #. odoo-javascript
@@ -158,7 +159,7 @@ msgstr "Hyödykekoodi"
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Commodity codes configuration"
-msgstr ""
+msgstr "Tavarakoodien määritys"
 
 #. module: account_intrastat
 #: model:ir.model,name:account_intrastat.model_res_company
@@ -229,19 +230,19 @@ msgstr "Näyttönimi"
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Exclude any domestic or extra-EU sales from the Intrastat report."
-msgstr ""
+msgstr "Poissulje kotimaan tai EU:n ulkopuolisia myyntejä Intrastat-raportista."
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Exclude sales made to private individuals from the listing."
-msgstr ""
+msgstr "Sulje yksityishenkilöille tehdyt myynnit pois listauksesta."
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Exclude services from the report."
-msgstr ""
+msgstr "Sulje palvelut pois raportista."
 
 #. module: account_intrastat
 #. odoo-javascript
@@ -363,7 +364,7 @@ msgstr "Intrastat-lisäyksikön määrä"
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Intrastat Thresholds"
-msgstr ""
+msgstr "Intrastat-kynnysarvot"
 
 #. module: account_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_account_bank_statement_line__intrastat_transport_mode_id
@@ -395,6 +396,8 @@ msgid ""
 "Intrastat thresholds may change annually. Verify that your transactions "
 "exceed the threshold for reporting."
 msgstr ""
+"Intrastat-kynnysarvot saattavat muuttua vuosittain. Varmista, että "
+"maksutapahtumasi ylittävät raportointikynnyksen."
 
 #. module: account_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.account_move_line_tree_view_account_intrastat_transaction_codes
@@ -428,7 +431,7 @@ msgstr "Laskurivit"
 #: model:ir.model.fields,field_description:account_intrastat.field_account_return__is_intrastat_return
 #: model:ir.model.fields,field_description:account_intrastat.field_account_return_type__is_intrastat_return_type
 msgid "Is an Intrastat Return Type"
-msgstr ""
+msgstr "On Intrastat-ilmoitustyyppi"
 
 #. module: account_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.account_move_tree_view_account_intrastat_transport_codes
@@ -467,13 +470,13 @@ msgstr "Vain yritysasiakkaat"
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Only goods included"
-msgstr ""
+msgstr "Sisältää vain tavarat"
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Only intra-EU transactions"
-msgstr ""
+msgstr "Vain EU:n sisäiset maksutapahtumat"
 
 #. module: account_intrastat
 #. odoo-javascript
@@ -632,7 +635,7 @@ msgstr "Lisäyksiköiden määrä tuotemäärää kohti."
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "The value of goods should be VAT exclusive."
-msgstr ""
+msgstr "Tavaroiden arvon tulisi olla arvonlisäveroton."
 
 #. module: account_intrastat
 #. odoo-javascript
@@ -674,13 +677,13 @@ msgstr "Määrittelemättömät painotuotteet."
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Unit of measure configuration"
-msgstr ""
+msgstr "Mittayksikön määritys"
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "VAT exclusive"
-msgstr ""
+msgstr "ilman arvonlisäveroa"
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_services_value
@@ -697,7 +700,7 @@ msgstr "Arvon valuutta"
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Verify that each good is assigned the right unit of measure."
-msgstr ""
+msgstr "Varmista, että jokaiselle tavaralle on määritetty oikea mittayksikkö."
 
 #. module: account_intrastat
 #. odoo-python
@@ -706,6 +709,8 @@ msgid ""
 "Verify that each item has the appropriate code and description according to "
 "the CN (Combined Nomenclature) codes."
 msgstr ""
+"Varmista, että kullakin tuottella on CN:n (yhdistetty nimikkeistö) mukainen "
+"koodi ja kuvaus."
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_weight

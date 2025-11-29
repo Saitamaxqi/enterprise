@@ -4,13 +4,14 @@
 #
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2025.
 # Bren Driesen <brdri@odoo.com>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:42+0000\n"
-"PO-Revision-Date: 2025-11-19 13:45+0000\n"
-"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>\n"
+"PO-Revision-Date: 2025-11-27 16:40+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "hr_expense_stripe/nl/>\n"
 "Language: nl\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -33,6 +34,9 @@ msgid ""
 "                                <span class=\"text-warning\"> Stripe issuing "
 "is not yet supported for your localization.</span>"
 msgstr ""
+"<i class=\"fa fa-warning ms-1 text-warning\"/>\n"
+"                                <span class=\"text-warning\"> Stripe issuing "
+"wordt nog niet ondersteund in jouw lokalisatie.</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_kanban
@@ -3739,7 +3743,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/account_journal.py:0
 msgid "Stripe issuing is not supported for your localization"
-msgstr ""
+msgstr "Stripe Issuing wordt niet ondersteund voor jouw lokalisatie"
 
 #. module: hr_expense_stripe
 #. odoo-python

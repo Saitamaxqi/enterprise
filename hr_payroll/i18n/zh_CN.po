@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"POT-Creation-Date: 2025-11-28 18:40+0000\n"
 "PO-Revision-Date: 2025-11-08 19:47+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -299,8 +299,8 @@ msgid ""
 "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
 "title=\"Arrow\"/>"
 msgstr ""
-"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"箭头图标\" title="
-"\"箭头\"/>"
+"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"箭头图标\" title=\"箭头"
+"\"/>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -317,8 +317,9 @@ msgstr "<span class=\"mx-2\">/</span>"
 msgid ""
 "<span class=\"o_small-fs\">This dashboard is the headquarter of the Payroll "
 "app, from here, you'll have a quick overview on everything.</span>"
-msgstr "<span class=\"o_small-fs\""
-">该仪表板是薪资应用的核心控制台，您可在此快速掌握所有关键信息。</span>"
+msgstr ""
+"<span class=\"o_small-fs\">该仪表板是薪资应用的核心控制台，您可在此快速掌握所"
+"有关键信息。</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -528,8 +529,9 @@ msgstr "<strong><span class=\"h3-fs\">深入探索</span></strong>"
 msgid ""
 "<strong>Congrats, Your first payslip is now finished. It's time for you to "
 "explore the Payroll app by yourself.</strong>"
-msgstr "<strong>恭喜，您的第一张工资单现已完成。现在是时候亲自探索工资单应用程序了。<"
-"/strong>"
+msgstr ""
+"<strong>恭喜，您的第一张工资单现已完成。现在是时候亲自探索工资单应用程序了。"
+"</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -583,8 +585,9 @@ msgstr ""
 msgid ""
 "A Pay Run is a batch of individual payslips processed together for a "
 "specific pay period, including wages, taxes, and deductions.<br><br>"
-msgstr "发薪操作是在特定工资期内一起处理的一批个人工资单，包括工资、税收和扣除额。<br"
-"><br>"
+msgstr ""
+"发薪操作是在特定工资期内一起处理的一批个人工资单，包括工资、税收和扣除额。"
+"<br><br>"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_salary_attachment_action
@@ -663,6 +666,7 @@ msgid "Activity type"
 msgstr "活动类型"
 
 #. module: hr_payroll
+#: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Add Inputs"
@@ -1025,7 +1029,8 @@ msgstr "批"
 msgid ""
 "Batches - Groups of payslips with their progress state, to keep an eye on "
 "your latest pays."
-msgstr "批次管理 - 用于追踪最新工资单处理进度的分组系统，可查看各组工资单的状态。"
+msgstr ""
+"批次管理 - 用于追踪最新工资单处理进度的分组系统，可查看各组工资单的状态。"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_res_config_settings__module_l10n_be_hr_payroll
@@ -2210,9 +2215,8 @@ msgid ""
 "        "
 msgstr ""
 "员工的工作时间表。\n"
-"        "
-"如果不填，则认为该员工拥有完全灵活的时间表，可以在一周内的任何时间无限制地工"
-"作。\n"
+"        如果不填，则认为该员工拥有完全灵活的时间表，可以在一周内的任何时间无"
+"限制地工作。\n"
 "        "
 
 #. module: hr_payroll
@@ -3663,8 +3667,9 @@ msgstr ""
 msgid ""
 "Oops! Let’s keep the payslip amount strictly positive. We want to deduct "
 "money from our employee’s payslip, not add to it!"
-msgstr "哎呀！请保持工资单金额为严格的正数。我们是要从员工的工资单中扣款，而不是加钱"
-"！"
+msgstr ""
+"哎呀！请保持工资单金额为严格的正数。我们是要从员工的工资单中扣款，而不是加"
+"钱！"
 
 #. module: hr_payroll
 #. odoo-python
@@ -3672,7 +3677,8 @@ msgstr "哎呀！请保持工资单金额为严格的正数。我们是要从员
 msgid ""
 "Oops! Only draft and cancelled payslips can be deleted without causing any "
 "chaos. We can't take back our dedicated employees' hard-earned cash!"
-msgstr "哎呀！只有草稿和已取消的工资单可以被删除，以免造成任何混乱。我们不能收回我们"
+msgstr ""
+"哎呀！只有草稿和已取消的工资单可以被删除，以免造成任何混乱。我们不能收回我们"
 "敬业员工辛辛苦苦赚来的钱！"
 
 #. module: hr_payroll
@@ -5084,9 +5090,8 @@ msgid ""
 "Still looking for more ? Here is a video to help you <i class=\"fa fa-video-"
 "camera fa-2\" aria-hidden=\"true\" contenteditable=\"false\">​</i>"
 msgstr ""
-"还想了解更多信息？下面的视频将为您提供帮助 <i class="
-"\"fa fa-video-camera fa-2\" aria-hidden=\"true\" contenteditable=\"false\""
-">​</i>"
+"还想了解更多信息？下面的视频将为您提供帮助 <i class=\"fa fa-video-camera "
+"fa-2\" aria-hidden=\"true\" contenteditable=\"false\">​</i>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
@@ -5213,8 +5218,9 @@ msgstr "勾选为意外缺勤的工作条目将被计入工作缺勤报表。"
 msgid ""
 "The YTD reset day must be a valid day of the month : since the current month "
 "is %(month)s, it should be between 1 and %(day)s."
-msgstr "YTD 重置日必须是该月的有效日期：由于当前月份是%(month)s，因此它应该介于 1 "
-"和%(day)s 之间。"
+msgstr ""
+"YTD 重置日必须是该月的有效日期：由于当前月份是%(month)s，因此它应该介于 1 和%"
+"(day)s 之间。"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_edit_payslip_line__code

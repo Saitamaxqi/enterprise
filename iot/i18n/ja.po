@@ -9,21 +9,22 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Junko Augias (juau)" <juau@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:40+0000\n"
-"PO-Revision-Date: 2025-11-20 08:14+0000\n"
+"PO-Revision-Date: 2025-11-28 01:36+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
-"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/iot/ja/"
-">\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/iot/ja/>"
+"\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: iot
 #. odoo-javascript
@@ -410,31 +411,31 @@ msgstr "会計データモジュール"
 #. odoo-javascript
 #: code:addons/iot/static/src/backend/iot_device_form.js:0
 msgid "Fiscal Data Module is connected and operational"
-msgstr ""
+msgstr "会計データモジュールは接続され、正常に動作しています"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Fiscal Data Module memory 90% full."
-msgstr ""
+msgstr "会計データモジュールのメモリが 90% 使用されています。"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Fiscal Data Module memory full."
-msgstr ""
+msgstr "会計データモジュールのメモリが一杯です。"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Fiscal Data Module not operational. Please restart the blackbox"
-msgstr ""
+msgstr "会計データモジュールが動作していません。ブラックボックスを再起動してください"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Fiscal Data Module real time clock corrupt."
-msgstr ""
+msgstr "会計データモジュールのリアルタイムクロックが破損しています。"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__hdmi
@@ -510,13 +511,13 @@ msgstr "インターネットが接続されています"
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Invalid PIN."
-msgstr ""
+msgstr "PINが無効です。"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Invalid data in message sent to the blackbox."
-msgstr ""
+msgstr "ブラックボックスに送信されたメッセージのデータが無効です。"
 
 #. module: iot
 #: model:ir.ui.menu,name:iot.iot_menu_root
@@ -559,7 +560,8 @@ msgstr "IoT Box が見つかりました。接続しています..."
 #: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
 msgid ""
 "IoT Box local network is %(lan_quality)s and internet is %(wan_quality)s"
-msgstr ""
+msgstr "IoT Box のローカルネットワークは %(lan_quality)s、インターネットは %"
+"(wan_quality)s です"
 
 #. module: iot
 #: model:ir.actions.act_window,name:iot.iot_box_action

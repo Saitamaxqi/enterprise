@@ -4,13 +4,14 @@
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # DeepL <noreply-mt-deepl@weblate.org>, 2025.
+# "Malaz Siddig Elsayed Abuidris (msea)" <msea@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-11-12 15:02+0000\n"
-"Last-Translator: DeepL <noreply-mt-deepl@weblate.org>\n"
+"PO-Revision-Date: 2025-11-28 12:48+0000\n"
+"Last-Translator: \"Malaz Siddig Elsayed Abuidris (msea)\" <msea@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
 "spreadsheet_dashboard_account_accountant/tr/>\n"
 "Language: tr\n"
@@ -18,13 +19,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "(Net sales - Total expenses) / Net sales"
 msgstr "(Net satışlar - Toplam giderler) / Net satışlar"
 
@@ -32,7 +32,6 @@ msgstr "(Net satışlar - Toplam giderler) / Net satışlar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "(Net sales – COGS) / Net sales"
 msgstr "(Net satışlar - COGS) / Net satışlar"
 
@@ -40,7 +39,6 @@ msgstr "(Net satışlar - COGS) / Net satışlar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "< 0.7: company might be stuck with non liquid assets"
 msgstr "< 0,7: şirket likit olmayan varlıklarla sıkışıp kalabilir"
 
@@ -48,7 +46,6 @@ msgstr "< 0,7: şirket likit olmayan varlıklarla sıkışıp kalabilir"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "< 0.8: income might be too low"
 msgstr "< 0,8: gelir çok düşük olabilir"
 
@@ -56,7 +53,6 @@ msgstr "< 0,8: gelir çok düşük olabilir"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "< 0: company might not be able to meet obligations"
 msgstr "< 0: şirket yükümlülüklerini yerine getiremeyebilir"
 
@@ -64,7 +60,6 @@ msgstr "< 0: şirket yükümlülüklerini yerine getiremeyebilir"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "< 1: weak financial performance"
 msgstr "<1: zayıf mali performans"
 
@@ -72,7 +67,6 @@ msgstr "<1: zayıf mali performans"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "< 2.5: mature company who accumulated a lot of money"
 msgstr "< 2,5: çok para biriktirmiş olgun şirket"
 
@@ -80,7 +74,6 @@ msgstr "< 2,5: çok para biriktirmiş olgun şirket"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "< 20%: hard to become profitable"
 msgstr "< 20%: karlı hale gelmesi zor"
 
@@ -88,7 +81,6 @@ msgstr "< 20%: karlı hale gelmesi zor"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "< 3%: not efficient at generating business"
 msgstr "< 3%: iş yaratmada verimli değil"
 
@@ -96,7 +88,6 @@ msgstr "< 3%: iş yaratmada verimli değil"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "< 45: company gets paid for sales quickly"
 msgstr "< 45: şirket satışlar için hızlı bir şekilde ödeme alır"
 
@@ -104,7 +95,6 @@ msgstr "< 45: şirket satışlar için hızlı bir şekilde ödeme alır"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "< 45: company liquidates debts to suppliers quickly"
 msgstr "< 45: Şirket tedarikçilere olan borçlarını hızla tasfiye ediyor"
 
@@ -112,7 +102,6 @@ msgstr "< 45: Şirket tedarikçilere olan borçlarını hızla tasfiye ediyor"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "< 5%: not efficient at operating business"
 msgstr "< 5%: işletme faaliyetlerinde verimli değil"
 
@@ -120,7 +109,6 @@ msgstr "< 5%: işletme faaliyetlerinde verimli değil"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "> 0: company can meet financial obligations at any time"
 msgstr "> 0: şirket finansal yükümlülüklerini her zaman karşılayabilir"
 
@@ -128,7 +116,6 @@ msgstr "> 0: şirket finansal yükümlülüklerini her zaman karşılayabilir"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "> 1.5: strong financial performance"
 msgstr "> 1.5: güçlü finansal performans"
 
@@ -136,7 +123,6 @@ msgstr "> 1.5: güçlü finansal performans"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "> 10%: very efficient"
 msgstr "> 10%: çok verimli"
 
@@ -144,7 +130,6 @@ msgstr "> 10%: çok verimli"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "> 10%: very efficient at operating business"
 msgstr "> 10%: işletme faaliyetlerinde çok verimli"
 
@@ -152,7 +137,6 @@ msgstr "> 10%: işletme faaliyetlerinde çok verimli"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "> 1: company in highly solvent position"
 msgstr "> 1: yüksek çözücü konumundaki şirket"
 
@@ -160,7 +144,6 @@ msgstr "> 1: yüksek çözücü konumundaki şirket"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "> 1: income allow to meet financial obligations"
 msgstr "> 1: gelir, mali yükümlülükleri karşılamaya izin verir"
 
@@ -168,7 +151,6 @@ msgstr "> 1: gelir, mali yükümlülükleri karşılamaya izin verir"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "> 50%: hugely profitable business"
 msgstr "> 50%: son derece karlı bir iş"
 
@@ -176,7 +158,6 @@ msgstr "> 50%: son derece karlı bir iş"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "> 5: company owns a lot of debt and not of a lot of own money"
 msgstr "> 5: Şirketin çok fazla borcu var ve çok fazla kendi parası yok"
 
@@ -184,7 +165,6 @@ msgstr "> 5: Şirketin çok fazla borcu var ve çok fazla kendi parası yok"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "> 60: company might not get paid for sales quickly enough"
 msgstr "> 60: şirket satışlar için yeterince hızlı ödeme alamayabilir"
 
@@ -192,7 +172,6 @@ msgstr "> 60: şirket satışlar için yeterince hızlı ödeme alamayabilir"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "> 70: company might be slow to pay suppliers"
 msgstr "> 70: Şirket tedarikçilerine ödeme yapmakta yavaş davranabilir"
 
@@ -200,7 +179,6 @@ msgstr "> 70: Şirket tedarikçilerine ödeme yapmakta yavaş davranabilir"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Account type"
 msgstr "Hesap türü"
 
@@ -234,7 +212,6 @@ msgstr "Ortalama Alacak Vadesi (Gün)"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Average debtor days"
 msgstr "Ortalama borçlu gün sayısı"
 
@@ -248,7 +225,6 @@ msgstr "Ortalama Borç Vadesi (Gün)"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Average payable days"
 msgstr "Ortalama ödenecek gün sayısı"
 
@@ -268,7 +244,6 @@ msgstr "Banka ve Kasa"
 
 #. module: spreadsheet_dashboard_account_accountant
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_account_accountant.dashboard_benchmark
-#, fuzzy
 msgid "Benchmark"
 msgstr "Benchmark"
 
@@ -276,7 +251,6 @@ msgstr "Benchmark"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Best if compared with competitors"
 msgstr "Rakiplerle karşılaştırıldığında en iyisi"
 
@@ -284,7 +258,6 @@ msgstr "Rakiplerle karşılaştırıldığında en iyisi"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "COGS"
 msgstr "COGS"
 
@@ -305,7 +278,6 @@ msgstr "Nakit varlık oranı"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Cash flow"
 msgstr "Nakit akışı"
 
@@ -313,7 +285,6 @@ msgstr "Nakit akışı"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Cash flow / Current liabilities"
 msgstr "Nakit akışı / Kısa vadeli yükümlülükler"
 
@@ -321,7 +292,6 @@ msgstr "Nakit akışı / Kısa vadeli yükümlülükler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Cash flow ratio"
 msgstr "Nakit akış oranı"
 
@@ -393,7 +363,6 @@ msgstr "Kısa Vadeli Borçlar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Current assets / Current liabilities"
 msgstr "Dönen varlıklar / Dönen yükümlülükler"
 
@@ -407,7 +376,6 @@ msgstr "Cari Oran (Dönen Varlıklar / Kısa Vadeli Yabancı Kaynaklar)"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Current assets – Current liabilities"
 msgstr "Dönen varlıklar - Dönen yükümlülükler"
 
@@ -429,7 +397,6 @@ msgstr "Cari gelir"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Current ratio"
 msgstr "Cari oran"
 
@@ -449,7 +416,6 @@ msgstr "Borç/Özsermaye oranı"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Debt-to-equity"
 msgstr "Borç-özkaynak"
 
@@ -464,7 +430,6 @@ msgstr "Amortisman"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "EBIT / Net sales"
 msgstr "FVÖK / Net satışlar"
 
@@ -578,7 +543,6 @@ msgstr "Ay"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Month-Year"
 msgstr "Ay-Yıl"
 
@@ -586,7 +550,6 @@ msgstr "Ay-Yıl"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Net Credit Purchases / Average accounts payable balance for period"
 msgstr "Net Alacak Alımlar / Dönem ortalama borç bakiyesi"
 
@@ -600,7 +563,6 @@ msgstr "Net Varlıklar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Net income / Revenue"
 msgstr "Net gelir / Hasılat"
 
@@ -624,7 +586,6 @@ msgstr "Net kar marjı"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Net sales"
 msgstr "Net satışlar"
 
@@ -653,7 +614,6 @@ msgstr "Bilanço Dışı"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Offset -1 - Month"
 msgstr "Ofset -1 - Ay"
 
@@ -661,7 +621,6 @@ msgstr "Ofset -1 - Ay"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Offset -1 - Month-Year"
 msgstr "Ofset -1 - Ay-Yıl"
 
@@ -669,7 +628,6 @@ msgstr "Ofset -1 - Ay-Yıl"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Offset -1 - Start date"
 msgstr "Ofset -1 - Başlangıç tarihi"
 
@@ -677,7 +635,6 @@ msgstr "Ofset -1 - Başlangıç tarihi"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Offset -1 - Year"
 msgstr "Ofset -1 - Yıl"
 
@@ -685,7 +642,6 @@ msgstr "Ofset -1 - Yıl"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Offset -4 - Month"
 msgstr "Ofset -4 - Ay"
 
@@ -693,7 +649,6 @@ msgstr "Ofset -4 - Ay"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Offset -4 - Month-Year"
 msgstr "Ofset -4 - Ay-Yıl"
 
@@ -701,7 +656,6 @@ msgstr "Ofset -4 - Ay-Yıl"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Offset -4 - Start date"
 msgstr "Ofset -4 - Başlangıç tarihi"
 
@@ -709,7 +663,6 @@ msgstr "Ofset -4 - Başlangıç tarihi"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Offset -4 - Year"
 msgstr "Ofset -4 - Yıl"
 
@@ -717,7 +670,6 @@ msgstr "Ofset -4 - Yıl"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Operating margin"
 msgstr "Faaliyet marjı"
 
@@ -754,7 +706,6 @@ msgstr "Borçlar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Payables / Expenses * 30"
 msgstr "Borçlar / Giderler * 30"
 
@@ -810,7 +761,6 @@ msgstr "Karlılık"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Quick assets"
 msgstr "Hızlı varlıklar"
 
@@ -818,7 +768,6 @@ msgstr "Hızlı varlıklar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Quick assets / Current liabilities"
 msgstr "Kısa vadeli varlıklar / Kısa vadeli yükümlülükler"
 
@@ -851,7 +800,6 @@ msgstr "Alacaklar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Receivables / Income * 30"
 msgstr "Alacaklar / Gelir * 30"
 
@@ -871,7 +819,6 @@ msgstr "Yatırım getirisi"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Sales on account / Average accounts receivable balance for period"
 msgstr "Vadeli satışlar / Dönem ortalama alacak bakiyesi"
 
@@ -906,7 +853,6 @@ msgstr "Teknik adı"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Total Current assets"
 msgstr "Toplam Dönen Varlıklar"
 
@@ -914,7 +860,6 @@ msgstr "Toplam Dönen Varlıklar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Total Current liabilities"
 msgstr "Toplam Kısa vadeli yükümlülükler"
 
@@ -922,7 +867,6 @@ msgstr "Toplam Kısa vadeli yükümlülükler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Total assets"
 msgstr "Toplam varlıklar"
 
@@ -930,7 +874,6 @@ msgstr "Toplam varlıklar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Total expense"
 msgstr "Toplam gider"
 
@@ -938,7 +881,6 @@ msgstr "Toplam gider"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Total income"
 msgstr "Toplam gelir"
 
@@ -946,7 +888,6 @@ msgstr "Toplam gelir"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Total liabilities"
 msgstr "Toplam yükümlülükler"
 
@@ -954,7 +895,6 @@ msgstr "Toplam yükümlülükler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Total liabilities / Total shareholders’ equity"
 msgstr "Toplam yükümlülükler / Toplam özkaynaklar"
 
@@ -962,7 +902,6 @@ msgstr "Toplam yükümlülükler / Toplam özkaynaklar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Total shareholder's equity"
 msgstr "Toplam özkaynaklar"
 
@@ -977,7 +916,6 @@ msgstr "Değer"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "Very dependent on the sector"
 msgstr "Sektöre çok bağlıdır"
 
@@ -1000,7 +938,6 @@ msgstr "Yıl"
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
-#, fuzzy
 msgid "Year Filter"
 msgstr "Yıl Filtresi"
 
@@ -1008,7 +945,6 @@ msgstr "Yıl Filtresi"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "bank and cash"
 msgstr "banka ve nakit"
 
@@ -1016,7 +952,6 @@ msgstr "banka ve nakit"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "cost of revenue"
 msgstr "gelir maliyeti"
 
@@ -1024,7 +959,6 @@ msgstr "gelir maliyeti"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "expenses + depreciation + cost of revenue"
 msgstr "giderler + amortisman + gelir maliyeti"
 
@@ -1032,7 +966,6 @@ msgstr "giderler + amortisman + gelir maliyeti"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "income"
 msgstr "gelir"
 
@@ -1040,7 +973,6 @@ msgstr "gelir"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "income + other income"
 msgstr "gelir + diğer gelirler"
 
@@ -1055,7 +987,6 @@ msgstr "son dönem"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "net sales - COGS"
 msgstr "net satışlar - COGS"
 
@@ -1063,7 +994,6 @@ msgstr "net satışlar - COGS"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid ""
 "number of times you can pay off current debts with cash generated per year"
 msgstr ""
@@ -1073,7 +1003,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "payable"
 msgstr "ödenebilir"
 
@@ -1081,7 +1010,6 @@ msgstr "ödenebilir"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "payable + credit card + current liabilities"
 msgstr "borç + alacak + kısa vadeli yükümlülükler"
 
@@ -1089,7 +1017,6 @@ msgstr "borç + alacak + kısa vadeli yükümlülükler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "payable + credit card + current liabilities + non-current liabilities"
 msgstr ""
 "borç + alacak + kredi kartı + kısa vadeli yükümlülükler + uzun vadeli "
@@ -1099,7 +1026,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "possible issue in COGS (Cost of Goods sold)"
 msgstr "COGS'de (Satılan Malın Maliyeti) olası sorun"
 
@@ -1107,7 +1033,6 @@ msgstr "COGS'de (Satılan Malın Maliyeti) olası sorun"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "possible issue in direct and indirect costs"
 msgstr "doğrudan ve dolaylı maliyetlerde olası sorun"
 
@@ -1115,7 +1040,6 @@ msgstr "doğrudan ve dolaylı maliyetlerde olası sorun"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid ""
 "possible issue in payment terms agreement with clients to get paid faster"
 msgstr ""
@@ -1126,7 +1050,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid ""
 "possible issue in providers payments, could lead to loss of suppliers trust"
 msgstr ""
@@ -1136,7 +1059,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "possible issue in ressources allocation or missed growth opportunities"
 msgstr "kaynak tahsisinde olası sorun veya kaçırılan büyüme fırsatları"
 
@@ -1144,7 +1066,6 @@ msgstr "kaynak tahsisinde olası sorun veya kaçırılan büyüme fırsatları"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "possible issue in the business model"
 msgstr "iş modelinde olası sorun"
 
@@ -1152,7 +1073,6 @@ msgstr "iş modelinde olası sorun"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "possible issue with asset distribution and cash availability"
 msgstr "varlık dağılımı ve nakit mevcudiyeti ile ilgili olası sorun"
 
@@ -1160,7 +1080,6 @@ msgstr "varlık dağılımı ve nakit mevcudiyeti ile ilgili olası sorun"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "possible issues in cash availability at short term"
 msgstr "kısa vadede nakit mevcudiyetinde olası sorunlar"
 
@@ -1168,7 +1087,6 @@ msgstr "kısa vadede nakit mevcudiyetinde olası sorunlar"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "receivable"
 msgstr "alacak"
 
@@ -1176,7 +1094,6 @@ msgstr "alacak"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid ""
 "receivable + bank and cash + current assets + non-current assets + "
 "prepayments + fixed assets"
@@ -1188,7 +1105,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "receivable + bank and cash + current assets + prepayments"
 msgstr "alacak + banka ve nakit + dönen varlıklar + ön ödemeler"
 
@@ -1196,7 +1112,6 @@ msgstr "alacak + banka ve nakit + dönen varlıklar + ön ödemeler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "receivable + bank and cash + prepayments"
 msgstr "alacak + banka ve nakit + ön ödemeler"
 
@@ -1218,7 +1133,6 @@ msgstr "alacak"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "total assets - total liabilities"
 msgstr "toplam varlıklar - toplam yükümlülükler"
 
@@ -1226,6 +1140,5 @@ msgstr "toplam varlıklar - toplam yükümlülükler"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
-#, fuzzy
 msgid "total income - total expense"
 msgstr "toplam geli̇r - toplam gi̇der"

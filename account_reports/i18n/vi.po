@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-14 18:42+0000\n"
-"PO-Revision-Date: 2025-11-21 15:38+0000\n"
+"PO-Revision-Date: 2025-11-28 07:26+0000\n"
 "Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/vi/>\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: account_reports
 #. odoo-javascript
@@ -406,6 +406,12 @@ msgid ""
 "show_warning_existing_return\" class=\"fa fa-exclamation-triangle text-"
 "danger pb-2\" title=\"A return already exists for the selected period.\"/>"
 msgstr ""
+"<span invisible=\"not show_warning_wrong_dates\" class="
+"\"fa fa-exclamation-triangle text-danger pb-2\" title="
+"\"Khoảng thời gian đã chọn không khớp với bất kỳ kỳ kế toán nào.\"/>.\n"
+"<span invisible=\"not show_warning_existing_return\" class="
+"\"fa fa-exclamation-triangle text-danger pb-2\" title="
+"\"Đã tồn tại một tờ khai cho kỳ đã chọn.\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_form_view
@@ -1453,6 +1459,8 @@ msgid ""
 "By default, Odoo applies its own deadline for returns (shown as 0). Entering "
 "a value here will override it and be used as the new deadline."
 msgstr ""
+"Theo mặc định, Odoo áp dụng thời hạn trả hàng riêng (hiển thị là 0). Việc "
+"nhập giá trị tại đây sẽ ghi đè và được sử dụng làm thời hạn mới."
 
 #. module: account_reports
 #. odoo-python
@@ -2706,6 +2714,9 @@ msgid ""
 "and that any unrealized exchange differences are properly recorded in profit "
 "or loss (accounts 654/754) under Belgian GAAP."
 msgstr ""
+"Đảm bảo rằng các khoản phải trả bằng ngoại tệ được đánh giá lại theo tỷ giá "
+"khoá sổ cuối năm và mọi chênh lệch tỷ giá chưa thực hiện được ghi nhận đúng "
+"vào lãi hoặc lỗ (tài khoản 654/754) theo chuẩn mực kế toán Bỉ (Belgian GAAP)."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_non_recoverable_vat_gross_accounting
@@ -3022,6 +3033,11 @@ msgid ""
 "- Has a payment plan been negotiated?\n"
 "- Is a provision recorded if recovery is doubtful?"
 msgstr ""
+"Đối với mỗi khoản phải thu rủi ro cao (>60 ngày), hãy kiểm tra các điều sau:"
+"\n"
+"- Follow-up có được ghi chép không?\n"
+"- Kế hoạch thanh toán đã được thương lượng chưa?\n"
+"- Có ghi nhận dự phòng nếu nghi ngờ về khả năng thu hồi không?"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_foreign_currency_liabilities
@@ -3929,7 +3945,7 @@ msgstr "Đang tải..."
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__date_lock
 msgid "Lock Date"
-msgstr ""
+msgstr "Ngày khoá sổ"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.company_information
@@ -4088,6 +4104,10 @@ msgid ""
 "such as using the wrong VAT rate, wrongly exempting transactions.\n"
 "                "
 msgstr ""
+"Việc thiếu thông tin công ty (như mã số thuế GTGT hoặc quốc gia) có thể gây "
+"ra lỗi trong báo cáo của bạn,\n"
+"ví dụ như áp dụng sai thuế suất hoặc miễn thuế giao dịch không chính xác.\n"
+"                "
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_send__mode
@@ -6101,6 +6121,8 @@ msgid ""
 "The operation is refused as it would impact an already issued tax statement. "
 "Please change the following lock dates to proceed: %(lock_date_info)s."
 msgstr ""
+"Giao dịch bị từ chối vì sẽ ảnh hưởng đến báo cáo thuế đã phát hành. Vui lòng "
+"thay đổi các ngày khóa sổ sau để tiếp tục: %(lock_date_info)s."
 
 #. module: account_reports
 #. odoo-python

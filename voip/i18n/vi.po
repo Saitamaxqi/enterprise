@@ -10,12 +10,13 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # "Thi Huong Nguyen (thng)" <thng@odoo.com>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:40+0000\n"
-"PO-Revision-Date: 2025-11-21 15:38+0000\n"
+"PO-Revision-Date: 2025-11-28 04:37+0000\n"
 "Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/voip/"
 "vi/>\n"
@@ -24,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: voip
 #. odoo-javascript
@@ -915,6 +916,8 @@ msgid ""
 "have your administrator verify that the media type is correctly set to SRTP-"
 "DTLS."
 msgstr ""
+"Có vẻ như máy chủ không sử dụng đúng loại phương tiện. Vui lòng nhờ quản trị "
+"viên kiểm tra và đảm bảo loại phương tiện được đặt chính xác là SRTP-DTLS."
 
 #. module: voip
 #. odoo-javascript
@@ -1486,6 +1489,9 @@ msgid ""
 "preferred device (your desk phone or cell phone) and then connect you to the "
 "recipient."
 msgstr ""
+"Chỉ định một số điện thoại để khi thực hiện cuộc gọi trong Odoo Điện thoại, "
+"hệ thống sẽ đổ chuông đến thiết bị bạn chọn (điện thoại bàn hoặc di động) "
+"rồi kết nối bạn với người nhận."
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__start_date
@@ -1522,6 +1528,8 @@ msgid ""
 "The DTLS fingerprint and/or setup is missing from the SDP. Please have your "
 "administrator verify that the PBX is configured to use SRTP-DTLS."
 msgstr ""
+"Thiết lập và/hoặc dấu vân tay DTLS không có trong SDP. Vui lòng nhờ quản trị "
+"viên xác nhận rằng PBX được cấu hình để sử dụng SRTP-DTLS."
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_provider__pbx_ip
@@ -1547,6 +1555,9 @@ msgid ""
 "verify the websocket server URL in the VoIP Provider Settings. If the "
 "problem persists, this is probably an issue with the server."
 msgstr ""
+"Lỗi có thể xuất phát từ lớp vận chuyển. Vui lòng yêu cầu quản trị viên kiểm "
+"tra URL máy chủ WebSocket trong cài đặt Nhà cung cấp VoIP. Nếu vấn đề vẫn "
+"tiếp diễn, có khả năng đây là sự cố từ phía máy chủ."
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__activity_name
@@ -1622,6 +1633,9 @@ msgid ""
 "incorrect. Please have an administrator check the websocket server URL in "
 "the VoIP Provider Settings."
 msgstr ""
+"Không thể khởi động agent người dùng. URL của máy chủ websocket có thể không "
+"chính xác. Vui lòng nhờ quản trị viên kiểm tra URL của máy chủ websocket "
+"trong Cài đặt Nhà cung cấp VoIP."
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__voip_username

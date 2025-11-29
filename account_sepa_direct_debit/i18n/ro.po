@@ -10,22 +10,23 @@
 # Cozmin Candea <office@terrabit.ro>, 2023
 # Dorin Hongu <dhongu@gmail.com>, 2023
 # Cuciureanu Larisa <larisa.cuciureanu@nexterp.ro>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-05 10:25+0000\n"
-"Last-Translator: Cuciureanu Larisa <larisa.cuciureanu@nexterp.ro>\n"
+"PO-Revision-Date: 2025-11-27 14:13+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Romanian <https://translate.odoo.com/projects/odoo-19/"
 "account_sepa_direct_debit/ro/>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
-"20)) ? 1 : 2;\n"
-"X-Generator: Weblate 5.12.2\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : "
+"(n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: account_sepa_direct_debit
 #: model:ir.actions.report,print_report_name:account_sepa_direct_debit.sdd_mandate_form_report_main
@@ -2096,7 +2097,7 @@ msgid ""
 "payment if this option is set.\n"
 msgstr ""
 "Adevărat dacă și numai dacă acest mandat poate fi utilizat pentru o singură "
-"tranzacție. Dacă această opțiune este setată, va trece automat de la  "
+"tranzacție. Dacă această opțiune este setată, va trece automat de la "
 "'active' la 'closed' după prima utilizare în plată.\n"
 
 #. module: account_sepa_direct_debit
