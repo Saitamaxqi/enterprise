@@ -281,6 +281,15 @@ msgstr ""
 "RFC válido o tipo de operación"
 
 #. module: l10n_mx_reports
+#. odoo-python
+#: code:addons/l10n_mx_reports/models/account_diot.py:0
+#, python-format
+msgid ""
+"The report cannot be generated because there are entries with tax amounts "
+"but no partner assigned."
+msgstr ""
+
+#. module: l10n_mx_reports
 #: model:ir.model,name:l10n_mx_reports.model_account_trial_balance_report_handler
 msgid "Trial Balance Custom Handler"
 msgstr "Gestor personalizado de saldos de prueba"

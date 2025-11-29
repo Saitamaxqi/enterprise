@@ -4,22 +4,23 @@
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # Betty Keresztesi <betty@soft4biz.ro>, 2025.
+# Dorin Hongu <dhongu@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.2alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 20:09+0000\n"
-"PO-Revision-Date: 2025-11-21 15:38+0000\n"
-"Last-Translator: Betty Keresztesi <betty@soft4biz.ro>\n"
+"PO-Revision-Date: 2025-11-26 08:23+0000\n"
+"Last-Translator: Dorin Hongu <dhongu@gmail.com>\n"
 "Language-Team: Romanian <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_ro_saft/ro/>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
-"20)) ? 1 : 2;\n"
-"X-Generator: Weblate 5.12.2\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : "
+"(n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: l10n_ro_saft
 #: model_terms:ir.ui.view,arch_db:l10n_ro_saft.view_l10n_ro_saft_account_asset_form
@@ -50,7 +51,7 @@ msgid ""
 "export (e.g. 310309 for domestic 19% VAT)"
 msgstr ""
 "Un cod din 6 cifre definit de ANAF pentru identificarea exactă a impozitelor "
-"în exportul D.406 (de ex. 310309 pentru TVA internă de 19%)"
+"în exportul D.406 (de ex. 310309 pentru TVA internă de 19% VAT)"
 
 #. module: l10n_ro_saft
 #: model:ir.model.fields.selection,name:l10n_ro_saft.selection__res_company__l10n_ro_saft_tax_accounting_basis__a
@@ -167,8 +168,8 @@ msgstr "Raport FEC Handler personalizat"
 msgid ""
 "I: non-residents and taxpayers with obligation to submit a special VAT return"
 msgstr ""
-"I: nerezidenți/Contribuabilii care au obligaţia să depună decontul special "
-"de taxă pe valoarea adăugată"
+"I: nerezidenți și contribuabilii care au obligaţia să depună decontul "
+"special de TVA"
 
 #. module: l10n_ro_saft
 #: model:ir.model.fields,field_description:l10n_ro_saft.field_account_asset__id
@@ -237,13 +238,13 @@ msgstr "Produs(e) invalid(e)"
 #. module: l10n_ro_saft
 #: model_terms:ir.ui.view,arch_db:l10n_ro_saft.view_move_form_l10n_ro
 msgid "Is self invoice (RO)?"
-msgstr "Este autofactura (RO)?"
+msgstr "Este autofactură (RO)?"
 
 #. module: l10n_ro_saft
 #: model:ir.model.fields,field_description:l10n_ro_saft.field_account_bank_statement_line__l10n_ro_is_self_invoice
 #: model:ir.model.fields,field_description:l10n_ro_saft.field_account_move__l10n_ro_is_self_invoice
 msgid "Is self invoice?"
-msgstr "Este autofactura?"
+msgstr "Este autofactură?"
 
 #. module: l10n_ro_saft
 #: model:ir.model,name:l10n_ro_saft.model_account_move
@@ -254,7 +255,7 @@ msgstr "Notă contabilă"
 #: model:ir.model.fields,field_description:l10n_ro_saft.field_l10n_ro_saft_account_asset_category__write_uid
 #: model:ir.model.fields,field_description:l10n_ro_saft.field_l10n_ro_saft_tax_type__write_uid
 msgid "Last Updated by"
-msgstr "Ultima actualizare de"
+msgstr "Ultima actualizare de către"
 
 #. module: l10n_ro_saft
 #: model:ir.model.fields,field_description:l10n_ro_saft.field_l10n_ro_saft_account_asset_category__write_date
@@ -276,7 +277,7 @@ msgstr "Amortizare minimă"
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "Missing category on assets"
-msgstr ""
+msgstr "Categorie lipsă pentru active"
 
 #. module: l10n_ro_saft
 #: model:ir.model.fields.selection,name:l10n_ro_saft.selection__res_company__l10n_ro_saft_tax_accounting_basis__norma14
@@ -301,24 +302,26 @@ msgid ""
 "NORMA39: leasing and financial companies using the IFRS CoA according to ASF "
 "Reg. no. 39/2015"
 msgstr ""
+"NORMA39: societățile de leasing și financiare care utilizează IFRS CoA în "
+"conformitate cu ASF Reg. nr. 39/2015"
 
 #. module: l10n_ro_saft
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "Partners should have a country"
-msgstr ""
+msgstr "Partenerii ar trebui să aibă setată o țară"
 
 #. module: l10n_ro_saft
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "Partners should have their city."
-msgstr ""
+msgstr "Partenerii ar trebui să aibă setată un oraș."
 
 #. module: l10n_ro_saft
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "Partners' VAT prefix should correspond to their country."
-msgstr ""
+msgstr "Prefixul TVA al partenerilor trebuie să corespundă cu țara lor."
 
 #. module: l10n_ro_saft
 #. odoo-python
@@ -331,18 +334,19 @@ msgstr "Vă rugăm să definiți un `Cont bancar` pentru compania dumneavoastră
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "Please define a `Phone Number` for your company."
 msgstr ""
+"Vă rugăm să definiți un „Număr de telefon” pentru compania dumneavoastră."
 
 #. module: l10n_ro_saft
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "Please set the company Tax Accounting Basis."
-msgstr ""
+msgstr "Vă rugăm să setați baza de calcul a impozitului pe profit al companiei."
 
 #. module: l10n_ro_saft
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "Products with no commodity code"
-msgstr ""
+msgstr "Produse fără cod vamal"
 
 #. module: l10n_ro_saft
 #: model:ir.model.fields,field_description:l10n_ro_saft.field_account_tax__l10n_ro_saft_tax_code
@@ -358,25 +362,25 @@ msgstr "Tipul fiscal SAF-T românesc"
 #. module: l10n_ro_saft
 #: model_terms:ir.ui.view,arch_db:l10n_ro_saft.res_config_settings_form_inherit_l10n_ro_saft
 msgid "Romanian localization"
-msgstr "Localizare romaneasca"
+msgstr "Localizare românească"
 
 #. module: l10n_ro_saft
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "SAF-T (D406 Asset Declaration)"
-msgstr ""
+msgstr "SAF-T (Declarația D406 pentru mijloace fixe)"
 
 #. module: l10n_ro_saft
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "SAF-T (D406 Declaration)"
-msgstr ""
+msgstr "SAF-T (Declarația D406)"
 
 #. module: l10n_ro_saft
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "Set asset categories"
-msgstr ""
+msgstr "Setați categoriile de mijloace fixe"
 
 #. module: l10n_ro_saft
 #. odoo-python
@@ -390,12 +394,13 @@ msgstr "Setări"
 msgid ""
 "Some partners have invalid VAT numbers. Example of a valid VAT: RO18547290"
 msgstr ""
+"Unii parteneri au coduri TVA invalide. Exemplu de cod TVA valid: RO18547290"
 
 #. module: l10n_ro_saft
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "Some partners have missing VAT numbers."
-msgstr ""
+msgstr "Unii parteneri nu au cod TVA completat."
 
 #. module: l10n_ro_saft
 #. odoo-python
@@ -404,6 +409,8 @@ msgid ""
 "Some partners have missing or invalid CUI numbers in `Company Registry`. "
 "Example of a valid CUI: 18547290"
 msgstr ""
+"Unii parteneri au CUI lipsă sau invalid în câmpul „Registrul Comerțului”. "
+"Exemplu de CUI valid: 18547290"
 
 #. module: l10n_ro_saft
 #. odoo-python
@@ -411,12 +418,13 @@ msgstr ""
 msgid ""
 "Some products have duplicated `Internal Reference`, please make them unique."
 msgstr ""
+"Unele produse au „Referință internă” duplicată; vă rugăm să le faceți unice."
 
 #. module: l10n_ro_saft
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "Some products have no `Internal Reference`."
-msgstr ""
+msgstr "Unele produse nu au completată „Referința internă”."
 
 #. module: l10n_ro_saft
 #. odoo-python
@@ -425,6 +433,8 @@ msgid ""
 "Some taxes are missing the \"Romanian SAF-T Tax Type\" and/or \"Romanian SAF-"
 "T Tax Code\" field(s)."
 msgstr ""
+"Unele taxe nu au completate câmpurile „Tip taxă SAF-T România” și/sau „Cod "
+"taxă SAF-T România”."
 
 #. module: l10n_ro_saft
 #: model_terms:ir.ui.view,arch_db:l10n_ro_saft.res_config_settings_form_inherit_l10n_ro_saft
@@ -441,7 +451,7 @@ msgstr "Baza contabilă fiscală (RO)"
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "Taxes missing Tax Type or Tax Code (RO)"
-msgstr ""
+msgstr "Taxe fără Tip Taxă sau Cod Taxă (RO)"
 
 #. module: l10n_ro_saft
 #. odoo-python
@@ -457,7 +467,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "The Intrastat code isn't set on some products."
-msgstr ""
+msgstr "Codul Intrastat nu este setat pentru unele produse."
 
 #. module: l10n_ro_saft
 #. odoo-python
@@ -466,6 +476,8 @@ msgid ""
 "The SAF-T Asset Declaration cannot be generated if the currency of the "
 "company is not RON"
 msgstr ""
+"Declarația SAF-T pentru mijloace fixe nu poate fi generată dacă moneda "
+"companiei nu este RON"
 
 #. module: l10n_ro_saft
 #. odoo-python
@@ -485,47 +497,47 @@ msgstr ""
 #. module: l10n_ro_saft
 #: model:ir.model.constraint,message:l10n_ro_saft.constraint_l10n_ro_saft_account_asset_category_code_unique
 msgid "The code of the asset category must be unique !"
-msgstr ""
+msgstr "Codul categoriei de mijloace fixe trebuie să fie unic!"
 
 #. module: l10n_ro_saft
 #: model:ir.model.constraint,message:l10n_ro_saft.constraint_l10n_ro_saft_tax_type_code_unique
 msgid "The code of the tax type must be unique !"
-msgstr ""
+msgstr "Codul tipului de taxă trebuie să fie unic!"
 
 #. module: l10n_ro_saft
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "View Company/ies"
-msgstr ""
+msgstr "Vezi compania/companiile"
 
 #. module: l10n_ro_saft
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "View Partners"
-msgstr "Vedeți Partenerii"
+msgstr "Vizualizare Parteneri"
 
 #. module: l10n_ro_saft
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "View Product(s)"
-msgstr ""
+msgstr "Vezi produsul/produsele"
 
 #. module: l10n_ro_saft
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "View Settings"
-msgstr ""
+msgstr "Vezi setările"
 
 #. module: l10n_ro_saft
 #. odoo-python
 #: code:addons/l10n_ro_saft/models/account_general_ledger.py:0
 msgid "View Taxes"
-msgstr ""
+msgstr "Vezi taxele"
 
 #. module: l10n_ro_saft
 #: model:ir.model.fields,field_description:l10n_ro_saft.field_account_asset__l10n_ro_saft_account_asset_category_warning
 msgid "Warning on account asset category"
-msgstr ""
+msgstr "Avertizare privind categoria de mijloace fixe"
 
 #. module: l10n_ro_saft
 #. odoo-python
