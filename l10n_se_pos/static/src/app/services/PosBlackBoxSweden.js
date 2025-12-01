@@ -8,12 +8,6 @@ patch(PosStore.prototype, {
     useBlackBoxSweden() {
         return !!this.config.iface_sweden_fiscal_data_module;
     },
-    cashierHasPriceControlRights() {
-        if (this.useBlackBoxSweden()) {
-            return false;
-        }
-        return super.cashierHasPriceControlRights(...arguments);
-    },
     disallowLineQuantityChange() {
         const result = super.disallowLineQuantityChange(...arguments);
         return this.useBlackBoxSweden() || result;
