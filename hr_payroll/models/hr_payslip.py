@@ -2156,7 +2156,7 @@ class HrPayslip(models.Model):
 
     def action_configure_payslip_inputs(self):
         self.ensure_one()
-        return self.structure_id.action_get_structure_inputs()
+        return self.struct_id.action_get_structure_inputs()
 
     def compute_salary_allocations(self, total_amount=None):
         self.ensure_one()
