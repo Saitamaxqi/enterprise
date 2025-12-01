@@ -244,3 +244,49 @@ registry.category("web_tour.tours").add("pos_settle_open_invoice", {
             Chrome.endTour(),
         ].flat(),
 });
+
+registry.category("web_tour.tours").add("pos_settle_open_invoice_with_credit_note", {
+    steps: () =>
+        [
+            Chrome.startPoS(),
+            Dialog.confirm("Open Register"),
+
+            ProductScreen.clickPartnerButton(),
+            PartnerList.clickPartnerOptions("C Partner"),
+            {
+                trigger: "div.o_popover :contains('Settle invoices')",
+                content: "Open settle invoices from partner dropdown",
+                run: "click",
+            },
+            {
+                trigger: "thead .o_list_record_selector input",
+                content: "Click 'Select All' checkbox to select both invoice and credit note",
+                run: "click",
+            },
+            {
+                trigger: "tr.o_data_row td[name='name']:contains('INV/2025/00001')",
+                content: "Invoice is present in the settle dialog",
+            },
+            {
+                trigger: "tr.o_data_row td[name='name']:contains('RINV/2025/00001')",
+                content: "Credit note is present in the settle dialog",
+            },
+            {
+                trigger: ".modal-footer button:contains('Select')",
+                content: "Confirm selection of invoice and credit note",
+                run: "click",
+            },
+            ProductScreen.totalAmountIs("8.00"),
+            ProductScreen.clickPayButton(),
+            PaymentScreen.clickPaymentMethod("Bank"),
+            PaymentScreen.clickValidate(),
+            Utils.selectButton("Yes"),
+
+            ReceiptScreen.receiptIsThere(),
+            ReceiptScreen.receiptAmountTotalIs("0.00"),
+            ReceiptScreen.paymentLineContains("Bank", "8.00"),
+            ReceiptScreen.paymentLineContains("Customer Account", "-8.00"),
+
+            Chrome.endTour(),
+        ].flat(),
+});

@@ -30,7 +30,7 @@ patch(PartnerLine.prototype, {
             ).id,
             domain: [
                 ["commercial_partner_id", "=", commercialPartnerId],
-                ["customer_due_total", ">", 0],
+                ["customer_due_total", "!=", 0],
                 ["id", "not in", settleDueLinesIds],
             ],
             onSelected: async (orderIds) => {
@@ -66,7 +66,7 @@ patch(PartnerLine.prototype, {
             ).id,
             domain: [
                 ["commercial_partner_id", "=", commercialPartnerId],
-                ["pos_amount_unsettled", ">", 0],
+                ["pos_amount_unsettled", "!=", 0],
                 ["id", "not in", settleInvoiceLinesIds],
             ],
             onSelected: async (invoiceIds) => {
