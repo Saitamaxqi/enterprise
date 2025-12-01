@@ -1279,6 +1279,48 @@
         <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm'))]"/>
     </record>
 
+    <record id="l10n_ch_elm_input_WT_5401" model="hr.payslip.input.type">
+        <field name="name">(5401) General AVS Deduction in % (2)</field>
+        <field name="code">AVS.GENERIC.2</field>
+        <field name="country_id" ref="base.ch"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm'))]"/>
+    </record>
+
+    <record id="l10n_ch_elm_input_WT_7401" model="hr.payslip.input.type">
+        <field name="name">(7401) General AVS Deduction in % Employer (2)</field>
+        <field name="code">AVS.GENERIC.COMP.2</field>
+        <field name="country_id" ref="base.ch"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm'))]"/>
+    </record>
+
+    <record id="l10n_ch_elm_input_WT_5402" model="hr.payslip.input.type">
+        <field name="name">(5402) General AVS Deduction in % (3)</field>
+        <field name="code">AVS.GENERIC.3</field>
+        <field name="country_id" ref="base.ch"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm'))]"/>
+    </record>
+
+    <record id="l10n_ch_elm_input_WT_7402" model="hr.payslip.input.type">
+        <field name="name">(7402) General AVS Deduction in % Employer (3)</field>
+        <field name="code">AVS.GENERIC.COMP.3</field>
+        <field name="country_id" ref="base.ch"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm'))]"/>
+    </record>
+
+    <record id="l10n_ch_elm_input_WT_5403" model="hr.payslip.input.type">
+        <field name="name">(5403) General AVS Deduction in % (4)</field>
+        <field name="code">AVS.GENERIC.4</field>
+        <field name="country_id" ref="base.ch"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm'))]"/>
+    </record>
+
+    <record id="l10n_ch_elm_input_WT_7403" model="hr.payslip.input.type">
+        <field name="name">(7403) General AVS Deduction in % Employer (4)</field>
+        <field name="code">AVS.GENERIC.COMP.4</field>
+        <field name="country_id" ref="base.ch"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm'))]"/>
+    </record>
+
     <record id="l10n_ch_hr_elm_input_WT_6000" model="hr.payslip.input.type">
         <field name="name">(6000) Expenses travel, car, overnight accommodation</field>
         <field name="code">EXP6000</field>
