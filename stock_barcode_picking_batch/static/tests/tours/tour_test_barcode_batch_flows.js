@@ -1487,3 +1487,39 @@ registry.category("web_tour.tours").add("test_scan_can_change_destination_locati
         },
     ],
 });
+
+registry.category("web_tour.tours").add("test_barcode_batch_partial_receipt_leave_reopen", {
+    steps: () => [
+        // Scan the product once for picking_receipt_1
+        {
+            trigger: '.o_barcode_line:contains(picking_receipt_1):contains(product1)',
+            run: 'click',
+        },
+        {
+            trigger: '.o_barcode_line:contains(product1)',
+            run: 'scan product1',
+        },
+        // Scan the product twice for picking_receipt_2
+        {
+            trigger: '.o_barcode_line:contains(picking_receipt_2):contains(product1)',
+            run: 'click',
+        },
+        {
+            trigger: '.o_barcode_line:contains(product1)',
+            run: 'scan product1',
+        },
+        {
+            trigger: '.o_barcode_line:contains(product1)',
+            run: 'scan product1',
+        },
+        // We need additional steps to make sure the python code is called
+        {
+            trigger: '.o_exit',
+            run: 'click',
+        },
+        {
+            trigger: '.o_button_operations',
+            run: 'click',
+        },
+    ]
+});

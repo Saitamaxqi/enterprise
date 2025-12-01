@@ -1007,3 +1007,24 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         # validate that SML destination locations changed
         move_lines = internal_picking_1.move_line_ids + internal_picking_2.move_line_ids
         self.assertEqual(move_lines.mapped('location_dest_id'), self.shelf3)
+
+    def test_barcode_batch_partial_receipt_leave_reopen(self):
+        """
+        Create a batch picking with 2 receipts, open the batch and process
+        part of both pickings.
+        """
+        self.picking_receipt_1.move_ids.filtered(lambda m: m.product_id == self.product1).product_uom_qty = 5
+        batch = self.env['stock.picking.batch'].create({
+            'picking_ids': [
+                Command.link(self.picking_receipt_1.id),
+                Command.link(self.picking_receipt_2.id)
+            ],
+        })
+        batch.action_confirm()
+        self.assertEqual(len(batch.move_ids), 4)
+        self.assertEqual(len(batch.move_line_ids), 5)
+
+        url = self._get_batch_client_action_url(batch.id)
+        self.start_tour(url, 'test_barcode_batch_partial_receipt_leave_reopen', login='admin', timeout=180)
+        self.assertEqual(len(batch.move_ids), 4)
+        self.assertEqual(len(batch.move_line_ids), 7)
