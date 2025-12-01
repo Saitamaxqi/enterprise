@@ -2,11 +2,13 @@
 
 from odoo.tests import TransactionCase, tagged
 from datetime import date
+from freezegun import freeze_time
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install', 'swissdec_payroll')
 class TestWhitelistFromTemplate(TransactionCase):
 
+    @freeze_time("2024-01-01")
     def setUp(self):
         super().setUp()
         self.company_ch = self.env['res.company'].create({
@@ -16,7 +18,7 @@ class TestWhitelistFromTemplate(TransactionCase):
         self.employee_ch = self.env['hr.employee'].create({
             'name': 'CH Employee',
             'company_id': self.company_ch.id,
-            'contract_date_start': "2025-01-01",
+            'contract_date_start': "2024-01-01",
             'structure_type_id': self.env.ref('l10n_ch_hr_payroll.structure_type_employee_ch').id
         })
 
@@ -132,6 +134,7 @@ class TestWhitelistFromTemplate(TransactionCase):
             })],
         })
 
+    @freeze_time("2024-01-01")
     def validate_payslip_issues_presence(self, payslip, expected_action_texts):
         # Compute payslip to generate issues
         payslip.compute_sheet()
@@ -140,20 +143,20 @@ class TestWhitelistFromTemplate(TransactionCase):
         self.assertTrue(issues, "No issues generated for the payslip.")
 
         issue_action_texts = [issue['action_text'] for issue in issues.values()]
-
         for action_text in expected_action_texts:
             self.assertIn(
                 action_text, issue_action_texts,
                 f"Issue with action_text '{action_text}' not found in payslip.issues."
             )
 
+    @freeze_time("2024-01-01")
     def test_ch_warnings_action_text_presence(self):
         """Test the presence of action_text values in payslip.issues."""
         payslip = self.env['hr.payslip'].create({
             'name': 'Warning Slip',
             'employee_id': self.employee_ch.id,
-            'date_from': "2025-01-01",
-            'date_to': "2025-01-31",
+            'date_from': "2024-01-01",
+            'date_to': "2024-01-31",
         })
 
         expected_action_texts = [
