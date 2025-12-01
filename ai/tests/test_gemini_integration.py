@@ -25,7 +25,7 @@ class TestGeminiIntegration(TransactionCase):
         test_attachment = self.env["ir.attachment"].create(
             {
                 "name": "test_doc.txt",
-                "index_content": "Odoo is an open-source ERP system with many modules.",
+                "raw": b"Odoo is an open-source ERP system with many modules.",
                 "res_model": "ai.agent",
                 "res_id": self.agent.id,
             }

@@ -486,8 +486,8 @@ class AIAgentSource(models.Model):
                 failed_by_error[result['error']] |= url_sources
                 continue
 
-            updated_content = result['content']
-            updated_content_checksum = self.env['ir.attachment']._compute_checksum(updated_content.encode('utf-8'))
+            updated_content = result['content'].encode()
+            updated_content_checksum = self.env['ir.attachment']._compute_checksum(updated_content)
 
             # Check for the new sources to attach
             sources_to_attach = url_sources.filtered(lambda s: not s.attachment_id)
@@ -500,7 +500,6 @@ class AIAgentSource(models.Model):
                     'raw': updated_content,
                     'mimetype': 'text/html',
                     'url': url,
-                    'index_content': updated_content,
                 })
 
             if attachment_vals_list:
@@ -518,7 +517,6 @@ class AIAgentSource(models.Model):
             if attachments_to_update:
                 attachments_to_update.write({
                     'raw': updated_content,
-                    'index_content': updated_content,
                 })
 
         if attachments_embeddings_to_unlink:
