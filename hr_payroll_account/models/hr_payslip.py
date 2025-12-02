@@ -37,7 +37,7 @@ class HrPayslip(models.Model):
 
     def action_payslip_cancel(self):
         moves = self.mapped('move_id')
-        moves._unlink_or_reverse()
+        moves.sudo()._unlink_or_reverse()
         return super().action_payslip_cancel()
 
     def action_payslip_done(self):
