@@ -792,7 +792,7 @@ class AccountReturn(models.Model):
 
         if report:
             previous_options = {'tax_unit': tax_unit.id if tax_unit else 'company_only'}
-            options = report.sudo().with_context(allowed_company_ids=companies.ids).get_options(previous_options=previous_options)
+            options = report.sudo().with_context(allowed_company_ids=companies.ids).with_company(main_company.id).get_options(previous_options=previous_options)
             return self.env['res.company'].browse(report.get_report_company_ids(options))
 
         return companies
