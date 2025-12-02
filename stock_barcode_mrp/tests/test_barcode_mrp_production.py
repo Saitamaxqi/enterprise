@@ -423,9 +423,9 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         })
         # Disable creation of new lots for component, the purpose is to check
         # by-products lots can still be created anyway.
-        self.env['stock.picking.type'].search(
-            [('code', '=', 'mrp_operation')], limit=1
-        ).use_create_components_lots = False
+        warehouse = self.stock_location.warehouse_id
+        warehouse.manu_type_id.use_create_components_lots = False
+        warehouse.manufacture_steps = 'pbm_sam'
         # Creates a BoM.
         component02 = self.env['product.product'].create({
             'name': 'Compo 02',
@@ -445,15 +445,16 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
             self.env['stock.quant'].create({
                 'quantity': 99,
                 'product_id': component.id,
-                'location_id': self.stock_location.id,
+                'location_id': warehouse.pbm_loc_id.id,
             })
 
         url = "/odoo/action-stock_barcode.stock_picking_type_action_kanban"
         self.start_tour(url, 'test_barcode_production_add_byproduct', login='admin', timeout=180)
         mo = self.env['mrp.production'].search([], order='id desc', limit=1)
-        self.assertEqual(len(mo.move_byproduct_ids), 2)
-        self.assertEqual(mo.move_byproduct_ids[0].product_id.display_name, 'By Product')
-        self.assertEqual(mo.move_byproduct_ids[1].product_id.display_name, 'Compo Lot')
+        self.assertRecordValues(mo.move_byproduct_ids, [
+            {'product_id': self.by_product.id, 'location_dest_id': warehouse.sam_loc_id.id},
+            {'product_id': self.component_lot.id, 'location_dest_id': warehouse.sam_loc_id.id},
+        ])
         self.assertEqual(mo.move_byproduct_ids[1].lot_ids.name, 'byprod_lot_001')
 
     def test_split_line_on_exit_for_production(self):
