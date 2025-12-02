@@ -430,6 +430,19 @@ class TestPayslipFlow(TestPayslipBase):
             payslip_form.save()
         self.assertTrue(payslip_form)
 
+    def test_06_pay_run_payslip_name(self):
+        """
+        This test checks that the name of the payslip contains the name and the period for which the pay run is
+        being run.
+        """
+        payslip_run = self.env['hr.payslip.run'].create({
+            'date_end': '2025-11-30',
+            'date_start': '2025-11-01',
+            'name': 'Payslip for Employee'
+        })
+        payslip_run.generate_payslips(employee_ids=[self.richard_emp.id])
+        self.assertEqual(payslip_run.slip_ids.name, 'Salary Slip - Richard - November 2025')
+
 
 @tagged('-at_install', 'post_install')
 class TestPayslipUi(HttpCase):
