@@ -177,7 +177,12 @@ class SaleCommissionAchievementReport(models.Model):
         # test the existance of the view. _get_report_view can be called twice in a single transaction by get_views and web_search_read for example.
         # To avoid `psycopg2.errors.DuplicateTable: relation already exists` errors, we only create the view on the first call.
         # Unfortunately tools.sql.table_exists can't be used here because the view is created in a temporary schema
-        self.env.cr.execute("SELECT viewname FROM pg_catalog.pg_views WHERE viewname='sale_commission_achievement_report_view'")
+        self.env.cr.execute("""
+            SELECT 1 FROM pg_catalog.pg_class AS c
+                WHERE c.relname = 'sale_commission_achievement_report_view'
+                AND c.relkind = 'v'::"char"
+                AND pg_catalog.pg_table_is_visible(c.oid)
+        """)
         res = self.env.cr.fetchone()
         if res:
             # The view is already defined in this transaction
