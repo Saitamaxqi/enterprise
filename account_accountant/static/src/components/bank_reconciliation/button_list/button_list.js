@@ -176,8 +176,8 @@ export class BankRecButtonList extends Component {
      */
     async setAccountReceivableOnReconcileLine() {
         let accountId;
-        if (this.props.statementLine.data.partner_id.property_account_receivable_id.id) {
-            accountId = this.props.statementLine.data.partner_id.property_account_receivable_id.id;
+        if (this.statementLineData.partner_id.property_account_receivable_id.id) {
+            accountId = this.statementLineData.partner_id.property_account_receivable_id.id;
         } else {
             accountId = await this.orm.webSearchRead("account.account", [
                 ["account_type", "=", "asset_receivable"],
@@ -194,7 +194,7 @@ export class BankRecButtonList extends Component {
     async setAccountPayableOnReconcileLine() {
         let accountId;
         if (this.statementLineData.partner_id.property_account_payable_id.id) {
-            accountId = this.props.statementLine.data.partner_id.property_account_payable_id.id;
+            accountId = this.statementLineData.partner_id.property_account_payable_id.id;
         } else {
             accountId = await this.orm.webSearchRead("account.account", [
                 ["account_type", "=", "liability_payable"],
@@ -585,7 +585,7 @@ export class BankRecButtonList extends Component {
             };
         }
 
-        if (this.props.statementLine.data.is_reconciled && !this.props.statementLine.data.checked) {
+        if (this.statementLineData.is_reconciled && !this.statementLineData.checked) {
             buttonsToDisplay.toReview = {
                 label: _t("Reviewed"),
                 action: this.setStatementLineAsReviewed.bind(this),

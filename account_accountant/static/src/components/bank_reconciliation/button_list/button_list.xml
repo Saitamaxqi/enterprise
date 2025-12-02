@@ -2,15 +2,15 @@
 <templates>
     <t t-name="account_accountant.BankRecButtonList">
         <div class="d-flex flex-wrap gap-1">
-            <t t-if="props.preSelectedReconciliationModel and !props.statementLine.data.is_reconciled">
+            <t t-if="props.preSelectedReconciliationModel and !statementLineData.is_reconciled">
                 <BankRecButton
                     label="props.preSelectedReconciliationModel.display_name"
                     primary="true"
                     action.bind="() => this.triggerReconciliationModel(props.preSelectedReconciliationModel.id)"
                 />
             </t>
-            <t t-elif="button?.toReview">
-                <BankRecButton t-props="button.toReview"/>
+            <t t-elif="buttons?.toReview">
+                <BankRecButton t-props="buttons.toReview"/>
             </t>
             <t t-else="">
                 <t t-foreach="buttonsToDisplay" t-as="button" t-key="button_index">
@@ -18,7 +18,7 @@
                 </t>
             </t>
 
-            <Dropdown>
+            <Dropdown t-if="!statementLineData.is_reconciled">
                 <button class="btn btn-secondary" t-att-class="{'btn-sm': !ui.isSmall}">
                     <i class="oi oi-ellipsis-v"/>
                 </button>
