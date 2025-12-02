@@ -1218,3 +1218,23 @@ test("Cannot create a filter if a datasource is in error", async function () {
         expect(".o_global_filter_save").toHaveCount(0);
     }
 });
+
+test("Default value and subdomain are hidden for invalid relational filters", async () => {
+    const { model, env } = await createSpreadsheetWithList({
+        mockRPC: async function (route, { model, method, kwargs }) {
+            if (model === "unknown" && method === "fields_get") {
+                throw makeServerError({ code: 404 });
+            }
+        },
+    });
+
+    addGlobalFilterWithoutReload(model, {
+        id: "43",
+        type: "relation",
+        label: "Relational Filter",
+        modelName: "unknown",
+    });
+
+    await openSidePanel(model, env, "43");
+    expect(".o_multi_record_selector").toHaveCount(0);
+});
