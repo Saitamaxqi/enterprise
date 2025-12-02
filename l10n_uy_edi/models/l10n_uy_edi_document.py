@@ -91,6 +91,10 @@ class L10n_Uy_EdiDocument(models.Model):
     @api.depends('move_id.l10n_latam_document_number', 'move_id.l10n_latam_document_type_id', 'move_id.company_id', 'move_id.partner_id')
     def _compute_from_origin(self):
         for doc in self:
+            doc.l10n_latam_document_number = False
+            doc.l10n_latam_document_type_id = False
+            doc.company_id = False
+            doc.partner_id = False
             if doc.move_id:
                 doc.l10n_latam_document_number = doc.move_id.l10n_latam_document_number
                 doc.l10n_latam_document_type_id = doc.move_id.l10n_latam_document_type_id
