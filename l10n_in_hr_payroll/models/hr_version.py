@@ -121,15 +121,13 @@ class HrVersion(models.Model):
     l10n_in_esic = fields.Boolean(related='company_id.l10n_in_esic', groups="hr_payroll.group_hr_payroll_user")
     l10n_in_esic_employee_amount = fields.Monetary(groups="hr_payroll.group_hr_payroll_user",
         compute="_compute_l10n_in_esic_employee_amount", store=True, readonly=False, tracking=True,
-        help='Employee contributions towards ESIC (Employees’ State Insurance Corporation) are\
-        calculated based on their gross wages.')
+        help='Employee contributions apply when the gross wage is below ₹21,000')
     l10n_in_esic_employee_percentage = fields.Float(string='Employee ESIC Percentage',
         compute="_compute_l10n_in_esic_employee_percentage", store=True, readonly=False,
         groups="hr_payroll.group_hr_payroll_user")
     l10n_in_esic_employer_amount = fields.Monetary(groups="hr_payroll.group_hr_payroll_user",
         compute="_compute_l10n_in_esic_employer_amount", store=True, readonly=False, tracking=True,
-        help='Employer contributions towards ESIC (Employees’ State Insurance Corporation) are calculated\
-        based on the employee’s gross wages.')
+        help='Employer contributions apply when the gross wage is below ₹21,000')
     l10n_in_esic_employer_percentage = fields.Float(string='Employer ESIC Percentage',
         compute="_compute_l10n_in_esic_employer_percentage", store=True, readonly=False,
         groups="hr_payroll.group_hr_payroll_user")
