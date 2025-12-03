@@ -57,3 +57,8 @@ class TestL10nClEdiPos(TestL10nClEdiCommon, TestPointOfSaleHttpCommon):
         })
         self.main_pos_config.with_user(self.pos_user).open_ui()
         self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_cl_partner_missing_info', login="accountman")
+
+    def test_refund_consumidor_final_anonimo(self):
+        """Test that refunding an order with Consumidor Final Anónimo shows proper error dialog"""
+        self.main_pos_config.with_user(self.pos_user).open_ui()
+        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_refund_consumidor_final_anonimo', login="accountman")
