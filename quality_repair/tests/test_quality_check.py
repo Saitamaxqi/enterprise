@@ -44,3 +44,20 @@ class TestQualityRepair(TestRepairCommon):
         self.assertEqual(qc.quality_state, 'pass')
         repair.action_repair_end()
         self.assertEqual(repair.state, 'done')
+
+    def test_repair_multi_record_create_write(self):
+        """Test that creating and writing multiple repair orders works as expected."""
+        repairs = self.env['repair.order'].create([
+            {
+                'product_id': self.product_storable_lot.id,
+                'partner_id': self.res_partner_1.id,
+            },
+            {
+                'product_id': self.product_storable_lot.id,
+                'partner_id': self.res_partner_1.id,
+            },
+        ])
+        self.assertEqual(len(repairs), 2, "Model should create two repair orders.")
+
+        repairs.write({'name': 'test'})
+        self.assertEqual(set(repairs.mapped('name')), {'test'}, "Model should write the name on both records.")
