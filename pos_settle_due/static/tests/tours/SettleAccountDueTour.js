@@ -40,7 +40,12 @@ registry.category("web_tour.tours").add("pos_settle_account_due", {
             },
             ReceiptScreen.isShown(),
             ReceiptScreen.receiptIsThere(),
-            ReceiptScreen.containsOrderLine("TSJ/2025/00001", 0, "10.00", "0.00"),
+            ReceiptScreen.containsOrderLine(
+                `TSJ/${new Date().getFullYear()}/00001`,
+                0,
+                "10.00",
+                "0.00"
+            ),
             ReceiptScreen.receiptAmountTotalIs("0.00"),
             ReceiptScreen.paymentLineContains("Bank", "10.00"),
             ReceiptScreen.paymentLineContains("Customer Account", "-10.00"),
