@@ -11,7 +11,7 @@ from odoo import _, api, fields, models, SUPERUSER_ID
 from odoo.addons.l10n_in_reports.tools.gstr1_spreadsheet_generator import GSTR1SpreadsheetGenerator
 from odoo.exceptions import UserError, AccessError, ValidationError, RedirectWarning
 from odoo.fields import Domain
-from odoo.tools import date_utils, html_escape, SQL
+from odoo.tools import date_utils, float_is_zero, html_escape, SQL
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 from .irn_exception import IrnException
 
@@ -787,18 +787,22 @@ class AccountReturn(models.Model):
                     lines_json[tax_rate]['iamt'] += line_tax_details['igst']
                     lines_json[tax_rate]['csamt'] += line_tax_details['cess']
                 if lines_json:
+                    is_out_refund = move_id.move_type == "out_refund"
+                    sign = is_out_refund and 1 or -1
                     invoice_type = 'B2CL'
+                    invoice_total = move_id.amount_total_signed * -sign
                     if move_id.l10n_in_gst_treatment == "overseas" and is_lut:
                         invoice_type = 'EXPWOP'
                     elif move_id.l10n_in_gst_treatment == "overseas":
                         invoice_type = 'EXPWP'
-                    is_out_refund = move_id.move_type == "out_refund"
-                    sign = is_out_refund and 1 or -1
+                        # If Base amount and Invoice total is same then add tax values in total for Export with payment only
+                        if float_is_zero(invoice_total - sum(line['txval'] for line in lines_json.values()), precision_digits=2):
+                            invoice_total += sum(line['iamt'] + line['csamt'] for line in lines_json.values())
                     inv_json = {
                         "ntty": is_out_refund and "C" or "D",
                         "nt_num": move_id.name,
                         "nt_dt": move_id.invoice_date.strftime("%d-%m-%Y"),
-                        "val": AccountMove._l10n_in_round_value(move_id.amount_total_signed * -sign),
+                        "val": AccountMove._l10n_in_round_value(invoice_total),
                         "typ": invoice_type,
                         "itms": [
                             {"num": index, "itm_det": {
@@ -855,14 +859,18 @@ class AccountReturn(models.Model):
                     lines_json[tax_rate]['iamt'] += line_tax_details['igst'] * -1
                     lines_json[tax_rate]['csamt'] += line_tax_details['cess'] * -1
                 if lines_json:
-                    invoice_type = 'WPAY'
-                    if is_lut:
-                        invoice_type = 'WOPAY'
+                    invoice_total = move_id.amount_total_signed
+                    invoice_type = 'WOPAY'
+                    if not is_lut:
+                        invoice_type = 'WPAY'
+                        # If Base amount and Invoice total is same then add tax values in total for Export with payment only
+                        if float_is_zero(invoice_total - sum(line['txval'] for line in lines_json.values()), precision_digits=2):
+                            invoice_total += sum(line['iamt'] + line['csamt'] for line in lines_json.values())
                     export_json.setdefault(invoice_type, [])
                     export_inv = {
                         "inum": move_id.name,
                         "idt": move_id.invoice_date.strftime("%d-%m-%Y"),
-                        "val": AccountMove._l10n_in_round_value(move_id.amount_total_signed),
+                        "val": AccountMove._l10n_in_round_value(invoice_total),
                         "itms": [{
                             **d,
                             "txval": AccountMove._l10n_in_round_value(d['txval']),
