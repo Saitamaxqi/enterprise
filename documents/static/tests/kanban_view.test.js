@@ -827,10 +827,10 @@ test("Name in previewer is correct without attachment", async function () {
 
     expect(previewedAttachments).toHaveLength(2);
 
-    expect(previewedAttachments[0].id).toBe(10);
+    expect(previewedAttachments[0].id).toBe(-10);
     expect(previewedAttachments[0].name).toBe("Shin chan: The Spicy Kasukabe");
 
-    expect(previewedAttachments[1].id).toBe(11);
+    expect(previewedAttachments[1].id).toBe(-11);
     expect(previewedAttachments[1].name).toBe("Mom vs Dad |Shinchan");
 
     expect.verifySteps(["preview_Shin chan: The Spicy Kasukabe", "preview_Mom vs Dad |Shinchan"]);
@@ -868,4 +868,41 @@ test("Check actions with preview", async function () {
     await contains(".o_kanban_record:contains('Test_file.txt') [name='document_preview']").click();
     await contains(".o-FileViewer .o_cp_action_menus .o-dropdown").click();
     await waitFor(".o-dropdown-item:contains('Unlock')");
+});
+
+test("Ensure previewer shows correct name after renaming a document", async function () {
+    const serverData = getDocumentsTestServerModelsData([
+        {
+            attachment_id: 1,
+            id: 2,
+            name: "text_file.txt",
+            mimetype: "image/webp",
+        },
+    ]);
+
+    DocumentsModels["DocumentsDocument"]._views = {
+        kanban: basicDocumentsKanbanArch,
+        search: getEnrichedSearchArch(),
+        form: "<form><field name='name'/></form>",
+    };
+
+    serverData["ir.attachment"] = [{ id: 1, name: "text_file.txt", mimetype: "image/webp" }];
+
+    await makeDocumentsMockEnv({ serverData });
+    await mountWithCleanup(WebClient);
+    await getService("action").doAction({
+        res_model: "documents.document",
+        type: "ir.actions.act_window",
+        views: [[false, "kanban"]],
+    });
+
+    await contains(".o_kanban_record:contains('text_file.txt')").click({ ctrlKey: true });
+    await contains(".o_control_panel_actions button:contains('Action')").click();
+    await contains(".o-dropdown-item:contains('Rename')").click();
+    await contains(".o_input").edit("test1.txt");
+    await contains(".o_form_button_save:contains('Save')").click();
+    expect(".o_kanban_record span:contains('test1.txt')").toHaveCount(1);
+    await contains(".o_kanban_record:contains('test1.txt') [name='document_preview']").click();
+    await waitFor(".o-FileViewer");
+    expect(".o-FileViewer-header span:contains('test1.txt')").toHaveCount(1);
 });

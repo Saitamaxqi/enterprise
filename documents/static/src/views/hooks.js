@@ -316,8 +316,10 @@ function useDocumentsViewFilePreviewer({
                 const getRecordAttachment = (rec) => {
                     rec = rec.shortcutTarget;
                     return {
-                        id: rec.data.attachment_id.id ?? rec.data.id,
-                        name: rec.data.attachment_id.display_name ?? rec.data.display_name,
+                        // A negative ID prevents a reload from resolving to a real record, ensuring that the document name
+                        // is always shown instead of the potentially non renamed attachment name.
+                        id: -rec.resId,
+                        name: rec.data.name,
                         mimetype: rec.data.mimetype,
                         url: rec.data.url,
                         documentId: rec.resId,
