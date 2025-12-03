@@ -320,8 +320,10 @@ class HrPayslip(models.Model):
                 overlap_days = payslip._get_contract_days_in_payslip_range(overlap_start, overlap_end)
                 leave_type = leave.holiday_status_id
                 leave_days_map.setdefault(leave_type, [])
-                if leave.request_unit_half:
-                    overlap_days = overlap_days / 2
+                if leave.request_date_from_period == 'pm':
+                    overlap_days -= 0.5
+                if leave.request_date_to_period == 'am':
+                    overlap_days -= 0.5
                 leave_days_map[leave_type] += [(overlap_days, leave)]
 
             total_leave_days = 0.0
