@@ -680,7 +680,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                 'vat': '6537643',
             })
 
-        unit_returns = self.env['account.return'].search([('type_id', '=', self.basic_return_type.id), ('company_ids', 'in', unit_companies.ids)])
+        unit_returns = self.env['account.return'].search([('type_id', '=', self.basic_return_type.id)]).filtered(lambda r: r.company_ids == unit_companies)
 
         self.assert_return_dates_equal(
             unit_returns,

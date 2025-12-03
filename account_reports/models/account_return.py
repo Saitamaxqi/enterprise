@@ -179,12 +179,15 @@ class AccountReturnType(models.Model):
         """ Returns whether a return can exist for this type with the provided company and tax units. This is used to know which returns need
         to be deleted when a change of configuration has occured.
         """
-        is_not_multivat = not self.report_id or company.account_fiscal_country_id.code == self.report_id.country_id.code
-        is_not_tax_unit_main_comp = tax_unit and tax_unit.main_company_id != company
+        is_foreign_vat = self.report_id and company.account_fiscal_country_id.code != self.report_id.country_id.code
+
+        is_tax_unit_main_comp = not tax_unit or tax_unit.main_company_id == company
+
         all_branch_companies_with_same_vat = company._get_branches_with_same_vat()
         sorted_branch_companies_with_same_vat = sorted(all_branch_companies_with_same_vat, key=lambda comp: len(comp.parent_path.split('/')))
-        is_not_main_branch = company.parent_id and company != sorted_branch_companies_with_same_vat[0]
-        return not (is_not_multivat and (is_not_tax_unit_main_comp or is_not_main_branch))
+        is_main_branch = not company.parent_id or company == sorted_branch_companies_with_same_vat[0]
+
+        return is_foreign_vat or (is_tax_unit_main_comp and is_main_branch)
 
     @api.model
     def _cron_generate_or_refresh_all_returns(self):
