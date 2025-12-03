@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 import re
 
 from odoo import api, models, fields, _
-from odoo.addons.account_edi_ubl_cii.models.account_edi_xml_ubl_20 import FloatFmt
+from odoo.addons.account_edi_ubl_cii.models.account_edi_common import FloatFmt
 from odoo.addons.account.tools import dict_to_xml
 from odoo.addons.l10n_co_dian import xml_utils
 from odoo.addons.l10n_co_edi.models.res_partner import FINAL_CONSUMER_VAT
