@@ -187,7 +187,7 @@ class TestDKReport(TestDKReportCommon):
             ('KONTONUMMER_20230131', 'KONTONAVN_20230131', 'VAERDI_20230131'),
             ('6190', 'Trade and other receivables', '6250'),
             ('6560', 'Revaluation reserve', '3000'),
-            ('7441', 'Suppliers of goods and services (copy)', '-10000'),
+            ('7441', 'Suppliers of goods and services (short-term) (copy)', '-10000'),
             ('7680', 'Sales tax', '-1250'),
             ('7740', 'VAT on purchases', '2000'),
         )
