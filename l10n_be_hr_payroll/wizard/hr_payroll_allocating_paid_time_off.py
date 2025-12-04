@@ -77,8 +77,10 @@ class HrPayrollAllocPaidLeave(models.TransientModel):
              WHERE v.contract_date_start <= %(stop)s
                AND (v.contract_date_end IS NULL OR v.contract_date_end >= %(start)s)
                AND e.active IS TRUE
+               AND e.company_id IN %(company)s
                AND v.employee_type = 'employee'
                AND v.company_id IN %(company)s
+               AND v.active IS TRUE
                    {where_structure}
                    {where_employee_in_department}
         """.format(where_structure=structure, where_employee_in_department=employee_check)
@@ -120,8 +122,8 @@ class HrPayrollAllocPaidLeave(models.TransientModel):
 
         for employee_id, (paid_time_off, version_id) in alloc_employees.items():
             employee = employees.browse(employee_id)
-
-            if self.year == employee._get_first_version_date().year:
+            first_version_date = employee._get_first_version_date()
+            if first_version_date and self.year == first_version_date.year:
                 for double_pay_line in employee.double_pay_line_n_ids:
                     work_months_ratio = double_pay_line.months_count / 12
                     work_months_rate = double_pay_line.occupation_rate / 100

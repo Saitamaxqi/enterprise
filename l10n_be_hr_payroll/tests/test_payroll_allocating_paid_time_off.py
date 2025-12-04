@@ -122,3 +122,44 @@ class TestPayrollAllocatingPaidTimeOff(TestPayrollCommon):
             ).paid_time_off,
             8,
             "The employee should have 8 days paid time offs for this year.")
+
+    # This situation occurred during the migration to the version model. Some employees had one version in BE
+    # while the rest of their versions were in HK. Normally, this should not happen because we create a separate
+    # employee record for each company, and an employee's versions are linked to the company of that employee.
+    def test_allocating_paid_time_off_with_versions_in_different_companies(self):
+        """
+        Last year, the employee Georges had these contracts: :
+        - From 01/01 to 31/05, he worked at mid time, 3 days/week   ->   BE Company
+        - From 01/06 to 31/08, he worked at full time, 5 days/week  ->   BE Company
+        - From 01/09 to 31/12, he worked at 4/5, 4 days/week        ->   HK Company
+
+        Since Georges switched to HK company on 01/09, there shouldn't be any allocation for him.
+        """
+        with freeze_time('2023-12-01'):
+            hongkong_company = self.env['res.company'].create({
+                'name': 'My HK Company - Test',
+                'country_id': self.env.ref('base.hk').id,
+                'currency_id': self.env.ref('base.EUR').id,
+                'street': 'not Rue du Paradis',
+                'zip': '6870',
+                'city': 'not Eghezee',
+                'vat': 'BE0897223670',
+                'phone': '061928374',
+            })
+            self.employee_georges.company_id = hongkong_company.id
+            self.employee_georges.flush_recordset()
+            last_year = date.today().year - 1
+            target_dates = [
+                date(last_year, 1, 1),
+                date(last_year, 6, 1),
+            ]
+            versions = self.employee_georges.version_ids.search([
+                ('date_version', 'in', target_dates)
+            ])
+            versions.write({'company_id': self.belgian_company.id})
+            self.wizard = self.env['hr.payroll.alloc.paid.leave'].create({
+                'year': date.today().year - 1,
+                'holiday_status_id': self.paid_time_off_type.id
+            })
+            self.wizard.alloc_employee_ids = self.wizard.alloc_employee_ids.filtered(lambda alloc_employee: alloc_employee.employee_id.id == self.employee_georges.id)
+            self.assertEqual(len(self.wizard.alloc_employee_ids), 0, "Since Georges switched to HK company on 01/09, there shouldn't be any allocation for him.")
