@@ -7389,3 +7389,41 @@ registry.category("web_tour.tours").add("test_quantity_distribution_sublines_sam
         ...stepUtils.validateBarcodeOperation(".o_barcode_location_group > .o_barcode_line.o_line_completed"),
     ]
 });
+
+registry.category("web_tour.tours").add("test_rental_partial_reception", {
+    steps: () => [
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan RNT01",
+        },
+        {
+            trigger: '.o_barcode_line[data-barcode="RNT01"] .qty-done:contains("1")',
+            run: 'scan OBTVALI',
+        },
+        {
+            trigger: ".modal-content.o_barcode_backorder_dialog",
+            run: function() {
+                const incompleteLines = document.querySelectorAll(".o_barcode_backorder_product_row");
+                helper.assert(incompleteLines.length, 1);
+                const line = incompleteLines[0];
+                helper.assert(line.querySelector("[name='qty-done']").innerText, "1");
+                helper.assert(line.querySelector("[name='reserved-qty']").innerText, "4");
+                helper.assert(line.querySelector("[name='backorder-qty']").innerText, "3");
+            },
+        },
+        {
+            trigger: ".modal-dialog button.btn-primary",
+            run: "click",
+        },
+        {
+            trigger: ".o_notification",
+            run: function() {
+                const backorderLink = document.querySelector(".o_notification_buttons span");
+                helper.assert(
+                    backorderLink.innerText.includes("WH/IN/"), true,
+                    "The notification should contain a link to the created backorder."
+                );
+            },
+        },
+    ]
+})

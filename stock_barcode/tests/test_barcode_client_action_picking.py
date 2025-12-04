@@ -4567,3 +4567,37 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             {'quantity': 1.0, 'product_uom_qty': 1.0, 'lot_ids': [lot_1.id], 'picked': True},
             {'quantity': 1.0, 'product_uom_qty': 1.0, 'lot_ids': [lot_1.id], 'picked': True},
         ])
+
+    def test_rental_partial_reception(self):
+        """ Checks that processing a partial receipt for a rental order triggers the backorder dialog.
+        """
+        if not self.env['ir.module.module'].search([('name', '=', 'sale_stock_renting'), ('state', '=', 'installed')]):
+            self.skipTest("sale_stock_renting is not installed, so there is no rental orders to test")
+
+        # Enable rental pickings
+        self.env['res.config.settings'].create({'group_rental_stock_picking': True}).execute()
+
+        product = self.env['product.product'].create({
+            'name': 'Rental',
+            'rent_ok': True,
+            'is_storable': True,
+            'barcode': 'RNT01'
+        })
+        self.env['stock.quant']._update_available_quantity(product, self.stock_location, 4)
+        rental = self.env['sale.order'].with_context(in_rental_app=True).create({
+            'partner_id': self.owner.id,
+            'order_line': [Command.create({
+                'product_id': product.id,
+                'product_uom_qty': 4,
+            })]
+        })
+        rental.action_confirm()
+        delivery = rental.picking_ids.filtered(lambda p: p.picking_type_id == rental.warehouse_id.out_type_id)
+        receipt = rental.picking_ids - delivery
+        delivery.button_validate()
+
+        url = self._get_client_action_url(receipt.id)
+        self.start_tour(url, 'test_rental_partial_reception', login='admin', timeout=180)
+
+        self.assertTrue(receipt.backorder_ids)
+        self.assertEqual(receipt.backorder_ids.move_ids.product_uom_qty, 3.0)
