@@ -1220,6 +1220,7 @@ class TestQualityCheck(TestQualityCommon):
     def test_qc_by_product_with_partial_reception(self):
         """
         Test that a new quality check is created for the backorder.
+        If splitting before validating, test that the old QC remains.
         """
         self.env['quality.point'].create({
             'picking_type_ids': [self.picking_type_id],
@@ -1251,12 +1252,20 @@ class TestQualityCheck(TestQualityCommon):
         # Check that the first quality check is still linked to the first picking
         self.assertEqual(len(picking_in.check_ids), 1)
         self.assertEqual(picking_in.check_ids.quality_state, 'pass')
-        # Make sure that the backorder is correctly created
+        # Make sure that the backorder is correctly created and that it has a quality check
         backorder = picking_in.backorder_ids
-        # Verify that a new quality check is created and linked to the backorder
+        self.assertEqual(len(backorder.check_ids), 1)
+        # Check that splitting the backorder doesn't remove the check
+        backorder.move_ids.quantity = 3
+        backorder.move_ids.picked = True
+        backorder.action_split_transfer()
         self.assertEqual(len(backorder.check_ids), 1)
         backorder.check_ids.do_pass()
         self.assertEqual(backorder.check_ids.quality_state, 'pass')
+        # Check that the new-new backorder has its own quality check
+        backorder_2 = backorder.backorder_ids
+        self.assertEqual(len(backorder_2.check_ids), 1)
+        self.assertNotIn(backorder_2.check_ids, (picking_in + backorder).check_ids)
 
     def test_quality_check_on_receipt_with_additional_move_lines(self):
         """
