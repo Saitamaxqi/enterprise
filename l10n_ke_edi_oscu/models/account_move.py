@@ -84,7 +84,7 @@ class AccountMove(models.Model):
     def _compute_l10n_ke_validation_message(self):
         """ Compute the series of messages to be displayed in the banner at the header of the invoice. """
         for move in self:
-            if not move.company_id.l10n_ke_oscu_is_active or not move.is_invoice(include_receipts=True):
+            if not move.is_invoice(include_receipts=True):
                 move.l10n_ke_validation_message = False
                 continue
 
@@ -93,6 +93,19 @@ class AccountMove(models.Model):
                 **product_lines.product_id._l10n_ke_get_validation_messages(for_invoice=True),
                 **product_lines.product_uom_id._l10n_ke_get_validation_messages(),
             }
+
+            if not move.company_id.l10n_ke_oscu_is_active:
+                messages['etims_configuration_warning'] = {
+                    'message': _(
+                        "eTIMS configuration is incomplete for company '%(company)s'. Please verify that the eTIMS Server Mode, "
+                        "OSCU Configuration, and the company's eTIMS Branch Code are correctly set up to proceed.",
+                        company=move.company_id.name
+                    ),
+                    'blocking': True,
+                }
+                move.l10n_ke_validation_message = messages
+                continue
+
             if move.l10n_ke_oscu_invoice_number and not move.l10n_ke_oscu_receipt_number and not move.l10n_ke_oscu_signature:
                 messages['timeout_warning'] = {
                     'message': _("The eTIMS connection timed out while sending the invoice, please try again later.")
