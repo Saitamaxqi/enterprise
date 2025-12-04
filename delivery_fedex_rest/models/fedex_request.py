@@ -266,6 +266,8 @@ class FedexRequest:
             res['personName'] = partner.name[:70]
             if partner.parent_id:
                 res['companyName'] = partner.parent_id.name[:35]
+            elif partner.company_name:
+                res['companyName'] = partner.company_name[:35]
         if partner.email:
             res['emailAddress'] = partner.email
         elif company_partner and company_partner.email:
