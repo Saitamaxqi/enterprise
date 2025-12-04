@@ -7,6 +7,7 @@ from functools import reduce
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError, UserError
+from odoo.tools import float_round
 
 
 class HrEmployee(models.Model):
@@ -365,7 +366,7 @@ Earnings are made of professional income, remuneration, unemployment allocations
 
     def get_l10n_be_holiday_attest_occupations(self, year):
         first_of_year = date(year, 1, 1)
-        last_of_year = min(date(year, 12, 31), date.today())
+        last_of_year = min(date(year, 12, 31), self.end_notice_period or self.departure_date or date.today())
         versions = self.version_ids.filtered(
             lambda v: v._is_overlapping_period(first_of_year, last_of_year)
         )
@@ -374,10 +375,10 @@ Earnings are made of professional income, remuneration, unemployment allocations
         occupations = []
         for idx, version in enumerate(versions):
             previous_occupation_work_time_rate = (
-                versions[idx - 1].hours_per_week, versions[idx - 1].resource_calendar_id._get_days_per_week()
+                float_round(versions[idx - 1].hours_per_week, 2), versions[idx - 1].resource_calendar_id._get_days_per_week()
             ) if idx != 0 else None
             occupation_work_time_rate = (
-                version.hours_per_week, version.resource_calendar_id._get_days_per_week()
+                float_round(version.hours_per_week, 2), version.resource_calendar_id._get_days_per_week()
             )
             if previous_occupation_work_time_rate != occupation_work_time_rate:
                 if occupations:
@@ -391,7 +392,7 @@ Earnings are made of professional income, remuneration, unemployment allocations
                     })
                 occupations.append({
                     'date_start': max(first_of_year, version.date_version),
-                    'hours_per_week': version.hours_per_week,
+                    'hours_per_week': float_round(version.hours_per_week, 2),
                     'days_per_week': version.resource_calendar_id._get_days_per_week(),
                 })
         equivalent_days, non_equivalent_days = self._get_l10n_be_holiday_attest_worked_days(
