@@ -433,6 +433,10 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf2, 80.0)
 
         self.start_tour("/odoo/barcode", "test_inventory_packaging_location", login="admin")
+        # Relaunch the same tour with a mobile device config.
+        self.browser_size = '375x667'
+        self.touch_enabled = True
+        self.start_tour("/odoo/barcode", "test_inventory_packaging_location", login="admin")
 
     def test_inventory_owner_scan_package(self):
         group_owner = self.env.ref('stock.group_tracking_owner')

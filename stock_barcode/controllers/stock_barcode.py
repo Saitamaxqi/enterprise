@@ -298,12 +298,13 @@ class StockBarcodeController(http.Controller):
                 'action': {
                     'name': product_display_name,
                     'res_model': 'stock.quant',
-                    'views': [(kanban_view_id, 'kanban'), (tree_view_id, 'list')],
+                    'views': [(tree_view_id, 'list'), (kanban_view_id, 'kanban')],
                     'type': 'ir.actions.act_window',
                     'domain': [('product_id', '=', product_id)],
                     'context': {
                         'search_default_internal_loc': True,
                     },
+                    'mobile_view_mode': 'kanban',
                 }
             }
 
