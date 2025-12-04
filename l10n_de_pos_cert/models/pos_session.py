@@ -139,8 +139,11 @@ class PosSession(models.Model):
 
         move_statements = [entry for entry in self.get_cash_in_out_list() if entry.get('cashier_name')]  # remove difference line
         for cash_move in move_statements:
-            # Need to update here if we update format in _prepareTryCashInOutPayload()
-            [_, move_type, statement_type, move_reason] = cash_move['name'].split('-')
+            # Need to update here if we update format in _prepareTryCashInOutPayload(), _prepare_account_bank_statement_line_vals()
+            # current structure of name is: {session_name}-{move_type}-{statement_type}-{move_reason}
+            # so if - is in name or reason direct spiltting won't work
+            move_parts = cash_move['name'].removeprefix(self.name).split('-')
+            move_type, statement_type, move_reason = move_parts[1], move_parts[2], "-".join(move_parts[3:])
             statements.append({"type": statement_type.capitalize(), "name": f"Cash {move_type} - {move_reason}"[:40], "amounts_per_vat_id": [self._get_vat_details(5, cash_move['amount'], cash_move['amount'])]})
         return statements
 
@@ -155,6 +158,10 @@ class PosSession(models.Model):
         config = self.config_id
         session = self
 
+        # To update the value of `l10n_de_vat_definition_export_identifier` for existing customers when they upgrade
+        # this will ensure that all taxes have their export IDs set once their first session is closed
+        company._check_vat_definition_export_id()
+
         precision = self.currency_id.decimal_places
         transactions = []
         for i, o in enumerate(orders, start=1):
@@ -164,8 +171,8 @@ class PosSession(models.Model):
                     "buyer_export_id": f"{o.partner_id.id}",
                     "type": "Kunde" if company.id != o.partner_id.company_id.id else "Mitarbeiter",
                     "address": {
-                        "street": o.partner_id.street or '',
-                        "postal_code": o.partner_id.zip or '',
+                        "street": o.partner_id.street[:60] or 'N/A',  # minimum 1 character required
+                        "postal_code": o.partner_id.zip[:10] or 'N/A',  # minimum 1 character required
                         "country_code": COUNTRY_CODE_MAP.get(o.partner_id.country_id.code) or "DEU",
                     },
                 }
