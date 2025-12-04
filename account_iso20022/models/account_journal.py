@@ -293,10 +293,10 @@ class AccountJournal(models.Model):
         EndToEndId.text = payment.get('end_to_end_uuid') or uuid4().hex
         Amt = etree.SubElement(CdtTrfTxInf, "Amt")
 
-        currency_id = self.env['res.currency'].search([('id', '=', payment['currency_id'])], limit=1)
         journal_id = self.env['account.journal'].search([('id', '=', payment['journal_id'])], limit=1)
-        val_Ccy = currency_id and currency_id.name or journal_id.company_id.currency_id.name
-        val_InstdAmt = float_repr(float_round(payment['amount'], 2), 2)
+        currency_id = self.env['res.currency'].search([('id', '=', payment['currency_id'])], limit=1) or journal_id.company_id.currency_id
+        val_Ccy = currency_id.name
+        val_InstdAmt = float_repr(currency_id.round(payment['amount']), currency_id.decimal_places)
         InstdAmt = etree.SubElement(Amt, "InstdAmt", Ccy=val_Ccy)
         InstdAmt.text = val_InstdAmt
 
