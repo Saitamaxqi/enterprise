@@ -200,7 +200,7 @@ class L10n_BeTaxReportHandler(models.AbstractModel):
 
         # Create a mapping between report line ids and actual grid names
         non_compound_rep_lines = report.line_ids.expression_ids.filtered(
-                lambda x: x.formula not in {'48s44', '48s46L', '48s46T', '46L', '46T'})
+                lambda x: x.formula not in {'48s44', '48s46L', '48s46T', '-46L', '-46T'})
         lines_grids_map = {
             expr.report_line_id.id: expr.formula.split('.')[0].replace('c', '') for expr in non_compound_rep_lines
         }
