@@ -15,6 +15,25 @@ class Test13thMonth(TestPayslipBase):
         self.structure = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_thirteen_month')
         self.payslip = self.create_payslip(self.structure, datetime(2019, 12, 1), datetime(2019, 12, 31))
 
+        self.calendar_40h = self.env['resource.calendar'].create({
+            'name': '40h calendar',
+            'attendance_ids': [
+                (0, 0, {'name': 'Monday Morning', 'dayofweek': '0', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Monday Afternoon', 'dayofweek': '0', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon'}),
+                (0, 0, {'name': 'Tuesday Morning', 'dayofweek': '1', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Tuesday Afternoon', 'dayofweek': '1', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon'}),
+                (0, 0, {'name': 'Wednesday Morning', 'dayofweek': '2', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Wednesday Afternoon', 'dayofweek': '2', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon'}),
+                (0, 0, {'name': 'Thursday Morning', 'dayofweek': '3', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Thursday Afternoon', 'dayofweek': '3', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon'}),
+                (0, 0, {'name': 'Friday Morning', 'dayofweek': '4', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Friday Afternoon', 'dayofweek': '4', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon'}),
+            ]
+        })
+
+        self.env.company.resource_calendar_id = self.calendar_40h
+        self.structure.type_id.default_resource_calendar_id = self.calendar_40h
+
         self.calendar_20h = self.env['resource.calendar'].create({
             'name': '20h calendar',
             'attendance_ids': [
@@ -648,7 +667,7 @@ class Test13thMonth(TestPayslipBase):
     def test_13th_month_long_term_sick_back_to_work_half_day_sick(self):
         self.update_version(date(2015, 1, 1))
         self.env.ref('hr_holidays.leave_type_sick_time_off').request_unit = 'half_day'
-        leaves = self.env['hr.leave'].create([
+        leaves = self.env['hr.leave'].with_context(leave_skip_state_check=True).create([
             {
                 'employee_id': self.employee.id,
                 'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
@@ -724,7 +743,7 @@ class Test13thMonth(TestPayslipBase):
             else:
                 current_date += relativedelta(days=1)
 
-        leaves = self.env['hr.leave'].create(leaves_to_create)
+        leaves = self.env['hr.leave'].with_context(leave_skip_state_check=True).create(leaves_to_create)
         leaves.action_approve()
         self.employee.version_ids.generate_work_entries(date(2018, 12, 31), date(2019, 12, 31))
 
