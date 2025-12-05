@@ -323,6 +323,12 @@ class AccountMove(models.Model):
         )
         return super().button_draft()
 
+    def button_cancel(self):
+        # EXTENDS 'account'
+        res = super().button_cancel()
+        self.l10n_br_last_edi_status = "cancelled"
+        return res
+
     def _get_fields_to_detach(self):
         # EXTENDS account
         fields_list = super()._get_fields_to_detach()
