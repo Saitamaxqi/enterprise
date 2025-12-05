@@ -24,6 +24,7 @@ class HrWorkEntry(models.Model):
             work_entry.has_payslip = any(
                 slip.employee_id == work_entry.employee_id
                 and slip.date_from <= work_entry.date <= slip.date_to
+                and not slip.is_refunded
                 for slip in all_payslips)
 
     def _check_undefined_slots(self, interval_start, interval_end):
