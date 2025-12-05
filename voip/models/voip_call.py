@@ -271,9 +271,12 @@ class VoipCall(models.Model):
             domain = [("phone_mobile_search", "=", number)]
         partner = self.env["res.partner"].search(domain, limit=1)
         if not partner:
-            partner = self.env["res.users.settings"].search([
-                ("voip_username", "=", number)
-            ], limit=1).user_id.partner_id
+            partner = (
+                self.env["res.users.settings"]
+                .sudo()
+                .search([("voip_username", "=", number)], limit=1)
+                .user_id.partner_id.sudo(False)
+            )
         if not partner:
             return False
         self.check_access("read")
