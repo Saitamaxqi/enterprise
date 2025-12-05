@@ -1805,7 +1805,7 @@ class AccountReport(models.Model):
         ]
 
         if self.return_type_ids:
-            options['buttons'].append({'name': _('Returns'), 'action': 'action_open_returns', 'sequence': 110, 'always_show': True})
+            options['buttons'].append({'name': _('Returns'), 'action': 'action_open_returns', 'sequence': 110, 'always_show': True, 'branch_allowed': True})
 
     def open_account_report_file_download_error_wizard(self, errors, content):
         self.ensure_one()
