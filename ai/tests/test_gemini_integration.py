@@ -90,7 +90,7 @@ class TestGeminiIntegration(TransactionCase):
                 self.assertEqual(params.get("key"), "test-gemini-key")
 
                 instructions = body["systemInstruction"]
-                rag_context_found = "##Context information:" in str(instructions["parts"])
+                rag_context_found = "##RAG context information:" in str(instructions["parts"])
                 self.assertTrue(rag_context_found, "RAG context not found in messages")
                 self.assertIn(
                     "Odoo is an open-source ERP system", str(instructions["parts"])

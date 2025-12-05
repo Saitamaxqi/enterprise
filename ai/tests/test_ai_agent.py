@@ -121,3 +121,31 @@ class TestAIAgent(TransactionCase):
             action_2["params"]["channelId"],
             "Each call to 'action_ask_ai' should open a new ai chat channel."
         )
+
+    def test_get_llm_response_with_sources(self):
+        """Responses include source links when the LLM returns attachment ids."""
+        agent = self.env["ai.agent"].create({
+            "name": "Odoo Agent",
+        })
+
+        attachment = self.env["ir.attachment"].create({
+            "name": "Doc 1",
+            "raw": b"content",
+            "mimetype": "text/plain",
+        })
+        self.env["ai.agent.source"].create({
+            "name": "Doc 1",
+            "agent_id": agent.id,
+            "attachment_id": attachment.id,
+            "type": "binary",
+            "status": "indexed",
+            "is_active": True,
+        })
+
+        message = f"Here is your answer [SOURCE:{attachment.id}]"
+        llm_response = agent._get_llm_response_with_sources([message])
+
+        self.assertEqual(len(llm_response), 1)
+        self.assertNotIn("[SOURCE", llm_response[0])
+        self.assertIn("href=\"%s/web/content/%s\"" % (agent.get_base_url(), attachment.id), llm_response[0])
+        self.assertIn("[1]", llm_response[0])
