@@ -2030,7 +2030,7 @@ export default class BarcodePickingModel extends BarcodeModel {
             if (barcodeData.packageName) {
                 additionalParams.default_name = barcodeData.packageName;
             }
-            await this._putInPack(additionalParams);
+            return await this._putInPack(additionalParams);
         } else if (!resultPackage.package_type_id) {
             // Changes the package type for the scanned one.
             await this.save();
@@ -2042,7 +2042,7 @@ export default class BarcodePickingModel extends BarcodeModel {
                 package: resultPackage.name,
             });
             this.notification(message, { type: "success" });
-            this.trigger("refresh");
+            return this.trigger("refresh");
         } else {
             // Put package(s) inside a new one of the scanned package type.
             const packageToPackIds = this.getPackageToPackIds();

@@ -4691,7 +4691,7 @@ registry.category("web_tour.tours").add("test_put_packs_in_new_pack", {
             run: "scan maxibox",
         },
         {
-            trigger: ".o_barcode_line:first-child:not(.o_selected.o_line_completed)",
+            trigger: ".o_barcode_line.o_line_completed:not(.o_selected) :contains('MXB-0000003')",
             run: "scan MNB-0000003",
         },
         {
@@ -4699,7 +4699,7 @@ registry.category("web_tour.tours").add("test_put_packs_in_new_pack", {
             run: "scan MNB-0000004",
         },
         {
-            trigger: ".o_barcode_line:nth-child(2).o_selected.o_line_completed",
+            trigger: ".o_validate_page.btn-primary",
             run: "scan maxibox",
         },
         {
@@ -7386,8 +7386,10 @@ registry.category("web_tour.tours").add("test_quantity_distribution_sublines_sam
             trigger: ".o_barcode_client_action",
             run: "scan lot 1",
         },
-        ...stepUtils.validateBarcodeOperation(".o_barcode_location_group > .o_barcode_line.o_line_completed"),
-    ]
+        ...stepUtils.validateBarcodeOperation(
+            ".o_barcode_location_group > .o_barcode_line.o_line_completed"
+        ),
+    ],
 });
 
 registry.category("web_tour.tours").add("test_rental_partial_reception", {
@@ -7398,12 +7400,14 @@ registry.category("web_tour.tours").add("test_rental_partial_reception", {
         },
         {
             trigger: '.o_barcode_line[data-barcode="RNT01"] .qty-done:contains("1")',
-            run: 'scan OBTVALI',
+            run: "scan OBTVALI",
         },
         {
             trigger: ".modal-content.o_barcode_backorder_dialog",
-            run: function() {
-                const incompleteLines = document.querySelectorAll(".o_barcode_backorder_product_row");
+            run: function () {
+                const incompleteLines = document.querySelectorAll(
+                    ".o_barcode_backorder_product_row"
+                );
                 helper.assert(incompleteLines.length, 1);
                 const line = incompleteLines[0];
                 helper.assert(line.querySelector("[name='qty-done']").innerText, "1");
@@ -7417,13 +7421,14 @@ registry.category("web_tour.tours").add("test_rental_partial_reception", {
         },
         {
             trigger: ".o_notification",
-            run: function() {
+            run: function () {
                 const backorderLink = document.querySelector(".o_notification_buttons span");
                 helper.assert(
-                    backorderLink.innerText.includes("WH/IN/"), true,
+                    backorderLink.innerText.includes("WH/IN/"),
+                    true,
                     "The notification should contain a link to the created backorder."
                 );
             },
         },
-    ]
-})
+    ],
+});

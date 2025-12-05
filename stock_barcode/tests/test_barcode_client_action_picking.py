@@ -4164,28 +4164,26 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         sequence.write({'number_next_actual': 123})
 
         # Creates two products and two package's types.
-        product1 = self.env['product.product'].create({
+        product1, product2 = self.env['product.product'].create([{
             'name': 'PRO_GTIN_8',
             'is_storable': True,
             'barcode': '82655853',  # GTIN-8
             'uom_id': self.env.ref('uom.product_uom_unit').id
-        })
-        product2 = self.env['product.product'].create({
+        }, {
             'name': 'PRO_GTIN_12',
             'is_storable': True,
             'barcode': '584687955629',  # GTIN-12
             'uom_id': self.env.ref('uom.product_uom_unit').id,
-        })
-        wooden_chest_package_type = self.env['stock.package.type'].create({
+        }])
+        wooden_chest_package_type, iron_chest_package_type = self.env['stock.package.type'].create([{
             'name': 'Wooden Chest',
             'barcode': 'WOODC',
-        })
-        iron_chest_package_type = self.env['stock.package.type'].create({
+        }, {
             'name': 'Iron Chest',
             'barcode': 'IRONC',
-        })
+        }])
 
-        self.start_tour("/odoo/barcode", 'test_gs1_package_receipt', login='admin', timeout=180)
+        self.start_tour("/odoo/barcode", 'test_gs1_package_receipt', login='admin')
         # Checks the package is in the stock location with the products.
         package = self.env['stock.package'].search([('name', '=', '546879213579461324')])
         package2 = self.env['stock.package'].search([('name', '=', '130406658041178543')])
@@ -4201,7 +4199,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(package3.package_type_id.id, iron_chest_package_type.id)
         self.assertEqual(package3.quant_ids.product_id.id, product2.id)
 
-        self.start_tour("/odoo/barcode", 'test_gs1_package_delivery', login='admin', timeout=180)
+        self.start_tour("/odoo/barcode", 'test_gs1_package_delivery', login='admin')
         # Checks the package is in the customer's location.
         self.assertEqual(package.location_id.id, self.customer_location.id)
 
