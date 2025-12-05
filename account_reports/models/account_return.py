@@ -317,11 +317,8 @@ class AccountReturnType(models.Model):
             date_from = fields.Date.from_string(self.env.context['forced_date_from'])
             date_to = fields.Date.from_string(self.env.context['forced_date_to'])
         else:
-            fy_dates_dict = main_company.compute_fiscalyear_dates(today)
-            date_from = fy_dates_dict['date_from']
-            date_to = fy_dates_dict['date_to']
-            if date_to < next_year:
-                date_to = next_year
+            date_from = today - relativedelta(years=1)
+            date_to = next_year
 
         if not self._can_return_exist(main_company, tax_unit):
             returns_to_unlink = self.env['account.return'].sudo().search([
