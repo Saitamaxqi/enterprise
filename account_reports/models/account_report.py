@@ -111,8 +111,28 @@ class AccountReport(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         reports = super().create(vals_list)
+
+        reports_by_impacted_field = {}
+        for report, impacted_fields in zip(reports, vals_list):
+            for field_name in impacted_fields:
+                reports_by_impacted_field.setdefault(field_name, self.env['account.report'])
+                reports_by_impacted_field[field_name] += report
+
         if root_annual_statements := self.env.ref('account_reports.annual_statements', raise_if_not_found=False):
             asr_section_reports = reports.filtered_domain(self._asr_sections_domain(root_annual_statements))
+
+            if asr_section_reports:
+                # When the report needs to be added to the annual statement, the computation of some of its filters
+                # might be skipped (because it's linked to a single composite report). Make sure we compute those
+                # filters once before setting the link to the composite report.
+                for name, field in asr_section_reports._fields.items():
+                    if field._depends and 'section_main_report_ids' in field._depends and field.store:
+                        # We then need to recompute the fields on the reports not setting it in the create (all the filters are also editable)
+                        reports_to_recompute = reports - reports_by_impacted_field.get(name, self.env['account.report'])
+                        if reports_to_recompute:
+                            self.env.add_to_compute(field, reports_to_recompute)
+                            reports_to_recompute._recompute_field(field)
+
             asr_section_reports._link_annual_statements(root_annual_statements)
         return reports
 
