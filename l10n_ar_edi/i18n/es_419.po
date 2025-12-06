@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_ar_edi
+# * l10n_ar_edi
 #
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.4a1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-13 19:53+0000\n"
-"PO-Revision-Date: 2025-06-03 13:30+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-12-06 01:43+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
+"Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
+"odoo-19-l10n/l10n_ar_edi/es_419/>\n"
 "Language: es_419\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: l10n_ar_edi
 #. odoo-python
@@ -25,6 +28,10 @@ msgid ""
 "The ARCA electronic billing webservice is not available. Wait a few minutes "
 "for it to reset and try to validate the action again."
 msgstr ""
+"\n"
+"\n"
+"El webservice de facturación electrónica de ARCA no está disponible. Espera "
+"unos minutos a que se restablezca e intenta validar la acción otra vez."
 
 #. module: l10n_ar_edi
 #. odoo-python
@@ -39,12 +46,23 @@ msgid ""
 "likely that you has not delegated ARCA services or electronic invoice setup "
 "is not completed"
 msgstr ""
+"\"600: ValidacionDeToken: Error al verificar hash\".\n"
+"    \"600: VerificacionDeHash: No validó la firma digital\": Por lo general "
+"es un error de los servidores de la ARCA. Para verificarlo, ve al tipo de "
+"documentos y usa la opción \"Obtener última factura\". Si ocurre un error, "
+"entonces se debe a un problema de la ARCA que suele solucionarse durante el "
+"día.\n"
+" * \"600: ValidacionDeToken: No apareció CUIT en lista de relaciones\": Es "
+"probable que no hayas delegado los servicios de la ARCA o que no hayas "
+"completado la configuración de la factura electrónica."
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_journal.py:0
 msgid "\"Check Available ARCA PoS\" is not implemented for webservice %s"
 msgstr ""
+"\"Verificar el PdV de la ARCA disponible\" no está implementado para el "
+"webservice %s."
 
 #. module: l10n_ar_edi
 #. odoo-python
@@ -53,6 +71,8 @@ msgid ""
 "\"Check Available ARCA PoS\" is not implemented in testing mode for "
 "webservice %s"
 msgstr ""
+"\"Verificar el PdV de ARCA disponible\" no está implementado en modo de "
+"pruebas para el webservice %s."
 
 #. module: l10n_ar_edi
 #. odoo-python
@@ -102,6 +122,10 @@ msgid ""
 "* Get Last Invoice: it connects to ARCA to get the last invoice number and "
 "show it in the number field"
 msgstr ""
+"* Número específico de factura: Consulta toda la información de la factura "
+"en ARCA para el número indicado\n"
+"* Obtener última factura: Se conecta a ARCA para obtener el número de la "
+"última factura y mostrarlo en el campo de número."
 
 #. module: l10n_ar_edi
 #. odoo-python
@@ -143,94 +167,94 @@ msgstr "ADC - AGENTE DE DEPÓSITO COLECTIVO"
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_move_form
 msgid "ARCA"
-msgstr ""
+msgstr "ARCA"
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_afip_auth_mode
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_move__l10n_ar_afip_auth_mode
 msgid "ARCA Authorization Mode"
-msgstr ""
+msgstr "Modo de autorización de ARCA"
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_res_company__l10n_ar_afip_ws_crt_id
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_res_config_settings__l10n_ar_afip_ws_crt_id
 msgid "ARCA Certificate"
-msgstr ""
+msgstr "Certificado de ARCA"
 
 #. module: l10n_ar_edi
 #: model:ir.actions.act_window,name:l10n_ar_edi.act_afipws_auth
 msgid "ARCA Connections"
-msgstr ""
+msgstr "Conexiones de ARCA"
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_afipws_auth_form
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_afipws_auth_tree
 msgid "ARCA Connector"
-msgstr ""
+msgstr "Conector de la ARCA"
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_res_company__l10n_ar_afip_ws_environment
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_res_config_settings__l10n_ar_afip_ws_environment
 msgid "ARCA Environment"
-msgstr ""
+msgstr "Entorno de ARCA"
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/wizards/l10n_ar_afip_ws_consult.py:0
 msgid "ARCA Errors: %(error)s"
-msgstr ""
+msgstr "Errores de la ARCA: %(error)s"
 
 #. module: l10n_ar_edi
 #: model:ir.actions.act_url,name:l10n_ar_edi.action_help_afip
 msgid "ARCA Help Page"
-msgstr ""
+msgstr "Página de ayuda de ARCA"
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_res_company__l10n_ar_afip_verification_type
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_res_config_settings__l10n_ar_afip_verification_type
 msgid "ARCA Invoice Verification"
-msgstr ""
+msgstr "Verificación de factura de ARCA"
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
 msgid "ARCA Messages"
-msgstr ""
+msgstr "Mensajes de ARCA"
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_afip_qr_code
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_move__l10n_ar_afip_qr_code
 msgid "ARCA QR Code"
-msgstr ""
+msgstr "Código QR de ARCA"
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_afipws_auth_form
 msgid "ARCA Servers"
-msgstr ""
+msgstr "Servidores de ARCA"
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
 msgid "ARCA Validation Error: %(error)s"
-msgstr ""
+msgstr "Error de validación de ARCA: %(error)s"
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
 msgid "ARCA Validation Event: %(event)s"
-msgstr ""
+msgstr "Evento de validación de ARCA: %(event)s"
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
 msgid "ARCA Validation Observation: %(obs)s"
-msgstr ""
+msgstr "Observación de validación de ARCA: %(obs)s"
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_afip_verification_result
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_move__l10n_ar_afip_verification_result
 msgid "ARCA Verification result"
-msgstr ""
+msgstr "Resultado de verificación de ARCA"
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_afip_ws
@@ -238,36 +262,38 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_move__l10n_ar_afip_ws
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_l10n_ar_afipws_connection__l10n_ar_afip_ws
 msgid "ARCA WS"
-msgstr ""
+msgstr "WS de ARCA"
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_journal.py:0
 #: code:addons/l10n_ar_edi/wizards/l10n_ar_afip_ws_consult.py:0
 msgid "ARCA WS %s not implemented"
-msgstr ""
+msgstr "WS de ARCA %s no implementado"
 
 #. module: l10n_ar_edi
 #: model:ir.ui.menu,name:l10n_ar_edi.menu_afipws
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.res_config_settings_view_form
 msgid "ARCA Web Services"
-msgstr ""
+msgstr "Webservices de ARCA"
 
 #. module: l10n_ar_edi
 #: model:ir.model,name:l10n_ar_edi.model_l10n_ar_afipws_connection
 msgid "ARCA Webservice Connection"
-msgstr ""
+msgstr "Conexión del webservice de ARCA"
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_move_form
 msgid "ARCA authorization"
-msgstr ""
+msgstr "Autorización de ARCA"
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
 msgid "ARCA authorization verification result: %(observations)s%(errors)s"
 msgstr ""
+"Resultado de la verificación de autorización de ARCA: %(observations)s%"
+"(errors)s"
 
 #. module: l10n_ar_edi
 #. odoo-python
@@ -276,16 +302,18 @@ msgid ""
 "ARCA environment not configured for company “%s”, please check accounting "
 "settings"
 msgstr ""
+"La empresa \"%s\" no tiene un entorno de la ARCA configurado, revisa los "
+"ajustes de Contabilidad."
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields.selection,name:l10n_ar_edi.selection__account_move__l10n_ar_afip_result__a
 msgid "Accepted in ARCA"
-msgstr ""
+msgstr "Aceptado en ARCA"
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields.selection,name:l10n_ar_edi.selection__account_move__l10n_ar_afip_result__o
 msgid "Accepted in ARCA with Observations"
-msgstr ""
+msgstr "Aceptado con observaciones en ARCA"
 
 #. module: l10n_ar_edi
 #: model:ir.model,name:l10n_ar_edi.model_account_move_reversal
@@ -317,6 +345,8 @@ msgid ""
 "Allow or Require to do vendor bill verify in ARCA for documents with CAE, "
 "CAI or CAEA numbers"
 msgstr ""
+"Permite o exige verificar las facturas de proveedor con números CAE, CAI o "
+"CAEA en la ARCA."
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields.selection,name:l10n_ar_edi.selection__account_move__l10n_ar_afip_verification_result__a
@@ -335,6 +365,13 @@ msgid ""
 " If not, then could be a overload of ARCA service, please wait some time and "
 "try again"
 msgstr ""
+"¿Estás facturando desde otra computadora o sistema? Este error puede ocurrir "
+"al solicitarle un token de acceso a ARCA varias veces cuando el token más "
+"reciente sigue siendo válido. Necesitas esperar 12 horas para generar un "
+"token nuevo y poder conectarte a ARCA.\n"
+"\n"
+" De lo contrario, puede que se trate de una sobrecarga del servicio de ARCA. "
+"Espera un momento y vuelve a intentarlo."
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_afip_result
@@ -342,12 +379,15 @@ msgstr ""
 msgid ""
 "Argentina: Result of the electronic invoice request to the ARCA web service."
 msgstr ""
+"Argentina: Resultado de la solicitud de factura electrónica enviada al "
+"webservice de ARCA."
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_afip_auth_code_due
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_move__l10n_ar_afip_auth_code_due
 msgid "Argentina: The Due Date of the Invoice given by ARCA."
 msgstr ""
+"Argentina: La fecha de vencimiento de la factura proporcionada por ARCA."
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_afip_fce_is_cancellation
@@ -1827,13 +1867,13 @@ msgstr "o"
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_journal.py:0
 msgid "wsbfe"
-msgstr ""
+msgstr "wsbfe"
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_journal.py:0
 msgid "wsfex"
-msgstr ""
+msgstr "wsfex"
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_currency_form

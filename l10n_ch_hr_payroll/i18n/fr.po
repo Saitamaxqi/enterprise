@@ -8,21 +8,22 @@
 #
 # "Manon Rondou (ronm)" <ronm@odoo.com>, 2025.
 # Joël Michaud <joel.michaud@braintec.com>, 2025.
+# Philippe Lang <philippe.lang@colab.ch>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-09 12:57+0000\n"
-"PO-Revision-Date: 2025-11-28 12:46+0000\n"
-"Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
+"POT-Creation-Date: 2025-12-05 19:03+0000\n"
+"PO-Revision-Date: 2025-12-05 10:58+0000\n"
+"Last-Translator: Philippe Lang <philippe.lang@colab.ch>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_ch_hr_payroll/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : "
-"((n != 0 && n % 1000000 == 0) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
+"1000000 == 0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.14.3\n"
 
 #. module: l10n_ch_hr_payroll
@@ -994,6 +995,21 @@ msgid "(5400) General AVS Deduction in %"
 msgstr "(5400) Déduction générale AVS en %"
 
 #. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5401
+msgid "(5401) General AVS Deduction in % (2)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5402
+msgid "(5402) General AVS Deduction in % (3)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5403
+msgid "(5403) General AVS Deduction in % (4)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_6000
 msgid "(6000) Expenses travel, car, overnight accommodation"
 msgstr "(6000) Frais de déplacement, voiture, nuitées"
@@ -1062,6 +1078,21 @@ msgstr "(7310) Commission paritaire nationale employeur"
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7400
 msgid "(7400) General AVS Deduction in % Employer"
 msgstr "(7400) Déduction générale AVS en % Employeur"
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7401
+msgid "(7401) General AVS Deduction in % Employer (2)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7402
+msgid "(7402) General AVS Deduction in % Employer (3)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7403
+msgid "(7403) General AVS Deduction in % Employer (4)"
+msgstr ""
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.actions.report,print_report_name:l10n_ch_hr_payroll.action_report_individual_account
@@ -1871,17 +1902,17 @@ msgstr "Quittance AHV-AVS"
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7011
 msgid "AHV/IV/EO Administrative Costs"
-msgstr "Frais administratifs AHV/IV/EO"
+msgstr "Frais administratifs AVS/AI/APG"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7010
 msgid "AHV/IV/EO Employer contribution"
-msgstr "Cotisation employeur AHV/IV/EO"
+msgstr "Cotisation employeur AVS/AI/APG"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5010
 msgid "AHV/IV/EO contribution"
-msgstr "Cotisation AHV/IV/EO"
+msgstr "Cotisation AVS/AI/APG"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_tax_rate_import_wizard__canton__ai
@@ -3490,7 +3521,7 @@ msgstr "Indemnité pour travail souterrain"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_hr_employee_children__name
 msgid "Complete Name"
-msgstr "Nom Complet"
+msgstr "Prénom"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_swissdec_declaration_form
@@ -4645,12 +4676,17 @@ msgstr "Part employé - Achat de prestations PP prise en charge par l’employeu
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_1971
 msgid "Employee portion of KTG assumed by employer"
-msgstr "Part employé KTG prise en charge par l’employeur"
+msgstr "Part employé IJM prise en charge par l’employeur"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_1961
 msgid "Employee shares"
 msgstr "Actions de l’employé"
+
+#. module: l10n_ch_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_employee_view_form
+msgid "Employee will be excluded from Pay Runs"
+msgstr ""
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -5226,9 +5262,39 @@ msgid "General AVS Deduction in %"
 msgstr "Déduction générale AVS en %"
 
 #. module: l10n_ch_hr_payroll
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5401
+msgid "General AVS Deduction in % (2)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5402
+msgid "General AVS Deduction in % (3)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5403
+msgid "General AVS Deduction in % (4)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7400
 msgid "General AVS Deduction in % Employer"
 msgstr "Déduction générale AVS en % Employeur"
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7401
+msgid "General AVS Deduction in % Employer (2)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7402
+msgid "General AVS Deduction in % Employer (3)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7403
+msgid "General AVS Deduction in % Employer (4)"
+msgstr ""
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.swissdec_wage_types_form
@@ -5954,7 +6020,7 @@ msgstr "Déclaration incomplète"
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "Incorrect EAN13 Check-sum for this SV-AS Number"
-msgstr "Somme de contrôle EAN13 incorrecte pour ce numéro SV-AS"
+msgstr "Somme de contrôle EAN13 incorrecte pour ce numéro AVS"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_employee_view_form
@@ -7922,6 +7988,11 @@ msgid "Nidwald"
 msgstr "Nidwald"
 
 #. module: l10n_ch_hr_payroll
+#: model:hr.work.entry.type,name:l10n_ch_hr_payroll.l10n_ch_swissdec_night_110_wt
+msgid "Night Shift 110%"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_1075
 msgid "Night shift allowance"
 msgstr "Indemnité de travail de nuit"
@@ -8118,7 +8189,7 @@ msgstr "Taux non-professionnel femme (%)"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_accident_insurance_line_rate__non_occupational_male_rate
 msgid "Non-occupational Male Rate (%)"
-msgstr "Taux non-professionnel Home (%)"
+msgstr "Taux non-professionnel homme (%)"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_employee_view_form
@@ -8306,22 +8377,22 @@ msgstr "Cotisations employeur à l’assurance-accidents professionnels"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_accident_insurance_line_rate__occupational_female_rate
 msgid "Occupational Female Rate (%)"
-msgstr "Taux professionnel Femme (%)"
+msgstr "Taux professionnel femme (%)"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_accident_insurance_line_rate__occupational_male_rate
 msgid "Occupational Male Rate (%)"
-msgstr "Taux professionnel Homme (%)"
+msgstr "Taux professionnel homme (%)"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_company_master_data_document
 msgid "Occupational Rate"
-msgstr "Taux d’occupation"
+msgstr "Taux d'assurance-accidents professionnels"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_accident_insurance_group_view_form
 msgid "Occupational Rate (%)"
-msgstr "Taux d’occupation (%)"
+msgstr "Taux d'assurance-accidents professionnels (%)"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.ui.menu,name:l10n_ch_hr_payroll.menu_l10n_ch_occupation
@@ -8369,6 +8440,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_social_insurance_view_form
 msgid "Old-age and Survivors' Insurance (AVS)"
 msgstr "Assurance-vieillesse et survivants (AVS)"
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.work.entry.type,name:l10n_ch_hr_payroll.l10n_ch_swissdec_oncall_125_wt
+msgid "On-call duty 125%"
+msgstr ""
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_1071
@@ -8525,6 +8601,12 @@ msgid "Overtime 125%"
 msgstr "Heures supplémentaires 125 %"
 
 #. module: l10n_ch_hr_payroll
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_1066
+#: model:hr.work.entry.type,name:l10n_ch_hr_payroll.l10n_ch_swissdec_overtime_150_wt
+msgid "Overtime 150%"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_1067
 msgid "Overtime after departure"
 msgstr "Heures supplémentaires après le départ"
@@ -8605,6 +8687,16 @@ msgid "Paid Lessons"
 msgstr "Leçons payées"
 
 #. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_night_110
+msgid "Paid Nigh-Shift hours (110%)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_on_call_125
+msgid "Paid On-call duty hours (125%)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_hours_100
 msgid "Paid Overtime Hours (100%)"
 msgstr "Heures supplémentaires payées (100 %)"
@@ -8613,6 +8705,11 @@ msgstr "Heures supplémentaires payées (100 %)"
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_hours_125
 msgid "Paid Overtime Hours (125%)"
 msgstr "Heures supplémentaires payées (125 %)"
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_hours_150
+msgid "Paid Overtime Hours (150%)"
+msgstr ""
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_2015
@@ -9385,7 +9482,7 @@ msgstr "Code IS"
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_hr_employee_children__l10n_ch_sv_as_number
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_employee_view_form
 msgid "SV-AS Number"
-msgstr "Numéro SV-AS"
+msgstr "Numéro AVS"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_tax_rate_import_wizard__canton__sz
@@ -9479,7 +9576,7 @@ msgstr "Salaire service militaire/protection civile"
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_1016
 msgid "Salary for working from home"
-msgstr "(1016) Salaire pour travail à domicile"
+msgstr "Salaire pour travail à domicile"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_1217
@@ -9655,7 +9752,7 @@ msgstr "Perte de gain RHT/ITP (SH)"
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_2060
 msgid "Short-time work monthly"
-msgstr "(2060) Déduction RHT/ITP (SM)"
+msgstr "Déduction RHT/ITP (SM)"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_version__l10n_ch_relationship_ceo__ownersiblings
@@ -10093,7 +10190,7 @@ msgstr "NPA du conjoint/de la conjointe"
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee__l10n_ch_spouse_sv_as_number
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_version__l10n_ch_spouse_sv_as_number
 msgid "Spouse SV-AS-Number"
-msgstr "Numéro SV-AS du conjoint"
+msgstr "Numéro AVS du conjoint"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee__l10n_ch_spouse_work_canton

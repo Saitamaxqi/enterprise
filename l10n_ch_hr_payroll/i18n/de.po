@@ -8,12 +8,13 @@
 # Wil Odoo, 2025
 # Larissa Manderfeld, 2025
 # "Larissa Manderfeld (lman)" <lman@odoo.com>, 2025.
+# Olivier Jossen <olivier.jossen@braintec.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-09 12:57+0000\n"
-"PO-Revision-Date: 2025-10-28 12:10+0000\n"
+"POT-Creation-Date: 2025-12-05 19:03+0000\n"
+"PO-Revision-Date: 2025-12-02 10:20+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_ch_hr_payroll/de/>\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,help:l10n_ch_hr_payroll.field_hr_employee__l10n_ch_permanent_staff_public_admin
@@ -989,6 +990,21 @@ msgid "(5400) General AVS Deduction in %"
 msgstr "(5400) Allgemeiner AHV-Abzug in %"
 
 #. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5401
+msgid "(5401) General AVS Deduction in % (2)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5402
+msgid "(5402) General AVS Deduction in % (3)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5403
+msgid "(5403) General AVS Deduction in % (4)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_6000
 msgid "(6000) Expenses travel, car, overnight accommodation"
 msgstr "(6000) Ausgaben für Reisen, Auto, Übernachtung"
@@ -1057,6 +1073,21 @@ msgstr "(7310) Nationale paritätische Kommission Arbeitgeber"
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7400
 msgid "(7400) General AVS Deduction in % Employer"
 msgstr "(7400) Allgemeiner AHV-Abzug in % Arbeitgeber"
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7401
+msgid "(7401) General AVS Deduction in % Employer (2)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7402
+msgid "(7402) General AVS Deduction in % Employer (3)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7403
+msgid "(7403) General AVS Deduction in % Employer (4)"
+msgstr ""
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.actions.report,print_report_name:l10n_ch_hr_payroll.action_report_individual_account
@@ -4652,6 +4683,11 @@ msgid "Employee shares"
 msgstr "Arbeitnehmeraktien"
 
 #. module: l10n_ch_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_employee_view_form
+msgid "Employee will be excluded from Pay Runs"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/l10n_ch_declaration_salary_certificate.py:0
 #: code:addons/l10n_ch_hr_payroll/models/l10n_ch_insurance_report.py:0
@@ -5222,9 +5258,39 @@ msgid "General AVS Deduction in %"
 msgstr "Allgemeiner AHV-Abzug in %"
 
 #. module: l10n_ch_hr_payroll
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5401
+msgid "General AVS Deduction in % (2)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5402
+msgid "General AVS Deduction in % (3)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5403
+msgid "General AVS Deduction in % (4)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7400
 msgid "General AVS Deduction in % Employer"
 msgstr "Allgemeiner AHV-Abzug in % Arbeitgeber"
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7401
+msgid "General AVS Deduction in % Employer (2)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7402
+msgid "General AVS Deduction in % Employer (3)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7403
+msgid "General AVS Deduction in % Employer (4)"
+msgstr ""
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.swissdec_wage_types_form
@@ -7904,6 +7970,11 @@ msgid "Nidwald"
 msgstr "Nidwalden"
 
 #. module: l10n_ch_hr_payroll
+#: model:hr.work.entry.type,name:l10n_ch_hr_payroll.l10n_ch_swissdec_night_110_wt
+msgid "Night Shift 110%"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_1075
 msgid "Night shift allowance"
 msgstr "Nachtdienstzulage"
@@ -8354,6 +8425,11 @@ msgid "Old-age and Survivors' Insurance (AVS)"
 msgstr "Alters- und Hinterlassenenversicherung (AHV)"
 
 #. module: l10n_ch_hr_payroll
+#: model:hr.work.entry.type,name:l10n_ch_hr_payroll.l10n_ch_swissdec_oncall_125_wt
+msgid "On-call duty 125%"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_1071
 msgid "On-call duty allowance"
 msgstr "Pikettdienstzulage"
@@ -8508,6 +8584,12 @@ msgid "Overtime 125%"
 msgstr "Überstunden 125 %"
 
 #. module: l10n_ch_hr_payroll
+#: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_1066
+#: model:hr.work.entry.type,name:l10n_ch_hr_payroll.l10n_ch_swissdec_overtime_150_wt
+msgid "Overtime 150%"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_1067
 msgid "Overtime after departure"
 msgstr "Überstunden nach Austritt"
@@ -8587,6 +8669,16 @@ msgid "Paid Lessons"
 msgstr "Bezahlte Unterrichtsstunden"
 
 #. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_night_110
+msgid "Paid Nigh-Shift hours (110%)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_on_call_125
+msgid "Paid On-call duty hours (125%)"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_hours_100
 msgid "Paid Overtime Hours (100%)"
 msgstr "Bezahlte Überstunden (100 %)"
@@ -8595,6 +8687,11 @@ msgstr "Bezahlte Überstunden (100 %)"
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_hours_125
 msgid "Paid Overtime Hours (125%)"
 msgstr "Bezahlte Überstunden (125 %)"
+
+#. module: l10n_ch_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_hours_150
+msgid "Paid Overtime Hours (150%)"
+msgstr ""
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_2015
@@ -8701,13 +8798,13 @@ msgstr "Personalabrechnungsmonat abgeschlossen"
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_lpp_insurance_view_form
 msgid "Payroll Unit"
-msgstr "Einheit der Personalabrechnung"
+msgstr "Buchungskreis"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-javascript
 #: code:addons/l10n_ch_hr_payroll/static/src/fields/salary_result/salary_result.xml:0
 msgid "Payroll Unit:"
-msgstr "Einheit der Personalabrechnung:"
+msgstr "Buchungskreis:"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,help:l10n_ch_hr_payroll.field_l10n_ch_lpp_insurance__fund_number
@@ -8716,9 +8813,9 @@ msgid ""
 "\"packages\" that are transmitted independently of one another using the ELM "
 "standard."
 msgstr ""
-"Personalabrechnungseinheiten ermöglichen es Unternehmen und "
-"Rentenversicherungsträgern, *Pakete* zu erstellen, die unabhängig "
-"voneinander unter Verwendung des ELM-Standards übermittelt werden."
+"Buchungskreise ermöglichen es Unternehmen und Rentenversicherungsträgern, "
+"«Pakete» zu erstellen, die unabhängig voneinander unter Verwendung des ELM-"
+"Standards übermittelt werden."
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee_is_line_correction__payslip_id
@@ -10175,7 +10272,7 @@ msgstr "Statistik zu Vergütungsvereinbarung"
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_res_company__l10n_ch_statistics_payroll_unit
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_res_config_settings__l10n_ch_statistics_payroll_unit
 msgid "Statistics Payroll Unit"
-msgstr "Statistik zu Personalabrechnungseinheit"
+msgstr "Statistik zum Buchungskreis"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.swissdec_wage_types_form

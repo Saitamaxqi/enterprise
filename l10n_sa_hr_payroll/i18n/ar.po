@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-13 20:10+0000\n"
+"POT-Creation-Date: 2025-12-05 19:07+0000\n"
 "PO-Revision-Date: 2025-11-18 17:12+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19-l10n/"
@@ -46,6 +46,11 @@ msgstr "<span>/ سنة</span>"
 
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_contract_template_view_form
+#: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_employee_view_form
+msgid "<span>days / year</span>"
+msgstr ""
+
+#. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_employee_view_form
 msgid "<span>days</span>"
 msgstr "<span>أيام</span>"
@@ -89,6 +94,12 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.res_config_settings_view_form
 msgid "Annual Leave Time-off Type"
+msgstr ""
+
+#. module: l10n_sa_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_contract_template_view_form
+#: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_employee_view_form
+msgid "Annual Leaves Provisions"
 msgstr ""
 
 #. module: l10n_sa_hr_payroll
@@ -199,6 +210,12 @@ msgid "Display Name"
 msgstr "اسم العرض"
 
 #. module: l10n_sa_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_contract_template_view_form
+#: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_employee_view_form
+msgid "Eligibility"
+msgstr ""
+
+#. module: l10n_sa_hr_payroll
 #: model:hr.salary.rule,name:l10n_sa_hr_payroll.l10n_sa_hr_payroll_ksa_saudi_employee_payroll_structure_emergency_leave_salary_rule
 msgid "Emergency Leave"
 msgstr ""
@@ -212,12 +229,6 @@ msgstr "الموظف"
 #: model:ir.model,name:l10n_sa_hr_payroll.model_hr_version
 msgid "Employee Contract"
 msgstr "عقد الموظف"
-
-#. module: l10n_sa_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_contract_template_view_form
-#: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_employee_view_form
-msgid "End Of Service Provision"
-msgstr ""
 
 #. module: l10n_sa_hr_payroll
 #: model:hr.departure.reason,name:l10n_sa_hr_payroll.saudi_departure_end_of_contract
@@ -467,10 +478,18 @@ msgid "Net Salary"
 msgstr "صافي المرتب"
 
 #. module: l10n_sa_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_contract_template_view_form
-#: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.hr_employee_view_form
-msgid "Number of Days"
-msgstr "عدد الأيام"
+#: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_hr_employee__l10n_sa_number_of_days
+#: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_hr_version__l10n_sa_number_of_days
+msgid "Number of Annual leave days"
+msgstr ""
+
+#. module: l10n_sa_hr_payroll
+#: model:ir.model.fields,help:l10n_sa_hr_payroll.field_hr_employee__l10n_sa_number_of_days
+#: model:ir.model.fields,help:l10n_sa_hr_payroll.field_hr_version__l10n_sa_number_of_days
+msgid ""
+"Number of Annual leave days per year that the employee is eligible to, it is "
+"used to compute the monthly provision for the annual leave days"
+msgstr ""
 
 #. module: l10n_sa_hr_payroll
 #: model:ir.model.constraint,message:l10n_sa_hr_payroll.constraint_hr_version_l10n_sa_hr_payroll_number_of_days_constraint
@@ -480,14 +499,6 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_hr_employee__l10n_sa_leaves_count_compensable
 msgid "Number of Time Off Eligible for Compensation"
-msgstr ""
-
-#. module: l10n_sa_hr_payroll
-#: model:ir.model.fields,help:l10n_sa_hr_payroll.field_hr_employee__l10n_sa_number_of_days
-#: model:ir.model.fields,help:l10n_sa_hr_payroll.field_hr_version__l10n_sa_number_of_days
-msgid ""
-"Number of days of basic salary to be added to the end of service provision "
-"per year"
 msgstr ""
 
 #. module: l10n_sa_hr_payroll
@@ -659,12 +670,6 @@ msgid "Saudi National / IQAMA ID"
 msgstr ""
 
 #. module: l10n_sa_hr_payroll
-#: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_hr_employee__l10n_sa_number_of_days
-#: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_hr_version__l10n_sa_number_of_days
-msgid "Saudi Number of Days"
-msgstr ""
-
-#. module: l10n_sa_hr_payroll
 #: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_hr_employee__l10n_sa_other_allowances
 #: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_hr_version__l10n_sa_other_allowances
 msgid "Saudi Other Allowances"
@@ -812,3 +817,6 @@ msgstr ""
 #: code:addons/l10n_sa_hr_payroll/models/hr_salary_attachment.py:0
 msgid "id"
 msgstr "المعرف"
+
+#~ msgid "Number of Days"
+#~ msgstr "عدد الأيام"

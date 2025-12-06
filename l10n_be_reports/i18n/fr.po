@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.5a1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-13 19:55+0000\n"
+"POT-Creation-Date: 2025-12-05 19:03+0000\n"
 "PO-Revision-Date: 2025-11-18 17:09+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19-l10n/"
@@ -382,8 +382,8 @@ msgid ""
 "Actions may trigger specific behavior like opening calendar view or "
 "automatically mark as done when a document is uploaded"
 msgstr ""
-"Les actions peuvent déclencher des comportements spécifiques, tels que l’"
-"ouverture de la vue du calendrier ou automatiquement marquer comme fait "
+"Les actions peuvent déclencher des comportements spécifiques, tels que "
+"l’ouverture de la vue du calendrier ou automatiquement marquer comme fait "
 "lorsqu’un document est chargé."
 
 #. module: l10n_be_reports
@@ -2531,12 +2531,6 @@ msgstr "Addresse email manquante sur la société."
 
 #. module: l10n_be_reports
 #. odoo-python
-#: code:addons/l10n_be_reports/models/account_return.py:0
-msgid "No negative amount in VAT report"
-msgstr ""
-
-#. module: l10n_be_reports
-#. odoo-python
 #: code:addons/l10n_be_reports/models/account_report.py:0
 msgid "No phone associated with company %s."
 msgstr "Aucun numéro de téléphone associé à la société %s."
@@ -3198,24 +3192,9 @@ msgstr ""
 "vos comptes puis réessayez."
 
 #. module: l10n_be_reports
-#. odoo-python
-#: code:addons/l10n_be_reports/models/account_return.py:0
-msgid ""
-"The Belgian VAT report should only include positive values. A negative "
-"amount probably means a misconfiguration."
-msgstr ""
-
-#. module: l10n_be_reports
 #: model:ir.model.fields,help:l10n_be_reports.field_l10n_be_form_325_wizard__sender_id
 msgid "The company responsible for sending the form."
 msgstr "L'entreprise responsable d'envoyer le relevé."
-
-#. module: l10n_be_reports
-#. odoo-javascript
-#: code:addons/l10n_be_reports/static/src/components/tax_report/warnings.xml:0
-#, fuzzy
-msgid "The following controls failed:"
-msgstr "Certains contrôles ont échoués"
 
 #. module: l10n_be_reports
 #. odoo-python
@@ -3239,6 +3218,14 @@ msgid ""
 "The region where the company is located. This is used for annual report "
 "export."
 msgstr "Région de l’entreprise (pour export du rapport annuel)"
+
+#. module: l10n_be_reports
+#. odoo-javascript
+#: code:addons/l10n_be_reports/static/src/components/tax_report/warnings.xml:0
+msgid ""
+"The report contains negative amounts. This is normally not allowed and could "
+"cause the tax authorities to reject it."
+msgstr ""
 
 #. module: l10n_be_reports
 #. odoo-python
@@ -4790,3 +4777,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.xbrl_social_balance_sheet
 msgid "wrg:m3"
 msgstr ""
+
+#, fuzzy
+#~ msgid "The following controls failed:"
+#~ msgstr "Certains contrôles ont échoués"

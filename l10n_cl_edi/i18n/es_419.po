@@ -3,13 +3,14 @@
 # * l10n_cl_edi
 #
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.3alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-13 19:57+0000\n"
-"PO-Revision-Date: 2025-11-18 17:10+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"POT-Creation-Date: 2025-12-05 19:01+0000\n"
+"PO-Revision-Date: 2025-12-04 23:42+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19-l10n/l10n_cl_edi/es_419/>\n"
 "Language: es_419\n"
@@ -17,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: l10n_cl_edi
 #: model:ir.model.fields,help:l10n_cl_edi.field_account_bank_statement_line__l10n_cl_dte_partner_status
@@ -1045,7 +1046,7 @@ msgstr "Facturación Electrónica"
 #. module: l10n_cl_edi
 #: model_terms:ir.ui.view,arch_db:l10n_cl_edi.res_config_settings_view_cl_form
 msgid "Email Alias"
-msgstr "Seudónimo de Email"
+msgstr "Alias del correo"
 
 #. module: l10n_cl_edi
 #: model_terms:ir.ui.view,arch_db:l10n_cl_edi.res_config_settings_view_cl_form
@@ -2204,16 +2205,6 @@ msgstr ""
 
 #. module: l10n_cl_edi
 #. odoo-python
-#: code:addons/l10n_cl_edi/models/l10n_latam_document_type.py:0
-msgid ""
-"There are no CAFs available. Please upload a CAF file or ask for a new one "
-"at www.sii.cl website"
-msgstr ""
-"No hay CAFs disponibles. Por favor suba un archivo CAF o solicite uno nuevo "
-"en el sitio www.sii.cl"
-
-#. module: l10n_cl_edi
-#. odoo-python
 #: code:addons/l10n_cl_edi/models/account_move.py:0
 msgid ""
 "There are no activity codes configured in your company. This is mandatory "
@@ -2709,3 +2700,10 @@ msgstr "⇒ Enviar ahora al SII"
 #: model_terms:ir.ui.view,arch_db:l10n_cl_edi.invoice_status_form_cl
 msgid "⇒ Verify on SII"
 msgstr "⇒ Verificar en SII"
+
+#~ msgid ""
+#~ "There are no CAFs available. Please upload a CAF file or ask for a new "
+#~ "one at www.sii.cl website"
+#~ msgstr ""
+#~ "No hay CAFs disponibles. Por favor suba un archivo CAF o solicite uno "
+#~ "nuevo en el sitio www.sii.cl"

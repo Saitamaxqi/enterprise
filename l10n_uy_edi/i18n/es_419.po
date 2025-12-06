@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-13 20:12+0000\n"
+"POT-Creation-Date: 2025-12-05 19:08+0000\n"
 "PO-Revision-Date: 2025-11-18 17:13+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -94,17 +94,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
 msgid ""
 "<span>To create your account, ensure you have a valid subscription. Click "
-"\"Create Uruware Account\", configure it directly in Uruware's portal, get "
-"the WS password, Commerce Code, and Terminal Code from them, and enter these "
-"parameters here. Test your connection. Note: Only one test and production "
-"environment are allowed per subscription</span>"
+"\"Create UCFE Provider Account\", configure it directly in UCFE Provider's "
+"portal, get the WS password, Commerce Code, and Terminal Code from them, and "
+"enter these parameters here. Test your connection. Note: Only one test and "
+"production environment are allowed per subscription</span>"
 msgstr ""
-"<span> Para crear su cuenta, asegúrese de tener una suscripción válida. Haga "
-"clic en \"Crear cuenta Uruware\", luego configúrela directamente en el "
-"portal del Uruware, obtenga de ahi la contraseña de WS, el Código de "
-"Comercio y el Código de Terminal, e ingrese estos parámetros acá. Pruebe su "
-"conexión. Nota: Solo se permite un entorno de prueba y producción por "
-"suscripción.</span>"
 
 #. module: l10n_uy_edi
 #: model:ir.model,name:l10n_uy_edi.model_account_move_send
@@ -313,13 +307,13 @@ msgstr "Crear CFE"
 
 #. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
-msgid "Create Uruware Account"
-msgstr "Cree Cuenta Uruware"
+msgid "Create UCFE Provider Account"
+msgstr ""
 
 #. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
-msgid "Create Uruware Test Account"
-msgstr "Cree Cuenta de Prueba Uruware"
+msgid "Create UCFE Provider Test Account"
+msgstr ""
 
 #. module: l10n_uy_edi
 #: model:ir.model,website_form_label:l10n_uy_edi.model_res_partner
@@ -397,11 +391,6 @@ msgstr ""
 "aproximadamente."
 
 #. module: l10n_uy_edi
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__l10n_latam_document_number
-msgid "Document Number"
-msgstr "Número de documento"
-
-#. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__l10n_latam_document_type_id
 msgid "Document Type"
 msgstr "Tipo de Documento"
@@ -471,16 +460,21 @@ msgid "Electronic Fiscal Document (CFE - UY)"
 msgstr "Documento Fiscal Electrónico (CFE - UY)"
 
 #. module: l10n_uy_edi
-#. odoo-python
-#: code:addons/l10n_uy_edi/models/res_config_settings.py:0
-msgid "Error connection to Odoo IAP to create Uruware account"
-msgstr "Error en la conexión con Odoo IAP para crear cuenta en Uruware"
+#: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
+msgid "Electronic Invoicing Provider (UCFE) Credentials"
+msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
-msgid "Error creating the Uruware account. Please contact support: "
-msgstr "Error creando la cuenta de Uruware. Por favor contacte a soporte: "
+msgid "Error connection to Odoo IAP to create UCFE Provider account"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/res_config_settings.py:0
+msgid "Error creating the UCFE Provider account. Please contact support: "
+msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
@@ -538,6 +532,12 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid "For now it is not possible to create %(latam_document_name)s documents"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
 msgid "For this type of CFE you can only report up to 200 lines"
 msgstr "Para este tipo de CFE solo puedes reportar hasta 200 líneas"
 
@@ -581,11 +581,9 @@ msgstr "FAC"
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
 msgid ""
-"Incomplete Data to connect to Uruware on company %(company)s: Please "
+"Incomplete Data to connect to UCFE Provider on company %(company)s: Please "
 "complete the UCFE data to test the connection: %(missing)s"
 msgstr ""
-"Datos incompletos para conectarse a Uruware en la compañía %(company)s: Por "
-"favor complete los datos UCFE para probar la conexión %(missing)s"
 
 #. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_journal_type
@@ -636,6 +634,11 @@ msgstr "Apunte contable"
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__uuid
 msgid "Key or UUID CFE"
 msgstr "CFE Llave o UUID"
+
+#. module: l10n_uy_edi
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__l10n_latam_document_number
+msgid "L10N Latam Document Number"
+msgstr ""
 
 #. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_is_needed
@@ -901,6 +904,15 @@ msgstr "Pruebas"
 
 #. module: l10n_uy_edi
 #. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid ""
+"The CFE has been rejected by DGI so we automatically cancel this record. "
+"Please, you will need to manually check the reject reason and generate/send "
+"a new CFE with the fixes"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
 msgid ""
 "The account creating request has been successfully sent. The credentials "
@@ -921,14 +933,6 @@ msgstr "La moneda no existe en la tabla de monedas de DGI"
 #: code:addons/l10n_uy_edi/models/account_move.py:0
 msgid "The electronic invoice was created successfully"
 msgstr "La factura electrónica fue creada exitosamente"
-
-#. module: l10n_uy_edi
-#. odoo-python
-#: code:addons/l10n_uy_edi/models/account_move.py:0
-msgid ""
-"The invoice partner has account payable without account currency but this "
-"move has '%(currency)s' currency."
-msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
@@ -986,14 +990,10 @@ msgstr "Este campo es usado en el XML para crear la e-Factura de Exportacion"
 #: model:ir.model.fields,help:l10n_uy_edi.field_res_company__l10n_uy_edi_ucfe_password
 #: model:ir.model.fields,help:l10n_uy_edi.field_res_config_settings__l10n_uy_edi_ucfe_password
 msgid ""
-"This password is used exclusively for accessing Uruware webservices, "
-"enabling communication and data exchange between Odoo and Uruware. It is "
-"distinct from the password used to log in to Uruware's portal."
+"This password is used exclusively for accessing UCFE webservices, enabling "
+"communication and data exchange between Odoo and UCFE. It is distinct from "
+"the password used to log in to UCFE's portal."
 msgstr ""
-"Esta contraseña se utiliza exclusivamente para acceder a los servicios web "
-"de Uruware, lo que permite la comunicación y el intercambio de datos entre "
-"Odoo y Uruware. Es distinta de la contraseña utilizada para iniciar sesión "
-"en el portal de Uruware."
 
 #. module: l10n_uy_edi
 #. odoo-python
@@ -1068,6 +1068,43 @@ msgstr ""
 "de todos los CFE (estos no crearán un nuevo CFE en DGI)."
 
 #. module: l10n_uy_edi
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_company__l10n_uy_edi_ucfe_commerce_code
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_config_settings__l10n_uy_edi_ucfe_commerce_code
+msgid "UCFE Provider Commerce code"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid "UCFE Provider Inbox URL"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid "UCFE Provider Query URL"
+msgstr ""
+
+#. module: l10n_uy_edi
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_company__l10n_uy_edi_ucfe_terminal_code
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_config_settings__l10n_uy_edi_ucfe_terminal_code
+msgid "UCFE Provider Terminal code"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid "UCFE Provider Username"
+msgstr ""
+
+#. module: l10n_uy_edi
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_company__l10n_uy_edi_ucfe_password
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_config_settings__l10n_uy_edi_ucfe_password
+#: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
+msgid "UCFE Provider WS Password"
+msgstr ""
+
+#. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
 msgid "UCFE Web Services"
 msgstr ""
@@ -1120,12 +1157,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_uy_edi
-#. odoo-python
-#: code:addons/l10n_uy_edi/models/account_move.py:0
-msgid "For now it is not possible to create %(latam_document_name)s documents"
-msgstr ""
-
-#. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.l10n_uy_edi_document_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.view_move_form_inherit_l10n_uy_edi
 msgid "Update DGI Status"
@@ -1158,9 +1189,8 @@ msgstr "Localización Uruguaya"
 #. module: l10n_uy_edi
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_xml_attachment_id
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_move__l10n_uy_edi_xml_attachment_id
-msgid "Uruguay: the most recent e-invoice XML returned by Uruware."
+msgid "Uruguay: the most recent e-invoice XML returned by UCFE Provider."
 msgstr ""
-"Uruguay: el XML de factura electrónica más reciente devuelto por Uruware."
 
 #. module: l10n_uy_edi
 #. odoo-python
@@ -1177,47 +1207,6 @@ msgstr ""
 "%s\n"
 "Si esto no es intencional, verifique si una UCFE Uruware está configurada "
 "correctamente o si la factura no está hecha electrónicamente aún."
-
-#. module: l10n_uy_edi
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_company__l10n_uy_edi_ucfe_commerce_code
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_config_settings__l10n_uy_edi_ucfe_commerce_code
-msgid "Uruware Commerce code"
-msgstr "Uruware Código de Comercio"
-
-#. module: l10n_uy_edi
-#: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
-msgid "Uruware Credentials"
-msgstr "Credenciales Uruware"
-
-#. module: l10n_uy_edi
-#. odoo-python
-#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-msgid "Uruware Inbox URL"
-msgstr "URL Inbox Uruware"
-
-#. module: l10n_uy_edi
-#. odoo-python
-#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-msgid "Uruware Query URL"
-msgstr "URL Query Uruware"
-
-#. module: l10n_uy_edi
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_company__l10n_uy_edi_ucfe_terminal_code
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_config_settings__l10n_uy_edi_ucfe_terminal_code
-msgid "Uruware Terminal code"
-msgstr "Uruware Código de Terminal"
-
-#. module: l10n_uy_edi
-#. odoo-python
-#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-msgid "Uruware Username"
-msgstr "Usuario Uruware"
-
-#. module: l10n_uy_edi
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_company__l10n_uy_edi_ucfe_password
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_config_settings__l10n_uy_edi_ucfe_password
-msgid "Uruware WS Password"
-msgstr "Contraseña WS Uruware"
 
 #. module: l10n_uy_edi
 #. odoo-python
@@ -1309,13 +1298,10 @@ msgstr "Tu base de datos es válida, pero ocurrió un error de nuestro lado."
 #. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
 msgid ""
-"Your login email will be used as the contact that Uruware will send the "
-"credentials to. Make sure it is correct. This process will take around 24 to "
-"48 hours."
+"Your login email will be used as the contact that UCFE Provider will send "
+"the credentials to. Make sure it is correct. This process will take around "
+"24 to 48 hours."
 msgstr ""
-"Tu correo electrónico de inicio de sesión se utilizará como el contacto al "
-"que Uruware enviará las credenciales. Asegúrate de que sea correcto. Este "
-"proceso tomará entre 24 y 48 horas."
 
 #. module: l10n_uy_edi
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_error
@@ -1323,6 +1309,86 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_uy_edi.field_l10n_uy_edi_document__message
 msgid "error details for CFEs in the 'error' state."
 msgstr "Uruguay: detalle de errores de los CFE en estado 'error'"
+
+#~ msgid "Document Number"
+#~ msgstr "Número de documento"
+
+#~ msgid ""
+#~ "<span>To create your account, ensure you have a valid subscription. Click "
+#~ "\"Create Uruware Account\", configure it directly in Uruware's portal, "
+#~ "get the WS password, Commerce Code, and Terminal Code from them, and "
+#~ "enter these parameters here. Test your connection. Note: Only one test "
+#~ "and production environment are allowed per subscription</span>"
+#~ msgstr ""
+#~ "<span> Para crear su cuenta, asegúrese de tener una suscripción válida. "
+#~ "Haga clic en \"Crear cuenta Uruware\", luego configúrela directamente en "
+#~ "el portal del Uruware, obtenga de ahi la contraseña de WS, el Código de "
+#~ "Comercio y el Código de Terminal, e ingrese estos parámetros acá. Pruebe "
+#~ "su conexión. Nota: Solo se permite un entorno de prueba y producción por "
+#~ "suscripción.</span>"
+
+#~ msgid "Create Uruware Account"
+#~ msgstr "Cree Cuenta Uruware"
+
+#~ msgid "Create Uruware Test Account"
+#~ msgstr "Cree Cuenta de Prueba Uruware"
+
+#~ msgid "Error connection to Odoo IAP to create Uruware account"
+#~ msgstr "Error en la conexión con Odoo IAP para crear cuenta en Uruware"
+
+#~ msgid "Error creating the Uruware account. Please contact support: "
+#~ msgstr "Error creando la cuenta de Uruware. Por favor contacte a soporte: "
+
+#~ msgid ""
+#~ "Incomplete Data to connect to Uruware on company %(company)s: Please "
+#~ "complete the UCFE data to test the connection: %(missing)s"
+#~ msgstr ""
+#~ "Datos incompletos para conectarse a Uruware en la compañía %(company)s: "
+#~ "Por favor complete los datos UCFE para probar la conexión %(missing)s"
+
+#~ msgid ""
+#~ "This password is used exclusively for accessing Uruware webservices, "
+#~ "enabling communication and data exchange between Odoo and Uruware. It is "
+#~ "distinct from the password used to log in to Uruware's portal."
+#~ msgstr ""
+#~ "Esta contraseña se utiliza exclusivamente para acceder a los servicios "
+#~ "web de Uruware, lo que permite la comunicación y el intercambio de datos "
+#~ "entre Odoo y Uruware. Es distinta de la contraseña utilizada para iniciar "
+#~ "sesión en el portal de Uruware."
+
+#~ msgid "Uruguay: the most recent e-invoice XML returned by Uruware."
+#~ msgstr ""
+#~ "Uruguay: el XML de factura electrónica más reciente devuelto por Uruware."
+
+#~ msgid "Uruware Commerce code"
+#~ msgstr "Uruware Código de Comercio"
+
+#~ msgid "Uruware Credentials"
+#~ msgstr "Credenciales Uruware"
+
+#~ msgid "Uruware Inbox URL"
+#~ msgstr "URL Inbox Uruware"
+
+#~ msgid "Uruware Query URL"
+#~ msgstr "URL Query Uruware"
+
+#~ msgid "Uruware Terminal code"
+#~ msgstr "Uruware Código de Terminal"
+
+#~ msgid "Uruware Username"
+#~ msgstr "Usuario Uruware"
+
+#~ msgid "Uruware WS Password"
+#~ msgstr "Contraseña WS Uruware"
+
+#~ msgid ""
+#~ "Your login email will be used as the contact that Uruware will send the "
+#~ "credentials to. Make sure it is correct. This process will take around 24 "
+#~ "to 48 hours."
+#~ msgstr ""
+#~ "Tu correo electrónico de inicio de sesión se utilizará como el contacto "
+#~ "al que Uruware enviará las credenciales. Asegúrate de que sea correcto. "
+#~ "Este proceso tomará entre 24 y 48 horas."
 
 #~ msgid ""
 #~ "Up to now it is not possible to create e-Resguardo or e-Delivery documents"
