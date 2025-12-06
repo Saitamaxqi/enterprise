@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:40+0000\n"
-"PO-Revision-Date: 2025-11-27 14:15+0000\n"
-"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
+"PO-Revision-Date: 2025-12-06 09:59+0000\n"
+"Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/voip/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -361,7 +361,7 @@ msgstr "Ligações"
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_graph
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_pivot
 msgid "Calls Analysis"
-msgstr ""
+msgstr "Análise de chamadas"
 
 #. module: voip
 #. odoo-javascript
@@ -374,13 +374,13 @@ msgstr "Cancelar"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/transfer_confirmation.xml:0
 msgid "Cancel transfer"
-msgstr ""
+msgstr "Cancelar transferência"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Cancelled Call"
-msgstr ""
+msgstr "Chamada cancelada"
 
 #. module: voip
 #. odoo-javascript
@@ -414,6 +414,8 @@ msgid ""
 "Choose which app to open when clicking on a phone number in the Odoo Mobile "
 "app."
 msgstr ""
+"Escolha qual aplicativo abrir ao clicar em um número de telefone no "
+"aplicativo Odoo Mobile."
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__company_id
@@ -451,12 +453,12 @@ msgstr "Confirmar"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "Confirm Transfer"
-msgstr ""
+msgstr "Confirmar transferência"
 
 #. module: voip
 #: model_terms:ir.actions.act_window,help:voip.action_voip_provider_view
 msgid "Connect Odoo to your VoIP service by adding a provider."
-msgstr ""
+msgstr "Conecte o Odoo ao seu serviço VoIP adicionando um provedor."
 
 #. module: voip
 #. odoo-javascript
@@ -483,7 +485,7 @@ msgstr "Contato"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
 msgid "Contact Avatar"
-msgstr ""
+msgstr "Contato - Avatar"
 
 #. module: voip
 #. odoo-javascript
@@ -547,7 +549,7 @@ msgstr "Data"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__how_to_call_on_mobile
 msgid "Default phone app"
-msgstr ""
+msgstr "Aplicativo de telefone padrão"
 
 #. module: voip
 #. odoo-javascript
@@ -570,13 +572,13 @@ msgstr "Modo de teste"
 #. odoo-javascript
 #: code:addons/voip/static/src/core/session.js:0
 msgid "Demo call"
-msgstr ""
+msgstr "Chamada de demonstração"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/transfer_confirmation.xml:0
 msgid "Direct transfer"
-msgstr ""
+msgstr "Transferência direta"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__direction

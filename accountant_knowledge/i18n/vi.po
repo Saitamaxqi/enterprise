@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-28 07:26+0000\n"
+"PO-Revision-Date: 2025-12-06 10:18+0000\n"
 "Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "accountant_knowledge/vi/>\n"
@@ -385,6 +385,8 @@ msgid ""
 "Capital increase costs are recorded directly on the balance sheet as a "
 "deduction from the share premium."
 msgstr ""
+"Chi phí tăng vốn được ghi nhận trực tiếp trên bảng cân đối kế toán dưới dạng "
+"khoản trừ vào quỹ dự trữ vốn cổ phần."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
@@ -541,6 +543,8 @@ msgid ""
 "Depreciation is calculated using either the straight-line or declining "
 "balance method, based on the estimated useful life of the assets."
 msgstr ""
+"Khấu hao được tính toán bằng phương pháp đường thẳng hoặc phương pháp số dư "
+"giảm dần, dựa trên thời gian sử dụng ước tính của tài sản."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -669,6 +673,8 @@ msgid ""
 "During this period, the company benefited from the following tax credits, "
 "which have contributed to optimizing its tax position:"
 msgstr ""
+"Trong giai đoạn này, công ty đã được hưởng các khoản tín dụng thuế sau, giúp "
+"tối ưu hóa tình trạng thuế của mình:"
 
 #. module: accountant_knowledge
 #. odoo-python
@@ -745,6 +751,8 @@ msgid ""
 "Explain how tax changes made between the balance sheet date and the "
 "financial statement date affect this period's results."
 msgstr ""
+"Giải thích cách các thay đổi thuế xảy ra giữa ngày lập bảng cân đối kế toán "
+"và ngày lập báo cáo tài chính ảnh hưởng đến kết quả của kỳ này."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -861,6 +869,8 @@ msgid ""
 "General accounting principles have been applied with due regard to the "
 "prudence principle, based on the following assumptions:"
 msgstr ""
+"Các nguyên tắc kế toán chung đã được áp dụng với sự cân nhắc thận trọng, dựa "
+"trên những giả định sau:"
 
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
@@ -922,6 +932,8 @@ msgid ""
 "If the change has been applied retrospectively, present the main items from "
 "prior periods restated under the new accounting method."
 msgstr ""
+"Nếu thay đổi được áp dụng hồi tố, hãy trình bày các khoản mục chính từ các "
+"kỳ trước đã được điều chỉnh lại theo phương pháp kế toán mới."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -1057,6 +1069,8 @@ msgid ""
 "Interest on borrowings specifically related to the production of tangible "
 "assets is not included in the production cost of these assets."
 msgstr ""
+"Lãi vay liên quan trực tiếp đến việc sản xuất tài sản hữu hình không được "
+"tính vào chi phí sản xuất của các tài sản này."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
@@ -1120,6 +1134,8 @@ msgid ""
 "Loan issuance costs, where applicable, are recognized as expenses in the "
 "financial year during which the loans are granted."
 msgstr ""
+"Chi phí phát hành khoản vay, nếu có, được ghi nhận là chi phí trong năm tài "
+"chính mà khoản vay được cấp."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
@@ -1138,6 +1154,8 @@ msgid ""
 "Management has chosen not to disclose remuneration information, as doing so "
 "would effectively reveal the individual compensation of executives."
 msgstr ""
+"Ban quản lý đã chọn không tiết lộ thông tin về thù lao, vì việc làm đó sẽ vô "
+"tình tiết lộ mức lương cá nhân của các lãnh đạo."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
@@ -1318,6 +1336,8 @@ msgid ""
 "Present the main items of prior period's financial statements that have been "
 "restated to correct the error."
 msgstr ""
+"Trình bày các mục chính của báo cáo tài chính kỳ trước đã được điều chỉnh "
+"lại để sửa lỗi."
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_kanban
@@ -1363,6 +1383,9 @@ msgid ""
 "Provide details on the carryback and carryforward of tax losses, and the "
 "split of income tax between current and exceptional results."
 msgstr ""
+"Cung cấp thông tin chi tiết về việc chuyển lỗ thuế sang năm trước và năm "
+"sau, cũng như việc phân chia thuế thu nhập giữa kết quả thường xuyên và kết "
+"quả bất thường."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
@@ -1399,6 +1422,8 @@ msgid ""
 "Receivables and payables denominated in foreign currencies are converted "
 "into euros using the exchange rate at the invoice date."
 msgstr ""
+"Các khoản phải thu và phải trả bằng ngoại tệ được quy đổi sang euro theo tỷ "
+"giá tại ngày lập hóa đơn."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
@@ -1553,6 +1578,8 @@ msgid ""
 "Specify the impact of the change as determined at the opening of the period, "
 "identifying the affected financial statement items."
 msgstr ""
+"Xác định tác động của thay đổi tại thời điểm đầu kỳ, đồng thời chỉ rõ các "
+"khoản mục trên báo cáo tài chính bị ảnh hưởng."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
@@ -1764,6 +1791,8 @@ msgid ""
 "The primary method used to value the items recorded in the accounts is the "
 "historical cost method."
 msgstr ""
+"Phương pháp chính được sử dụng để định giá các tài sản được ghi nhận trong "
+"sổ sách kế toán là phương pháp giá gốc."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -1771,6 +1800,8 @@ msgid ""
 "The purchase price (including customs duties and non-recoverable taxes, less "
 "any trade discounts, rebates, or settlement discounts);"
 msgstr ""
+"Giá mua (bao gồm thuế hải quan và các loại thuế không hoàn lại, trừ đi bất "
+"kỳ khoản chiết khấu thương mại, hoàn tiền hoặc chiết khấu thanh toán nào);"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
@@ -1857,6 +1888,8 @@ msgid ""
 "We are making the following comment regarding a matter that may affect the "
 "overall consistency and reliability of the financial statements:"
 msgstr ""
+"Chúng tôi đưa ra nhận xét sau về một vấn đề có thể ảnh hưởng đến tính nhất "
+"quán và độ tin cậy tổng thể của báo cáo tài chính:"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
@@ -1869,6 +1902,8 @@ msgid ""
 "When applicable, the initial estimate of dismantling, removal, and site "
 "restoration costs related to the asset's location."
 msgstr ""
+"Khi áp dụng, ước tính ban đầu về chi phí tháo dỡ, di dời và phục hồi khu vực "
+"liên quan đến vị trí của tài sản."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources

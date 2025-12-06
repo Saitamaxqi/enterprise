@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
+"POT-Creation-Date: 2025-12-05 18:42+0000\n"
 "PO-Revision-Date: 2025-11-16 17:52+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Bulgarian <https://translate.odoo.com/projects/odoo-19/"
@@ -763,7 +763,8 @@ msgstr ""
 #: model:ir.model.fields,help:mrp_workorder.field_quality_check__component_barcode
 #: model:ir.model.fields,help:mrp_workorder.field_stock_move__product_barcode
 msgid "International Article Number used for product identification."
-msgstr "Международен номер на артикула, използван за идентификация на продукта."
+msgstr ""
+"Международен номер на артикула, използван за идентификация на продукта."
 
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_workorder__move_line_ids
@@ -1576,6 +1577,18 @@ msgid ""
 "            On the operation type you could e.g. specify if packing is "
 "needed by default,\n"
 "            if it should show the customer."
+msgstr ""
+
+#. module: mrp_workorder
+#. odoo-javascript
+#: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.js:0
+msgid "The quality alert has been successfully created."
+msgstr ""
+
+#. module: mrp_workorder
+#. odoo-javascript
+#: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.js:0
+msgid "The scrap order has been successfully registered."
 msgstr ""
 
 #. module: mrp_workorder

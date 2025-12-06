@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-11-27 14:14+0000\n"
-"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
+"POT-Creation-Date: 2025-12-05 18:42+0000\n"
+"PO-Revision-Date: 2025-12-06 09:54+0000\n"
+"Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "mrp_workorder/ja/>\n"
 "Language: ja\n"
@@ -168,7 +168,8 @@ msgstr "追加作業オーダ"
 msgid ""
 "Additional instructions that can be created and visualised from both here "
 "and the shop floor interface."
-msgstr "追加指示は、ここと製造現場のインターフェースの両方から作成し、視覚化すること"
+msgstr ""
+"追加指示は、ここと製造現場のインターフェースの両方から作成し、視覚化すること"
 "ができます。"
 
 #. module: mrp_workorder
@@ -192,7 +193,8 @@ msgstr "登録を許可"
 msgid ""
 "Allow users to close MO in last work order operation or from the overview "
 "tab."
-msgstr "ユーザが最後の作業オーダのオペレーションまたは概要タブから製造オーダを終了で"
+msgstr ""
+"ユーザが最後の作業オーダのオペレーションまたは概要タブから製造オーダを終了で"
 "きるようにします。"
 
 #. module: mrp_workorder
@@ -755,7 +757,7 @@ msgstr "指示"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__quality_point_count
 msgid "Instructions Count"
-msgstr ""
+msgstr "指示数"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_quality_check__component_barcode
@@ -1577,9 +1579,21 @@ msgid ""
 msgstr ""
 "オペレーションタイプシステムにより、各在庫処理に\n"
 "　　　特定のタイプを割り当て、それに応じてビューを変更することができます。\n"
-"            "
-"オペレーションタイプでは、例えば、顧客に表示する必要がある場合に、\n"
+"            オペレーションタイプでは、例えば、顧客に表示する必要がある場合"
+"に、\n"
 "　　　デフォルトで梱包が必要かどうかを指定できます。"
+
+#. module: mrp_workorder
+#. odoo-javascript
+#: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.js:0
+msgid "The quality alert has been successfully created."
+msgstr ""
+
+#. module: mrp_workorder
+#. odoo-javascript
+#: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.js:0
+msgid "The scrap order has been successfully registered."
+msgstr ""
 
 #. module: mrp_workorder
 #. odoo-python
@@ -1933,8 +1947,9 @@ msgstr "これらの作業オーダのいくつかを処理するにはログイ
 msgid ""
 "You need to complete Quality Checks using the Shop Floor before marking Work "
 "Order as Done."
-msgstr "作業オーダ完了とマークする前に、製造現場で品質検査を完了させる必要があります"
-"。"
+msgstr ""
+"作業オーダ完了とマークする前に、製造現場で品質検査を完了させる必要がありま"
+"す。"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -1943,7 +1958,8 @@ msgid ""
 "You need to define at least one productivity loss in the category "
 "'Productive'. Create one from the Manufacturing app, menu: Configuration / "
 "Productivity Losses."
-msgstr "'生産性'カテゴリ内で少なくとも1つの生産性ロスを定義する必要があります。製造ア"
+msgstr ""
+"'生産性'カテゴリ内で少なくとも1つの生産性ロスを定義する必要があります。製造ア"
 "プリのメニュー:設定 / 生産性ロスで作成して下さい。"
 
 #. module: mrp_workorder
@@ -1952,7 +1968,8 @@ msgstr "'生産性'カテゴリ内で少なくとも1つの生産性ロスを定
 msgid ""
 "You need to link this user to an employee of this company to process the "
 "work order"
-msgstr "作業オーダを処理するには、このユーザをこの会社の従業員にリンクさせる必要があ"
+msgstr ""
+"作業オーダを処理するには、このユーザをこの会社の従業員にリンクさせる必要があ"
 "ります。"
 
 #. module: mrp_workorder

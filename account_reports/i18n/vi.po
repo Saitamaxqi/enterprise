@@ -10,13 +10,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
 # "Thi Huong Nguyen (thng)" <thng@odoo.com>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-14 18:42+0000\n"
-"PO-Revision-Date: 2025-11-28 07:26+0000\n"
-"Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
+"PO-Revision-Date: 2025-12-06 09:52+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/vi/>\n"
 "Language: vi\n"
@@ -163,7 +164,6 @@ msgstr ", dẫn đến chênh lệch không thể lý giải của"
 
 #. module: account_reports
 #: model:mail.template,body_html:account_reports.email_template_customer_follow_up_report
-#, fuzzy
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
@@ -189,11 +189,11 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
-"                   <t t-if=\"object.id != "
-"object.commercial_partner_id.id\">Kính gửi <t t-out=\"object.name or ''\"/> "
+"                   <t t-if=\"object.id != object.commercial_partner_id.id\""
+">Kính gửi <t t-out=\"object.name or ''\"/> "
 "(<t t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
-"                    <t t-else=\"\">Kính gửi <t t-out=\"object.name or ''\"/>,"
-"</t>\n"
+"                    <t t-else=\"\">Kính gửi <t t-out=\"object.name or ''\""
+"/>,</t>\n"
 "                    <br/>\n"
 "                    Kính gửi quý khách, xin vui lòng xem danh sách các hóa "
 "đơn chưa thanh toán của quý khách đính kèm dưới đây.\n"
@@ -1661,6 +1661,8 @@ msgid ""
 "Check for payables overdue by more than 60 days and validate that all "
 "amounts due are properly recorded."
 msgstr ""
+"Kiểm tra các khoản phải trả quá hạn hơn 60 ngày và xác nhận rằng tất cả số "
+"tiền đến hạn đã được ghi nhận đầy đủ."
 
 #. module: account_reports
 #. odoo-javascript
@@ -1843,6 +1845,8 @@ msgid ""
 "Compare the general ledger cash account with the physical cash inventory "
 "provided by the client. Investigate and explain any discrepancies."
 msgstr ""
+"So sánh tài khoản tiền mặt trong sổ cái chung với số dư tiền mặt thực tế do "
+"khách hàng cung cấp. Điều tra và giải thích bất kỳ chênh lệch nào."
 
 #. module: account_reports
 #. odoo-javascript
@@ -1874,6 +1878,8 @@ msgid ""
 "Conduct a comparative account review to identify key variances, analyze "
 "trends, and assess performance versus prior periods."
 msgstr ""
+"Thực hiện đánh giá so sánh báo cáo tài chính để xác định các chênh lệch "
+"chính, phân tích xu hướng và đánh giá hiệu quả so với các kỳ trước."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_trade_payables_analytical_review
@@ -4966,6 +4972,8 @@ msgid ""
 "Prepare a summary of subsidiaries and investments including ownership "
 "percentages, acquisition values, net equity, earnings, and dividends paid."
 msgstr ""
+"Chuẩn bị bản tóm tắt về các công ty con và khoản đầu tư bao gồm tỷ lệ sở "
+"hữu, giá trị mua, vốn chủ sở hữu ròng, lợi nhuận và cổ tức đã chi trả."
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_prepayements0
@@ -5385,6 +5393,8 @@ msgid ""
 "Review FX rates used at year-end, compare with prior year, and verify "
 "appropriate recognition and presentation of currency adjustments."
 msgstr ""
+"Kiểm tra tỷ giá ngoại tệ sử dụng tại cuối năm, so sánh với năm trước và xác "
+"minh việc ghi nhận cũng như trình bày điều chỉnh ngoại tệ phù hợp."
 
 #. module: account_reports
 #. odoo-python
@@ -5450,6 +5460,8 @@ msgid ""
 "Review petty cash accounts to ensure they do not have credit balances. "
 "Investigate and justify any anomalies."
 msgstr ""
+"Kiểm tra các tài khoản tiền mặt nhỏ để đảm bảo chúng không có số dư thẻ tín "
+"dụng. Điều tra và giải thích bất kỳ sự bất thường nào."
 
 #. module: account_reports
 #. odoo-python
@@ -5464,9 +5476,10 @@ msgid ""
 "services delivered in the next period, estimate the revenue that should be "
 "recognized later (accrued income), and document how this was determined."
 msgstr ""
-"Kiểm tra doanh thu được ghi nhận trong tháng cuối cùng của kỳ, xác định các "
-"dịch vụ được cung cấp trong kỳ tiếp theo, ước tính doanh thu cần được ghi "
-"nhận sau này (doanh thu dồn tích) và ghi chép cách thức xác định này."
+"Rà soát các khoản doanh thu được ghi nhận trong tháng cuối của kỳ, xác định "
+"bất kỳ dịch vụ nào được cung cấp ở kỳ tiếp theo, ước tính phần doanh thu cần "
+"được ghi nhận sau (thu nhập dồn tích) và lập tài liệu giải trình cách xác "
+"định các khoản này."
 
 #. module: account_reports
 #. odoo-python
@@ -6930,6 +6943,8 @@ msgid ""
 "You cannot reset this return to new, as another return has been locked at a "
 "later date."
 msgstr ""
+"Bạn không thể đặt lại trạng thái này về trạng thái mới, vì một trạng thái "
+"khác đã được khóa vào một ngày sau đó."
 
 #. module: account_reports
 #. odoo-python

@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-28 18:40+0000\n"
-"PO-Revision-Date: 2025-11-28 07:26+0000\n"
+"POT-Creation-Date: 2025-12-05 18:41+0000\n"
+"PO-Revision-Date: 2025-12-06 10:00+0000\n"
 "Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/sign/"
 "vi/>\n"
@@ -373,7 +373,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_partner_view_form
 msgid "<span class=\"o_stat_text\">Signature Requested</span>"
-msgstr "<span class=\"o_stat_text\">Chữ ký đã được yêu cầu </span>"
+msgstr "<span class=\"o_stat_text\">Yêu cầu ký tên</span>"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
@@ -3613,7 +3613,7 @@ msgid ""
 "Signature requested for template: %(template)s\n"
 "Signatories: %(signatories)s"
 msgstr ""
-"Chữ ký được yêu cầu cho mẫu: %(template)s\n"
+"Yêu cầu ký tên cho mẫu: %(template)s\n"
 "Người ký: %(signatories)s"
 
 #. module: sign
@@ -3707,6 +3707,11 @@ msgstr "Người ký"
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_action.js:0
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_sidebar.js:0
 msgid "Signer %s"
+msgstr ""
+
+#. module: sign
+#: model:sign.item.role,name:sign.sign_item_role_default
+msgid "Signer 1"
 msgstr ""
 
 #. module: sign
@@ -3816,6 +3821,8 @@ msgid ""
 "Specify the default validity period (in days) for signature requests. Set to "
 "0 for requests that don't expire."
 msgstr ""
+"Xác định khoảng thời gian hiệu lực mặc định (tính bằng ngày) cho các yêu cầu "
+"ký tên. Đặt bằng 0 cho các yêu cầu không hết hạn."
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_send_request__set_sign_order
@@ -3841,11 +3848,6 @@ msgstr ""
 #: model:sign.item.type,tip:sign.sign_item_type_stamp
 msgid "Stamp it"
 msgstr ""
-
-#. module: sign
-#: model:sign.item.role,name:sign.sign_item_role_default
-msgid "Standard"
-msgstr "Tiêu chuẩn"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__state
@@ -4843,6 +4845,8 @@ msgid ""
 "You will get the signed document by email. You may also request a paper copy "
 "from the sender."
 msgstr ""
+"Bạn sẽ nhận được tài liệu đã ký qua email. Bạn cũng có thể yêu cầu bản sao "
+"giấy từ người gửi."
 
 #. module: sign
 #: model_terms:ir.actions.act_window,help:sign.sign_all_request_action
@@ -5209,6 +5213,9 @@ msgstr "bạn"
 #: model_terms:ir.ui.view,arch_db:sign.green_report_el_pdf
 msgid "{{0}} Summary"
 msgstr "{{0}} Tóm tắt"
+
+#~ msgid "Standard"
+#~ msgstr "Tiêu chuẩn"
 
 #~ msgid "Basic Bloc"
 #~ msgstr "Khối cơ bản"

@@ -5,12 +5,13 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Thi Huong Nguyen (thng)" <thng@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:40+0000\n"
-"PO-Revision-Date: 2025-11-28 04:37+0000\n"
+"PO-Revision-Date: 2025-12-06 10:09+0000\n"
 "Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "appointment/vi/>\n"
@@ -2171,12 +2172,12 @@ msgid ""
 "            Requested appointments are still considered as reserved for the "
 "slots availability"
 msgstr ""
-"Tự động xác nhận lịch hẹn khi tạo, lên đến tỷ lệ phần trăm đã chỉ định của "
-"tổng công suất đã đặt.\n"
-"            Nếu không được chọn, các lịch hẹn sẽ được tạo dưới dạng yêu cầu "
-"và cần xác nhận thủ công.\n"
-"            Các lịch hẹn yêu cầu vẫn được coi là đã đặt cho tính khả dụng "
-"của khung giờ."
+"Tự động xác nhận lịch hẹn ngay khi tạo, lên đến tỷ lệ phần trăm nhất định "
+"của tổng sức chứa đã đặt trước.\n"
+"Nếu không chọn, lịch hẹn sẽ được tạo dưới dạng yêu cầu và cần được xác nhận "
+"thủ công.\n"
+"Các lịch hẹn được yêu cầu vẫn được tính là đã đặt trước nhằm đảm bảo xác "
+"định khung giờ trống."
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__slot_ids
@@ -2326,6 +2327,9 @@ msgid ""
 "        reserved user/resource capacity exceeds this percentage of total "
 "capacity."
 msgstr ""
+"Các đặt lịch sẽ không được xác nhận tự động khi tổng năng lực phục vụ\n"
+"của người dùng/tài nguyên đã đặt vượt quá tỷ lệ phần trăm của tổng năng lực "
+"phục vụ."
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__assignment_method__manual
@@ -2554,7 +2558,7 @@ msgstr "Kết nối"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__connectors_displayed
 msgid "Connectors Displayed"
-msgstr "Liên kết Google"
+msgstr "Đơn vị vận chuyển được hiển thị"
 
 #. module: appointment
 #: model:ir.model,name:appointment.model_res_partner
@@ -4860,6 +4864,8 @@ msgid ""
 "Will appear in the list of available questions when adding one in any "
 "appointment. Always true for default questions."
 msgstr ""
+"Sẽ xuất hiện trong danh sách các câu hỏi có sẵn khi thêm câu hỏi vào bất kỳ "
+"lịch hẹn nào. Luôn đúng đối với các câu hỏi mặc định."
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.staff_user_select
@@ -5118,3 +5124,6 @@ msgid ""
 "== 'request' else 'Appointment Booked: ' }}"
 "{{ object.appointment_type_id.name }}"
 msgstr ""
+"{{ 'Yêu cầu lịch hẹn: ' if not object.appointment_type_id.is_always_confirm "
+"and object.appointment_status == 'request' else 'Đã đặt lịch hẹn: ' }}{{ "
+"object.appointment_type_id.name }}"

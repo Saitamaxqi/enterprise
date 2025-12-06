@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-11-15 12:51+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-12-06 09:59+0000\n"
+"Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "website_helpdesk/vi/>\n"
 "Language: vi\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.navbar
@@ -201,7 +201,7 @@ msgstr "Tên doanh nghiệp"
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.footer
 msgid "Contact Us"
-msgstr "Liên hệ với chúng tôi"
+msgstr "Liên hệ"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.footer
@@ -211,7 +211,7 @@ msgstr "Liên hệ"
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.helpdesk_all_team
 msgid "Contact us <i class=\"oi oi-arrow-right\"/>"
-msgstr "Liên hệ với chúng tôi <i class=\"oi oi-arrow-right\"/>"
+msgstr "Liên hệ <i class=\"oi oi-arrow-right\"/>"
 
 #. module: website_helpdesk
 #: model:ir.model,website_form_label:website_helpdesk.model_helpdesk_ticket

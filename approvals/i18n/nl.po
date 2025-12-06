@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-28 18:40+0000\n"
-"PO-Revision-Date: 2025-11-27 14:13+0000\n"
-"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
+"POT-Creation-Date: 2025-12-05 18:42+0000\n"
+"PO-Revision-Date: 2025-12-06 09:51+0000\n"
+"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/approvals/"
 "nl/>\n"
 "Language: nl\n"
@@ -569,7 +569,7 @@ msgstr "Documenten:"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "E.g: Expenses Paris business trip"
-msgstr "Bijv: Declaratie zakenreis Parijs"
+msgstr "Bijv: Onkostendeclaratie zakenreis Parijs"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_kanban
@@ -1489,6 +1489,12 @@ msgstr ""
 #: code:addons/approvals/models/approval_request.py:0
 msgid "You cannot approve before the previous approver."
 msgstr "Je kunt pas goedkeuren na de vorige goedkeurder."
+
+#. module: approvals
+#. odoo-python
+#: code:addons/approvals/models/approval_approver.py:0
+msgid "You cannot change approval request."
+msgstr ""
 
 #. module: approvals
 #. odoo-python

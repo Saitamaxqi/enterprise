@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"POT-Creation-Date: 2025-12-05 18:41+0000\n"
 "PO-Revision-Date: 2025-11-08 20:06+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Bulgarian <https://translate.odoo.com/projects/odoo-19/"
@@ -1128,11 +1128,6 @@ msgid "Allowed Access"
 msgstr "Разрешен достъп"
 
 #. module: documents
-#: model:res.groups,comment:documents.group_documents_user
-msgid "Allows you to manage his documents."
-msgstr ""
-
-#. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Already linked Documents: %s"
@@ -1305,6 +1300,13 @@ msgid "Can add, modify, and delete files within this folder."
 msgstr ""
 
 #. module: documents
+#: model:res.groups,comment:documents.group_documents_manager
+msgid ""
+"Can configure folders, manage access rights, and oversee all documents "
+"within their areas."
+msgstr ""
+
+#. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Can modify, delete, and rename."
@@ -1327,6 +1329,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Can only view. Cannot rename, move, or delete."
+msgstr ""
+
+#. module: documents
+#: model:res.groups,comment:documents.group_documents_user
+msgid "Can view or edit, upload, and share their own or shared documents."
 msgstr ""
 
 #. module: documents
@@ -2382,6 +2389,13 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__has_warning_partners_without_access
 msgid "Has Warning Partners Without Access"
+msgstr ""
+
+#. module: documents
+#: model:res.groups,comment:documents.group_documents_system
+msgid ""
+"Has full control over all document settings, folders, and user rights across "
+"the application."
 msgstr ""
 
 #. module: documents
@@ -3531,8 +3545,8 @@ msgid ""
 "Reminder to upload your document{{ object.name and ' : ' + object.name or "
 "'' }}"
 msgstr ""
-"Напомянне да си качите документа{{ object.name and ' : ' + object.name or '' "
-"}}"
+"Напомянне да си качите документа{{ object.name and ' : ' + object.name or "
+"'' }}"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
@@ -4136,8 +4150,8 @@ msgstr "Следните документи/преки пътища имат н�
 #: code:addons/documents/models/documents_document.py:0
 msgid "The following shortcuts cannot be set as documents parents: \n"
 msgstr ""
-"Следните преки пътища не могат да бъдат зададени като родителски документи: "
-"\n"
+"Следните преки пътища не могат да бъдат зададени като родителски "
+"документи: \n"
 
 #. module: documents
 #. odoo-python
@@ -4263,8 +4277,8 @@ msgid ""
 "Those represent the different categories of things you have to do (e.g. "
 "\"Call\" or \"Send email\")."
 msgstr ""
-"Те представляват различните категории задачи, които трябва да изпълните ("
-"напр. \"Обаждане\" или \"Изпращане на имейл\")."
+"Те представляват различните категории задачи, които трябва да изпълните "
+"(напр. \"Обаждане\" или \"Изпращане на имейл\")."
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__thumbnail
@@ -4402,8 +4416,8 @@ msgid ""
 "Upload <span class=\"fw-normal\">a file or</span> drag <span class=\"fw-"
 "normal\">it here.</span>"
 msgstr ""
-"Качете <span class=\"fw-normal\">файл или</span> го плъзнете <span class"
-"=\"fw-normal\">тук.</span>"
+"Качете <span class=\"fw-normal\">файл или</span> го плъзнете <span "
+"class=\"fw-normal\">тук.</span>"
 
 #. module: documents
 #. odoo-javascript
@@ -4653,7 +4667,8 @@ msgstr "Не можете да променяте собственика на д
 #. odoo-python
 #: code:addons/documents/models/documents_tag.py:0
 msgid "You cannot delete tags used in server actions."
-msgstr "Не можете да изтривате маркери, които се използват в сървърни действия."
+msgstr ""
+"Не можете да изтривате маркери, които се използват в сървърни действия."
 
 #. module: documents
 #. odoo-python

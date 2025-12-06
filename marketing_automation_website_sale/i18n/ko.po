@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:44+0000\n"
-"PO-Revision-Date: 2025-11-13 07:38+0000\n"
+"PO-Revision-Date: 2025-12-06 10:14+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "marketing_automation_website_sale/ko/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_purchase_followup_arch
@@ -101,6 +101,17 @@ msgid ""
 "email from</font>\n"
 "            </span>"
 msgstr ""
+"<span style=\"font-size: 12px\">\n"
+"              <font style=\"color: rgb(183, 191, 199)\">8000 Marina Blvd, "
+"Suite 300</font></span>\n"
+"           <br/>\n"
+"            <span style=\"font-size: 12px\"> <font style="
+"\"color: rgb(183, 191, 199)\"> Brisbane, California 94005</font></span>\n"
+"           <br/>\n"
+"            <span style=\"font-size: 12px\">\n"
+"              <font style=\"color: rgb(183, 191, 199)\"> 이 이메일의 발송 기"
+"관은 다음과 같습니다:</font>\n"
+"            </span>"
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_purchase_followup_arch
@@ -264,6 +275,10 @@ msgid ""
 "                reach out to them, and they will be more than happy to "
 "assist you."
 msgstr ""
+"도움이 필요하거나 궁금한 점이 있으면 언제든지 고객 서비스 팀에 문의하세요.\n"
+"                                    문의 사항이나 우려 사항에 대해 언제든지\n"
+"                                   도움을 드릴 준비가 되어 있습니다.\n"
+"                                   연락만 주시면 기꺼이 도와드리겠습니다!"
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch

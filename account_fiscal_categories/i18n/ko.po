@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:42+0000\n"
-"PO-Revision-Date: 2025-11-27 16:39+0000\n"
-"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
+"PO-Revision-Date: 2025-12-06 10:08+0000\n"
+"Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "account_fiscal_categories/ko/>\n"
 "Language: ko\n"
@@ -48,7 +48,7 @@ msgstr "활성화"
 #. module: account_fiscal_categories
 #: model_terms:ir.actions.act_window,help:account_fiscal_categories.action_account_fiscal_category_list
 msgid "Add a Fiscal Category"
-msgstr ""
+msgstr "재무 카테고리 추가"
 
 #. module: account_fiscal_categories
 #: model:account.report.column,name:account_fiscal_categories.fiscal_report_total_amount
@@ -139,7 +139,7 @@ msgstr "재정 보고서"
 #. module: account_fiscal_categories
 #: model:ir.model,name:account_fiscal_categories.model_account_fiscal_report_handler
 msgid "Fiscal Report Custom Handler"
-msgstr ""
+msgstr "재무 보고서 맞춤 작성"
 
 #. module: account_fiscal_categories
 #: model:ir.model.constraint,message:account_fiscal_categories.constraint_account_fiscal_category_unique_code
@@ -242,10 +242,10 @@ msgstr "예: 비공제 세금"
 #. odoo-javascript
 #: code:addons/account_fiscal_categories/static/src/components/fiscal_report/warnings.xml:0
 msgid "in this period."
-msgstr ""
+msgstr "이 기간에 속합니다."
 
 #. module: account_fiscal_categories
 #. odoo-javascript
 #: code:addons/account_fiscal_categories/static/src/components/fiscal_report/warnings.xml:0
 msgid "multiple fiscal rates"
-msgstr ""
+msgstr "여러 건의 세율"

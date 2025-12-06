@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-10 20:15+0000\n"
-"PO-Revision-Date: 2025-11-27 14:17+0000\n"
-"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
+"PO-Revision-Date: 2025-12-06 10:21+0000\n"
+"Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/databases/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -298,53 +298,53 @@ msgstr "Erro ao criar usuários em %(dbname)s: %(message)s\n"
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
 msgid "Error while getting KPIs from %(dbname)s: %(message)s\n"
-msgstr ""
+msgstr "Erro ao obter KPIs de %(dbname)s: %(message)s\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
 msgid "Error while getting users from %(dbname)s: %(message)s\n"
-msgstr ""
+msgstr "Erro ao obter usuários de %(dbname)s: %(message)s\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
 msgid "Error while listing databases from %(dbname)s: %(message)s\n"
-msgstr ""
+msgstr "Erro ao listar bases de dados de %(dbname)s: %(message)s\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "Error while removing users from %(dbname)s: %(message)s\n"
-msgstr ""
+msgstr "Erro ao remover usuários de %(dbname)s: %(message)s\n"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__everywhere_user_ids
 msgid "Everywhere User"
-msgstr ""
+msgstr "Usuário em todos os lugares"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_fetch_documents
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_fetch_documents
 msgid "Fetch Documents"
-msgstr ""
+msgstr "Buscar documentos"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_fetch_draft_entries
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_fetch_draft_entries
 msgid "Fetch Draft Journal Entries"
-msgstr ""
+msgstr "Buscar lançamentos de diário provisórios"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_fetch_tax_returns
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_fetch_tax_returns
 msgid "Fetch Tax Returns"
-msgstr ""
+msgstr "Buscar declarações fiscais"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__fetched_values
 msgid "Fetched Values"
-msgstr ""
+msgstr "Valores obtidos"
 
 #. module: databases
 #: model_terms:ir.actions.act_window,help:databases.action_view_databases_all
@@ -352,11 +352,13 @@ msgid ""
 "Get all your Odoo databases summarized, and perform mass action like "
 "inviting users."
 msgstr ""
+"Obtenha um resumo de todas as suas bases de dados no Odoo e execute ações em "
+"massa, como convidar usuários."
 
 #. module: databases
 #: model:ir.model.constraint,message:databases.constraint_project_project_database_url_unique
 msgid "Hey, this URL is already hooked up to a database!"
-msgstr ""
+msgstr "Ei, este URL já está conectado a uma base de dados!"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_hosting
@@ -393,7 +395,7 @@ msgstr "Convite"
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "Invitation is done"
-msgstr ""
+msgstr "O convite está feito"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.databases_manage_users_wizard_view_form
@@ -438,7 +440,7 @@ msgstr "Última autenticação"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_user__local_user_id
 msgid "Local User"
-msgstr ""
+msgstr "Usuário local"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_user__login
@@ -448,7 +450,7 @@ msgstr "Login"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_kpi_properties
 msgid "Metrics"
-msgstr ""
+msgstr "Métricas"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__mode
@@ -468,12 +470,13 @@ msgstr "Novo"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__new_properties
 msgid "New KPIs to add:"
-msgstr ""
+msgstr "Novos KPIs a serem adicionados:"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
 msgid "New databases will be based on the selected project template."
 msgstr ""
+"As novas bases de dados serão baseadas no modelo de projeto selecionado."
 
 #. module: databases
 #: model_terms:ir.actions.act_window,help:databases.action_view_tasks_all
@@ -494,12 +497,12 @@ msgstr "Odoo Online"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_res_config_settings__databases_apikey
 msgid "Odoo.com API Key"
-msgstr ""
+msgstr "Chave API do Odoo.com"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_res_config_settings__databases_apiuser
 msgid "Odoo.com API User"
-msgstr ""
+msgstr "Usuário da API do Odoo.com"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form

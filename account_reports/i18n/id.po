@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-14 18:42+0000\n"
-"PO-Revision-Date: 2025-11-10 09:37+0000\n"
+"PO-Revision-Date: 2025-12-06 09:51+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/id/>\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: account_reports
 #. odoo-javascript
@@ -543,7 +543,7 @@ msgstr "Periode Akuntansi"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_audit_accounting_process
 msgid "Accounting Process"
-msgstr ""
+msgstr "Proses Akuntansi"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report
@@ -771,7 +771,7 @@ msgstr "Umur Utang Dagang"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_aged_payable_review
 msgid "Aged Payables Review"
-msgstr ""
+msgstr "Aged Payables Review"
 
 #. module: account_reports
 #: model:account.report,name:account_reports.aged_receivable_report
@@ -800,7 +800,7 @@ msgstr "Umur hutang per partner"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_aged_receivable_followup
 msgid "Aged receivables and follow-up"
-msgstr ""
+msgstr "Aged receivables dan tindak-lanjut"
 
 #. module: account_reports
 #. odoo-python
@@ -957,12 +957,12 @@ msgstr "Simulasi Analitik"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_analytical_review
 msgid "Analytical Review"
-msgstr ""
+msgstr "Tinjauan Analitik"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_inventory_analytical_review
 msgid "Analyze the change in assets between year N and year N-1."
-msgstr ""
+msgstr "Analisis perubahan aset antara tahu nN dan tahun N-1."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_revenue_receivables_review
@@ -970,12 +970,14 @@ msgid ""
 "Analyze the change in revenue and trade receivables between year N and year "
 "N-1."
 msgstr ""
+"Analisis perubahan di pendapatan dan piutang dagang antara tahun N dan tahun "
+"N-1."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_fixed_assets_review
 msgid ""
 "Analyze the evolution of fixed assets and depreciation between N and N-1."
-msgstr ""
+msgstr "Analiis evolusi aset tetap dan penyusutan antara N dan N-1."
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_mail_compose_message__account_reports_annotation_date
@@ -1072,7 +1074,7 @@ msgstr "Urutan Teratas"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_audit_assets_listing
 msgid "Assets Listing"
-msgstr ""
+msgstr "Daftar Aset"
 
 #. module: account_reports
 #: model:account.report.column,name:account_reports.aged_payable_report_period0
@@ -1262,7 +1264,7 @@ msgstr "Balance tax current account (receivable)"
 #: model:ir.embedded.actions,name:account_reports.account_audit_embedded_action_account_balances_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_kanban_view
 msgid "Balances"
-msgstr ""
+msgstr "Saldo"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__audit_balances_count
@@ -1272,7 +1274,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_bank_fees_analytical_review
 msgid "Bank Fees Analytical Review"
-msgstr ""
+msgstr "Tinjauan Analitik Biaya Bank"
 
 #. module: account_reports
 #. odoo-python
@@ -1509,7 +1511,7 @@ msgstr "Kas masuk"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_cash_inventory_reconciliation
 msgid "Cash inventory reconciliation"
-msgstr ""
+msgstr "Rekonsiliasi Inventaris Kas"
 
 #. module: account_reports
 #. odoo-python
@@ -1588,7 +1590,7 @@ msgstr "Periksa Status"
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_view_account_return_check_templates
 msgid "Check Templates"
-msgstr ""
+msgstr "Periksa Templat"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_aged_payable_review
@@ -1596,6 +1598,8 @@ msgid ""
 "Check for payables overdue by more than 60 days and validate that all "
 "amounts due are properly recorded."
 msgstr ""
+"Periksa utang yang melewati batas lebih dari 60 hari dan validasi bahwa "
+"semua jumlah secara tepat direkam."
 
 #. module: account_reports
 #. odoo-javascript
@@ -1624,7 +1628,7 @@ msgstr "Pemeriksaan yang Divalidasi"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_clear_internal_transfer_account
 msgid "Clear Internal Transfer Accounts"
-msgstr ""
+msgstr "Bersihkan Akun Transfer Internal"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
@@ -1697,6 +1701,8 @@ msgid ""
 "Collect missing bank statements and reconcile them with internal records, "
 "resolving any discrepancies."
 msgstr ""
+"Kumpulkan rekening koran yang hilang dan rekonsiliasi mereka dengan rekaman "
+"internal, menyelesaikan perbedaan apa pun yang tersedia."
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
@@ -1771,6 +1777,8 @@ msgid ""
 "Compare current vs prior year expense trends and justify significant "
 "deviations."
 msgstr ""
+"Bandingkan tren pengeluaran tahun ini vs sebelumnya dan jelaskan "
+"penyimpangan yang signifikan."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_cash_inventory_reconciliation
@@ -1778,6 +1786,8 @@ msgid ""
 "Compare the general ledger cash account with the physical cash inventory "
 "provided by the client. Investigate and explain any discrepancies."
 msgstr ""
+"Bandingkan akun kas buku besar umum dengan inventaris kas fisik yang "
+"disediakan oleh klien. Selidiki dan jelaskan ketidaksesuaian apa pun."
 
 #. module: account_reports
 #. odoo-javascript
@@ -1791,6 +1801,8 @@ msgid ""
 "Compile a complete list of all guarantees received or granted (pledges, "
 "mortgages, collateral)."
 msgstr ""
+"Buat daftar lengkap semua jaminan yang diterima atau diberikan "
+"(pledge, hipotek, jaminan)."
 
 #. module: account_reports
 #. odoo-python
@@ -1809,6 +1821,8 @@ msgid ""
 "Conduct a comparative account review to identify key variances, analyze "
 "trends, and assess performance versus prior periods."
 msgstr ""
+"Lakukan tinjauan akun pembanding untuk mengidentifikasi perbedaan utama, "
+"analisa tren, dan nilai performa vs periode-periode sebelumnya."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_trade_payables_analytical_review
@@ -1816,6 +1830,8 @@ msgid ""
 "Conduct a year-over-year analysis of trade payables and explain significant "
 "changes."
 msgstr ""
+"Lakukan analisis tahun per tahun mengenai utang dagang dan jelaskan "
+"perubahan yang signifikan."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_bank_fees_analytical_review
@@ -1823,6 +1839,8 @@ msgid ""
 "Conduct an analytical review of banking fees. Ensure consistent accounting "
 "treatment and explain major changes."
 msgstr ""
+"Lakukan tinjauan analitik dari biaya perbankan. Pastikan perlakuan akuntansi "
+"yang konsisten dan jelaskan perubahan-perubahan besar."
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_res_config_settings
@@ -1846,6 +1864,8 @@ msgid ""
 "Confirm proper classification, fair value measurement, and disposal "
 "treatment of marketable securities."
 msgstr ""
+"Konfirmasi klasifikasi yang tepat, pengukuran value yang adil, dan "
+"penanganan pembuangan sekuritas yang dapat diperdagangkan."
 
 #. module: account_reports
 #. odoo-javascript
@@ -2105,7 +2125,7 @@ msgstr "Customer Statement Custom Handler"
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_search_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_template_search_view
 msgid "Cycle"
-msgstr ""
+msgstr "Siklus"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.return_creation_wizard_form
@@ -2422,6 +2442,8 @@ msgstr ""
 #: model:account.return.check.template,description:account_reports.account_return_check_template_audit_accounting_process
 msgid "Document current accounting processes (especially if done in-house)."
 msgstr ""
+"Dokumentasikan proses akuntansi saat ini "
+"(terutama bila dilakukan secara internal)."
 
 #. module: account_reports
 #: model:account.report.column,name:account_reports.journal_report_count
@@ -2575,7 +2597,7 @@ msgstr "Templat email"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_audit_empty_suspense_accounts
 msgid "Empty Suspense accounts"
-msgstr ""
+msgstr "Akun Empty Suspense"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_send__enable_download
@@ -2635,6 +2657,8 @@ msgid ""
 "Ensure all intercompany or internal bank transfer accounts are cleared and "
 "justified."
 msgstr ""
+"Pastikan semua akun transfer bank internal atau antar perusahaan "
+"diselesaikan dan dibenarkan."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_payables_settlement
@@ -2642,6 +2666,8 @@ msgid ""
 "Ensure all notes payable recorded at year-end were properly settled in the "
 "following period."
 msgstr ""
+"Pastikan semua catatan utang yang terekam di akhir-tahun secara tepat "
+"diselesaikan di periode berikutnya."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_foreign_currency_liabilities
@@ -2650,6 +2676,9 @@ msgid ""
 "and that any unrealized exchange differences are properly recorded in profit "
 "or loss (accounts 654/754) under Belgian GAAP."
 msgstr ""
+"Pastikan utang mata uang asing dievaluasi ulang berdasarkan kurs penutupan "
+"akhir tahun dan perbedaan pertukaran apa pun yang belum direalisasi direkam "
+"dengan tepat dalam laba atau rugi (akun 654/754) di bawah GAAP Belgia."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_non_recoverable_vat_gross_accounting
@@ -2657,6 +2686,8 @@ msgid ""
 "Ensure that non-deductible VAT expenses are recorded including VAT (gross "
 "amount)."
 msgstr ""
+"Pastikan pengeluaran PPn yang non-deductible direkam termasuk PPN "
+"(jumlah bruto)."
 
 #. module: account_reports
 #. odoo-python
@@ -2885,7 +2916,7 @@ msgstr "Budget Keuangan"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_financial_provisions_review
 msgid "Financial Provisions Review"
-msgstr ""
+msgstr "Tinjauan Financial Provision"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_fiscal_position
@@ -2909,7 +2940,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_fixed_assets_review
 msgid "Fixed Assets Review"
-msgstr ""
+msgstr "Tinjauan Aset Tetap"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__fixed_assets
@@ -2962,16 +2993,20 @@ msgid ""
 "- Has a payment plan been negotiated?\n"
 "- Is a provision recorded if recovery is doubtful?"
 msgstr ""
+"Untuk setiap piutang risiko tinggi (>60 hari), verifikasi hal-hal berikut:\n"
+"- Apakah ada tindak-lanjut yang didokumentasi?\n"
+"- Apakah rencana pembayaran telah dinegosiasikan?\n"
+"- Apakah provision direkam bila pembayaran kembali tidak diragukan?"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_foreign_currency_liabilities
 msgid "Foreign Currency Liabilities"
-msgstr ""
+msgstr "Foreign Currency Liabilities"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_foreign_exchange_differences
 msgid "Foreign Exchange Differences"
-msgstr ""
+msgstr "Perbedaan Valuta Asing"
 
 #. module: account_reports
 #. odoo-python
@@ -3322,6 +3357,8 @@ msgid ""
 "Identify and explain any significant or unusual supplier balances, "
 "especially debit balances."
 msgstr ""
+"Identifikasi dan jelaskan setiap saldo signifikan atau tidak biasa dari "
+"supplier, terutama saldo debit."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_no_unjustified_cash_payments_to_supplier
@@ -3329,12 +3366,16 @@ msgid ""
 "Identify and verify any cash payments made to suppliers. Ensure all are "
 "properly justified."
 msgstr ""
+"Identifikasi dan verifikasi pembayaran kas apa pun yang dibuat ke supplier. "
+"Pastikan semuanya secara tepat dijelaskan."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_outstanding_checks
 msgid ""
 "Identify checks that remain uncashed (lost, forgotten, or to be canceled)"
 msgstr ""
+"Identifikasi cek yang belum dicairkan "
+"(hilang, dilupakan, atau untuk dibatalkan)"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_review_for_capitalizable_expenses
@@ -3342,11 +3383,13 @@ msgid ""
 "Identify expenses that should have been capitalized according to accounting "
 "standards."
 msgstr ""
+"Identifikasi pengeluaran yang seharusnya dikapitalisasi menurut standar-"
+"standar akuntansi."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_provision_for_impairment
 msgid "Identify potential losses and record provisions where appropriate."
-msgstr ""
+msgstr "Identifikasi kemungkinan kerugian dan rekam provision bila diperlukan."
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_return__message_needaction
@@ -3548,12 +3591,12 @@ msgstr "Stok Persediaan"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_inventory_analytical_review
 msgid "Inventory Analytical Review"
-msgstr ""
+msgstr "Tinjauan Analitik Inventaris"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_investigate_unusual_supplier_balances
 msgid "Investigate Unusual Supplier Balances"
-msgstr ""
+msgstr "Selidiki Saldo Supplier yang Tidak Biasa"
 
 #. module: account_reports
 #. odoo-javascript
@@ -3968,7 +4011,7 @@ msgstr "Tandai sebagai Diserahkan"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_marketable_securities_review
 msgid "Marketable Securities Review"
-msgstr ""
+msgstr "Tinjauan Sekuritas yang Dapat Diperdagangkan"
 
 #. module: account_reports
 #: model:account.report.column,name:account_reports.partner_ledger_report_matching_number
@@ -4227,12 +4270,12 @@ msgstr "Tidak Ada Jurnal"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_no_negative_petty_cash_balances
 msgid "No Negative Petty Cash Balances"
-msgstr ""
+msgstr "Tidak Ada Saldo Kas Kecil yang Negatif"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_no_unjustified_cash_payments_to_supplier
 msgid "No Unjustified Cash Payments to Suppliers"
-msgstr ""
+msgstr "Tidak Ada Pembayaran Tunai yang Tidak Jelas ke Supplier"
 
 #. module: account_reports
 #. odoo-python
@@ -4302,7 +4345,7 @@ msgstr "Tidak Dapat Dipotong"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_non_recoverable_vat_gross_accounting
 msgid "Non-recoverable VAT: gross accounting"
-msgstr ""
+msgstr "PPN yang tidak dapat dikembalikan: akuntansi bruto"
 
 #. module: account_reports
 #. odoo-javascript
@@ -4361,11 +4404,13 @@ msgid ""
 "Obtain a detailed physical inventory, valued and signed by the company "
 "manager."
 msgstr ""
+"Dapatkan inventaris fisik rinci, yang dinilai dan ditandatangani oleh "
+"manajer perusahaan."
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_obtain_signed_inventory_valuation
 msgid "Obtain signed inventory valuation"
-msgstr ""
+msgstr "Dapatkan valuasi inventaris yang ditandatangani"
 
 #. module: account_reports
 #. odoo-javascript
@@ -4471,7 +4516,7 @@ msgstr "Opening Balance of Financial Year"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_operating_expenses_review
 msgid "Operating Expenses Review"
-msgstr ""
+msgstr "Tinjauan Pengeluaran Operasi"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_operating_income0
@@ -4513,7 +4558,7 @@ msgstr "Resi/Pembayaran yang Belum Lunas"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_outstanding_checks
 msgid "Outstanding checks"
-msgstr ""
+msgstr "Cek terutang"
 
 #. module: account_reports
 #. odoo-python
@@ -4646,7 +4691,7 @@ msgstr "Mitra:"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__resolved_check_count
 msgid "Passed"
-msgstr "Lolo"
+msgstr "Lolos"
 
 #. module: account_reports
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return__audit_status__paused
@@ -4685,7 +4730,7 @@ msgstr "Utang"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_payables_settlement
 msgid "Payables Settlement"
-msgstr ""
+msgstr "Penyelsaian Utang"
 
 #. module: account_reports
 #. odoo-python
@@ -4757,7 +4802,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_audit_period_events
 msgid "Period Events"
-msgstr ""
+msgstr "Acara-Acara Berkala"
 
 #. module: account_reports
 #. odoo-python
@@ -4891,6 +4936,8 @@ msgid ""
 "Prepare a summary of subsidiaries and investments including ownership "
 "percentages, acquisition values, net equity, earnings, and dividends paid."
 msgstr ""
+"Siapkan ringkasan cabang perusahaan dan investasi termasuk persentase "
+"kepemilikan, nilai akuisisi, ekuitas bersih, laba, dan dividen yang dibayar."
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_prepayements0
@@ -4991,7 +5038,7 @@ msgstr "Provisi untuk %(for_cur)s (1 %(comp_cur)s = %(rate)s %(for_cur)s)"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_provision_for_impairment
 msgid "Provision for Impairment"
-msgstr ""
+msgstr "Provision for Impairment"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__purchases
@@ -5269,7 +5316,7 @@ msgstr "Pendapatan"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_revenue_receivables_review
 msgid "Revenue & receivables Review"
-msgstr ""
+msgstr "Tinjau Pendapatan & Piutang"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_multicurrency_revaluation_wizard__reversal_date
@@ -5310,6 +5357,9 @@ msgid ""
 "Review FX rates used at year-end, compare with prior year, and verify "
 "appropriate recognition and presentation of currency adjustments."
 msgstr ""
+"Tinjau FX rate yang digunakan di akhir-tahun, bandingkan dengan tahun "
+"sebelumnya, dan verifikasi pengakuan dan presentasi yang sesuai untuk "
+"penyesuaian mata uang."
 
 #. module: account_reports
 #. odoo-python
@@ -5334,12 +5384,12 @@ msgstr ""
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_review_for_capitalizable_expenses
 msgid "Review for capitalizable expenses"
-msgstr ""
+msgstr "Tinjau untuk pengeluaran yang dapat dikapitalisasi"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_review_of_guaranteed
 msgid "Review of Guarantees"
-msgstr ""
+msgstr "Tinjauan Jaminan"
 
 #. module: account_reports
 #. odoo-python
@@ -5375,6 +5425,8 @@ msgid ""
 "Review petty cash accounts to ensure they do not have credit balances. "
 "Investigate and justify any anomalies."
 msgstr ""
+"Tinjau akun okas kecil untuk memastikan mereka tidak memiliki saldo kredit. "
+"Selidiki dan jelaskan ketidaksesuaian apa pun."
 
 #. module: account_reports
 #. odoo-python
@@ -5389,6 +5441,10 @@ msgid ""
 "services delivered in the next period, estimate the revenue that should be "
 "recognized later (accrued income), and document how this was determined."
 msgstr ""
+"Tinjau penjualan yang direkam di bulan terakhir periode, identifikasi "
+"layanan apa pun yang disediakan di periode berikutnya, estimasi pendapatan "
+"yang akan diakui di kemudian hari (pendatan akrual), dan dokumentasikan "
+"bagaimana ini ditentukan."
 
 #. module: account_reports
 #. odoo-python
@@ -5558,7 +5614,7 @@ msgstr "Tetapkan data perusahaan Anda"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_settlement_in_subsequent_period
 msgid "Settlement in Subsequent Period"
-msgstr ""
+msgstr "Penyelesaian di Periode Berikutnya"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_st_cash_forecast0
@@ -5695,7 +5751,7 @@ msgstr "Tanggal Mulai"
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_create_account_audit
 msgid "Start an Audit"
-msgstr ""
+msgstr "Mulai Audit"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_res_company__account_return_reminder_day
@@ -5787,13 +5843,13 @@ msgstr "Menyerahkan"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_subsidaries_and_investments_summary
 msgid "Subsidiaries and investments summary"
-msgstr ""
+msgstr "Cabang perusahaan dan ringkasan inventasi"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_audit_assets_listing
 #: model:account.return.check.template,description:account_reports.account_return_check_template_audit_period_events
 msgid "Summarize main events that occurs in this fiscal period."
-msgstr ""
+msgstr "Ringkaskan acara-acara utama yang terjadi di periode fiskal ini."
 
 #. module: account_reports
 #: model:ir.model.fields.selection,name:account_reports.selection__account_account__audit_status__supervised
@@ -6127,6 +6183,8 @@ msgid ""
 "These accounts must be cleared regularly, as they represent unallocated or "
 "pending transactions."
 msgstr ""
+"Akun-akun ini harus dibersihkan secara reguler, karena mereka mewakili "
+"transaksi yang belum dialokasikan atau pending."
 
 #. module: account_reports
 #. odoo-python
@@ -6363,7 +6421,7 @@ msgstr "Trade Partner"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_trade_payables_analytical_review
 msgid "Trade Payables Analytical Review"
-msgstr ""
+msgstr "Tinjauan Analitik Utang Dagang"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.transaction_without_statement
@@ -6560,6 +6618,8 @@ msgid ""
 "Validate recognition and classification of financial provisions and "
 "reversals. Ensure all entries are properly justified."
 msgstr ""
+"Validasi pengakuan dan klasifikasi provision dan reversal keuangan. Pastikan "
+"semua entri secara tepat dibenarkan."
 
 #. module: account_reports
 #. odoo-javascript
@@ -6598,6 +6658,18 @@ msgid ""
 "exchange for immediate cash.\n"
 "            "
 msgstr ""
+"Verifikasi bahwa kwitansi kas dan kartu direkam di periode-akhir dan benar "
+"diselesaikan di periode sebelumnya. Juga pastikan penanganan akuntansi yang "
+"tepat untuk penugasan Dailly*, operasi diskon, dan factoring contract**.\n"
+"\n"
+"* \"\"Dailly Law\"\" adalah undang-undang Prancis yang memungkin bisnis "
+"untuk memberikan piutang komersil (seperti faktur) ke lembaga kredit "
+"(seperti bank) ditukar dengan imbalan pembiayaan.\n"
+"\n"
+"**Factoring contracts terjadi dimana bisnis menjual fakturnya yang belum "
+"dibayar (akun piutang) ke perusahaan pihak-ketiga, disebut sebagai factor, "
+"ditukar dengan kas langsung.\n"
+"            "
 
 #. module: account_reports
 #. odoo-python
@@ -6746,7 +6818,7 @@ msgstr "Tahun"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_year_end_revenue_cutoff_analysis
 msgid "Year-end revenue cutoff analysis"
-msgstr ""
+msgstr "Analisis cutoff pendapatan akhir tahun"
 
 #. module: account_reports
 #. odoo-javascript

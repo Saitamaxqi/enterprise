@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-08 20:08+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-12-06 10:13+0000\n"
+"Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/esg/"
 "id/>\n"
 "Language: id\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: esg
 #. odoo-python
@@ -249,17 +249,17 @@ msgstr "Perjalanan Bisnis"
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c4f6
 msgid "C4F6"
-msgstr ""
+msgstr "C4F6"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_c4f8o
 msgid "C4F8O"
-msgstr ""
+msgstr "C4F8O"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c5f8
 msgid "C5F8"
-msgstr ""
+msgstr "C5F8"
 
 #. module: esg
 #. odoo-javascript
@@ -342,7 +342,7 @@ msgstr "Jejak Karbon"
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_co
 msgid "Carbon Monoxide"
-msgstr ""
+msgstr "Karbon Monoksida"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_carbon_report_handler
@@ -951,12 +951,12 @@ msgstr "Potensi Pemasan Global (GWP) tidak boleh sama dengan 0."
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_125
 msgid "HFC-125"
-msgstr ""
+msgstr "HFC-125"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_134
 msgid "HFC-134"
-msgstr ""
+msgstr "HFC-134"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_134a
@@ -971,17 +971,17 @@ msgstr "HFC-134a (t)"
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_143
 msgid "HFC-143"
-msgstr ""
+msgstr "HFC-143"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_143a
 msgid "HFC-143a"
-msgstr ""
+msgstr "HFC-143a"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_152
 msgid "HFC-152"
-msgstr ""
+msgstr "HFC-152"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_152a
@@ -996,12 +996,12 @@ msgstr "HFC-152a (t)"
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_161
 msgid "HFC-161"
-msgstr ""
+msgstr "HFC-161"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_227ea
 msgid "HFC-227ea"
-msgstr ""
+msgstr "HFC-227ea"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_23
@@ -1016,17 +1016,17 @@ msgstr "HFC-23 (t)"
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_236cb
 msgid "HFC-236cb"
-msgstr ""
+msgstr "HFC-236cb"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_32
 msgid "HFC-32"
-msgstr ""
+msgstr "HFC-32"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_41
 msgid "HFC-41"
-msgstr ""
+msgstr "HFC-41"
 
 #. module: esg
 #. odoo-javascript
@@ -1037,22 +1037,22 @@ msgstr "HFCs"
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_cf3ochf2
 msgid "HFE-125"
-msgstr ""
+msgstr "HFE-125"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_chf2ch2ocf3
 msgid "HFE-245fa1"
-msgstr ""
+msgstr "HFE-245fa1"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_cf3cf2ch2och3
 msgid "HFE-365mcf3"
-msgstr ""
+msgstr "HFE-365mcf3"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_chf2_c4f9och3
 msgid "HFE-7100"
-msgstr ""
+msgstr "HFE-7100"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__has_message
@@ -1302,7 +1302,7 @@ msgstr "Metana (CH₄)"
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_ch4
 msgid "Methane (generic) (CH₄)"
-msgstr ""
+msgstr "Metana (umum) (CH₄)"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
@@ -1357,7 +1357,7 @@ msgstr "Baru"
 #: model:esg.gas,name:esg.esg_gas_nf3
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__nf3
 msgid "Nitrogen Trifluoride"
-msgstr ""
+msgstr "Nitrogen Trifluorida"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_n2o
@@ -1469,17 +1469,17 @@ msgstr "Emisi Tidak Langsung Lainnya"
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c3f8
 msgid "PFC-218"
-msgstr ""
+msgstr "PFC-218"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c-c4f8
 msgid "PFC-318"
-msgstr ""
+msgstr "PFC-318"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c6f14
 msgid "PFC-51-14"
-msgstr ""
+msgstr "PFC-51-14"
 
 #. module: esg
 #. odoo-javascript
@@ -1741,7 +1741,7 @@ msgstr "Pembakaran yang Tidak Bergerak"
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_so2
 msgid "Sulfur Dioxide (SO2+SO3)"
-msgstr ""
+msgstr "Sulfur Dioksida (SO2+SO3)"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_sf6

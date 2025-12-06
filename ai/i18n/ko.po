@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-28 18:41+0000\n"
-"PO-Revision-Date: 2025-11-20 08:15+0000\n"
+"PO-Revision-Date: 2025-12-06 10:08+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/ai/ko/>\n"
 "Language: ko\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_read_group
@@ -185,6 +185,30 @@ msgid ""
 "            ⚠️ Order must be exactly 'ASC' or 'DESC'\n"
 "        "
 msgstr ""
+"\n"
+"            검색 보기 요소를 통해 그래프/차트 보기를 실행합니다.\n"
+"            이 보기는 추세, 비교, 분포, KPI 시각화에 가장 적합합니다.\n"
+"\n"
+"            지원되는 그래프 유형:\n"
+"            - '막대형': 카테고리별 값 비교\n"
+"            - '선형': 시간 경과에 따른 추세 표시\n"
+"            - '원형': 전체적인 비율 표시\n"
+"\n"
+"            주요 기능:\n"
+"            - 메뉴에서 옵션을 선택하여 필터 적용\n"
+"            - 단일 측정값을 시각화\n"
+"            - 그래프 축을 필드별로 그룹화\n"
+"            - 특정한 필드 내 검색\n"
+"            - 중첩 및 누적 옵션\n"
+"            - 순서 정렬 관리(오름차순/내림차순)\n"
+"\n"
+"            💡 유효한 측정값을 검색하려면 먼저 compute_report_measures()를 호"
+"출하세요\n"
+"            ⚠️ 각 검색 문자열은 'field=text' 형식을 사용해야 합니다. 배열에는"
+" 여러 개의 검색 문자열이 포함되거나 빈 문자열이 올 수 있습니다 []\n"
+"            ⚠️ 모드는 반드시 '막대형', '선형' 또는 '원형'이어야 합니다\n"
+"            ⚠️ 순서는 반드시 '오름차순' 또는 '내림차순'이어야 합니다\n"
+"        "
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_open_menu_kanban
@@ -523,13 +547,13 @@ msgstr "AI 채팅"
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 #: code:addons/ai/static/src/editor/embedded_components/plugins/voice_transcription_plugin.js:0
 msgid "AI is listening..."
-msgstr ""
+msgstr "AI 내용 확인 중..."
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/discuss/typing_patch.js:0
 msgid "AI is thinking..."
-msgstr ""
+msgstr "AI 분석 중..."
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_composer
@@ -551,7 +575,7 @@ msgstr "AI: %(name)s"
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_adjust_search
 msgid "AI: Adjust Search"
-msgstr ""
+msgstr "AI: 검색 조정"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_compute_report_measures
@@ -561,7 +585,7 @@ msgstr ""
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_get_fields
 msgid "AI: Get Fields"
-msgstr ""
+msgstr "AI: 필드 가져오기"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_get_menu_details
@@ -591,7 +615,7 @@ msgstr ""
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_read_group
 msgid "AI: Read group"
-msgstr ""
+msgstr "AI: 읽기 그룹"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_search
@@ -614,7 +638,7 @@ msgstr "추가 작업"
 #. odoo-python
 #: code:addons/ai/models/ir_actions_server.py:0
 msgid "Action \"%(action)s\" done."
-msgstr ""
+msgstr "\"%(action)s\" 작업 완료."
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__active
@@ -710,13 +734,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_allow_end_message
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_allow_end_message
 msgid "Allow End Message"
-msgstr ""
+msgstr "종료 메시지 허용"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 msgid "An error occured"
-msgstr ""
+msgstr "오류가 발생했습니다"
 
 #. module: ai
 #. odoo-javascript
@@ -758,7 +782,7 @@ msgstr "첨부 파일 전체 임베딩"
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_composer__available_prompts
 msgid "Available User Prompts"
-msgstr ""
+msgstr "선택할 수 있는 사용자 프롬프트"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__avatar_128
@@ -1171,7 +1195,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/models/ai_agent.py:0
 msgid "Invalid search operator."
-msgstr ""
+msgstr "잘못된 검색 연산자입니다."
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__is_ask_ai_agent
@@ -1464,7 +1488,7 @@ msgstr "저장 및 생성"
 #. odoo-javascript
 #: code:addons/ai/static/src/records_selector_popover/records_selector_popover.xml:0
 msgid "Select a records"
-msgstr ""
+msgstr "레코드 선택"
 
 #. module: ai
 #. odoo-javascript
@@ -1499,7 +1523,7 @@ msgstr "이메일로 공유하기"
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 msgid "Share transcript summary"
-msgstr ""
+msgstr "대화 내용 요약 공유"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
@@ -1536,7 +1560,7 @@ msgstr "출처"
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__sources_fully_processed
 msgid "Sources Fully Processed"
-msgstr ""
+msgstr "소스 처리 완료"
 
 #. module: ai
 #. odoo-javascript
@@ -1784,7 +1808,7 @@ msgstr "파일 업로드"
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__use_in_ai
 #: model:ir.model.fields,field_description:ai.field_ir_cron__use_in_ai
 msgid "Use in AI"
-msgstr ""
+msgstr "AI에서 사용"
 
 #. module: ai
 #. odoo-javascript
@@ -1805,7 +1829,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__user_has_access
 msgid "User Has Access"
-msgstr ""
+msgstr "사용자 액세스 가능"
 
 #. module: ai
 #. odoo-javascript

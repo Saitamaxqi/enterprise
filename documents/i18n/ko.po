@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-18 05:40+0000\n"
+"POT-Creation-Date: 2025-12-05 18:41+0000\n"
+"PO-Revision-Date: 2025-12-06 09:52+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/documents/"
 "ko/>\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: documents
 #. odoo-python
@@ -65,7 +65,7 @@ msgstr "%s 문서/폴더가 회사 루트로 이동되었습니다."
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "%s members added."
-msgstr ""
+msgstr "%s 회원 추가 완료."
 
 #. module: documents
 #. odoo-javascript
@@ -807,16 +807,16 @@ msgid ""
 msgstr ""
 "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
 "16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
-"color: #454748; width: 100%; border-collapse:separate;\"><tr><td align=\""
-"center\">\n"
+"color: #454748; width: 100%; border-collapse:separate;\"><tr><td "
+"align=\"center\">\n"
 "                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
-"width=\"590\" style=\"padding: 16px; background-color: white; color: #454748;"
-" border-collapse:separate;\">\n"
+"width=\"590\" style=\"padding: 16px; background-color: white; color: "
+"#454748; border-collapse:separate;\">\n"
 "                    <tbody>\n"
 "                        <!-- HEADER -->\n"
 "                        <tr>\n"
-"                            <td align=\"center\" style=\"min-width: 590px;\">"
-"\n"
+"                            <td align=\"center\" style=\"min-width: 590px;"
+"\">\n"
 "                                <table border=\"0\" cellpadding=\"0\" "
 "cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: "
 "white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
@@ -825,16 +825,17 @@ msgstr ""
 "                                            문서 요청: <br/>\n"
 "                                            <t t-if=\"object.name\">\n"
 "                                                <span style=\"font-size: "
-"20px; font-weight: bold;\" t-out=\"object.name or ''\">Inbox Financial</span>"
-"\n"
+"20px; font-weight: bold;\" t-out=\"object.name or ''\">Inbox Financial</"
+"span>\n"
 "                                            </t>\n"
 "                                        </span><br/>\n"
-"                                    </td><td valign=\"middle\" align="
-"\"right\" t-if=\"not object.create_uid.company_id.uses_default_logo\">\n"
-"                                        <img t-attf-src="
-"\"/logo.png?company={{ object.create_uid.company_id.id }}\" style="
-"\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt="
-"\"object.create_uid.company_id.name\"/>\n"
+"                                    </td><td valign=\"middle\" "
+"align=\"right\" t-if=\"not "
+"object.create_uid.company_id.uses_default_logo\">\n"
+"                                        <img t-attf-src=\"/logo.png?"
+"company={{ object.create_uid.company_id.id }}\" style=\"padding: 0px; "
+"margin: 0px; height: auto; width: 80px;\" t-att-"
+"alt=\"object.create_uid.company_id.name\"/>\n"
 "                                    </td></tr>\n"
 "                                    <tr><td colspan=\"2\" style=\"text-"
 "align:center;\">\n"
@@ -847,62 +848,62 @@ msgstr ""
 "                        </tr>\n"
 "                        <!-- CONTENT -->\n"
 "                        <tr>\n"
-"                            <td align=\"center\" style=\"min-width: 590px;\">"
-"\n"
+"                            <td align=\"center\" style=\"min-width: 590px;"
+"\">\n"
 "                                <table border=\"0\" cellpadding=\"0\" "
 "cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: "
 "white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                                    <tr><td valign=\"top\" style=\"font-size:"
-" 13px;\">\n"
+"                                    <tr><td valign=\"top\" style=\"font-"
+"size: 13px;\">\n"
 "                                        <div>\n"
-"                                            안녕하세요 <t t-out="
-"\"object.requestee_partner_id.name or ''\">OdooBot</t>님,\n"
+"                                            안녕하세요 <t t-"
+"out=\"object.requestee_partner_id.name or ''\">OdooBot</t>님,\n"
 "                                            <br/><br/>\n"
-"                                            <t t-out="
-"\"object.create_uid.name or ''\">OdooBot</t> (<t t-out="
-"\"object.create_uid.email or ''\">odoobot@example.com</t>) 님이 다음의 "
-"문서를 요청하고 있습니다\n"
+"                                            <t t-"
+"out=\"object.create_uid.name or ''\">OdooBot</t> (<t t-"
+"out=\"object.create_uid.email or ''\">odoobot@example.com</t>) 님이 다음의 문"
+"서를 요청하고 있습니다\n"
 "                                            <br/><br/>\n"
 "                                            <center>\n"
 "                                                <div>\n"
-"                                                    <t t-if=\"object.name\">"
-"\n"
-"                                                        <b t-out="
-"\"object.name or ''\">Inbox Financial</b>\n"
+"                                                    <t t-"
+"if=\"object.name\">\n"
+"                                                        <b t-"
+"out=\"object.name or ''\">Inbox Financial</b>\n"
 "                                                    </t>\n"
 "                                                </div>\n"
 "                                                <div>\n"
-"                                                    <t t-if="
-"\"object.request_activity_id.note\">\n"
-"                                                        <i t-out="
-"\"object.request_activity_id.note or ''\">Example of a note.</i>\n"
+"                                                    <t t-"
+"if=\"object.request_activity_id.note\">\n"
+"                                                        <i t-"
+"out=\"object.request_activity_id.note or ''\">Example of a note.</i>\n"
 "                                                    </t>\n"
 "                                                </div>\n"
 "                                                <br/>\n"
-"                                                <div style="
-"\"margin: 16px 0px 16px 0px;\">\n"
-"                                                    <a t-att-href="
-"\"object.access_url\" t-attf-style=\"background-color: {{"
-"user.company_id.email_secondary_color or '#875A7B'}}; padding: 20px 30px "
-"20px 30px; text-decoration: none; color: {{"
-"user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-"
-"size:13px;\">\n"
-"                                                        요청 문서 "
-"업로드하기\n"
+"                                                <div style=\"margin: 16px "
+"0px 16px 0px;\">\n"
+"                                                    <a t-att-"
+"href=\"object.access_url\" t-attf-style=\"background-color: "
+"{{user.company_id.email_secondary_color or '#875A7B'}}; padding: 20px 30px "
+"20px 30px; text-decoration: none; color: "
+"{{user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; "
+"font-size:13px;\">\n"
+"                                                        요청 문서 업로드하"
+"기\n"
 "                                                    </a>\n"
 "                                                </div>\n"
 "                                            </center><br/>\n"
 "                                            누락된 문서는 링크 만료일 전 <t "
 "t-out=\"object.request_activity_id.date_deadline\">2021-05-17</t>까지 업로드 "
 "해주시기 바랍니다.\n"
-"                                            <t t-if="
-"\"user and user.signature\" data-o-mail-quote-container=\"1\">\n"
+"                                            <t t-if=\"user and "
+"user.signature\" data-o-mail-quote-container=\"1\">\n"
 "                                                <br/>\n"
-"                                                <div data-o-mail-quote=\"1\""
-">--<br data-o-mail-quote=\"1\"/><t t-out=\"user.signature or ''\" data-o"
-"-mail-quote=\"1\">Mitchell Admin</t></div>\n"
-"                                                <br data-o-mail-quote=\"1\"/>"
-"\n"
+"                                                <div data-o-mail-"
+"quote=\"1\">--<br data-o-mail-quote=\"1\"/><t t-out=\"user.signature or ''\" "
+"data-o-mail-quote=\"1\">Mitchell Admin</t></div>\n"
+"                                                <br data-o-mail-quote=\"1\"/"
+">\n"
 "                                            </t>\n"
 "                                        </div>\n"
 "                                    </td></tr>\n"
@@ -916,34 +917,34 @@ msgstr ""
 "                        </tr>\n"
 "                        <!-- FOOTER -->\n"
 "                        <tr>\n"
-"                            <td align=\"center\" style=\"min-width: 590px;\">"
-"\n"
+"                            <td align=\"center\" style=\"min-width: 590px;"
+"\">\n"
 "                                <table border=\"0\" cellpadding=\"0\" "
 "cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: "
-"white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\""
-">\n"
-"                                    <tr><td valign=\"middle\" align=\"left\">"
-"\n"
-"                                        <t t-out="
-"\"object.create_uid.company_id.name or ''\">YourCompany</t>\n"
+"white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;"
+"\">\n"
+"                                    <tr><td valign=\"middle\" "
+"align=\"left\">\n"
+"                                        <t t-"
+"out=\"object.create_uid.company_id.name or ''\">YourCompany</t>\n"
 "                                    </td></tr>\n"
 "                                    <tr><td valign=\"middle\" align=\"left\" "
 "style=\"opacity: 0.7;\">\n"
-"                                        <t t-out="
-"\"object.create_uid.company_id.phone or ''\">+1 650-123-4567</t>\n"
-"                                        <t t-if="
-"\"object.create_uid.company_id.email\">\n"
-"                                            | <a t-attf-href="
-"\"'mailto:%s' % {{ object.create_uid.company_id.email }}\" style=\"text-"
-"decoration:none; color: #454748;\" t-out=\""
-"object.create_uid.company_id.email or ''\">info@yourcompany.com</a>\n"
+"                                        <t t-"
+"out=\"object.create_uid.company_id.phone or ''\">+1 650-123-4567</t>\n"
+"                                        <t t-"
+"if=\"object.create_uid.company_id.email\">\n"
+"                                            | <a t-attf-href=\"'mailto:%s' % "
+"{{ object.create_uid.company_id.email }}\" style=\"text-decoration:none; "
+"color: #454748;\" t-out=\"object.create_uid.company_id.email or "
+"''\">info@yourcompany.com</a>\n"
 "                                        </t>\n"
-"                                        <t t-if="
-"\"object.create_uid.company_id.website\">\n"
-"                                            | <a t-attf-href="
-"\"'%s' % {{ object.create_uid.company_id.website }}\" style=\"text-"
-"decoration:none; color: #454748;\" t-out=\""
-"object.create_uid.company_id.website or ''\">http://www.example.com</a>\n"
+"                                        <t t-"
+"if=\"object.create_uid.company_id.website\">\n"
+"                                            | <a t-attf-href=\"'%s' % "
+"{{ object.create_uid.company_id.website }}\" style=\"text-decoration:none; "
+"color: #454748;\" t-out=\"object.create_uid.company_id.website or "
+"''\">http://www.example.com</a>\n"
 "                                        </t>\n"
 "                                    </td></tr>\n"
 "                                </table>\n"
@@ -954,15 +955,15 @@ msgstr ""
 "                    </td></tr>\n"
 "                    <!-- POWERED BY -->\n"
 "                    <tr><td align=\"center\" style=\"min-width: 590px;\">\n"
-"                        <table border=\"0\" cellpadding=\"0\" cellspacing="
-"\"0\" width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; "
-"color: #454748; padding: 8px; border-collapse:separate;\">\n"
+"                        <table border=\"0\" cellpadding=\"0\" "
+"cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: "
+"#F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
 "                          <tr><td style=\"text-align: center; font-size: "
 "13px;\">\n"
-"                            Powered by <a target=\"_blank\" href="
-"\"https://www.odoo.com/app/documents\" t-attf-style="
-"\"color: {{user.company_id.email_secondary_color or '#875A7B'}};\">Odoo "
-"Documents</a>\n"
+"                            Powered by <a target=\"_blank\" href=\"https://"
+"www.odoo.com/app/documents\" t-attf-style=\"color: "
+"{{user.company_id.email_secondary_color or '#875A7B'}};\">Odoo Documents</"
+"a>\n"
 "                          </td></tr>\n"
 "                        </table>\n"
 "                    </td></tr>\n"
@@ -1138,16 +1139,16 @@ msgid ""
 msgstr ""
 "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
 "16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
-"color: #454748; width: 100%; border-collapse:separate;\"><tr><td align=\""
-"center\">\n"
+"color: #454748; width: 100%; border-collapse:separate;\"><tr><td "
+"align=\"center\">\n"
 "                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
-"width=\"590\" style=\"padding: 16px; background-color: white; color: #454748;"
-" border-collapse:separate;\">\n"
+"width=\"590\" style=\"padding: 16px; background-color: white; color: "
+"#454748; border-collapse:separate;\">\n"
 "                    <tbody>\n"
 "                        <!-- HEADER -->\n"
 "                        <tr>\n"
-"                            <td align=\"center\" style=\"min-width: 590px;\">"
-"\n"
+"                            <td align=\"center\" style=\"min-width: 590px;"
+"\">\n"
 "                                <table border=\"0\" cellpadding=\"0\" "
 "cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: "
 "white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
@@ -1156,16 +1157,16 @@ msgstr ""
 "                                            문서 요청: <br/>\n"
 "                                            <t t-if=\"object.name\">\n"
 "                                                <span style=\"font-size: "
-"20px; font-weight: bold;\" t-out=\"object.name or ''\">Inbox Financial</span>"
-"\n"
+"20px; font-weight: bold;\" t-out=\"object.name or ''\">Inbox Financial</"
+"span>\n"
 "                                            </t>\n"
 "                                        </span><br/>\n"
-"                                    </td><td valign=\"middle\" align="
-"\"right\">\n"
-"                                        <img t-attf-src="
-"\"/logo.png?company={{ object.create_uid.company_id.id }}\" style="
-"\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt="
-"\"object.create_uid.company_id.name\"/>\n"
+"                                    </td><td valign=\"middle\" "
+"align=\"right\">\n"
+"                                        <img t-attf-src=\"/logo.png?"
+"company={{ object.create_uid.company_id.id }}\" style=\"padding: 0px; "
+"margin: 0px; height: auto; width: 80px;\" t-att-"
+"alt=\"object.create_uid.company_id.name\"/>\n"
 "                                    </td></tr>\n"
 "                                    <tr><td colspan=\"2\" style=\"text-"
 "align:center;\">\n"
@@ -1178,62 +1179,62 @@ msgstr ""
 "                        </tr>\n"
 "                        <!-- CONTENT -->\n"
 "                        <tr>\n"
-"                            <td align=\"center\" style=\"min-width: 590px;\">"
-"\n"
+"                            <td align=\"center\" style=\"min-width: 590px;"
+"\">\n"
 "                                <table border=\"0\" cellpadding=\"0\" "
 "cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: "
 "white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
-"                                    <tr><td valign=\"top\" style=\"font-size:"
-" 13px;\">\n"
+"                                    <tr><td valign=\"top\" style=\"font-"
+"size: 13px;\">\n"
 "                                        <div>\n"
-"                                            안녕하세요 <t t-out="
-"\"object.requestee_partner_id.name or ''\">OdooBot</t>님,\n"
+"                                            안녕하세요 <t t-"
+"out=\"object.requestee_partner_id.name or ''\">OdooBot</t>님,\n"
 "                                            <br/><br/>\n"
 "                                            다음 요청 문서가 아직 업로드되지 "
 "않았습니다. 확인을 부탁드립니다:\n"
 "                                            <br/><br/>\n"
 "                                            <center>\n"
 "                                                <div>\n"
-"                                                    <t t-if=\"object.name\">"
-"\n"
-"                                                        <b t-out="
-"\"object.name or ''\">Inbox Financial</b>\n"
+"                                                    <t t-"
+"if=\"object.name\">\n"
+"                                                        <b t-"
+"out=\"object.name or ''\">Inbox Financial</b>\n"
 "                                                    </t>\n"
 "                                                </div>\n"
 "                                                <div>\n"
-"                                                    <t t-if="
-"\"object.request_activity_id.note\">\n"
-"                                                        <i t-out="
-"\"object.request_activity_id.note or ''\">Example of a note.</i>\n"
+"                                                    <t t-"
+"if=\"object.request_activity_id.note\">\n"
+"                                                        <i t-"
+"out=\"object.request_activity_id.note or ''\">Example of a note.</i>\n"
 "                                                    </t>\n"
 "                                                </div>\n"
 "                                                <br/>\n"
-"                                                <div style="
-"\"margin: 16px 0px 16px 0px;\">\n"
-"                                                    <a t-att-href="
-"\"object.access_url\" t-attf-style=\"background-color: {{"
-"user.company_id.email_secondary_color or '#875A7B'}}; padding: 20px 30px "
-"20px 30px; text-decoration: none; color: {{"
-"user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-"
-"size:13px;\">\n"
-"                                                        요청 문서 "
-"업로드하기\n"
+"                                                <div style=\"margin: 16px "
+"0px 16px 0px;\">\n"
+"                                                    <a t-att-"
+"href=\"object.access_url\" t-attf-style=\"background-color: "
+"{{user.company_id.email_secondary_color or '#875A7B'}}; padding: 20px 30px "
+"20px 30px; text-decoration: none; color: "
+"{{user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; "
+"font-size:13px;\">\n"
+"                                                        요청 문서 업로드하"
+"기\n"
 "                                                    </a>\n"
 "                                                </div>\n"
 "                                            </center><br/>\n"
 "                                            누락된 문서는 링크 만료일 전인 "
-"<t t-out=\"object.request_activity_id.date_deadline or ''\">2021-05-17</"
-"t>업로드 해주시기 바랍니다 .\n"
+"<t t-out=\"object.request_activity_id.date_deadline or ''\">2021-05-17</t>업"
+"로드 해주시기 바랍니다 .\n"
 "                                            <br/><br/>\n"
 "                                            감사합니다,\n"
-"                                            <t t-if="
-"\"user and user.signature\" data-o-mail-quote-container=\"1\">\n"
+"                                            <t t-if=\"user and "
+"user.signature\" data-o-mail-quote-container=\"1\">\n"
 "                                                <br/>\n"
-"                                                <div data-o-mail-quote=\"1\""
-">--<br data-o-mail-quote=\"1\"/><t t-out=\"user.signature\" data-o-mail-"
-"quote=\"1\">Mitchell Admin</t></div>\n"
-"                                                <br data-o-mail-quote=\"1\"/>"
-"\n"
+"                                                <div data-o-mail-"
+"quote=\"1\">--<br data-o-mail-quote=\"1\"/><t t-out=\"user.signature\" data-"
+"o-mail-quote=\"1\">Mitchell Admin</t></div>\n"
+"                                                <br data-o-mail-quote=\"1\"/"
+">\n"
 "                                            </t>\n"
 "                                        </div>\n"
 "                                    </td></tr>\n"
@@ -1247,34 +1248,34 @@ msgstr ""
 "                        </tr>\n"
 "                        <!-- FOOTER -->\n"
 "                        <tr>\n"
-"                            <td align=\"center\" style=\"min-width: 590px;\">"
-"\n"
+"                            <td align=\"center\" style=\"min-width: 590px;"
+"\">\n"
 "                                <table border=\"0\" cellpadding=\"0\" "
 "cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: "
-"white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\""
-">\n"
-"                                    <tr><td valign=\"middle\" align=\"left\">"
-"\n"
-"                                        <t t-out="
-"\"object.create_uid.company_id.name or ''\">YourCompany</t>\n"
+"white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;"
+"\">\n"
+"                                    <tr><td valign=\"middle\" "
+"align=\"left\">\n"
+"                                        <t t-"
+"out=\"object.create_uid.company_id.name or ''\">YourCompany</t>\n"
 "                                    </td></tr>\n"
 "                                    <tr><td valign=\"middle\" align=\"left\" "
 "style=\"opacity: 0.7;\">\n"
-"                                        <t t-out="
-"\"object.create_uid.company_id.phone or ''\">+1 650-123-4567</t>\n"
-"                                        <t t-if="
-"\"object.create_uid.company_id.email\">\n"
-"                                            | <a t-attf-href="
-"\"'mailto:%s' % {{ object.create_uid.company_id.email }}\" style=\"text-"
-"decoration:none; color: #454748;\" t-out=\"object.create_uid.company_id."
-"email\">info@yourcompany.com</a>\n"
+"                                        <t t-"
+"out=\"object.create_uid.company_id.phone or ''\">+1 650-123-4567</t>\n"
+"                                        <t t-"
+"if=\"object.create_uid.company_id.email\">\n"
+"                                            | <a t-attf-href=\"'mailto:%s' % "
+"{{ object.create_uid.company_id.email }}\" style=\"text-decoration:none; "
+"color: #454748;\" t-"
+"out=\"object.create_uid.company_id.email\">info@yourcompany.com</a>\n"
 "                                        </t>\n"
-"                                        <t t-if="
-"\"object.create_uid.company_id.website\">\n"
-"                                            | <a t-att-href="
-"\"object.create_uid.company_id.website\" style=\"text-decoration:none; color:"
-" #454748;\" t-out=\"object.create_uid.company_id.website\""
-">http://www.example.com</a>\n"
+"                                        <t t-"
+"if=\"object.create_uid.company_id.website\">\n"
+"                                            | <a t-att-"
+"href=\"object.create_uid.company_id.website\" style=\"text-decoration:none; "
+"color: #454748;\" t-out=\"object.create_uid.company_id.website\">http://"
+"www.example.com</a>\n"
 "                                        </t>\n"
 "                                    </td></tr>\n"
 "                                </table>\n"
@@ -1285,15 +1286,15 @@ msgstr ""
 "                    </td></tr>\n"
 "                    <!-- POWERED BY -->\n"
 "                    <tr><td align=\"center\" style=\"min-width: 590px;\">\n"
-"                        <table border=\"0\" cellpadding=\"0\" cellspacing="
-"\"0\" width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; "
-"color: #454748; padding: 8px; border-collapse:separate;\">\n"
+"                        <table border=\"0\" cellpadding=\"0\" "
+"cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: "
+"#F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
 "                          <tr><td style=\"text-align: center; font-size: "
 "13px;\">\n"
-"                            Powered by <a target=\"_blank\" href="
-"\"https://www.odoo.com/app/documents\" t-attf-style="
-"\"color: {{user.company_id.email_secondary_color or '#875A7B'}};\">Odoo "
-"Documents</a>\n"
+"                            Powered by <a target=\"_blank\" href=\"https://"
+"www.odoo.com/app/documents\" t-attf-style=\"color: "
+"{{user.company_id.email_secondary_color or '#875A7B'}};\">Odoo Documents</"
+"a>\n"
 "                          </td></tr>\n"
 "                        </table>\n"
 "                    </td></tr>\n"
@@ -1340,7 +1341,7 @@ msgstr "바로가기가 생성되었습니다."
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__access_internal_help
 msgid "Access Internal Help"
-msgstr ""
+msgstr "내부 도움말 액세스하기"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__access_token
@@ -1372,7 +1373,7 @@ msgstr "문서 및 파트너에 대한 액세스는 수정할 수 없습니다."
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__access_via_link
 msgid "Access through link"
-msgstr ""
+msgstr "링크로 액세스하기"
 
 #. module: documents
 #. odoo-javascript
@@ -1549,7 +1550,7 @@ msgstr "문서에서 추가"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Add in %(folder_name)s"
-msgstr ""
+msgstr "%(folder_name)s 항목에 추가"
 
 #. module: documents
 #. odoo-javascript
@@ -1584,7 +1585,7 @@ msgstr "태그 추가..."
 #. odoo-javascript
 #: code:addons/documents/static/src/attachments/attachment_list_patch.xml:0
 msgid "Add to Documents"
-msgstr ""
+msgstr "문서에 추가"
 
 #. module: documents
 #. odoo-javascript
@@ -1596,7 +1597,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
 msgid "Add to documents"
-msgstr ""
+msgstr "문서에 추가"
 
 #. module: documents
 #. odoo-python
@@ -1657,11 +1658,6 @@ msgid "Allowed Access"
 msgstr "허용된 액세스"
 
 #. module: documents
-#: model:res.groups,comment:documents.group_documents_user
-msgid "Allows you to manage his documents."
-msgstr "해당 직원의 문서를 관리할 수 있습니다."
-
-#. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Already linked Documents: %s"
@@ -1691,6 +1687,10 @@ msgid ""
 "user defined actions, request a signature, convert to vendor bills with AI, "
 "etc."
 msgstr ""
+"간편하게 수신 메일을 처리하려면 스캐너를 이용하여 PDF 파일을 폴더 이메일로 전"
+"송하도록 설정해 보세요. 스캔 파일은 자동으로 해당 폴더에 표시됩니다. 이후 분"
+"할 도구를 활용해 문서를 일괄 처리하세요. 사용자 지정의 작업 실행, 서명 요청, "
+"AI를 통한 공급업체 청구서 변환 등 다양한 작업을 수행할 수 있습니다."
 
 #. module: documents
 #. odoo-javascript
@@ -1833,6 +1833,13 @@ msgid "Can add, modify, and delete files within this folder."
 msgstr "이 폴더에서 파일을 추가, 수정 및 삭제할 수 있습니다."
 
 #. module: documents
+#: model:res.groups,comment:documents.group_documents_manager
+msgid ""
+"Can configure folders, manage access rights, and oversee all documents "
+"within their areas."
+msgstr ""
+
+#. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Can modify, delete, and rename."
@@ -1841,7 +1848,7 @@ msgstr "수정, 삭제 및 이름 변경 가능"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__user_can_move
 msgid "Can move it"
-msgstr ""
+msgstr "이동 가능 여부"
 
 #. module: documents
 #. odoo-javascript
@@ -1856,6 +1863,11 @@ msgstr "내용 보기만 가능합니다. 항목을 추가, 수정 또는 삭제
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Can only view. Cannot rename, move, or delete."
 msgstr "보기만 가능합니다. 이름 변경, 이동 또는 삭제는 불가능합니다."
+
+#. module: documents
+#: model:res.groups,comment:documents.group_documents_user
+msgid "Can view or edit, upload, and share their own or shared documents."
+msgstr ""
 
 #. module: documents
 #. odoo-javascript
@@ -1888,7 +1900,7 @@ msgstr "하위"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_operation_view_form
 msgid "Choose a destination"
-msgstr ""
+msgstr "목적지를 선택하세요"
 
 #. module: documents
 #. odoo-python
@@ -2202,7 +2214,7 @@ msgstr "목적지"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__access_internal
 msgid "Destination Access Internal"
-msgstr ""
+msgstr "목적지 내부 액세스"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__access_via_link
@@ -2222,7 +2234,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__user_permission
 msgid "Destination User Permission"
-msgstr ""
+msgstr "목적지 사용자 권한"
 
 #. module: documents
 #. odoo-javascript
@@ -2303,7 +2315,7 @@ msgstr "문서 / 파트너"
 #. module: documents
 #: model:ir.model,name:documents.model_documents_access_tracking
 msgid "Document Access Tracking"
-msgstr ""
+msgstr "문서 액세스 조회"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_res_partner__document_count
@@ -2496,7 +2508,7 @@ msgstr "문서 공유"
 #. module: documents
 #: model:ir.model,name:documents.model_documents_sharing_access
 msgid "Documents share access"
-msgstr ""
+msgstr "문서 공유 액세스"
 
 #. module: documents
 #. odoo-javascript
@@ -2512,7 +2524,7 @@ msgstr "문서 연결 해제 믹스인"
 #. module: documents
 #: model:ir.actions.server,name:documents.ir_cron_documents_access_tracking_ir_actions_server
 msgid "Documents: Access Tracking"
-msgstr ""
+msgstr "문서: 액세스 조회"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
@@ -2582,7 +2594,7 @@ msgstr "복사"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Duplicate in %(folder_name)s"
-msgstr ""
+msgstr "%(folder_name)s 항목에 복제"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_operation__operation__copy
@@ -2599,7 +2611,7 @@ msgstr "복제: %(documentName)s"
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
 msgid "Duplicate: %(numberOfDocuments)s items"
-msgstr ""
+msgstr "복제: %(numberOfDocuments)s 항목"
 
 #. module: documents
 #. odoo-javascript
@@ -2908,6 +2920,13 @@ msgid "Has Warning Partners Without Access"
 msgstr ""
 
 #. module: documents
+#: model:res.groups,comment:documents.group_documents_system
+msgid ""
+"Has full control over all document settings, folders, and user rights across "
+"the application."
+msgstr ""
+
+#. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
 msgid "Hide shortcuts"
 msgstr "바로 가기 숨기기"
@@ -2985,7 +3004,7 @@ msgstr "이미지/동영상"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_access_tracking__documents
 msgid "Impacted Document Ids"
-msgstr ""
+msgstr "영향을 받는 문서 ID"
 
 #. module: documents
 #. odoo-python
@@ -3006,7 +3025,7 @@ msgstr "회사"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
 msgid "In My Drive"
-msgstr ""
+msgstr "내 드라이브"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__thumbnail_status__restricted
@@ -3123,7 +3142,7 @@ msgstr "잘못된 역할입니다."
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Invalid search operand."
-msgstr ""
+msgstr "잘못된 검색 연산자입니다."
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__invite_partner_ids
@@ -3347,7 +3366,7 @@ msgstr "링크가 클립보드에 복사되었습니다!"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
 msgid "Links partially sent"
-msgstr ""
+msgstr "일부 링크 전송 완료"
 
 #. module: documents
 #: model:documents.document,name:documents.document_loans_folder
@@ -3515,7 +3534,7 @@ msgstr "이 페이지를 휴지통으로 이동"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Move to %(folder_name)s"
-msgstr ""
+msgstr "%(folder_name)s 항목으로 이동"
 
 #. module: documents
 #. odoo-javascript
@@ -3550,7 +3569,7 @@ msgstr "이동: %(documentName)s"
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
 msgid "Move: %(numberOfDocuments)s items"
-msgstr ""
+msgstr "이동: %(numberOfDocuments)s 항목"
 
 #. module: documents
 #. odoo-javascript
@@ -3564,7 +3583,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog.js:0
 msgid "Moving to: %s"
-msgstr ""
+msgstr "이동: %s"
 
 #. module: documents
 #. odoo-javascript
@@ -4292,7 +4311,7 @@ msgstr "재무팀으로 보내기"
 #. module: documents
 #: model:ir.actions.server,name:documents.ir_actions_server_send_to_finance
 msgid "Send to Finance"
-msgstr ""
+msgstr "재무 항목으로 전송"
 
 #. module: documents
 #: model:mail.template,description:documents.mail_template_document_request
@@ -4324,7 +4343,7 @@ msgstr "서버 작업"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
 msgid "Set Expiration Date"
-msgstr ""
+msgstr "만료일 설정"
 
 #. module: documents
 #: model:mail.template,description:documents.mail_template_document_request_reminder
@@ -4367,7 +4386,7 @@ msgstr "공유: %(documentName)s"
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Share: %(numberOfDocuments)s files"
-msgstr ""
+msgstr "공유: %(numberOfDocuments)s 파일"
 
 #. module: documents
 #: model:documents.document,name:documents.document_marketing_brand1_shared_folder
@@ -4382,7 +4401,7 @@ msgstr "공유 대상"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
 msgid "Shared with anyone"
-msgstr ""
+msgstr "모두와 공유"
 
 #. module: documents
 #. odoo-javascript
@@ -5413,7 +5432,7 @@ msgstr "people.jpg"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
 msgid "rights changed from"
-msgstr ""
+msgstr "다음에서 권한 변경:"
 
 #. module: documents
 #. odoo-javascript
@@ -5472,6 +5491,9 @@ msgid ""
 msgstr ""
 "•\n"
 "                                        <b>URL</b>"
+
+#~ msgid "Allows you to manage his documents."
+#~ msgstr "해당 직원의 문서를 관리할 수 있습니다."
 
 #~ msgid ""
 #~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-"

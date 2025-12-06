@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"POT-Creation-Date: 2025-12-05 18:41+0000\n"
 "PO-Revision-Date: 2025-11-08 20:06+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Hindi <https://translate.odoo.com/projects/odoo-19/documents/"
@@ -1125,11 +1125,6 @@ msgid "Allowed Access"
 msgstr "ऐक्सेस की अनुमति है"
 
 #. module: documents
-#: model:res.groups,comment:documents.group_documents_user
-msgid "Allows you to manage his documents."
-msgstr "आपको उनके दस्तावेज़ मैनेज करने की अनुमति देता है।"
-
-#. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Already linked Documents: %s"
@@ -1147,8 +1142,8 @@ msgid ""
 "An easy way to process incoming mails is to configure your scanner to send "
 "PDFs to"
 msgstr ""
-"आने वाले मेल को प्रोसेस करने का एक आसान तरीका है अपने स्कैनर को पीडीएफ़ भेजने के लिए कॉन्फ़ि"
-"गर करें"
+"आने वाले मेल को प्रोसेस करने का एक आसान तरीका है अपने स्कैनर को पीडीएफ़ भेजने के लिए "
+"कॉन्फ़िगर करें"
 
 #. module: documents
 #: model_terms:digest.tip,tip_description:documents.digest_tip_documents_0
@@ -1224,8 +1219,7 @@ msgstr ""
 #: code:addons/documents/static/src/js/tours/documents.js:0
 msgid ""
 "As this PDF contains multiple documents, let's split and process in bulk."
-msgstr ""
-"चूंकि इस पीडीएफ़ में कई दस्तावेज़ हैं, तो चलिए उन्हें बांटकर एक साथ प्रोसेस करते हैं।"
+msgstr "चूंकि इस पीडीएफ़ में कई दस्तावेज़ हैं, तो चलिए उन्हें बांटकर एक साथ प्रोसेस करते हैं।"
 
 #. module: documents
 #. odoo-javascript
@@ -1302,6 +1296,13 @@ msgid "Can add, modify, and delete files within this folder."
 msgstr ""
 
 #. module: documents
+#: model:res.groups,comment:documents.group_documents_manager
+msgid ""
+"Can configure folders, manage access rights, and oversee all documents "
+"within their areas."
+msgstr ""
+
+#. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Can modify, delete, and rename."
@@ -1324,6 +1325,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Can only view. Cannot rename, move, or delete."
+msgstr ""
+
+#. module: documents
+#: model:res.groups,comment:documents.group_documents_user
+msgid "Can view or edit, upload, and share their own or shared documents."
 msgstr ""
 
 #. module: documents
@@ -1804,8 +1810,7 @@ msgstr "दस्तावेज़ का अनुरोध"
 #. module: documents
 #: model:mail.template,subject:documents.mail_template_document_request
 msgid "Document Request {{ object.name != False and ': '+ object.name or '' }}"
-msgstr ""
-"दस्तावेज़ का अनुरोध {{ object.name != False and ': '+ object.name or '' }}"
+msgstr "दस्तावेज़ का अनुरोध {{ object.name != False and ': '+ object.name or '' }}"
 
 #. module: documents
 #. odoo-python
@@ -2251,8 +2256,7 @@ msgstr "फ़ाइलें ट्रैश में भेज दी जा�
 #. odoo-javascript
 #: code:addons/documents/static/src/views/form/folder_form_controller.js:0
 msgid "Files will be sent to trash and deleted forever after %s days."
-msgstr ""
-"फ़ाइलें ट्रैश में भेज दी जाएंगी और %s दिनों बाद हमेशा के लिए हटा दी जाएंगी।"
+msgstr "फ़ाइलें ट्रैश में भेज दी जाएंगी और %s दिनों बाद हमेशा के लिए हटा दी जाएंगी।"
 
 #. module: documents
 #: model:documents.document,name:documents.document_finance_folder
@@ -2377,6 +2381,13 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__has_warning_partners_without_access
 msgid "Has Warning Partners Without Access"
+msgstr ""
+
+#. module: documents
+#: model:res.groups,comment:documents.group_documents_system
+msgid ""
+"Has full control over all document settings, folders, and user rights across "
+"the application."
 msgstr ""
 
 #. module: documents
@@ -4129,8 +4140,7 @@ msgstr "निम्नलिखित दस्तावेज़ों/शॉर�
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "The following shortcuts cannot be set as documents parents: \n"
-msgstr ""
-"निम्नलिखित शॉर्टकट को दस्तावेज़ों के पैरेंट के तौर पर सेट नहीं किया जा सकता: \n"
+msgstr "निम्नलिखित शॉर्टकट को दस्तावेज़ों के पैरेंट के तौर पर सेट नहीं किया जा सकता: \n"
 
 #. module: documents
 #. odoo-python
@@ -4155,16 +4165,14 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "There are no records to link this document. Create one first."
-msgstr ""
-"इस दस्तावेज़ को लिंक करने के लिए कोई रिकॉर्ड नहीं है. पहले एक रिकॉर्ड बनाएं।"
+msgstr "इस दस्तावेज़ को लिंक करने के लिए कोई रिकॉर्ड नहीं है. पहले एक रिकॉर्ड बनाएं।"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/helper/documents_draggable.js:0
 msgid ""
 "There is at least one document you cannot move to trash in your selection."
-msgstr ""
-"आपके चुने हुए आइटम में कम से कम एक दस्तावेज़ ऐसा है, जिसे आप ट्रैश में नहीं ले जा सकते।"
+msgstr "आपके चुने हुए आइटम में कम से कम एक दस्तावेज़ ऐसा है, जिसे आप ट्रैश में नहीं ले जा सकते।"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__last_access_date_group__1_month
@@ -4261,8 +4269,8 @@ msgid ""
 "Those represent the different categories of things you have to do (e.g. "
 "\"Call\" or \"Send email\")."
 msgstr ""
-"ये उन चीज़ों की अलग-अलग कैटगरी दिखाते हैं, जो आपको करनी हैं (जैसे \"कॉल करें\" या "
-"\"ईमेल भेजें\")।"
+"ये उन चीज़ों की अलग-अलग कैटगरी दिखाते हैं, जो आपको करनी हैं (जैसे \"कॉल करें\" या \"ईमेल "
+"भेजें\")।"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__thumbnail
@@ -4283,8 +4291,7 @@ msgstr "ट्रैश में मौजूद दस्तावेज़ों
 #. odoo-javascript
 #: code:addons/documents/static/src/views/helper/documents_action_helper.xml:0
 msgid "Tip: configure your scanner to send all documents to this address."
-msgstr ""
-"सलाह: अपने स्कैनर को सभी दस्तावेज़ इस पते पर भेजने के लिए कॉन्फ़िगर करें।"
+msgstr "सलाह: अपने स्कैनर को सभी दस्तावेज़ इस पते पर भेजने के लिए कॉन्फ़िगर करें।"
 
 #. module: documents
 #: model:digest.tip,name:documents.digest_tip_documents_0
@@ -4610,15 +4617,13 @@ msgstr "आप उस folder_id को ऐक्सेस नहीं कर �
 #: code:addons/documents/static/src/views/helper/documents_draggable.js:0
 msgid ""
 "You can't create shortcuts in nor move documents to this special folder."
-msgstr ""
-"आप इस खास फ़ोल्डर में शॉर्टकट नहीं बना सकते और न ही दस्तावेज़ों को ले जा सकते हैं।"
+msgstr "आप इस खास फ़ोल्डर में शॉर्टकट नहीं बना सकते और न ही दस्तावेज़ों को ले जा सकते हैं।"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/search/documents_search_panel.js:0
 msgid "You can't create shortcuts in or move documents to this special folder."
-msgstr ""
-"आप इस खास फ़ोल्डर में शॉर्टकट नहीं बना सकते और न ही दस्तावेज़ों को ले जा सकते हैं।"
+msgstr "आप इस खास फ़ोल्डर में शॉर्टकट नहीं बना सकते और न ही दस्तावेज़ों को ले जा सकते हैं।"
 
 #. module: documents
 #. odoo-python
@@ -4643,8 +4648,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "You cannot change the owner of documents you do not own."
-msgstr ""
-"आप उन दस्तावेज़ों के मालिक नहीं बदल सकते हैं जिनके मालिक आप खुद नहीं हैं।"
+msgstr "आप उन दस्तावेज़ों के मालिक नहीं बदल सकते हैं जिनके मालिक आप खुद नहीं हैं।"
 
 #. module: documents
 #. odoo-python
@@ -4692,8 +4696,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "You do not have sufficient access rights to delete these documents."
-msgstr ""
-"इन दस्तावेज़ों को मिटाने के लिए आपको जो अनुमतियां चाहिए, वे आपके पास नहीं हैं।"
+msgstr "इन दस्तावेज़ों को मिटाने के लिए आपको जो अनुमतियां चाहिए, वे आपके पास नहीं हैं।"
 
 #. module: documents
 #. odoo-javascript
@@ -4964,3 +4967,6 @@ msgid ""
 msgstr ""
 "•\n"
 "                                        <b>यूआरएल</b>"
+
+#~ msgid "Allows you to manage his documents."
+#~ msgstr "आपको उनके दस्तावेज़ मैनेज करने की अनुमति देता है।"

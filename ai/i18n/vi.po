@@ -5,13 +5,14 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Thi Huong Nguyen (thng)" <thng@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-28 18:41+0000\n"
-"PO-Revision-Date: 2025-11-11 09:09+0000\n"
-"Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
+"PO-Revision-Date: 2025-12-06 10:09+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/ai/vi/"
 ">\n"
 "Language: vi\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_read_group
@@ -31,6 +32,12 @@ msgid ""
 "must be in valid JSON format.\n"
 "        "
 msgstr ""
+"\n"
+"            **Tên công cụ: Đọc nhóm**  \n"
+"\n"
+"Tìm kiếm một mô hình cụ thể bằng cách sử dụng bộ lọc điều kiện. Bộ lọc điều "
+"kiện được cung cấp phải ở định dạng JSON hợp lệ.\n"
+"        "
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_search
@@ -42,6 +49,12 @@ msgid ""
 "must be in valid JSON format.\n"
 "        "
 msgstr ""
+"\n"
+"            **Tên công cụ: tìm kiếm**  \n"
+"\n"
+"Tìm kiếm một mô hình cụ thể bằng cách sử dụng bộ lọc điều kiện. Bộ lọc điều "
+"kiện được cung cấp phải ở định dạng JSON hợp lệ.\n"
+"        "
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_get_fields
@@ -529,6 +542,9 @@ msgid ""
 "ai_tool_show_warning\" aria-hidden=\"true\" title=\"The AI will not be "
 "limited by the groups defined on tools\"/>"
 msgstr ""
+"<i class=\"fa fa-warning text-warning me-2\" invisible="
+"\"not ai_tool_show_warning\" aria-hidden=\"true\" title="
+"\"AI sẽ không bị giới hạn bởi các nhóm được xác định trên công cụ\"/>"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
@@ -1291,6 +1307,8 @@ msgid ""
 "JSON containing the values that can be returned by the LLM along with their "
 "properties (type, length, ...)"
 msgstr ""
+"JSON chứa các giá trị có thể được LLM trả về cùng với các thuộc tính của "
+"chúng (loại, độ dài,...)"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
@@ -1428,6 +1446,8 @@ msgid ""
 "No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, CSV, and "
 "OpenDocument files are allowed."
 msgstr ""
+"Không có tệp hợp lệ để tải lên. Chỉ các tệp PDF, Word, PowerPoint, Excel, "
+"Text, CSV và OpenDocument mới được phép."
 
 #. module: ai
 #. odoo-javascript
@@ -1622,6 +1642,8 @@ msgid ""
 "Some files have invalid formats and were skipped: %s. Only PDF, Word, "
 "PowerPoint, Excel, Text, CSV, and OpenDocument files are allowed."
 msgstr ""
+"Một số tệp có định dạng không hợp lệ và đã bị bỏ qua: %s. Chỉ cho phép các "
+"tệp PDF, Word, PowerPoint, Excel, Text, CSV và OpenDocument."
 
 #. module: ai
 #. odoo-javascript
@@ -1765,6 +1787,9 @@ msgid ""
 "This tool is automatically provided with `__end_message` param which when "
 "provided, the LLM processing loop is terminated."
 msgstr ""
+"Công cụ này được cung cấp tự động với tham số `__end_message`. Khi tham số "
+"này được cung cấp, vòng lặp xử lý của mô hình ngôn ngữ lớn (LLM) sẽ được kết "
+"thúc."
 
 #. module: ai
 #. odoo-javascript
@@ -1825,7 +1850,6 @@ msgstr "Loại"
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ir_actions_server__state
 #: model:ir.model.fields,help:ai.field_ir_cron__state
-#, fuzzy
 msgid ""
 "Type of server action. The following values are available:\n"
 "- 'Update a Record': update the values of a record\n"
@@ -1958,6 +1982,8 @@ msgid ""
 "You must allow the access to your microphone to start the recording. Try "
 "refreshing the page and start again."
 msgstr ""
+"Bạn phải cho phép truy cập micro để bắt đầu ghi âm. Hãy thử làm mới trang và "
+"thử lại."
 
 #. module: ai
 #. odoo-javascript

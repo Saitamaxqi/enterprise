@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-08 19:34+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-12-06 09:53+0000\n"
+"Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/helpdesk/"
 "ko/>\n"
 "Language: ko\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__answered_customer_message_count
@@ -113,7 +113,6 @@ msgstr "<b>내부 메모를 기록</b>하고 @<b>멘션</b>을 사용해서 동�
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.solved_ticket_request_email_template
-#, fuzzy
 msgid ""
 "<div>\n"
 "        Dear <t t-out=\"object.sudo().partner_id.name or 'Madam/Sir'\">Madam/"
@@ -135,14 +134,14 @@ msgid ""
 "        "
 msgstr ""
 "<div>\n"
-"        안녕하세요, <t t-out=\"object.sudo().partner_id.name or 'Madam/"
-"Sir'\">Madam/Sir</t>님.<br/><br/>\n"
+"        안녕하세요, <t t-out=\"object.sudo().partner_id.name or 'Madam/Sir'\""
+">Madam/Sir</t>님.<br/><br/>\n"
 "        고객님의 문의 사항 (상담 번호 <t t-out=\"object.id or ''\">15</t>)가 "
 "처리되었음을 알려드립니다. \n"
 "        상담을 통해 고객님께서 문의하신 내용에 대한 만족스러운 해결책이 제공"
 "되었길 바랍니다.<br/><br/>\n"
-"        만약 추가 질문이나 기타 의견이 있으시면 언제든지 이 이메일에 답장하"
-"여 문의를 다시 개설해 주시기 바랍니다. \n"
+"        만약 추가 질문이나 기타 의견이 있으시면 언제든지 이 이메일에 답장하여"
+" 문의를 다시 개설해 주시기 바랍니다. \n"
 "        저희 팀은 항상 고객님에게 도움을 드리기 위해 최선을 다하고 있으며, 추"
 "가 문의 사항이 있으실 경우 기꺼이 귀 기울일 준비가 되어있습니다.<br/><br/>\n"
 "        저희 서비스에 보내주신 성원에 감사드립니다. 저희는 고객님의 비즈니스"
@@ -1007,6 +1006,8 @@ msgid ""
 "cannot be accessed by the customer, as it belongs to a helpdesk team that is "
 "not publicly available, or there is no customer associated with the ticket."
 msgstr ""
+"현재 미리보기를 제공할 수 없습니다. 해당 티켓은 고객 측에서 액세스가 불가능합"
+"니다. 헬프 데스크 팀에서 작업 중이거나 티켓에 연결된 고객이 없습니다."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_attachment_count
@@ -1511,7 +1512,7 @@ msgstr "불량 기간"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage__rotting_threshold_days
 msgid "Days to rot"
-msgstr ""
+msgstr "일 후 불량 처리 예정"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_status__deadline
@@ -3938,7 +3939,7 @@ msgstr "쿠폰 사용"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__use_giftcards
 msgid "Use Gift Cards"
-msgstr ""
+msgstr "기프트 카드 사용"
 
 #. module: helpdesk
 #. odoo-javascript

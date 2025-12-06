@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-14 18:42+0000\n"
-"PO-Revision-Date: 2025-11-13 09:24+0000\n"
+"PO-Revision-Date: 2025-12-06 09:52+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/ja/>\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: account_reports
 #. odoo-javascript
@@ -1730,13 +1730,13 @@ msgstr "期末銀行口座残高"
 #. odoo-python
 #: code:addons/account_reports/models/account_move.py:0
 msgid "Closing entry deleted"
-msgstr "期末仕訳が削除されました"
+msgstr "締め仕訳が削除されました"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_move.py:0
 msgid "Closing entry deleted for company %s"
-msgstr "会社%s用に期末仕訳が削除されました"
+msgstr "会社%s用に締め仕訳が削除されました"
 
 #. module: account_reports
 #. odoo-python
@@ -3902,7 +3902,7 @@ msgstr "最終明細残高"
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_search_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_search_view
 msgid "Late Activities"
-msgstr "遅れた活動"
+msgstr "期限超過の活動"
 
 #. module: account_reports
 #. odoo-python
@@ -4934,7 +4934,7 @@ msgstr "会計の管理設定で繰延仕訳帳を設定してください。"
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Please specify the accounts necessary for the tax closing entry."
-msgstr "税申告の締め仕訳に必要な勘定科目を指定してください。"
+msgstr "税の締め仕訳に必要な勘定科目を指定してください。"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_fixed_assets_view0
@@ -6381,7 +6381,7 @@ msgstr "今日"
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_search_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_search_view
 msgid "Today Activities"
-msgstr "今日の活動"
+msgstr "本日の活動"
 
 #. module: account_reports
 #. odoo-javascript
@@ -6919,7 +6919,7 @@ msgid ""
 "values impacting the tax report of a locked period. Please change the "
 "following lock dates to proceed: %(lock_date_info)s."
 msgstr ""
-"この決算仕訳をドラフトに戻すと、ロックされた期間の税レポートに影響する繰越額"
+"この締め仕訳をドラフトに戻すと、ロックされた期間の税レポートに影響する繰越額"
 "が削除されます。続行するには、以下のロック日付を変更してください:%"
 "(lock_date_info)s。"
 

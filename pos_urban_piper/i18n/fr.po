@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:43+0000\n"
-"PO-Revision-Date: 2025-11-08 19:55+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-12-06 10:04+0000\n"
+"Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "pos_urban_piper/fr/>\n"
 "Language: fr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -40,12 +40,16 @@ msgid ""
 "\"%s\" is not synchronized with the UrbanPiper. Please sync it before "
 "proceeding."
 msgstr ""
+"'%s' n’est pas synchronisé avec UrbanPiper. Veuillez synchroniser avant de "
+"continuer."
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
 msgid "%s is %s online food delivery for all platform in this locations."
 msgstr ""
+"%s est %s le service de livraison de repas en ligne utilisé par toutes les "
+"plateformes."
 
 #. module: pos_urban_piper
 #. odoo-python
@@ -417,13 +421,13 @@ msgstr "Une erreur s'est produite lors de la mise à jour du statut."
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
 msgid "Error to send in preparation display."
-msgstr "Erreur à envoyer dans l'affichage de la préparation."
+msgstr "Erreur lors de l’envoi vers l’écran de préparation."
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/product_info_popup/product_info_popup.js:0
 msgid "Failed to update food delivery availability."
-msgstr ""
+msgstr "Échec de la mise à jour de la disponibilité pour la livraison de repas."
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
@@ -701,13 +705,13 @@ msgstr "Prestataires de livraison en ligne"
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/product_info_popup/product_info_popup.xml:0
 msgid "Online Food Delivery:"
-msgstr ""
+msgstr "Livraison de repas en ligne :"
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
 msgid "Online Order"
-msgstr ""
+msgstr "Commande en ligne"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -718,6 +722,8 @@ msgid ""
 "Online orders cannot be deleted. If needed, reject the order instead or "
 "contact the food delivery provider."
 msgstr ""
+"Les commandes en ligne ne peuvent pas être supprimées. Si nécessaire, "
+"rejetez la commande ou contactez le fournisseur de livraison de repas."
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -891,7 +897,7 @@ msgstr "ID PdV d'Urban Piper (Atlas)"
 #. module: pos_urban_piper
 #: model:ir.model,name:pos_urban_piper.model_pos_prep_display
 msgid "Pos Preparation Display"
-msgstr "Affichage de la préparation PdV"
+msgstr "Écran de préparation PdV"
 
 #. module: pos_urban_piper
 #: model:ir.model,name:pos_urban_piper.model_pos_prep_order
@@ -1220,6 +1226,8 @@ msgid ""
 "This action will flush(delete) the entire menu from Atlas for this store and "
 "re-sync it if any menu data is available."
 msgstr ""
+"Cette action va supprimer entièrement le menu d’Atlas pour ce magasin et le "
+"resynchroniser si des données de menu sont disponibles."
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -1397,10 +1405,10 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
 msgid "disabled"
-msgstr ""
+msgstr "désactivé"
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
 msgid "enabled"
-msgstr ""
+msgstr "activé"

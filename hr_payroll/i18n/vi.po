@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-28 18:40+0000\n"
-"PO-Revision-Date: 2025-11-27 14:14+0000\n"
-"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
+"POT-Creation-Date: 2025-12-05 18:42+0000\n"
+"PO-Revision-Date: 2025-12-06 09:55+0000\n"
+"Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll/vi/>\n"
 "Language: vi\n"
@@ -229,6 +229,8 @@ msgid ""
 "<code>categories</code>: dict containing the computed salary rule categories "
 "(sum of amount of all rules belonging to that category)."
 msgstr ""
+"<code>categories</code>: dict chứa các danh mục quy tắc lương đã tính toán "
+"(tổng số tiền của tất cả các quy tắc thuộc danh mục đó)."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -720,7 +722,7 @@ msgstr "Thêm một cấu trúc lương mới"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
 msgid "Add a salary adjustment"
-msgstr ""
+msgstr "Thêm một điều chỉnh lương"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -940,6 +942,8 @@ msgid ""
 "Are you sure you want to revert this payslip? This will create a negative of "
 "this payslip."
 msgstr ""
+"Bạn có chắc chắn muốn hủy phiếu lương này không? Việc này sẽ tạo ra một bản "
+"sao ngược của phiếu lương này."
 
 #. module: hr_payroll
 #: model:hr.payslip.input.type,name:hr_payroll.input_assignment_salary
@@ -1003,6 +1007,10 @@ msgstr "Có trong cấu trúc"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_input_type__available_in_attachments
+msgid "Available in adjustments"
+msgstr ""
+
+#. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_type_view_search
 msgid "Available in attachments"
 msgstr "Có trong khấu trừ"
@@ -1199,6 +1207,8 @@ msgid ""
 "Choose whether to correct only the selected payslip or all payslips affected "
 "by the changes in this version."
 msgstr ""
+"Chọn xem chỉ chỉnh sửa phiếu lương được chọn hay tất cả các phiếu lương bị "
+"ảnh hưởng bởi các thay đổi trong phiên bản này."
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -1546,7 +1556,7 @@ msgstr "Tạo thanh toán SEPA"
 #. module: hr_payroll
 #: model:ir.actions.server,name:hr_payroll.action_new_salary_attachment
 msgid "Create Salary Adjustment"
-msgstr ""
+msgstr "Tạo điều chỉnh lương"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_mixin__create_uid
@@ -1567,7 +1577,7 @@ msgstr "Tạo một phiếu lương"
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_salary_attachment_action
 msgid "Create a Salary Adjustment"
-msgstr ""
+msgstr "Tạo một điều chỉnh lương"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_hr_salary_rule_section
@@ -2062,7 +2072,7 @@ msgstr "Thu nhập"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "Edit Individual Salary Adjustment"
-msgstr ""
+msgstr "Chỉnh sửa một điều chỉnh lương"
 
 #. module: hr_payroll
 #. odoo-python
@@ -2081,7 +2091,7 @@ msgstr "Hướng dẫn sửa dòng phiếu lương"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "Edit Salary Adjustment"
-msgstr ""
+msgstr "Chỉnh sửa điều chỉnh lương"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_edit_payslip_worked_days_line
@@ -3454,7 +3464,7 @@ msgstr "Phiếu lương mới"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "New Salary Adjustment"
-msgstr ""
+msgstr "Điều chỉnh lương mới"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_filter_payrun
@@ -3520,7 +3530,7 @@ msgstr "Không làm tròn"
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_salary_attachment_action
 msgid "No Salary Adjustment ?"
-msgstr ""
+msgstr "Không có điều chỉnh lương?"
 
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_employee_unique_registration_number
@@ -3550,6 +3560,9 @@ msgid ""
 "select another period and/or\n"
 "                salary structure type."
 msgstr ""
+"Không có bản ghi nào phù hợp với khoảng thời gian và loại cấu trúc lương của "
+"bạn, vui lòng quay lại để chọn khoảng thời gian và/hoặc\n"
+"loại cấu trúc lương khác."
 
 #. module: hr_payroll
 #. odoo-python
@@ -4772,17 +4785,17 @@ msgstr "Tiền lương"
 #: model:ir.model,name:hr_payroll.model_hr_salary_attachment
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
 msgid "Salary Adjustment"
-msgstr ""
+msgstr "Điều chỉnh lương"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__salary_attachment_count
 msgid "Salary Adjustment Count"
-msgstr ""
+msgstr "Số điều chỉnh lương"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__salary_attachment_count
 msgid "Salary Adjustment count"
-msgstr ""
+msgstr "Số điều chỉnh lương"
 
 #. module: hr_payroll
 #. odoo-python
@@ -4796,7 +4809,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Salary Adjustments"
-msgstr ""
+msgstr "Điều chỉnh lương"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_category_form
@@ -4975,7 +4988,7 @@ msgstr "Tìm Phiếu lương"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_search
 msgid "Search Salary Adjustment"
-msgstr ""
+msgstr "Tìm kiếm điều chỉnh lương"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_rule_filter
@@ -5341,6 +5354,8 @@ msgid ""
 "The current employee records for each employee will be indexed. All "
 "posterior records corresponding to the same contract will also be indexed."
 msgstr ""
+"Các bản ghi hiện tại của từng nhân viên sẽ được lập chỉ mục. Tất cả bản ghi "
+"về sau thuộc cùng hợp đồng đó cũng sẽ được lập chỉ mục."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
@@ -5432,6 +5447,8 @@ msgid ""
 "The salary adjustment you're trying to remove is still running. You can’t "
 "delete unless you change it to completed or cancelled."
 msgstr ""
+"Điều chỉnh lương mà bạn đang muốn xóa vẫn đang có hiệu lực. Bạn không thể "
+"xóa trừ khi thay đổi trạng thái thành đã hoàn tất hoặc đã hủy."
 
 #. module: hr_payroll
 #. odoo-python

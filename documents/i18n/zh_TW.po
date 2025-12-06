@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
+"POT-Creation-Date: 2025-12-05 18:41+0000\n"
 "PO-Revision-Date: 2025-11-08 19:42+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -1127,11 +1127,6 @@ msgid "Allowed Access"
 msgstr "允許存取"
 
 #. module: documents
-#: model:res.groups,comment:documents.group_documents_user
-msgid "Allows you to manage his documents."
-msgstr "允許你管理他的文件。"
-
-#. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Already linked Documents: %s"
@@ -1300,6 +1295,13 @@ msgid "Can add, modify, and delete files within this folder."
 msgstr "可新增、修改及刪除此資料夾內的檔案。"
 
 #. module: documents
+#: model:res.groups,comment:documents.group_documents_manager
+msgid ""
+"Can configure folders, manage access rights, and oversee all documents "
+"within their areas."
+msgstr ""
+
+#. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Can modify, delete, and rename."
@@ -1323,6 +1325,11 @@ msgstr "只可檢視內容，不可新增、修改或刪除項目。"
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Can only view. Cannot rename, move, or delete."
 msgstr "只可檢視，不可重新命名、移動或刪除項目。"
+
+#. module: documents
+#: model:res.groups,comment:documents.group_documents_user
+msgid "Can view or edit, upload, and share their own or shared documents."
+msgstr ""
 
 #. module: documents
 #. odoo-javascript
@@ -2373,6 +2380,13 @@ msgid "Has Warning Partners Without Access"
 msgstr ""
 
 #. module: documents
+#: model:res.groups,comment:documents.group_documents_system
+msgid ""
+"Has full control over all document settings, folders, and user rights across "
+"the application."
+msgstr ""
+
+#. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
 msgid "Hide shortcuts"
 msgstr "隱藏捷徑"
@@ -2739,8 +2753,9 @@ msgstr "法律"
 msgid ""
 "Let's move this document to Finance<br/> <i>Tips: actions can be tailored to "
 "your process, according to the folder.</i>"
-msgstr "讓我們將這份文件移交至財務部門。<br/"
-"><i></i>提示：你可為不同資料夾自訂操作，以適應你的工作流程。"
+msgstr ""
+"讓我們將這份文件移交至財務部門。<br/><i></i>提示：你可為不同資料夾自訂操作，"
+"以適應你的工作流程。"
 
 #. module: documents
 #. odoo-javascript
@@ -4925,6 +4940,9 @@ msgid ""
 msgstr ""
 "•\n"
 "                                        <b>網址</b>"
+
+#~ msgid "Allows you to manage his documents."
+#~ msgstr "允許你管理他的文件。"
 
 #~ msgid ""
 #~ "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-"

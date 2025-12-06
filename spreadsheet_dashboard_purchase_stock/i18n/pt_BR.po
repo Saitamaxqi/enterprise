@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-11-27 14:17+0000\n"
-"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
+"PO-Revision-Date: 2025-12-06 10:21+0000\n"
+"Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/spreadsheet_dashboard_purchase_stock/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -321,13 +321,13 @@ msgstr "Pedidos de compra por comprador"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 msgid "Purchase Value"
-msgstr ""
+msgstr "Valor de compra"
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 msgid "Purchase Value by confirmation date"
-msgstr ""
+msgstr "Valor da compra por data de confirmação"
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
@@ -378,7 +378,7 @@ msgstr "Período selecionado"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 msgid "Supplier Dependency Chart"
-msgstr ""
+msgstr "Gráfico de dependência de fornecedores"
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
@@ -463,7 +463,7 @@ msgstr "Fornecedor"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 msgid "Vendors"
-msgstr ""
+msgstr "Fornecedores"
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript

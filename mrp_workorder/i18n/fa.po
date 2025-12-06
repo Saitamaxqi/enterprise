@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:44+0000\n"
+"POT-Creation-Date: 2025-12-05 18:42+0000\n"
 "PO-Revision-Date: 2025-11-16 17:53+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Persian <https://translate.odoo.com/projects/odoo-19/"
@@ -1576,11 +1576,23 @@ msgid ""
 "            if it should show the customer."
 msgstr ""
 "سیستم نوع عملیات به شما اجازه می‌دهد که به هر عملیات\n"
-"            انبار یک نوع خاص اختصاص دهید که مطابق آن نمایش‌ها را تغییر می‌دهد."
-"\n"
-"            در نوع عملیات شما می‌توانید مثلاً مشخص کنید که آیا به بسته‌بندی به‌"
-"طور پیش‌فرض نیاز است،\n"
+"            انبار یک نوع خاص اختصاص دهید که مطابق آن نمایش‌ها را تغییر "
+"می‌دهد.\n"
+"            در نوع عملیات شما می‌توانید مثلاً مشخص کنید که آیا به بسته‌بندی "
+"به‌طور پیش‌فرض نیاز است،\n"
 "            یا اگر باید مشتری را نشان دهد."
+
+#. module: mrp_workorder
+#. odoo-javascript
+#: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.js:0
+msgid "The quality alert has been successfully created."
+msgstr ""
+
+#. module: mrp_workorder
+#. odoo-javascript
+#: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.js:0
+msgid "The scrap order has been successfully registered."
+msgstr ""
 
 #. module: mrp_workorder
 #. odoo-python
@@ -1732,8 +1744,8 @@ msgid ""
 "to scrap products, track time,\n"
 "            launch a maintenance request, perform quality tests, etc."
 msgstr ""
-"از میز مرکز کار کنترل پنل برای ثبت مستقیم عملیات در سطح کارگاه استفاده کنید."
-"\n"
+"از میز مرکز کار کنترل پنل برای ثبت مستقیم عملیات در سطح کارگاه استفاده "
+"کنید.\n"
 "             این تبلت برگه هایی را برای کارگران شما فراهم می کند و به آنها "
 "اجازه می دهد محصولات را حذف کنند، زمان را ردیابی کنند،\n"
 "            درخواست تعمیر و نگهداری را راه اندازی کنند، تست های کیفیت را "

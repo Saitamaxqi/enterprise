@@ -10,13 +10,14 @@
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # "Thi Huong Nguyen (thng)" <thng@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Odoo Translation Bot <c3p@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-11-28 03:15+0000\n"
-"Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
+"PO-Revision-Date: 2025-12-06 10:00+0000\n"
+"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "sale_subscription/vi/>\n"
 "Language: vi\n"
@@ -265,7 +266,6 @@ msgstr ""
 
 #. module: sale_subscription
 #: model:mail.template,body_html:sale_subscription.mail_template_subscription_rating
-#, fuzzy
 msgid ""
 "<div style=\"background:#F0F0F0;color:#515166;padding:10px 0px;font-"
 "family:Arial,Helvetica,sans-serif;font-size:14px;\">\n"
@@ -409,8 +409,8 @@ msgstr ""
 "                                            Vui lòng cho biết cảm nghĩ của "
 "bạn về dịch vụ của chúng tôi:\n"
 "                                        </h2>\n"
-"                                        <div style=\"text-color: #888888\">("
-"nhấp vào một trong những biểu tượng cảm xúc này)</div>\n"
+"                                        <div style=\"text-color: #888888\">"
+"(nhấp vào một trong những biểu tượng cảm xúc này)</div>\n"
 "                                    </td>\n"
 "                                </tr>\n"
 "                                <tr>\n"
@@ -3985,7 +3985,6 @@ msgstr "Đăng ký"
 #. module: sale_subscription
 #. odoo-python
 #: code:addons/sale_subscription/models/sale_order.py:0
-#, fuzzy
 msgid ""
 "Subscription %(link)s has been cancelled. The parent order %(parent_link)s "
 "has been reopened.\n"
@@ -4238,6 +4237,9 @@ msgid ""
 "continuously,customer didn't pay, etc.) will be automatically closed after "
 "this period."
 msgstr ""
+"Các đăng ký trễ hạn gia hạn (ví dụ: thanh toán tự động liên tục thất bại, "
+"khách hàng chưa thanh toán, v.v.) sẽ tự động bị đóng sau khoảng thời gian "
+"này."
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -4510,6 +4512,8 @@ msgid ""
 "This subscription is overdue and exceeds the auto-close limit of the "
 "recurring plan. It will be closed soon by the system."
 msgstr ""
+"Đăng ký này đã quá hạn và vượt quá giới hạn tự động đóng của kế hoạch định "
+"kỳ. Hệ thống sẽ sớm đóng gói đăng ký này."
 
 #. module: sale_subscription
 #. odoo-python
