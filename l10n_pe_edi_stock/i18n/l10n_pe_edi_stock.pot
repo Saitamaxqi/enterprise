@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-13 20:08+0000\n"
-"PO-Revision-Date: 2025-11-13 20:08+0000\n"
+"POT-Creation-Date: 2025-12-05 19:06+0000\n"
+"PO-Revision-Date: 2025-12-05 19:06+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -366,11 +366,6 @@ msgid "Default Operator"
 msgstr ""
 
 #. module: l10n_pe_edi_stock
-#: model:ir.model.fields,field_description:l10n_pe_edi_stock.field_stock_picking__l10n_latam_document_number
-msgid "Delivery Guide Number"
-msgstr ""
-
-#. module: l10n_pe_edi_stock
 #: model:ir.model.fields,field_description:l10n_pe_edi_stock.field_stock_picking__l10n_pe_edi_status
 msgid "Delivery Guide Status (PE)"
 msgstr ""
@@ -400,6 +395,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_pe_edi_stock.field_res_partner__display_name
 #: model:ir.model.fields,field_description:l10n_pe_edi_stock.field_stock_picking__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
+#: model:ir.model.fields,field_description:l10n_pe_edi_stock.field_stock_picking__l10n_latam_document_number
+msgid "Document Number (UY)"
 msgstr ""
 
 #. module: l10n_pe_edi_stock
@@ -968,6 +968,11 @@ msgid "Special Authorization Issuing Entity"
 msgstr ""
 
 #. module: l10n_pe_edi_stock
+#: model:ir.model,name:l10n_pe_edi_stock.model_stock_picking
+msgid "Stock Picking - Delivery Guide (Uruguay)"
+msgstr ""
+
+#. module: l10n_pe_edi_stock
 #: model_terms:ir.ui.view,arch_db:l10n_pe_edi_stock.res_config_settings_form_inherit_l10n_pe_edi
 msgid "Sunat Delivery Guide API"
 msgstr ""
@@ -1107,11 +1112,6 @@ msgstr ""
 #. module: l10n_pe_edi_stock
 #: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2613100000
 msgid "Toasted"
-msgstr ""
-
-#. module: l10n_pe_edi_stock
-#: model:ir.model,name:l10n_pe_edi_stock.model_stock_picking
-msgid "Transfer"
 msgstr ""
 
 #. module: l10n_pe_edi_stock

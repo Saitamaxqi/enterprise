@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-13 20:06+0000\n"
-"PO-Revision-Date: 2025-11-13 20:06+0000\n"
+"POT-Creation-Date: 2025-12-05 19:06+0000\n"
+"PO-Revision-Date: 2025-12-05 19:06+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1586,7 +1586,7 @@ msgstr ""
 
 #. module: l10n_mx_edi
 #: model:ir.model.fields.selection,name:l10n_mx_edi.selection__res_company__l10n_mx_edi_pac__finkok
-msgid "Quadrum (formerly finkok)"
+msgid "Quadrum"
 msgstr ""
 
 #. module: l10n_mx_edi

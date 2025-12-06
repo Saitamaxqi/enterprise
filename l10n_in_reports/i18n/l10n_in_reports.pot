@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-13 20:03+0000\n"
-"PO-Revision-Date: 2025-11-13 20:03+0000\n"
+"POT-Creation-Date: 2025-12-05 19:05+0000\n"
+"PO-Revision-Date: 2025-12-05 19:05+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -489,8 +489,12 @@ msgid "B2B Reverse Charge"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_b2c_regular
 #: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_cdnur_regular
+msgid "B2C Overseas"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_b2c_regular
 msgid "B2C Regular"
 msgstr ""
 
@@ -1675,12 +1679,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_in_reports/wizard/gst_otp_validation.py:0
 msgid "Invalid OTP. Please enter a valid 6-digit OTP"
-msgstr ""
-
-#. module: l10n_in_reports
-#. odoo-python
-#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
-msgid "Invalid Product Type"
 msgstr ""
 
 #. module: l10n_in_reports

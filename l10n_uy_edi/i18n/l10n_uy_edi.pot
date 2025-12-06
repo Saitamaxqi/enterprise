@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-13 20:12+0000\n"
-"PO-Revision-Date: 2025-11-13 20:12+0000\n"
+"POT-Creation-Date: 2025-12-05 19:08+0000\n"
+"PO-Revision-Date: 2025-12-05 19:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -348,11 +348,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_uy_edi
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__l10n_latam_document_number
-msgid "Document Number"
-msgstr ""
-
-#. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__l10n_latam_document_type_id
 msgid "Document Type"
 msgstr ""
@@ -487,6 +482,12 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid "For now it is not possible to create %(latam_document_name)s documents"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
 msgid "For this type of CFE you can only report up to 200 lines"
 msgstr ""
 
@@ -582,6 +583,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move__l10n_uy_edi_cfe_uuid
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__uuid
 msgid "Key or UUID CFE"
+msgstr ""
+
+#. module: l10n_uy_edi
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__l10n_latam_document_number
+msgid "L10N Latam Document Number"
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -860,14 +866,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-msgid ""
-"The invoice partner has account payable without account currency but this "
-"move has '%(currency)s' currency."
-msgstr ""
-
-#. module: l10n_uy_edi
-#. odoo-python
-#: code:addons/l10n_uy_edi/models/account_move.py:0
 msgid "The partner of the CFE needs to have an Identification Type"
 msgstr ""
 
@@ -1059,13 +1057,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_uy_edi
-#. odoo-python
-#: code:addons/l10n_uy_edi/models/account_move.py:0
-msgid ""
-"For now it is not possible to create %(latam_document_name)s documents"
-msgstr ""
-
-#. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.l10n_uy_edi_document_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.view_move_form_inherit_l10n_uy_edi
 msgid "Update DGI Status"
@@ -1107,7 +1098,7 @@ msgstr ""
 msgid ""
 "Uruguayan e-invoicing was enabled but the following invoices cannot be e-invoiced:\n"
 "%s\n"
-"If this is not intended, please check if an UCFE Provider is properly set or if the invoice isn't already e-invoiced.\n"
+"If this is not intended, please check if an UCFE Uruware is properly set or if the invoice isn't already e-invoiced.\n"
 msgstr ""
 
 #. module: l10n_uy_edi
