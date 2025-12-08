@@ -1,7 +1,6 @@
 import base64
 import hashlib
 import io
-import jwt
 import logging
 import requests
 import secrets
@@ -16,8 +15,6 @@ from cryptography.hazmat.primitives.serialization import Encoding
 from datetime import datetime, timedelta, timezone
 from dateutil.relativedelta import relativedelta
 from json.decoder import JSONDecodeError
-from jwt import ImmatureSignatureError
-from jwt.exceptions import InvalidSignatureError
 from urllib.parse import urlencode
 
 from odoo import fields, models, modules, tools
@@ -25,6 +22,14 @@ from odoo.exceptions import RedirectWarning, UserError
 from odoo.http import request
 from odoo.tools import LazyTranslate
 
+_logger = logging.getLogger(__name__)
+
+try:
+    import jwt
+    from jwt.exceptions import ImmatureSignatureError, InvalidSignatureError
+except ImportError:
+    jwt = None
+    _logger.error("The PyJWT module is not installed, Intervat might not work as expected.")
 
 ALLOWED_CHARS = string.ascii_letters + string.digits + "-._~"
 BASE_URL = {
@@ -175,6 +180,10 @@ class ResCompany(models.Model):
 
     def _l10n_be_generate_jwt(self):
         """ Generate a new jwt to send to the government apis. This jwt is signed with the x509 certificate private key. """
+        if jwt is None:
+            _logger.error("The library 'PyJWT' is missing, cannot generate a new jwt.")
+            return ''
+
         private_key = serialization.load_pem_private_key(
             base64.b64decode(self.l10n_be_intervat_private_key.pem_key),
             None
@@ -258,6 +267,9 @@ class ResCompany(models.Model):
 
     def _l10n_be_verify_id_token_signature(self, id_token):
         """ Check the signature of the jwt sent by the government. """
+        if jwt is None:
+            raise UserError(self.env._("The library 'PyJWT' is missing, cannot verify the jwt signature."))
+
         jwt_header = jwt.get_unverified_header(id_token)
         kid = jwt_header.get('kid')
         response = requests.get(
