@@ -461,3 +461,20 @@ class BelgiumTaxReportTest(AccountSalesReportCommon):
 
         self.assertEqual(reconciled_lines, reconciled_bank_lines.reconciled_lines_ids)
         self.assertEqual(reconciled_lines.reconciled_lines_ids, reconciled_bank_lines)
+
+    def test_be_vat_communication(self):
+        """ Test structured communication generation for BE and non-BE VATs. """
+        wizard = self.env['qr.code.payment.wizard']
+        communication = wizard._be_company_vat_communication(self.company)
+        self.assertEqual(communication, '+++047/7472/70195+++', "A BE company should generate a structured communication.")
+        self.company.vat = "0470995079"
+        communication = wizard._be_company_vat_communication(self.company)
+        self.assertEqual(communication, '+++047/0995/07936+++', "A BE company with numeric VAT should generate a structured communication.")
+
+        # Non-BE VAT: no structured communication, should return empty communication
+        non_be_company = self.env['res.company'].create({'name': 'Company Non-BE', 'vat': "US08972236"})
+        communication = wizard._be_company_vat_communication(non_be_company)
+        self.assertEqual(communication, "", "A non-BE company should return an empty communication string.")
+        self.company.account_fiscal_country_id = self.env.ref('base.be')
+        communication = wizard._be_company_vat_communication(non_be_company)
+        self.assertEqual(communication, "", "A non-BE company with fiscal country BE should return an empty communication string.")
