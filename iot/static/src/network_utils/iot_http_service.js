@@ -75,12 +75,12 @@ export class IotHttpService {
 
     cacheIotBoxRecords(boxes) {
         for (const box of boxes) {
-            this.cachedIotBoxes[box.id] = { ip: box.ip, identifier: box.identifier };
+            this.cachedIotBoxes[box.id] = { ip: box.ip, identifier: box.identifier, version: box.version };
         }
     }
 
     async getIotBoxData(iotBoxId) {
-        const record = await this.orm.searchRead("iot.box", [["id", "=", iotBoxId]], ["id", "ip", "identifier"]);
+        const record = await this.orm.searchRead("iot.box", [["id", "=", iotBoxId]], ["id", "ip", "identifier", "version"]);
         if (!record) {
             throw new Error(`No IoT Box found`);
         }
@@ -96,7 +96,10 @@ export class IotHttpService {
         }
     }
 
-    async _webRtc({ identifier, deviceIdentifier, data, messageId, onSuccess, onFailure, messageType }) {
+    async _webRtc({ identifier, version, deviceIdentifier, data, messageId, onSuccess, onFailure, messageType }) {
+        if (/\d{4}\.\d{2}\.\d{2}/.test(version)) {
+            throw new Error("IoT box does not support WebRTC, skipping.");
+        }
         await this.webRtc.onMessage(identifier, deviceIdentifier, messageId, onSuccess, onFailure);
         if (data) {
             await this.webRtc.sendMessage(identifier, {
@@ -155,11 +158,11 @@ export class IotHttpService {
         if (!this.cachedIotBoxes[iotBoxId]) {
             this.cacheIotBoxRecords(await this.getIotBoxData(iotBoxId))
         }
-        const { ip, identifier } = this.cachedIotBoxes[iotBoxId];
+        const { ip, identifier, version } = this.cachedIotBoxes[iotBoxId];
 
         // if we target the box instead of a device, we want longpolling to handle action as messageType
         const messageType = deviceIdentifier === identifier ? data.action : undefined;
-        const params = { ip, identifier, data, messageType, ...arguments[0] };
+        const params = { ip, identifier, version, data, messageType, ...arguments[0] };
 
         for (const connectionType of this.connectionTypes) {
             try {
