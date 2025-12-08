@@ -542,7 +542,9 @@ class TestDeliverySendCloud(TransactionCase):
             ('123-456 Main Street', '123-456'),
             ('456B Elm St', '456B'),
             ('789 C Oak Avenue', '789 C'),
-            ('20A1 Vo Thi Sau Street, Tan Dinh Ward, District 1', '20A1')
+            ('20A1 Vo Thi Sau Street, Tan Dinh Ward, District 1', '20A1'),
+            ('Innsbruck Straße 8/1/13', '8/1/13'),
+            ('7-3/11A Hochköning Straße', '7-3/11A'),
         ]
         for address in addresses:
             self.assertEqual(api._get_house_number(address[0]), address[1])
