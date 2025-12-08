@@ -23,7 +23,8 @@ result = payslip.paid_amount
 salary_simulation = payslip.env.context.get('salary_simulation')
 
 employee = version.employee_id
-is_next_year = version.contract_date_start.year + 1 == payslip.date_from.year if version.contract_date_start else False 
+first_version_date = employee.with_user(1)._get_first_version_date()
+is_next_year = first_version_date.year + 1 == payslip.date_from.year if first_version_date else False 
 
 to_recover = employee.l10n_be_holiday_pay_to_recover_n
 recovered = employee.l10n_be_holiday_pay_recovered_n
@@ -47,7 +48,8 @@ result = not salary_simulation and is_next_year and to_recover and not already_d
 salary_simulation = payslip.env.context.get('salary_simulation')
 
 employee = version.employee_id
-is_next_year = version.contract_date_start.year == payslip.date_from.year if version.contract_date_start else False 
+first_version_date = employee.with_user(1)._get_first_version_date()
+is_next_year = first_version_date.year == payslip.date_from.year if first_version_date else False 
 
 to_recover = employee.l10n_be_holiday_pay_to_recover_n1
 recovered = employee.l10n_be_holiday_pay_recovered_n1
