@@ -1140,7 +1140,7 @@ class AccountReturn(models.Model):
         self._check_failing_checks_in_current_stage()
 
         if report := self.type_id.report_id:
-            options = {**self._get_closing_report_options(), **(options_to_inject or {})}
+            options = {**self._get_closing_report_options(), **(options_to_inject or {}), 'export_mode': 'file'}
 
             report.with_context(allowed_company_ids=self.company_ids.ids)._generate_carryover_external_values(options)
             self._generate_locking_attachments(options)

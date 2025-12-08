@@ -195,7 +195,7 @@ class L10n_BeTaxReportHandler(models.AbstractModel):
         grids_list = []
         currency_id = self.env.company.currency_id
 
-        options = report.get_options({'no_format': True, 'date': {'date_from': date_from, 'date_to': date_to}, 'filter_unfold_all': True})
+        options = report.get_options({'no_format': True, 'date': {'date_from': date_from, 'date_to': date_to}, 'filter_unfold_all': True, 'export_mode': 'file'})
         lines = report._get_lines(options)
 
         # Create a mapping between report line ids and actual grid names

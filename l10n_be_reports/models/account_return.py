@@ -242,13 +242,11 @@ class AccountReturn(models.Model):
 
         return super().action_submit()
 
-    def _generate_submission_attachments(self, options):
-        super()._generate_submission_attachments(options)
-        if self.type_id == self.env.ref('l10n_be_reports.be_vat_return_type'):
-            self._add_attachment(self.type_id.report_id.dispatch_report_action(options, 'export_tax_report_to_xml'))
+    def _generate_locking_attachments(self, options):
+        super()._generate_locking_attachments(options)
         if self.type_external_id == 'l10n_be_reports.be_vat_listing_return_type':
             self._add_attachment(self.type_id.report_id.dispatch_report_action(options, 'partner_vat_listing_export_to_xml'))
-        if self.type_external_id == 'l10n_be_reports.be_ec_sales_list_return_type':
+        elif self.type_external_id == 'l10n_be_reports.be_ec_sales_list_return_type':
             self._add_attachment(self.type_id.report_id.dispatch_report_action(options, 'export_to_xml_sales_report'))
 
     def l10n_be_reset_2_sates_common(self):
