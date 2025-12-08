@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="o_payment_ref user-select-text d-none d-md-block"
-                                 t-att-class="isUnfolded or isExpandedPaymentRef ? 'overflow-wrap' : 'text-truncate'">
+                                 t-att-class="isUnfolded ? 'overflow-wrap' : 'text-truncate'">
                                 <span class="d-inline">
                                     <t t-if="partner">
                                         <a class="fw-bold" href="#" t-on-click.prevent.stop="openPartner">
@@ -52,7 +52,6 @@
                                         <span class="fw-bold" t-esc="recordData.partner_name" name="statement_line_partner_name"/>
                                     </t>
                                     <span t-att-class="partner or recordData.partner_name ? 'ms-1' : undefined"
-                                          t-on-click="toggleIsExpandedPaymentRef"
                                           t-esc="recordData.payment_ref"
                                     />
                                 </span>
@@ -83,9 +82,7 @@
 
                         <!-- Only available on small screen -->
                         <div class="o_row d-md-none">
-                            <span class="o_payment_ref"
-                                  t-att-class="isExpandedPaymentRef ? 'overflow-wrap' : 'text-truncate'"
-                                  t-on-click="toggleIsExpandedPaymentRef"
+                            <span class="text-truncate o_payment_ref"
                                   t-esc="recordData.payment_ref"
                             />
                         </div>
