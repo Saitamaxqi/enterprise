@@ -478,6 +478,8 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         lots = self.env['stock.lot'].create([{**common_vals, 'name': f'lot{i}'} for i in range(1, 4)])
         for lot in lots:
             self.env['stock.quant']._update_available_quantity(self.productlot1, self.stock_location, 3, lot_id=lot)
+        # Add 1 unit without lot
+        self.env['stock.quant']._update_available_quantity(self.productlot1, self.stock_location, 1, lot_id=False)
         # Create a delivery and batch it alone (a batch with a single picking is enough for this test's purpose.)
         delivery = self.env['stock.picking'].create({
             'name': "delivery with lots",
@@ -489,7 +491,7 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
                 'location_dest_id': self.customer_location.id,
                 'product_id': self.productlot1.id,
                 'product_uom': self.uom_unit.id,
-                'product_uom_qty': 9,
+                'product_uom_qty': 10,
             })],
         })
         batch = self.env['stock.picking.batch'].create({

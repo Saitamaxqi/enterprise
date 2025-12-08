@@ -841,7 +841,7 @@ registry.category("web_tour.tours").add("test_barcode_batch_scan_other_reserved_
                 const sublines = helper.getSublines();
                 const selectedSubline = helper.getSubline({ selected: true });
                 helper.assert(sublines[0], selectedSubline, "First lot should be selected");
-                helper.assertLinesTrackingNumbers(sublines, ["lot1", "lot2", "lot3"]);
+                helper.assertLinesTrackingNumbers(sublines, ["lot1", "lot2", "lot3", ""]);
             },
         },
         // Scan lot2 one time: second line (lot2 line) should be selected.
@@ -851,26 +851,46 @@ registry.category("web_tour.tours").add("test_barcode_batch_scan_other_reserved_
         { trigger: ".o_barcode_line", run: "scan lot2" },
         { trigger: ".o_barcode_line", run: "scan lot2" },
         {
-            trigger: ".o_sublines .o_barcode_line:nth-child(2).o_selected.o_faulty",
+            trigger: ".o_sublines .o_barcode_line:last-child.o_selected",
             run: () => {
                 const sublines = helper.getSublines();
                 const selectedSubline = helper.getSubline({ selected: true });
-                helper.assert(sublines[1], selectedSubline, "First lot should be selected");
                 helper.assertLineTrackingNumber(sublines[1], "lot2");
-                helper.assertLineQty(sublines[1], "4/3");
+                helper.assertLineQty(sublines[1], "3/3");
+                helper.assertLineTrackingNumber(sublines[3], "lot2");
+                helper.assertLineQty(sublines[3], "1/1");
+                helper.assert(sublines[3], selectedSubline, "Last lot should be selected");
             },
         },
         // Scan lot3: should select the 3th line.
         { trigger: ".o_barcode_line", run: "scan lot3" },
         // Scan lot1: should select the 1st line.
-        { trigger: ".o_sublines .o_barcode_line:last-child.o_selected", run: "scan lot1" },
+        { trigger: ".o_barcode_line .qty-done:contains(5)", run: "scan lot1" },
         // Scan again lot3: should re-select the 3th line.
         { trigger: ".o_sublines .o_barcode_line:first-child.o_selected", run: "scan lot3" },
         // Scan lot3 and lot1 once again to complete the delivery.
-        { trigger: ".o_sublines .o_barcode_line:last-child.o_selected", run: "scan lot3" },
+        { trigger: ".o_barcode_line .qty-done:contains(7)", run: "scan lot3" },
+        { trigger: ".o_sublines .o_barcode_line:contains(3).o_line_completed" },
+        { trigger: ".o_put_in_pack", run: "click" },
         {
-            trigger: ".o_sublines .o_barcode_line:last-child.o_selected.o_line_completed",
-            run: "scan lot1",
+            trigger: ".o_barcode_line .result-package", run: "scan lot1",
+        },
+        { trigger: ".o_barcode_line", run: "scan lot1" },
+        {
+            trigger: ".o_barcode_line .qty-done:contains(10)",
+            run: () => {
+                const sublines = helper.getSublines();
+                helper.assertLineTrackingNumber(sublines[0], "lot1");
+                helper.assertLineQty(sublines[0], "2/2");
+                helper.assertLineTrackingNumber(sublines[1], "lot1");
+                helper.assertLineQty(sublines[1], "1/1");
+                helper.assertLineTrackingNumber(sublines[2], "lot2");
+                helper.assertLineQty(sublines[2], "3/3");
+                helper.assertLineTrackingNumber(sublines[3], "lot3");
+                helper.assertLineQty(sublines[3], "3/3");
+                helper.assertLineTrackingNumber(sublines[4], "lot2");
+                helper.assertLineQty(sublines[4], "1/1");
+            },
         },
         { trigger: ".o_validate_page.btn-primary", run: "click" },
         { trigger: ".o_stock_barcode_main_menu" },

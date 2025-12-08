@@ -330,12 +330,15 @@ export default class BarcodePickingBatchModel extends BarcodePickingModel {
             const parentLine = this._getParentLine(this.selectedLine);
             if (parentLine && this._lineIsNotComplete(parentLine)) {
                 let foundLine = false;
+                const hasLotLessLine = parentLine.lines.some(
+                    (line) => !line.lot_id && !line.lot_name
+                );
                 for (const line of parentLine.lines) {
                     const lineLotName = line.lot_name || (line.lot_id && line.lot_id.name) || false;
                     const sameLotName = Boolean(lineLotName && dataLotName === lineLotName);
                     if (
-                        dataLotName &&
-                        (sameLotName || this._canOverrideTrackingNumber(line, dataLotName))
+                        this._canOverrideTrackingNumber(line, dataLotName) &&
+                        (!sameLotName || this._lineIsNotComplete(line) || !hasLotLessLine)
                     ) {
                         foundLine = line;
                         if (sameLotName) {
