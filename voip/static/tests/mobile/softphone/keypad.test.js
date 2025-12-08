@@ -7,6 +7,17 @@ describe.current.tags("mobile");
 setupVoipTests();
 
 test.tags("focus required");
+test("Clicking a keypad key *should* focus the input on mobile, to see the cursor", async () => {
+    await start();
+    mockUserAgent("android");
+    await click(".o_menu_systray button:has(> .oi-voip)");
+    await click(".o-voip-Softphone nav button:has(> .oi-numpad)");
+    await click(".o-voip-Keypad-digitBtn:has(> span:text('2'))");
+    const input = document.querySelector(".o-voip-Keypad-searchBar input");
+    expect(document.activeElement).toBe(input);
+});
+
+test.tags("focus required");
 test("Cursor position is correct after backspace in the middle of a number", async () => {
     mockUserAgent("android");
     await start();
