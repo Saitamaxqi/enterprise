@@ -38,7 +38,8 @@ class AIAgentSource(models.Model):
         """
         article_sources = self.filtered(lambda s: s.type == 'knowledge_article')
         for source in article_sources:
-            source.user_has_access = source.article_id.user_has_access
+            # evaluate access with the current user without elevating to sudo (used in LLM response flow)
+            source.user_has_access = source.article_id.with_user(self.env.user).user_can_read
         super(AIAgentSource, self - article_sources)._compute_user_has_access()
 
     def _update_name(self):
