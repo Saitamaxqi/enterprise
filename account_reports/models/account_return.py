@@ -1303,93 +1303,71 @@ class AccountReturn(models.Model):
         if not self.env.user.has_group('account.group_account_manager'):
             raise UserError(_("Only an Accounting Administrator can reset a tax return"))
 
-        if self.state == 'paid':
-            self._reset_checks_for_states([self.state, 'submitted'])
-            self.state = 'submitted'
+        # Check if it is the last return locked
+        domain = [
+            ('company_id', '=', self.company_id.id),
+            ('type_id', '=', self.type_id.id),
+            ('date_lock', '!=', False),
+            ('date_deadline', '>', self.date_deadline),
+        ]
+        if self.env['account.return'].search_count(domain, limit=1):
+            raise UserError(_("You cannot reset this return to new, as another return has been locked at a later date."))
 
-        if self.state == 'submitted':
-            self._reset_checks_for_states([self.state, 'reviewed'])
-            self.date_submission = False
-            self.state = 'reviewed'
+        # delete carryover if possible
+        if report := self.type_id.report_id:
 
-        if self.state == 'reviewed':
-            # Check if it is the last return locked
-            domain = [
-                ('company_id', '=', self.company_id.id),
-                ('type_id', '=', self.type_id.id),
-                ('date_lock', '!=', False),
-                ('date_deadline', '>', self.date_deadline),
-            ]
-            if self.env['account.return'].search_count(domain, limit=1):
-                raise UserError(_("You cannot reset this return to new, as another return has been locked at a later date."))
+            if not report.country_id or report.country_id == self.company_id.account_fiscal_country_id:
+                # Check for locked return
+                violated_lock_dates = []
+                for company in self.company_ids:
+                    violated_lock_dates = company._get_lock_date_violations(
+                        self.date_to,
+                        fiscalyear=False,
+                        sale=False,
+                        purchase=False,
+                        tax=True,
+                        hard=True,
+                    )
+                    if violated_lock_dates:
+                        raise UserError(_("The operation is refused as it would impact an already issued tax statement. "
+                                        "Please change the following lock dates to proceed: %(lock_date_info)s.",
+                                        lock_date_info=self.env['res.company']._format_lock_dates(violated_lock_dates)))
 
-            # delete carryover if possible
-            if report := self.type_id.report_id:
+            carryover_values = self.env['account.report.external.value'].search(
+                [
+                    ('carryover_origin_report_line_id', 'in', report.line_ids.ids),
+                    ('date', '=', self.date_to),
+                    ('company_id', 'in', self.company_ids.ids),
+                ]
+            )
 
-                if not report.country_id or report.country_id == self.company_id.account_fiscal_country_id:
-                    # Check for locked return
-                    violated_lock_dates = []
-                    for company in self.company_ids:
-                        violated_lock_dates = company._get_lock_date_violations(
-                            self.date_to,
-                            fiscalyear=False,
-                            sale=False,
-                            purchase=False,
-                            tax=True,
-                            hard=True,
-                        )
-                        if violated_lock_dates:
-                            raise UserError(_("The operation is refused as it would impact an already issued tax statement. "
-                                            "Please change the following lock dates to proceed: %(lock_date_info)s.",
-                                            lock_date_info=self.env['res.company']._format_lock_dates(violated_lock_dates)))
+            carryover_impacted_period = self.type_id._get_period_boundaries(self.company_id, self.date_to + relativedelta(days=1))
 
-                carryover_values = self.env['account.report.external.value'].search(
-                    [
-                        ('carryover_origin_report_line_id', 'in', report.line_ids.ids),
-                        ('date', '=', self.date_to),
-                        ('company_id', 'in', self.company_ids.ids),
-                    ]
-                )
+            violated_lock_dates = self.company_id._get_lock_date_violations(
+                carryover_impacted_period[1], fiscalyear=False, sale=False, purchase=False, tax=True, hard=True,
+            ) if carryover_values else None
 
-                carryover_impacted_period = self.type_id._get_period_boundaries(self.company_id, self.date_to + relativedelta(days=1))
+            if violated_lock_dates:
+                raise UserError(_("You cannot reset this closing entry to draft, as it would delete carryover values impacting the tax report of a locked period. "
+                                "Please change the following lock dates to proceed: %(lock_date_info)s.",
+                                lock_date_info=self.env['res.company']._format_lock_dates(violated_lock_dates)))
 
-                violated_lock_dates = self.company_id._get_lock_date_violations(
-                    carryover_impacted_period[1], fiscalyear=False, sale=False, purchase=False, tax=True, hard=True,
-                ) if carryover_values else None
+            carryover_values.unlink()
 
-                if violated_lock_dates:
-                    raise UserError(_("You cannot reset this closing entry to draft, as it would delete carryover values impacting the tax report of a locked period. "
-                                    "Please change the following lock dates to proceed: %(lock_date_info)s.",
-                                    lock_date_info=self.env['res.company']._format_lock_dates(violated_lock_dates)))
+            main_company = self.tax_unit_id.main_company_id or self.company_id
+            if report.country_id == main_company.account_fiscal_country_id and main_company.tax_lock_date and self.date_to <= main_company.tax_lock_date:
+                for company in self.company_ids:
+                    company.sudo().tax_lock_date = self.date_from + relativedelta(days=-1)
 
-                carryover_values.unlink()
+            self.total_amount_to_pay = 0
+            self.period_amount_to_pay = 0
 
-                main_company = self.tax_unit_id.main_company_id or self.company_id
-                if report.country_id == main_company.account_fiscal_country_id and main_company.tax_lock_date and self.date_to <= main_company.tax_lock_date:
-                    for company in self.company_ids:
-                        company.sudo().tax_lock_date = self.date_from + relativedelta(days=-1)
-
-                self.total_amount_to_pay = 0
-                self.period_amount_to_pay = 0
-
-            self.closing_move_ids.button_draft()
-            self.closing_move_ids.unlink()
-            self.attachment_ids.unlink()
-
-            self.date_lock = False
-            self.report_opened_once = False
-            self._reset_checks_for_states([self.state, 'new'])
-            self.state = 'new'
-
-        self._mark_uncompleted()
+        self.date_lock = False
+        self._reset_common()
         return True
 
     def action_reset_custom_return(self):
-        if self.state == 'reviewed':
-            self._reset_checks_for_states([self.state, 'new'])
-            self.state = 'new'
-
-        self._mark_uncompleted()
+        self._reset_common()
         return True
 
     def action_reset_annual_closing(self):
@@ -1398,16 +1376,7 @@ class AccountReturn(models.Model):
         if not self.env.user.has_group('account.group_account_manager'):
             raise UserError(_("Only an Accounting Administrator can reset an annual closing"))
 
-        if self.state == 'submitted':
-            self._reset_checks_for_states([self.state, 'reviewed'])
-            self.state = 'reviewed'
-            self.date_submission = False
-
-        if self.state == 'reviewed':
-            self._reset_checks_for_states([self.state, 'new'])
-            self.state = 'new'
-
-        self._mark_uncompleted()
+        self._reset_common()
         return True
 
     def action_reset_2_states(self):
@@ -1416,18 +1385,20 @@ class AccountReturn(models.Model):
         if not self.env.user.has_group('account.group_account_manager'):
             raise UserError(_("Only an Accounting Administrator can reset a return"))
 
-        if self.state == 'submitted':
-            self._reset_checks_for_states([self.state, 'reviewed'])
-            self.state = 'reviewed'
-            self.date_submission = False
+        self._reset_common()
+        return True
 
-        if self.state == 'reviewed':
-            self._reset_checks_for_states([self.state, 'new'])
-            self.state = 'new'
-
+    def _reset_common(self):
+        self._reset_checks_for_states([state for state, _label in self._fields[self.type_id.states_workflow].selection])
+        self.state = 'new'
         self._mark_uncompleted()
         self.report_opened_once = False
-        return True
+        self.attachment_ids.unlink()
+        self.date_submission = False
+
+        if self.closing_move_ids:
+            self.closing_move_ids.button_draft()
+            self.closing_move_ids.unlink()
 
     ####################################################################################################
     ####  Other Actions
