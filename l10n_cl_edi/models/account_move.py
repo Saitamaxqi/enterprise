@@ -663,13 +663,15 @@ services reception has been received as well.
         """
         res = super()._get_last_sequence(relaxed=relaxed, with_prefix=with_prefix)
         if res and self.country_code == "CL" and self.is_sale_document():
-            folio = int(res.split(" ")[-1])
-            available_caf = self.env['l10n_cl.dte.caf'].sudo().search([
-            ('final_nb', '>=', folio), ('start_nb', '<=', folio), ('l10n_latam_document_type_id', '=', self.l10n_latam_document_type_id.id),
-            ('status', '=', 'in_use'), ('company_id', '=', self.company_id.id)], limit=1)
-            if not available_caf:
-                start_nb = self.l10n_latam_document_type_id._get_start_number()
-                res = f"{self.l10n_latam_document_type_id.doc_code_prefix} {start_nb - 1:06d}"
+            match = re.search(r'(\d+)$', res)
+            if match:
+                folio = int(match.group(1))
+                available_caf = self.env['l10n_cl.dte.caf'].sudo().search([
+                ('final_nb', '>=', folio), ('start_nb', '<=', folio), ('l10n_latam_document_type_id', '=', self.l10n_latam_document_type_id.id),
+                ('status', '=', 'in_use'), ('company_id', '=', self.company_id.id)], limit=1)
+                if not available_caf:
+                    start_nb = self.l10n_latam_document_type_id._get_start_number()
+                    res = f"{self.l10n_latam_document_type_id.doc_code_prefix} {start_nb - 1:06d}"
         return res
 
     def _l10n_cl_create_dte(self):
