@@ -72,7 +72,7 @@ class AccountReport(models.Model):
 
     # Account Audit Status
     allow_account_audit_status_on_lines = fields.Boolean(string="Allow Account Audit Status On Lines",
-        compute=lambda x: x._compute_report_option_filter('filter_account_type', 'disabled'), readonly=False,
+        compute=lambda x: x._compute_report_option_filter('allow_account_audit_status_on_lines'), readonly=False,
         precompute=True, store=True, depends=['root_report_id'])
 
     @api.constrains('custom_handler_model_id')
