@@ -741,6 +741,7 @@ class HrPayslip(models.Model):
             corrected_payslips_values.append({
                 'name': corrected_name,
                 'origin_payslip_id': payslip.id,
+                'employee_id': payslip.employee_id.id,
                 'version_id': payslip.employee_id._get_version(date=payslip.date_from).id,
                 'date_from': payslip.date_from,
                 'date_to': payslip.date_to,
