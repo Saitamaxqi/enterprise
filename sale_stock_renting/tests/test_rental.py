@@ -1470,3 +1470,45 @@ class TestRentalPicking(TestRentalCommon):
             'product_uom_qty': rental_order.order_line.product_uom_qty,
             'move_dest_ids': rental_order.picking_ids.move_ids[0].ids
         }])
+
+    @freeze_time('2025-01-01 00:00:00')
+    def test_rental_pickup_reference(self):
+        """
+        Check that move and move lines created with respect to pickup and returns
+        of a rental order have a set reference.
+        """
+        # Disable "rental transfers" and rely on the qty_in_rent fot the forecast
+        self.env['res.config.settings'].create({'group_rental_stock_picking': False}).execute()
+        self.assertFalse(self.env.user.has_group('sale_stock_renting.group_rental_stock_picking'))
+        rental_order = self.env['sale.order'].with_context(in_rental_app=True).create({
+            'partner_id': self.cust1.id,
+            'rental_start_date': Datetime.today(),
+            'rental_return_date': Datetime.today() + timedelta(days=2),
+            'order_line': [
+                Command.create({
+                    'product_id': self.product_id.id,
+                    'product_uom_qty': 1.0,
+                }),
+                Command.create({
+                    'product_id': self.tracked_product_id.id,
+                    'product_uom_qty': 1.0,
+                    'reserved_lot_ids': [Command.set(self.lot_id1.ids)],
+                }),
+            ],
+        })
+        rental_order.action_confirm()
+        pickup_action = Form.from_action(self.env, rental_order.action_open_pickup()).save()
+        pickup_action.apply()
+        self.assertRecordValues(rental_order.order_line.move_ids.sorted(lambda m: m.product_id.id), [
+            {'product_id': self.product_id.id, 'reference': f"Rental move: {rental_order.name}"},
+            {'product_id': self.tracked_product_id.id, 'reference': f"Rental move: {rental_order.name}"},
+        ])
+        return_action = Form.from_action(self.env, rental_order.action_open_return()).save()
+        return_action.apply()
+        stock, rental = self.warehouse_id.lot_stock_id.id, self.env.company.rental_loc_id.id
+        self.assertRecordValues(rental_order.order_line.move_ids.sorted(lambda m: (m.product_id.id, m.id)), [
+            {'product_id': self.product_id.id, 'reference': f"Rental move: {rental_order.name}", 'location_id': stock, 'location_dest_id': rental},
+            {'product_id': self.product_id.id, 'reference': f"Rental move: {rental_order.name}", 'location_id': rental, 'location_dest_id': stock},
+            {'product_id': self.tracked_product_id.id, 'reference': f"Rental move: {rental_order.name}", 'location_id': stock, 'location_dest_id': rental},
+            {'product_id': self.tracked_product_id.id, 'reference': f"Rental move: {rental_order.name}", 'location_id': rental, 'location_dest_id': stock},
+        ])
