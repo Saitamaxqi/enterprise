@@ -1083,6 +1083,8 @@ class PlanningSlot(models.Model):
         if self.company_id in self.env.user.employee_ids.mapped('company_id'):
             resource_id = self.env.user.employee_ids.filtered(lambda e: e.company_id == self.company_id)[
                 0].resource_id.id
+        elif len(self.env.user.employee_ids) == 1:
+            resource_id = self.env.user.employee_ids.resource_id.id
         else:
             raise UserError(self.env._("You cannot assign yourself to a shift belonging to another company."))
         return self.sudo().write({'resource_id': resource_id})
