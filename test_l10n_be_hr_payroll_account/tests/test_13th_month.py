@@ -155,18 +155,6 @@ class Test13thMonth(TestPayslipBase):
         work_entries.action_validate()
         self.assertAlmostEqual(self.payslip._get_paid_amount(), self.version.wage * 6 / 12, msg='It should count 6/12 months')
 
-    def test_13th_month_paid_amount_multiple_contracts(self):
-        self.update_version(date(2019, 1, 1), date(2019, 3, 31))
-        version = self.create_version(date(2019, 10, 1))
-        self.payslip.write({
-            'version_id': version.id,
-            'date_from': datetime(2019, 12, 1),
-            'date_to': datetime(2019, 12, 31),
-        })
-        work_entries = self.employee.version_ids.generate_work_entries(date(2018, 12, 31), date(2019, 12, 31))
-        work_entries.action_validate()
-        self.assertAlmostEqual(self.payslip._get_paid_amount(), version.wage * 6 / 12, msg='It should count 6/12 months')
-
     def test_13th_month_paid_amount_multiple_contracts_gap(self):
         self.update_version(date(2019, 1, 1), date(2019, 3, 31))
         version = self.create_version(date(2019, 11, 1))
@@ -379,6 +367,12 @@ class Test13thMonth(TestPayslipBase):
         # Basic for the 13th month is the December salary
         self.assertAlmostEqual(self.payslip._get_paid_amount(), 3000)
 
+    def test_13th_month_contract_interruption(self):
+        self.update_version(date(2015, 1, 1), date(2019, 3, 1))
+        self.create_version(date(2019, 9, 1), wage=3000)
+        self.employee.version_ids.generate_work_entries(date(2018, 12, 31), date(2019, 12, 31))
+        self.assertAlmostEqual(self.payslip._get_paid_amount(), 0, msg='Not 6 months of seniority')
+
     def test_13th_month_unpaid_work_entry(self):
         self.update_version(date(2015, 1, 1))
         work_entries = self.employee.version_ids.generate_work_entries(date(2018, 12, 31), date(2019, 12, 31))
@@ -395,6 +389,22 @@ class Test13thMonth(TestPayslipBase):
         work_entries.filtered(lambda r: r.state == 'confirmed').action_validate()
         work_entry.action_validate()
         self.assertAlmostEqual(self.payslip._get_paid_amount(), self.version.wage * 11 / 12, msg='It should count 11/12 months')
+
+    def test_13th_month_unpaid_7_months_work_entry(self):
+        self.update_version(date(2015, 1, 1))
+        self.employee.version_ids.generate_work_entries(date(2018, 12, 31), date(2019, 12, 31))
+        unpaid_leaves = self.env['hr.leave'].create([
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_unpaid').id,
+                'request_date_from': date(2019, 4, 1),
+                'request_date_to': date(2019, 10, 31),
+            }
+        ])
+
+        unpaid_leaves.action_approve()
+        self.employee.version_ids.generate_work_entries(date(2018, 12, 31), date(2019, 12, 31))
+        self.assertAlmostEqual(self.payslip._get_paid_amount(), self.version.wage * 5 / 12, msg='It should count 5/12 months')
 
     def test_13th_month_unpaid_work_entry_half_day(self):
         self.update_version(date(2015, 1, 1))

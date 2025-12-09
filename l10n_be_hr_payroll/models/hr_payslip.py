@@ -664,8 +664,10 @@ class HrPayslip(models.Model):
 
                     payslip_amount += ((n_days / days_in_month) / 12) * (fte_basic * work_time_rate)
 
-        if is_PFA and full_time_months < 6:
-            return 0, full_time_months
+        if is_PFA:
+            first_version_date = self.employee_id._get_first_version_date()
+            if first_version_date.year == self.date_from.year and first_version_date.month >= 7:
+                return 0, full_time_months
         return payslip_amount, full_time_months
 
     def _get_paid_amount_13th_month(self):
