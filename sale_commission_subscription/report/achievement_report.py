@@ -128,10 +128,10 @@ subscription_rules AS (
         MAX(log.team_id) AS team_id,
         rules.plan_id,
         SUM({self._get_sale_order_log_product()}) AS achieved,
-        {self.env.company.currency_id.id} AS currency_id,
+        log.currency_id AS currency_id,
         MAX(log.event_date) AS date,
-        MAX(log.company_id) AS achievement_company_id,
         MAX(rules.company_id) AS plan_company_id,
+        MAX(log.company_id) AS achievement_company_id,
         MAX(log.order_id) AS related_res_id,
         MAX(so.partner_id) AS partner_id,
         -- create_date because _update_effective_date could update several logs at the same time
@@ -152,17 +152,18 @@ subscription_rules AS (
     GROUP BY
         log.id,
         rules.plan_id,
-        rules.user_id
+        rules.user_id,
+        log.currency_id
 ), subscription_commission_lines_user AS (
     SELECT
         rules.user_id,
         MAX(log.team_id) AS team_id,
         rules.plan_id,
         SUM({self._get_sale_order_log_product()}) AS achieved,
-        {self.env.company.currency_id.id} AS currency_id,
+        log.currency_id AS currency_id,
         MAX(log.event_date) AS date,
-        MAX(log.company_id) AS achievement_company_id,
         MAX(rules.company_id) AS plan_company_id,
+        MAX(log.company_id) AS achievement_company_id,
         MAX(log.order_id) AS related_res_id,
         MAX(so.partner_id) AS partner_id,
         -- create_date because _update_effective_date could update several logs at the same time
@@ -183,7 +184,8 @@ subscription_rules AS (
     GROUP BY
         log.id,
         rules.plan_id,
-        rules.user_id
+        rules.user_id,
+        log.currency_id
 ), subscription_commission_lines AS (
     (SELECT *, 'sale.order' AS related_res_model FROM subscription_commission_lines_team)
     UNION ALL
