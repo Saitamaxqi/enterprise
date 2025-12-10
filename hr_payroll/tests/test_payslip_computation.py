@@ -254,7 +254,7 @@ class TestPayslipComputation(TestPayslipContractBase):
 
     def test_payslip_generation_with_overtime_work_rate(self):
         """ Test the computation of overtime amount in the payslip as per rate. """
-        work_entry = self.env['hr.work.entry'].create(self.env['hr.version']._generate_work_entries_postprocess([{
+        self.env['hr.work.entry'].create(self.env['hr.version']._generate_work_entries_postprocess([{
             'name': 'Overtime Work',
             'employee_id': self.richard_emp.id,
             'version_id': self.contract_cdi.id,
@@ -262,7 +262,6 @@ class TestPayslipComputation(TestPayslipContractBase):
             'date_start': datetime(2024, 12, 16, 18, 0, 0),
             'date_stop': datetime(2024, 12, 16, 22, 0, 0),
         }]))
-        work_entry.action_validate()
         payslip = self.env['hr.payslip'].create({
             'name': 'Payslip of Richard',
             'employee_id': self.richard_emp.id,
