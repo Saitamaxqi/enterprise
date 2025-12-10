@@ -105,7 +105,6 @@ export class IotHttpService {
             await this.webRtc.sendMessage(identifier, {
                 device_identifier: deviceIdentifier,
                 data,
-                ...data, // compatibility with v19.1+ IoT Boxes
             }, messageId, messageType);
         }
         this.connectionStatus = "webrtc";
