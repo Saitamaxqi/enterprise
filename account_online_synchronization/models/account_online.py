@@ -1015,6 +1015,12 @@ class AccountOnlineLink(models.Model):
             self.write(data)
 
             self._update_connection_status()
+            if data.get('manage_consent'):
+                url = self._get_odoofin_url(f'/manage-consent?client_id={self.client_id}&access_token={self.access_token}')
+                self.message_post(
+                    body=_("You can manage your bank synchronization consent for this connection %s", Markup("<a href='%s' target='_blank'>%s</a>") % (url, _("here.")))
+                )
+
         # if for some reason we just have to update the record without doing anything else, the mode will be set to 'none'
         if mode == 'none':
             return {'type': 'ir.actions.client', 'tag': 'reload'}
