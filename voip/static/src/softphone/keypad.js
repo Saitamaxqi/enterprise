@@ -49,6 +49,8 @@ export class Keypad extends Component {
         this.selection = useSelection({
             refName: "input-ref",
             model: this.props.state.input.selection,
+            preserveOnClickAwayPredicate: (ev) =>
+                Boolean(ev.target.closest(".o-voip-Keypad-backspace, .o-voip-Keypad-digitBtn")),
         });
         this.ui = useService("ui");
         this.softphone = useService("voip").softphone;
@@ -59,7 +61,7 @@ export class Keypad extends Component {
                     shouldFocusInput &&
                     this.inputRef.el &&
                     !this.voip.error &&
-                    !isCurrentFocusEditable()
+                    (document.activeElement === this.inputRef.el || !isCurrentFocusEditable())
                 ) {
                     this.inputRef.el.focus();
                     this.selection.restore();
