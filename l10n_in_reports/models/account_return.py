@@ -2358,7 +2358,6 @@ class AccountReturn(models.Model):
         options = self._get_closing_report_options()
         hsn_base_line_domain = [
                 ('l10n_in_gstr_section', '=like', 'sale%'),
-                ('l10n_in_gstr_section', '!=', 'sale_out_of_scope'),
                 ('display_type', '=', 'product'),
             ]
         options_domain = report._get_options_domain(options, date_scope='strict_range')

@@ -63,6 +63,7 @@ class L10n_InReportHandler(models.AbstractModel):
 
     def _get_invalid_no_hsn_line_domain(self):
         return [
+            ('l10n_in_gstr_section', '!=', 'sale_out_of_scope'),
             ('l10n_in_hsn_code', '=', False),
             ('display_type', '!=', 'tax')
         ]
@@ -124,6 +125,7 @@ class L10n_InReportHandler(models.AbstractModel):
             'OTH-OTHERS',
         ]
         domain = aml_domain + [
+                    ('l10n_in_gstr_section', '!=', 'sale_out_of_scope'),
                     ('product_id.l10n_in_hsn_code', 'not =ilike', '99%'),
                     ('product_id.uom_id.l10n_in_code', 'not in', uqc_codes),
                 ]
@@ -187,7 +189,6 @@ class L10n_InReportHandler(models.AbstractModel):
         if warnings is not None:
             hsn_base_line_domain = [
                 ('l10n_in_gstr_section', '=like', 'sale%'),
-                ('l10n_in_gstr_section', '!=', 'sale_out_of_scope'),
                 ('display_type', '=', 'product'),
             ]
 
