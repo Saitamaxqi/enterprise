@@ -662,7 +662,7 @@ services reception has been received as well.
         for the current folio number and adjusts the sequence accordingly.
         """
         res = super()._get_last_sequence(relaxed=relaxed, with_prefix=with_prefix)
-        if res and self.country_code == "CL" and self.is_sale_document():
+        if res and self.country_code == "CL" and self.is_sale_document() and self.l10n_latam_document_type_id:
             match = re.search(r'(\d+)$', res)
             if match:
                 folio = int(match.group(1))
