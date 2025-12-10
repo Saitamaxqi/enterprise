@@ -31,3 +31,7 @@ class AccountMove(models.Model):
             'res_model': 'esg.carbon.emission.report',
             'domain': [('move_id', '=', self.id)],
         }
+
+    def copy(self, default=None):
+        context_self = self.with_context(auto_generate_esg_assignation_rule=False)
+        return super(AccountMove, context_self).copy(default)
