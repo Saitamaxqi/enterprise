@@ -712,6 +712,29 @@ class TestCFDIInvoice(TestMxEdiCommon):
                 'state': 'invoice_sent_failed',
             }])
 
+    def test_invoice_negative_lines_on_multiple_lines(self):
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'quantity': quantity,
+                        'price_unit': price_unit,
+                        'tax_ids': [Command.set(self.tax_0.ids)],
+                    })
+                    for quantity, price_unit in (
+                        (1.0, 326.4),
+                        (1.0, 24.0),
+                        (1.0, 172.8),
+                        (1.0, 691.2),
+                        (-1.0, 1149.6),
+                    )
+                ],
+            )
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_invoice_negative_lines_on_multiple_lines')
+
     def test_invoice_payment_policy(self):
         """ Ensure the invoice payment policy isn't override by the partner payment policy. """
         with self.mx_external_setup(self.frozen_today):
