@@ -85,3 +85,8 @@ class ResPartnerBank(models.Model):
         elif checksum == 'mod11_8_9_digits':   # Validate account number with 8 or 9 digits using Mod11 checksum
             return len(account_number) in {8, 9} and mod11_is_valid(account_number)
         return False
+
+    def _se_get_bban_from_iban(self):
+        cleaned_acc_number = self.sanitized_acc_number[4:]
+        clearing_number = 5 if cleaned_acc_number[0] == '8' else 4
+        return cleaned_acc_number[clearing_number:].lstrip('0'), cleaned_acc_number[:clearing_number]

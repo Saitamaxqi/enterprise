@@ -185,7 +185,7 @@ class AccountJournal(models.Model):
             PmtInf.append(self._get_Dbtr(group_payment_method_code))
             PmtInf.append(self._get_DbtrAcct(group_payment_method_code))
             DbtrAgt = etree.SubElement(PmtInf, "DbtrAgt")
-            DbtrAgt.append(self._get_FinInstnId(self.bank_account_id, group_payment_method_code))
+            DbtrAgt.append(self._get_FinInstnId(self.bank_account_id, group_payment_method_code, mode='DbtrAgt'))
             unique_chrgbr_values = {payment.get('iso20022_charge_bearer') for payment in payments_list}
             unique_chrgbr = unique_chrgbr_values.pop() if len(unique_chrgbr_values) == 1 else None
             if unique_chrgbr:
@@ -333,10 +333,10 @@ class AccountJournal(models.Model):
 
     def _get_CdtrAgt(self, bank_account, payment_method_code):
         CdtrAgt = etree.Element("CdtrAgt")
-        CdtrAgt.append(self._get_FinInstnId(bank_account, payment_method_code))
+        CdtrAgt.append(self._get_FinInstnId(bank_account, payment_method_code, mode='CdtrAgt'))
         return CdtrAgt
 
-    def _get_FinInstnId(self, bank_account, payment_method_code):
+    def _get_FinInstnId(self, bank_account, payment_method_code, mode=None):
         FinInstnId = etree.Element("FinInstnId")
         bic_code = self._get_cleaned_bic_code(bank_account, payment_method_code)
         if bic_code:
