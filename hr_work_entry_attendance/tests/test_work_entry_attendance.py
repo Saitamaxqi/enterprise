@@ -100,12 +100,12 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
             * check that times are all stored in utc and are not improperly converted
         """
         self.employee.version_id.resource_calendar_id.tz = 'Asia/Tokyo'
-
+        self.employee.tz = 'Asia/Tokyo'
         monday_morning_tokyo = datetime(2024, 10, 20, 22, 0, 0)  # 22:00 sunday utc = 7:00 monday tokyo
         self.env['hr.attendance'].create({
             'employee_id': self.employee.id,
             'check_in': monday_morning_tokyo,
-            'check_out': monday_morning_tokyo.replace(day=21, hour=6),  # 16:00
+            'check_out': monday_morning_tokyo.replace(day=21, hour=7),  # 16:00
         })
         self.contract.generate_work_entries(date(2024, 10, 21), date(2024, 10, 21))
 

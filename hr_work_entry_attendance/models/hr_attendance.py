@@ -124,5 +124,5 @@ class HrAttendance(models.Model):
             res = super().unlink()
         if work_entries:
             slots = [{'date': work_entry.date, 'employee_id': work_entry.employee_id.id} for work_entry in work_entries]
-            self.env["hr.work.entry.regeneration.wizard"].regenerate_work_entries(slots=slots, record_ids=work_entries.ids)
+            self.env["hr.work.entry.regeneration.wizard"].sudo().regenerate_work_entries(slots=slots, record_ids=work_entries.ids)
         return res
