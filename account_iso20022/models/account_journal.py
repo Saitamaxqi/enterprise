@@ -183,7 +183,7 @@ class AccountJournal(models.Model):
             PmtInf.append(ReqdExctnDt)
 
             PmtInf.append(self._get_Dbtr(group_payment_method_code))
-            PmtInf.append(self._get_DbtrAcct(group_payment_method_code, payments_list))
+            PmtInf.append(self._get_DbtrAcct(group_payment_method_code))
             DbtrAgt = etree.SubElement(PmtInf, "DbtrAgt")
             DbtrAgt.append(self._get_FinInstnId(self.bank_account_id, group_payment_method_code))
             unique_chrgbr_values = {payment.get('iso20022_charge_bearer') for payment in payments_list}
@@ -256,6 +256,7 @@ class AccountJournal(models.Model):
         Dbtr.extend(self._get_company_PartyIdentification32(postal_address=True, payment_method_code=payment_method_code))
         return Dbtr
 
+    # TODO: remove payments arg in master
     def _get_DbtrAcct(self, payment_method_code=None, payments=None):
         if not self.bank_account_id.sanitized_acc_number:
             raise UserError(_("This journal does not have a bank account defined."))
@@ -270,6 +271,7 @@ class AccountJournal(models.Model):
         Ccy.text = self.currency_id and self.currency_id.name or self.company_id.currency_id.name
         return DbtrAcct
 
+    # TODO: remove partner_acc_type arg in master
     def _get_DbtrAcctOthr(self, payment_method_code=None, partner_acc_type=None):
         Othr = etree.Element("Othr")
         OthrId = etree.SubElement(Othr, "Id")
