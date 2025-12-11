@@ -578,6 +578,7 @@ class TestL10nClDte(TestL10nClEdiCommon):
             self.skipTest("Demo data not installed: l10n_cl_edi.l10n_cl_demo_certificate")
         self.assertEqual(cert.sudo().subject_serial_number, "23841194-7")
 
+    @freeze_time('2025-12-11T14:00:00', tz_offset=3)
     def test_zero_amount_invoice_in_foreign_currency(self):
         """
         Test that confirming an invoice with zero total in a foreign currency
@@ -588,6 +589,7 @@ class TestL10nClDte(TestL10nClEdiCommon):
             'move_type': 'out_invoice',
             'currency_id': self.env.ref('base.USD').id,
             'journal_id': self.sale_journal.id,
+            'invoice_date': '2025-12-11',
             'l10n_latam_document_type_id': self.env.ref('l10n_cl.dc_y_f_dte').id,
             'invoice_line_ids': [(0, 0, {
                 'product_id': self.product_a.id,
