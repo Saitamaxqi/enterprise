@@ -1,4 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+from __future__ import annotations
 
 import ast
 import base64
@@ -9,6 +10,7 @@ import io
 import itertools
 import json
 import logging
+import typing
 import re
 from ast import literal_eval
 from collections import defaultdict
@@ -30,6 +32,9 @@ from odoo.tools.float_utils import float_round, float_compare
 from odoo.tools.mail import html_to_inner_content
 from odoo.tools.misc import file_path, format_date, formatLang
 from odoo.tools.safe_eval import expr_eval, safe_eval
+
+if typing.TYPE_CHECKING:
+    from collections.abc import Collection
 
 _lt = LazyTranslate(__name__)
 _logger = logging.getLogger(__name__)
@@ -5362,8 +5367,8 @@ class AccountReport(models.Model):
             domain &= dates_domain
 
         order = 'create_date ASC' if options['export_mode'] else ''
-        annotations = self.env['account.report.annotation'].search(domain, order=order)
-        for annotation in annotations:
+        report_annotations = self.env['account.report.annotation'].search(domain, order=order)
+        for annotation in report_annotations:
             message = annotation.message_id
             for line_id in line_dict_ids_by_record[message.model, message.res_id]:
                 annotations_by_line[line_id].append({
@@ -5412,8 +5417,8 @@ class AccountReport(models.Model):
 
     def _get_last_comments_by_line(self, options, lines):
         annotations_by_line = self.get_annotations(options, lines)
-        for line, annotations in annotations_by_line.items():
-            last_annotation = annotations[0]['body'] if annotations else ''
+        for line, report_annotations in annotations_by_line.items():
+            last_annotation = report_annotations[0]['body'] if report_annotations else ''
             annotations_by_line[line] = markupsafe.Markup('<br/>').join(html2plaintext(last_annotation).split("\n"))
         return annotations_by_line
 
@@ -6312,7 +6317,7 @@ class AccountReport(models.Model):
 
         print_mode_self = self.with_context(no_format=True)
         lines = self._filter_out_folded_children(print_mode_self._get_lines(options))
-        annotations = self.get_annotations(options, lines)
+        report_annotations = self.get_annotations(options, lines)
 
         # For reports with lines generated for accounts, the account name and codes are shown in a single column.
         # To help user post-process the report if they need, we should in such a case split the account name and code in two columns.
@@ -6372,7 +6377,7 @@ class AccountReport(models.Model):
                 horizontal_group_name = next((group['name'] for group in options['available_horizontal_groups'] if group['id'] == options['selected_horizontal_group_id']), None)
                 write_cell(sheet, x_offset, y_offset, horizontal_group_name, title_format)
                 x_offset += 1
-            if annotations:
+            if report_annotations:
                 annotations_x_offset = x_offset
                 write_cell(sheet, annotations_x_offset, y_offset, 'Annotations', title_format)
                 x_offset += 1
@@ -6475,7 +6480,7 @@ class AccountReport(models.Model):
                 write_cell(sheet, x + line.get('colspan', 1) - 1, y + y_offset, cell_value, cell_format, datetime=cell_type == 'date')
 
             # Write annotations.
-            if annotations and (line_annotations := annotations.get(line['id'])):
+            if report_annotations and (line_annotations := report_annotations.get(line['id'])):
                 line_annotation_text = []
                 record_to_number_map = {}
                 for line_annotation in line_annotations:
@@ -7364,6 +7369,16 @@ class AccountReportLine(models.Model):
     _inherit = 'account.report.line'
 
     display_custom_groupby_warning = fields.Boolean(compute='_compute_display_custom_groupby_warning')
+
+    def fetch(self, field_names: Collection[str] | None = None) -> None:
+        super().fetch(field_names)
+        # TODO remove in master: `account_or_unaff_id` falls back to `account_id`
+        if field_names is None or 'groupby' in field_names or 'user_groupby' in field_names:
+            for line in self:
+                if 'account_or_unaff_id' in (line.groupby or ''):
+                    line.groupby = line.groupby.replace('account_or_unaff_id', 'account_id')
+                if 'account_or_unaff_id' in (line.user_groupby or ''):
+                    line.user_groupby = line.user_groupby.replace('account_or_unaff_id', 'account_id')
 
     @api.depends('groupby', 'user_groupby')
     def _compute_display_custom_groupby_warning(self):
