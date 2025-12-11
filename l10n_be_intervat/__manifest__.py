@@ -14,6 +14,9 @@ your electronic VAT declarations.
         'views/res_config_settings_views.xml',
         'wizard/vat_return_lock_wizard.xml',
     ],
+    'demo': [
+        'demo/demo_company.xml',
+    ],
     'installable': True,
     'auto_install': ['l10n_be', 'l10n_be_reports'],
     'license': 'OEEL-1',
