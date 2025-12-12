@@ -3,6 +3,7 @@
 from freezegun import freeze_time
 from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
+from markupsafe import Markup
 
 from odoo.tests import Form
 from odoo.tests.common import TransactionCase
@@ -66,6 +67,8 @@ class TestHrAppraisal(TransactionCase):
             'duration_next_appraisal': cls.duration_next_appraisal,
         })
         cls.appraisal_rating = cls.env['hr.appraisal.note'].create({'name': 'Exceeds expectations'})
+        cls.employee_feedback = Markup("<span>Employee Feedback</span>")
+        cls.manager_feedback = Markup("<span>Manager Feedback</span>")
 
     def test_hr_appraisal(self):
         with freeze_time(date.today() + relativedelta(months=6)):
@@ -272,3 +275,22 @@ class TestHrAppraisal(TransactionCase):
         appraisal_campaign_form.appraisal_template_id = appraisal_template
         appraisal_campaign = appraisal_campaign_form.save()
         appraisal_campaign.action_generate_appraisals()
+
+    def _set_appraisal_data(self, appraisal):
+        appraisal.employee_feedback = self.employee_feedback
+        appraisal.manager_feedback = self.manager_feedback
+        appraisal.assessment_note = self.appraisal_rating
+
+    def test_reopen_appraisal(self):
+        appraisal = self.HrAppraisal.create({
+            'employee_id': self.hr_employee.id,
+            'date_close': date.today() + relativedelta(months=1),
+            'state': '2_pending',
+        })
+        self._set_appraisal_data(appraisal)
+        appraisal.action_done()
+        appraisal.action_reopen()
+        self.assertEqual(appraisal.state, '2_pending', "A reopened appraisal should be in the pending state")
+        self.assertEqual(appraisal.employee_feedback, self.employee_feedback, "Employee feedback should stay the same after the appraisal is reopened")
+        self.assertEqual(appraisal.manager_feedback, self.manager_feedback, "Manager feedback should stay the same after the appraisal is reopened")
+        self.assertEqual(appraisal.assessment_note, self.appraisal_rating, "Appraisal rating shouldn't change when an appraisal is reopened")

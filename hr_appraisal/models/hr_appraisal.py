@@ -500,6 +500,10 @@ class HrAppraisal(models.Model):
 
     def action_back(self):
         self.state = '1_new'
+        self.assessment_note = False
+
+    def action_reopen(self):
+        self.state = '2_pending'
 
     def action_open_employee_appraisals(self):
         self.ensure_one()
