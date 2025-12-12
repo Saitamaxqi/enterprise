@@ -419,3 +419,10 @@ class PosConfig(models.Model):
         self.env['ir.config_parameter'].sudo().set_param('pos_urban_piper.toggle_state', json.dumps(config_state))
         self._notify('URBAN_PIPER_PROVIDER_STATES', config_state[str(self.id)])
         return config_state[str(self.id)]
+
+    def get_urbanpiper_special_products(self):
+        return [
+            self.env.ref("pos_urban_piper.product_other_charges", raise_if_not_found=False),
+            self.env.ref("pos_urban_piper.product_delivery_charges", raise_if_not_found=False),
+            self.env.ref("pos_urban_piper.product_packaging_charges", raise_if_not_found=False),
+        ]
