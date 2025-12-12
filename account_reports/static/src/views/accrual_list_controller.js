@@ -1,5 +1,6 @@
 import { reactive, useEnv, useRef } from "@odoo/owl";
 import { useDateTimePicker } from "@web/core/datetime/datetime_picker_hook";
+import { serializeDate } from "@web/core/l10n/dates";
 import { ListController } from "@web/views/list/list_controller";
 
 const { DateTime } = luxon;
@@ -12,7 +13,7 @@ export class AccrualListController extends ListController {
         this.state = reactive({
             date: DateTime.now(),
         });
-        this.dateAsString = this.state.date.toFormat("yyyy-MM-dd");
+        this.dateAsString = serializeDate(this.state.date);
         if (this.model.config.resModel === "purchase.order.line") {
             this.model.config.fields.qty_received_at_date.aggregator = "sum";
         } else {
@@ -58,7 +59,7 @@ export class AccrualListController extends ListController {
     }
 
     async setDate(date) {
-        this.dateAsString = date.toFormat("yyyy-MM-dd");
+        this.dateAsString = serializeDate(date);
         this.model.config.context.accrual_entry_date = this.dateAsString;
         this.accrualContext.accrual_entry_date = this.dateAsString;
         this.state.date = date;
