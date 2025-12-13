@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 19:07+0000\n"
+"POT-Creation-Date: 2025-12-12 19:05+0000\n"
 "PO-Revision-Date: 2025-11-18 17:12+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19-l10n/"
@@ -358,6 +358,35 @@ msgid "Iqama Annual Amount"
 msgstr ""
 
 #. module: l10n_sa_hr_payroll
+#. odoo-python
+#: code:addons/l10n_sa_hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
+msgid ""
+"Kindly configure the company's MoL Establishment ID by navigating to: "
+"Payroll Configuration → Settings → Saudi Arabia Payroll."
+msgstr ""
+
+#. module: l10n_sa_hr_payroll
+#. odoo-python
+#: code:addons/l10n_sa_hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
+msgid ""
+"Kindly configure the establishment's bank account by navigating to: Payroll "
+"Configuration → Settings → Saudi Arabia Payroll."
+msgstr ""
+
+#. module: l10n_sa_hr_payroll
+#. odoo-python
+#: code:addons/l10n_sa_hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
+msgid ""
+"Kindly set the Saudi National/IQAMA ID for the employees by navigating to: "
+"the Employee Form → Payroll Tab → Saudi Payroll Information section."
+msgstr ""
+
+#. module: l10n_sa_hr_payroll
+#: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_hr_employee__l10n_sa_leaves_count_compensable
+msgid "L10N Sa Leaves Count Compensable"
+msgstr ""
+
+#. module: l10n_sa_hr_payroll
 #: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_hr_departure_reason__l10n_sa_reason_type
 msgid "L10N Sa Reason Type"
 msgstr ""
@@ -457,6 +486,12 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #. odoo-python
 #: code:addons/l10n_sa_hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
+msgid "Missing bank for company bank account"
+msgstr ""
+
+#. module: l10n_sa_hr_payroll
+#. odoo-python
+#: code:addons/l10n_sa_hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "Missing establishment code on the company bank %s"
 msgstr ""
 
@@ -494,11 +529,6 @@ msgstr ""
 #. module: l10n_sa_hr_payroll
 #: model:ir.model.constraint,message:l10n_sa_hr_payroll.constraint_hr_version_l10n_sa_hr_payroll_number_of_days_constraint
 msgid "Number of Days must be equal to or greater than 0"
-msgstr ""
-
-#. module: l10n_sa_hr_payroll
-#: model:ir.model.fields,field_description:l10n_sa_hr_payroll.field_hr_employee__l10n_sa_leaves_count_compensable
-msgid "Number of Time Off Eligible for Compensation"
 msgstr ""
 
 #. module: l10n_sa_hr_payroll
@@ -565,18 +595,6 @@ msgstr "إيصال الدفع"
 #. module: l10n_sa_hr_payroll
 #: model:ir.actions.report,name:l10n_sa_hr_payroll.action_report_advance_and_loan
 msgid "Payslip Salary Advance and Loan"
-msgstr ""
-
-#. module: l10n_sa_hr_payroll
-#. odoo-python
-#: code:addons/l10n_sa_hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
-msgid "Please set the MoL Establishment ID in the settings."
-msgstr ""
-
-#. module: l10n_sa_hr_payroll
-#. odoo-python
-#: code:addons/l10n_sa_hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
-msgid "Please set the establishment's bank account in the settings"
 msgstr ""
 
 #. module: l10n_sa_hr_payroll
@@ -721,12 +739,6 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_sa_hr_payroll.field_hr_salary_attachment__other_input_type_code
 msgid "The code that can be used in the salary rules"
 msgstr "الكود الذي يمكن استخدامه في قواعد الراتب"
-
-#. module: l10n_sa_hr_payroll
-#. odoo-python
-#: code:addons/l10n_sa_hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
-msgid "The debit date cannot be later than the value date"
-msgstr ""
 
 #. module: l10n_sa_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_sa_hr_payroll.report_payslip_sa

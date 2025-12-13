@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 19:03+0000\n"
-"PO-Revision-Date: 2025-12-05 10:58+0000\n"
-"Last-Translator: Philippe Lang <philippe.lang@colab.ch>\n"
+"POT-Creation-Date: 2025-12-12 19:02+0000\n"
+"PO-Revision-Date: 2025-12-13 09:32+0000\n"
+"Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_ch_hr_payroll/fr/>\n"
 "Language: fr\n"
@@ -1897,7 +1897,7 @@ msgstr "AG"
 #. odoo-javascript
 #: code:addons/l10n_ch_hr_payroll/static/src/fields/salary_result/salary_result.xml:0
 msgid "AHV-AVS Quittance"
-msgstr "Quittance AHV-AVS"
+msgstr "Quittance AVS"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7011
@@ -5939,6 +5939,7 @@ msgid "Ijm Institution"
 msgstr "Institution IJM"
 
 #. module: l10n_ch_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_leave__l10n_ch_swissdec_payroll_impact
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_leave_type__l10n_ch_swissdec_payroll_impact
 msgid "Impacts Swiss Payroll"
 msgstr "Impacte la paie suisse"
@@ -11358,7 +11359,7 @@ msgstr "Taux d'occupation total"
 #. odoo-javascript
 #: code:addons/l10n_ch_hr_payroll/static/src/fields/salary_result/salary_result.xml:0
 msgid "Total-AHV-AVS-Incomes:"
-msgstr "Total des revenus AVS (AHV) :"
+msgstr "Total des revenus AVS :"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-javascript

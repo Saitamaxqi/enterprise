@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 19:03+0000\n"
+"POT-Creation-Date: 2025-12-12 19:02+0000\n"
 "PO-Revision-Date: 2025-12-04 11:19+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19-l10n/"
@@ -5942,6 +5942,7 @@ msgid "Ijm Institution"
 msgstr "Istituzione IGM"
 
 #. module: l10n_ch_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_leave__l10n_ch_swissdec_payroll_impact
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_leave_type__l10n_ch_swissdec_payroll_impact
 msgid "Impacts Swiss Payroll"
 msgstr "Impatti sui salari svizzeri"

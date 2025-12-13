@@ -9,13 +9,14 @@
 # Larissa Manderfeld, 2025
 # "Larissa Manderfeld (lman)" <lman@odoo.com>, 2025.
 # Olivier Jossen <olivier.jossen@braintec.com>, 2025.
+# Virginie Blanc <virginie.blanc@mgmaudio.ch>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 19:03+0000\n"
-"PO-Revision-Date: 2025-12-02 10:20+0000\n"
-"Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
+"POT-Creation-Date: 2025-12-12 19:02+0000\n"
+"PO-Revision-Date: 2025-12-13 09:32+0000\n"
+"Last-Translator: Virginie Blanc <virginie.blanc@mgmaudio.ch>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_ch_hr_payroll/de/>\n"
 "Language: de\n"
@@ -5931,6 +5932,7 @@ msgid "Ijm Institution"
 msgstr "KTG-Institut"
 
 #. module: l10n_ch_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_leave__l10n_ch_swissdec_payroll_impact
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_leave_type__l10n_ch_swissdec_payroll_impact
 msgid "Impacts Swiss Payroll"
 msgstr "Hat Auswirkung auf Schweizer Personalabrechnung"
@@ -8899,7 +8901,7 @@ msgstr "Dauerhaftes Personal für öffentliche Verwaltungen"
 #. module: l10n_ch_hr_payroll
 #: model:hr.contract.type,name:l10n_ch_hr_payroll.l10n_ch_contract_type_indefiniteSalaryMth
 msgid "Permanent contract with monthly salary"
-msgstr "Unbfristeter Arbeitsvertrag mit monatlichem Gehalt"
+msgstr "Unbefristeter Arbeitsvertrag mit monatlichem Gehalt"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.contract.type,name:l10n_ch_hr_payroll.l10n_ch_contract_type_indefiniteSalaryMthAWT

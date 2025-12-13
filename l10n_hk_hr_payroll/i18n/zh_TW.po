@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-13 20:01+0000\n"
+"POT-Creation-Date: 2025-12-12 19:03+0000\n"
 "PO-Revision-Date: 2025-11-18 17:11+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -761,6 +761,11 @@ msgid "A benefit in kind is paid for the employee's internet subcription."
 msgstr ""
 
 #. module: l10n_hk_hr_payroll
+#: model:ir.model.fields,field_description:l10n_hk_hr_payroll.field_hr_work_entry_type__l10n_hk_use_713
+msgid "ADW Calculation"
+msgstr ""
+
+#. module: l10n_hk_hr_payroll
 #: model:ir.model.fields,field_description:l10n_hk_hr_payroll.field_l10n_hk_rental__active
 msgid "Active"
 msgstr "啟用"
@@ -1080,6 +1085,13 @@ msgid ""
 "Calculated as per the Employment (Amendment) Ordinance 2007: (Total of fully "
 "paid wages earned in the 12-month period) / (Total number of fully paid days "
 "in that period)."
+msgstr ""
+
+#. module: l10n_hk_hr_payroll
+#: model:ir.model.fields,help:l10n_hk_hr_payroll.field_hr_work_entry_type__l10n_hk_use_713
+msgid ""
+"Calculates the employee’s pay according to the Average Daily Wage (ADW) "
+"rules under Hong Kong employment regulations."
 msgstr ""
 
 #. module: l10n_hk_hr_payroll
@@ -2252,7 +2264,6 @@ msgstr ""
 
 #. module: l10n_hk_hr_payroll
 #: model:ir.actions.act_window,name:l10n_hk_hr_payroll.l10n_hk_manulife_mpf_action
-#: model:ir.ui.menu,name:l10n_hk_hr_payroll.menu_l10n_hk_manulife_mpf
 #: model_terms:ir.ui.view,arch_db:l10n_hk_hr_payroll.l10n_hk_manulife_mpf_view_form
 msgid "Manulife MPF Sheet"
 msgstr ""
@@ -2735,7 +2746,7 @@ msgstr "原因"
 
 #. module: l10n_hk_hr_payroll
 #: model:ir.model.fields,field_description:l10n_hk_hr_payroll.field_hr_departure_reason__l10n_hk_ir56f_code
-msgid "Reason for cessation"
+msgid "Reason For Cessation (IR56F)"
 msgstr ""
 
 #. module: l10n_hk_hr_payroll
@@ -3273,11 +3284,6 @@ msgid "Type Of Form"
 msgstr ""
 
 #. module: l10n_hk_hr_payroll
-#: model:ir.model.fields,field_description:l10n_hk_hr_payroll.field_hr_work_entry_type__l10n_hk_use_713
-msgid "Use 713"
-msgstr ""
-
-#. module: l10n_hk_hr_payroll
 #: model:ir.model.fields,field_description:l10n_hk_hr_payroll.field_res_company__l10n_hk_use_mpf_offsetting
 #: model:ir.model.fields,field_description:l10n_hk_hr_payroll.field_res_config_settings__l10n_hk_use_mpf_offsetting
 msgid "Use MPF Offsetting"
@@ -3493,6 +3499,11 @@ msgstr ""
 #. module: l10n_hk_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_hk_hr_payroll.report_ir56g
 msgid "company that are not yet exercised, assigned or released (Please ✓):"
+msgstr ""
+
+#. module: l10n_hk_hr_payroll
+#: model:ir.ui.menu,name:l10n_hk_hr_payroll.menu_l10n_hk_manulife_mpf
+msgid "eMPF Contributions"
 msgstr ""
 
 #. module: l10n_hk_hr_payroll
