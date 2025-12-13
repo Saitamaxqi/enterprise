@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-11-20 08:15+0000\n"
+"POT-Creation-Date: 2025-12-12 18:42+0000\n"
+"PO-Revision-Date: 2025-12-10 10:30+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "sale_renting/id/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: sale_renting
 #. odoo-python
@@ -764,6 +764,12 @@ msgid "Next Action"
 msgstr "Aksi Selanjutnya"
 
 #. module: sale_renting
+#. odoo-python
+#: code:addons/sale_renting/models/sale_order_recurrence.py:0
+msgid "Night"
+msgstr ""
+
+#. module: sale_renting
 #: model:sale.temporal.recurrence,name:sale_renting.recurrence_nightly
 msgid "Nightly"
 msgstr ""
@@ -776,6 +782,8 @@ msgstr ""
 "Periode-periode malam tidak dapat digabungkan dengan periode rental lainnya."
 
 #. module: sale_renting
+#. odoo-python
+#: code:addons/sale_renting/models/sale_order_recurrence.py:0
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__night
 msgid "Nights"
 msgstr ""
@@ -1365,7 +1373,7 @@ msgstr "Pesanan sudah dikembalikkan."
 #. module: sale_renting
 #: model:ir.model.constraint,message:sale_renting.constraint_sale_temporal_recurrence_check_pickup_time
 msgid "The pickup time has to be between 0 and 24."
-msgstr ""
+msgstr "Waktu pickup harus antara 0 dan 24."
 
 #. module: sale_renting
 #: model:ir.model.constraint,message:sale_renting.constraint_sale_temporal_recurrence_temporal_recurrence_duration
@@ -1405,7 +1413,7 @@ msgstr "Tanggal mulai rental harus sebelum tanggal pengembalian rental."
 #. module: sale_renting
 #: model:ir.model.constraint,message:sale_renting.constraint_sale_temporal_recurrence_check_return_time
 msgid "The return time has to be between 0 and 24."
-msgstr ""
+msgstr "Waktu pengembalian harus antara 0 dan 24."
 
 #. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.rental_order_today_pickup_action

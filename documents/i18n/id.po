@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-05 18:41+0000\n"
-"PO-Revision-Date: 2025-12-06 10:10+0000\n"
+"PO-Revision-Date: 2025-12-10 10:29+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "documents/id/>\n"
@@ -1790,7 +1790,7 @@ msgstr "Dokumen / Partner"
 #. module: documents
 #: model:ir.model,name:documents.model_documents_access_tracking
 msgid "Document Access Tracking"
-msgstr ""
+msgstr "Pelacak Akses Dokumen"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_res_partner__document_count
@@ -1912,12 +1912,12 @@ msgstr "Link Dokumen ke Record"
 #. module: documents
 #: model:ir.model,name:documents.model_documents_operation
 msgid "Documents Operation"
-msgstr ""
+msgstr "Operasi Dokumen"
 
 #. module: documents
 #: model:ir.model,name:documents.model_documents_sharing
 msgid "Documents Sharing"
-msgstr ""
+msgstr "Pembagian Dokumen"
 
 #. module: documents
 #: model:ir.actions.client,name:documents.document_action_preference
@@ -1985,7 +1985,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model,name:documents.model_documents_sharing_access
 msgid "Documents share access"
-msgstr ""
+msgstr "Akses pembagian dokumen"
 
 #. module: documents
 #. odoo-javascript
@@ -2001,7 +2001,7 @@ msgstr "Documents unlink mixin"
 #. module: documents
 #: model:ir.actions.server,name:documents.ir_cron_documents_access_tracking_ir_actions_server
 msgid "Documents: Access Tracking"
-msgstr ""
+msgstr "Dokumen: Pelacakan Akses"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
@@ -3799,7 +3799,7 @@ msgstr "Kirim Ke Finance"
 #. module: documents
 #: model:ir.actions.server,name:documents.ir_actions_server_send_to_finance
 msgid "Send to Finance"
-msgstr ""
+msgstr "Kirim ke Finance"
 
 #. module: documents
 #: model:mail.template,description:documents.mail_template_document_request

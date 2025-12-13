@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-14 18:42+0000\n"
-"PO-Revision-Date: 2025-12-06 09:52+0000\n"
+"POT-Creation-Date: 2025-12-12 18:44+0000\n"
+"PO-Revision-Date: 2025-12-11 10:23+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/ja/>\n"
@@ -37,6 +37,18 @@ msgstr "」勘定残高は次のものに影響されています:"
 #: code:addons/account_reports/models/account_journal_report.py:0
 msgid "%(journal)s - %(account)s"
 msgstr "%(journal)s - %(account)s"
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "%(line_name)s - %(company)s"
+msgstr ""
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "%(line_name)s - %(company_name)s"
+msgstr ""
 
 #. module: account_reports
 #. odoo-python
@@ -100,10 +112,8 @@ msgstr ""
 #: code:addons/account_reports/models/account_report.py:0
 msgid ""
 "'Open General Ledger' caret option is only available form report lines "
-"targetting accounts."
+"targetting accounts or Undistributed Profits/Losses."
 msgstr ""
-"「総勘定元帳を表示」キャレットオプションは、勘定科目を対象とするレポート明細"
-"のみに使用可能となります。"
 
 #. module: account_reports
 #. odoo-python
@@ -2631,7 +2641,8 @@ msgstr "利益配分"
 msgid ""
 "Editing a manual report line is not allowed when multiple companies are "
 "selected."
-msgstr "複数会社が選択されている時に、手動レポート明細の編集はできません。"
+msgstr ""
+"マルチカンパニーが選択されている時に、手動レポート明細の編集はできません。"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_send__checkbox_send_mail
@@ -3756,6 +3767,7 @@ msgstr "仕訳明細"
 #. odoo-javascript
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
+#: code:addons/account_reports/models/account_general_ledger.py:0
 #: code:addons/account_reports/models/account_report.py:0
 #: code:addons/account_reports/models/account_return.py:0
 #: code:addons/account_reports/models/account_trial_balance_report.py:0
@@ -3914,6 +3926,11 @@ msgstr "以降"
 #: model:ir.ui.menu,name:account_reports.account_reports_audit_menu
 msgid "Ledgers"
 msgstr "元帳"
+
+#. module: account_reports
+#: model:account.report.line,name:account_reports.account_financial_report_allocations_withdrawals0
+msgid "Less Allocations and Plus Withdrawals"
+msgstr ""
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_cost_sales0
@@ -4241,6 +4258,11 @@ msgstr "生成された文書の命名。"
 #: model:account.report.line,name:account_reports.account_financial_report_net_profit0
 msgid "Net Profit"
 msgstr "純利益"
+
+#. module: account_reports
+#: model:account.report.line,name:account_reports.account_financial_report_net_profit_after_allocations0
+msgid "Net Profit Left After Allocations and Withdrawals"
+msgstr ""
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_net_assets0
@@ -6540,6 +6562,12 @@ msgid "Undefined"
 msgstr "未定義"
 
 #. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "Undistributed Profits/Losses"
+msgstr ""
+
+#. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Unfold All"
@@ -7187,6 +7215,13 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/multicurrency_revaluation_report/warnings.xml:0
 msgid "⇒ Reset to Odoo’s Rate"
 msgstr "Odooのレート⇒リセット"
+
+#~ msgid ""
+#~ "'Open General Ledger' caret option is only available form report lines "
+#~ "targetting accounts."
+#~ msgstr ""
+#~ "「総勘定元帳を表示」キャレットオプションは、勘定科目を対象とするレポート明"
+#~ "細のみに使用可能となります。"
 
 #~ msgid "days after tax period"
 #~ msgstr "課税期間後の日数"

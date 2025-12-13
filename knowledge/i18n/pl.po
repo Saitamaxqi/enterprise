@@ -4,22 +4,23 @@
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# "Marta (wacm)" <wacm@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-11-14 16:59+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-12-10 10:30+0000\n"
+"Last-Translator: \"Marta (wacm)\" <wacm@odoo.com>\n"
 "Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/knowledge/"
 "pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.12.2\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && "
+"(n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4978,7 +4979,7 @@ msgstr "Przenieś do Prywatnych"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.js:0
 msgid "Move to Shared"
-msgstr "Przenieś do Współdzielonych"
+msgstr "Przenieś do współdzielonego"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5389,13 +5390,13 @@ msgstr "Ścieżka rodzica"
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_template_view_form
 msgid "Parent Template"
-msgstr "Szablon rodzica"
+msgstr "Szablon nadrzędny"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_member__partner_id
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_member_view_search
 msgid "Partner"
-msgstr "Kontrahent"
+msgstr "Partner"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_shared_todos_pay_the_electricity_bill
@@ -5462,7 +5463,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid "Pluralize the trademark (e.g.<em>YourCompanies</em>)"
-msgstr "Pluralizuj znak towarowy (np.<em>TwojeFirmy</em>)"
+msgstr "Użyj liczby mnogiej znaku towarowego (np.<em>TwojeFirmy</em>)"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter

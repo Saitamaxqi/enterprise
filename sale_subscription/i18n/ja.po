@@ -9,12 +9,13 @@
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Junko Augias (juau)" <juau@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Yoshi Tashiro <tashiro@quartile.co>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-12-06 09:59+0000\n"
+"PO-Revision-Date: 2025-12-10 10:28+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "sale_subscription/ja/>\n"
@@ -2049,7 +2050,8 @@ msgstr "日"
 msgid ""
 "Define if price must be prorated or not for incomplete periods (upsell, "
 "calendar alignment, etc.)"
-msgstr ""
+msgstr "不完全な期間(アップセル、カレンダー調整など)について、価格を日割り計算するか"
+"どうかを定義します。"
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_product_product__allow_one_time_sale
@@ -2533,7 +2535,7 @@ msgstr "請求済"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_order_portal_content_inherit
 msgid "Invoicing Address"
-msgstr "請求住所"
+msgstr "請求先"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order__is_batch
@@ -2900,12 +2902,12 @@ msgstr "新規顧客情報"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_change_customer_wizard__partner_shipping_id
 msgid "New Delivery Address"
-msgstr "新規配送先住所"
+msgstr "新規配送先"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_change_customer_wizard__partner_invoice_id
 msgid "New Invoice Address"
-msgstr "新規請求先住所"
+msgstr "新規請求先"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order_log__recurring_monthly
@@ -4310,7 +4312,7 @@ msgstr "繰延設定が正しく設定されていません。サブスクリプ
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_order_portal_content_inherit
 msgid "The delivery address can not be changed."
-msgstr "配送先住所は変更することはできません。"
+msgstr "配送先は変更することはできません。"
 
 #. module: sale_subscription
 #: model:ir.model.constraint,message:sale_subscription.constraint_sale_order_template_check_duration_value

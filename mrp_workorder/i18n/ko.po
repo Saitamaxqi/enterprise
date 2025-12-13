@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-05 18:42+0000\n"
-"PO-Revision-Date: 2025-12-06 09:54+0000\n"
+"PO-Revision-Date: 2025-12-11 10:23+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "mrp_workorder/ko/>\n"
@@ -820,7 +820,7 @@ msgstr "최근 본 내용"
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.xml:0
 msgid "Load All Manufacturing Orders"
-msgstr ""
+msgstr "모든 제조지시서 불러오기"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -1045,7 +1045,7 @@ msgstr "작업지시가 없습니다!"
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_point_view_form_inherit_mrp
 msgid "No worksheet yet !"
-msgstr ""
+msgstr "아직 워크시트가 없습니다!"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__note

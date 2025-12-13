@@ -32,7 +32,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-14 18:42+0000\n"
+"POT-Creation-Date: 2025-12-12 18:44+0000\n"
 "PO-Revision-Date: 2025-12-06 09:51+0000\n"
 "Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
@@ -55,6 +55,18 @@ msgstr "\" tilin saldoon vaikuttaa"
 #: code:addons/account_reports/models/account_journal_report.py:0
 msgid "%(journal)s - %(account)s"
 msgstr "%(journal)s - %(account)s"
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "%(line_name)s - %(company)s"
+msgstr ""
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "%(line_name)s - %(company_name)s"
+msgstr ""
 
 #. module: account_reports
 #. odoo-python
@@ -118,10 +130,8 @@ msgstr ""
 #: code:addons/account_reports/models/account_report.py:0
 msgid ""
 "'Open General Ledger' caret option is only available form report lines "
-"targetting accounts."
+"targetting accounts or Undistributed Profits/Losses."
 msgstr ""
-"'Avaa pääkirja' -toiminto on käytettävissä vain tileihin kohdistuvilla "
-"raporttiriveillä."
 
 #. module: account_reports
 #. odoo-python
@@ -207,11 +217,11 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
-"                    <t t-if=\"object.id != object.commercial_partner_id.id\""
-">Hyvä <t t-out=\"object.name or ''\"/> "
-"(<t t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
-"                    <t t-else=\"\">Hyvä <t t-out=\"object.name or ''\"/>,</t>"
-"\n"
+"                    <t t-if=\"object.id != "
+"object.commercial_partner_id.id\">Hyvä <t t-out=\"object.name or ''\"/> (<t "
+"t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
+"                    <t t-else=\"\">Hyvä <t t-out=\"object.name or ''\"/>,</"
+"t>\n"
 "                    <br/>\n"
 "                    Ohessa luettelo avoimista laskuistanne.\n"
 "                    <br/>\n"
@@ -254,11 +264,11 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
-"                   <t t-if=\"object.id != object.commercial_partner_id.id\""
-">Hyvä <t t-out=\"object.name or ''\"/> "
-"(<t t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
-"                   <t t-else=\"\">Hyvä <t t-out=\"object.name or ''\"/>,</t>"
-"\n"
+"                   <t t-if=\"object.id != "
+"object.commercial_partner_id.id\">Hyvä <t t-out=\"object.name or ''\"/> (<t "
+"t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
+"                   <t t-else=\"\">Hyvä <t t-out=\"object.name or ''\"/>,</"
+"t>\n"
 "                   <br/>\n"
 "                    Liitteenä tiliotteenne.\n"
 "                   <br/>\n"
@@ -315,31 +325,33 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p>\n"
-"                    Hyvä <t t-out=\"object.company_id.name\""
-">YrityksenNimi</t>,\n"
+"                    Hyvä <t t-out=\"object.company_id.name\">YrityksenNimi</"
+"t>,\n"
 "                </p>\n"
 "                <p>\n"
 "                    Vastaanotettujen asiakirjojen ja tietojen pohjalta "
 "yrityksen <t t-out=\"object.company_id.name\">YrityksesiNimi</t>\n"
-"                    ALV-ilmoitus ajanjaksolta <t t-out=\"object"
-".type_id._get_period_name"
-"(object.company_id, object.date_from, object.date_to)\"/> on lähetetty.\n"
+"                    ALV-ilmoitus ajanjaksolta <t t-"
+"out=\"object.type_id._get_period_name(object.company_id, object.date_from, "
+"object.date_to)\"/> on lähetetty.\n"
 "                </p>\n"
 "                <p>\n"
-"                    Maksettava summa on <t t-out=\"format_amount"
-"(object.total_amount_to_pay, object.amount_to_pay_currency_id)\"/>.\n"
+"                    Maksettava summa on <t t-"
+"out=\"format_amount(object.total_amount_to_pay, "
+"object.amount_to_pay_currency_id)\"/>.\n"
 "                </p>\n"
 "                <table style=\"border:1px solid black; padding:20px; text-"
 "align:left; border-spacing: 16px;\">\n"
 "                    <tr>\n"
 "                        <td>Maksettava</td>\n"
-"                        <td><t t-out=\"format_amount"
-"(object.total_amount_to_pay, object.amount_to_pay_currency_id)\"/></td>\n"
+"                        <td><t t-"
+"out=\"format_amount(object.total_amount_to_pay, "
+"object.amount_to_pay_currency_id)\"/></td>\n"
 "                    </tr>\n"
 "                    <tr>\n"
 "                        <td>Eräpäivä</td>\n"
-"                        <td><t t-out=\"format_date(object.date_deadline)\""
-"/></td>\n"
+"                        <td><t t-out=\"format_date(object.date_deadline)\"/"
+"></td>\n"
 "                    </tr>\n"
 "                </table>\n"
 "                <p>Ystävällisin terveisin,</p>\n"
@@ -365,8 +377,8 @@ msgid ""
 "send_mail_readonly\"/>"
 msgstr ""
 "<i class=\"fa fa-question-circle ml4\" role=\"img\" aria-label=\"Varoitus\" "
-"title=\"Kumppanin sähköpostiosoite ei ole tiedossa\" invisible="
-"\"not send_mail_readonly\"/>"
+"title=\"Kumppanin sähköpostiosoite ei ole tiedossa\" invisible=\"not "
+"send_mail_readonly\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
@@ -395,8 +407,8 @@ msgid ""
 "success\">Passed</span>"
 msgstr ""
 "<span invisible=\"context.get('in_checks_view') or unresolved_check_count != "
-"0 or resolved_check_count &lt;= 0\" class=\"oe_stat_text ps-0 text-success\""
-">Hyväksytty</span>"
+"0 or resolved_check_count &lt;= 0\" class=\"oe_stat_text ps-0 text-"
+"success\">Hyväksytty</span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
@@ -404,9 +416,8 @@ msgid ""
 "<span invisible=\"context.get('in_checks_view') or unresolved_check_count "
 "&lt;= 0\" class=\"oe_stat_text ps-0 text-danger\">Pending</span>"
 msgstr ""
-"<span invisible="
-"\"context.get('in_checks_view') or unresolved_check_count &lt;= 0\" class="
-"\"oe_stat_text ps-0 text-danger\">Vireillä</span>"
+"<span invisible=\"context.get('in_checks_view') or unresolved_check_count "
+"&lt;= 0\" class=\"oe_stat_text ps-0 text-danger\">Vireillä</span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_kanban_view
@@ -416,8 +427,8 @@ msgid ""
 "records_count\"> </span>"
 msgstr ""
 "<span invisible=\"not records_count or records_count &lt; 21\">20+</span>\n"
-"                                                    <span invisible="
-"\"not records_count\"> </span>"
+"                                                    <span invisible=\"not "
+"records_count\"> </span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.return_creation_wizard_form
@@ -429,13 +440,12 @@ msgid ""
 "show_warning_existing_return\" class=\"fa fa-exclamation-triangle text-"
 "danger pb-2\" title=\"A return already exists for the selected period.\"/>"
 msgstr ""
-"<span invisible=\"not show_warning_wrong_dates\" class="
-"\"fa fa-exclamation-triangle text-danger pb-2\" title="
-"\"Valittu aikaväli ei vastaa mitään tilikautta.\"/>\n"
-"                            <span invisible="
-"\"not show_warning_existing_return\" class="
-"\"fa fa-exclamation-triangle text-danger pb-2\" title="
-"\"Valitulle aikavälille on jo olemassa ilmoitus\"/>"
+"<span invisible=\"not show_warning_wrong_dates\" class=\"fa fa-exclamation-"
+"triangle text-danger pb-2\" title=\"Valittu aikaväli ei vastaa mitään "
+"tilikautta.\"/>\n"
+"                            <span invisible=\"not "
+"show_warning_existing_return\" class=\"fa fa-exclamation-triangle text-"
+"danger pb-2\" title=\"Valitulle aikavälille on jo olemassa ilmoitus\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_form_view
@@ -1484,8 +1494,8 @@ msgid ""
 "By default, Odoo applies its own deadline for returns (shown as 0). Entering "
 "a value here will override it and be used as the new deadline."
 msgstr ""
-"Odoo soveltaa oletuksena omaa veroilmoituksen määräaikaansa (näkyy arvona 0)"
-". Tähän kenttään syötetty arvo korvaa oletuksen ja sitä käytetään uutena "
+"Odoo soveltaa oletuksena omaa veroilmoituksen määräaikaansa (näkyy arvona "
+"0). Tähän kenttään syötetty arvo korvaa oletuksen ja sitä käytetään uutena "
 "määräaikana."
 
 #. module: account_reports
@@ -2533,8 +2543,8 @@ msgstr "Asiakirjan lataus"
 #: model:account.return.check.template,description:account_reports.account_return_check_template_audit_accounting_process
 msgid "Document current accounting processes (especially if done in-house)."
 msgstr ""
-"Dokumentoi nykyiset kirjanpitoprosessit "
-"(erityisesti jos ne hoidetaan sisäisesti)."
+"Dokumentoi nykyiset kirjanpitoprosessit (erityisesti jos ne hoidetaan "
+"sisäisesti)."
 
 #. module: account_reports
 #: model:account.report.column,name:account_reports.journal_report_count
@@ -3467,7 +3477,8 @@ msgstr ""
 #: model:account.return.check.template,description:account_reports.account_return_check_template_outstanding_checks
 msgid ""
 "Identify checks that remain uncashed (lost, forgotten, or to be canceled)"
-msgstr "Tunnista lunastamattomat sekit (kadonneet, unohdetut tai peruutettavat)"
+msgstr ""
+"Tunnista lunastamattomat sekit (kadonneet, unohdetut tai peruutettavat)"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_review_for_capitalizable_expenses
@@ -3800,6 +3811,7 @@ msgstr "Päiväkirjamerkintä"
 #. odoo-javascript
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
+#: code:addons/account_reports/models/account_general_ledger.py:0
 #: code:addons/account_reports/models/account_report.py:0
 #: code:addons/account_reports/models/account_return.py:0
 #: code:addons/account_reports/models/account_trial_balance_report.py:0
@@ -3958,6 +3970,11 @@ msgstr "Myöhemmin"
 #: model:ir.ui.menu,name:account_reports.account_reports_audit_menu
 msgid "Ledgers"
 msgstr "Tilikirjat"
+
+#. module: account_reports
+#: model:account.report.line,name:account_reports.account_financial_report_allocations_withdrawals0
+msgid "Less Allocations and Plus Withdrawals"
+msgstr ""
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_cost_sales0
@@ -4283,6 +4300,11 @@ msgstr "Nimi, joka annetaan luoduille asiakirjoille."
 #: model:account.report.line,name:account_reports.account_financial_report_net_profit0
 msgid "Net Profit"
 msgstr "Nettovoitto"
+
+#. module: account_reports
+#: model:account.report.line,name:account_reports.account_financial_report_net_profit_after_allocations0
+msgid "Net Profit Left After Allocations and Withdrawals"
+msgstr ""
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_net_assets0
@@ -6598,6 +6620,12 @@ msgid "Undefined"
 msgstr "Ei määritelty"
 
 #. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "Undistributed Profits/Losses"
+msgstr ""
+
+#. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Unfold All"
@@ -6735,16 +6763,16 @@ msgid ""
 msgstr ""
 "Varmista, että tilikauden lopussa kirjatut käteis- ja korttitulot maksetaan "
 "seuraavalla tilikaudella. Tarkista myös Dailly*-tehtävien, "
-"diskonttaustoimien sekä laskurahoitussopimusten** oikea kirjanpitokäsittely."
-"\n"
+"diskonttaustoimien sekä laskurahoitussopimusten** oikea "
+"kirjanpitokäsittely.\n"
 "\n"
 "* ”Dailly-laki” on ranskalainen laki, joka sallii yritysten siirtää "
 "kaupalliset saamiset (kuten laskut) luottolaitokselle (kuten pankille) "
 "vastineeksi rahoituksesta.\n"
 "\n"
 "**Laskurahoitussopimuksissa yritys myy maksamattomat laskunsa (saamiset) "
-"kolmannelle osapuolelle, ns. factorille, vastineeksi välittömästä käteisestä."
-"\n"
+"kolmannelle osapuolelle, ns. factorille, vastineeksi välittömästä "
+"käteisestä.\n"
 "            "
 
 #. module: account_reports
@@ -7243,8 +7271,9 @@ msgid ""
 "object._get_followup_responsible().company_id).name }} Follow Up - "
 "{{ object.commercial_company_name }}"
 msgstr ""
-"{{ (object.company_id or object._get_followup_responsible().company_id).name "
-"}} Seuranta - {{ object.commercial_company_name }}"
+"{{ (object.company_id or "
+"object._get_followup_responsible().company_id).name }} Seuranta - "
+"{{ object.commercial_company_name }}"
 
 #. module: account_reports
 #: model:mail.template,subject:account_reports.email_template_customer_statement
@@ -7262,6 +7291,13 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/multicurrency_revaluation_report/warnings.xml:0
 msgid "⇒ Reset to Odoo’s Rate"
 msgstr "⇒ Palauta Odoon kurssiin"
+
+#~ msgid ""
+#~ "'Open General Ledger' caret option is only available form report lines "
+#~ "targetting accounts."
+#~ msgstr ""
+#~ "'Avaa pääkirja' -toiminto on käytettävissä vain tileihin kohdistuvilla "
+#~ "raporttiriveillä."
 
 #~ msgid " and %s others"
 #~ msgstr " ja %s muut"

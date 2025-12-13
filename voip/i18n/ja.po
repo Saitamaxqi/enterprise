@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:40+0000\n"
-"PO-Revision-Date: 2025-11-28 01:36+0000\n"
+"PO-Revision-Date: 2025-12-10 10:27+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/voip/ja/"
 ">\n"
@@ -834,7 +834,6 @@ msgstr "選択されている場合、一部のメッセージで配信エラー
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__do_not_disturb_until_dt
-#, fuzzy
 msgid "If set, Odoo Phone will be in Do Not Disturb mode until this time."
 msgstr "設定すると、Odoo Phoneはこの時刻まで「おやすみモード」になります。"
 
@@ -898,7 +897,7 @@ msgstr "フォロー中"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__is_within_same_company
 msgid "Is Within Same Company"
-msgstr ""
+msgstr "同一会社内"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_partner__has_call_in_queue
@@ -915,6 +914,8 @@ msgid ""
 "have your administrator verify that the media type is correctly set to SRTP-"
 "DTLS."
 msgstr ""
+"サーバーが正しいメディアタイプを使用していない可能性があります。管理者にメデ"
+"ィアタイプがSRTP-DTLSに正しく設定されていることを確認してください。"
 
 #. module: voip
 #. odoo-javascript
@@ -954,12 +955,12 @@ msgstr "通話時間: %(duration)s"
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy__user
 msgid "Let users decide"
-msgstr ""
+msgstr "ユーザに決定させる"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy_option__user
 msgid "Let users decide when to record."
-msgstr ""
+msgstr "ユーザが録画するタイミングを決定できるようにします。"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_main_attachment_id
@@ -999,7 +1000,7 @@ msgstr "不在"
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Missed Call"
-msgstr ""
+msgstr "不在着信"
 
 #. module: voip
 #. odoo-javascript
@@ -1022,7 +1023,7 @@ msgstr "ミュート"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "My Calls"
-msgstr ""
+msgstr "自分の通話"
 
 #. module: voip
 #. odoo-javascript
@@ -1034,7 +1035,7 @@ msgstr "名前"
 #. module: voip
 #: model_terms:ir.actions.act_window,help:voip.voip_call_view
 msgid "No Calls Yet!"
-msgstr ""
+msgstr "まだ通話はありません!"
 
 #. module: voip
 #. odoo-javascript
@@ -1165,19 +1166,19 @@ msgstr "出庫"
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Outgoing call"
-msgstr ""
+msgstr "発信"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 msgid "Outgoing call (%(duration)s)"
-msgstr ""
+msgstr "発信 (%(duration)s)"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Outgoing call…"
-msgstr ""
+msgstr "発信中…"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__pbx_ip
@@ -1199,7 +1200,7 @@ msgstr "電話"
 #. module: voip
 #: model:ir.model,name:voip.model_voip_country_code_mixin
 msgid "Phone Country Mixin"
-msgstr ""
+msgstr "電話国情報Mixin"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__phone_number

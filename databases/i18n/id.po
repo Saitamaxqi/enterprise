@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-10 20:15+0000\n"
-"PO-Revision-Date: 2025-11-17 07:03+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-12-10 10:31+0000\n"
+"Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "databases/id/>\n"
 "Language: id\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: databases
 #. odoo-python
@@ -176,7 +176,7 @@ msgstr "Nama Database"
 #. module: databases
 #: model:ir.model,name:databases.model_databases_synchronization_wizard
 msgid "Database Synchronization Wizard"
-msgstr ""
+msgstr "Wizard Sinkronisasi Database"
 
 #. module: databases
 #: model:project.project,name:databases.database_default_template
@@ -192,7 +192,7 @@ msgstr "URL database"
 #. module: databases
 #: model:ir.model,name:databases.model_databases_user
 msgid "Database User"
-msgstr ""
+msgstr "User Database"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_user_ids
@@ -202,7 +202,7 @@ msgstr ""
 #. module: databases
 #: model:ir.model,name:databases.model_databases_manage_users_wizard
 msgid "Database Users Invitation Wizard"
-msgstr ""
+msgstr "Wizard Undangan User Database"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_version
@@ -231,12 +231,12 @@ msgstr "Database-Database"
 #. module: databases
 #: model:ir.actions.server,name:databases.ir_cron_synchronize_databases_with_odoocom_ir_actions_server
 msgid "Databases: pull databases from Odoo.com and synchronize"
-msgstr ""
+msgstr "Database: pull database dari Odoo.com dan sinkronisasi"
 
 #. module: databases
 #: model:ir.actions.server,name:databases.ir_cron_synchronize_databases_ir_actions_server
 msgid "Databases: synchronize"
-msgstr ""
+msgstr "Database: sinkronisasi"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.databases_manage_users_wizard_view_form
@@ -355,7 +355,7 @@ msgstr ""
 #. module: databases
 #: model:ir.model.constraint,message:databases.constraint_project_project_database_url_unique
 msgid "Hey, this URL is already hooked up to a database!"
-msgstr ""
+msgstr "Hey, URL ini sudah terhubung ke database!"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_hosting
@@ -686,7 +686,7 @@ msgstr "Sinkronisasikan"
 #. module: databases
 #: model:ir.actions.server,name:databases.action_synchronize_all_databases
 msgid "Synchronize all the Databases"
-msgstr ""
+msgstr "Sinkronisasi semua Database"
 
 #. module: databases
 #: model_terms:ir.actions.act_window,help:databases.action_view_databases_all
@@ -735,7 +735,7 @@ msgstr ""
 #. module: databases
 #: model:ir.model.constraint,message:databases.constraint_project_project_database_url_required
 msgid "Uh-oh! It seems we are missing a url for a database!"
-msgstr ""
+msgstr "Uh-oh! Sepertinya Anda kurang url untuk database!"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__user_ids

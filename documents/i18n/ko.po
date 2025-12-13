@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-05 18:41+0000\n"
-"PO-Revision-Date: 2025-12-06 09:52+0000\n"
+"PO-Revision-Date: 2025-12-10 10:26+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/documents/"
 "ko/>\n"
@@ -1357,7 +1357,7 @@ msgstr "URL 액세스"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__access_via_link_help
 msgid "Access Via Link Help"
-msgstr ""
+msgstr "링크 도움말을 통한 액세스"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.portal_my_home_documents
@@ -1531,7 +1531,7 @@ msgstr "별명 태그 추가..."
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_operation__operation__add
 msgid "Add attachment to Documents"
-msgstr ""
+msgstr "문서에 첨부 파일 추가"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_request_page
@@ -1591,7 +1591,7 @@ msgstr "문서에 추가"
 #. odoo-javascript
 #: code:addons/documents/static/src/attachments/attachment_list_patch.js:0
 msgid "Add to My Documents"
-msgstr ""
+msgstr "내 문서에 추가"
 
 #. module: documents
 #. odoo-javascript
@@ -1667,7 +1667,7 @@ msgstr "이미 연결된 문서: %s"
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Ambiguous shortcut target location."
-msgstr ""
+msgstr "바로가기 대상 위치가 불확실합니다."
 
 #. module: documents
 #: model_terms:digest.tip,tip_description:documents.digest_tip_documents_0
@@ -2096,7 +2096,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
 msgid "Create shortcut to: %(documentName)s"
-msgstr ""
+msgstr "바로가기 생성: %(documentName)s"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_operation__operation__shortcut
@@ -2113,7 +2113,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Create shortcuts in %(folder_name)s"
-msgstr ""
+msgstr "바로가기를 %(folder_name)s 에 생성"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__create_uid
@@ -2219,7 +2219,7 @@ msgstr "목적지 내부 액세스"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__access_via_link
 msgid "Destination Access Via Link"
-msgstr ""
+msgstr "링크를 통해 대상 액세스"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__display_name
@@ -2229,7 +2229,7 @@ msgstr "목적지 표시명"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__is_access_via_link_hidden
 msgid "Destination Link Access Hidden"
-msgstr ""
+msgstr "대상 링크 액세스 숨기기"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__user_permission
@@ -2369,13 +2369,13 @@ msgstr "문서 토큰"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Document created in %(folder_name)s!"
-msgstr ""
+msgstr "%(folder_name)s 폴더에 문서 생성!"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Document moved to %(folder_name)s!"
-msgstr ""
+msgstr "%(folder_name)s 폴더로 문서 이동!"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_kanban
@@ -2452,7 +2452,7 @@ msgstr "문서 보기 설정"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_access_rights.js:0
 msgid "Documents With Access Rights"
-msgstr ""
+msgstr "액세스 권한이 부여된 문서"
 
 #. module: documents
 #. odoo-python
@@ -2476,7 +2476,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Documents created in %(folder_name)s!"
-msgstr ""
+msgstr "%(folder_name)s 폴더에 문서 생성!"
 
 #. module: documents
 #: model:ir.model,name:documents.model_documents_mixin
@@ -2486,13 +2486,13 @@ msgstr "문서 작성 혼합물"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_operation_view_form
 msgid "Documents currently in destination"
-msgstr ""
+msgstr "현재 대상 위치에 있는 문서"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Documents moved to %(folder_name)s!"
-msgstr ""
+msgstr "%(folder_name)s 폴더로 문서 이동!"
 
 #. module: documents
 #. odoo-javascript
@@ -2670,7 +2670,7 @@ msgstr "임베디드 작업"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
 msgid "Enable access and save"
-msgstr ""
+msgstr "액세스 허용 및 저장"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__thumbnail_status__error
@@ -2724,14 +2724,14 @@ msgstr "추가 댓글..."
 #: code:addons/documents/static/src/editor/plugins/add_documents_attachment_plugin.js:0
 #: code:addons/documents/static/src/views/view_dialogs/select_add_document_create_dialog.js:0
 msgid "Failed to add document(s): "
-msgstr ""
+msgstr "문서 추가에 실패했습니다 "
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/editor/plugins/add_documents_attachment_plugin.js:0
 #: code:addons/documents/static/src/views/view_dialogs/select_add_document_create_dialog.js:0
 msgid "Failed to paste link(s): "
-msgstr ""
+msgstr "링크 붙여넣기에 실패했습니다 "
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__favorited_ids
@@ -2912,7 +2912,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__has_warning_no_access
 msgid "Has Warning No Access"
-msgstr ""
+msgstr "액세스 없음 경고 여부"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__has_warning_partners_without_access
@@ -3083,7 +3083,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Insufficient access to %(folder_name)s"
-msgstr ""
+msgstr "%(folder_name)s 폴더에 대한 액세스 권한 없음"
 
 #. module: documents
 #: model:documents.document,name:documents.document_insurances_folder
@@ -3182,7 +3182,7 @@ msgstr "팔로워임"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__is_on_single_document
 msgid "Is On Single Document"
-msgstr ""
+msgstr "단일 문서에 속해 있는지 여부"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__is_multipage
@@ -3942,7 +3942,7 @@ msgstr "소유자"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__owner_id
 msgid "Owner of all documents"
-msgstr ""
+msgstr "전체 문서 소유자"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page
@@ -4421,7 +4421,7 @@ msgstr "바로가기"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Shortcut created in %(folder_name)s!"
-msgstr ""
+msgstr "%(folder_name)s 폴더에 바로가기 생성!"
 
 #. module: documents
 #. odoo-python
@@ -4433,7 +4433,7 @@ msgstr "바로가기는 대상 문서를 변경할 수 없습니다."
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Shortcuts created in %(folder_name)s!"
-msgstr ""
+msgstr "%(folder_name)s 폴더에 바로가기 생성!"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__destination_children_ids
@@ -4459,7 +4459,7 @@ msgstr "소셜"
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Some emails are missing"
-msgstr ""
+msgstr "일부 이메일이 누락되었습니다"
 
 #. module: documents
 #. odoo-javascript
@@ -4898,13 +4898,13 @@ msgstr "사용할 수 없는 작업"
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Unexpected user_folder_id value %s"
-msgstr ""
+msgstr "알 수 없는 user_folder_id 값 %s"
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Unknown searched value %s"
-msgstr ""
+msgstr "알 수 없는 검색값 %s"
 
 #. module: documents
 #. odoo-javascript
@@ -4917,7 +4917,7 @@ msgstr "잠금 해제"
 #. odoo-python
 #: code:addons/documents/wizard/documents_operation.py:0
 msgid "Unsupported attachment type: %s"
-msgstr ""
+msgstr "지원되지 않는 첨부 파일 유형: %s"
 
 #. module: documents
 #. odoo-javascript
@@ -5340,7 +5340,7 @@ msgstr "이메일"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
 msgid "expiration date changed from"
-msgstr ""
+msgstr "다음 만료일이 변경되었습니다:"
 
 #. module: documents
 #. odoo-javascript
@@ -5361,7 +5361,7 @@ msgstr "폴더,"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
 msgid "has gained access as"
-msgstr ""
+msgstr "에게 다음의 액세스 권한 부여:"
 
 #. module: documents
 #: model:documents.document,name:documents.documents_vendor_bill_extract_azure_interior_document

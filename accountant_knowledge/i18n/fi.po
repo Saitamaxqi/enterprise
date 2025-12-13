@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-12-06 10:17+0000\n"
+"PO-Revision-Date: 2025-12-10 10:30+0000\n"
 "Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
 "accountant_knowledge/fi/>\n"
@@ -1401,6 +1401,8 @@ msgid ""
 "Provide details on the carryback and carryforward of tax losses, and the "
 "split of income tax between current and exceptional results."
 msgstr ""
+"Anna lisätietoja taannehtivasta ja tulevasta verojen tappiontasauksesta sekä "
+"tämänhetkisten ja poikkeuksellisten tulosten tuloveron erittleystä."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
@@ -1408,26 +1410,28 @@ msgid ""
 "Provide information on the estimated value of long-term investments held in "
 "the portfolio and any changes in their value over the financial year."
 msgstr ""
+"Anna tietoa salkussa olevien pitkäaikaisten sijoitusten arvioidusta arvosta "
+"ja arvon muutoksista tilivuoden aikana."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Provisions"
-msgstr ""
+msgstr "Varaukset"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
 msgid "R&D cost"
-msgstr ""
+msgstr "Tutkimus- ja kehityskustannukset"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid "Receivables and Payables"
-msgstr ""
+msgstr "Saamiset ja velat"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid "Receivables and payables are recorded at their nominal value."
-msgstr ""
+msgstr "Saamiset ja velat kirjataan nimellisarvoisina."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -1435,41 +1439,43 @@ msgid ""
 "Receivables and payables denominated in foreign currencies are converted "
 "into euros using the exchange rate at the invoice date."
 msgstr ""
+"Ulkomaan valuutoissa ilmoitetut saamiset ja velat muunnetaan euroiksi laskun "
+"päivämäärän valuuttakurssilla."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Refusal to Attest"
-msgstr ""
+msgstr "Kieltäytyminen todistamasta"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "Registered Office:"
-msgstr ""
+msgstr "Rekisteröity toimipaikka:"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
 msgid "Related-Party Transactions"
-msgstr ""
+msgstr "Lähipiiritapahtumat"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Remuneration due for the fiscal year<br>"
-msgstr ""
+msgstr "Tilikauden maksettavat palkkiot<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Remuneration for Services"
-msgstr ""
+msgstr "Palveluiden palkkiot"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Renovations: 10 years"
-msgstr ""
+msgstr "Remontit: 10 vuotta"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid "Repayable Advances"
-msgstr ""
+msgstr "Takaisinmaksettavat ennakot"
 
 #. module: accountant_knowledge
 #: model:ir.model,name:accountant_knowledge.model_ir_actions_report
@@ -1479,17 +1485,17 @@ msgstr "Raporttitoimet"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Report on Work Conducted"
-msgstr ""
+msgstr "Raportti tehdystä työstä"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Report on Work Performed"
-msgstr ""
+msgstr "Raportti suoritetusta työstä"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
 msgid "Research and Development Expenses"
-msgstr ""
+msgstr "Tutkimus- ja kehityskulut"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
@@ -1497,6 +1503,8 @@ msgid ""
 "Research and development costs are recognized as expenses in the period in "
 "which they are incurred."
 msgstr ""
+"Tutkimus- ja kehityskustannukset kirjataan kuluksi sinä tilikautena, jona ne "
+"ovat syntyneet."
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__responsible_user_ids
@@ -1506,12 +1514,12 @@ msgstr "Vastuulliset"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "Result breakdown by region"
-msgstr ""
+msgstr "Tulosten erittely alueittain"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Revenue: {{ revenue }}"
-msgstr ""
+msgstr "Tulot: {{ revenue }}"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_form
@@ -1521,12 +1529,12 @@ msgstr "Tallenna"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Self-Held Shares"
-msgstr ""
+msgstr "Omat osakkeet"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_kanban
 msgid "Set to Done"
-msgstr ""
+msgstr "Määritä valmiiksi"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_kanban
@@ -1536,27 +1544,27 @@ msgstr "Aseta luonnokseksi"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Share Capital"
-msgstr ""
+msgstr "Osakepääoma"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Shares Issues<br>"
-msgstr ""
+msgstr "Osakeannit<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Shares Redeemed/Cancelled<br>"
-msgstr ""
+msgstr "Lunastetut/peruutetut osakkeet<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Shares at End of Year<br>"
-msgstr ""
+msgstr "Osakkeet vuoden lopussa<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Shares at Start of Year<br>"
-msgstr ""
+msgstr "Osakkeet vuoden alussa<br>"
 
 #. module: accountant_knowledge
 #. odoo-javascript
@@ -1569,12 +1577,12 @@ msgstr "Allekirjoitus"
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_significant_events
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
 msgid "Significant Events"
-msgstr ""
+msgstr "Merkittävät tapahtumat"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Software: 3 years"
-msgstr ""
+msgstr "Ohjelmisto: 3 vuotta"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -1582,6 +1590,8 @@ msgid ""
 "Specify details for executives, subsidiaries, investments, related "
 "companies, and others."
 msgstr ""
+"Määritä lisätiedot johtajista, tytäryhtiöistä, sijoituksista, "
+"sidosyrityksistä ja muista."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -1589,11 +1599,13 @@ msgid ""
 "Specify the impact of the change as determined at the opening of the period, "
 "identifying the affected financial statement items."
 msgstr ""
+"Tarkenna kauden alussa määritellyn muutoksen vaikutus ja tunnista "
+"tilinpäätöksen kirjaukset, joihin se vaikuttaa."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "Standard Cost"
-msgstr ""
+msgstr "Vakiokustannus"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__start_date
@@ -1608,12 +1620,12 @@ msgstr "Aloituspäivä, joka sisältyy tilikauteen."
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
 msgid "Start from our ready-to-use templates"
-msgstr ""
+msgstr "Aloita valmiista mallipohjistamme"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 msgid "State and justify the change in estimate."
-msgstr ""
+msgstr "Ilmoita ja perustele muutos arviossa."
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__status
@@ -1623,18 +1635,18 @@ msgstr "Status"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 msgid "Subsidiaries and Equity Interests"
-msgstr ""
+msgstr "Tytäryhtiöt ja pääomaosuudet"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "Subsidiary Details"
-msgstr ""
+msgstr "Tytäryhtiön tiedot"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_subventions
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
 msgid "Subventions"
-msgstr ""
+msgstr "Tuet"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_supporting_documents
@@ -1647,38 +1659,42 @@ msgstr "Tukevat asiakirjat"
 msgid ""
 "Tangible assets are also valued at their production cost where applicable."
 msgstr ""
+"Myös aineellisten hyödykkeiden arvo määritetään tuotantokustannusten "
+"perusteella, mikäli mahdollista."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Tangible assets are valued at their acquisition cost, which includes:"
 msgstr ""
+"Aineellisten hyödykkeiden arvo määritetään hankintamenojen perusteella, "
+"jotka sisältävät:"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_tax_and_compliance
 msgid "Tax & Compliance"
-msgstr ""
+msgstr "Verot & vaatimustenmukaisuus"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
 msgid "Tax Credits"
-msgstr ""
+msgstr "Verohyvitykset"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_tax_package
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_tax_package
 msgid "Tax Package"
-msgstr ""
+msgstr "Veropaketti"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_taxation
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
 msgid "Taxation"
-msgstr ""
+msgstr "Verotus"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Technical installations, equipment, and tools<br>"
-msgstr ""
+msgstr "Tekniset asennukset, varusteet ja työkalut<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
@@ -1686,6 +1702,8 @@ msgid ""
 "The annual financial statements have been prepared in accordance with "
 "applicable accounting standards."
 msgstr ""
+"Vuosittaiset tilinpäätökset on laadittu sovellettavien "
+"tilinpäätösstandardien mukaisesti."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
@@ -1695,16 +1713,21 @@ msgid ""
 "may be recorded when the grant agreement is signed and eligible expenses "
 "have been incurred, even if the funds have not yet been received."
 msgstr ""
+"Yritys on saanut tukia, jotka on kirjattu liikevoittoon suhteessa "
+"aiheutuneisiin kuluihin. Tämän seurauksena tukisaamiset voidaan kirjata, kun "
+"avustussopimus on allekirjoitettu ja tukikelpoiset kustannukset aiheutuneet, "
+"vaikka varoja ei olisi vielä saatu."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "The consolidated financial statements can be obtained via..."
-msgstr ""
+msgstr "Konsernitilinpäätös on saatavilla..."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid "The equity method is used for valuation where applicable."
 msgstr ""
+"Pääomaisuusmenetelmää käytetään arvonmäärityksessä, jos sovellettavissa."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -1712,25 +1735,27 @@ msgid ""
 "The exemption for valuation of securities in case of abnormal and temporary "
 "decline is applied."
 msgstr ""
+"Arvopapereiden arvonmääritystä koskevaa poikkeusta epätavallisen ja "
+"väliaikaisen laskun tapauksessa sovelletaan."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
 msgid ""
 "The fiscal year ended on {{ end of period }} covers a period of 12 months."
-msgstr ""
+msgstr "{{ end of period }} päättynyt tilikausi kattaa 12 kuukauden jakson."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid ""
 "The following decisions have been made regarding the presentation of the "
 "annual financial statements:"
-msgstr ""
+msgstr "Vuositilinpäätöksen esittämistä koskien on tehty seuraavat päätökset:"
 
 #. module: accountant_knowledge
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/editor/embedded_components/core/account_report/account_report.xml:0
 msgid "The full report will be included in the final document."
-msgstr ""
+msgstr "Täysi raportti sisällytetään lopulliseen asiakirjaan."
 
 #. module: accountant_knowledge
 #. odoo-javascript
@@ -1739,6 +1764,8 @@ msgid ""
 "The full report will be included in the final document. Feel free to tailor "
 "the result using filters and options from the report."
 msgstr ""
+"Täysi raportti sisällytetään lopulliseen asiakirjaan. Voit muokata tulosta "
+"vapaasti raportin suodattimien ja vaihtoehtojen avulla."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -1747,6 +1774,9 @@ msgid ""
 "expenses. When the inventory value is lower than the gross value, a "
 "provision for impairment is recorded for the amount of the difference."
 msgstr ""
+"Bruttoarvo koostuu ostokustannuksista ilman satunnaisia kuluja. Kun "
+"varastoarvo on bruttoarvia alhaisempi, kirjataan erotuksen suuruinen "
+"arvonalentumisvaraus."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
@@ -1754,16 +1784,18 @@ msgid ""
 "The gross value of goods and supplies includes the purchase price and "
 "related incidental costs."
 msgstr ""
+"Tavaroiden ja tarvikkeiden bruttoarvo sisältää ostohinnan ja siihen "
+"liittyvät satunnaiset kustannukset."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "The key figures are as follows:"
-msgstr ""
+msgstr "Keskeiset luvut ovat seuraavat:"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
 msgid "The net accounting result is a {{ net accounting result }}."
-msgstr ""
+msgstr "Kirjanpidollinen nettotulos on {{ net accounting result }}."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
@@ -1771,6 +1803,8 @@ msgid ""
 "The notes and tables provided below form an integral part of the annual "
 "financial statements."
 msgstr ""
+"Alla olevat merkinnät ja taulukot muodostavat olennaisen osan "
+"vuositilinpäätöstä."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
@@ -1780,6 +1814,9 @@ msgid ""
 "assets. The acquired portion not yet recognized in income is recorded under "
 "equity as investment grants."
 msgstr ""
+"Pääomamenoja rahoittavien tukien osuus kirjataan liikevoittoon samana "
+"ajanjaksona kuin niihin liittyvien omaisuuserien poistot. Hankittu osuus, "
+"jota ei ole vielä kirjattu tulokseen, kirjataan pääomaan investointitukina."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
@@ -1787,6 +1824,8 @@ msgid ""
 "The primary method used to value the items recorded in the accounts is the "
 "historical cost method."
 msgstr ""
+"Tileille kirjattujen kohteiden ensisijainen arvonmääritysmenetelmä on "
+"hankintamenomenetelmä."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -1794,23 +1833,25 @@ msgid ""
 "The purchase price (including customs duties and non-recoverable taxes, less "
 "any trade discounts, rebates, or settlement discounts);"
 msgstr ""
+"Ostohinta (sisältää tullit ja ei-takaisinperittävät verot, vähennettynä "
+"mahdollisilla paljousalennuksilla, hyvityksillä tai maksuaikahyvityksillä);"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
 msgid ""
 "The total balance sheet amount before allocation of the result is {{ total "
 "balance sheet }}."
-msgstr ""
+msgstr "Taseen kokonaissumma ennen tuloksen jakoa on {{ total balance sheet }}."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "This company is part of a group, and owns the following subsidiaries"
-msgstr ""
+msgstr "Tämä yritys kuuluu konserniin ja omistaa seuraavat tytäryhtiöt"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "This company is part of a group, under the following parent company."
-msgstr ""
+msgstr "Tämä yritys kuuluu konserniin, jonka emoyhtiö on seuraava."
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__title
@@ -1821,58 +1862,58 @@ msgstr "Otsikko"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Tools: 10 years"
-msgstr ""
+msgstr "Työkalut: 10 vuotta"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Total assets: {{ total balance sheet }}"
-msgstr ""
+msgstr "Taseen loppusumma: {{ total balance sheet }}"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "Total<br>"
-msgstr ""
+msgstr "Yhteensä<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
 msgid "Transactions with Major Shareholders"
-msgstr ""
+msgstr "Liiketoimet merkittävien osakkeenomistajien kanssa"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Transactions with Management"
-msgstr ""
+msgstr "Liiketoimet johdon kanssa"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Transport equipment: 5 years"
-msgstr ""
+msgstr "Kuljetusvälineet: 5 vuotta"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Unqualified Attestation"
-msgstr ""
+msgstr "Epäpätevä todistus"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Valuation of free shares granted<br>"
-msgstr ""
+msgstr "Myönnettyjen ilmaisosakkeiden arvonmääritys<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Valuation of multi-year variable compensation<br>"
-msgstr ""
+msgstr "Monivuotisen muuttuvan palkkion arvonmääritys<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Valuation of stock options granted during the year<br>"
-msgstr ""
+msgstr "Vuoden aikana myönnettyjen osakeoptioiden arvonmääritys<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 msgid "Voluntary Change in Accounting Policy"
-msgstr ""
+msgstr "Vapaaehtoinen muutos tilinpäätöksen laatimisperiaatteissa"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
@@ -1880,11 +1921,13 @@ msgid ""
 "We are making the following comment regarding a matter that may affect the "
 "overall consistency and reliability of the financial statements:"
 msgstr ""
+"Esitämme seuraavan huomautuksen asiasta, joka saattaa vaikuttaa "
+"tilinpäätöksen yleiseen johdonmukaisuuteen ja luotettavuuteen:"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "Weighted Average Cost"
-msgstr ""
+msgstr "Painotettu keskimääräinen kustannus"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -1892,6 +1935,8 @@ msgid ""
 "When applicable, the initial estimate of dismantling, removal, and site "
 "restoration costs related to the asset's location."
 msgstr ""
+"Soveltuvissa tapauksissa alkuperäinen arvio omaisuuserän sijaintiin "
+"liittyvistä purku-, siirto- ja entisöintikustannuksista."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -1901,19 +1946,22 @@ msgid ""
 "determined by comparing the acquisition value with the probable realizable "
 "value."
 msgstr ""
+"Soveltuvissa tapauksissa saamisten poistot tehdään varausten kautta "
+"mahdollisten perintävaikeuksien huomioimiseksi. Nämä arvonalentumisvaraukset "
+"määritetään vertaamalla hankinta-arvoa todennäköiseen realisointiarvoon."
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_workforce
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
 msgid "Workforce"
-msgstr ""
+msgstr "Työvoima"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
 msgid "Workforce employed during the Period"
-msgstr ""
+msgstr "Kauden aikana palkattu työvoima"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_form
 msgid "e.g. Annual Financial Overview"
-msgstr ""
+msgstr "esim. Vuotuinen taloudellinen yleiskatsaus"

@@ -17,17 +17,17 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-11-16 18:00+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-12-10 10:28+0000\n"
+"Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/sale_subscription/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
-"1000000 == 0) ? 1 : 2);\n"
-"X-Generator: Weblate 5.12.2\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : "
+"((n != 0 && n % 1000000 == 0) ? 1 : 2);\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: sale_subscription
 #. odoo-python
@@ -2072,6 +2072,8 @@ msgid ""
 "Define if price must be prorated or not for incomplete periods (upsell, "
 "calendar alignment, etc.)"
 msgstr ""
+"Defina se o preço deve ser rateado ou não para períodos incompletos "
+"(upsell, alinhamento de calendário, etc.)"
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_product_product__allow_one_time_sale
@@ -2274,7 +2276,7 @@ msgstr "Data de expiração:"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_portal_content
 msgid "Extend Until"
-msgstr ""
+msgstr "Prorrogar até"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_order_log_report_search
@@ -2309,7 +2311,7 @@ msgstr "Data do primeiro contrato"
 #: model:ir.model.fields,field_description:sale_subscription.field_product_product__subscription_rule_ids_fixed
 #: model:ir.model.fields,field_description:sale_subscription.field_product_template__subscription_rule_ids_fixed
 msgid "Fixed Subscription Pricings"
-msgstr ""
+msgstr "Preços fixos de assinatura"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order__message_follower_ids
@@ -2491,6 +2493,7 @@ msgid ""
 "If you wish to reopen it, you can pay your invoice for the current invoicing "
 "period"
 msgstr ""
+"Caso deseje retomá-la, pague a fatura para o período atual de faturamento"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -2876,7 +2879,7 @@ msgstr "Receita Recorrente Mensal"
 #. module: sale_subscription
 #: model:product.template,description_sale:sale_subscription.product_car_leasing_product_template
 msgid "Monthly lease for city or business driving"
-msgstr ""
+msgstr "Aluguel mensal para condução na cidade ou para negócios"
 
 #. module: sale_subscription
 #: model:ir.model.fields.selection,name:sale_subscription.selection__sale_order_template__duration_unit__month
@@ -3078,6 +3081,8 @@ msgid ""
 "Onboarding example showing how the app tracks customer subscriptions and "
 "visualizes MRR growth."
 msgstr ""
+"Exemplo de integração mostrando como o aplicativo monitora as assinaturas "
+"dos clientes e exibe o aumento da RRM."
 
 #. module: sale_subscription
 #. odoo-python
@@ -3322,6 +3327,8 @@ msgstr ""
 msgid ""
 "Please contact your sales manager if you want to reopen this subscription."
 msgstr ""
+"Entre em contato com seu gerente de vendas se quiser reativar esta "
+"assinatura."
 
 #. module: sale_subscription
 #. odoo-javascript
@@ -3422,7 +3429,7 @@ msgstr "Produtos"
 #: model:ir.model.fields,field_description:sale_subscription.field_product_product__allow_prorated_price
 #: model:ir.model.fields,field_description:sale_subscription.field_product_template__allow_prorated_price
 msgid "Prorated Price"
-msgstr ""
+msgstr "Preço proporcional"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__qty_delivered
@@ -3561,7 +3568,7 @@ msgstr "Recorrente"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order__recurring_total
 msgid "Recurring Amount"
-msgstr ""
+msgstr "Valor recorrente"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order__recurring_details
@@ -3719,7 +3726,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_order_view_form
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_so_portal_template
 msgid "Resume"
-msgstr "Continuar"
+msgstr "Retomar"
 
 #. module: sale_subscription
 #: model:mail.message.subtype,name:sale_subscription.subtype_resume_and_pause_subscription
@@ -4257,6 +4264,9 @@ msgid ""
 "continuously,customer didn't pay, etc.) will be automatically closed after "
 "this period."
 msgstr ""
+"As assinaturas com renovação atrasada (ex.: falha contínua no pagamento "
+"automático, não pagamento pelo cliente, etc.) serão automaticamente "
+"encerradas após esse período."
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -4530,6 +4540,8 @@ msgid ""
 "This subscription is overdue and exceeds the auto-close limit of the "
 "recurring plan. It will be closed soon by the system."
 msgstr ""
+"Esta assinatura está vencida e excede o limite de encerramento automático do "
+"plano recorrente. Ela será encerrada em breve pelo sistema."
 
 #. module: sale_subscription
 #. odoo-python
@@ -4771,7 +4783,7 @@ msgstr "Armazém"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order__warn_system_closing
 msgid "Warn System Closing"
-msgstr ""
+msgstr "Aviso de encerramento do sistema"
 
 #. module: sale_subscription
 #. odoo-python
@@ -4849,11 +4861,14 @@ msgid ""
 "                Any new delivered quantity during that period may never be "
 "invoiced."
 msgstr ""
+"Você está prestes a faturar um período de assinatura no futuro para produtos "
+"com política de faturamento baseada na quantidade entregue.\n"
+"Novas quantidades entreguee durante esse período não poderão ser faturadas."
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.invoice_warning_message
 msgid "You are about to invoice the subscription until the"
-msgstr ""
+msgstr "Você está prestes a faturar a assinatura até"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_portal_templates_warnings

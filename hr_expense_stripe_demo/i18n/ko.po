@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-11-27 14:17+0000\n"
-"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
+"PO-Revision-Date: 2025-12-10 10:31+0000\n"
+"Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "hr_expense_stripe_demo/ko/>\n"
 "Language: ko\n"
@@ -54,7 +54,7 @@ msgstr "승인 시 매입"
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__split_capture
 msgid "Capture in two transactions"
-msgstr ""
+msgstr "두 가지 작업에서 캡처"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__card_id
@@ -173,7 +173,7 @@ msgstr "배송 완료로 표시"
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields.selection,name:hr_expense_stripe_demo.selection__hr_expense_stripe_test_shipping_wizard__new_shipping_status__fail
 msgid "Mark as delivery failed"
-msgstr ""
+msgstr "전달 실패로 표시"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields.selection,name:hr_expense_stripe_demo.selection__hr_expense_stripe_test_shipping_wizard__new_shipping_status__return
@@ -241,7 +241,7 @@ msgstr "충전 시뮬레이션"
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__force_capture
 msgid "Simulate a Force Capture"
-msgstr ""
+msgstr "강제 매입 시뮬레이션"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__card_currency_id
@@ -251,7 +251,7 @@ msgstr "Stripe 통화"
 #. module: hr_expense_stripe_demo
 #: model:ir.model,name:hr_expense_stripe_demo.model_hr_expense_stripe_topup_wizard
 msgid "Stripe Issuing Top-up Wizard"
-msgstr ""
+msgstr "Stripe 발급 및 충전 마법사"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields.selection,name:hr_expense_stripe_demo.selection__hr_expense_stripe_test_shipping_wizard__new_shipping_status__submit

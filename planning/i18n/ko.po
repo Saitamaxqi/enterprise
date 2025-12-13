@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:41+0000\n"
-"PO-Revision-Date: 2025-12-06 10:01+0000\n"
+"PO-Revision-Date: 2025-12-11 10:23+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/planning/"
 "ko/>\n"
@@ -2831,6 +2831,8 @@ msgid ""
 "always come after the shift start date. It's like trying to eat your "
 "breakfast before waking up - not possible!"
 msgstr ""
+"오류가 발생했습니다! 순서가 올바르지 않습니다. 정기 종료일은 항상 교대 시작일"
+" 이후여야 합니다. 순서가 제대로 설정되지 않으면 작동이 되지 않습니다."
 
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__res_company__planning_employee_unavailabilities__unassign

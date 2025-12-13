@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:49+0000\n"
+"POT-Creation-Date: 2025-12-12 18:47+0000\n"
 "PO-Revision-Date: 2025-11-16 17:58+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -140,6 +140,7 @@ msgstr "預設留白時間"
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_report__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_lot__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_move__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_return_picking__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse_orderpoint__display_name
@@ -176,6 +177,7 @@ msgstr "有資料行有追蹤產品"
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_report__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_lot__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_move__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_stock_picking__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_return_picking__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse_orderpoint__id
@@ -305,6 +307,12 @@ msgid "Rental Transfers"
 msgstr "租賃轉移"
 
 #. module: sale_stock_renting
+#. odoo-python
+#: code:addons/sale_stock_renting/models/stock_move.py:0
+msgid "Rental move: %(order)s"
+msgstr "租賃移動：%(order)s"
+
+#. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_res_config_settings__group_rental_stock_picking
 msgid "Rental pickings"
 msgstr "租賃提取"
@@ -416,6 +424,11 @@ msgstr ""
 "你應該將追蹤模式改為獨立序號。"
 
 #. module: sale_stock_renting
+#: model:ir.model,name:sale_stock_renting.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__unavailable_lot_ids
 msgid "Unavailable Lot"
 msgstr "不可用批次"
@@ -463,9 +476,6 @@ msgstr "到"
 
 #~ msgid "Rental Schedule"
 #~ msgstr "租賃日程"
-
-#~ msgid "Rental move: %(order)s"
-#~ msgstr "租賃移動：%(order)s"
 
 #~ msgid "Reserved Lot"
 #~ msgstr "預留批次"

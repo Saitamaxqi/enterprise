@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-14 18:42+0000\n"
+"POT-Creation-Date: 2025-12-12 18:44+0000\n"
 "PO-Revision-Date: 2025-12-06 09:51+0000\n"
 "Last-Translator: \"Noemi Pla Garcia (nopl)\" <nopl@odoo.com>\n"
 "Language-Team: Spanish <https://translate.odoo.com/projects/odoo-19/"
@@ -28,8 +28,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
-" ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
+"0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.14.3\n"
 
 #. module: account_reports
@@ -43,6 +43,18 @@ msgstr "\" el saldo de la cuenta se ve afectado por"
 #: code:addons/account_reports/models/account_journal_report.py:0
 msgid "%(journal)s - %(account)s"
 msgstr "%(journal)s - %(account)s"
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "%(line_name)s - %(company)s"
+msgstr ""
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "%(line_name)s - %(company_name)s"
+msgstr ""
 
 #. module: account_reports
 #. odoo-python
@@ -106,10 +118,8 @@ msgstr ""
 #: code:addons/account_reports/models/account_report.py:0
 msgid ""
 "'Open General Ledger' caret option is only available form report lines "
-"targetting accounts."
+"targetting accounts or Undistributed Profits/Losses."
 msgstr ""
-"La opción \"Abrir el libro mayor\" sólo está disponible en las líneas de "
-"informe que tienen como objetivo las cuentas."
 
 #. module: account_reports
 #. odoo-python
@@ -304,15 +314,15 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p>\n"
-"                    Estimado/a <t t-out=\"object.company_id.name\""
-">SuEmpresa</t>:\n"
+"                    Estimado/a <t t-"
+"out=\"object.company_id.name\">SuEmpresa</t>:\n"
 "                </p>\n"
 "                <p>\n"
 "                    Tras revisar la documentación e información "
-"proporcionada, le informamos de que la declaración de IVA de <t t-out="
-"\"object.company_id.name\">SuEmpresa</t>\n"
-"                    correspondiente al período <t t-out=\"object"
-".type_id._get_period_name(object.company_id, object.date_from, "
+"proporcionada, le informamos de que la declaración de IVA de <t t-"
+"out=\"object.company_id.name\">SuEmpresa</t>\n"
+"                    correspondiente al período <t t-"
+"out=\"object.type_id._get_period_name(object.company_id, object.date_from, "
 "object.date_to)\"/> ha sido presentada correctamente.\n"
 "                </p>\n"
 "                <p>\n"
@@ -324,13 +334,14 @@ msgstr ""
 "align:left; border-spacing: 16px;\">\n"
 "                    <tr>\n"
 "                        <td>Importe a pagar</td>\n"
-"                        <td><t t-out=\"format_amount("
-"object.total_amount_to_pay, object.amount_to_pay_currency_id)\"/></td>\n"
+"                        <td><t t-"
+"out=\"format_amount(object.total_amount_to_pay, "
+"object.amount_to_pay_currency_id)\"/></td>\n"
 "                    </tr>\n"
 "                    <tr>\n"
 "                        <td>Fecha límite de pago</td>\n"
-"                        <td><t t-out=\"format_date(object.date_deadline)\""
-"/></td>\n"
+"                        <td><t t-out=\"format_date(object.date_deadline)\"/"
+"></td>\n"
 "                    </tr>\n"
 "                </table>\n"
 "                <p>Saludos cordiales,</p>\n"
@@ -392,9 +403,8 @@ msgid ""
 "<span invisible=\"context.get('in_checks_view') or unresolved_check_count "
 "&lt;= 0\" class=\"oe_stat_text ps-0 text-danger\">Pending</span>"
 msgstr ""
-"<span invisible="
-"\"context.get('in_checks_view') or unresolved_check_count &lt;= 0\" class="
-"\"oe_stat_text ps-0 text-danger\">Pendiente</span>"
+"<span invisible=\"context.get('in_checks_view') or unresolved_check_count "
+"&lt;= 0\" class=\"oe_stat_text ps-0 text-danger\">Pendiente</span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_kanban_view
@@ -403,10 +413,10 @@ msgid ""
 "                                                    <span invisible=\"not "
 "records_count\"> </span>"
 msgstr ""
-"<span invisible=\"not records_count or records_count &lt; 21\">Más de "
-"20</span>\n"
-"                                                    <span invisible="
-"\"not records_count\"> </span>"
+"<span invisible=\"not records_count or records_count &lt; 21\">Más de 20</"
+"span>\n"
+"                                                    <span invisible=\"not "
+"records_count\"> </span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.return_creation_wizard_form
@@ -3754,6 +3764,7 @@ msgstr "Apunte contable"
 #. odoo-javascript
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
+#: code:addons/account_reports/models/account_general_ledger.py:0
 #: code:addons/account_reports/models/account_report.py:0
 #: code:addons/account_reports/models/account_return.py:0
 #: code:addons/account_reports/models/account_trial_balance_report.py:0
@@ -3914,6 +3925,11 @@ msgstr "Más tarde"
 #: model:ir.ui.menu,name:account_reports.account_reports_audit_menu
 msgid "Ledgers"
 msgstr "Libros contables"
+
+#. module: account_reports
+#: model:account.report.line,name:account_reports.account_financial_report_allocations_withdrawals0
+msgid "Less Allocations and Plus Withdrawals"
+msgstr ""
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_cost_sales0
@@ -4239,6 +4255,11 @@ msgstr "Nombre para los documentos generados."
 #: model:account.report.line,name:account_reports.account_financial_report_net_profit0
 msgid "Net Profit"
 msgstr "Ganancias netas"
+
+#. module: account_reports
+#: model:account.report.line,name:account_reports.account_financial_report_net_profit_after_allocations0
+msgid "Net Profit Left After Allocations and Withdrawals"
+msgstr ""
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_net_assets0
@@ -6561,6 +6582,12 @@ msgid "Undefined"
 msgstr "Indefinido"
 
 #. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "Undistributed Profits/Losses"
+msgstr ""
+
+#. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Unfold All"
@@ -7190,8 +7217,9 @@ msgid ""
 "object._get_followup_responsible().company_id).name }} Follow Up - "
 "{{ object.commercial_company_name }}"
 msgstr ""
-"{{ (object.company_id or object._get_followup_responsible().company_id).name "
-"}} Seguimiento - {{ object.commercial_company_name }}"
+"{{ (object.company_id or "
+"object._get_followup_responsible().company_id).name }} Seguimiento - "
+"{{ object.commercial_company_name }}"
 
 #. module: account_reports
 #: model:mail.template,subject:account_reports.email_template_customer_statement
@@ -7209,6 +7237,13 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/multicurrency_revaluation_report/warnings.xml:0
 msgid "⇒ Reset to Odoo’s Rate"
 msgstr "⇒ Restablecer a la tasa de Odoo"
+
+#~ msgid ""
+#~ "'Open General Ledger' caret option is only available form report lines "
+#~ "targetting accounts."
+#~ msgstr ""
+#~ "La opción \"Abrir el libro mayor\" sólo está disponible en las líneas de "
+#~ "informe que tienen como objetivo las cuentas."
 
 #~ msgid " and %s others"
 #~ msgstr " y %s otros"

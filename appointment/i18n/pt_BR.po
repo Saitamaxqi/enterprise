@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:40+0000\n"
-"PO-Revision-Date: 2025-12-06 10:09+0000\n"
+"PO-Revision-Date: 2025-12-12 14:16+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/appointment/pt_BR/>\n"
@@ -1828,12 +1828,12 @@ msgstr "Permitir"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Allow Bookings"
-msgstr ""
+msgstr "Permitir reservas"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__allow_guests
 msgid "Allow invitations"
-msgstr ""
+msgstr "Permitir convites"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__country_ids
@@ -2137,7 +2137,7 @@ msgstr "Arquivado"
 #. module: appointment
 #: model_terms:ir.actions.act_window,help:appointment.appointment_question_action
 msgid "Ask the right questions, get the right answers"
-msgstr ""
+msgstr "Faça as perguntas certas, obtenha as respostas certas"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__is_auto_assign
@@ -2177,7 +2177,7 @@ msgstr "Participantes"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__auto_confirm
 msgid "Auto Confirm"
-msgstr ""
+msgstr "Confirmação automática"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__assignment_method__auto
@@ -2194,6 +2194,12 @@ msgid ""
 "            Requested appointments are still considered as reserved for the "
 "slots availability"
 msgstr ""
+"Confirme automaticamente os compromissos no momento da criação, até a "
+"porcentagem determinada da capacidade total reservada.\n"
+"Se desmarcado, os compromissos serão criados como solicitações e precisarão "
+"de confirmação manual.\n"
+"Os compromissos solicitados ainda são considerados reservados para a "
+"disponibilidade de vagas"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__slot_ids
@@ -2250,7 +2256,7 @@ msgstr "Imagem de fundo"
 #. odoo-javascript
 #: code:addons/appointment/static/src/fields/badge_selection_icon_mapping_field.js:0
 msgid "Badges with Icon for Selection Field"
-msgstr ""
+msgstr "Emblemas com ícone para campo de seleção"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__base_book_url
@@ -2286,7 +2292,7 @@ msgstr "Compromissos agendados"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Booked Capacity"
-msgstr ""
+msgstr "Capacidade reservada"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_tree_booking
@@ -2343,11 +2349,13 @@ msgid ""
 "        reserved user/resource capacity exceeds this percentage of total "
 "capacity."
 msgstr ""
+"As reservas não serão confirmadas automaticamente quando a capacidade total\n"
+"reservada de usuários/recursos exceder essa porcentagem da capacidade total."
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__assignment_method__manual
 msgid "By visitor"
-msgstr ""
+msgstr "Por visitante"
 
 #. module: appointment
 #: model:ir.model,name:appointment.model_calendar_attendee
@@ -2363,12 +2371,12 @@ msgstr "Evento no calendário"
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category__anytime
 msgid "Calendar Link"
-msgstr ""
+msgstr "Link do calendário"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "Calendar Links"
-msgstr ""
+msgstr "Links do calendário"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_form
@@ -2477,7 +2485,7 @@ msgstr "Check-in realizado"
 #. odoo-javascript
 #: code:addons/appointment/static/src/components/appointment_template_picker_dialog/appointment_template_picker_dialog.xml:0
 msgid "Choose an appointment preset"
-msgstr ""
+msgstr "Escolha uma predefinição de compromisso"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointments_list_layout
@@ -2556,7 +2564,7 @@ msgstr "Mensagem de confirmação"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Confirmation Page"
-msgstr ""
+msgstr "Página de confirmação"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -2651,11 +2659,13 @@ msgstr "Criar um recurso de compromisso"
 msgid ""
 "Create questions your attendees can answer when booking their appointments."
 msgstr ""
+"Crie perguntas que os participantes possam responder ao marcarem suas "
+"consultas."
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__slot_creation_interval
 msgid "Create slot every"
-msgstr ""
+msgstr "Criar slot a cada"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer__create_uid
@@ -2720,7 +2730,7 @@ msgstr "Data e hora"
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category__punctual
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "Date-limited"
-msgstr ""
+msgstr "Com prazo limitado"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_manage_leaves_view_form
@@ -2735,12 +2745,12 @@ msgstr "Recusado"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_search
 msgid "Default Questions"
-msgstr ""
+msgstr "Perguntas padrão"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__is_default
 msgid "Default question"
-msgstr ""
+msgstr "Pergunta padrão"
 
 #. module: appointment
 #. odoo-python
@@ -2850,12 +2860,12 @@ msgstr "Nome exibido"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__show_avatars
 msgid "Display pictures"
-msgstr ""
+msgstr "Exibir imagens"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__show_avatars
 msgid "Display user or resource images across the entire booking flow."
-msgstr ""
+msgstr "Exiba imagens de usuários ou recursos em todo o fluxo de reservas."
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__category_time_display
@@ -2865,7 +2875,7 @@ msgstr "Campos de tempo exibidos da categoria"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
 msgid "Displayed when the field is empty"
-msgstr ""
+msgstr "Exibido quando o campo está vazio"
 
 #. module: appointment
 #. odoo-python
@@ -2904,7 +2914,7 @@ msgstr "E-mail*"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Emails & SMS"
-msgstr ""
+msgstr "E-mails e SMS"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_manage_leaves__leave_end_dt
@@ -2965,7 +2975,7 @@ msgstr "Flexível"
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category__custom
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "Flexible Schedule"
-msgstr ""
+msgstr "Horário flexível"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.portal_my_home_appointment
@@ -3066,6 +3076,8 @@ msgid ""
 "How users and resources will be assigned to the meetings that customers book "
 "on your website."
 msgstr ""
+"Como os usuários e recursos serão atribuídos às reuniões que os clientes "
+"reservarem no seu site."
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer__id
@@ -3098,7 +3110,7 @@ msgstr "Ícone que indica uma atividade excepcional."
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__identical_config_id
 msgid "Identical Config"
-msgstr ""
+msgstr "Configuração idêntica"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_needaction
@@ -3212,7 +3224,7 @@ msgstr "Imagem 512"
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_question__is_default
 msgid "Include by default in new appointment types."
-msgstr ""
+msgstr "Incluir por padrão em novos tipos de compromisso."
 
 #. module: appointment
 #. odoo-javascript
@@ -3239,7 +3251,7 @@ msgstr "Mensagem de introdução"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Introduction Page"
-msgstr ""
+msgstr "Página de introdução"
 
 #. module: appointment
 #. odoo-javascript
@@ -3267,7 +3279,7 @@ msgstr "Convite para {{ object.event_id.name }}"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__is_always_confirm
 msgid "Is Always Confirm"
-msgstr ""
+msgstr "É sempre confirmar"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_is_follower
@@ -3282,7 +3294,7 @@ msgstr "Está publicado"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__is_reusable
 msgid "Is Reusable"
-msgstr ""
+msgstr "É reutilizável"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -3335,18 +3347,19 @@ msgstr ""
 #: code:addons/appointment/models/templates/appointment_type.py:0
 msgid "Let customers book a resource such as a room, a tennis court, etc."
 msgstr ""
+"Permita que os clientes reservem recursos como salas, quadras de tênis, etc."
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/models/templates/appointment_type.py:0
 msgid "Let customers book a table in your restaurant or bar"
-msgstr ""
+msgstr "Permita que os clientes reservem uma mesa no seu restaurante ou bar"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/models/templates/appointment_type.py:0
 msgid "Let others book a meeting in your calendar"
-msgstr ""
+msgstr "Permita que outras pessoas agendem reuniões em sua agenda"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
@@ -3475,7 +3488,7 @@ msgstr "URL de redirecionamento da reunião"
 #. odoo-python
 #: code:addons/appointment/controllers/calendar_view.py:0
 msgid "Meeting with %(name)s"
-msgstr ""
+msgstr "Reunião com %(name)s"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_kanban
@@ -3521,7 +3534,7 @@ msgstr "Meu calendário"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "My Calendar Link"
-msgstr ""
+msgstr "Meu link do calendário"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_search
@@ -3624,7 +3637,7 @@ msgstr "Nenhum"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_search
 msgid "Not Reusable"
-msgstr ""
+msgstr "Não reutilizável"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_calendar_event__alarm_ids
@@ -3666,7 +3679,7 @@ msgstr "Odoo Mensagens"
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category_time_display__punctual_fields
 msgid "On specific dates"
-msgstr ""
+msgstr "Em datas específicas"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__slot_type__unique
@@ -3707,7 +3720,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
 msgid "Oops! The extension \""
-msgstr ""
+msgstr "Opa! A extensão \""
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -3973,7 +3986,7 @@ msgstr "Restringir para usuários"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_search
 msgid "Reusable"
-msgstr ""
+msgstr "reutilizável"
 
 #. module: appointment
 #. odoo-javascript
@@ -4020,6 +4033,7 @@ msgstr "Agendar baseado em"
 msgid ""
 "Schedule a video meeting in a virtual room with one or more participants"
 msgstr ""
+"Agende uma videoconferência em uma sala virtual com um ou mais participantes"
 
 #. module: appointment
 #. odoo-javascript
@@ -4104,7 +4118,7 @@ msgstr "Selecione um horário"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__is_date_first
 msgid "Select date and time first"
-msgstr ""
+msgstr "Selecione primeiro a data e a hora"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer_input__value_answer_id
@@ -4246,7 +4260,7 @@ msgstr "Pequena descrição do tipo de compromisso."
 #. odoo-python
 #: code:addons/appointment/controllers/appointment.py:0
 msgid "Some required answers are missing in the form."
-msgstr ""
+msgstr "Algumas respostas obrigatórias estão faltando no formulário."
 
 #. module: appointment
 #. odoo-javascript
@@ -4550,6 +4564,8 @@ msgstr ""
 #: model:ir.model.constraint,message:appointment.constraint_appointment_slot_check_start_and_end_datetimes
 msgid "The unique slot end datetime must be later than the start datetime."
 msgstr ""
+"A data e hora finais exclusivas do intervalo devem ser posteriores à data e "
+"hora iniciais."
 
 #. module: appointment
 #. odoo-javascript
@@ -4637,12 +4653,12 @@ msgstr "Esta é uma visualização do formulário de compromisso do cliente."
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
 msgid "This question is used by"
-msgstr ""
+msgstr "Esta pergunta é usada por"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_question__extra_comment
 msgid "This will appear below the question in the appointment form."
-msgstr ""
+msgstr "Isso aparecerá abaixo da pergunta no formulário de agendamento."
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__4
@@ -4793,6 +4809,21 @@ msgid ""
 "            - Calendar Link: the user will create and share to another user "
 "an appointment type covering all their time slots"
 msgstr ""
+"Usado para definir a categoria deste tipo de compromisso.\n"
+"\n"
+"Pode ser um dos seguintes:\n"
+"\n"
+"- Agenda semanal: a categoria padrão, horários recorrentes semanais. "
+"Acessível a partir do site\n"
+"\n"
+"- Limitado por data: horários regulares limitados entre duas datas. "
+"Acessível a partir do site.\n"
+"\n"
+"- Agenda flexível: o usuário criará e compartilhará com outro usuário um "
+"tipo de compromisso personalizado com horários de separação a dedo.\n"
+"\n"
+"- Link do calendário: o usuário criará e compartilhará com outro usuário um "
+"tipo de compromisso que abrange todos os seus horários"
 
 #. module: appointment
 #: model:res.groups,name:appointment.group_appointment_user
@@ -4802,7 +4833,7 @@ msgstr "Usuário"
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__select_first__user_resource
 msgid "User / Resource"
-msgstr ""
+msgstr "Usuário / Recurso"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__user_capacity
@@ -4866,12 +4897,12 @@ msgstr "Semanalmente"
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category__recurring
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "Weekly Schedule"
-msgstr ""
+msgstr "Agenda semanal"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__select_first
 msgid "What is selected first by the customer when booking an appointment."
-msgstr ""
+msgstr "O que é selecionado primeiro pelo cliente ao marcar uma consulta."
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_question__is_reusable
@@ -4879,6 +4910,8 @@ msgid ""
 "Will appear in the list of available questions when adding one in any "
 "appointment. Always true for default questions."
 msgstr ""
+"Aparecerá na lista de perguntas disponíveis ao adicionar uma em qualquer "
+"compromisso. Sempre verdadeiro para perguntas padrão."
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.staff_user_select
@@ -4888,12 +4921,12 @@ msgstr "Com"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Within availabilities,"
-msgstr ""
+msgstr "Dentro das disponibilidades,"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category_time_display__recurring_fields
 msgid "Within the next"
-msgstr ""
+msgstr "Nos próximos"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__resource_calendar_id
@@ -4932,7 +4965,7 @@ msgstr "Sua seleção"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
 msgid "appointments"
-msgstr ""
+msgstr "compromissos"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
@@ -4947,17 +4980,17 @@ msgstr "em"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "at least"
-msgstr ""
+msgstr "pelo menos"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "days,"
-msgstr ""
+msgstr "dias,"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
 msgid "e.g. \"Anything else we should know?\""
-msgstr ""
+msgstr "Por exemplo: “Mais alguma coisa que devemos saber?”"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -4980,7 +5013,7 @@ msgstr "Ex.: \"Obrigado por sua confiança, estamos ansiosos para conhecê-lo!\"
 #. module: appointment
 #: model:appointment.question,placeholder:appointment.appointment_question_phone
 msgid "e.g. +1 555-555-5555"
-msgstr ""
+msgstr "por exemplo, +1 555-555-5555"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_manage_leaves_view_form
@@ -5055,17 +5088,17 @@ msgstr "hora(s) e não pode ser cancelado neste momento.<br/>"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "hour(s) before start time"
-msgstr ""
+msgstr "hora(s) antes da hora de início"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "hour(s) before the booking"
-msgstr ""
+msgstr "hora(s) antes da reserva"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "of total capacity"
-msgstr ""
+msgstr "da capacidade total"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -5082,7 +5115,7 @@ msgstr "pessoas"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "seats max"
-msgstr ""
+msgstr "assentos máximos"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -5093,6 +5126,11 @@ msgid ""
 "                                    <span invisible=\"schedule_based_on != "
 "'resources'\">resource</span>"
 msgstr ""
+"compromissos simultâneos(s)\n"
+"                                por <span invisible="
+"\"schedule_based_on != 'users'\">usuário</span>\n"
+"                                <span invisible="
+"\"schedule_based_on != 'resources'\">recurso</span>"
 
 #. module: appointment
 #. odoo-python
@@ -5135,6 +5173,10 @@ msgid ""
 "== 'request' else 'Appointment Booked: ' }}"
 "{{ object.appointment_type_id.name }}"
 msgstr ""
+"{{ 'Appointment Requested: ' if not "
+"object.appointment_type_id.is_always_confirm and object.appointment_status "
+"== 'request' else 'Appointment Booked: ' }}{{ "
+"object.appointment_type_id.name }}"
 
 #~ msgid ""
 #~ "<div style=\"font-size: 13px; color: #374151;\">\n"

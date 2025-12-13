@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-28 18:41+0000\n"
-"PO-Revision-Date: 2025-12-06 10:08+0000\n"
+"POT-Creation-Date: 2025-12-12 18:44+0000\n"
+"PO-Revision-Date: 2025-12-10 10:28+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/ai/ko/>\n"
 "Language: ko\n"
@@ -204,8 +204,8 @@ msgstr ""
 "\n"
 "            💡 유효한 측정값을 검색하려면 먼저 compute_report_measures()를 호"
 "출하세요\n"
-"            ⚠️ 각 검색 문자열은 'field=text' 형식을 사용해야 합니다. 배열에는"
-" 여러 개의 검색 문자열이 포함되거나 빈 문자열이 올 수 있습니다 []\n"
+"            ⚠️ 각 검색 문자열은 'field=text' 형식을 사용해야 합니다. 배열에는 "
+"여러 개의 검색 문자열이 포함되거나 빈 문자열이 올 수 있습니다 []\n"
 "            ⚠️ 모드는 반드시 '막대형', '선형' 또는 '원형'이어야 합니다\n"
 "            ⚠️ 순서는 반드시 '오름차순' 또는 '내림차순'이어야 합니다\n"
 "        "
@@ -580,7 +580,7 @@ msgstr "AI: 검색 조정"
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_compute_report_measures
 msgid "AI: Compute Report Measures"
-msgstr ""
+msgstr "AI: 보고서 측정값 계산"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_get_fields
@@ -590,27 +590,27 @@ msgstr "AI: 필드 가져오기"
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_get_menu_details
 msgid "AI: Get Menu Details"
-msgstr ""
+msgstr "AI: 메뉴 세부 정보 가져오기"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_open_menu_graph
 msgid "AI: Open Menu Graph"
-msgstr ""
+msgstr "AI: 그래프 메뉴 열기"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_open_menu_kanban
 msgid "AI: Open Menu Kanban"
-msgstr ""
+msgstr "AI: 칸반 메뉴 열기"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_open_menu_list
 msgid "AI: Open Menu List"
-msgstr ""
+msgstr "AI: 목록 메뉴 열기"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_open_menu_pivot
 msgid "AI: Open Menu Pivot"
-msgstr ""
+msgstr "AI: 피벗 메뉴 열기"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_read_group
@@ -650,7 +650,7 @@ msgstr "활성화"
 #. odoo-python
 #: code:addons/ai/models/ir_actions_server.py:0
 msgid "Activity created for %(user)s."
-msgstr ""
+msgstr "%(user)s 사용자 활동이 생성되었습니다."
 
 #. module: ai
 #. odoo-javascript
@@ -716,19 +716,19 @@ msgstr "AI 에이전트"
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_has_schema
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_has_schema
 msgid "Ai Tool Has Schema"
-msgstr ""
+msgstr "AI 도구 스키마 여부"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_is_candidate
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_is_candidate
 msgid "Ai Tool Is Candidate"
-msgstr ""
+msgstr "AI 도구 후보 여부"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_show_warning
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_show_warning
 msgid "Ai Tool Show Warning"
-msgstr ""
+msgstr "AI 도구에 경고 표시"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_allow_end_message
@@ -765,7 +765,7 @@ msgstr "AI에게 물어보기"
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__systray_ai_button
 msgid "Ask AI for help"
-msgstr ""
+msgstr "AI에 도움 요청하기"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ir_attachment
@@ -1088,7 +1088,7 @@ msgstr "HTTP 라우팅"
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__has_embedding_generation_failed
 msgid "Has Embedding Generation Failed"
-msgstr ""
+msgstr "임베딩 생성 실패 여부"
 
 #. module: ai
 #. odoo-javascript
@@ -1289,7 +1289,7 @@ msgstr "MIME 유형"
 #. odoo-python
 #: code:addons/ai/utils/tools_schema/validators.py:0
 msgid "Missing definition for %(name)s"
-msgstr ""
+msgstr "%(name)s 정의 누락"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_composer__focused_models
@@ -1317,6 +1317,12 @@ msgstr ""
 
 #. module: ai
 #. odoo-python
+#: code:addons/ai/utils/llm_providers.py:0
+msgid "No embedding configuration found for the provider"
+msgstr ""
+
+#. module: ai
+#. odoo-python
 #: code:addons/ai/models/ai_agent.py:0
 msgid "No embedding model found for the selected provider"
 msgstr ""
@@ -1336,7 +1342,7 @@ msgstr "선택한 모델의 공급업체를 찾을 수 없습니다."
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
 msgid "No tool was executed."
-msgstr ""
+msgstr "도구가 실행되지 않았습니다."
 
 #. module: ai
 #. odoo-javascript
@@ -1790,7 +1796,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_natural_language_service.js:0
 msgid "Unable to switch view"
-msgstr ""
+msgstr "보기 전환을 할 수 없습니다"
 
 #. module: ai
 #. odoo-python
@@ -1902,7 +1908,7 @@ msgstr "예: 이름"
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_json_schema/ai_json_schema.xml:0
 msgid "eg: red, blue, green"
-msgstr ""
+msgstr "예: 빨간색, 파란색, 초록색"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action

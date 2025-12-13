@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-05 18:41+0000\n"
-"PO-Revision-Date: 2025-12-06 10:10+0000\n"
+"PO-Revision-Date: 2025-12-10 10:29+0000\n"
 "Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/documents/es_419/>\n"
@@ -1862,6 +1862,8 @@ msgid ""
 "Can configure folders, manage access rights, and oversee all documents "
 "within their areas."
 msgstr ""
+"Puede configurar carpetas, gestionar los permisos de acceso y revisar todos "
+"los documentos de sus áreas."
 
 #. module: documents
 #. odoo-python
@@ -1894,6 +1896,8 @@ msgstr "Solo pueden ver. No pueden renombrar, mover ni eliminar."
 #: model:res.groups,comment:documents.group_documents_user
 msgid "Can view or edit, upload, and share their own or shared documents."
 msgstr ""
+"Puede ver o editar, subir y compartir sus documentos o los que le han "
+"compartido."
 
 #. module: documents
 #. odoo-javascript
@@ -2966,6 +2970,8 @@ msgid ""
 "Has full control over all document settings, folders, and user rights across "
 "the application."
 msgstr ""
+"Tiene control total sobre los ajustes de todos los documentos, carpetas y "
+"permisos de acceso de los usuarios en toda la aplicación."
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search

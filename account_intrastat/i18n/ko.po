@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-27 14:13+0000\n"
-"Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
+"PO-Revision-Date: 2025-12-10 10:25+0000\n"
+"Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "account_intrastat/ko/>\n"
 "Language: ko\n"
@@ -664,7 +664,7 @@ msgstr "중량 품목이 정의되지 않았습니다."
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Unit of measure configuration"
-msgstr ""
+msgstr "단위 환경설정"
 
 #. module: account_intrastat
 #. odoo-python

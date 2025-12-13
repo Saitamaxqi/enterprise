@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-12-06 09:48+0000\n"
+"PO-Revision-Date: 2025-12-12 15:39+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/account_intrastat/pt_BR/>\n"
@@ -623,7 +623,7 @@ msgstr "Número de unidades suplementares por quantidade de produto."
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "The value of goods should be VAT exclusive."
-msgstr ""
+msgstr "O valor das mercadorias deve ser sem IVA."
 
 #. module: account_intrastat
 #. odoo-javascript
@@ -665,13 +665,13 @@ msgstr "Produtos com peso indefinido."
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Unit of measure configuration"
-msgstr ""
+msgstr "Configuração da unidade de medida"
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "VAT exclusive"
-msgstr ""
+msgstr "Sem IVA"
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_services_value
@@ -689,6 +689,7 @@ msgstr "Valor da moeda"
 #: code:addons/account_intrastat/models/account_return.py:0
 msgid "Verify that each good is assigned the right unit of measure."
 msgstr ""
+"Verifique se cada mercadoria está atribuída à unidade de medida correta."
 
 #. module: account_intrastat
 #. odoo-python
@@ -697,6 +698,8 @@ msgid ""
 "Verify that each item has the appropriate code and description according to "
 "the CN (Combined Nomenclature) codes."
 msgstr ""
+"Verifique se cada item possui o código e a descrição adequados de acordo com "
+"os códigos da NC (Nomenclatura Combinada)."
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_weight

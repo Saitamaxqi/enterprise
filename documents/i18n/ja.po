@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-05 18:41+0000\n"
-"PO-Revision-Date: 2025-12-06 09:52+0000\n"
+"PO-Revision-Date: 2025-12-11 10:23+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "documents/ja/>\n"
@@ -1855,7 +1855,8 @@ msgstr "このフォルダ内のファイルを追加、変更、削除できま
 msgid ""
 "Can configure folders, manage access rights, and oversee all documents "
 "within their areas."
-msgstr ""
+msgstr "フォルダの設定、アクセス権限の管理、および担当領域内の全ドキュメントの管理を"
+"行うことができます。"
 
 #. module: documents
 #. odoo-python
@@ -1885,7 +1886,8 @@ msgstr "表示のみ可能です。名前の変更、移動、削除はできま
 #. module: documents
 #: model:res.groups,comment:documents.group_documents_user
 msgid "Can view or edit, upload, and share their own or shared documents."
-msgstr ""
+msgstr "自身のドキュメントまたは共有ドキュメントを閲覧・編集、アップロード、共有でき"
+"ます。"
 
 #. module: documents
 #. odoo-javascript
@@ -2945,7 +2947,8 @@ msgstr "アクセス権限なしパートナー警告"
 msgid ""
 "Has full control over all document settings, folders, and user rights across "
 "the application."
-msgstr ""
+msgstr "アプリケーション全体のドキュメント設定、フォルダ、ユーザ権限をすべて管理でき"
+"ます。"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
@@ -4338,7 +4341,7 @@ msgstr "財務に送信"
 #. module: documents
 #: model:ir.actions.server,name:documents.ir_actions_server_send_to_finance
 msgid "Send to Finance"
-msgstr ""
+msgstr "財務に送信"
 
 #. module: documents
 #: model:mail.template,description:documents.mail_template_document_request
@@ -4370,7 +4373,7 @@ msgstr "サーバアクション"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
 msgid "Set Expiration Date"
-msgstr ""
+msgstr "有効期限を設定"
 
 #. module: documents
 #: model:mail.template,description:documents.mail_template_document_request_reminder
@@ -4402,7 +4405,7 @@ msgstr "共有"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__share_access_ids
 msgid "Share Access"
-msgstr ""
+msgstr "アクセスを共有"
 
 #. module: documents
 #. odoo-python
@@ -4414,7 +4417,7 @@ msgstr "共有: %(documentName)s"
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Share: %(numberOfDocuments)s files"
-msgstr ""
+msgstr "共有: %(numberOfDocuments)s ファイル"
 
 #. module: documents
 #: model:documents.document,name:documents.document_marketing_brand1_shared_folder
@@ -4429,7 +4432,7 @@ msgstr "以下と共有:"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
 msgid "Shared with anyone"
-msgstr ""
+msgstr "誰とでも共有"
 
 #. module: documents
 #. odoo-javascript
@@ -4449,7 +4452,7 @@ msgstr "ショートカット"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Shortcut created in %(folder_name)s!"
-msgstr ""
+msgstr "%(folder_name)s にショートカットを作成しました!"
 
 #. module: documents
 #. odoo-python
@@ -4461,12 +4464,12 @@ msgstr "ショートカットのターゲット先ドキュメントを変更す
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Shortcuts created in %(folder_name)s!"
-msgstr ""
+msgstr "%(folder_name)s にショートカットを作成しました!"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__destination_children_ids
 msgid "Siblings"
-msgstr ""
+msgstr "同階層"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_single
@@ -4487,7 +4490,7 @@ msgstr "ソーシャル"
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Some emails are missing"
-msgstr ""
+msgstr "一部のメールが欠落しています"
 
 #. module: documents
 #. odoo-javascript
@@ -4663,23 +4666,23 @@ msgstr ""
 #: code:addons/documents/models/documents_document.py:0
 msgid ""
 "The following documents have been restored from the trash: %(documents)s."
-msgstr ""
+msgstr "以下のドキュメントがごみ箱から復元されました:%(documents)s。"
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "The following documents have been sent to trash: %(documents)s."
-msgstr ""
+msgstr "以下のドキュメントがゴミ箱に移動されました:%(documents)s。"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.folder_notification_move_in
 msgid "The following documents were moved inside this folder:"
-msgstr ""
+msgstr "以下のドキュメントがこのフォルダ内に移動されました："
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.folder_notification_move_out
 msgid "The following documents were moved outside this folder:"
-msgstr ""
+msgstr "以下のドキュメントがこのフォルダの外に移動されました："
 
 #. module: documents
 #. odoo-python
@@ -4722,7 +4725,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "There are no records to link this document. Create one first."
-msgstr ""
+msgstr "このドキュメントにリンクできるレコードがありません。まず1件作成してください。"
 
 #. module: documents
 #. odoo-javascript
@@ -4753,7 +4756,7 @@ msgstr "このアクションは存在しません。"
 #. odoo-python
 #: code:addons/documents/models/ir_actions_server.py:0
 msgid "This action was not made available on the containing folder."
-msgstr ""
+msgstr "この操作は、このフォルダでは使用できません。"
 
 #. module: documents
 #: model:ir.model.constraint,message:documents.constraint_documents_document_attachment_unique
@@ -4932,13 +4935,13 @@ msgstr "利用不可能なアクション。"
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Unexpected user_folder_id value %s"
-msgstr ""
+msgstr "Unexpected user_folder_id value %s"
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Unknown searched value %s"
-msgstr ""
+msgstr "不明な検索値%s"
 
 #. module: documents
 #. odoo-javascript
@@ -4951,7 +4954,7 @@ msgstr "ロック解除"
 #. odoo-python
 #: code:addons/documents/wizard/documents_operation.py:0
 msgid "Unsupported attachment type: %s"
-msgstr ""
+msgstr "サポートされていない添付ファイル形式:%s"
 
 #. module: documents
 #. odoo-javascript
@@ -5193,7 +5196,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "You can't move documents you do not own out of folders you cannot edit."
-msgstr ""
+msgstr "編集できないフォルダから、所有していないドキュメントを移動することはできませ"
+"ん。"
 
 #. module: documents
 #. odoo-javascript
@@ -5206,7 +5210,8 @@ msgstr "この/これらのフォルダは、会社のルートフォルダに�
 msgid ""
 "You cannot change permissions because you don't have edit access to all the "
 "selected documents."
-msgstr ""
+msgstr "選択したすべてのドキュメントに対する編集アクセス権がないため、権限を変更でき"
+"ません。"
 
 #. module: documents
 #. odoo-python
@@ -5254,7 +5259,7 @@ msgstr "そのようなタイプのアクションを固定することはでき
 #. odoo-python
 #: code:addons/documents/wizard/documents_operation.py:0
 msgid "You do not have editor access to any folder."
-msgstr ""
+msgstr "どのフォルダに対しても編集権限がありません。"
 
 #. module: documents
 #. odoo-python
@@ -5272,7 +5277,8 @@ msgstr "このフォルダに書き込む権限がありません。"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/helper/documents_drop_zone.xml:0
 msgid "You must be in a specific writable folder to upload files"
-msgstr ""
+msgstr "ファイルをアップロードするには、特定の書き込み可能なフォルダ内にいる必要があ"
+"ります"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
@@ -5299,7 +5305,7 @@ msgstr "アップロードが完了しました"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
 msgid "and its expiration date changed from"
-msgstr ""
+msgstr "そしてその有効期限が変更されました："
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.format_file_size
@@ -5320,7 +5326,7 @@ msgstr "日数"
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "discoverable"
-msgstr ""
+msgstr "閲覧可能"
 
 #. module: documents
 #. odoo-javascript
@@ -5369,7 +5375,7 @@ msgstr "例: mycompany.com"
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "edit"
-msgstr ""
+msgstr "編集"
 
 #. module: documents
 #. odoo-python
@@ -5380,7 +5386,7 @@ msgstr "Eメール"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
 msgid "expiration date changed from"
-msgstr ""
+msgstr "有効期限が変更されました"
 
 #. module: documents
 #. odoo-javascript
@@ -5401,7 +5407,7 @@ msgstr "フォルダ、"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
 msgid "has gained access as"
-msgstr ""
+msgstr "アクセス権を取得しました："
 
 #. module: documents
 #: model:documents.document,name:documents.documents_vendor_bill_extract_azure_interior_document
@@ -5438,13 +5444,13 @@ msgstr "kiB"
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "link_required"
-msgstr ""
+msgstr "link_required"
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "mixed"
-msgstr ""
+msgstr "混合"
 
 #. module: documents
 #. odoo-python
@@ -5472,7 +5478,7 @@ msgstr "people.jpg"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
 msgid "rights changed from"
-msgstr ""
+msgstr "権限が変更されました："
 
 #. module: documents
 #. odoo-javascript
@@ -5511,17 +5517,17 @@ msgstr "無名"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.folder_notification_move_out
 msgid "was been moved outside this folder."
-msgstr ""
+msgstr "このフォルダ外に移動されました。"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.folder_notification_move_in
 msgid "was moved inside this folder."
-msgstr ""
+msgstr "このフォルダ内に移動されました。"
 
 #. module: documents
 #: model:mail.template,subject:documents.mail_template_document_share
 msgid "{{ len(ctx.get('documents', [])) }} document(s) shared with you"
-msgstr ""
+msgstr "{{ len(ctx.get('documents', [])) }} ドキュメントが共有されました"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page

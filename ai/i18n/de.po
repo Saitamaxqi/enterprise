@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-28 18:41+0000\n"
+"POT-Creation-Date: 2025-12-12 18:44+0000\n"
 "PO-Revision-Date: 2025-12-06 10:08+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/ai/de/>\n"
@@ -1450,6 +1450,12 @@ msgid "No configured Ask AI agent. Please contact your administrator."
 msgstr ""
 "Es ist kein Agent für „KI fragen“ konfiguriert. Wenden Sie sich an Ihren "
 "Administrator."
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/utils/llm_providers.py:0
+msgid "No embedding configuration found for the provider"
+msgstr ""
 
 #. module: ai
 #. odoo-python

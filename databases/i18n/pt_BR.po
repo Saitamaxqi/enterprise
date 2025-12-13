@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-10 20:15+0000\n"
-"PO-Revision-Date: 2025-12-06 10:21+0000\n"
+"PO-Revision-Date: 2025-12-12 15:40+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/databases/pt_BR/>\n"
@@ -510,11 +510,13 @@ msgid ""
 "Odoo.com API keys are managed in the <em>Developer API Keys</em> section of "
 "your"
 msgstr ""
+"As chaves API do Odoo.com são gerenciadas na seção Chaves API do "
+"desenvolvedor <em></em> do seu"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
 msgid "Odoo.com Connection &amp; Security page"
-msgstr ""
+msgstr "Odoo.com Conexão &amp; Página de segurança"
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__project_project__database_hosting__paas
@@ -534,18 +536,20 @@ msgid ""
 "Organize your tasks by dispatching them across the pipeline.<br>\n"
 "                Collaborate efficiently by chatting in real-time or via email."
 msgstr ""
+"Organize suas tarefas distribuindo-as pelo pipeline.\n"
+"Colabore de forma eficiente conversando em tempo real ou por e-mail."
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__project_project__database_hosting__other
 #: model:ir.model.fields.selection,name:databases.selection__project_template_create_wizard__database_hosting__other
 msgid "Outside of Odoo"
-msgstr ""
+msgstr "Fora do Odoo"
 
 #. module: databases
 #. odoo-javascript
 #: code:addons/databases/static/src/views/databases_project_list/databases_project_list_renderer.js:0
 msgid "Planned activities of type %(return_name)s"
-msgstr ""
+msgstr "Atividades planejadas do tipo %(return_name)s"
 
 #. module: databases
 #: model:ir.model,name:databases.model_project_project
@@ -565,22 +569,22 @@ msgstr "Assistente de criação de modelo de projeto"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_res_config_settings__databases_project_template_id
 msgid "Project template"
-msgstr ""
+msgstr "Modelo de projetão"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__property_definition
 msgid "Property Definition"
-msgstr ""
+msgstr "Definição de propriedade"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 msgid "Regular Project"
-msgstr ""
+msgstr "Projeto regular"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__removable_user_ids
 msgid "Removable User"
-msgstr ""
+msgstr "Usuário removível"
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__databases_manage_users_wizard__mode__remove
@@ -595,7 +599,7 @@ msgstr "Remover"
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 msgid "Remove User"
-msgstr ""
+msgstr "Remover usuário"
 
 #. module: databases
 #: model:ir.actions.server,name:databases.action_remove_users
@@ -620,12 +624,16 @@ msgid ""
 "Select the users you want to invite to the %(nb_databases)s selected "
 "databases."
 msgstr ""
+"Selecione os usuários que você deseja convidar para os bancos de dados "
+"selecionados do %(nb_databases)s."
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "Select the users you want to invite to the database %(database_name)s."
 msgstr ""
+"Selecione os usuários que você deseja convidar para o banco de dados %"
+"(database_name)s."
 
 #. module: databases
 #. odoo-python
@@ -634,6 +642,8 @@ msgid ""
 "Select the users you want to remove from the %(nb_databases)s selected "
 "databases."
 msgstr ""
+"Selecione os usuários que quer remover das bases de dados selecionadas %"
+"(nb_databases)s."
 
 #. module: databases
 #. odoo-python
@@ -641,6 +651,7 @@ msgstr ""
 msgid ""
 "Select the users you want to remove from the database %(database_name)s."
 msgstr ""
+"Selecione os usuários que quer remover da base de dados %(database_name)s."
 
 #. module: databases
 #: model:ir.actions.act_window,name:databases.action_databases_configuration
@@ -657,25 +668,25 @@ msgstr "Estado"
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__summary_message
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__summary_message
 msgid "Summary Message"
-msgstr ""
+msgstr "Mensagem resumida"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_nb_synchro_errors
 msgid "Synchronization Errors Count"
-msgstr ""
+msgstr "Contagem de erros de sincronização"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
 msgid "Synchronization done successfully!"
-msgstr ""
+msgstr "Sincronização concluída com sucesso!"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/models/project_project.py:0
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
 msgid "Synchronization of %d databases"
-msgstr ""
+msgstr "Sincronização de bases de dados %d"
 
 #. module: databases
 #: model:ir.actions.server,name:databases.action_synchronize_database
@@ -687,7 +698,7 @@ msgstr "Sincronizar"
 #. module: databases
 #: model:ir.actions.server,name:databases.action_synchronize_all_databases
 msgid "Synchronize all the Databases"
-msgstr ""
+msgstr "Sincronizar todas as bases de dados"
 
 #. module: databases
 #: model_terms:ir.actions.act_window,help:databases.action_view_databases_all
@@ -695,6 +706,9 @@ msgid ""
 "Synchronize to automatically fetch Odoo Online databases, or set an API Key "
 "to connect to On Premise or Odoo.sh ones."
 msgstr ""
+"Sincronize para obter automaticamente os bancos de dados do Odoo Online ou "
+"defina uma chave API para se conectar aos bancos de dados On Premise ou "
+"Odoo.sh."
 
 #. module: databases
 #: model:ir.actions.act_window,name:databases.action_view_tasks_all
@@ -707,7 +721,7 @@ msgstr "Tarefas"
 #. odoo-javascript
 #: code:addons/databases/static/src/views/databases_project_list/databases_project_list_renderer.js:0
 msgid "Tax return %(return_name)s"
-msgstr ""
+msgstr "Declaração de imposto de renda %(return_name)s"
 
 #. module: databases
 #. odoo-python
@@ -716,23 +730,29 @@ msgid ""
 "The database %(url)s is registered as a saas database in odoo.com. As it "
 "seems to be configured we have left it as is.\n"
 msgstr ""
+"A base e dados %(url)s está registrada como uma base de dados SaaS no "
+"odoo.com. Como parece estar configurada, deixamos como está.\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "These users were successfully invited to %(nb_databases)s databases."
 msgstr ""
+"Esses usuários foram convidados com sucesso para as bases de dados %"
+"(nb_databases)s."
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "These users were successfully removed from %(nb_databases)s databases."
 msgstr ""
+"Esses usuários foram removidos com sucesso dos bancos de dados %"
+"(nb_databases)s."
 
 #. module: databases
 #: model:ir.model.constraint,message:databases.constraint_project_project_database_url_required
 msgid "Uh-oh! It seems we are missing a url for a database!"
-msgstr ""
+msgstr "Oh, oh! Parece que está faltando um URL para uma base de dados!"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__user_ids

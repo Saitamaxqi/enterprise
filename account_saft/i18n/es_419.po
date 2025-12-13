@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:45+0000\n"
+"POT-Creation-Date: 2025-12-12 18:44+0000\n"
 "PO-Revision-Date: 2025-09-17 09:36+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -86,6 +86,12 @@ msgstr "SAF-T solo es compatible con el grupo de una columna."
 msgid "Some partners are missing at least one address (Zip/City)."
 msgstr ""
 "A algunos contactos les falta al menos una dirección (código postal/ciudad)."
+
+#. module: account_saft
+#. odoo-python
+#: code:addons/account_saft/models/account_general_ledger.py:0
+msgid "Undistributed profits or losses may cause export rejection."
+msgstr ""
 
 #. module: account_saft
 #. odoo-python

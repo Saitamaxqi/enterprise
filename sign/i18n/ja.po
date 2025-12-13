@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 18:41+0000\n"
-"PO-Revision-Date: 2025-12-06 09:59+0000\n"
+"POT-Creation-Date: 2025-12-12 18:42+0000\n"
+"PO-Revision-Date: 2025-12-10 10:28+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/sign/ja/"
 ">\n"
@@ -805,12 +805,12 @@ msgstr "承認ユーザ:"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
 msgid "Autocomplete values and download signed document"
-msgstr ""
+msgstr "値を自動補完し、署名済みドキュメントをダウンロード"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__available_template_ids
 msgid "Available Template"
-msgstr ""
+msgstr "利用可能なテンプレート"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
@@ -856,11 +856,14 @@ msgid ""
 "electronic representation of my hand-written signature/initials for all "
 "purposes when it is used on documents, including legally binding contracts."
 msgstr ""
+"署名することで、選択した署名/イニシャルが文書で使用される際(法的拘束力のある"
+"契約書を含む)、私の手書きの署名/イニシャルの有効な電子的表現として扱われるこ"
+"とに同意します。"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__message_cc
@@ -973,7 +976,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
 msgid "Choose a template"
-msgstr ""
+msgstr "テンプレートを選択"
 
 #. module: sign
 #. odoo-javascript
@@ -1141,7 +1144,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_share_view_form
 msgid "Copy link"
-msgstr ""
+msgstr "リンクをコピー"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__cc_partner_ids
@@ -1607,6 +1610,8 @@ msgstr "編集"
 
 #. module: sign
 #. odoo-javascript
+#. odoo-python
+#: code:addons/sign/models/sign_template.py:0
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_action.js:0
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_sidebar.xml:0
 msgid "Edit Template"
@@ -4108,6 +4113,14 @@ msgid "The document %s has been fully signed."
 msgstr "ドキュメント%sは全て署名されました。"
 
 #. module: sign
+#. odoo-python
+#: code:addons/sign/models/sign_template.py:0
+msgid ""
+"The document you're trying to update doesn't exist or doesn't belong to this "
+"template."
+msgstr ""
+
+#. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
 msgid ""
 "The final document and this completion history have been sent by email "
@@ -4464,6 +4477,13 @@ msgid "Update"
 msgstr "更新"
 
 #. module: sign
+#. odoo-javascript
+#: code:addons/sign/static/src/backend_components/sign_template/sign_template_action.js:0
+#: code:addons/sign/static/src/backend_components/sign_template/sign_template_sidebar.xml:0
+msgid "Update Document"
+msgstr ""
+
+#. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
 msgid "Update Terms"
 msgstr "条件の更新"
@@ -4473,6 +4493,15 @@ msgstr "条件の更新"
 #: code:addons/sign/models/res_config_settings.py:0
 msgid "Update Terms & Conditions"
 msgstr "取引条件を更新"
+
+#. module: sign
+#. odoo-javascript
+#: code:addons/sign/static/src/backend_components/sign_template/sign_template_action.js:0
+msgid ""
+"Updating a document generates a new template with the same sign items. The "
+"copied items will land in the same coordinates as their originals if the "
+"number of pages match with the previous PDF. Do you want to proceed?"
+msgstr ""
 
 #. module: sign
 #. odoo-javascript

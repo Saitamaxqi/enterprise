@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-14 18:42+0000\n"
-"PO-Revision-Date: 2025-12-06 09:52+0000\n"
+"POT-Creation-Date: 2025-12-12 18:44+0000\n"
+"PO-Revision-Date: 2025-12-11 10:23+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/ko/>\n"
@@ -36,6 +36,18 @@ msgstr "\" 계정 잔액은 다음 항목으로 인해 변동됩니다"
 #: code:addons/account_reports/models/account_journal_report.py:0
 msgid "%(journal)s - %(account)s"
 msgstr "%(journal)s - %(account)s"
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "%(line_name)s - %(company)s"
+msgstr ""
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "%(line_name)s - %(company_name)s"
+msgstr ""
 
 #. module: account_reports
 #. odoo-python
@@ -98,10 +110,8 @@ msgstr ""
 #: code:addons/account_reports/models/account_report.py:0
 msgid ""
 "'Open General Ledger' caret option is only available form report lines "
-"targetting accounts."
+"targetting accounts or Undistributed Profits/Losses."
 msgstr ""
-"'총계정원장 보기' 삽입 기능은 회계 계정을 대상으로 하는 양식 보고서 항목에서"
-"만 사용이 가능합니다."
 
 #. module: account_reports
 #. odoo-python
@@ -344,6 +354,13 @@ msgid ""
 "show_warning_existing_return\" class=\"fa fa-exclamation-triangle text-"
 "danger pb-2\" title=\"A return already exists for the selected period.\"/>"
 msgstr ""
+"<span invisible=\"not show_warning_wrong_dates\" class=\"fa fa-exclamation-"
+"triangle text-danger pb-2\" title=\"The selected range doesn't match any "
+"fiscal period.\"/>\n"
+"                                                               <span "
+"invisible=\"not show_warning_existing_return\" class=\"fa fa-exclamation-"
+"triangle text-danger pb-2\" title=\"A return already exists for the selected "
+"period.\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_form_view
@@ -414,7 +431,7 @@ msgstr "계정"
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_audit_account_status
 msgid "Account Audit Account Status"
-msgstr ""
+msgstr "계정 감사 계정 상태"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_account_balances_search_view
@@ -495,7 +512,7 @@ msgstr "계정 반환"
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_return_check_template
 msgid "Account Return Check Template"
-msgstr ""
+msgstr "계정 반환 확인 템플릿"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_res_company__account_revaluation_journal_id
@@ -793,7 +810,7 @@ msgstr "파트너별 장기 미지급금"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_aged_receivable_followup
 msgid "Aged receivables and follow-up"
-msgstr ""
+msgstr "장기 미수금 및 후속 조치"
 
 #. module: account_reports
 #. odoo-python
@@ -1121,7 +1138,7 @@ msgstr "감사 계정"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_account__audit_balance_show_warning
 msgid "Audit Balance Show Warning"
-msgstr ""
+msgstr "감사 잔액 경고 표시"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_account__audit_previous_balance_show_warning
@@ -1265,7 +1282,7 @@ msgstr "잔고 계산"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_bank_fees_analytical_review
 msgid "Bank Fees Analytical Review"
-msgstr ""
+msgstr "은행 수수료 분석 검토"
 
 #. module: account_reports
 #. odoo-python
@@ -1616,7 +1633,7 @@ msgstr "수표 승인"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_clear_internal_transfer_account
 msgid "Clear Internal Transfer Accounts"
-msgstr ""
+msgstr "내부 이체 계정 정리하기"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
@@ -3051,7 +3068,7 @@ msgstr "일반 상태"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__generic_state_only_pay
 msgid "Generic State Only Pay"
-msgstr ""
+msgstr "일반 상태만 결제"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__generic_state_review
@@ -3061,7 +3078,7 @@ msgstr "일반 상태 검토"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__generic_state_review_submit
 msgid "Generic State Review Submit"
-msgstr ""
+msgstr "일반 상태 검토 제출"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_generic_tax_report_handler
@@ -3539,7 +3556,7 @@ msgstr "재고 분석 검토"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_investigate_unusual_supplier_balances
 msgid "Investigate Unusual Supplier Balances"
-msgstr ""
+msgstr "비정상적인 공급업체 잔액 조사"
 
 #. module: account_reports
 #. odoo-javascript
@@ -3650,6 +3667,7 @@ msgstr "전표 항목"
 #. odoo-javascript
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
+#: code:addons/account_reports/models/account_general_ledger.py:0
 #: code:addons/account_reports/models/account_report.py:0
 #: code:addons/account_reports/models/account_return.py:0
 #: code:addons/account_reports/models/account_trial_balance_report.py:0
@@ -3808,6 +3826,11 @@ msgstr "이전"
 #: model:ir.ui.menu,name:account_reports.account_reports_audit_menu
 msgid "Ledgers"
 msgstr "장부"
+
+#. module: account_reports
+#: model:account.report.line,name:account_reports.account_financial_report_allocations_withdrawals0
+msgid "Less Allocations and Plus Withdrawals"
+msgstr ""
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_cost_sales0
@@ -4132,6 +4155,11 @@ msgid "Net Profit"
 msgstr "순이익"
 
 #. module: account_reports
+#: model:account.report.line,name:account_reports.account_financial_report_net_profit_after_allocations0
+msgid "Net Profit Left After Allocations and Withdrawals"
+msgstr ""
+
+#. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_net_assets0
 msgid "Net assets"
 msgstr "순자산"
@@ -4282,7 +4310,7 @@ msgstr "비공제"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_non_recoverable_vat_gross_accounting
 msgid "Non-recoverable VAT: gross accounting"
-msgstr ""
+msgstr "환급 불가 부가가치세: 전체 회계"
 
 #. module: account_reports
 #. odoo-javascript
@@ -4345,7 +4373,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_obtain_signed_inventory_valuation
 msgid "Obtain signed inventory valuation"
-msgstr ""
+msgstr "재고 평가서 서명 후 받기"
 
 #. module: account_reports
 #. odoo-javascript
@@ -4731,7 +4759,7 @@ msgstr "기간 4"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__period_amount_to_pay
 msgid "Period Amount To Pay"
-msgstr ""
+msgstr "결제 금액 기간"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_audit_period_events
@@ -5245,7 +5273,7 @@ msgstr "매출액"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_revenue_receivables_review
 msgid "Revenue & receivables Review"
-msgstr ""
+msgstr "수익 및 미수금 검토"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_multicurrency_revaluation_wizard__reversal_date
@@ -5310,7 +5338,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_review_for_capitalizable_expenses
 msgid "Review for capitalizable expenses"
-msgstr ""
+msgstr "자본화 가능 비용 검토"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_review_of_guaranteed
@@ -5479,7 +5507,7 @@ msgstr "해당 값을 전송 및 인쇄"
 #. odoo-python
 #: code:addons/account_reports/models/account_followup_report.py:0
 msgid "Send Follow Up Reports"
-msgstr ""
+msgstr "후속 보고서 발송"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_send__send_mail_readonly
@@ -5533,7 +5561,7 @@ msgstr "회사 데이터 설정"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_settlement_in_subsequent_period
 msgid "Settlement in Subsequent Period"
-msgstr ""
+msgstr "후속 기간 정산"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_st_cash_forecast0
@@ -5755,7 +5783,7 @@ msgstr "제출"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_subsidaries_and_investments_summary
 msgid "Subsidiaries and investments summary"
-msgstr ""
+msgstr "자회사 및 투자 요약"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_audit_assets_listing
@@ -5904,7 +5932,7 @@ msgstr "세금 납부"
 #. module: account_reports
 #: model:mail.template,subject:account_reports.email_template_generic_tax_instructions
 msgid "Tax return payment instructions"
-msgstr ""
+msgstr "세무 신고 납부 안내"
 
 #. module: account_reports
 #. odoo-python
@@ -6286,7 +6314,7 @@ msgstr "총계 %s"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__total_amount_to_pay
 msgid "Total Amount To Pay"
-msgstr ""
+msgstr "총 지급액"
 
 #. module: account_reports
 #. odoo-python
@@ -6315,7 +6343,7 @@ msgstr "거래 협력사"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_trade_payables_analytical_review
 msgid "Trade Payables Analytical Review"
-msgstr ""
+msgstr "매입채무 분석 검토"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.transaction_without_statement
@@ -6411,6 +6439,12 @@ msgstr "보관 취소"
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Undefined"
 msgstr "미지정"
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "Undistributed Profits/Losses"
+msgstr ""
 
 #. module: account_reports
 #. odoo-javascript
@@ -6694,7 +6728,7 @@ msgstr "년"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_year_end_revenue_cutoff_analysis
 msgid "Year-end revenue cutoff analysis"
-msgstr ""
+msgstr "연말 매출 마감 분석"
 
 #. module: account_reports
 #. odoo-javascript
@@ -7043,6 +7077,13 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/multicurrency_revaluation_report/warnings.xml:0
 msgid "⇒ Reset to Odoo’s Rate"
 msgstr "⇒ Odoo 요율로 재설정"
+
+#~ msgid ""
+#~ "'Open General Ledger' caret option is only available form report lines "
+#~ "targetting accounts."
+#~ msgstr ""
+#~ "'총계정원장 보기' 삽입 기능은 회계 계정을 대상으로 하는 양식 보고서 항목에"
+#~ "서만 사용이 가능합니다."
 
 #~ msgid " and %s others"
 #~ msgstr "및  %s 다른"

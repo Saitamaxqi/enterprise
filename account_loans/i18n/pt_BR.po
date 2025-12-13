@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-12-06 10:02+0000\n"
+"PO-Revision-Date: 2025-12-12 15:39+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/account_loans/pt_BR/>\n"
@@ -641,12 +641,12 @@ msgstr "Análise de empréstimos"
 #. module: account_loans
 #: model:account.return.check.template,name:account_loans.account_return_check_template_loans_classification
 msgid "Loans classification"
-msgstr ""
+msgstr "Classificação dos empréstimos"
 
 #. module: account_loans
 #: model:account.return.check.template,name:account_loans.account_return_check_template_loans_recording
 msgid "Loans recording"
-msgstr ""
+msgstr "Registro de empréstimos"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__long_term_account_id

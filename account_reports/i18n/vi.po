@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-14 18:42+0000\n"
+"POT-Creation-Date: 2025-12-12 18:44+0000\n"
 "PO-Revision-Date: 2025-12-06 09:52+0000\n"
 "Last-Translator: Odoo Translation Bot <c3p@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
@@ -38,6 +38,18 @@ msgstr "\" số dư tài khoản bị ảnh hưởng bởi"
 #: code:addons/account_reports/models/account_journal_report.py:0
 msgid "%(journal)s - %(account)s"
 msgstr "%(journal)s - %(account)s"
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "%(line_name)s - %(company)s"
+msgstr ""
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "%(line_name)s - %(company_name)s"
+msgstr ""
 
 #. module: account_reports
 #. odoo-python
@@ -101,10 +113,8 @@ msgstr ""
 #: code:addons/account_reports/models/account_report.py:0
 msgid ""
 "'Open General Ledger' caret option is only available form report lines "
-"targetting accounts."
+"targetting accounts or Undistributed Profits/Losses."
 msgstr ""
-"Tùy chọn dấu mũ 'Mở sổ cái chung' chỉ khả dụng cho các dòng báo cáo nhắm mục "
-"tiêu tới tài khoản."
 
 #. module: account_reports
 #. odoo-python
@@ -189,11 +199,11 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
-"                   <t t-if=\"object.id != object.commercial_partner_id.id\""
-">Kính gửi <t t-out=\"object.name or ''\"/> "
+"                   <t t-if=\"object.id != "
+"object.commercial_partner_id.id\">Kính gửi <t t-out=\"object.name or ''\"/> "
 "(<t t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
-"                    <t t-else=\"\">Kính gửi <t t-out=\"object.name or ''\""
-"/>,</t>\n"
+"                    <t t-else=\"\">Kính gửi <t t-out=\"object.name or ''\"/>,"
+"</t>\n"
 "                    <br/>\n"
 "                    Kính gửi quý khách, xin vui lòng xem danh sách các hóa "
 "đơn chưa thanh toán của quý khách đính kèm dưới đây.\n"
@@ -406,12 +416,12 @@ msgid ""
 "show_warning_existing_return\" class=\"fa fa-exclamation-triangle text-"
 "danger pb-2\" title=\"A return already exists for the selected period.\"/>"
 msgstr ""
-"<span invisible=\"not show_warning_wrong_dates\" class="
-"\"fa fa-exclamation-triangle text-danger pb-2\" title="
-"\"Khoảng thời gian đã chọn không khớp với bất kỳ kỳ kế toán nào.\"/>.\n"
-"<span invisible=\"not show_warning_existing_return\" class="
-"\"fa fa-exclamation-triangle text-danger pb-2\" title="
-"\"Đã tồn tại một tờ khai cho kỳ đã chọn.\"/>"
+"<span invisible=\"not show_warning_wrong_dates\" class=\"fa fa-exclamation-"
+"triangle text-danger pb-2\" title=\"Khoảng thời gian đã chọn không khớp với "
+"bất kỳ kỳ kế toán nào.\"/>.\n"
+"<span invisible=\"not show_warning_existing_return\" class=\"fa fa-"
+"exclamation-triangle text-danger pb-2\" title=\"Đã tồn tại một tờ khai cho "
+"kỳ đã chọn.\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_form_view
@@ -3039,8 +3049,8 @@ msgid ""
 "- Has a payment plan been negotiated?\n"
 "- Is a provision recorded if recovery is doubtful?"
 msgstr ""
-"Đối với mỗi khoản phải thu rủi ro cao (>60 ngày), hãy kiểm tra các điều sau:"
-"\n"
+"Đối với mỗi khoản phải thu rủi ro cao (>60 ngày), hãy kiểm tra các điều "
+"sau:\n"
 "- Follow-up có được ghi chép không?\n"
 "- Kế hoạch thanh toán đã được thương lượng chưa?\n"
 "- Có ghi nhận dự phòng nếu nghi ngờ về khả năng thu hồi không?"
@@ -3747,6 +3757,7 @@ msgstr "Hạng mục bút toán"
 #. odoo-javascript
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
+#: code:addons/account_reports/models/account_general_ledger.py:0
 #: code:addons/account_reports/models/account_report.py:0
 #: code:addons/account_reports/models/account_return.py:0
 #: code:addons/account_reports/models/account_trial_balance_report.py:0
@@ -3904,6 +3915,11 @@ msgstr "Để sau"
 #. module: account_reports
 #: model:ir.ui.menu,name:account_reports.account_reports_audit_menu
 msgid "Ledgers"
+msgstr ""
+
+#. module: account_reports
+#: model:account.report.line,name:account_reports.account_financial_report_allocations_withdrawals0
+msgid "Less Allocations and Plus Withdrawals"
 msgstr ""
 
 #. module: account_reports
@@ -4228,6 +4244,11 @@ msgstr "Tên được dùng để tạo chứng từ."
 #: model:account.report.line,name:account_reports.account_financial_report_net_profit0
 msgid "Net Profit"
 msgstr "Lợi nhuận ròng"
+
+#. module: account_reports
+#: model:account.report.line,name:account_reports.account_financial_report_net_profit_after_allocations0
+msgid "Net Profit Left After Allocations and Withdrawals"
+msgstr ""
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_net_assets0
@@ -6545,6 +6566,12 @@ msgid "Undefined"
 msgstr "Không xác định"
 
 #. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "Undistributed Profits/Losses"
+msgstr ""
+
+#. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Unfold All"
@@ -7198,6 +7225,13 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/multicurrency_revaluation_report/warnings.xml:0
 msgid "⇒ Reset to Odoo’s Rate"
 msgstr "⇒ Đặt lại về tỷ giá của Odoo"
+
+#~ msgid ""
+#~ "'Open General Ledger' caret option is only available form report lines "
+#~ "targetting accounts."
+#~ msgstr ""
+#~ "Tùy chọn dấu mũ 'Mở sổ cái chung' chỉ khả dụng cho các dòng báo cáo nhắm "
+#~ "mục tiêu tới tài khoản."
 
 #~ msgid ""
 #~ "%s for Transactions(+) imported from your online bank account (dated "

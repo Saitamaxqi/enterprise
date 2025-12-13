@@ -4,13 +4,14 @@
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# "Manon Rondou (ronm)" <ronm@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:46+0000\n"
-"PO-Revision-Date: 2025-11-08 20:13+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-12-10 10:30+0000\n"
+"Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "sale_account_accountant/fr/>\n"
 "Language: fr\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: sale_account_accountant
 #: model_terms:ir.ui.view,arch_db:sale_account_accountant.sale_order_line_view_search
@@ -28,7 +29,7 @@ msgstr "Société"
 #. module: sale_account_accountant
 #: model_terms:ir.ui.view,arch_db:sale_account_accountant.sale_order_line_view_list
 msgid "Create Accrual Entries"
-msgstr ""
+msgstr "Créer des écritures de régularisation"
 
 #. module: sale_account_accountant
 #: model_terms:ir.ui.view,arch_db:sale_account_accountant.sale_order_line_view_search
@@ -48,27 +49,31 @@ msgstr "Nom d'affichage"
 #. module: sale_account_accountant
 #: model_terms:ir.ui.view,arch_db:sale_account_accountant.sale_order_line_view_search
 msgid "Display only goods lines"
-msgstr ""
+msgstr "Afficher uniquement les lignes de produits"
 
 #. module: sale_account_accountant
 #: model_terms:ir.ui.view,arch_db:sale_account_accountant.sale_order_line_view_search
 msgid "Display only lines for product invoiced on delivered quantities"
 msgstr ""
+"Afficher uniquement les lignes pour les produits facturés sur les quantités "
+"livrées"
 
 #. module: sale_account_accountant
 #: model_terms:ir.ui.view,arch_db:sale_account_accountant.sale_order_line_view_search
 msgid "Display only lines for product invoiced on ordered quantities"
 msgstr ""
+"Afficher uniquement les lignes pour les produits facturés sur les quantités "
+"commandées"
 
 #. module: sale_account_accountant
 #: model_terms:ir.ui.view,arch_db:sale_account_accountant.sale_order_line_view_search
 msgid "Display only service lines"
-msgstr ""
+msgstr "Afficher uniquement les lignes de services"
 
 #. module: sale_account_accountant
 #: model_terms:ir.ui.view,arch_db:sale_account_accountant.sale_order_line_view_search
 msgid "For the Last 365 Days"
-msgstr ""
+msgstr "Pour les 365 derniers jours"
 
 #. module: sale_account_accountant
 #: model_terms:ir.ui.view,arch_db:sale_account_accountant.sale_order_line_view_search
@@ -83,29 +88,29 @@ msgstr "ID"
 #. module: sale_account_accountant
 #: model_terms:ir.ui.view,arch_db:sale_account_accountant.sale_order_line_view_search
 msgid "Invoice on Delivered"
-msgstr ""
+msgstr "Facturer à la livraison"
 
 #. module: sale_account_accountant
 #: model_terms:ir.ui.view,arch_db:sale_account_accountant.sale_order_line_view_search
 msgid "Invoice on Ordered"
-msgstr ""
+msgstr "Facturer à la commande"
 
 #. module: sale_account_accountant
 #: model:ir.model.fields,field_description:sale_account_accountant.field_sale_order_line__invoice_to_be_issued
 msgid "Invoice to be Issued"
-msgstr ""
+msgstr "Facture à émettre"
 
 #. module: sale_account_accountant
 #: model:ir.actions.act_window,name:sale_account_accountant.sale_order_line_accrual_deferred_revenues_action
 #: model:ir.ui.menu,name:sale_account_accountant.menu_sale_order_line_accrual_deferred_revenues_action
 msgid "Invoiced Not Delivered"
-msgstr ""
+msgstr "Facturé, non livré"
 
 #. module: sale_account_accountant
 #: model:ir.actions.act_window,name:sale_account_accountant.sale_order_line_accrual_to_bill_action
 #: model:ir.ui.menu,name:sale_account_accountant.menu_sale_order_line_accrual_to_bill_action
 msgid "Invoices To Be Issued"
-msgstr ""
+msgstr "Factures à émettre"
 
 #. module: sale_account_accountant
 #: model:ir.model.fields,field_description:sale_account_accountant.field_sale_order_line__product_invoice_policy
@@ -116,7 +121,7 @@ msgstr "Politique de facturation"
 #. odoo-python
 #: code:addons/sale_account_accountant/models/sale_order_line.py:0
 msgid "Only a check to True is supported"
-msgstr ""
+msgstr "Seule la valeur True est prise en charge"
 
 #. module: sale_account_accountant
 #: model_terms:ir.ui.view,arch_db:sale_account_accountant.sale_order_line_view_search
@@ -157,7 +162,7 @@ msgstr "Lignes de commande"
 #. module: sale_account_accountant
 #: model_terms:ir.ui.view,arch_db:sale_account_accountant.sale_order_line_view_search
 msgid "Sales Order Lines processed during last 365 days"
-msgstr ""
+msgstr "Lignes de commandes client traitées au cours des 365 derniers jours"
 
 #. module: sale_account_accountant
 #: model_terms:ir.ui.view,arch_db:sale_account_accountant.sale_order_line_view_search

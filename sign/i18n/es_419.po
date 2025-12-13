@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 18:41+0000\n"
-"PO-Revision-Date: 2025-12-06 10:15+0000\n"
-"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
+"POT-Creation-Date: 2025-12-12 18:42+0000\n"
+"PO-Revision-Date: 2025-12-10 10:30+0000\n"
+"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/sign/es_419/>\n"
 "Language: es_419\n"
@@ -1631,6 +1631,8 @@ msgstr "Editar"
 
 #. module: sign
 #. odoo-javascript
+#. odoo-python
+#: code:addons/sign/models/sign_template.py:0
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_action.js:0
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_sidebar.xml:0
 msgid "Edit Template"
@@ -3750,7 +3752,7 @@ msgstr "Signatario %s"
 #. module: sign
 #: model:sign.item.role,name:sign.sign_item_role_default
 msgid "Signer 1"
-msgstr ""
+msgstr "Signatario 1"
 
 #. module: sign
 #. odoo-javascript
@@ -4153,6 +4155,14 @@ msgid "The document %s has been fully signed."
 msgstr "El documento %s ha sido firmado por completo."
 
 #. module: sign
+#. odoo-python
+#: code:addons/sign/models/sign_template.py:0
+msgid ""
+"The document you're trying to update doesn't exist or doesn't belong to this "
+"template."
+msgstr ""
+
+#. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
 msgid ""
 "The final document and this completion history have been sent by email "
@@ -4523,6 +4533,13 @@ msgid "Update"
 msgstr "Actualizar"
 
 #. module: sign
+#. odoo-javascript
+#: code:addons/sign/static/src/backend_components/sign_template/sign_template_action.js:0
+#: code:addons/sign/static/src/backend_components/sign_template/sign_template_sidebar.xml:0
+msgid "Update Document"
+msgstr ""
+
+#. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
 msgid "Update Terms"
 msgstr "Actualizar términos"
@@ -4532,6 +4549,15 @@ msgstr "Actualizar términos"
 #: code:addons/sign/models/res_config_settings.py:0
 msgid "Update Terms & Conditions"
 msgstr "Actualizar términos y condiciones"
+
+#. module: sign
+#. odoo-javascript
+#: code:addons/sign/static/src/backend_components/sign_template/sign_template_action.js:0
+msgid ""
+"Updating a document generates a new template with the same sign items. The "
+"copied items will land in the same coordinates as their originals if the "
+"number of pages match with the previous PDF. Do you want to proceed?"
+msgstr ""
 
 #. module: sign
 #. odoo-javascript

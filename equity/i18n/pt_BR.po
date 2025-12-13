@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:40+0000\n"
-"PO-Revision-Date: 2025-12-06 10:12+0000\n"
+"PO-Revision-Date: 2025-12-12 15:40+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/equity/pt_BR/>\n"
@@ -684,24 +684,24 @@ msgstr "Nome exibido"
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__dividend_payout
 #: model:ir.model.fields,field_description:equity.field_equity_security_class__dividend_payout
 msgid "Dividend Payout"
-msgstr ""
+msgstr "Pagamento de dividendos"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__attachment_expiration_date
 msgid "Document Exp. Date"
-msgstr ""
+msgstr "Data de validade do documento"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 msgid "Document Expiration Date"
-msgstr ""
+msgstr "Data de validade do documento"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
 msgid "Edit Beneficial Owner"
-msgstr ""
+msgstr "Editar Titular Beneficiário"
 
 #. module: equity
 #. odoo-python
@@ -719,66 +719,66 @@ msgstr "Patrimônio"
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_access_token
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_access_token
 msgid "Equity Access Token"
-msgstr ""
+msgstr "Token de acesso a ações"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__equity_currency_id
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_currency_id
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_currency_id
 msgid "Equity Currency"
-msgstr ""
+msgstr "Moeda patrimonial"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_kanban_dashboard_graph
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_kanban_dashboard_graph
 msgid "Equity Kanban Dashboard Graph"
-msgstr ""
+msgstr "Gráfico do painel Kanban de patrimônio líquido"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_last_valuation
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_last_valuation
 msgid "Equity Last Valuation"
-msgstr ""
+msgstr "Última Avaliação do Patrimônio Líquido"
 
 #. module: equity
 #: model:mail.template,name:equity.equity_shareholder_email_template
 msgid "Equity Shareholder Email"
-msgstr ""
+msgstr "E-mail do acionista"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_shareholders_count
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_shareholders_count
 msgid "Equity Shareholders Count"
-msgstr ""
+msgstr "Contagem de acionistas"
 
 #. module: equity
 #: model:ir.model,name:equity.model_equity_transaction
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_transaction_ids
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_transaction_ids
 msgid "Equity Transaction"
-msgstr ""
+msgstr "Transação de ações"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_transaction_count
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_transaction_count
 msgid "Equity Transaction Count"
-msgstr ""
+msgstr "Contagem de transações de ações"
 
 #. module: equity
 #: model:mail.template,name:equity.equity_ubo_form_email_template
 msgid "Equity UBO Form Email"
-msgstr ""
+msgstr "Formulário UBO de capital próprio E-mail"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_valuation_ids
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_valuation_ids
 msgid "Equity Valuation"
-msgstr ""
+msgstr "Avaliação patrimonial"
 
 #. module: equity
 #: model:mail.template,subject:equity.equity_shareholder_email_template
 msgid "Equity notice"
-msgstr ""
+msgstr "Aviso sobre capital próprio"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__event
@@ -789,13 +789,13 @@ msgstr "Evento"
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
 msgid "Exemption from the identification of beneficial"
-msgstr ""
+msgstr "Isenção da identificação do beneficiário efetivo"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "Exercise transactions must have a destination 'Share' class"
-msgstr ""
+msgstr "As transações de exercício devem ter uma classe de destino “Ação”"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__expiration_date
@@ -810,12 +810,12 @@ msgstr "Data de expiração"
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__expiration_diff
 msgid "Expiration Diff"
-msgstr ""
+msgstr "Diferença de vencimento"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_search
 msgid "Expired Documents"
-msgstr ""
+msgstr "Documentos vencidos"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -824,11 +824,13 @@ msgid ""
 "persons considered as equivalent to the\n"
 "                        spouse; the parents;"
 msgstr ""
+"Membros da família: o cônjuge, qualquer pessoa considerada equivalente às "
+"pessoas consideradas equivalentes ao cônjuge; os pais;"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "First and Last Name:"
-msgstr ""
+msgstr "Nome e sobrenome:"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__message_follower_ids
@@ -852,24 +854,28 @@ msgid ""
 "                <b>hold or control at least 25% in the capital or voting "
 "rights</b> of"
 msgstr ""
+"Em conformidade com as nossas obrigações legais de identificação de "
+"clientes, informe-nos sobre pessoas físicas que, direta ou indiretamente\n"
+"               <b> detêm ou controlam pelo menos 25% in do capital ou dos "
+"direitos de voto</b> de"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_formation_date
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_formation_date
 msgid "Formation Date"
-msgstr ""
+msgstr "Data de constituição"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/cap_table/cap_table.js:0
 msgid "Fully Diluted"
-msgstr ""
+msgstr "Totalmente diluído"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_end_dialog.js:0
 msgid "Function end: %s"
-msgstr ""
+msgstr "Fim da função: %s"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -879,11 +885,15 @@ msgid ""
 "                            drawing up a list of European governing "
 "authorities, bodies and specialized agencies for a simplified due diligence."
 msgstr ""
+"Autoridades governamentais da União Europeia, organismos e agências, "
+"conforme definido pelo Decreto Real de 19 de julho de 2013\n"
+"elaborando uma lista de autoridades governamentais, organismos e agências "
+"especializadas europeias para uma devida diligência simplificada."
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__has_auth_rep_role
 msgid "Has Auth Rep Role"
-msgstr ""
+msgstr "Tem função de representante de autenticação"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__has_message
@@ -895,7 +905,7 @@ msgstr "Tem uma mensagem"
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__has_percentages
 msgid "Has Percentages"
-msgstr ""
+msgstr "Tem porcentagens"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -913,13 +923,26 @@ msgid ""
 "                        directors and members of the board or equivalent "
 "function of an international"
 msgstr ""
+"Chefes de Estado, chefes de governo, ministros e vice-ministros ou ministros "
+"adjuntos; membros de parlamentos;\n"
+"                        membros dos órgãos dirigentes de partidos políticos; "
+"membros de tribunais supremos, de tribunais constitucionais ou de outros\n"
+"                        órgãos judiciais superiores cujas decisões não sejam "
+"passíveis de recurso, salvo em circunstâncias excecionais; membros\n"
+"                        de tribunais de contas ou de conselhos de bancos "
+"centrais; embaixadores, encarregados de negócios e altos responsáveis das "
+"forças armadas;\n"
+"                        membros dos órgãos administrativos, de gestão ou de "
+"supervisão de empresas estatais; diretores, diretores adjuntos\n"
+"e membros do conselho de administração ou função equivalente de uma "
+"organização internacional"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__holder_id
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__holder_id
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_form
 msgid "Holder"
-msgstr ""
+msgstr "Titular"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_view_partner_form
