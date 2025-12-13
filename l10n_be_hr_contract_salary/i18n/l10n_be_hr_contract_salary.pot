@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 19:03+0000\n"
-"PO-Revision-Date: 2025-12-05 19:03+0000\n"
+"POT-Creation-Date: 2025-12-12 19:02+0000\n"
+"PO-Revision-Date: 2025-12-12 19:02+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -172,6 +172,11 @@ msgstr ""
 #. module: l10n_be_hr_contract_salary
 #: model_terms:hr.job,website_description:l10n_be_hr_contract_salary.job_developer_be
 msgid "A full-time position <br>Attractive salary package."
+msgstr ""
+
+#. module: l10n_be_hr_contract_salary
+#: model:hr.contract.salary.personal.info,name:l10n_be_hr_contract_salary.hr_contract_salary_personal_info_account_holder_name
+msgid "Account Holder Name"
 msgstr ""
 
 #. module: l10n_be_hr_contract_salary
