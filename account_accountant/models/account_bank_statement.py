@@ -918,6 +918,7 @@ class AccountBankStatementLine(models.Model):
 
         base_line = self.env['account.move.line'].browse(aml_id)
         base_line.account_id = account
+        base_line.move_id._compute_checked()
 
         # Now that the line has been modified, we can recompute the taxes
         if account.tax_ids:
