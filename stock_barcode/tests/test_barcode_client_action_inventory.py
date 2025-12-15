@@ -164,6 +164,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(mls_with_lot.filtered(lambda ml: ml.lot_id.name == 'lot2').qty_done, 1)
         self.assertEqual(mls_with_lot.filtered(lambda ml: ml.lot_id.name == 'lot3').qty_done, 1)
         self.assertEqual(set(mls_with_sn.mapped('lot_id.name')), {'serial1', 'serial2', 'serial3'})
+        self.assertFalse(moves_with_sn.lot_ids.company_id)
 
     def test_inventory_adjustment_tracked_product_multilocation(self):
         """ This test ensures two things:

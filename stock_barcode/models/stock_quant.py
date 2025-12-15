@@ -31,7 +31,6 @@ class StockQuant(models.Model):
                 val[2]['lot_id'] = self.env['stock.lot'].create({
                     'name': val[2].pop('lot_name'),
                     'product_id': val[2].get('product_id', quant_db and quant_db.product_id.id or False),
-                    'company_id': self.env['stock.location'].browse(val[2].get('location_id') or quant_db.location_id.id).company_id.id
                 }).id
 
         quant_ids = []
