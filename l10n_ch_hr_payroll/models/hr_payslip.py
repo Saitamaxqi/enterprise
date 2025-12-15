@@ -688,6 +688,11 @@ class HrPayslip(models.Model):
             payslip.l10n_ch_is_code = source_tax_code
             payslip.l10n_ch_txb_code = txb_code
 
+    def _has_lpp_in_percentage(self):
+        # To be overriden in ELM 5.3 certification module
+        self.ensure_one()
+        return False
+
     @api.depends('employee_id', 'version_id', 'struct_id', 'date_from', 'date_to', 'struct_id')
     def _compute_input_line_ids(self):
         swiss_slips = self.filtered(lambda p: p.struct_id.code == "CHMONTHLYELM")
@@ -728,8 +733,9 @@ class HrPayslip(models.Model):
             input_line_vals = []
             wage_types = grouped_one_time_wages_dict[slip.version_id][slip.date_to.year][slip.date_to.month]
             recurring_wage_types = grouped_recurring_wages.get(slip.version_id, self.env['l10n.ch.hr.contract.wage'])
+            has_lpp_in_percentage = slip._has_lpp_in_percentage()
 
-            if not slip.l10n_ch_lpp_not_insured and slip.l10n_ch_lpp_insurance_id and not slip.l10n_ch_after_departure_payment and not has_pay_interruption.l10n_ch_lpp_interruption:
+            if not slip.l10n_ch_lpp_not_insured and slip.l10n_ch_lpp_insurance_id and not slip.l10n_ch_after_departure_payment and not has_pay_interruption.l10n_ch_lpp_interruption and not has_lpp_in_percentage:
                 if slip.version_id.lpp_employee_amount:
                     input_line_vals.append(Command.create({
                         'amount': slip.version_id.lpp_employee_amount,

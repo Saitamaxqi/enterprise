@@ -265,7 +265,7 @@ else:
         <field name="l10n_ch_lpp_retroactive" eval="True"/>
         <field name="l10n_ch_source_tax_included" eval="True"/>
         <field name="l10n_ch_salary_certificate">1</field>
-        <field name="l10n_ch_is_periodic" eval="True"/>
+        <field name="l10n_ch_is_periodic" eval="False"/>
         <field name="l10n_ch_yearly_statement">P</field>
         <field name="l10n_ch_13th_month_included" eval="False"/>
         <field name="struct_id" ref="l10n_ch_hr_payroll.hr_payroll_structure_ch_elm"/>
@@ -301,7 +301,7 @@ else:
         <field name="l10n_ch_lpp_retroactive" eval="True"/>
         <field name="l10n_ch_source_tax_included" eval="True"/>
         <field name="l10n_ch_salary_certificate">1</field>
-        <field name="l10n_ch_is_periodic" eval="True"/>
+        <field name="l10n_ch_is_periodic" eval="False"/>
         <field name="l10n_ch_yearly_statement">P</field>
         <field name="l10n_ch_13th_month_included" eval="False"/>
         <field name="struct_id" ref="l10n_ch_hr_payroll.hr_payroll_structure_ch_elm"/>
@@ -337,7 +337,7 @@ else:
         <field name="l10n_ch_lpp_retroactive" eval="True"/>
         <field name="l10n_ch_source_tax_included" eval="True"/>
         <field name="l10n_ch_salary_certificate">1</field>
-        <field name="l10n_ch_is_periodic" eval="True"/>
+        <field name="l10n_ch_is_periodic" eval="False"/>
         <field name="l10n_ch_yearly_statement">P</field>
         <field name="l10n_ch_13th_month_included" eval="False"/>
         <field name="struct_id" ref="l10n_ch_hr_payroll.hr_payroll_structure_ch_elm"/>
