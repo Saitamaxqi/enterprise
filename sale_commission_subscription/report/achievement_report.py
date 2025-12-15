@@ -42,23 +42,23 @@ class SaleCommissionAchievementReport(models.Model):
         query = f"""
         filtered_order_logs AS (
             SELECT
-                    id,
-                    order_id,
-                    plan_id,
-                    amount_signed,
-                    team_id,
-                    company_id,
-                    user_id,
-                    currency_id,
-                    event_date,
-                    effective_date,
-                    create_date
-              FROM sale_order_log
+                    l.id,
+                    l.order_id,
+                    l.plan_id,
+                    l.amount_signed,
+                    l.team_id,
+                    l.company_id,
+                    l.user_id,
+                    l.currency_id,
+                    l.event_date,
+                    l.effective_date,
+                    l.create_date
+              FROM sale_order_log l
              WHERE 1=1
-               {'AND user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
-               {'AND team_id in (%s)' % ','.join(str(i) for i in teams.ids) if teams else ''}
-               {"AND event_date >= '%s' " % datetime.strftime(date_from, "%Y-%m-%d") if date_from else ''}
-               AND event_date <= '{datetime.strftime(date_to, "%Y-%m-%d") if date_to else today}'
+               {'AND l.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
+               {'AND l.team_id in (%s)' % ','.join(str(i) for i in teams.ids) if teams else ''}
+               {"AND l.event_date >= '%s' " % datetime.strftime(date_from, "%Y-%m-%d") if date_from else ''}
+               AND l.event_date <= '{datetime.strftime(date_to, "%Y-%m-%d") if date_to else today}'
         ),
         """
         return query
