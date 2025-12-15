@@ -46,6 +46,7 @@ export const FDM_MESSAGES = {
  */
 export class IotHttpService {
     longpollingFailedTimestamp = null;
+    webRtcFailedTimestamp = null;
     connectionStatus = "webrtc"; // webrtc, longpolling, websocket, offline
     connectionTypes = [
         this._webRtc.bind(this),
@@ -96,16 +97,31 @@ export class IotHttpService {
         }
     }
 
+    _ensureWebRtcEnabled() {
+        if (
+            this.webRtcFailedTimestamp &&
+            Date.now() - this.webRtcFailedTimestamp < 20 * 60 * 1000
+        ) {
+            throw new Error("WebRTC is temporarily disabled due to a recent failure.");
+        }
+    }
+
     async _webRtc({ identifier, version, deviceIdentifier, data, messageId, onSuccess, onFailure, messageType }) {
         if (/\d{4}\.\d{2}\.\d{2}/.test(version)) {
             throw new Error("IoT box does not support WebRTC, skipping.");
         }
-        await this.webRtc.onMessage(identifier, deviceIdentifier, messageId, onSuccess, onFailure);
-        if (data) {
-            await this.webRtc.sendMessage(identifier, {
-                device_identifier: deviceIdentifier,
-                data,
-            }, messageId, messageType);
+        this._ensureWebRtcEnabled();
+        try {
+            await this.webRtc.onMessage(identifier, deviceIdentifier, messageId, onSuccess, onFailure);
+            if (data) {
+                await this.webRtc.sendMessage(identifier, {
+                    device_identifier: deviceIdentifier,
+                    data,
+                }, messageId, messageType);
+            }
+        } catch (error) {
+            this.webRtcFailedTimestamp = Date.now();
+            throw error;
         }
         this.connectionStatus = "webrtc";
     }
