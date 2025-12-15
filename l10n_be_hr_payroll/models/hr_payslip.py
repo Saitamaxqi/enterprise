@@ -632,16 +632,16 @@ class HrPayslip(models.Model):
                         month_unpredictable_work_entries = unpredictable_work_entries.filtered(lambda we: we.date.month == month)
                         unpredictable_days = len(month_unpredictable_work_entries.mapped('date'))
 
+                        max_sick_days_to_remove = min(monthly_calendar_sick_time_off_days, calendar_sick_time_off_days)
+                        sick_days_to_remove = min(n_days, pfa_sick_calendar_days_to_defer + max_sick_days_to_remove)
                         if calendar_sick_time_off_days > n_days:
-                            pfa_sick_calendar_days_to_defer += calendar_sick_time_off_days - min(n_days, monthly_calendar_sick_time_off_days)
-                            calendar_sick_time_off_days = min(n_days, monthly_calendar_sick_time_off_days)
+                            pfa_sick_calendar_days_to_defer += calendar_sick_time_off_days - sick_days_to_remove
                         else:
-                            calendar_sick_time_off_days = min(n_days, pfa_sick_calendar_days_to_defer + calendar_sick_time_off_days)
-                            pfa_sick_calendar_days_to_defer = max(0, pfa_sick_calendar_days_to_defer - calendar_sick_time_off_days)
+                            pfa_sick_calendar_days_to_defer -= max(0, sick_days_to_remove - max_sick_days_to_remove)
 
                         # Remove sick days
-                        non_assimilated_days = max(0, calendar_sick_time_off_days - pfa_calendar_sick_days_remaining)
-                        pfa_calendar_sick_days_remaining = max(0, pfa_calendar_sick_days_remaining - calendar_sick_time_off_days)
+                        non_assimilated_days = max(0, sick_days_to_remove - pfa_calendar_sick_days_remaining)
+                        pfa_calendar_sick_days_remaining = max(0, pfa_calendar_sick_days_remaining - sick_days_to_remove)
 
                         # Remove unpredictable days
                         non_assimilated_days += max(0, unpredictable_days - pfa_unpredictable_days_remaining)
