@@ -57,7 +57,7 @@
                             <record id="account_financial_report_in_gross_profit0_balance" model="account.report.expression">
                                 <field name="label">balance</field>
                                 <field name="engine">aggregation</field>
-                                <field name="formula">OPINC_IN.balance - COS_IN.balance</field>
+                                <field name="formula">OPINC_IN.balance - COS_IN.balance + CLS_IN.balance - OPS_IN.balance</field>
                             </record>
                         </field>
                         <field name="children_ids">
