@@ -1970,3 +1970,19 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
         self.env.user.company_ids = self.company_data['company']
         options = self._generate_options(root_report, '2024-01-01', '2024-12-31')
         assert_available_variants_match(options, root_report + report_always + report_us_coa + report_us_country)
+
+    def test_send_customer_statement_without_template(self):
+        """Test sending the customer statement without an email template."""
+        report = self.env.ref('account_reports.customer_statement_report')
+        options = report.get_options({})
+        options['partner_ids'] = [self.partner.id]
+
+        wizard = self.env['account.report.send'].create({
+            'account_report_id': report.id,
+            'mail_subject': 'Customer Statement',
+            'report_options': options,
+        })
+        self.assertEqual(wizard.mode, 'single')
+        self.assertFalse(wizard.mail_template_id)
+
+        wizard.action_send_and_print()
