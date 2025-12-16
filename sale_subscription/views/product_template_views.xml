@@ -83,8 +83,9 @@
             <xpath expr="//field[@name='list_price']" position="replace">
                 <group groups="sales_team.group_sale_salesman">
                     <field name="display_subscription_pricing" invisible="not display_subscription_pricing"/>
+                    <field name="list_price" widget="monetary" invisible="display_subscription_pricing" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
                 </group>
-                <group>
+                <group groups="!sales_team.group_sale_salesman">
                     <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
                 </group>
             </xpath>
