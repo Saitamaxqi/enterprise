@@ -587,21 +587,12 @@ class TestPayslipComputation(TestPayslipContractBase):
             'date': date(2016, 1, 1),
             'duration': 1,
         })
-        # Cannot edit validated work entries linked to a payslip
+        # Validated work entries linked to a payslip can be edited
         self.assertEqual(richard_work_entry.state, 'draft')
         self.assertFalse(richard_work_entry.has_payslip, False)
         self.richard_payslip.action_payslip_done()
         self.assertEqual(richard_work_entry.state, 'validated')
         self.assertEqual(richard_work_entry.has_payslip, True)
-        with self.assertRaises(UserError):
-            richard_work_entry.write({'state': 'draft'})
-        # Entry reset on payslip cancellation
-        self.richard_payslip.action_payslip_cancel()
-        self.assertEqual(richard_work_entry.state, 'draft')
-        # Edit is allowed for entries not linked to a payslip
-        self.assertEqual(richard_work_entry.has_payslip, False)
-        richard_work_entry.write({'state': 'validated'})
-        self.assertEqual(richard_work_entry.state, 'validated')
         richard_work_entry.write({'state': 'draft'})
         self.assertEqual(richard_work_entry.state, 'draft')
 

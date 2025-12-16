@@ -57,6 +57,6 @@ class HrWorkEntry(models.Model):
         if vals.get('state') == 'conflict' or ('active' in vals and vals['active'] is False):
             return super().write(vals)
         for work_entry in self:
-            if work_entry.state == 'validated' and work_entry.has_payslip:
+            if work_entry.state == 'validated' and not vals.get('state'):
                 raise UserError(_("This work entry cannot be modified because it is already associated with a generated payslip."))
         return super().write(vals)
