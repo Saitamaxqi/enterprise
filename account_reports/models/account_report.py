@@ -7415,8 +7415,10 @@ class AccountReportLine(models.Model):
         prefix_groups_count = 0
         sub_groupby_domain = []
         full_sub_groupby_key_elements = []
+        parent_groupby_nber = 0
         for markup, model, value in line_id_list:
             if isinstance(markup, dict) and 'groupby' in markup:
+                parent_groupby_nber += 1
                 field_name = markup['groupby']
                 if field_name in custom_groupby_map:
                     sub_groupby_domain += custom_groupby_map[field_name]['domain_builder'](value)
@@ -7504,7 +7506,7 @@ class AccountReportLine(models.Model):
                 'unfolded': (has_children and next_groupby and options['unfold_all']) or line_id in options['unfolded_lines'],
                 'groupby': next_groupby,
                 'columns': columns,
-                'level': self.hierarchy_level + 2 * (prefix_groups_count + len(sub_groupby_domain) + 1) + (group_indent - 1),
+                'level': self.hierarchy_level + 2 * (prefix_groups_count + parent_groupby_nber + 1) + (group_indent - 1),
                 'parent_id': line_dict_id,
                 'expand_function': '_report_expand_unfoldable_line_with_groupby' if next_groupby else None,
                 'caret_options': caret_option,
