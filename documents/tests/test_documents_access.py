@@ -750,6 +750,10 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
         # with SUDO, a normal user can move a pinned a folder
         self.folder_a.with_user(self.internal_user).sudo().owner_id = self.internal_user
 
+        # Internal user cannot copy a company root folder
+        with self.assertRaises(AccessError):
+            self.company_root_folder.with_user(self.internal_user).copy(default={'user_folder_id': "COMPANY"})
+
     @mute_logger('odoo.addons.base.models.ir_rule')
     def test_unlink_with_children(self):
         """Check that deletion handles children items and checks access rights

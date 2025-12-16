@@ -39,6 +39,16 @@ defineActions([
 DocumentsModels.DocumentsDocument._views = {
     kanban: basicDocumentsKanbanArch,
     [["search", false]]: getEnrichedSearchArch(),
+    form: `<form>
+        <field name="type" invisible="1" force_save="1"/>
+        <field name="active" string="Active" invisible="1"/>
+        <sheet>
+            <div class="oe_title">
+                <label for="name"/>
+                <h1><field name="name" required="True"/></h1>
+            </div>
+        </sheet>
+    </form>`,
 };
 DocumentsModels.DocumentsOperation._views = {
     form: `<form>
@@ -70,6 +80,38 @@ DocumentsModels.DocumentsOperation._views = {
     </form>`,
 };
 onRpc("/documents/touch/accessTokenRequest", () => ({}));
+onRpc("/documents/touch/accessTokenDuplicateTestDoc", () => ({}));
+onRpc("action_confirm", () => ({}));
+
+test("Duplicate a document in a Newly made folder", async function () {
+    const serverData = getDocumentsTestServerModelsData([
+        makeDocumentRecordData(2, "Duplicate Test Doc", { owner_id: serverState.userId }),
+    ]);
+    await makeDocumentsMockEnv({ serverData });
+    await mountWithCleanup(WebClient);
+    await getService("action").doAction(1);
+
+    await contains(".o_kanban_record:contains('Duplicate Test Doc') .o_record_selector").click();
+    await contains(".o_dropdown_title").click();
+    await contains(".o-dropdown-item .fa-copy").click();
+    await animationFrame();
+
+    expect(".btn-primary:contains('Duplicate in My Drive')").toHaveCount(1);
+    expect(".btn-secondary:contains('Create a folder in My Drive')").toHaveCount(1);
+
+    await contains(".o_widget_documents_operation_new_folder .btn-secondary").click();
+    await contains(".o_input").edit("New Folder");
+    await contains(".o_form_button_save").click();
+    await animationFrame();
+
+    expect(".btn-primary:contains('Duplicate in New Folder')").toHaveCount(1);
+    expect(".btn-secondary:contains('Create a folder in New Folder')").toHaveCount(1);
+
+    await contains(".o_widget_documents_operation_confirmation .btn-primary").click();
+
+    await waitFor(".o_notification");
+    expect(".o_notification_content").toHaveText("Done!. Document created in New Folder!");
+});
 
 test('Internal users can always move to "My Drive"', async function () {
     const serverData = getDocumentsTestServerModelsData([
