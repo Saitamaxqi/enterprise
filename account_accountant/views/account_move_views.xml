@@ -84,21 +84,28 @@
                         icon="fa-bars"
                         type="object"
                         invisible="not deferred_move_ids"
-                        string="Deferred Entries">
+                        string="Deferral Entries">
                 </button>
                 <button name="open_deferred_original_entry"
                         class="oe_stat_button"
                         icon="fa-bars"
                         type="object"
-                        invisible="deferred_entry_type == 'revenue' or not deferred_original_move_ids"
+                        invisible="deferred_entry_type != 'expense' or not deferred_original_move_ids"
                         string="Related Purchase(s)">
                 </button>
                 <button name="open_deferred_original_entry"
                         class="oe_stat_button"
                         icon="fa-bars"
                         type="object"
-                        invisible="deferred_entry_type == 'expense' or not deferred_original_move_ids"
+                        invisible="deferred_entry_type != 'revenue' or not deferred_original_move_ids"
                         string="Related Sale(s)">
+                </button>
+                <button name="open_deferred_original_entry"
+                        class="oe_stat_button"
+                        icon="fa-bars"
+                        type="object"
+                        invisible="deferred_entry_type != 'misc' or not deferred_original_move_ids"
+                        string="Related Entries">
                 </button>
             </xpath>
         </field>
