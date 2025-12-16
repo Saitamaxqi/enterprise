@@ -914,3 +914,8 @@ class PosOrder(models.Model):
             'url': f'/l10n_br_edi_pos/download_nfce_attachments/{",".join(map(str, attachments.ids))}',
             'target': 'self',
         }
+
+    def get_reference_last_part(self):
+        if self.config_id.company_id.account_fiscal_country_id == self.env.ref('base.br') and self.config_id.l10n_br_is_nfce:
+            return self.sequence_number
+        return super().get_reference_last_part()
