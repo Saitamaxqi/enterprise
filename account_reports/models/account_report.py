@@ -105,10 +105,10 @@ class AccountReport(models.Model):
     def write(self, vals):
         if 'active' in vals:
             reports = {r.id: r.name for r in self}
-            actions = self.env['ir.actions.client'] \
+            actions = self.env['ir.actions.client'].sudo() \
                 .search([('name', 'in', list(reports.values())), ('tag', '=', 'account_report')]) \
                 .filtered(lambda act: (ast.literal_eval(act.context).get('report_id'), act.name) in reports.items())
-            self.env['ir.ui.menu'] \
+            self.env['ir.ui.menu'].sudo() \
                 .search([
                     ('active', '=', not vals['active']),
                     ('action', 'in', [f'ir.actions.client,{action.id}' for action in actions]),
