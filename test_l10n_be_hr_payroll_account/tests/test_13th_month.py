@@ -944,3 +944,50 @@ class Test13thMonth(TestPayslipBase):
         self.payslip.date_from = date(2025, 12, 1)
         self.payslip.date_to = date(2025, 12, 31)
         self.assertAlmostEqual(self.payslip._get_paid_amount(), 0, places=2)
+
+    def test_13th_month_maternity_leave(self):
+        self.update_version(date(2025, 1, 1))
+        leaves = self.env['hr.leave'].create([
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 7, 10),
+                'request_date_to': date(2025, 7, 30),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 7, 31),
+                'request_date_to': date(2025, 8, 6),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 8, 7),
+                'request_date_to': date(2025, 8, 12),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.l10n_be_leave_type_maternity').id,
+                'request_date_from': date(2025, 8, 13),
+                'request_date_to': date(2025, 11, 18),
+            }
+        ])
+
+        self.env['resource.calendar.leaves'].create([{
+            'name': 'Public Holiday',
+            'calendar_id': self.employee.resource_calendar_id.id,
+            'company_id': self.employee.company_id.id,
+            'resource_id': False,
+            'date_from': datetime(2025, 8, 15, 0, 0, 0),
+            'date_to': datetime(2025, 8, 15, 23, 59, 59),
+            'time_type': 'leave',
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id,
+        }])
+
+        leaves.action_approve()
+        self.employee.version_ids.generate_work_entries(date(2024, 12, 31), date(2025, 12, 31))
+        self.payslip.date_from = date(2025, 12, 1)
+        self.payslip.date_to = date(2025, 12, 31)
+        # Maternity leave should count, 13th month should be 100% wage
+        self.assertAlmostEqual(self.payslip._get_paid_amount(), self.version.wage, places=2)
