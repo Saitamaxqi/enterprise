@@ -58,11 +58,10 @@ class L10nBeIntervatController(http.Controller):
             )
             response_json, error = company_id._l10n_be_get_error_from_response(response)
             if error:
+                return_id._message_log(body=self.env._("Authentication Error: \n") + error['error_message'])
                 request.env.user._bus_send('simple_notification', {
                     'type': 'danger',
                     'title': request.env._("Authentication Failed"),
-                    'message': error['error_message'],
-                    'sticky': True,
                 })
                 return request.redirect(state.get('referrer_url', '/web'))
 
@@ -74,27 +73,30 @@ class L10nBeIntervatController(http.Controller):
 
             request_type = state.get('request_type')
             notification_message = request.env._("Send your declaration now.")
+            submission_error = False
             try:
                 if request_type == 'submit':
-                    return_id._l10n_be_submit_xml()
+                    submission_error = return_id._l10n_be_submit_xml() == 'error'
                     notification_message = request.env._("Your declaration has been sent.")
                 elif request_type == 'fetch':
                     return_id.l10n_be_action_fetch_from_intervat()
                     notification_message = request.env._("Your declaration has been fetched.")
             except UserError as e:
+                error_title = request.env._("Fetching Error: \n") if request_type == 'fetch' else request.env._("Submission Error: \n")
+                error_message = error_title + "\n".join(e.args)
+                return_id._message_log(body=error_message)
                 request.env.user._bus_send('simple_notification', {
                     'type': 'danger',
-                    'title': request.env._("Error"),
-                    'message': "\n".join(e.args),
-                    'sticky': True,
+                    'title': error_title,
                 })
                 return request.redirect(state.get('referrer_url', '/web'))
 
-            request.env.user._bus_send('simple_notification', {
-                'type': 'success',
-                'title': request.env._("Authentication Successful"),
-                'message': notification_message,
-            })
+            if submission_error:
+                request.env.user._bus_send('simple_notification', {
+                    'type': 'success',
+                    'title': request.env._("Authentication Successful"),
+                    'message': notification_message,
+                })
 
         return request.redirect(state.get('referrer_url', '/web'))
 
