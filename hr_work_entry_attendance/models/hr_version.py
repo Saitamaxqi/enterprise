@@ -30,13 +30,16 @@ class HrVersion(models.Model):
                 ('employee_id', 'in', self.employee_id.ids),
                 ('date', '<=', end_naive.date()),
                 ('date', '>=', start_naive.date()),
+                ('manual_duration', '>', 0),
             ],
             groupby=['employee_id', 'date:day'],
             aggregates=['id:recordset']
         )
-        overtimes_by_employee_dy_date = {employee_id: {date: record} for employee_id, date, record in overtimes}
+        overtimes_by_employee_by_date = defaultdict(dict)
+        for employee, date, overtime_lines in overtimes:
+            overtimes_by_employee_by_date[employee][date] = overtime_lines
         res = {}
-        for employee, overtimes_by_date in overtimes_by_employee_dy_date.items():
+        for employee, overtimes_by_date in overtimes_by_employee_by_date.items():
             resource = employee.resource_id
             for day, overtimes in overtimes_by_date.items():
                 overtime_list = []
