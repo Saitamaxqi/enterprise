@@ -100,7 +100,7 @@ export class ThankYouDialog extends Component {
                         id: doc.id,
                         name: doc.name,
                         date: doc.date,
-                        user: doc.user,
+                        user: doc.user || _t("Deleted User"),
                         accessToken: doc.token,
                         requestId: doc.requestId,
                         canceled: false,

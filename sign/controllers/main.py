@@ -703,8 +703,8 @@ class Sign(http.Controller):
             'token': item['access_token'],
             'requestId': item['sign_request_id'][0],
             'name': item['sign_request_id'][1],
-            'userId': item['create_uid'][0],
-            'user': item['create_uid'][1],
+            'userId': item['create_uid'][0] if item['create_uid'] else False,
+            'user': item['create_uid'][1] if item['create_uid'] else False,
             'date': item['create_date'].date(),
         } for item in items]
 
