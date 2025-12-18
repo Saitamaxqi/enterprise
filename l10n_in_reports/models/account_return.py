@@ -2384,8 +2384,9 @@ class AccountReturn(models.Model):
                 'result': 'anomaly' if line_ids else 'reviewed',
                 'action': line_ids._get_records_action(
                     name=_("Invalid tax for Intra State Transaction"),
-                    views=[(False, 'list')]
-                ),
+                    views=[(False, 'list')],
+                    domain=[('id', 'in', line_ids.ids)]
+                ) if line_ids else None,
             })
 
         # Invalid Inter-State Tax
@@ -2401,8 +2402,9 @@ class AccountReturn(models.Model):
                 'result': 'anomaly' if line_ids else 'reviewed',
                 'action': line_ids._get_records_action(
                     name=_("Invalid tax for Inter State Transaction"),
-                    views=[(False, 'list')]
-                ),
+                    views=[(False, 'list')],
+                    domain=[('id', 'in', line_ids.ids)]
+                ) if line_ids else None,
             })
 
         # Missing HSN
@@ -2418,8 +2420,9 @@ class AccountReturn(models.Model):
                 'result': 'anomaly' if line_ids else 'reviewed',
                 'action': line_ids._get_records_action(
                     name=_("Missing HSN for Journal Items"),
-                    views=[(False, 'list'), (False, 'form')]
-                )
+                    views=[(False, 'list'), (False, 'form')],
+                    domain=[('id', 'in', line_ids.ids)]
+                ) if line_ids else None,
             })
 
         # Invalue UQC code
@@ -2435,8 +2438,9 @@ class AccountReturn(models.Model):
                 'result': 'anomaly' if line_ids else 'reviewed',
                 'action': line_ids._get_records_action(
                     name=_("Invalid UQC Code"),
-                    views=[(False, 'list'), (False, 'form')]
-                ),
+                    views=[(False, 'list'), (False, 'form')],
+                    domain=[('id', 'in', line_ids.ids)]
+                ) if line_ids else None,
             })
 
         # Credit Notes
@@ -2452,7 +2456,7 @@ class AccountReturn(models.Model):
                 'records_model': self.env['ir.model']._get('account.move').id,
                 'records_count': move_count,
                 'result': 'anomaly' if move_ids else 'reviewed',
-                'action': move_ids._get_records_action(name=_("Credit Notes")),
+                'action': move_ids._get_records_action(name=_("Credit Notes")) if move_ids else None,
             })
 
         if 'unlinked_unregistered_inter_state_reversed_move' not in check_codes_to_ignore:
@@ -2465,7 +2469,7 @@ class AccountReturn(models.Model):
                 'records_model': self.env['ir.model']._get('account.move').id,
                 'records_count': move_count,
                 'result': 'anomaly' if move_ids else 'reviewed',
-                'action': move_ids._get_records_action(name=_("Credit Notes")),
+                'action': move_ids._get_records_action(name=_("Credit Notes")) if move_ids else None,
             })
 
         # Document Summary Check
