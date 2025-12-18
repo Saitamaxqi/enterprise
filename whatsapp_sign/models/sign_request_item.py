@@ -75,8 +75,8 @@ class SignRequestItem(models.Model):
         for template_id in whatsapp_template_ids:
             if not (template_id and template_id.isdigit()):
                 return False
-            template = self.env['whatsapp.template'].browse(int(template_id))
-            if not template or not template.exists() or (check_if_approved and template.status != 'approved'):
+            template = self.env['whatsapp.template'].browse(int(template_id)).exists()._filtered_access('read')
+            if not template or (check_if_approved and template.status != 'approved'):
                 return False
 
         return True
