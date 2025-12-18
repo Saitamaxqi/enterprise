@@ -21,7 +21,7 @@ class HrAttendanceOvertimeLine(models.Model):
         related_attendances = self._linked_attendances()
         if not related_attendances:
             return
-        related_work_entries = self.env['hr.work.entry'].search([
+        related_work_entries = self.env['hr.work.entry'].sudo().search([
             ('employee_id', 'in', related_attendances.employee_id.ids),
             ('date', '<=', max(related_attendances.mapped('check_out')).date()),
             ('date', '>=', min(related_attendances.mapped('check_in')).date()),

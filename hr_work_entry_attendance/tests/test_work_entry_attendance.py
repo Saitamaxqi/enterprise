@@ -1,9 +1,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import date, datetime
+
 from freezegun import freeze_time
 
-from odoo.tests import tagged
+from odoo.exceptions import AccessError
+from odoo.tests import new_test_user, tagged
 
 from .common import HrWorkEntryAttendanceCommon
 
@@ -399,3 +401,32 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
             datetime(2025, 6, 25).date(),
             datetime(2025, 6, 29).date()
         )
+
+    def test_approval_refusal_overtime_regenerates_work_entries_permission(self):
+        user = new_test_user(self.env, login="user1", groups="base.group_user")
+        self.employee.user_id = user.id
+
+        attendance1 = self.env['hr.attendance'].create({
+            'employee_id': self.employee.id,
+            'check_in': datetime(2021, 9, 13, 8, 0, 0),
+            'check_out': datetime(2021, 9, 13, 20, 0, 0),
+        })
+
+        with self.assertRaises(AccessError):
+            self.assertTrue(attendance1.linked_overtime_ids, "There should be at least one linked overtime line created")
+            attendance1.linked_overtime_ids[0].with_user(user).action_approve()
+            attendance1.linked_overtime_ids[0].with_user(user).action_refuse()
+
+        self.employee.attendance_manager_id = user.id
+        self.assertTrue(user.has_group('hr_attendance.group_hr_attendance_officer'), "User must be attendance officer to approve/refuse overtime")
+
+        attendance2 = self.env['hr.attendance'].create({
+            'employee_id': self.employee.id,
+            'check_in': datetime(2021, 9, 14, 8, 0, 0),
+            'check_out': datetime(2021, 9, 14, 20, 0, 0),
+        })
+
+        self.assertTrue(attendance2.linked_overtime_ids, "There should be at least one linked overtime line created")
+        # No error should be raised here
+        attendance2.linked_overtime_ids[0].with_user(user).action_approve()
+        attendance2.linked_overtime_ids[0].with_user(user).action_refuse()
