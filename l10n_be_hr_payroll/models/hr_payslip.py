@@ -608,7 +608,9 @@ class HrPayslip(models.Model):
                 monthly_covered_time_offs = self.env['hr.leave']
                 for version, n_days in days_by_version_counter.items():
                     if is_PFA:
-                        month_sick_work_entries = sick_work_entries.filtered(lambda we: we.date.month == month)
+                        month_sick_work_entries = sick_work_entries.filtered(
+                            lambda we: we.date.month == month and we.version_id == version
+                        )
                         calendar_sick_time_off_days = 0
                         for sick_wes in month_sick_work_entries.grouped('date').values():
                             for sick_we in sick_wes:
@@ -634,7 +636,7 @@ class HrPayslip(models.Model):
 
                         max_sick_days_to_remove = min(monthly_calendar_sick_time_off_days, calendar_sick_time_off_days)
                         sick_days_to_remove = min(n_days, pfa_sick_calendar_days_to_defer + max_sick_days_to_remove)
-                        if calendar_sick_time_off_days > n_days:
+                        if calendar_sick_time_off_days > sick_days_to_remove:
                             pfa_sick_calendar_days_to_defer += calendar_sick_time_off_days - sick_days_to_remove
                         else:
                             pfa_sick_calendar_days_to_defer -= max(0, sick_days_to_remove - max_sick_days_to_remove)

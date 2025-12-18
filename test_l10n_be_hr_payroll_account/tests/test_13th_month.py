@@ -107,6 +107,22 @@ class Test13thMonth(TestPayslipBase):
             ]
         })
 
+        self.calendar_part_time_20_hours_per_week = self.env['resource.calendar'].create({
+            'name': 'Part time parental 50%',
+            'attendance_ids': [
+                (0, 0, {'name': 'Monday Morning', 'dayofweek': '0', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Monday Afternoon', 'dayofweek': '0', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon'}),
+                (0, 0, {'name': 'Tuesday Morning', 'dayofweek': '1', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Tuesday Afternoon', 'dayofweek': '1', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon'}),
+                (0, 0, {'name': 'Wednesday Morning', 'dayofweek': '2', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': med_work_entry_type.id}),
+                (0, 0, {'name': 'Wednesday Afternoon', 'dayofweek': '2', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': med_work_entry_type.id}),
+                (0, 0, {'name': 'Thursday Morning', 'dayofweek': '3', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Thursday Afternoon', 'dayofweek': '3', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': med_work_entry_type.id}),
+                (0, 0, {'name': 'Friday Morning', 'dayofweek': '4', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': med_work_entry_type.id}),
+                (0, 0, {'name': 'Friday Afternoon', 'dayofweek': '4', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': med_work_entry_type.id}),
+            ]
+        })
+
     def test_end_of_year_bonus(self):
         self.update_version(date(2015, 1, 1))
 
@@ -991,3 +1007,149 @@ class Test13thMonth(TestPayslipBase):
         self.payslip.date_to = date(2025, 12, 31)
         # Maternity leave should count, 13th month should be 100% wage
         self.assertAlmostEqual(self.payslip._get_paid_amount(), self.version.wage, places=2)
+
+    def test_13th_month_multiple_sick_leaves_1(self):
+        self.update_version(date(2025, 1, 1), wage=4863.26)
+        leaves = self.env['hr.leave'].create([
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 6, 2),
+                'request_date_to': date(2025, 6, 15),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 6, 16),
+                'request_date_to': date(2025, 7, 13),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 7, 14),
+                'request_date_to': date(2025, 8, 10),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 10, 20),
+                'request_date_to': date(2025, 10, 24),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 10, 25),
+                'request_date_to': date(2025, 11, 16),
+            },
+        ])
+
+        leaves.action_approve()
+        self.employee.version_ids.generate_work_entries(date(2024, 12, 31), date(2025, 12, 31))
+        self.payslip.date_from = date(2025, 12, 1)
+        self.payslip.date_to = date(2025, 12, 31)
+        self.assertAlmostEqual(self.payslip._get_paid_amount(), self.version.wage * (9 / 12 + ((21 / 31) / 12 + (19 / 31) / 12 + (14 / 30) / 12)), places=2)
+
+    def test_13th_month_multiple_sick_leaves_2(self):
+        version = self.update_version(date(2024, 12, 9), date(2025, 3, 13), wage=1965.71)
+        version.resource_calendar_id = self.calendar_part_time_20_hours_per_week
+
+        version = self.create_version(date(2025, 3, 14), wage=4209.1)
+        version.resource_calendar_id = self.calendar_40h
+
+        leaves = self.env['hr.leave'].create([
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 2, 25),
+                'request_date_to': date(2025, 2, 25),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 3, 14),
+                'request_date_to': date(2025, 3, 14),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 3, 15),
+                'request_date_to': date(2025, 5, 27),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.l10n_be_leave_type_maternity').id,
+                'request_date_from': date(2025, 5, 28),
+                'request_date_to': date(2025, 9, 2),
+            },
+        ])
+
+        leaves.action_approve()
+        self.employee.version_ids.generate_work_entries(date(2024, 12, 31), date(2025, 12, 31))
+        self.payslip.date_from = date(2025, 12, 1)
+        self.payslip.date_to = date(2025, 12, 31)
+        self.assertAlmostEqual(self.payslip._get_paid_amount(), version.wage * (10 / 12 + ((14.5 / 30) / 12 + (4 / 31) / 12)), places=2)
+
+    def test_13th_month_multiple_sick_leaves_3(self):
+        self.update_version(date(2025, 1, 1), wage=2920.89)
+        leaves = self.env['hr.leave'].create([
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 2, 21),
+                'request_date_to': date(2025, 2, 21),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 3, 6),
+                'request_date_to': date(2025, 4, 9),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.l10n_be_leave_type_maternity').id,
+                'request_date_from': date(2025, 4, 10),
+                'request_date_to': date(2025, 7, 22),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 7, 23),
+                'request_date_to': date(2025, 7, 25),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 7, 28),
+                'request_date_to': date(2025, 8, 20),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 9, 25),
+                'request_date_to': date(2025, 9, 26),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 11, 12),
+                'request_date_to': date(2025, 11, 13),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 11, 19),
+                'request_date_to': date(2025, 11, 19),
+            },
+            {
+                'employee_id': self.employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+                'request_date_from': date(2025, 11, 20),
+                'request_date_to': date(2025, 11, 20),
+            },
+        ])
+
+        leaves.action_approve()
+        self.employee.version_ids.generate_work_entries(date(2024, 12, 31), date(2025, 12, 31))
+        self.payslip.date_from = date(2025, 12, 1)
+        self.payslip.date_to = date(2025, 12, 31)
+        self.assertAlmostEqual(self.payslip._get_paid_amount(), self.version.wage * (9 / 12 + ((28 / 31) / 12 + (28 / 30) / 12) + (26 / 30) / 12), places=2)
