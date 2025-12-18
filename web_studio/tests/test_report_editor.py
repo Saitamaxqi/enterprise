@@ -1456,3 +1456,46 @@ class TestReportEditorUIUnit(HttpCase):
         self.assertNotEqual(report.report_name, "web_studio.test_no_view_report")
         views = self.env["ir.ui.view"].search([("key", "=", report.report_name)])
         self.assertEqual(len(views), 1)
+
+    def test_save_report_insignificant_diff(self):
+        self.authenticate("admin", "admin")
+        self.main_view.arch = """
+        <t t-name="web_studio.test_report_document">
+            <div id="wrapwrap">
+                <div x="a" y="b"></div>
+            </div>
+        </t>"""
+
+        params = {
+            "report_id": self.report.id,
+            "html_parts": {
+                self.main_view.id: [
+                    {
+                        "call_key": None,
+                        "call_group_key": None,
+                        "type": "full",
+                        "html": """
+                            <t t-name="web_studio.test_report_document" o-diff-key="0">
+                                 <div id="wrapwrap" o-diff-key="1">
+                                    <div x="a" y="b" o-diff-key="2"></div>
+                                 </div>
+                            </t>
+                        """
+                    }
+                ]
+            },
+        }
+        self.url_open(
+            "/web_studio/save_report",
+            data=json.dumps({"params": params}),
+            headers={"Content-Type": "application/json"}
+        )
+        arch, studio_arch = get_combined_and_studio_arch(self.main_view)
+        self.assertXMLEqual(arch, """
+            <t t-name="web_studio.test_report_document">
+                <div id="wrapwrap">
+                    <div x="a" y="b"></div>
+                </div>
+            </t>
+            """)
+        self.assertXMLEqual(studio_arch.strip(), "<data/>")
