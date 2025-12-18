@@ -599,3 +599,48 @@ class TestL10nClDte(TestL10nClEdiCommon):
         })
         invoice.action_post()
         self.assertEqual(invoice.state, 'posted')
+
+    @freeze_time('2019-10-24T20:00:00', tz_offset=3)
+    def test_l10n_cl_dte_33_multiple_caf(self):
+        """If there are multiple CAFs we want to make sure that the sequence calculation finds
+            the right one and is able to properly assign the next number in sequence."""
+        self.tax_19 = self.env['account.tax'].search([
+            ('name', '=', '19% VAT'),
+            ('type_tax_use', '=', 'sale'),
+            ('company_id', '=', self.company_data['company'].id)])
+        invoice = self.env['account.move'].with_context(default_move_type='out_invoice').create({
+            'partner_id': self.partner_sii.id,
+            'move_type': 'out_invoice',
+            'invoice_date_due': '2019-10-23',
+            'invoice_date': '2019-10-23',
+            'currency_id': self.env.ref('base.CLP').id,
+            'journal_id': self.sale_journal.id,
+            'l10n_latam_document_type_id': self.env.ref('l10n_cl.dc_a_f_dte').id,
+            'company_id': self.company_data['company'].id,
+            'invoice_line_ids': [(0, 0, {
+                'name': 'Tapa Ranurada UL FM 300 6"',
+                'product_id': self.product_a.id,
+                'product_uom_id': self.product_a.uom_id.id,
+                'quantity': 26,
+                'price_unit': 2391.0,
+                'tax_ids': [self.tax_19.id],
+            }), (0, 0, {
+                'name': 'Copla Flexible 1NS 6"',
+                'product_id': self.product_a.id,
+                'product_uom_id': self.product_a.uom_id.id,
+                'quantity': 80,
+                'price_unit': 2914.0,
+                'tax_ids': [self.tax_19.id],
+            })],
+        })
+        invoice.action_post()
+
+        copied_invoice = invoice.copy()
+        copied_invoice.action_post()
+        # Resequence the copied invoice to introduce a gap and make it such that the next invoice
+        # is outside of the range of the CAFs.
+        copied_invoice.name = 'FAC 000321'
+
+        another_copied_invoice = invoice.copy()
+        another_copied_invoice.action_post()
+        self.assertEqual(another_copied_invoice.name, 'FAC 000002')
