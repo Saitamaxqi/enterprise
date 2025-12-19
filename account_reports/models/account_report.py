@@ -5396,7 +5396,7 @@ class AccountReport(models.Model):
                 continue
 
             model, record_id = self._get_model_info_from_id(line.get('id'))
-            if model == 'account.move.line':
+            if model == 'account.move.line' and record_id is not None:
                 aml_id_to_report_lines_map[record_id].append(line)
             elif model in self._get_annotatable_models():
                 line['chatter'] = {

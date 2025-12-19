@@ -112,7 +112,6 @@ class AccountReport(models.AbstractModel):
         analytic_distribution_equivalent = SQL('to_jsonb(UNNEST(ARRAY_REMOVE(ARRAY[%s], NULL)))', analytic_cols)
 
         change_equivalence_dict = {
-            'id': SQL("account_analytic_line.id"),
             'balance': SQL("-amount"),
             'display_type': 'product',
             'parent_state': 'posted',
