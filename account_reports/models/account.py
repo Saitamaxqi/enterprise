@@ -175,7 +175,7 @@ class AccountAccount(models.Model):
                                   FROM account_move_line aml
                                   JOIN account_account aml_account ON aml_account.id = aml.account_id
                                  WHERE aml.date <= %(date_to)s
-                                   AND NOT aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%'])
+                                   AND NOT aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%', 'equity_unaffected'])
                                    AND aml.company_id = ANY(%(company_ids)s)
                                    AND aml.parent_state = 'posted'
 
@@ -186,7 +186,7 @@ class AccountAccount(models.Model):
                                   JOIN account_account aml_account ON aml_account.id = aml.account_id
                                  WHERE aml.date <= %(date_to)s
                                    AND aml.date >= %(date_from)s
-                                   AND aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%'])
+                                   AND aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%', 'equity_unaffected'])
                                    AND aml.company_id = ANY(%(company_ids)s)
                                    AND aml.parent_state = 'posted'
                             ) aml

@@ -537,13 +537,15 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
 
         modified_domain = []
         if not account:
-            action['domain'] += [
-                ('account_id.include_initial_balance', '=', False),
-                ('date', '<', column_group_forced_options['trial_balance_block_fiscalyear_start']),
-                ('company_id', '=', report._get_res_id_from_line_id(params['calling_line_dict_id'], 'res.company')),
-            ]
+            action['domain'] += report._get_unallocated_earnings_lines_domain(
+                column_group_forced_options['trial_balance_block_fiscalyear_start'],
+                report._get_res_id_from_line_id(params['calling_line_dict_id'], 'res.company')
+            )
 
-        elif column_group_forced_options['trial_balance_column_type'] in ('initial_balance', 'end_balance') and account.internal_group in ('income', 'expense'):
+        elif (
+                column_group_forced_options['trial_balance_column_type'] in ('initial_balance', 'end_balance')
+                and (account.internal_group in ('income', 'expense') or account.account_type == 'equity_unaffected')
+        ):
             for condition in action['domain']:
                 match condition:
                     case ['account_id', '=', account_id]:

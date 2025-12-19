@@ -4889,11 +4889,7 @@ class AccountReport(models.Model):
         }
 
         action = self.open_journal_items(options=options_for_audit, params=params)
-        action['domain'] += [
-            ('account_id.include_initial_balance', '=', False),
-            ('date', '<', action['context']['date_from']),
-            ('company_id', '=', record_id),
-        ]
+        action['domain'] += self._get_unallocated_earnings_lines_domain(action['context']['date_from'], record_id)
         action.get('context', {}).update({'search_default_date_between': 0})
         return action
 
@@ -6693,12 +6689,20 @@ class AccountReport(models.Model):
         """
         return [comp_data['id'] for comp_data in options['companies']]
 
+    def _get_unallocated_earnings_lines_domain(self, fiscalyear_start, company_id=None):
+        domain = [
+            ('account_id.include_initial_balance', '=', False),
+            ('date', '<', fiscalyear_start),
+        ]
+        if company_id:
+            domain += [('company_id', '=', company_id)]
+        return domain
+
     def _get_unallocated_earnings_lines(self, options, date_scope, auditable=False):
         def get_column_group_result(query_options, date_scope):
-            query = self._get_report_query(query_options, date_scope, domain=[
-                ('account_id.include_initial_balance', '=', False),
-                ('date', '<', self.env[self.custom_handler_model_name]._get_fiscalyear_start_date(query_options)),
-            ])
+            query = self._get_report_query(query_options, date_scope, domain=self._get_unallocated_earnings_lines_domain(
+                self.env[self.custom_handler_model_name]._get_fiscalyear_start_date(query_options)
+            ))
             return self.env.execute_query_dict(SQL(
                 """
                 SELECT account_move_line.company_id,
