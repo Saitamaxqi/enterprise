@@ -139,6 +139,11 @@ export class DocumentService {
             this.store.Document.records[data.id] = document;
             // Get reactive version.
             document = this.store.Document.records[data.id];
+        } else {
+            // Document was renamed
+            if ("attachment" in data && data.name !== document.name) {
+                document.attachment = this.store.Attachment.insert(data.attachment);
+            }
         }
         // return reactive version
         return document;
