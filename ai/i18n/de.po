@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:44+0000\n"
-"PO-Revision-Date: 2025-12-06 10:08+0000\n"
+"POT-Creation-Date: 2025-12-19 18:44+0000\n"
+"PO-Revision-Date: 2025-12-15 07:52+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/ai/de/>\n"
 "Language: de\n"
@@ -862,12 +862,6 @@ msgid "An error occured"
 msgstr "Es ist ein Fehler aufgetreten"
 
 #. module: ai
-#. odoo-javascript
-#: code:addons/ai/static/src/discuss/core/common/thread_model_patch.js:0
-msgid "An error occurred while generating the AI response."
-msgstr "Beim Generieren der KI-Antwort ist ein Fehler aufgetreten."
-
-#. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__analytical
 msgid "Analytical"
 msgstr "Analytisch"
@@ -1455,7 +1449,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/utils/llm_providers.py:0
 msgid "No embedding configuration found for the provider"
-msgstr ""
+msgstr "Keine Einbettungskonfiguration für den Anbieter gefunden"
 
 #. module: ai
 #. odoo-python
@@ -1514,6 +1508,12 @@ msgstr "Online"
 #: code:addons/ai/models/ai_agent_source.py:0
 msgid "Only administrators can create sources from URLs."
 msgstr "Nur Administratoren können Quellen aus URL erstellen."
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/ai_agent.py:0
+msgid "Oops, it looks like our AI is unreachable"
+msgstr ""
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_embedding__embedding_model__text-embedding-3-small
@@ -2091,6 +2091,9 @@ msgstr "ausgeführt."
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "fa-hashtag"
 msgstr "fa-hashtag"
+
+#~ msgid "An error occurred while generating the AI response."
+#~ msgstr "Beim Generieren der KI-Antwort ist ein Fehler aufgetreten."
 
 #~ msgid "URL content cannot be extracted."
 #~ msgstr "Der Inhalt der URL kann nicht extrahiert werden."

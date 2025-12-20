@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-12 18:42+0000\n"
-"PO-Revision-Date: 2025-11-08 19:50+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-12-16 04:16+0000\n"
+"Last-Translator: \"Chloe Wang (chwa)\" <chwa@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
 "projects/odoo-19/sign/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_res_partner__signature_count
@@ -2403,12 +2403,17 @@ msgstr "我的模板"
 #. module: sign
 #. odoo-python
 #: code:addons/sign/models/sign_document.py:0
+#, fuzzy
 msgid ""
 "My US Company\n"
 "1034 Wildwood Street\n"
 "44654 Millersburg Ohio United States\n"
 "+1 555-555-5556"
 msgstr ""
+"My US Company\n"
+"1034 Wildwood Street\n"
+"44654 Millersburg Ohio United States\n"
+"+1 555-555-5556"
 
 #. module: sign
 #: model:sign.template.tag,name:sign.sign_template_tag_2

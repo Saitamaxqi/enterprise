@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-28 18:40+0000\n"
-"PO-Revision-Date: 2025-12-12 11:22+0000\n"
+"PO-Revision-Date: 2025-12-19 14:25+0000\n"
 "Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/ai_app/"
 "fi/>\n"
@@ -84,7 +84,7 @@ msgstr "Agentti autta sinua hallitsemaan ja järjestämään Tekoäly-toimintosi
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_form
 msgid "All Models"
-msgstr ""
+msgstr "Kaikki mallit"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_form
@@ -101,7 +101,7 @@ msgstr "Painikkeet"
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_form
 msgid "Call the Agent"
-msgstr ""
+msgstr "Soita agentille"
 
 #. module: ai_app
 #: model:ir.ui.menu,name:ai_app.ai_config_menu
@@ -122,14 +122,14 @@ msgstr "Luo ensimmäinen aiheesi!"
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_view_search
 msgid "Custom Rules"
-msgstr ""
+msgstr "Mukautetut säännöt"
 
 #. module: ai_app
 #: model:ir.actions.act_window,name:ai_app.ai_composer_action
 #: model:ir.ui.menu,name:ai_app.menu_ai_composer
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_tree
 msgid "Default Prompts"
-msgstr ""
+msgstr "Oletuskehotteet"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_topic_view_form
@@ -145,7 +145,7 @@ msgstr "Avain"
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_form
 msgid "Mail Template extra prompt"
-msgstr ""
+msgstr "Sähköpostipohjan lisäkehote"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_search
@@ -162,12 +162,12 @@ msgstr "Nimi"
 #. module: ai_app
 #: model_terms:ir.actions.act_window,help:ai_app.ai_composer_action
 msgid "No Default Prompts found!"
-msgstr ""
+msgstr "Oletuskehotteita ei löytynyt!"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_form
 msgid "On the Model"
-msgstr ""
+msgstr "Mallissa"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_tree

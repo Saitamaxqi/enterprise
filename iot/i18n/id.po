@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:43+0000\n"
-"PO-Revision-Date: 2025-11-14 07:51+0000\n"
+"POT-Creation-Date: 2025-12-19 18:43+0000\n"
+"PO-Revision-Date: 2025-12-18 08:16+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/iot/"
 "id/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: iot
 #. odoo-javascript
@@ -150,12 +150,6 @@ msgid "Camera"
 msgstr "Kamera"
 
 #. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/backend/iot_device_form.js:0
-msgid "Check if the device is still connected"
-msgstr "Periksa apakah perangkat masih terhubung"
-
-#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Check the lights"
 msgstr "Periksa lampu"
@@ -211,12 +205,6 @@ msgstr "Status Terhubung"
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_search
 msgid "Connection"
 msgstr "Connection"
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/backend/iot_device_form.js:0
-msgid "Connection to device failed"
-msgstr "Koneksi ke perangkat gagal"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__create_uid
@@ -381,6 +369,18 @@ msgstr "Gagal untuk mengirim command restart ke IoT Box ('%s')"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.js:0
 msgid "Failed to toggle remote debug."
+msgstr "Gagal untuk toggle remote debug."
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/backend/iot_device_form.js:0
+msgid "Failed to update keyboard layout on the device."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/backend/iot_device_form.js:0
+msgid "Failed to update scanner mode on the device."
 msgstr ""
 
 #. module: iot
@@ -876,7 +876,7 @@ msgstr "Remote Debug"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.js:0
 msgid "Remote debug is %s."
-msgstr ""
+msgstr "Debug remote adalah %s."
 
 #. module: iot
 #. odoo-javascript
@@ -1205,7 +1205,7 @@ msgstr "Kartu Tanda Tangan PPN tidak kompatibel dengan Modul Data Fiskal."
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__version_commit_url
 msgid "Version Commit Url"
-msgstr ""
+msgstr "URL Commit Versi"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
@@ -1259,7 +1259,7 @@ msgstr "device-icon"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.js:0
 msgid "disabled"
-msgstr ""
+msgstr "dinonaktifkan"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
@@ -1275,7 +1275,7 @@ msgstr "contoh. ABDE0123"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.js:0
 msgid "enabled"
-msgstr ""
+msgstr "diaktifkan"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
@@ -1311,6 +1311,12 @@ msgstr "reset.linked.printers"
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "to add an IoT Box."
 msgstr "untuk menambahkan IoT Box."
+
+#~ msgid "Check if the device is still connected"
+#~ msgstr "Periksa apakah perangkat masih terhubung"
+
+#~ msgid "Connection to device failed"
+#~ msgstr "Koneksi ke perangkat gagal"
 
 #~ msgid "Are you sure you want to restart Odoo on the IoT box?"
 #~ msgstr "Apakah Anda yakin ingin restart Odoo pada IoT Box?"

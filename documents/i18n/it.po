@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 18:41+0000\n"
-"PO-Revision-Date: 2025-11-10 09:37+0000\n"
+"POT-Creation-Date: 2025-12-19 18:42+0000\n"
+"PO-Revision-Date: 2025-12-15 14:12+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
 "documents/it/>\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
 "0) ? 1 : 2);\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: documents
 #. odoo-python
@@ -1870,6 +1870,8 @@ msgid ""
 "Can configure folders, manage access rights, and oversee all documents "
 "within their areas."
 msgstr ""
+"Può configurare cartelle, gestire i diritti di accesso e supervisionare "
+"tutti i documenti nelle loro aree."
 
 #. module: documents
 #. odoo-python
@@ -1902,6 +1904,8 @@ msgstr "Può solo visualizzare. Non può rinominare, spostare o eliminare."
 #: model:res.groups,comment:documents.group_documents_user
 msgid "Can view or edit, upload, and share their own or shared documents."
 msgstr ""
+"Può visualizzare o modificare, caricare e condividere i propri documenti o "
+"quelli condivisi."
 
 #. module: documents
 #. odoo-javascript
@@ -2901,6 +2905,11 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Icona Font Awesome es. fa-tasks"
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Future Activities"
+msgstr "Attività future"
+
+#. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/owl/components/pdf_exit_dialog/pdf_exit_dialog.xml:0
 msgid "Gather in one document"
@@ -2963,6 +2972,8 @@ msgid ""
 "Has full control over all document settings, folders, and user rights across "
 "the application."
 msgstr ""
+"Ha controllo totale delle impostazioni dei documenti, delle cartelle e dei "
+"diritti degli utenti nell'applicazione."
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
@@ -3323,6 +3334,11 @@ msgstr "Ultimo aggiornamento di"
 #: model:ir.model.fields,field_description:documents.field_documents_tag__write_date
 msgid "Last Updated on"
 msgstr "Ultimo aggiornamento il"
+
+#. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Late Activities"
+msgstr "Attività in ritardo"
 
 #. module: documents
 #: model:documents.document,name:documents.document_legal_folder
@@ -3920,6 +3936,25 @@ msgid "Only Documents managers can set an alias."
 msgstr "Solo i manager dei documenti possono configurare un alias."
 
 #. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid ""
+"Only one string or number value can be searched for documents `child_of`."
+msgstr ""
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid "Only one value can be searched for child of `folder_id`."
+msgstr ""
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid "Only one value can be searched for children of `user_folder_id`"
+msgstr ""
+
+#. module: documents
 #. odoo-javascript
 #. odoo-python
 #: code:addons/documents/static/src/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog.xml:0
@@ -4485,6 +4520,11 @@ msgid "Shortcuts created in %(folder_name)s!"
 msgstr "Scelte rapide create in %(folder_name)s!"
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Show all records whose next activity date is past"
+msgstr ""
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__destination_children_ids
 msgid "Siblings"
 msgstr "Secondari"
@@ -4894,6 +4934,11 @@ msgid "Today"
 msgstr "Oggi"
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Today Activities"
+msgstr "Attività odierne"
+
+#. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/kanban/documents_kanban_renderer.js:0
 msgid "Toggle favorite"
@@ -5249,6 +5294,13 @@ msgstr ""
 #: code:addons/documents/models/documents_document.py:0
 msgid "You cannot change the owner of documents you do not own."
 msgstr "Non puoi modificare il proprietario dei documenti che non possiedi."
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid ""
+"You cannot copy a folder into itself or into one of its own descendants."
+msgstr ""
 
 #. module: documents
 #. odoo-python
@@ -6508,9 +6560,6 @@ msgstr ""
 #~ msgid "Fiscal years"
 #~ msgstr "Anni fiscali"
 
-#~ msgid "Future Activities"
-#~ msgstr "Attività future"
-
 #~ msgid "Group By"
 #~ msgstr "Raggruppa per"
 
@@ -6552,9 +6601,6 @@ msgstr ""
 
 #~ msgid "Knowledge"
 #~ msgstr "Knowledge"
-
-#~ msgid "Late Activities"
-#~ msgstr "Attività in ritardo"
 
 #~ msgid ""
 #~ "Let's process documents in your Inbox.<br/><i>Tip: Use Tags to filter "
@@ -6828,9 +6874,6 @@ msgstr ""
 
 #~ msgid "To validate"
 #~ msgstr "Da convalidare"
-
-#~ msgid "Today Activities"
-#~ msgstr "Attività odierne"
 
 #~ msgid "Un-archive"
 #~ msgstr "Ripristinare l'archivio"

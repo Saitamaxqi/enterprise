@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-12-10 15:04+0000\n"
+"PO-Revision-Date: 2025-12-19 12:26+0000\n"
 "Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
 "hr_expense_stripe_demo/fi/>\n"
@@ -43,17 +43,17 @@ msgstr "Peruuta"
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__capture_surcharge
 msgid "Capture Surcharge"
-msgstr ""
+msgstr "Merkitse lisämaksu"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__capture
 msgid "Capture if approved"
-msgstr ""
+msgstr "Tallenna, jos hyväksytty"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__split_capture
 msgid "Capture in two transactions"
-msgstr ""
+msgstr "Merkitse kahtena tapahtumana"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__card_id
@@ -64,7 +64,7 @@ msgstr "Kortti"
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__cashback_amount
 msgid "Cashback Amount"
-msgstr ""
+msgstr "Takaisinmaksun summa"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields.selection,name:hr_expense_stripe_demo.selection__hr_expense_stripe_test_purchase_wizard__authorization_method__chip
@@ -85,7 +85,7 @@ msgstr "Yritys"
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields.selection,name:hr_expense_stripe_demo.selection__hr_expense_stripe_test_purchase_wizard__authorization_method__contactless
 msgid "Contactless"
-msgstr ""
+msgstr "Kontaktiton"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__create_uid
@@ -107,7 +107,7 @@ msgstr "Valuutta"
 #. module: hr_expense_stripe_demo
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe_demo.hr_expense_stripe_test_shipping_wizard_form
 msgid "Current Shipping Status"
-msgstr ""
+msgstr "Toimituksen tämänhetkinen tila"
 
 #. module: hr_expense_stripe_demo
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe_demo.hr_expense_stripe_test_purchase_wizard
@@ -125,7 +125,7 @@ msgstr "Näyttönimi"
 #. module: hr_expense_stripe_demo
 #: model:ir.model,name:hr_expense_stripe_demo.model_hr_expense_stripe_card
 msgid "Employee Expense Card"
-msgstr ""
+msgstr "Työntekijän kulukortti"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_card__id
@@ -139,12 +139,12 @@ msgstr "Tunnus"
 #. odoo-python
 #: code:addons/hr_expense_stripe_demo/wizard/hr_expense_stripe_test_shipping_wizard.py:0
 msgid "Invalid shipping status"
-msgstr ""
+msgstr "Virheellinen toimituksen tila"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields.selection,name:hr_expense_stripe_demo.selection__hr_expense_stripe_test_purchase_wizard__authorization_method__keyed_in
 msgid "Keyed in Manually"
-msgstr ""
+msgstr "Syötetty manuaalisesti"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__write_uid

@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-12 18:42+0000\n"
-"PO-Revision-Date: 2025-12-10 10:30+0000\n"
+"PO-Revision-Date: 2025-12-15 17:41+0000\n"
 "Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/sign/es_419/>\n"
@@ -658,7 +658,7 @@ msgstr "Administrador"
 #. odoo-javascript
 #: code:addons/sign/static/src/dialogs/sign_name_and_signature_dialog.js:0
 msgid "Adopt Your Signature"
-msgstr "Adapte su firma"
+msgstr "Agregar firma"
 
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_log__request_state__signed
@@ -4161,6 +4161,8 @@ msgid ""
 "The document you're trying to update doesn't exist or doesn't belong to this "
 "template."
 msgstr ""
+"El documento que quieres actualizar no existe o no pertenece a esta "
+"plantilla."
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
@@ -4537,7 +4539,7 @@ msgstr "Actualizar"
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_action.js:0
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_sidebar.xml:0
 msgid "Update Document"
-msgstr ""
+msgstr "Actualizar documento"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
@@ -4558,6 +4560,10 @@ msgid ""
 "copied items will land in the same coordinates as their originals if the "
 "number of pages match with the previous PDF. Do you want to proceed?"
 msgstr ""
+"Al actualizar el documento se generará una nueva plantilla con los mismos "
+"elementos de firma. Los elementos copiados estarán en las mismas coordenadas "
+"que los originales si el número de páginas coincide con el PDF previo. ¿"
+"Quieres continuar?"
 
 #. module: sign
 #. odoo-javascript

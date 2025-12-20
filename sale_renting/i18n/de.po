@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-12 18:42+0000\n"
-"PO-Revision-Date: 2025-11-28 16:15+0000\n"
+"PO-Revision-Date: 2025-12-15 07:51+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "sale_renting/de/>\n"
@@ -778,7 +778,7 @@ msgstr "Nächste Aktion"
 #. odoo-python
 #: code:addons/sale_renting/models/sale_order_recurrence.py:0
 msgid "Night"
-msgstr ""
+msgstr "Nacht"
 
 #. module: sale_renting
 #: model:sale.temporal.recurrence,name:sale_renting.recurrence_nightly

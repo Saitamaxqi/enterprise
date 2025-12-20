@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
+"POT-Creation-Date: 2025-12-19 18:42+0000\n"
 "PO-Revision-Date: 2025-11-16 13:39+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Persian <https://translate.odoo.com/projects/odoo-19/"
@@ -983,11 +983,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order_log_report__recurring_yearly
 msgid "Annual Recurring Revenue"
 msgstr ""
-
-#. module: sale_subscription
-#: model_terms:ir.ui.view,arch_db:sale_subscription.product_template_only_view_form_recurring
-msgid "Applied On"
-msgstr "اعمال روی"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_order_template_view_search
@@ -2887,6 +2882,11 @@ msgid "Product Variant"
 msgstr "گونه محصول"
 
 #. module: sale_subscription
+#: model_terms:ir.ui.view,arch_db:sale_subscription.product_template_only_view_form_recurring
+msgid "Product Variants"
+msgstr ""
+
+#. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_sale_order_line_list
 msgid "Product Varient"
 msgstr ""
@@ -4666,6 +4666,9 @@ msgid ""
 "attention. If you have some concerns about it, please contact "
 "{{ object.user_id.name }}, your contact person."
 msgstr ""
+
+#~ msgid "Applied On"
+#~ msgstr "اعمال روی"
 
 #~ msgid "<i class=\"fa fa-comment\"/> Send message"
 #~ msgstr "<i class=\"fa fa-comment\"/> ارسال پیام"

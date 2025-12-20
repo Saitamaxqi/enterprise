@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:42+0000\n"
-"PO-Revision-Date: 2025-12-06 09:52+0000\n"
+"PO-Revision-Date: 2025-12-17 17:58+0000\n"
 "Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll_account/fi/>\n"
@@ -87,7 +87,7 @@ msgstr "Tilikarttamalli"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payslip.py:0
 msgid "Account Journal not configured on Structure"
-msgstr ""
+msgstr "Tilin päiväkirjaa ei ole määritetty rakenteessa"
 
 #. module: hr_payroll_account
 #. odoo-python
@@ -115,7 +115,7 @@ msgstr "Oikaisuvienti"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payslip.py:0
 msgid "An employee bank account is untrusted"
-msgstr ""
+msgstr "Työntekijän pankkitili ei ole luotettava"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_employee__analytic_distribution

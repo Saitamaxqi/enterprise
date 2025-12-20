@@ -16,13 +16,14 @@
 # Martin Trigaux, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Krisztián Juhász <juhasz.krisztian@uzletimegoldasok.hu>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-12 18:44+0000\n"
-"PO-Revision-Date: 2025-11-08 19:32+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-12-19 07:41+0000\n"
+"Last-Translator: Krisztián Juhász <juhasz.krisztian@uzletimegoldasok.hu>\n"
 "Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/hu/>\n"
 "Language: hu\n"
@@ -30,7 +31,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: account_reports
 #. odoo-javascript
@@ -48,13 +49,13 @@ msgstr "%(journal)s - %(account)s"
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "%(line_name)s - %(company)s"
-msgstr ""
+msgstr "%(line_name)s - %(company)s"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "%(line_name)s - %(company_name)s"
-msgstr ""
+msgstr "%(line_name)s - %(company_name)s"
 
 #. module: account_reports
 #. odoo-python
@@ -72,7 +73,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "%(return_type_name)s %(period_suffix)s %(country_code)s"
-msgstr ""
+msgstr "%(return_type_name)s %(period_suffix)s %(country_code)s"
 
 #. module: account_reports
 #. odoo-python
@@ -85,13 +86,13 @@ msgstr "%s (másolat)"
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "%s is not a numeric value"
-msgstr ""
+msgstr "%s nem numerikus érték"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "%s selected"
-msgstr ""
+msgstr "%s kiválasztott"
 
 #. module: account_reports
 #. odoo-python
@@ -135,7 +136,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "(%s lines)"
-msgstr ""
+msgstr "(%s -sor)"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.outstanding_receipts
@@ -151,7 +152,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "(1 line)"
-msgstr ""
+msgstr "(1 sor)"
 
 #. module: account_reports
 #. odoo-python
@@ -196,6 +197,26 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px;\">\n"
+"                    <t t-if=\"object.id != object.commercial_partner_id.id\""
+">Dear <t t-out=\"object.name or ''\"/> "
+"(<t t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
+"                    <t t-else=\"\">Dear <t t-out=\"object.name or ''\"/>,</t>"
+"\n"
+"                    <br/>\n"
+"                    Mellékletben megtalálja a nyitott számláinak listáját.\n"
+"                   <br/> \n"
+"                    Kérdés esetén kérjük, forduljon hozzánk bizalommal.\n"
+"                   <br/> \n"
+"                    Üdvözlettel,\n"
+"                    <br/>\n"
+"                    <t t-out=\"object._get_followup_responsible().name if "
+"is_html_empty(object._get_followup_responsible().signature) else "
+"object._get_followup_responsible().signature\"/>\n"
+"                </p>\n"
+"            </div>\n"
+"        "
 
 #. module: account_reports
 #: model:mail.template,body_html:account_reports.email_template_customer_statement
@@ -222,6 +243,26 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p style=\"margin: 0px; padding: 0px;\">\n"
+"                   <t t-if=\"object.id != object.commercial_partner_id.id\"> "
+"Tisztelt <t t-out=\"object.name or ''\"/> "
+"(<t t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
+"                    <t t-else=\"\">Tisztelt <t t-out=\"object.name or ''\""
+"/>,</t>\n"
+"                    <br/>\n"
+"                    Mellékletben megtalálja számlájának kimutatását.\n"
+"                   <br/> \n"
+"                    Kérdés esetén kérjük, forduljon hozzánk bizalommal.\n"
+"                   <br/> \n"
+"                    Üdvözlettel,\n"
+"                   <br/>\n"
+"\t                <t t-out=\"object._get_followup_responsible().name if "
+"is_html_empty(object._get_followup_responsible().signature) else "
+"object._get_followup_responsible().signature\"/> \n"
+"               </p>\n"
+"            </div>\n"
+"        "
 
 #. module: account_reports
 #: model:mail.template,body_html:account_reports.email_template_generic_tax_instructions
@@ -262,16 +303,42 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p>\n"
+"                   Tisztelt <t t-out=\"object.company_id.name\"> "
+"YourCompany</t>,\n"
+"               </p>\n"
+"                <p> A kapott dokumentumok és információk alapján a <t t-out="
+"\"object.company_id.name\">YourCompany</t> <t t-out=\"object"
+".type_id._get_period_name"
+"(object.company_id, object.date_from, object.date_to)\"/> időszakra "
+"vonatkozó áfa-bevallása benyújtásra került. </p>\n"
+"                <p>Megállapítást nyert, hogy <t t-out=\"format_amount"
+"(object.total_amount_to_pay, object.amount_to_pay_currency_id)\"/> összeg "
+"fizetendő. </p>\n"
+"                <table style=\"border:1px solid black; padding:20px; text-"
+"align:left; border-spacing: 16px;\"> <tr>\n"
+"                        <td> Fizetendő összeg</td>\n"
+"                        <td><t t-out=\"format_amount"
+"(object.total_amount_to_pay, object.amount_to_pay_currency_id)\"/></td> </tr>"
+"\n"
+"                    <tr> <td> Esedékesség</td>\n"
+"                        <td><t t-out=\"format_date(object.date_deadline)\""
+"/></td> </tr>\n"
+"                </table> <p> Üdvözlettel,</p>\n"
+"                <p><t t-out=\"user.name\"> Mitchell Admin</t></p>\n"
+"           </div>\n"
+"        "
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
 msgid "<i class=\"fa fa-ellipsis-v\" title=\"Dropdown Menu\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-ellipsis-v\" title=\"Dropdown Menu\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
 msgid "<i class=\"fa fa-paperclip fa-lg\" title=\"Open Attachments\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-paperclip fa-lg\" title=\"Open Attachments\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_send_form
@@ -280,6 +347,9 @@ msgid ""
 "title=\"The email address is unknown on the partner\" invisible=\"not "
 "send_mail_readonly\"/>"
 msgstr ""
+"<i class=\"fa fa-question-circle ml4\" role=\"img\" aria-label=\"Warning\" "
+"title=\"Az e-mail cím ismeretlen a partnernél\" invisible="
+"\"not send_mail_readonly\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
@@ -287,16 +357,19 @@ msgid ""
 "<i>Errors marked with <i class=\"fa fa-warning\"/> are critical and prevent "
 "the file generation.</i>"
 msgstr ""
+"<i>A „ <i class=\"fa fa-warning\"/> ” jelöléssel ellátott hibák kritikusak "
+"és megakadályozzák a fájl létrehozását.</i>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
 msgid "<span class=\"oe_stat_text pe-1 text-black\">Deadline: </span>"
-msgstr ""
+msgstr "<span class=\"oe_stat_text pe-1 text-black\">Határidő: </span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
 msgid "<span class=\"oe_stat_text pe-1 text-black-50\">Submitted on: </span>"
 msgstr ""
+"<span class=\"oe_stat_text pe-1 text-black-50\">Beküldés dátuma: </span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
@@ -305,6 +378,9 @@ msgid ""
 "0 or resolved_check_count &lt;= 0\" class=\"oe_stat_text ps-0 text-"
 "success\">Passed</span>"
 msgstr ""
+"<span invisible=\"context.get('in_checks_view') or unresolved_check_count != "
+"0 or resolved_check_count &lt;= 0\" class=\"oe_stat_text ps-0 text-success\""
+">Elfogadva</span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
@@ -312,6 +388,9 @@ msgid ""
 "<span invisible=\"context.get('in_checks_view') or unresolved_check_count "
 "&lt;= 0\" class=\"oe_stat_text ps-0 text-danger\">Pending</span>"
 msgstr ""
+"<span invisible="
+"\"context.get('in_checks_view') or unresolved_check_count &lt;= 0\" class="
+"\"oe_stat_text ps-0 text-danger\">Függőben</span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_kanban_view
@@ -320,6 +399,9 @@ msgid ""
 "                                                    <span invisible=\"not "
 "records_count\"> </span>"
 msgstr ""
+"<span invisible=\"not records_count or records_count &lt; 21\">20+</span>\n"
+"                                                    <span invisible="
+"\"not records_count\"> </span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.return_creation_wizard_form
@@ -340,24 +422,24 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
 msgid "<span>One or more error(s) occurred during file generation:</span>"
-msgstr ""
+msgstr "<span>A fájl létrehozása során egy vagy több hiba történt:</span>"
 
 #. module: account_reports
 #: model:ir.model.constraint,message:account_reports.constraint_account_report_horizontal_group_name_uniq
 msgid "A horizontal group with the same name already exists."
-msgstr ""
+msgstr "Már létezik egy azonos nevű horizontális csoport."
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/widgets/account_report_x2many/account_report_x2many.js:0
 msgid "A line with a 'Group By' value cannot have children."
-msgstr ""
+msgstr "A „Csoportosítás” értékkel rendelkező sor nem tartalmazhat alelemeket."
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/wizard/return_creation_wizard.py:0
 msgid "A return already exists for the selected period."
-msgstr ""
+msgstr "A kiválasztott időszakra már létezik bevallás."
 
 #. module: account_reports
 #. odoo-python
@@ -366,6 +448,8 @@ msgid ""
 "A tax unit can only be created between companies sharing the same main "
 "currency."
 msgstr ""
+"Adóegység csak olyan vállalatok között hozható létre, amelyek ugyanazt a fő "
+"pénznemet használják."
 
 #. module: account_reports
 #. odoo-python
@@ -511,7 +595,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_res_company__account_representative_id
 msgid "Accounting Firm"
-msgstr ""
+msgstr "Könyvelőiroda"
 
 #. module: account_reports
 #. odoo-python
@@ -522,7 +606,7 @@ msgstr "Számviteli időszakok"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_audit_accounting_process
 msgid "Accounting Process"
-msgstr ""
+msgstr "Könyvelési folyamat"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report
@@ -798,19 +882,19 @@ msgstr "Összes"
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "All Journals"
-msgstr ""
+msgstr "Összes napló"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "All Payable"
-msgstr ""
+msgstr "Minden fizetendő"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "All Receivable"
-msgstr ""
+msgstr "Minden követelés"
 
 #. module: account_reports
 #. odoo-python
@@ -3099,7 +3183,7 @@ msgstr "Csoportnév"
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/deferred_reports/groupby.xml:0
 msgid "Group by"
-msgstr "Csoportosítás..."
+msgstr "Csoportosítás"
 
 #. module: account_reports
 #. odoo-python
@@ -3341,7 +3425,7 @@ msgstr "Inaktív"
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_account_balances_search_view
 msgid "Inactive Account"
-msgstr ""
+msgstr "Inaktív számlák"
 
 #. module: account_reports
 #. odoo-javascript
@@ -3531,13 +3615,13 @@ msgstr "Követő"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__is_main_company_active
 msgid "Is Main Company Active"
-msgstr ""
+msgstr "A fő vállalat aktív?"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_payment_wizard__is_recoverable
 #: model:ir.model.fields,field_description:account_reports.field_qr_code_payment_wizard__is_recoverable
 msgid "Is Recoverable"
-msgstr ""
+msgstr "Visszaállítható?"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__is_report_set
@@ -3581,7 +3665,7 @@ msgstr "Napló"
 #: model:ir.actions.client,name:account_reports.action_account_report_ja
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_ja
 msgid "Journal Audit"
-msgstr ""
+msgstr "Napló ellenőrzés"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_move
@@ -4374,7 +4458,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Only intra-EU customers"
-msgstr ""
+msgstr "Csak EU-s vevők"
 
 #. module: account_reports
 #: model:ir.actions.server,name:account_reports.action_account_reports_customer_statements
@@ -4426,7 +4510,7 @@ msgstr "Opciók"
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_filter_extra_options_template
 msgid "Options:"
-msgstr ""
+msgstr "Opciók:"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__other
@@ -4454,18 +4538,18 @@ msgstr "Lejárt"
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Overdue payables"
-msgstr ""
+msgstr "Késedelmes kötelezettségek"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Overdue receivables"
-msgstr ""
+msgstr "Késedelmes követelések"
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_return_check_template__action_id
 msgid "Overrides the default action based on the model and domain."
-msgstr ""
+msgstr "Felülírja az alapértelmezett műveletet a modell és a domain alapján."
 
 #. module: account_reports
 #. odoo-python
@@ -4476,7 +4560,7 @@ msgstr "PDF"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_reports_export_wizard__report_id
 msgid "Parent Report Id"
-msgstr ""
+msgstr "Szülői jelentés azonosítója"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_reports_export_wizard_format__export_wizard_id
@@ -4502,7 +4586,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Partner Categories"
-msgstr ""
+msgstr "Partnerkategóriák"
 
 #. module: account_reports
 #: model:account.report,name:account_reports.partner_ledger_report
@@ -4534,7 +4618,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/wizard/account_report_send.py:0
 msgid "Partner(s) should have an email address."
-msgstr "A partner(ek)nek rendelkeznie kell egy e-mail címmel"
+msgstr "A partner(ek)nek rendelkeznie kell egy e-mail címmel."
 
 #. module: account_reports
 #. odoo-javascript
@@ -4547,19 +4631,19 @@ msgstr "Partnerek"
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_filters
 msgid "Partners Categories:"
-msgstr ""
+msgstr "Partnerek Kategóriák:"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Partners in Wrong Country"
-msgstr ""
+msgstr "Partnerek a rossz országban"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_sales_report.py:0
 msgid "Partners with duplicated VAT numbers"
-msgstr ""
+msgstr "Duplikált adószámmal rendelkező partnerek"
 
 #. module: account_reports
 #. odoo-python
@@ -4570,7 +4654,7 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_filters
 msgid "Partners:"
-msgstr "Partnerek: "
+msgstr "Partnerek:"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__resolved_check_count
@@ -4927,7 +5011,7 @@ msgstr "Beszerzések"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_qr_code_payment_wizard__qr_code
 msgid "Qr Code"
-msgstr ""
+msgstr "QR-kód"
 
 #. module: account_reports
 #. odoo-javascript
@@ -4999,7 +5083,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__records_name
 msgid "Records Name"
-msgstr ""
+msgstr "Rekordok neve"
 
 #. module: account_reports
 #. odoo-javascript
@@ -5010,7 +5094,7 @@ msgstr "Frissítés"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__refresh_result
 msgid "Refresh Result"
-msgstr ""
+msgstr "Eredmény frissítése"
 
 #. module: account_reports
 #: model:ir.ui.menu,name:account_reports.account_audit_regularization_entries_menu
@@ -5049,12 +5133,12 @@ msgstr "Beszámoló neve"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__report_opened_once
 msgid "Report Opened Once"
-msgstr ""
+msgstr "Kimutatás egyszer megnyitva"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_send__report_options
 msgid "Report Options"
-msgstr ""
+msgstr "Kimutatás opciók"
 
 #. module: account_reports
 #. odoo-python
@@ -5194,7 +5278,7 @@ msgstr "Bevétel"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_revenue_receivables_review
 msgid "Revenue & receivables Review"
-msgstr ""
+msgstr "Bevételek és követelések áttekintése"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_multicurrency_revaluation_wizard__reversal_date

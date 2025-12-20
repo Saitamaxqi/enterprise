@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
+"POT-Creation-Date: 2025-12-19 18:43+0000\n"
 "PO-Revision-Date: 2025-10-23 08:07+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
@@ -1452,6 +1452,11 @@ msgstr "Exécuter"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
+msgid "Run Activities"
+msgstr ""
+
+#. module: marketing_automation
+#: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Run the next scheduled activity for each participant of this campaign?"
 msgstr ""
 "Exécuter la prochaine activité programmée pour chaque participant à cette "
@@ -1908,8 +1913,8 @@ msgid ""
 "(trigger_type)s\"\n"
 "Please modify one of those activities before saving."
 msgstr ""
-"Vous essayez de définir l'activité \"%(parent_activity)s\" comme "
-"\"%(parent_type)s\" alors que l'activité enfant \"%(activity)s\" a le "
+"Vous essayez de définir l'activité \"%(parent_activity)s\" comme \"%"
+"(parent_type)s\" alors que l'activité enfant \"%(activity)s\" a le "
 "déclencheur de type \"%(trigger_type)s\"\n"
 "Veuillez modifier une de ces activités avant de sauvegarder."
 

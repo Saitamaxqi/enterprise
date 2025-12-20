@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-05 18:42+0000\n"
-"PO-Revision-Date: 2025-12-06 09:51+0000\n"
+"PO-Revision-Date: 2025-12-15 10:39+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
 "approvals/it/>\n"
@@ -21,8 +21,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
-"0) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
 "X-Generator: Weblate 5.14.3\n"
 
 #. module: approvals
@@ -1491,7 +1491,7 @@ msgstr "Non puoi approvare prima dell'approvatore precedente."
 #. odoo-python
 #: code:addons/approvals/models/approval_approver.py:0
 msgid "You cannot change approval request."
-msgstr ""
+msgstr "Non è possibile modificare richieste di approvazione."
 
 #. module: approvals
 #. odoo-python

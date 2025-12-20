@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-11-20 08:15+0000\n"
+"PO-Revision-Date: 2025-12-16 04:17+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "accountant_knowledge/ja/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
@@ -1613,36 +1613,36 @@ msgstr "有形固定資産は、取得原価で評価されます。取得原価
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_tax_and_compliance
 msgid "Tax & Compliance"
-msgstr ""
+msgstr "税務・コンプライアンス"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
 msgid "Tax Credits"
-msgstr ""
+msgstr "税額クレジット"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_tax_package
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_tax_package
 msgid "Tax Package"
-msgstr ""
+msgstr "税務パッケージ"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_taxation
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
 msgid "Taxation"
-msgstr ""
+msgstr "課税"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Technical installations, equipment, and tools<br>"
-msgstr ""
+msgstr "技術設備、機器、および工具<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
 msgid ""
 "The annual financial statements have been prepared in accordance with "
 "applicable accounting standards."
-msgstr ""
+msgstr "年次財務諸表は、適用される会計基準に従って作成されています。"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
@@ -1652,42 +1652,45 @@ msgid ""
 "may be recorded when the grant agreement is signed and eligible expenses "
 "have been incurred, even if the funds have not yet been received."
 msgstr ""
+"会社は、発生した費用に応じて営業収益として認識される補助金を受け取っています"
+"。そのため、補助金がまだ受領されていない場合でも、補助金契約が締結され、対象"
+"となる費用が発生していれば、未収補助金として計上されることがあります。"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "The consolidated financial statements can be obtained via..."
-msgstr ""
+msgstr "連結財務諸表は以下から入手できます..."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid "The equity method is used for valuation where applicable."
-msgstr ""
+msgstr "該当する場合には持分法による評価が使用されます。"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid ""
 "The exemption for valuation of securities in case of abnormal and temporary "
 "decline is applied."
-msgstr ""
+msgstr "異常かつ一時的な価値下落が生じた場合の有価証券の評価減免が適用されます。"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
 msgid ""
 "The fiscal year ended on {{ end of period }} covers a period of 12 months."
-msgstr ""
+msgstr "{{ end of period }}に終了した会計年度は、12 か月間の期間を対象としています。"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid ""
 "The following decisions have been made regarding the presentation of the "
 "annual financial statements:"
-msgstr ""
+msgstr "年次財務諸表の表示に関して、以下の決定がなされています："
 
 #. module: accountant_knowledge
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/editor/embedded_components/core/account_report/account_report.xml:0
 msgid "The full report will be included in the final document."
-msgstr ""
+msgstr "完全版のレポートは最終ドキュメントに含まれます。"
 
 #. module: accountant_knowledge
 #. odoo-javascript
@@ -1695,7 +1698,8 @@ msgstr ""
 msgid ""
 "The full report will be included in the final document. Feel free to tailor "
 "the result using filters and options from the report."
-msgstr ""
+msgstr "完全版のレポートは最終ドキュメントに含まれます。レポートのフィルタやオプショ"
+"ンを使って、結果を自由に調整してください。"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -1703,31 +1707,32 @@ msgid ""
 "The gross value consists of the purchase cost, excluding incidental "
 "expenses. When the inventory value is lower than the gross value, a "
 "provision for impairment is recorded for the amount of the difference."
-msgstr ""
+msgstr "総額は、付随費用を除いた取得原価で構成されます。在庫価額が総額を下回る場合、"
+"その差額について減損引当金が計上されます。"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid ""
 "The gross value of goods and supplies includes the purchase price and "
 "related incidental costs."
-msgstr ""
+msgstr "商品および消耗品の総額には、購買価格と関連する付随費用が含まれます。"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "The key figures are as follows:"
-msgstr ""
+msgstr "主要な数値は以下のとおりです："
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
 msgid "The net accounting result is a {{ net accounting result }}."
-msgstr ""
+msgstr "会計上の純損益は {{ net accounting result }} です。"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
 msgid ""
 "The notes and tables provided below form an integral part of the annual "
 "financial statements."
-msgstr ""
+msgstr "以下に示す注記および表は、年次財務諸表の不可欠な一部を構成します。"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
@@ -1737,37 +1742,41 @@ msgid ""
 "assets. The acquired portion not yet recognized in income is recorded under "
 "equity as investment grants."
 msgstr ""
+"設備投資を資金援助する補助金の部分は、関連資産の減価償却期間に対応して営業収"
+"益として認識されます。まだ収益として認識されていない取得部分は、投資補助金と"
+"して純資産に計上されます。"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
 msgid ""
 "The primary method used to value the items recorded in the accounts is the "
 "historical cost method."
-msgstr ""
+msgstr "帳簿に計上された項目の評価に用いられる主要な方法は、取得原価法です。"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid ""
 "The purchase price (including customs duties and non-recoverable taxes, less "
 "any trade discounts, rebates, or settlement discounts);"
-msgstr ""
+msgstr "購買価格 (関税および控除不能な税金を含み、商業割引、値引き、決済割引を差し引"
+"いた後の金額);"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
 msgid ""
 "The total balance sheet amount before allocation of the result is {{ total "
 "balance sheet }}."
-msgstr ""
+msgstr "損益処理前の貸借対照表総額は {{ total balance sheet }} です。"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "This company is part of a group, and owns the following subsidiaries"
-msgstr ""
+msgstr "この会社はグループ企業の一員であり、以下の子会社を保有している"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "This company is part of a group, under the following parent company."
-msgstr ""
+msgstr "この会社はグループ企業の一員であり、以下の親会社の傘下にあります。"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__title
@@ -1778,77 +1787,79 @@ msgstr "タイトル"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Tools: 10 years"
-msgstr ""
+msgstr "ツール：10年"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Total assets: {{ total balance sheet }}"
-msgstr ""
+msgstr "総資産：{{ total balance sheet }}"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "Total<br>"
-msgstr ""
+msgstr "合計<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
 msgid "Transactions with Major Shareholders"
-msgstr ""
+msgstr "主要株主との取引"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Transactions with Management"
-msgstr ""
+msgstr "経営陣との取引"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Transport equipment: 5 years"
-msgstr ""
+msgstr "輸送用機器：5年"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Unqualified Attestation"
-msgstr ""
+msgstr "無限定証明"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Valuation of free shares granted<br>"
-msgstr ""
+msgstr "付与された無償株式の評価<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Valuation of multi-year variable compensation<br>"
-msgstr ""
+msgstr "複数年にわたる変動報酬の評価<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Valuation of stock options granted during the year<br>"
-msgstr ""
+msgstr "当年度に付与された株式オプションの評価<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 msgid "Voluntary Change in Accounting Policy"
-msgstr ""
+msgstr "会計方針の任意変更"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid ""
 "We are making the following comment regarding a matter that may affect the "
 "overall consistency and reliability of the financial statements:"
-msgstr ""
+msgstr "財務諸表全体の整合性および信頼性に影響を及ぼす可能性のある事項について、以下"
+"のコメントを記載します："
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "Weighted Average Cost"
-msgstr ""
+msgstr "加重平均原価"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid ""
 "When applicable, the initial estimate of dismantling, removal, and site "
 "restoration costs related to the asset's location."
-msgstr ""
+msgstr "該当する場合、資産の設置場所に関連する解体・撤去・原状回復費用の当初見積額を"
+"含みます。"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -1858,19 +1869,22 @@ msgid ""
 "determined by comparing the acquisition value with the probable realizable "
 "value."
 msgstr ""
+"該当する場合、回収が困難となる可能性を考慮し、債権には引当金による評価減が行"
+"われます。これらの減損引当金は、取得原価と実現可能価額を比較することで算定さ"
+"れます。"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_workforce
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
 msgid "Workforce"
-msgstr ""
+msgstr "人員"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
 msgid "Workforce employed during the Period"
-msgstr ""
+msgstr "期間中に雇用されていた人員"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_form
 msgid "e.g. Annual Financial Overview"
-msgstr ""
+msgstr "例：年次財務概要"

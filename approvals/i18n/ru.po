@@ -5,23 +5,24 @@
 # Translators:
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# "Anastasiia Koroleva (koan)" <koan@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-05 18:42+0000\n"
-"PO-Revision-Date: 2025-11-08 19:32+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-12-18 17:26+0000\n"
+"Last-Translator: \"Anastasiia Koroleva (koan)\" <koan@odoo.com>\n"
 "Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
 "approvals/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
-"X-Generator: Weblate 5.12.2\n"
+"Plural-Forms: nplurals=4; plural="
+"(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 "
+": n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: approvals
 #. odoo-python
@@ -52,12 +53,12 @@ msgstr "1200"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
 msgid "<i class=\"fa fa-check text-success me-1\"/>Approve"
-msgstr ""
+msgstr "<i class=\"fa fa-check text-success me-1\"/>Согласовать"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
 msgid "<i class=\"fa fa-times text-danger me-1\"/>Refuse"
-msgstr ""
+msgstr "<i class=\"fa fa-times text-danger me-1\"/>Отказать"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
@@ -170,6 +171,7 @@ msgstr "Дополнительная ссылка, которая должна �
 #: model:ir.model.constraint,message:approvals.constraint_approval_approver_unique_request_user
 msgid "An approver with the same user already exists for this request."
 msgstr ""
+"Этот пользователь уже добавлен в список согласующих для данного запроса."
 
 #. module: approvals
 #. odoo-python
@@ -186,7 +188,7 @@ msgstr "Согласование"
 #: model:ir.actions.act_window,name:approvals.approval_category_action
 #: model:ir.ui.menu,name:approvals.approvals_category_menu_config
 msgid "Approval Categories"
-msgstr ""
+msgstr "Категории согласования"
 
 #. module: approvals
 #: model:ir.model,name:approvals.model_approval_category
@@ -198,12 +200,12 @@ msgstr "Категория согласования"
 #. module: approvals
 #: model:ir.model,name:approvals.model_approval_category_approver
 msgid "Approval Category Approver"
-msgstr ""
+msgstr "Согласующий категории согласования"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__approval_properties_definition
 msgid "Approval Properties"
-msgstr ""
+msgstr "Свойства согласования"
 
 #. module: approvals
 #: model:ir.actions.report,name:approvals.action_report_approval_request
@@ -611,7 +613,7 @@ msgstr "Иконка Font awesome, например, fa-tasks"
 #. module: approvals
 #: model:ir.actions.server,name:approvals.model_approval_request_approve_admin
 msgid "Force Approval"
-msgstr ""
+msgstr "Принудительное согласование"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
@@ -621,7 +623,7 @@ msgstr "От:"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "Future Activities"
-msgstr ""
+msgstr "Предстоящие дела"
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_general_approval
@@ -824,7 +826,7 @@ msgstr "Дата последнего обновления:"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "Late Activities"
-msgstr ""
+msgstr "Просроченные дела"
 
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action
@@ -1318,7 +1320,7 @@ msgstr "Тестовая ссылка"
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "The request %(request_name)s for %(request_owner)s has been approved"
-msgstr ""
+msgstr "Запрос %(request_name)s пользователя %(request_owner)s был согласован"
 
 #. module: approvals
 #. odoo-python
@@ -1333,6 +1335,8 @@ msgid ""
 "The request created on %(create_date)s by %(request_owner)s has been "
 "approved."
 msgstr ""
+"Запрос, созданный %(create_date)s пользователем %(request_owner)s, был "
+"согласован."
 
 #. module: approvals
 #. odoo-python
@@ -1347,7 +1351,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "The request has been approved by an Approval Officer"
-msgstr ""
+msgstr "Запрос был согласован ответственным за согласования"
 
 #. module: approvals
 #: model:res.groups,comment:approvals.group_approval_user
@@ -1409,7 +1413,7 @@ msgstr "Оправить"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "Today Activities"
-msgstr ""
+msgstr "Дела на сегодня"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__activity_exception_decoration
@@ -1473,13 +1477,13 @@ msgstr "Вывести"
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "You are not allowed to approved or refused your own approval."
-msgstr ""
+msgstr "Вы не можете согласовывать или отклонять свой собственный запрос."
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "You can't delete an approved request. Archive it instead."
-msgstr ""
+msgstr "Согласованный запрос нельзя удалить. Вместо этого заархивируйте его."
 
 #. module: approvals
 #. odoo-python
@@ -1491,7 +1495,7 @@ msgstr "Вы не можете согласовать раньше предыд�
 #. odoo-python
 #: code:addons/approvals/models/approval_approver.py:0
 msgid "You cannot change approval request."
-msgstr ""
+msgstr "Вы не можете изменить запрос на согласование."
 
 #. module: approvals
 #. odoo-python
@@ -1507,7 +1511,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "You do not have the rights to execute that action."
-msgstr ""
+msgstr "У вас недостаточно прав доступа для выполнения этого действия."
 
 #. module: approvals
 #. odoo-python
@@ -1527,6 +1531,7 @@ msgstr "Вы должны приложить хотя бы один докуме
 #: code:addons/approvals/models/approval_request.py:0
 msgid "You must cancel and then back to draft the approval first."
 msgstr ""
+"Сначала необходимо отменить согласование и вернуть его в статус черновика."
 
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.product_product_action

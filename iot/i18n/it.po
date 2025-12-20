@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:43+0000\n"
-"PO-Revision-Date: 2025-11-28 16:15+0000\n"
+"POT-Creation-Date: 2025-12-19 18:43+0000\n"
+"PO-Revision-Date: 2025-12-15 10:39+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/iot/it/"
 ">\n"
@@ -155,12 +155,6 @@ msgid "Camera"
 msgstr "Fotocamera"
 
 #. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/backend/iot_device_form.js:0
-msgid "Check if the device is still connected"
-msgstr "Controllare se il dispositivo è ancora connesso"
-
-#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Check the lights"
 msgstr "Controlla le spie"
@@ -216,12 +210,6 @@ msgstr "Stato connesso"
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_search
 msgid "Connection"
 msgstr "Connessione"
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/backend/iot_device_form.js:0
-msgid "Connection to device failed"
-msgstr "Connessione al dispositivo non riuscita"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__create_uid
@@ -387,6 +375,18 @@ msgstr "Impossibile eseguire il comando di riavvio per la box IoT ('%s')"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.js:0
 msgid "Failed to toggle remote debug."
+msgstr "Impossibile attivare il debug remoto."
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/backend/iot_device_form.js:0
+msgid "Failed to update keyboard layout on the device."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/backend/iot_device_form.js:0
+msgid "Failed to update scanner mode on the device."
 msgstr ""
 
 #. module: iot
@@ -883,7 +883,7 @@ msgstr "Debug remoto"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.js:0
 msgid "Remote debug is %s."
-msgstr ""
+msgstr "Il debug remoto è %s."
 
 #. module: iot
 #. odoo-javascript
@@ -1270,7 +1270,7 @@ msgstr "device-icon"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.js:0
 msgid "disabled"
-msgstr ""
+msgstr "disattivato"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
@@ -1286,7 +1286,7 @@ msgstr "ad es. ABDE0123"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.js:0
 msgid "enabled"
-msgstr ""
+msgstr "attivato"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
@@ -1324,6 +1324,12 @@ msgstr "reset.linked.printers"
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "to add an IoT Box."
 msgstr "per aggiungere un box IoT."
+
+#~ msgid "Check if the device is still connected"
+#~ msgstr "Controllare se il dispositivo è ancora connesso"
+
+#~ msgid "Connection to device failed"
+#~ msgstr "Connessione al dispositivo non riuscita"
 
 #~ msgid "Are you sure you want to restart Odoo on the IoT box?"
 #~ msgstr "Riavviare veramente Odoo nel box IoT?"

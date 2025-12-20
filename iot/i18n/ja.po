@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:43+0000\n"
-"PO-Revision-Date: 2025-12-10 10:26+0000\n"
+"POT-Creation-Date: 2025-12-19 18:43+0000\n"
+"PO-Revision-Date: 2025-12-17 17:58+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/iot/ja/"
 ">\n"
@@ -154,12 +154,6 @@ msgid "Camera"
 msgstr "カメラ"
 
 #. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/backend/iot_device_form.js:0
-msgid "Check if the device is still connected"
-msgstr "デバイスがまだ接続されているか確認して下さい。"
-
-#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Check the lights"
 msgstr "ライトを確認"
@@ -215,12 +209,6 @@ msgstr "接続済ステータス"
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_search
 msgid "Connection"
 msgstr "接続"
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/backend/iot_device_form.js:0
-msgid "Connection to device failed"
-msgstr "機器との接続に失敗しました"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__create_uid
@@ -386,6 +374,18 @@ msgstr "IoT Boxへの再起動コマンドの送信に失敗しました ('%s')"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.js:0
 msgid "Failed to toggle remote debug."
+msgstr "リモートデバッグの切り替えに失敗しました。"
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/backend/iot_device_form.js:0
+msgid "Failed to update keyboard layout on the device."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/backend/iot_device_form.js:0
+msgid "Failed to update scanner mode on the device."
 msgstr ""
 
 #. module: iot
@@ -884,7 +884,7 @@ msgstr "リモートデバッグ"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.js:0
 msgid "Remote debug is %s."
-msgstr ""
+msgstr "リモートデバッグは%s です。"
 
 #. module: iot
 #. odoo-javascript
@@ -1088,7 +1088,7 @@ msgstr "テストページの印刷"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
 msgid "Testing communication with IoT Box and network quality, please wait..."
-msgstr ""
+msgstr "IoT Boxとの通信およびネットワーク品質を確認中です。お待ちください..."
 
 #. module: iot
 #: model:ir.model,name:iot.model_iot_channel
@@ -1102,6 +1102,9 @@ msgid ""
 "The report you are trying to print requires an IoT Box to be printed.\n"
 "Make sure you linked the report '%s' to the corresponding IoT printer device."
 msgstr ""
+"印刷しようとしているレポートは、IoT Boxを使用して印刷する必要があります。\n"
+"レポート「%s」が対応する IoTプリンタデバイスにリンクされていることを確認して"
+"ください。"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
@@ -1200,18 +1203,18 @@ msgstr "バリアント"
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Vat Signing Card blocked."
-msgstr ""
+msgstr "VATサインカードがブロックされています。"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Vat Signing Card not compatible with Fiscal Data Module."
-msgstr ""
+msgstr "VATサインカードは会計データモジュールと互換性がありません。"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__version_commit_url
 msgid "Version Commit Url"
-msgstr ""
+msgstr "バージョンコミットURL"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
@@ -1237,6 +1240,8 @@ msgstr "どちらに接続しますか?<br/><br/>"
 msgid ""
 "You can enable remote debug on your IoT Box by providing a Ngrok authtoken."
 msgstr ""
+"Ngrokの認証トークンを提供することで、IoT Boxでリモートデバッグを有効にできま"
+"す。"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
@@ -1262,7 +1267,7 @@ msgstr "デバイスアイコン"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.js:0
 msgid "disabled"
-msgstr ""
+msgstr "無効化されました"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
@@ -1278,7 +1283,7 @@ msgstr "例: ABDE0123"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.js:0
 msgid "enabled"
-msgstr ""
+msgstr "有効化済み"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
@@ -1304,6 +1309,8 @@ msgstr "会計データモジュールをインストール"
 msgid ""
 "it enables remote access to your local network to the owner of the token."
 msgstr ""
+"トークンの所有者に対して、ローカルネットワークへのリモートアクセスを可能にし"
+"ます。"
 
 #. module: iot
 #: model:ir.actions.client,name:iot.action_iot_delete_linked_devices_menu
@@ -1314,6 +1321,12 @@ msgstr "reset.linked.printers"
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "to add an IoT Box."
 msgstr "IoT BoxのIPアドレス"
+
+#~ msgid "Check if the device is still connected"
+#~ msgstr "デバイスがまだ接続されているか確認して下さい。"
+
+#~ msgid "Connection to device failed"
+#~ msgstr "機器との接続に失敗しました"
 
 #~ msgid "Are you sure you want to restart Odoo on the IoT box?"
 #~ msgstr "本当にIoT boxでOdooを再起動しますか？"

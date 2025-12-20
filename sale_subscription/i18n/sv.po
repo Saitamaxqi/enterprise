@@ -28,7 +28,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:43+0000\n"
+"POT-Creation-Date: 2025-12-19 18:42+0000\n"
 "PO-Revision-Date: 2025-11-16 18:00+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Swedish <https://translate.odoo.com/projects/odoo-19/"
@@ -989,11 +989,6 @@ msgstr "En merförsäljningsoffert %s har skapats"
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order_log_report__recurring_yearly
 msgid "Annual Recurring Revenue"
 msgstr ""
-
-#. module: sale_subscription
-#: model_terms:ir.ui.view,arch_db:sale_subscription.product_template_only_view_form_recurring
-msgid "Applied On"
-msgstr "Tillämpad på"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_order_template_view_search
@@ -2898,6 +2893,11 @@ msgid "Product Variant"
 msgstr "Produktvariant"
 
 #. module: sale_subscription
+#: model_terms:ir.ui.view,arch_db:sale_subscription.product_template_only_view_form_recurring
+msgid "Product Variants"
+msgstr ""
+
+#. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_sale_order_line_list
 msgid "Product Varient"
 msgstr ""
@@ -4688,6 +4688,9 @@ msgstr ""
 "{{ object.company_id.name }}: Din prenumeration {{ object.name }} behöver "
 "din uppmärksamhet. Om du har några frågor om det, vänligen kontakta "
 "{{ object.user_id.name }}, din kontaktperson."
+
+#~ msgid "Applied On"
+#~ msgstr "Tillämpad på"
 
 #~ msgid "<i class=\"fa fa-comment\"/> Send message"
 #~ msgstr "<i class=\"fa fa-comment\"/> Skicka meddelande"

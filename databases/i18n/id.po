@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-10 20:15+0000\n"
-"PO-Revision-Date: 2025-12-10 10:31+0000\n"
+"PO-Revision-Date: 2025-12-18 04:41+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "databases/id/>\n"
@@ -75,12 +75,12 @@ msgstr ""
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_nb_users
 msgid "Amount of Users"
-msgstr ""
+msgstr "Jumlah User-User"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_nb_documents
 msgid "Amount of documents in Inbox"
-msgstr ""
+msgstr "Jumlah dokumen di Inbox"
 
 #. module: databases
 #. odoo-python
@@ -116,7 +116,7 @@ msgstr "Lanjutkan"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__created_database_ids
 msgid "Created Database"
-msgstr ""
+msgstr "Database yang Dibuat"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__create_uid
@@ -144,28 +144,28 @@ msgstr "Database"
 #: model:ir.model.fields,field_description:databases.field_project_project__database_api_key
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_api_key
 msgid "Database API Key"
-msgstr ""
+msgstr "API Key Database"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_api_login
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_api_login
 msgid "Database API Login"
-msgstr ""
+msgstr "Login Database API"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_api_key_to_use
 msgid "Database Api Key To Use"
-msgstr ""
+msgstr "API Key Database Untuk Digunakan"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_can_access
 msgid "Database Can Access"
-msgstr ""
+msgstr "Database Dapat Mengakses"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_kpi_base_definition_id
 msgid "Database Kpi Base Definition"
-msgstr ""
+msgstr "Definisi Dasar KPI Database"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_name
@@ -197,7 +197,7 @@ msgstr "User Database"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_user_ids
 msgid "Database Users"
-msgstr ""
+msgstr "User-User Database"
 
 #. module: databases
 #: model:ir.model,name:databases.model_databases_manage_users_wizard
@@ -207,7 +207,7 @@ msgstr "Wizard Undangan User Database"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_version
 msgid "Database Version"
-msgstr ""
+msgstr "Versi Database"
 
 #. module: databases
 #. odoo-python
@@ -320,30 +320,30 @@ msgstr "Error selagi menghapus user dari %(dbname)s: %(message)s\n"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__everywhere_user_ids
 msgid "Everywhere User"
-msgstr ""
+msgstr "User Dimanapun"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_fetch_documents
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_fetch_documents
 msgid "Fetch Documents"
-msgstr ""
+msgstr "Ambil Dokumen"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_fetch_draft_entries
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_fetch_draft_entries
 msgid "Fetch Draft Journal Entries"
-msgstr ""
+msgstr "Ambil Draft Entri Jurnal"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_fetch_tax_returns
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_fetch_tax_returns
 msgid "Fetch Tax Returns"
-msgstr ""
+msgstr "Ambil SPT"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__fetched_values
 msgid "Fetched Values"
-msgstr ""
+msgstr "Vlaue yang Diambil"
 
 #. module: databases
 #: model_terms:ir.actions.act_window,help:databases.action_view_databases_all
@@ -437,7 +437,7 @@ msgstr "Autentikasi Terakhir"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_user__local_user_id
 msgid "Local User"
-msgstr ""
+msgstr "User Lokal"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_user__login
@@ -447,7 +447,7 @@ msgstr "Log masuk"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_kpi_properties
 msgid "Metrics"
-msgstr ""
+msgstr "Metrik-Metrik"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__mode
@@ -467,7 +467,7 @@ msgstr "Baru"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__new_properties
 msgid "New KPIs to add:"
-msgstr ""
+msgstr "KPI baru untuk ditambahkan:"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
@@ -493,12 +493,12 @@ msgstr "Odoo Online"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_res_config_settings__databases_apikey
 msgid "Odoo.com API Key"
-msgstr ""
+msgstr "API Key Odoo.com"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_res_config_settings__databases_apiuser
 msgid "Odoo.com API User"
-msgstr ""
+msgstr "User API Odoo.com"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
@@ -561,12 +561,12 @@ msgstr "Wizard buat Templat Project"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_res_config_settings__databases_project_template_id
 msgid "Project template"
-msgstr ""
+msgstr "Templat project"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__property_definition
 msgid "Property Definition"
-msgstr ""
+msgstr "Definisi Properti"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
@@ -576,7 +576,7 @@ msgstr ""
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__removable_user_ids
 msgid "Removable User"
-msgstr ""
+msgstr "User Dapat Dihapus"
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__databases_manage_users_wizard__mode__remove
@@ -656,12 +656,12 @@ msgstr "Keadaan"
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__summary_message
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__summary_message
 msgid "Summary Message"
-msgstr ""
+msgstr "Ringkasan Pesan"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_nb_synchro_errors
 msgid "Synchronization Errors Count"
-msgstr ""
+msgstr "Jumlah Error Sinkronisasi"
 
 #. module: databases
 #. odoo-python

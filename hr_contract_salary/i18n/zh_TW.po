@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:44+0000\n"
+"POT-Creation-Date: 2025-12-19 18:45+0000\n"
 "PO-Revision-Date: 2025-11-08 19:34+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -732,8 +732,8 @@ msgstr "出生國家"
 
 #. module: hr_contract_salary
 #: model_terms:ir.actions.act_window,help:hr_contract_salary.hr_contract_salary_offer_action
-msgid "Create a Offer"
-msgstr "建立聘用邀約"
+msgid "Create an Offer"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model_terms:ir.actions.act_window,help:hr_contract_salary.hr_contract_salary_offer_recruitment_action
@@ -2902,6 +2902,9 @@ msgid ""
 "{{ object.employee_version_id.name }}"
 msgstr ""
 "{{ object.company_id.name }} 錄取通知 - {{ object.employee_version_id.name }}"
+
+#~ msgid "Create a Offer"
+#~ msgstr "建立聘用邀約"
 
 #~ msgid "%(company)s: Job Offer - %(job_title)s"
 #~ msgstr "%(company)s 工作職位邀約 - %(job_title)s"

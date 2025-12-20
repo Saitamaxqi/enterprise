@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-12-06 10:01+0000\n"
+"PO-Revision-Date: 2025-12-16 04:16+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "spreadsheet_dashboard_sale_subscription/ja/>\n"
@@ -377,7 +377,7 @@ msgstr "直近30日分析"
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Last 30 days"
-msgstr "過去30日間"
+msgstr "直近30日"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript

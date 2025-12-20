@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-10 20:15+0000\n"
-"PO-Revision-Date: 2025-12-11 15:56+0000\n"
+"PO-Revision-Date: 2025-12-19 14:25+0000\n"
 "Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
 "databases/fi/>\n"
@@ -50,17 +50,17 @@ msgstr "<span>Päiväkirjamerkintöjen luonnokset</span>"
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 #: model_terms:ir.ui.view,arch_db:databases.project_project_view_form_simplified_template
 msgid "<span>Tax Returns</span>"
-msgstr ""
+msgstr "<span>Veroilmoitukset</span>"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
 msgid "API credentials to Odoo.com"
-msgstr ""
+msgstr "API-kirjautumistiedot Odoo.com -sivustolle"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 msgid "Add a user"
-msgstr ""
+msgstr "Lisää käyttäjä"
 
 #. module: databases
 #: model:res.groups,name:databases.group_databases_manager
@@ -70,23 +70,23 @@ msgstr "Järjestelmävalvoja"
 #. module: databases
 #: model:res.groups,comment:databases.group_databases_manager
 msgid "Administrator can manage the client databases"
-msgstr ""
+msgstr "Ylläpitäjä voi hallita asiakastietokantoja"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_nb_users
 msgid "Amount of Users"
-msgstr ""
+msgstr "Käyttäjien määrä"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_nb_documents
 msgid "Amount of documents in Inbox"
-msgstr ""
+msgstr "Asiakirjojen määrä saapuneet-kansiossa"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "An error occurred: %s"
-msgstr ""
+msgstr "Tapahtui virhe: %s"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.databases_manage_users_wizard_view_form
@@ -116,7 +116,7 @@ msgstr "Jatka"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__created_database_ids
 msgid "Created Database"
-msgstr ""
+msgstr "Luotu tietokanta"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__create_uid
@@ -144,18 +144,18 @@ msgstr "Tietokanta"
 #: model:ir.model.fields,field_description:databases.field_project_project__database_api_key
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_api_key
 msgid "Database API Key"
-msgstr ""
+msgstr "Tietokannan API-avain"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_api_login
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_api_login
 msgid "Database API Login"
-msgstr ""
+msgstr "Tietokannan API-kirjautuminen"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_api_key_to_use
 msgid "Database Api Key To Use"
-msgstr ""
+msgstr "Käytettävä tietokannan API-avain"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_can_access

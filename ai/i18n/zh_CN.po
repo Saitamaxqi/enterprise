@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:44+0000\n"
+"POT-Creation-Date: 2025-12-19 18:44+0000\n"
 "PO-Revision-Date: 2025-11-20 08:15+0000\n"
 "Last-Translator: \"Chloe Wang (chwa)\" <chwa@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -795,12 +795,6 @@ msgid "An error occured"
 msgstr "出现错误"
 
 #. module: ai
-#. odoo-javascript
-#: code:addons/ai/static/src/discuss/core/common/thread_model_patch.js:0
-msgid "An error occurred while generating the AI response."
-msgstr "生成 AI 响应时发生错误。"
-
-#. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__analytical
 msgid "Analytical"
 msgstr "分析"
@@ -1429,6 +1423,12 @@ msgid "Only administrators can create sources from URLs."
 msgstr "只有管理员才能从 URL 创建来源。"
 
 #. module: ai
+#. odoo-python
+#: code:addons/ai/models/ai_agent.py:0
+msgid "Oops, it looks like our AI is unreachable"
+msgstr ""
+
+#. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_embedding__embedding_model__text-embedding-3-small
 msgid "OpenAI"
 msgstr "OpenAI"
@@ -1973,6 +1973,9 @@ msgstr "已执行。"
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "fa-hashtag"
 msgstr "fa-hashtag"
+
+#~ msgid "An error occurred while generating the AI response."
+#~ msgstr "生成 AI 响应时发生错误。"
 
 #~ msgid "URL content cannot be extracted."
 #~ msgstr "无法提取 URL 内容。"

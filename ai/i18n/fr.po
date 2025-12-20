@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:44+0000\n"
-"PO-Revision-Date: 2025-12-06 10:08+0000\n"
+"POT-Creation-Date: 2025-12-19 18:44+0000\n"
+"PO-Revision-Date: 2025-12-15 14:12+0000\n"
 "Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/ai/fr/>\n"
 "Language: fr\n"
@@ -855,12 +855,6 @@ msgid "An error occured"
 msgstr "Une erreur s’est produite"
 
 #. module: ai
-#. odoo-javascript
-#: code:addons/ai/static/src/discuss/core/common/thread_model_patch.js:0
-msgid "An error occurred while generating the AI response."
-msgstr "Une erreur s’est produite lors de la génération de la réponse de l’IA."
-
-#. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__analytical
 msgid "Analytical"
 msgstr "Analytique"
@@ -1441,7 +1435,7 @@ msgstr "Aucun agent Ask AI configuré. Veuillez contacter votre administrateur."
 #. odoo-python
 #: code:addons/ai/utils/llm_providers.py:0
 msgid "No embedding configuration found for the provider"
-msgstr ""
+msgstr "Aucune configuration d’embedding trouvée pour le fournisseur"
 
 #. module: ai
 #. odoo-python
@@ -1500,6 +1494,12 @@ msgstr "En ligne"
 #: code:addons/ai/models/ai_agent_source.py:0
 msgid "Only administrators can create sources from URLs."
 msgstr "Seuls les administrateurs peuvent créer des sources à partir d’URL."
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/ai_agent.py:0
+msgid "Oops, it looks like our AI is unreachable"
+msgstr ""
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_embedding__embedding_model__text-embedding-3-small
@@ -2074,6 +2074,10 @@ msgstr "exécuté."
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "fa-hashtag"
 msgstr "fa-hashtag"
+
+#~ msgid "An error occurred while generating the AI response."
+#~ msgstr ""
+#~ "Une erreur s’est produite lors de la génération de la réponse de l’IA."
 
 #~ msgid "URL content cannot be extracted."
 #~ msgstr "Le contenu de l’URL ne peut pas être extrait."

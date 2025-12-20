@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:40+0000\n"
-"PO-Revision-Date: 2025-12-10 10:27+0000\n"
+"PO-Revision-Date: 2025-12-19 09:20+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/voip/ja/"
 ">\n"
@@ -927,7 +927,7 @@ msgstr "キーパッド"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Last 7 Days"
-msgstr "過去7日"
+msgstr "直近７日"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__last_seen_phone_call
@@ -1075,7 +1075,7 @@ msgstr "最近の通話が見つかりません"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "No redirect"
-msgstr ""
+msgstr "リダイレクトなし"
 
 #. module: voip
 #. odoo-javascript
@@ -1123,7 +1123,7 @@ msgstr "オフィサー"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "On Mobile"
-msgstr ""
+msgstr "モバイル上"
 
 #. module: voip
 #. odoo-javascript
@@ -1143,7 +1143,7 @@ msgstr "通話中"
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Ongoing Call"
-msgstr ""
+msgstr "通話中の電話"
 
 #. module: voip
 #. odoo-javascript
@@ -1154,7 +1154,8 @@ msgstr "関連レコードを開く"
 #. module: voip
 #: model_terms:ir.actions.act_window,help:voip.voip_call_view
 msgid "Open the softphone in the systray at the top to make your first call."
-msgstr ""
+msgstr "最初の通話を行うには、画面上部のシステムトレイにあるソフトフォンを開いてくだ"
+"さい。"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__direction__outgoing
@@ -1221,7 +1222,7 @@ msgstr "電話番号"
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__phone
 msgid "Phone's Default App"
-msgstr ""
+msgstr "電話のデフォルトアプリ"
 
 #. module: voip
 #. odoo-javascript
@@ -1249,7 +1250,7 @@ msgstr "個人設定"
 #. odoo-javascript
 #: code:addons/voip/static/src/web/voip_systray_item.js:0
 msgid "Processing…"
-msgstr ""
+msgstr "処理中…"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__mode__prod
@@ -1287,7 +1288,7 @@ msgstr "評価"
 #. module: voip
 #: model_terms:ir.actions.act_window,help:voip.action_voip_provider_view
 msgid "Ready to Start Calling?"
-msgstr ""
+msgstr "電話をかける準備はできましたか?"
 
 #. module: voip
 #. odoo-javascript
@@ -1299,7 +1300,7 @@ msgstr "最近の"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 msgid "Recent Calls"
-msgstr ""
+msgstr "最近の通話"
 
 #. module: voip
 #. odoo-javascript
@@ -1312,7 +1313,8 @@ msgstr "レコード"
 msgid ""
 "Record VoIP calls. An indicator is displayed during calls. There is no vocal "
 "announcement by default."
-msgstr ""
+msgstr "VoIP通話を録音します。通話中はインジケータが表示されます。(デフォルト)では音"
+"声による通知はありません。"
 
 #. module: voip
 #. odoo-javascript
@@ -1323,7 +1325,7 @@ msgstr "記録"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__recording_policy
 msgid "Recording Policy"
-msgstr ""
+msgstr "録音ポリシー"
 
 #. module: voip
 #. odoo-javascript
@@ -1346,13 +1348,13 @@ msgstr "拒否済"
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Rejected Call"
-msgstr ""
+msgstr "着信拒否"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 msgid "Rejected call"
-msgstr ""
+msgstr "着信拒否"
 
 #. module: voip
 #. odoo-python
@@ -1454,13 +1456,13 @@ msgstr "他のデバイスから電話する必要があります"
 #. odoo-javascript
 #: code:addons/voip/static/src/web/voip_systray_item.js:0
 msgid "Show Softphone"
-msgstr ""
+msgstr "ソフトフォンを表示"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/simple_datetime_field.js:0
 msgid "Simple Date & Time"
-msgstr ""
+msgstr "シンプル日付&時刻"
 
 #. module: voip
 #. odoo-python
@@ -1525,6 +1527,9 @@ msgid ""
 "The DTLS fingerprint and/or setup is missing from the SDP. Please have your "
 "administrator verify that the PBX is configured to use SRTP-DTLS."
 msgstr ""
+"SDPからDTLSフィンガープリントおよび/またはセットアップが欠落しています。管理"
+"者に対し、PBXがSRTP-DTLSを使用するよう設定されていることを確認するよう依頼し"
+"てください。"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_provider__pbx_ip
@@ -1550,6 +1555,9 @@ msgid ""
 "verify the websocket server URL in the VoIP Provider Settings. If the "
 "problem persists, this is probably an issue with the server."
 msgstr ""
+"エラーはトランスポート層に起因する可能性があります。管理者様にVoIPプロバイダ"
+"ー設定内のWebSocketサーバURLを確認してください。問題が解決しない場合、サーバ"
+"側の不具合である可能性が高いです。"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__activity_name
@@ -1607,11 +1615,14 @@ msgid ""
 "that you are reaching the right server (PBX server IP in the VoIP Provider "
 "Settings) and that the credentials in your user preferences are correct."
 msgstr ""
+"サーバが認証に失敗しました。管理者に対し、正しいサーバ(VoIPプロバイダー設定内"
+"のPBXサーバーIP)に接続していること、およびユーザ個人設定内の認証情報が正しい"
+"ことを確認してください。"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__call_count
 msgid "The total number of calls made to the same phone number."
-msgstr ""
+msgstr "同一の電話番号にかけられた通話の総数。"
 
 #. module: voip
 #. odoo-javascript
@@ -1621,6 +1632,9 @@ msgid ""
 "incorrect. Please have an administrator check the websocket server URL in "
 "the VoIP Provider Settings."
 msgstr ""
+"ユーザエージェントを起動できませんでした。WebSocketサーバーのURLが正しくない"
+"可能性があります。管理者の方に、VoIPプロバイダー設定内のWebSocketサーバーURL"
+"を確認してください。"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__voip_username
@@ -1656,13 +1670,13 @@ msgstr "今日"
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/simple_datetime_field.js:0
 msgid "Today, %(time)s"
-msgstr ""
+msgstr "今日、%(time)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/web/voip_systray_item.js:0
 msgid "Toggle Softphone"
-msgstr ""
+msgstr "ソフトフォンを切り替える"
 
 #. module: voip
 #. odoo-javascript
@@ -1676,7 +1690,7 @@ msgstr "振替"
 #: code:addons/voip/static/src/softphone/history.js:0
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Trying to call"
-msgstr ""
+msgstr "発信中"
 
 #. module: voip
 #. odoo-javascript
@@ -1711,7 +1725,7 @@ msgstr "Odoo Phoneを使用する"
 #. odoo-javascript
 #: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
 msgid "Use phone's default app"
-msgstr ""
+msgstr "スマートフォンのデフォルトアプリを使用"
 
 #. module: voip
 #: model:ir.model,name:voip.model_res_users
@@ -1740,7 +1754,7 @@ msgstr "VOIPキューサポート"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_res_users_settings_view_form
 msgid "View call history"
-msgstr ""
+msgstr "通話履歴を表示"
 
 #. module: voip
 #. odoo-javascript
@@ -1855,7 +1869,7 @@ msgstr "昨日"
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/simple_datetime_field.js:0
 msgid "Yesterday, %(time)s"
-msgstr ""
+msgstr "昨日、%(time)s"
 
 #. module: voip
 #. odoo-javascript
@@ -1883,12 +1897,12 @@ msgstr "資格情報が正しく設定されていません。管理者に連絡
 #. module: voip
 #: model:res.groups,comment:voip.group_voip_officer
 msgid "can view and report on all calls."
-msgstr ""
+msgstr "すべての通話を閲覧および報告できます。"
 
 #. module: voip
 #: model:res.groups,comment:voip.group_voip_admin
 msgid "can view, report, and manage call settings."
-msgstr ""
+msgstr "通話設定を表示、報告、および管理できます。"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form

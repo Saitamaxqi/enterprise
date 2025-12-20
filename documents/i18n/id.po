@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 18:41+0000\n"
-"PO-Revision-Date: 2025-12-10 10:29+0000\n"
+"POT-Creation-Date: 2025-12-19 18:42+0000\n"
+"PO-Revision-Date: 2025-12-18 08:16+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "documents/id/>\n"
@@ -434,6 +434,208 @@ msgid ""
 "                </table>\n"
 "            "
 msgstr ""
+"<t t-set=\"documents\" t-value=\"ctx.get('documents', "
+"object.env['documents.document'])\"/>\n"
+"                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
+"style=\"padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, "
+"Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"
+"\"><tr><td align=\"center\">\n"
+"                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
+"width=\"590\" style=\"padding: 16px; background-color: white; color: "
+"#454748; border-collapse:separate;\">\n"
+"                    <tbody>\n"
+"                        <!-- HEADER -->\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;"
+"\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" "
+"cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: "
+"white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"middle\">\n"
+"                                        <span style=\"font-size: 10px;\" t-"
+"if=\"len(documents) == 1\">\n"
+"                                            Dokumen yang Dibagi<br/>\n"
+"                                            <span style=\"font-size: 20px; "
+"font-weight: bold;\" t-out=\"documents.name or ''\"/>\n"
+"                                        </span>\n"
+"                                        <span style=\"font-size: 10px;\" t-"
+"if=\"len(documents) &gt; 1\">\n"
+"                                            Dokumen yang Dibagi<br/>\n"
+"                                            <span style=\"font-size: 20px; "
+"font-weight: bold;\" t-out=\"', "
+"'.join(documents.filtered('name').mapped('name'))\"/>\n"
+"                                        </span>\n"
+"                                        <br/>\n"
+"                                    </td><td valign=\"middle\" "
+"align=\"right\" t-if=\"not user.company_id.uses_default_logo\">\n"
+"                                        <img t-attf-src=\"/logo.png?"
+"company={{ user.company_id.id }}\" style=\"padding: 0px; margin: 0px; "
+"height: auto; width: 80px;\" t-att-alt=\"user.company_id.name\"/>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td colspan=\"2\" style=\"text-"
+"align:center;\">\n"
+"                                      <hr width=\"100%\" style=\"background-"
+"color:rgb(204,204,204);border:medium none;clear:both;display:block;font-"
+"size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                        <!-- CONTENT -->\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;"
+"\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" "
+"cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: "
+"white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                                    <tr><td valign=\"top\" style=\"font-"
+"size: 13px;\">\n"
+"                                        <div>\n"
+"                                            Halo <t t-out=\"object.name\"/"
+">,\n"
+"                                            <br/><br/>\n"
+"                                            <t t-if=\"len(documents) &lt;= "
+"1\">\n"
+"                                                <t t-if=\"documents.type == "
+"'folder'\" t-set=\"share_message\">membagikan folder berikut dengan Anda</"
+"t>\n"
+"                                                <t t-else=\"\" t-"
+"set=\"share_message\">membagikan dokumen berikut dengan Anda</t>\n"
+"                                            </t>\n"
+"                                            <t t-elif=\"len(documents) &gt; "
+"1\">\n"
+"                                                <t t-set=\"document_types\" "
+"t-value=\"set(documents.mapped('type'))\"/>\n"
+"                                                <t t-if=\"document_types == "
+"{'folder'}\" t-set=\"share_message\">membagikan folder berikut dengan Anda</"
+"t>\n"
+"                                                <t t-elif=\"'folder' not in "
+"document_types\" t-set=\"share_message\">membagikan dokumen berikut dengan "
+"Anda</t>\n"
+"                                                <t t-else=\"\" t-"
+"set=\"share_message\">membagikan dokumen/folder berikut dengan Anda</t>\n"
+"                                            </t>\n"
+"                                            <t t-out=\"user.name or "
+"''\">OdooBot</t> (<t t-out=\"user.email or ''\">odoobot@contoh.com</t>) <t t-"
+"out=\"share_message\"/>:\n"
+"                                            <br/><br/>\n"
+"                                            <center t-if=\"len(documents) "
+"&lt;= 1\">\n"
+"                                                <div t-if=\"len(documents) "
+"== 1\">\n"
+"                                                    <b t-"
+"out=\"documents.name\"/>\n"
+"                                                </div>\n"
+"                                                <div t-"
+"if=\"ctx.get('message')\">\n"
+"                                                    <i t-out=\"ctx['message']"
+"\"/>\n"
+"                                                </div>\n"
+"                                                <br/>\n"
+"                                                <div style=\"margin: 16px "
+"0px 16px 0px;\">\n"
+"                                                    <a t-att-"
+"href=\"documents.access_url\" t-attf-style=\"background-color: "
+"{{user.company_id.email_secondary_color or '#875A7B'}}; padding: 20px 30px "
+"20px 30px; text-decoration: none; color: "
+"{{user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; "
+"font-size:13px;\">\n"
+"                                                        <b>Dapatkan file "
+"Anda</b>\n"
+"                                                    </a>\n"
+"                                                </div>\n"
+"                                            </center>\n"
+"                                            <t t-elif=\"len(documents) &gt; "
+"1\">\n"
+"                                                <div t-"
+"if=\"ctx.get('message')\">\n"
+"                                                    <i t-out=\"ctx['message']"
+"\"/>\n"
+"                                                </div>\n"
+"                                                <ul>\n"
+"                                                    <li t-"
+"foreach=\"documents\" t-as=\"document\">\n"
+"                                                        <a t-att-"
+"href=\"document.access_url\" t-attf-style=\"color: "
+"{{user.company_id.email_secondary_color or '#875A7B'}}; font-size:13px;\">\n"
+"                                                            <b>Dapatkan <t t-"
+"out=\"document.name\"/></b>\n"
+"                                                        </a>\n"
+"                                                    </li>\n"
+"                                                </ul>\n"
+"                                            </t>\n"
+"\n"
+"                                            <br/>\n"
+"                                            <t t-if=\"user and "
+"user.signature\" data-o-mail-quote-container=\"1\">\n"
+"                                                <br/>\n"
+"                                                <div data-o-mail-"
+"quote=\"1\">--<br data-o-mail-quote=\"1\"/><t t-out=\"user.signature\" data-"
+"o-mail-quote=\"1\"/></div>\n"
+"                                                <br data-o-mail-quote=\"1\"/"
+">\n"
+"                                            </t>\n"
+"                                        </div>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td style=\"text-align:center;\">\n"
+"                                      <hr width=\"100%\" style=\"background-"
+"color:rgb(204,204,204);border:medium none;clear:both;display:block;font-"
+"size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                        <!-- FOOTER -->\n"
+"                        <tr>\n"
+"                            <td align=\"center\" style=\"min-width: 590px;"
+"\">\n"
+"                                <table border=\"0\" cellpadding=\"0\" "
+"cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: "
+"white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;"
+"\">\n"
+"                                    <tr><td valign=\"middle\" "
+"align=\"left\">\n"
+"                                        <t t-out=\"user.company_id.name or "
+"''\">PerusahaanAnda</t>\n"
+"                                    </td></tr>\n"
+"                                    <tr><td valign=\"middle\" align=\"left\" "
+"style=\"opacity: 0.7;\">\n"
+"                                        <t t-out=\"user.company_id.phone or "
+"''\">+1 650-123-4567</t>\n"
+"                                        <t t-if=\"user.company_id.email\">\n"
+"                                            | <a t-attf-href=\"'mailto:%s' % "
+"{{ user.company_id.email }}\" style=\"text-decoration:none; color: "
+"#454748;\" t-out=\"user.company_id.email\">info@perusahaanAnda.com</a>\n"
+"                                        </t>\n"
+"                                        <t t-"
+"if=\"user.company_id.website\">\n"
+"                                            | <a t-attf-href=\"'%s' % "
+"{{ user.company_id.website }}\" style=\"text-decoration:none; color: "
+"#454748;\" t-out=\"user.company_id.website\">http://www.contoh.com</a>\n"
+"                                        </t>\n"
+"                                    </td></tr>\n"
+"                                </table>\n"
+"                            </td>\n"
+"                        </tr>\n"
+"                    </tbody>\n"
+"                    </table>\n"
+"                    </td></tr>\n"
+"                    <!-- POWERED BY -->\n"
+"                    <tr><td align=\"center\" style=\"min-width: 590px;\">\n"
+"                        <table border=\"0\" cellpadding=\"0\" "
+"cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: "
+"#F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
+"                          <tr><td style=\"text-align: center; font-size: "
+"13px;\">\n"
+"                            Powered by <a target=\"_blank\" href=\"https://"
+"www.odoo.com/app/documents\" t-attf-style=\"color: "
+"{{user.company_id.email_secondary_color or '#875A7B'}};\">Odoo Documents</"
+"a>\n"
+"                          </td></tr>\n"
+"                        </table>\n"
+"                    </td></tr>\n"
+"                </table>\n"
+"            "
 
 #. module: documents
 #: model:mail.template,body_html:documents.mail_template_document_request
@@ -812,7 +1014,7 @@ msgstr "Shortcut dibuat."
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__access_internal_help
 msgid "Access Internal Help"
-msgstr ""
+msgstr "Akses Bantuan Internal"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__access_token
@@ -823,12 +1025,12 @@ msgstr "Token Akses"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__access_urls
 msgid "Access URLs"
-msgstr ""
+msgstr "Akses URL"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__access_via_link_help
 msgid "Access Via Link Help"
-msgstr ""
+msgstr "Akses Melalui Bantuan Link"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.portal_my_home_documents
@@ -844,7 +1046,7 @@ msgstr "Akses dokumen dan partner tidak boleh diubah."
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__access_via_link
 msgid "Access through link"
-msgstr ""
+msgstr "Akses melalui link"
 
 #. module: documents
 #. odoo-javascript
@@ -1317,7 +1519,7 @@ msgstr "Dapat memodifikasi, menghapus, dan menamakan ulang."
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__user_can_move
 msgid "Can move it"
-msgstr ""
+msgstr "Dapat digerakkan"
 
 #. module: documents
 #. odoo-javascript
@@ -1358,7 +1560,7 @@ msgstr "Kembalian"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_access_tracking__changes
 msgid "Changes need to be tracked"
-msgstr ""
+msgstr "Perubahan yang dibutuhkan untuk dilacak"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__checksum
@@ -1687,12 +1889,12 @@ msgstr "Tujuan"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__access_internal
 msgid "Destination Access Internal"
-msgstr ""
+msgstr "Tujuan Akses Internal"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__access_via_link
 msgid "Destination Access Via Link"
-msgstr ""
+msgstr "Tujuan Akses Melalui Link"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__display_name
@@ -1702,12 +1904,12 @@ msgstr "Nama Tampilan Tujuan"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__is_access_via_link_hidden
 msgid "Destination Link Access Hidden"
-msgstr ""
+msgstr "Tujuan Link Akses Disembunyikan"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__user_permission
 msgid "Destination User Permission"
-msgstr ""
+msgstr "Tujuan Izin User"
 
 #. module: documents
 #. odoo-javascript
@@ -1980,7 +2182,7 @@ msgstr "Dokumen-Dokumen dipindahkan ke tong sampah bila muncul di sini"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__documents_sharing_id
 msgid "Documents share"
-msgstr ""
+msgstr "Bagikan dokumen"
 
 #. module: documents
 #: model:ir.model,name:documents.model_documents_sharing_access
@@ -2316,7 +2518,7 @@ msgstr "Folder"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_folder_only
 msgid "Folder Only"
-msgstr ""
+msgstr "Hanya Folder"
 
 #. module: documents
 #. odoo-javascript
@@ -2339,6 +2541,11 @@ msgstr "Follower (Mitra)"
 #: model:ir.model.fields,help:documents.field_documents_document__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Ikon font awesome, misalnya fa-tasks"
+
+#. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Future Activities"
+msgstr ""
 
 #. module: documents
 #. odoo-javascript
@@ -2380,22 +2587,22 @@ msgstr "Memiliki Pesan"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__has_user
 msgid "Has User"
-msgstr ""
+msgstr "Memiliki User"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__has_warning_link_with_more_rights
 msgid "Has Warning Link With More Rights"
-msgstr ""
+msgstr "Memiliki Link Peringatan Dengan Lebih Banyak Hak"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__has_warning_no_access
 msgid "Has Warning No Access"
-msgstr ""
+msgstr "Memiliki Peringatan Tidak Ada Akses"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__has_warning_partners_without_access
 msgid "Has Warning Partners Without Access"
-msgstr ""
+msgstr "Memiliki Peringatan Partner Tanpa Akses"
 
 #. module: documents
 #: model:res.groups,comment:documents.group_documents_system
@@ -2482,7 +2689,7 @@ msgstr "Gambar/Video"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_access_tracking__documents
 msgid "Impacted Document Ids"
-msgstr ""
+msgstr "ID Dokumen yang Terdampak"
 
 #. module: documents
 #. odoo-python
@@ -2590,7 +2797,7 @@ msgstr "Hak User Internal"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__access_internal
 msgid "Internal users"
-msgstr ""
+msgstr "User-User Internal"
 
 #. module: documents
 #. odoo-python
@@ -2627,7 +2834,7 @@ msgstr "Search operand tidak valid."
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__invite_partner_ids
 msgid "Invite Partner"
-msgstr ""
+msgstr "Undang Partner"
 
 #. module: documents
 #: model:documents.document,name:documents.documents_email_as_vendor_bill
@@ -2662,7 +2869,7 @@ msgstr "Adalah Follower"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__is_on_single_document
 msgid "Is On Single Document"
-msgstr ""
+msgstr "Apakah Pada Satu Dokumen"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__is_multipage
@@ -2672,7 +2879,7 @@ msgstr "Apakah dianggap multi-halaman"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__partner_is_me
 msgid "Is me"
-msgstr ""
+msgstr "Apakah saya"
 
 #. module: documents
 #. odoo-python
@@ -2764,6 +2971,11 @@ msgstr "Terakhir Diperbarui oleh"
 #: model:ir.model.fields,field_description:documents.field_documents_tag__write_date
 msgid "Last Updated on"
 msgstr "Terakhir Diperbarui pada"
+
+#. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Late Activities"
+msgstr ""
 
 #. module: documents
 #: model:documents.document,name:documents.document_legal_folder
@@ -2985,7 +3197,7 @@ msgstr "Model"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_access_modified
 msgid "Modified"
-msgstr ""
+msgstr "Dimodifikasi"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__create_activity_date_deadline_range_type__months
@@ -3359,6 +3571,25 @@ msgid "Only Documents managers can set an alias."
 msgstr "Hanya Manajer dokumen yang dapat menetapkan alias."
 
 #. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid ""
+"Only one string or number value can be searched for documents `child_of`."
+msgstr ""
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid "Only one value can be searched for child of `folder_id`."
+msgstr ""
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid "Only one value can be searched for children of `user_folder_id`"
+msgstr ""
+
+#. module: documents
 #. odoo-javascript
 #. odoo-python
 #: code:addons/documents/static/src/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog.xml:0
@@ -3414,7 +3645,7 @@ msgstr "Atau kirim email ke"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__original_expiration_date
 msgid "Original Expiration"
-msgstr ""
+msgstr "Kadaluwarsa Asli"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__owner_id
@@ -3427,7 +3658,7 @@ msgstr "Pemilik"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__owner_id
 msgid "Owner of all documents"
-msgstr ""
+msgstr "Pemilik semua dokumen"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page
@@ -3863,7 +4094,7 @@ msgstr "Bagikan"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__share_access_ids
 msgid "Share Access"
-msgstr ""
+msgstr "Bagikan Akses"
 
 #. module: documents
 #. odoo-python
@@ -3925,9 +4156,14 @@ msgid "Shortcuts created in %(folder_name)s!"
 msgstr "Shortcut dibuat di %(folder_name)s!"
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Show all records whose next activity date is past"
+msgstr ""
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__destination_children_ids
 msgid "Siblings"
-msgstr ""
+msgstr "Saudara-Saudara"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_single
@@ -4329,6 +4565,11 @@ msgid "Today"
 msgstr "Hari Ini"
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Today Activities"
+msgstr ""
+
+#. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/kanban/documents_kanban_renderer.js:0
 msgid "Toggle favorite"
@@ -4681,6 +4922,13 @@ msgstr ""
 #: code:addons/documents/models/documents_document.py:0
 msgid "You cannot change the owner of documents you do not own."
 msgstr "Anda tidka dapat mengubah pemilik dokumen yang Anda tidak miliki."
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid ""
+"You cannot copy a folder into itself or into one of its own descendants."
+msgstr ""
 
 #. module: documents
 #. odoo-python

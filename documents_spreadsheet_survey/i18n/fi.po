@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-12-06 10:07+0000\n"
+"PO-Revision-Date: 2025-12-17 17:59+0000\n"
 "Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
 "documents_spreadsheet_survey/fi/>\n"
@@ -52,13 +52,13 @@ msgstr "Tunnus"
 #. odoo-python
 #: code:addons/documents_spreadsheet_survey/models/survey_survey.py:0
 msgid "Quiz passed"
-msgstr ""
+msgstr "Testi läpäisty"
 
 #. module: documents_spreadsheet_survey
 #. odoo-javascript
 #: code:addons/documents_spreadsheet_survey/static/src/spreadsheet/survey_functions.js:0
 msgid "Return the results of a survey."
-msgstr ""
+msgstr "Palauta kyselyn tulokset."
 
 #. module: documents_spreadsheet_survey
 #. odoo-python
@@ -70,18 +70,18 @@ msgstr "Pisteet (%)"
 #. odoo-javascript
 #: code:addons/documents_spreadsheet_survey/static/src/spreadsheet/survey_menu_items.js:0
 msgid "See survey"
-msgstr ""
+msgstr "Katso kysely"
 
 #. module: documents_spreadsheet_survey
 #. odoo-javascript
 #: code:addons/documents_spreadsheet_survey/static/src/spreadsheet/survey_menu_items.js:0
 msgid "See survey participation"
-msgstr ""
+msgstr "Tarkastele kyselyn osallistumista"
 
 #. module: documents_spreadsheet_survey
 #: model:ir.model.fields,field_description:documents_spreadsheet_survey.field_survey_survey__spreadsheet_document_id
 msgid "Spreadsheet Document"
-msgstr ""
+msgstr "Datataulukkoasiakirja"
 
 #. module: documents_spreadsheet_survey
 #. odoo-python
@@ -94,19 +94,19 @@ msgstr "Kysely"
 #. odoo-javascript
 #: code:addons/documents_spreadsheet_survey/static/src/spreadsheet/survey_plugin.js:0
 msgid "Survey %s not available"
-msgstr ""
+msgstr "Kysely %s ei saatavilla"
 
 #. module: documents_spreadsheet_survey
 #. odoo-javascript
 #: code:addons/documents_spreadsheet_survey/static/src/spreadsheet/survey_functions.js:0
 msgid "The survey id"
-msgstr ""
+msgstr "Kyselytunnus"
 
 #. module: documents_spreadsheet_survey
 #. odoo-python
 #: code:addons/documents_spreadsheet_survey/models/survey_survey.py:0
 msgid "Timestamp"
-msgstr ""
+msgstr "Aikaleima"
 
 #. module: documents_spreadsheet_survey
 #. odoo-python

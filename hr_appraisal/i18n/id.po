@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-12-06 09:52+0000\n"
+"PO-Revision-Date: 2025-12-18 04:40+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "hr_appraisal/id/>\n"
@@ -1765,7 +1765,7 @@ msgstr "Tag Tujuan"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__template_goal_id
 msgid "Goal Template"
-msgstr ""
+msgstr "Templat Tujuan"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_view_search
@@ -1821,7 +1821,7 @@ msgstr "Hard Skill"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__has_edit_right
 msgid "Has Edit Right"
-msgstr ""
+msgstr "Memiliki Hak Edit"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__has_message
@@ -1946,7 +1946,7 @@ msgstr "Adalah Follower"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__is_last_appraisal_late
 msgid "Is Last Appraisal Late"
-msgstr ""
+msgstr "Apakah Appraisal Terakhir Terlambat"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__is_manager
@@ -1997,7 +1997,7 @@ msgstr "Status Appraisal Terakhir"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_employee__last_ongoing_appraisal_date
 msgid "Last Ongoing Appraisal Date"
-msgstr ""
+msgstr "Tanggal Appraisal Berlangsung Terakhir"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__write_uid
@@ -2274,12 +2274,12 @@ msgstr "Catatan"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__number_of_completed_sibling_goals
 msgid "Number Of Completed Sibling Goals"
-msgstr ""
+msgstr "Jumlah Tujuan Saudara yang Diselesaikan"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__number_of_sibling_goals
 msgid "Number Of Sibling Goals"
-msgstr ""
+msgstr "Jumlah Tujuan Saudara"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__message_needaction_counter
@@ -2374,7 +2374,7 @@ msgstr "Feedback pengalaman secara keseluruhan"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__parent_id
 msgid "Parent Goal Template"
-msgstr ""
+msgstr "Templat Tujuan Induk"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__parent_path
@@ -2672,7 +2672,7 @@ msgstr ""
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__sibling_goals_ratio
 msgid "Sibling Goals Ratio"
-msgstr ""
+msgstr "Rasio Tujuan Saudara"
 
 #. module: hr_appraisal
 #: model:hr.appraisal.goal.tag,name:hr_appraisal.hr_appraisal_goal_tag_softskills
@@ -2714,7 +2714,7 @@ msgstr "Sangat Melampaui Ekspektasi"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__child_ids
 msgid "Sub Goal Template"
-msgstr ""
+msgstr "Templat Sub Goal"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_template_view_list
@@ -2958,7 +2958,7 @@ msgstr "Konten User"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__usual_duration_month
 msgid "Usual Timing"
-msgstr ""
+msgstr "Waktu Biasa"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_template_form

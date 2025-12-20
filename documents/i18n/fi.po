@@ -35,8 +35,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 18:41+0000\n"
-"PO-Revision-Date: 2025-12-06 09:52+0000\n"
+"POT-Creation-Date: 2025-12-19 18:42+0000\n"
+"PO-Revision-Date: 2025-12-16 15:21+0000\n"
 "Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
 "documents/fi/>\n"
@@ -87,7 +87,7 @@ msgstr "%s asiakirjaa/kansiota on siirretty yrityksen päähakemistoon."
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "%s members added."
-msgstr ""
+msgstr "%s jäsentä lisätty."
 
 #. module: documents
 #. odoo-javascript
@@ -114,6 +114,10 @@ msgid ""
 "documents in bulk with the split tool: launch user defined actions, request "
 "a signature, convert to vendor bills with AI, etc."
 msgstr ""
+". Skannatut tiedostot näkyvät automaattisesti kansiossasi. Käsittele sitten "
+"asiakirjasi erissä jakotyökalun avulla: käynnistä käyttäjän määrittämät "
+"toimet, pyydä allekirjoitusta, muunna toimittajalaskuiksi tekoälyn avulla, "
+"jne."
 
 #. module: documents
 #: model:documents.tag,name:documents.documents_tag_year_previous
@@ -2888,6 +2892,11 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Font awesome -ikoni esim.. fa-tasks"
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Future Activities"
+msgstr "Tulevat toimenpiteet"
+
+#. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/owl/components/pdf_exit_dialog/pdf_exit_dialog.xml:0
 msgid "Gather in one document"
@@ -3308,6 +3317,11 @@ msgstr "Viimeksi päivittänyt"
 #: model:ir.model.fields,field_description:documents.field_documents_tag__write_date
 msgid "Last Updated on"
 msgstr "Viimeksi päivitetty"
+
+#. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Late Activities"
+msgstr "Myöhässä olevat toimenpiteet"
 
 #. module: documents
 #: model:documents.document,name:documents.document_legal_folder
@@ -3902,6 +3916,25 @@ msgid "Only Documents managers can set an alias."
 msgstr "Vain asiakirjojen hallinnoijat voivat määrittää aliaksen."
 
 #. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid ""
+"Only one string or number value can be searched for documents `child_of`."
+msgstr ""
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid "Only one value can be searched for child of `folder_id`."
+msgstr ""
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid "Only one value can be searched for children of `user_folder_id`"
+msgstr ""
+
+#. module: documents
 #. odoo-javascript
 #. odoo-python
 #: code:addons/documents/static/src/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog.xml:0
@@ -4468,6 +4501,11 @@ msgid "Shortcuts created in %(folder_name)s!"
 msgstr ""
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Show all records whose next activity date is past"
+msgstr ""
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__destination_children_ids
 msgid "Siblings"
 msgstr ""
@@ -4867,6 +4905,11 @@ msgid "Today"
 msgstr "Tänään"
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Today Activities"
+msgstr "Tämän päivän toimenpiteet"
+
+#. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/kanban/documents_kanban_renderer.js:0
 msgid "Toggle favorite"
@@ -5217,6 +5260,13 @@ msgstr ""
 #: code:addons/documents/models/documents_document.py:0
 msgid "You cannot change the owner of documents you do not own."
 msgstr "Et voi vaihtaa sellaisten asiakirjojen omistajaa, joita et omista."
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid ""
+"You cannot copy a folder into itself or into one of its own descendants."
+msgstr ""
 
 #. module: documents
 #. odoo-python
@@ -6532,9 +6582,6 @@ msgstr ""
 #~ msgid "Fiscal years"
 #~ msgstr "Tilikaudet"
 
-#~ msgid "Future Activities"
-#~ msgstr "Tulevat toimenpiteet"
-
 #~ msgid "Group By"
 #~ msgstr "Ryhmittely"
 
@@ -6583,9 +6630,6 @@ msgstr ""
 
 #~ msgid "Knowledge"
 #~ msgstr "Tietämys"
-
-#~ msgid "Late Activities"
-#~ msgstr "Myöhässä olevat toimenpiteet"
 
 #~ msgid ""
 #~ "Let's process documents in your Inbox.<br/><i>Tip: Use Tags to filter "
@@ -6917,9 +6961,6 @@ msgstr ""
 
 #~ msgid "To validate"
 #~ msgstr "Vahvistettavaksi"
-
-#~ msgid "Today Activities"
-#~ msgstr "Tämän päivän toimenpiteet"
 
 #~ msgid "Un-archive"
 #~ msgstr "Peru arkistointi"

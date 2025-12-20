@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:44+0000\n"
+"POT-Creation-Date: 2025-12-19 18:44+0000\n"
 "PO-Revision-Date: 2025-12-12 14:15+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
@@ -844,12 +844,6 @@ msgid "An error occured"
 msgstr "Ocorreu um erro"
 
 #. module: ai
-#. odoo-javascript
-#: code:addons/ai/static/src/discuss/core/common/thread_model_patch.js:0
-msgid "An error occurred while generating the AI response."
-msgstr "Ocorreu um erro ao gerar a resposta da IA."
-
-#. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__analytical
 msgid "Analytical"
 msgstr "Analítico"
@@ -1491,6 +1485,12 @@ msgid "Only administrators can create sources from URLs."
 msgstr "Somente administradores podem criar fontes a partir de URLs."
 
 #. module: ai
+#. odoo-python
+#: code:addons/ai/models/ai_agent.py:0
+msgid "Oops, it looks like our AI is unreachable"
+msgstr ""
+
+#. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_embedding__embedding_model__text-embedding-3-small
 msgid "OpenAI"
 msgstr "OpenAI"
@@ -2055,3 +2055,6 @@ msgstr "executado."
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "fa-hashtag"
 msgstr "fa-hashtag"
+
+#~ msgid "An error occurred while generating the AI response."
+#~ msgstr "Ocorreu um erro ao gerar a resposta da IA."

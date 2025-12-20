@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:43+0000\n"
+"POT-Creation-Date: 2025-12-19 18:43+0000\n"
 "PO-Revision-Date: 2025-11-20 08:14+0000\n"
 "Last-Translator: \"Chloe Wang (chwa)\" <chwa@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -147,12 +147,6 @@ msgid "Camera"
 msgstr "摄像头"
 
 #. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/backend/iot_device_form.js:0
-msgid "Check if the device is still connected"
-msgstr "检查设备是否仍在连接"
-
-#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Check the lights"
 msgstr "检查灯号"
@@ -208,12 +202,6 @@ msgstr "已连线状态"
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_search
 msgid "Connection"
 msgstr "连接"
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/backend/iot_device_form.js:0
-msgid "Connection to device failed"
-msgstr "连接到设备失败"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__create_uid
@@ -377,6 +365,18 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.js:0
 msgid "Failed to toggle remote debug."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/backend/iot_device_form.js:0
+msgid "Failed to update keyboard layout on the device."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/backend/iot_device_form.js:0
+msgid "Failed to update scanner mode on the device."
 msgstr ""
 
 #. module: iot
@@ -1279,6 +1279,12 @@ msgstr "reset.linked.printers"
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "to add an IoT Box."
 msgstr "添加一个IOT 盒子"
+
+#~ msgid "Check if the device is still connected"
+#~ msgstr "检查设备是否仍在连接"
+
+#~ msgid "Connection to device failed"
+#~ msgstr "连接到设备失败"
 
 #~ msgid "Are you sure you want to restart Odoo on the IoT box?"
 #~ msgstr "您确定想重启IoT盒子上的Odoo吗？"

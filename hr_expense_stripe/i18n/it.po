@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-12 18:43+0000\n"
-"PO-Revision-Date: 2025-11-10 13:22+0000\n"
+"PO-Revision-Date: 2025-12-15 14:12+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
 "hr_expense_stripe/it/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -202,6 +202,105 @@ msgid ""
 "            </table>\n"
 "        "
 msgstr ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
+"16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
+"color: #454748; width: 100%; border-collapse:separate;\"><tr><td align=\""
+"center\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
+"\"590\" style=\"padding: 16px; background-color: white; color: #454748; "
+"border-collapse:separate;\">\n"
+"           <tbody>\n"
+"            <!-- HEADER --> \n"
+"           <tr>\n"
+"                <td align=\"center\" style=\"min-width: 590px;\"> \n"
+"               <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
+"\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px "
+"0px 8px; border-collapse:separate;\">\n"
+"                    <tr> <td valign=\"middle\">\n"
+"                    <t t-set=\"company\" t-value=\"object.company_id\"/> \n"
+"                   <span style=\"font-size: 10px;\"> Notifica di spedizione "
+"della carta</span><br/>\n"
+"                   <span style=\"font-size: 20px; font-weight: bold;\"> La "
+"tua carta è stata assegnata</span>\n"
+"                    </td></tr>\n"
+"                    <tr> <td valign=\"middle\" align=\"right\" t-if="
+"\"not company.uses_default_logo\">\n"
+"                    <img t-attf-src=\"/logo.png?company={{ company.id }}\" "
+"style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt="
+"\"company.name\"/> \n"
+"                   </td></tr> \n"
+"                   <tr><td colspan=\"2\" style=\"text-align:center;\"> \n"
+"                   <hr width=\"100%\" style=\"background-color:rgb"
+"(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-"
+"height:1px;line-height:0; margin:16px 0px 16px 0px;\"/>\n"
+"                    </td> </tr>\n"
+"                </table> \n"
+"               </td>\n"
+"            </tr> \n"
+"           <!-- CONTENT -->\n"
+"            <tr> \n"
+"               <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
+"width=\"590\" style=\"min-width: 590px; background-color: white; padding: "
+"0px 8px 0px 8px; border-collapse:separate;\"> \n"
+"                   <tr><td valign=\"top\" style=\"font-size: 13px;\"> \n"
+"                    Ciao <t t-out="
+"\"ctx.get('recipient_name', object.user_id.name)\">[Nome del destinatario]"
+"</t>,<br/><br/>\n"
+"                    Ti abbiamo assegnato una carta di credito aziendale.\n"
+"                    Puoi visualizzarla e gestirla in qualsiasi momento "
+"andando su Il mio profilo e selezionando la sezione Carte.<br/><br/>\n"
+"                    Se hai domande, non esitare a contattarci.<br/><br/>\n"
+"                    Cordiali saluti,<br/>\n"
+"                    <t t-out=\"object.ordered_by.name or ''\">"
+"[Amministratore delle spese]</t>\n"
+"                    </td></tr>\n"
+"                    <tr> <td style=\"text-align:center;\">\n"
+"                    <hr width=\"100%\" style=\"background-color:rgb"
+"(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-"
+"height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/> \n"
+"                   </td></tr> \n"
+"               </table>\n"
+"                </td> </tr>\n"
+"            <!-- FOOTER --> \n"
+"           <tr>\n"
+"                <td align=\"center\" style=\"min-width: 590px;\"> \n"
+"               <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
+"\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; "
+"padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                    <tr> <td valign=\"middle\" align=\"left\">\n"
+"                        <t t-out=\"company.name or ''\"> YourCompany</t>\n"
+"                    </td></tr>\n"
+"                    <tr> <td valign=\"middle\" align=\"left\" style="
+"\"opacity: 0.7;\">\n"
+"                    <t t-if=\"company.phone\"> \n"
+"                       <t t-out=\"company.phone or ''\"> +1 650-123-4567</t> "
+"|\n"
+"                   </t>\n"
+"                    <t t-if=\"company.email\"> \n"
+"                       <a t-attf-href=\"'mailto:%s' % {{ company.email }}\" "
+"style=\"text-decoration:none; color: #454748;\" t-out=\"company.email or ''\""
+"> info@yourcompany.com</a> | </t>\n"
+"                    <t t-if=\"company.website\"> <a t-attf-href="
+"\"'%s' % {{ company.website }}\" style=\"text-decoration:none; color: "
+"#454748;\" t-out=\"company.website or ''\"> http://www.example.com</a>\n"
+"                    </t> </td></tr> </table>\n"
+"                </td> </tr>\n"
+"            </tbody> </table>\n"
+"            </td> </tr>\n"
+"            <!-- POWERED BY --> <tr><td align=\"center\" style=\"min-width: "
+"590px;\"> <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
+"\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; "
+"padding: 8px; border-collapse:separate;\">\n"
+"            <tr> <td style=\"text-align: center; font-size: 13px;"
+"\"> Powered by <a target=\"_blank\" href="
+"\"https://www.odoo.com?utm_source=db&amp;utm_medium=mail\" t-attf-style="
+"\"color: {{company.email_secondary_color or '#875A7B'}};\">Odoo</a>\n"
+"            </td></tr>\n"
+"            </table> \n"
+"           </td></tr> \n"
+"           </table>\n"
+"        "
 
 #. module: hr_expense_stripe
 #: model:mail.template,body_html:hr_expense_stripe.email_template_hr_expense_stripe_card_canceled
@@ -2336,7 +2435,7 @@ msgstr "Negozi di alimentari e supermercati"
 #. module: hr_expense_stripe
 #: model:mail.template,name:hr_expense_stripe.email_template_hr_expense_stripe_card_assigned
 msgid "HR Expense Stripe Card Assigned"
-msgstr ""
+msgstr "Carta Stripe per spese HR assegnata"
 
 #. module: hr_expense_stripe
 #: model:mail.template,name:hr_expense_stripe.email_template_hr_expense_stripe_card_ordered
@@ -2547,6 +2646,8 @@ msgstr "Dipendente non valido"
 msgid ""
 "Invalid email type, must be 'canceled', 'ordered', 'assigned' or 'shipped'."
 msgstr ""
+"Tipo di e-mail non valido, deve essere \"annullato\", \"ordinato\", "
+"\"assegnato\" o \"spedito\"."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -3215,6 +3316,8 @@ msgid ""
 "Pausing your card will disable it. Only Expense Administrators can "
 "reactivate it."
 msgstr ""
+"Sospendendo la tua carta, questa verrà disattivata. Solo gli amministratori "
+"delle spese possono riattivarla."
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.pawn_shops
@@ -3450,7 +3553,7 @@ msgstr "Invia di nuovo"
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_view_form_inherits_stripe
 msgid "Reserved"
-msgstr ""
+msgstr "Prenotato"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__res_company__stripe_account_issuing_status__restricted
@@ -3514,7 +3617,7 @@ msgstr "Inviato alla persona che si occuperà della ricezione della carta"
 #. module: hr_expense_stripe
 #: model:mail.template,description:hr_expense_stripe.email_template_hr_expense_stripe_card_assigned
 msgid "Sent to the person that will use the card"
-msgstr ""
+msgstr "Inviato alla persona che utilizzerà la carta"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.service_stations
@@ -4488,7 +4591,7 @@ msgstr "Codice errore sconosciuto"
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/fields/monetary_blank_if_zero.xml:0
 msgid "Unlimited"
-msgstr ""
+msgstr "Illimitato"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
@@ -4842,6 +4945,8 @@ msgid ""
 "You cannot split an expense that is reserved. Please wait for the "
 "transaction to be captured."
 msgstr ""
+"Non è possibile suddividere una spesa riservata. Attendi che la transazione "
+"venga registrata."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4850,6 +4955,8 @@ msgid ""
 "You cannot submit an expense that is reserved. Please wait for the "
 "transaction to be captured."
 msgstr ""
+"Non è possibile inviare una spesa che è stata prenotata. Attendi che la "
+"transazione venga registrata."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4927,7 +5034,7 @@ msgstr "La tua carta spese è stata spedita"
 #. module: hr_expense_stripe
 #: model:mail.template,subject:hr_expense_stripe.email_template_hr_expense_stripe_card_assigned
 msgid "Your Expense Card has been Assigned"
-msgstr ""
+msgstr "La tua carta spese aziendale è stata assegnata"
 
 #. module: hr_expense_stripe
 #: model:mail.template,subject:hr_expense_stripe.email_template_hr_expense_stripe_card_ordered

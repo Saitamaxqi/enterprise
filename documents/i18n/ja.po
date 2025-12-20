@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 18:41+0000\n"
+"POT-Creation-Date: 2025-12-19 18:42+0000\n"
 "PO-Revision-Date: 2025-12-11 10:23+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -1855,7 +1855,8 @@ msgstr "このフォルダ内のファイルを追加、変更、削除できま
 msgid ""
 "Can configure folders, manage access rights, and oversee all documents "
 "within their areas."
-msgstr "フォルダの設定、アクセス権限の管理、および担当領域内の全ドキュメントの管理を"
+msgstr ""
+"フォルダの設定、アクセス権限の管理、および担当領域内の全ドキュメントの管理を"
 "行うことができます。"
 
 #. module: documents
@@ -1886,7 +1887,8 @@ msgstr "表示のみ可能です。名前の変更、移動、削除はできま
 #. module: documents
 #: model:res.groups,comment:documents.group_documents_user
 msgid "Can view or edit, upload, and share their own or shared documents."
-msgstr "自身のドキュメントまたは共有ドキュメントを閲覧・編集、アップロード、共有でき"
+msgstr ""
+"自身のドキュメントまたは共有ドキュメントを閲覧・編集、アップロード、共有でき"
 "ます。"
 
 #. module: documents
@@ -2886,6 +2888,11 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Font awesomeのアイコン 例. fa-tasks"
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Future Activities"
+msgstr "将来の活動"
+
+#. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/owl/components/pdf_exit_dialog/pdf_exit_dialog.xml:0
 msgid "Gather in one document"
@@ -2947,7 +2954,8 @@ msgstr "アクセス権限なしパートナー警告"
 msgid ""
 "Has full control over all document settings, folders, and user rights across "
 "the application."
-msgstr "アプリケーション全体のドキュメント設定、フォルダ、ユーザ権限をすべて管理でき"
+msgstr ""
+"アプリケーション全体のドキュメント設定、フォルダ、ユーザ権限をすべて管理でき"
 "ます。"
 
 #. module: documents
@@ -3308,6 +3316,11 @@ msgstr "最終更新者"
 #: model:ir.model.fields,field_description:documents.field_documents_tag__write_date
 msgid "Last Updated on"
 msgstr "最終更新日"
+
+#. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Late Activities"
+msgstr "遅れた活動"
 
 #. module: documents
 #: model:documents.document,name:documents.document_legal_folder
@@ -3902,6 +3915,25 @@ msgid "Only Documents managers can set an alias."
 msgstr "エイリアスを設定できるのはマネジャーだけです。"
 
 #. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid ""
+"Only one string or number value can be searched for documents `child_of`."
+msgstr ""
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid "Only one value can be searched for child of `folder_id`."
+msgstr ""
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid "Only one value can be searched for children of `user_folder_id`"
+msgstr ""
+
+#. module: documents
 #. odoo-javascript
 #. odoo-python
 #: code:addons/documents/static/src/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog.xml:0
@@ -4467,6 +4499,11 @@ msgid "Shortcuts created in %(folder_name)s!"
 msgstr "%(folder_name)s にショートカットを作成しました!"
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Show all records whose next activity date is past"
+msgstr ""
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__destination_children_ids
 msgid "Siblings"
 msgstr "同階層"
@@ -4725,7 +4762,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "There are no records to link this document. Create one first."
-msgstr "このドキュメントにリンクできるレコードがありません。まず1件作成してください。"
+msgstr ""
+"このドキュメントにリンクできるレコードがありません。まず1件作成してください。"
 
 #. module: documents
 #. odoo-javascript
@@ -4865,6 +4903,11 @@ msgstr "ヒント:ペーパーレス企業になるためには"
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__last_access_date_group__3_day
 msgid "Today"
 msgstr "今日"
+
+#. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Today Activities"
+msgstr "本日の活動"
 
 #. module: documents
 #. odoo-javascript
@@ -5196,7 +5239,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "You can't move documents you do not own out of folders you cannot edit."
-msgstr "編集できないフォルダから、所有していないドキュメントを移動することはできませ"
+msgstr ""
+"編集できないフォルダから、所有していないドキュメントを移動することはできませ"
 "ん。"
 
 #. module: documents
@@ -5210,7 +5254,8 @@ msgstr "この/これらのフォルダは、会社のルートフォルダに�
 msgid ""
 "You cannot change permissions because you don't have edit access to all the "
 "selected documents."
-msgstr "選択したすべてのドキュメントに対する編集アクセス権がないため、権限を変更でき"
+msgstr ""
+"選択したすべてのドキュメントに対する編集アクセス権がないため、権限を変更でき"
 "ません。"
 
 #. module: documents
@@ -5218,6 +5263,13 @@ msgstr "選択したすべてのドキュメントに対する編集アクセス
 #: code:addons/documents/models/documents_document.py:0
 msgid "You cannot change the owner of documents you do not own."
 msgstr "所有していないドキュメントの所有者を変更することはできません。"
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid ""
+"You cannot copy a folder into itself or into one of its own descendants."
+msgstr ""
 
 #. module: documents
 #. odoo-python
@@ -5277,7 +5329,8 @@ msgstr "このフォルダに書き込む権限がありません。"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/helper/documents_drop_zone.xml:0
 msgid "You must be in a specific writable folder to upload files"
-msgstr "ファイルをアップロードするには、特定の書き込み可能なフォルダ内にいる必要があ"
+msgstr ""
+"ファイルをアップロードするには、特定の書き込み可能なフォルダ内にいる必要があ"
 "ります"
 
 #. module: documents
@@ -6371,9 +6424,6 @@ msgstr ""
 #~ msgid "Fiscal years"
 #~ msgstr "会計年度"
 
-#~ msgid "Future Activities"
-#~ msgstr "将来の活動"
-
 #~ msgid "Group By"
 #~ msgstr "グループ化"
 
@@ -6403,9 +6453,6 @@ msgstr ""
 
 #~ msgid "Knowledge"
 #~ msgstr "ナレッジ"
-
-#~ msgid "Late Activities"
-#~ msgstr "遅れた活動"
 
 #~ msgid "Live"
 #~ msgstr "有効"
@@ -6596,9 +6643,6 @@ msgstr ""
 
 #~ msgid "To Validate"
 #~ msgstr "未検証"
-
-#~ msgid "Today Activities"
-#~ msgstr "本日の活動"
 
 #~ msgid "Unnamed"
 #~ msgstr "無名"

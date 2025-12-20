@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:44+0000\n"
-"PO-Revision-Date: 2025-12-12 11:22+0000\n"
+"POT-Creation-Date: 2025-12-19 18:44+0000\n"
+"PO-Revision-Date: 2025-12-18 15:37+0000\n"
 "Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/ai/fi/>\n"
 "Language: fi\n"
@@ -485,6 +485,46 @@ msgid ""
 "the current view info.\n"
 "        "
 msgstr ""
+"\n"
+"            Käyttäjä voi jatkaa kysymysten esittämistä. Sinä voit jatkaa "
+"tämän työkalun käyttämistä, jos uskot, että tämänhetkistä hakua voi muokata "
+"ilman erillisen valikon avaamista.\n"
+"\n"
+"            Kehotus <session_info_context> on tämänhetkisen näkymän tieto, "
+"joka sisältää aktiiviset hakufasetit.\n"
+"            Fasetti voi olla ryhmä `OR`-suodattimia, ryhmä ryhmittelyjä, tai "
+"ryhmä `OR`-hakutermejä.\n"
+"\n"
+"            **Parametrien ymmärtäminen**:\n"
+"            - `remove_facets` - Fasetin poistaminen poistaa koko suodatin-/"
+"ryhmittely-/hakutermiryhmän. Suodattimen tai hakutermin poistaminen vähentää "
+"rajoituksia.\n"
+"            - `toggle_filters` - Suodattimen vaihtaminen lisää/poistaa "
+"suodattimen aktiivisesta suodatinfasetista.\n"
+"            - `toggle_groupbys` - Ryhmittelyn vaihtaminen lisää/poistaa "
+"ryhmittelyn aktiivisesta ryhmittelyfasetista.\n"
+"            - `apply_searches` - Haun soveltaminen johtaa hakutermin `OR` "
+"-toimintoon aktiivisessa hakufasetissa, joka sisältää saman kentän. Esim. "
+"jos on olemassa kenttäfasetti \"name=John\" ja toteutat haun \"name=Jane\", "
+"tuloksena on haku \"name=John OR name=Jane\".\n"
+"            - `measures` - Mittojen määrittäminen aktivoi valitut mitat "
+"tämänhetkisessä näkymässä, jos se on pivot- tai kaavionäkymä.\n"
+"            - `mode` - Vain kaavionäkymässä: Tämä on kaaviotyyppi. Valitse "
+"\"viiva\", \"pylväs\", or \"ympyrä\" vaihtaaksesi kaaviotyyppiä nykyisessä "
+"kaavionäkymässä.\n"
+"            - `order` - Vain kaavionäkymässä: Järjestyksen määrittäminen "
+"muuttaa tulosten lajittelua nykyisessä kaavionäkymässä.\n"
+"            - `stacked` - Vain kaavionäkymässä: Pinonnan määrittäminen "
+"muuttaa tulosten pinontaa nykyisessä kaavionäkymässä.\n"
+"            - `cumulated` - Vain kaavionäkymässä: Kertymän määrittäminen "
+"muuttaa tulosten kertymistä nykyisessä kaavionäkymässä\n"
+"            - `custom_domain` - Hakunäkymän elementit eivät välttämättä "
+"riitä tarvitun domainin ilmaisemiseen. Siinä tapauksessa annat mukautetun "
+"domainin JSON-merkkijonona.\n"
+"            - `switch_view_type` - Näkymätyypin vaihtaminen muuttaa "
+"tämänhetkisen näkymän määritetyn tyyppiseksi. Valitse saatavilla olevista "
+"näkymätyypeistä tämänhetkisen näkymän tiedoista.\n"
+"        "
 
 #. module: ai
 #. odoo-python
@@ -498,6 +538,8 @@ msgid ""
 "<br/>\n"
 "            It used the following tools:"
 msgstr ""
+"<br/>\n"
+"            Se käytti seuraavia työkaluja:"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
@@ -506,11 +548,14 @@ msgid ""
 "ai_tool_show_warning\" aria-hidden=\"true\" title=\"The AI will not be "
 "limited by the groups defined on tools\"/>"
 msgstr ""
+"<i class=\"fa fa-warning text-warning me-2\" invisible=\"not "
+"ai_tool_show_warning\" aria-hidden=\"true\" title=\"Tekoälyä ei rajoiteta "
+"työkaluissa määritetyillä ryhmillä\"/>"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
 msgid "<span>with arguments</span>"
-msgstr ""
+msgstr "<span>argumenteilla</span>"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_agent__topic_ids
@@ -534,7 +579,7 @@ msgstr "Tekoäly"
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_action_prompt
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_action_prompt
 msgid "AI Action Prompt"
-msgstr ""
+msgstr "Tekoälyn toimintakehote"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_agent
@@ -544,17 +589,17 @@ msgstr "Tekoäly-agentti"
 #. module: ai
 #: model:ir.model,name:ai.model_ai_agent_source
 msgid "AI Agent Source"
-msgstr ""
+msgstr "Tekoälyagentin lähde"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_cron_process_sources_ir_actions_server
 msgid "AI Agent Sources: Process Sources"
-msgstr ""
+msgstr "Tekoälyagentin lähteet: Lähteiden käsittely"
 
 #. module: ai
 #: model:ir.model.constraint,message:ai.constraint_discuss_channel_ai_channel_type_check
 msgid "AI Agent can only be set for ai_chat or livechat channels."
-msgstr ""
+msgstr "Tekoälyagentin voi asettaa vain ai_chat tai livechat-kanaville."
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_cron_generate_embedding_ir_actions_server
@@ -796,12 +841,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 msgid "An error occured"
-msgstr ""
-
-#. module: ai
-#. odoo-javascript
-#: code:addons/ai/static/src/discuss/core/common/thread_model_patch.js:0
-msgid "An error occurred while generating the AI response."
 msgstr ""
 
 #. module: ai
@@ -1431,6 +1470,12 @@ msgstr "Saatavilla"
 #. odoo-python
 #: code:addons/ai/models/ai_agent_source.py:0
 msgid "Only administrators can create sources from URLs."
+msgstr ""
+
+#. module: ai
+#. odoo-python
+#: code:addons/ai/models/ai_agent.py:0
+msgid "Oops, it looks like our AI is unreachable"
 msgstr ""
 
 #. module: ai

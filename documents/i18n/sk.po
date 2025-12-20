@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 18:41+0000\n"
+"POT-Creation-Date: 2025-12-19 18:42+0000\n"
 "PO-Revision-Date: 2025-11-17 03:26+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Slovak <https://translate.odoo.com/projects/odoo-19/documents/"
@@ -2336,6 +2336,11 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Úžasná ikona fronty napr. fa-tasks"
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Future Activities"
+msgstr "Budúce aktivity"
+
+#. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/owl/components/pdf_exit_dialog/pdf_exit_dialog.xml:0
 msgid "Gather in one document"
@@ -2748,6 +2753,11 @@ msgstr "Naposledy upravoval"
 #: model:ir.model.fields,field_description:documents.field_documents_tag__write_date
 msgid "Last Updated on"
 msgstr "Naposledy upravované"
+
+#. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Late Activities"
+msgstr "Omeškané aktivity"
 
 #. module: documents
 #: model:documents.document,name:documents.document_legal_folder
@@ -3340,6 +3350,25 @@ msgid "Only Documents managers can set an alias."
 msgstr ""
 
 #. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid ""
+"Only one string or number value can be searched for documents `child_of`."
+msgstr ""
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid "Only one value can be searched for child of `folder_id`."
+msgstr ""
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid "Only one value can be searched for children of `user_folder_id`"
+msgstr ""
+
+#. module: documents
 #. odoo-javascript
 #. odoo-python
 #: code:addons/documents/static/src/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog.xml:0
@@ -3897,6 +3926,11 @@ msgid "Shortcuts created in %(folder_name)s!"
 msgstr ""
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Show all records whose next activity date is past"
+msgstr ""
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__destination_children_ids
 msgid "Siblings"
 msgstr ""
@@ -4286,6 +4320,11 @@ msgid "Today"
 msgstr ""
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Today Activities"
+msgstr "Dnešné aktivity"
+
+#. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/kanban/documents_kanban_renderer.js:0
 msgid "Toggle favorite"
@@ -4619,6 +4658,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "You cannot change the owner of documents you do not own."
+msgstr ""
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid ""
+"You cannot copy a folder into itself or into one of its own descendants."
 msgstr ""
 
 #. module: documents
@@ -5879,9 +5925,6 @@ msgstr ""
 #~ msgid "Fiscal years"
 #~ msgstr "Fiškálne roky"
 
-#~ msgid "Future Activities"
-#~ msgstr "Budúce aktivity"
-
 #~ msgid "Group By"
 #~ msgstr "Zoskupiť podľa"
 
@@ -5916,9 +5959,6 @@ msgstr ""
 
 #~ msgid "Knowledge"
 #~ msgstr "Vedomosti"
-
-#~ msgid "Late Activities"
-#~ msgstr "Omeškané aktivity"
 
 #~ msgid "Let's process these bills: send to Finance workspace."
 #~ msgstr "Spracujme tieto faktúry: pošlite do pracovného priestoru Finance."
@@ -6160,9 +6200,6 @@ msgstr ""
 
 #~ msgid "To validate"
 #~ msgstr "Overiť"
-
-#~ msgid "Today Activities"
-#~ msgstr "Dnešné aktivity"
 
 #~ msgid "Unnamed"
 #~ msgstr "Nepomenovaný"

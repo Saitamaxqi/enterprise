@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-12-06 10:08+0000\n"
+"POT-Creation-Date: 2025-12-19 18:44+0000\n"
+"PO-Revision-Date: 2025-12-16 04:16+0000\n"
 "Last-Translator: \"Chloe Wang (chwa)\" <chwa@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
 "projects/odoo-19/appointment_google_reserve/zh_Hans/>\n"
@@ -28,8 +28,8 @@ msgid ""
 "%(appointment_type_name)s: A %(appointment_category)s appointment type "
 "cannot be used with the Google Bookings integration."
 msgstr ""
-"%(appointment_type_name)s： %(appointment_category)s 预约类型不能与 Google "
-"预订整合使用。"
+"%(appointment_type_name)s： %(appointment_category)s 预约类型不能与 Google 预"
+"订整合使用。"
 
 #. module: appointment_google_reserve
 #. odoo-python
@@ -142,6 +142,11 @@ msgstr "创建日期"
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid "Disable Google Reserve"
+msgstr ""
+
+#. module: appointment_google_reserve
+#: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
+msgid "Disable Synchronization"
 msgstr ""
 
 #. module: appointment_google_reserve
@@ -266,7 +271,8 @@ msgstr "如果勾选此项， 某些消息将出现发送错误。"
 msgid ""
 "If the sanitized phone number is on the blacklist, the contact won't receive "
 "mass mailing sms anymore, from any list"
-msgstr "如果已被列入的电话号码在黑名单中，则该联系人将不会再收到来自任何列表的群发短"
+msgstr ""
+"如果已被列入的电话号码在黑名单中，则该联系人将不会再收到来自任何列表的群发短"
 "信"
 
 #. module: appointment_google_reserve
@@ -275,7 +281,8 @@ msgid ""
 "Indicates if a blacklisted sanitized phone number is a phone number. Helps "
 "distinguish which number is blacklisted             when there is both a "
 "mobile and phone field in a model."
-msgstr "表示被列入黑名单的经过净化的电话号码是否是电话号码。当模型中既有手机字段又有"
+msgstr ""
+"表示被列入黑名单的经过净化的电话号码是否是电话号码。当模型中既有手机字段又有"
 "电话字段时，有助于区分哪个号码被列入黑名单。"
 
 #. module: appointment_google_reserve
@@ -434,4 +441,4 @@ msgstr "网站沟通记录"
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.google_reserve_merchant_view_form
 msgid "e.g Restaurant"
-msgstr ""
+msgstr "例如：餐厅"

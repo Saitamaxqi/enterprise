@@ -11,13 +11,14 @@
 # Emily Jia <eji@odoo.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# "Chloe Wang (chwa)" <chwa@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 18:41+0000\n"
-"PO-Revision-Date: 2025-11-18 13:51+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"POT-Creation-Date: 2025-12-19 18:42+0000\n"
+"PO-Revision-Date: 2025-12-16 04:16+0000\n"
+"Last-Translator: \"Chloe Wang (chwa)\" <chwa@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
 "projects/odoo-19/documents/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -25,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: documents
 #. odoo-python
@@ -2327,6 +2328,11 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Font Awesome图标，例如：fa-tasks"
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Future Activities"
+msgstr "未来活动"
+
+#. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/owl/components/pdf_exit_dialog/pdf_exit_dialog.xml:0
 msgid "Gather in one document"
@@ -2745,6 +2751,11 @@ msgid "Last Updated on"
 msgstr "上次更新日期"
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Late Activities"
+msgstr "最近的活动"
+
+#. module: documents
 #: model:documents.document,name:documents.document_legal_folder
 #: model:documents.tag,name:documents.documents_tag_legal
 msgid "Legal"
@@ -2817,7 +2828,7 @@ msgstr "连接到"
 #: code:addons/documents/static/src/editor/plugins/add_documents_attachment_plugin.js:0
 #: code:addons/documents/static/src/views/view_dialogs/select_add_document_create_dialog.js:0
 msgid "Link(s) pasted!"
-msgstr ""
+msgstr "链接已粘贴！"
 
 #. module: documents
 #. odoo-javascript
@@ -2996,7 +3007,7 @@ msgstr "将此页移至回收站"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Move to %(folder_name)s"
-msgstr ""
+msgstr "移动至%(folder_name)s"
 
 #. module: documents
 #. odoo-javascript
@@ -3335,6 +3346,25 @@ msgstr "只有文档管理员可以设置别名。"
 #: code:addons/documents/models/documents_document.py:0
 msgid "Only Documents managers can set an alias."
 msgstr "只有文档管理员才能设置别名。"
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid ""
+"Only one string or number value can be searched for documents `child_of`."
+msgstr ""
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid "Only one value can be searched for child of `folder_id`."
+msgstr ""
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid "Only one value can be searched for children of `user_folder_id`"
+msgstr ""
 
 #. module: documents
 #. odoo-javascript
@@ -3894,6 +3924,11 @@ msgid "Shortcuts created in %(folder_name)s!"
 msgstr ""
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Show all records whose next activity date is past"
+msgstr ""
+
+#. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__destination_children_ids
 msgid "Siblings"
 msgstr ""
@@ -4290,6 +4325,11 @@ msgid "Today"
 msgstr "今天"
 
 #. module: documents
+#: model_terms:ir.ui.view,arch_db:documents.document_view_search
+msgid "Today Activities"
+msgstr "今天的活动"
+
+#. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/kanban/documents_kanban_renderer.js:0
 msgid "Toggle favorite"
@@ -4627,6 +4667,13 @@ msgstr ""
 #: code:addons/documents/models/documents_document.py:0
 msgid "You cannot change the owner of documents you do not own."
 msgstr "无法更改不属于您的文档的所有者。"
+
+#. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid ""
+"You cannot copy a folder into itself or into one of its own descendants."
+msgstr ""
 
 #. module: documents
 #. odoo-python
@@ -5939,9 +5986,6 @@ msgstr ""
 #~ msgid "Fiscal years"
 #~ msgstr "会计年度"
 
-#~ msgid "Future Activities"
-#~ msgstr "未来活动"
-
 #~ msgid "Group By"
 #~ msgstr "分组"
 
@@ -5981,9 +6025,6 @@ msgstr ""
 
 #~ msgid "Knowledge"
 #~ msgstr "知识"
-
-#~ msgid "Late Activities"
-#~ msgstr "最近的活动"
 
 #~ msgid ""
 #~ "Let's process documents in your Inbox.<br/><i>Tip: Use Tags to filter "
@@ -6304,9 +6345,6 @@ msgstr ""
 
 #~ msgid "To validate"
 #~ msgstr "‎待验证‎"
-
-#~ msgid "Today Activities"
-#~ msgstr "今天的活动"
 
 #~ msgid "Un-archive"
 #~ msgstr "取消归档"

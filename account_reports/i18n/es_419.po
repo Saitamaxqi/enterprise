@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-12 18:44+0000\n"
-"PO-Revision-Date: 2025-12-10 10:28+0000\n"
-"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
+"PO-Revision-Date: 2025-12-18 15:37+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/account_reports/es_419/>\n"
 "Language: es_419\n"
@@ -38,13 +38,13 @@ msgstr "%(journal)s - %(account)s"
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "%(line_name)s - %(company)s"
-msgstr ""
+msgstr "%(line_name)s - %(company)s"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "%(line_name)s - %(company_name)s"
-msgstr ""
+msgstr "%(line_name)s - %(company_name)s"
 
 #. module: account_reports
 #. odoo-python
@@ -110,6 +110,8 @@ msgid ""
 "'Open General Ledger' caret option is only available form report lines "
 "targetting accounts or Undistributed Profits/Losses."
 msgstr ""
+"La opción \"Abrir libro mayor\" solo está disponible en las líneas del "
+"reporte que se refieren a cuentas o a ganancias y pérdidas sin distribuir."
 
 #. module: account_reports
 #. odoo-python
@@ -3974,7 +3976,7 @@ msgstr "Libros contables"
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_allocations_withdrawals0
 msgid "Less Allocations and Plus Withdrawals"
-msgstr ""
+msgstr "Menos asignaciones y más retiros"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_cost_sales0
@@ -4308,7 +4310,7 @@ msgstr "Ganancias netas"
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_net_profit_after_allocations0
 msgid "Net Profit Left After Allocations and Withdrawals"
-msgstr ""
+msgstr "Ingresos netos restantes después de asignaciones y retiros"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_net_assets0
@@ -6656,7 +6658,7 @@ msgstr "Indefinido"
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Undistributed Profits/Losses"
-msgstr ""
+msgstr "Ganancias/pérdidas no distribuidas"
 
 #. module: account_reports
 #. odoo-javascript

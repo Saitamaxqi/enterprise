@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-12 18:48+0000\n"
-"PO-Revision-Date: 2025-10-09 21:12+0000\n"
-"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
+"PO-Revision-Date: 2025-12-18 15:37+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/website_generator/es_419/>\n"
 "Language: es_419\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: website_generator
 #: model:mail.template,body_html:website_generator.email_template_website_scrapped
@@ -124,7 +124,7 @@ msgstr "Listo, sitio web generado"
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.js:0
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #. module: website_generator
 #: model:ir.model,name:website_generator.model_ir_http
@@ -219,7 +219,7 @@ msgstr "Última actualización el"
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
 msgid "Loading..."
-msgstr ""
+msgstr "Cargando..."
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__notified
@@ -316,13 +316,13 @@ msgstr "Aprobada"
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
 msgid "The URL is not reachable."
-msgstr ""
+msgstr "No se puede acceder a la URL."
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
 msgid "The URL is reachable."
-msgstr ""
+msgstr "Se puede acceder a la URL."
 
 #. module: website_generator
 #. odoo-javascript
@@ -340,13 +340,13 @@ msgstr "El número máximo de páginas es 200 de forma predeterminada."
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.js:0
 msgid "The provided URL is not allowed"
-msgstr ""
+msgstr "La URL proporcionada no se permite"
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.js:0
 msgid "The provided URL is not reachable"
-msgstr ""
+msgstr "No es posible acceder a la URL proporcionada"
 
 #. module: website_generator
 #. odoo-python
@@ -394,7 +394,7 @@ msgstr "Puede tomar unos minutos."
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.js:0
 msgid "Too many requests"
-msgstr ""
+msgstr "Muchas solicitudes"
 
 #. module: website_generator
 #. odoo-python
@@ -406,7 +406,7 @@ msgstr "Menú superior para el sitio web %s"
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.js:0
 msgid "URL redirection"
-msgstr ""
+msgstr "URL de redirección"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__target_url

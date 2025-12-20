@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-05 18:42+0000\n"
-"PO-Revision-Date: 2025-12-11 13:00+0000\n"
+"PO-Revision-Date: 2025-12-18 09:36+0000\n"
 "Last-Translator: \"Marta (wacm)\" <wacm@odoo.com>\n"
 "Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/hr_payroll/"
 "cs/>\n"
@@ -3731,7 +3731,7 @@ msgstr "Mimo cyklus"
 #. module: hr_payroll
 #: model:res.groups,name:hr_payroll.group_hr_payroll_user
 msgid "Officer: Manage all contracts"
-msgstr ""
+msgstr "Pracovník mezd: Správa všech smluv"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -4314,7 +4314,7 @@ msgstr "Řádky pracovních dnů výplatní pásky"
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.hr_payslip_work_days_action_report
 msgid "Payslip Work Days Lines Report"
-msgstr ""
+msgstr "Výplatní páska Pracovní dny Řádky Zpráva"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payslip_worked_days
@@ -4343,7 +4343,7 @@ msgstr "Výplatní pásky"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
 msgid "Payslips - Show final results of the computation."
-msgstr ""
+msgstr "Výplatní pásky – Zobrazit konečné výsledky výpočtu."
 
 #. module: hr_payroll
 #: model:hr.payroll.dashboard.warning,name:hr_payroll.hr_payroll_dashboard_warning_payslips_previous_contract
@@ -4358,12 +4358,12 @@ msgstr ""
 #. module: hr_payroll
 #: model:hr.payroll.dashboard.warning,name:hr_payroll.hr_payroll_dashboard_warning_payslips_negative_net
 msgid "Payslips With Negative NET"
-msgstr ""
+msgstr "Výplatní pásky se zápornou čistou hodnotou"
 
 #. module: hr_payroll
 #: model:hr.payroll.dashboard.warning,name:hr_payroll.hr_payroll_dashboard_warning_payslip_overdue
 msgid "Payslips are overdue for payments"
-msgstr ""
+msgstr "Výplatní pásky jsou po splatnosti"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_employee_declaration__pdf_filename
@@ -4422,7 +4422,7 @@ msgstr "Plánování"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_work_entry_export_mixin_form_view
 msgid "Populate"
-msgstr ""
+msgstr "Naplnit"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -4494,7 +4494,7 @@ msgstr "Množství / sazba"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Quarter %(quarter)s of %(year)s"
-msgstr ""
+msgstr "Čtvrtletí %(quarter)s z %(year)s"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__queued_for_pdf
@@ -4542,7 +4542,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/dashboard_empty_screen/dashboard_empty_screen.xml:0
 msgid "Ready to simplify your payroll?"
-msgstr ""
+msgstr "Jste připraveni zjednodušit zpracování mezd?"
 
 #. module: hr_payroll
 #: model:ir.actions.server,name:hr_payroll.action_hr_payroll_recompute_whole_sheet
@@ -4652,7 +4652,7 @@ msgstr "Zbývající částka k zaplacení."
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_attachment__remaining_time
 msgid "Remaining time to be paid."
-msgstr ""
+msgstr "Zbývající čas, který má být zaplacen."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
@@ -4691,7 +4691,7 @@ msgstr "Výkazy"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
 msgid "Reporting - All reports that you can need during the year."
-msgstr ""
+msgstr "Reporting – Všechny reporty, které můžete během roku potřebovat."
 
 #. module: hr_payroll
 #. odoo-python
@@ -4709,7 +4709,7 @@ msgstr "Zodpovědný uživatel"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
 msgid "Restart"
-msgstr ""
+msgstr "Restartovat"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -4764,7 +4764,7 @@ msgstr "Parametry pravidel"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_rule.py:0
 msgid "Rule category and structure should belong to the same country"
-msgstr ""
+msgstr "Kategorie a struktura pravidel by měly patřit do stejné země."
 
 #. module: hr_payroll
 #: model:ir.ui.menu,name:hr_payroll.menu_action_hr_salary_rule_form
@@ -4985,7 +4985,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_dashboard_warning_view_search
 msgid "Search Payroll Dashboard Warning"
-msgstr ""
+msgstr "Hledat varování na panelu mezd"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_register
@@ -5123,12 +5123,16 @@ msgid ""
 "Some work entries are in conflict. Please resolve the conflicts before "
 "exporting."
 msgstr ""
+"Některé položky práce jsou v konfliktu. Před exportem prosím konflikty "
+"vyřešte."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip_run.py:0
 msgid "Some work entries could not be validated. Time intervals to look for:%s"
 msgstr ""
+"Některé pracovní záznamy nebylo možné ověřit. Časové intervaly, které je "
+"třeba zkontrolovat:%s"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__space_above
@@ -5143,7 +5147,7 @@ msgstr "Rozdělit"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 msgid "Split it in individual adjustment"
-msgstr ""
+msgstr "Rozdělit na jednotlivé úpravy"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__standard_calendar_id
@@ -5205,6 +5209,9 @@ msgid ""
 "Still looking for more ? Here is a video to help you <i class=\"fa fa-video-"
 "camera fa-2\" aria-hidden=\"true\" contenteditable=\"false\">​</i>"
 msgstr ""
+"Stále hledáte další informace? Zde je video, které vám pomůže <i class="
+"\"fa fa-video-camera fa-2\" aria-hidden=\"true\" contenteditable=\"false\""
+">​</i>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
@@ -5280,7 +5287,7 @@ msgstr "Součet dní"
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_dashboard_warning__color
 msgid "Tag color. No color means black."
-msgstr ""
+msgstr "Barva značky. Žádná barva znamená černou."
 
 #. module: hr_payroll
 #: model:hr.salary.rule,name:hr_payroll.default_gross_salary_rule
@@ -5314,6 +5321,9 @@ msgid ""
 "                        It computes the Net salary according to the Salary "
 "Rules you've defined in the configuration."
 msgstr ""
+"Výplatní páska je výpočet mzdy zaměstnance za určité časové období.\n"
+"Vypočítává čistou mzdu podle pravidel pro výpočet mzdy, která jste "
+"definovali v konfiguraci."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_work_entry_type__is_unforeseen
@@ -5331,6 +5341,8 @@ msgid ""
 "The YTD reset day must be a valid day of the month : since the current month "
 "is %(month)s, it should be between 1 and %(day)s."
 msgstr ""
+"Den resetování YTD musí být platným dnem v měsíci: jelikož aktuální měsíc je "
+"%(month)s, měl by být mezi 1 a %(day)s."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_edit_payslip_line__code
@@ -5367,6 +5379,8 @@ msgid ""
 "The current employee records for each employee will be indexed. All "
 "posterior records corresponding to the same contract will also be indexed."
 msgstr ""
+"Aktuální záznamy o zaměstnancích budou indexovány. Všechny následující "
+"záznamy týkající se stejné smlouvy budou také indexovány."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
@@ -5378,23 +5392,24 @@ msgstr "Výchozí pracovní doba je nastavena v konfiguraci."
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid ""
 "The duration of the payslip is not accurate according to the structure type."
-msgstr ""
+msgstr "Doba platnosti výplatní pásky není podle typu struktury přesná."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_correction_wizard__employee_id
 msgid "The employee for whom the payslip correction is being made."
-msgstr ""
+msgstr "Zaměstnanec, pro kterého se provádí oprava výplatní pásky."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "The employee's data has been updated since this payslip was created."
 msgstr ""
+"Údaje o zaměstnanci byly od vytvoření této výplatní pásky aktualizovány."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "The field is not valid:%s"
-msgstr ""
+msgstr "Pole není platné:%s"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_declaration_mixin_view_form
@@ -5402,6 +5417,8 @@ msgid ""
 "The files won't be posted in the employee portal if you don't have the "
 "Documents app."
 msgstr ""
+"Soubory nebudou zveřejněny v portálu pro zaměstnance, pokud nemáte aplikaci "
+"Dokumenty."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5410,6 +5427,8 @@ msgid ""
 "The following %(model_name)s are missing a %(field_name)s:\n"
 "    • %(names)s"
 msgstr ""
+"Následujícím %(model_name)s chybí %(field_name)s:\n"
+"    • %(names)s"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5433,7 +5452,7 @@ msgstr "Čistá částka bude získána zpět z první kladné odměny stanoven�
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "The payslip's company doesn't match the batch's"
-msgstr ""
+msgstr "Společnost na výplatní pásce se neshoduje se společností v dávce."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5445,7 +5464,7 @@ msgstr "Výplatní pásky by měly být ve stavu Koncept nebo Čekající."
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/views/payslip_list/hr_payslip_list_controller.js:0
 msgid "The payslips(s) are now added to the batch"
-msgstr ""
+msgstr "Výplatní pásky jsou nyní přidány do dávky."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5454,12 +5473,14 @@ msgid ""
 "The salary adjustment you're trying to remove is still running. You can’t "
 "delete unless you change it to completed or cancelled."
 msgstr ""
+"Úprava platu, kterou se snažíte odstranit, je stále aktivní. Nelze ji "
+"smazat, dokud ji nezměníte na dokončenou nebo zrušenou."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "The selected payslips should be linked to the same batch"
-msgstr ""
+msgstr "Vybrané výplatní pásky by měly být propojeny se stejnou dávkou."
 
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_payroll_headcount_date_range
@@ -5469,12 +5490,12 @@ msgstr "Počáteční datum musí být dříve než koncové datum."
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "The total returned by the salary rule is calculated as:"
-msgstr ""
+msgstr "Celková částka vrácená podle pravidla pro plat se vypočítá takto:"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_input__version_id
 msgid "The version this input should be applied to"
-msgstr ""
+msgstr "Verze, na kterou by se měl tento vstup aplikovat"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_work_entry_type__unpaid_structure_ids
@@ -5488,6 +5509,8 @@ msgid ""
 "There are previous payslips with a negative amount for a total of %s to "
 "report."
 msgstr ""
+"Existují předchozí výplatní pásky s negativní částkou v celkové výši %s, "
+"které je třeba nahlásit."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5501,12 +5524,15 @@ msgstr "Pro dané období není třeba generovat žádné prohlášení."
 msgid ""
 "There is no valid payslip (validated and net wage > 0) to generate the file."
 msgstr ""
+"Neexistuje žádný platný výplatní pás (ověřený a čistá mzda > 0) pro "
+"vytvoření souboru."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "There should be at least one payslip to generate the file."
 msgstr ""
+"K vytvoření souboru by měla být k dispozici alespoň jedna výplatní páska."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5518,7 +5544,7 @@ msgstr "U ověřených výplatních pásek je tato akce zakázána."
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "This action is restricted to payroll officers only."
-msgstr ""
+msgstr "Tato akce je omezena pouze na pracovníky oddělení mezd."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_rule_parameter__code
@@ -5543,6 +5569,8 @@ msgid ""
 "This is a corrected payslip.\n"
 "Find the correction under this name: %(payslip)s"
 msgstr ""
+"Toto je opravená výplatní páska.\n"
+"Oprava se nachází pod tímto názvem: %(payslip)s"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5551,13 +5579,15 @@ msgid ""
 "This is a refunded payslip.\n"
 "Find the refund under this name: %(payslip)s"
 msgstr ""
+"Toto je vrácená výplatní páska.\n"
+"Vrácenou částku najdete pod tímto názvem: %(payslip)s"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
 msgid ""
 "This is where you and your team will manage your <strong>Payroll</strong> ! "
 "🚀"
-msgstr ""
+msgstr "Zde budete vy a váš tým spravovat <strong>Mzdy</strong>! 🚀"
 
 #. module: hr_payroll
 #. odoo-python
@@ -5584,6 +5614,8 @@ msgid ""
 "This work entry cannot be modified because it is already associated with a "
 "generated payslip."
 msgstr ""
+"Tento záznam o práci nelze upravit, protože je již přiřazen k vygenerované "
+"výplatní pásce."
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -5657,6 +5689,8 @@ msgid ""
 "Total amount must be strictly positive and greater than or equal to the "
 "payslip amount."
 msgstr ""
+"Celková částka musí být kladná a musí být vyšší nebo rovna částce uvedené na "
+"výplatní pásce."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_attachment__total_amount
@@ -5784,7 +5818,7 @@ msgstr "Použijte pro uspořádání pořadí výpočtů"
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__appears_on_employee_cost_dashboard
 msgid "Used to compute the employer cost of a payslip."
-msgstr ""
+msgstr "Slouží k výpočtu nákladů zaměstnavatele na výplatní pásku."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_line__appears_on_payslip
@@ -5924,6 +5958,7 @@ msgstr "Varování"
 msgid ""
 "Warnings - A set of clickable warnings that'll lead you to faulty records."
 msgstr ""
+"Varování – Sada klikatelných varování, která vás zavedou k chybným záznamům."
 
 #. module: hr_payroll
 #. odoo-python
@@ -5937,6 +5972,13 @@ msgid ""
 "Missing work entries are like the Bermuda Triangle for paychecks. Let's keep "
 "your colleague's earnings from vanishing into thin air!"
 msgstr ""
+"Dávejte pozor na mezery v kalendáři %(employee_name)s.\n"
+"\n"
+"Doplňte prosím chybějící záznamy o práci %(employee_name)s:%"
+"(time_intervals_str)s.\n"
+"\n"
+"Chybějící záznamy o práci jsou jako Bermudský trojúhelník pro výplaty. "
+"Zabraňme tomu, aby výdělky vašich kolegů zmizely beze stopy!"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_work_entry_type__round_days_type
@@ -5961,13 +6003,13 @@ msgstr "Webová historie komunikace"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Week %(week_number)s of %(year)s"
-msgstr ""
+msgstr "Týden %(week_number)s z %(year)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Weeks %(week)s and %(week1)s of %(year)s"
-msgstr ""
+msgstr "Týdny %(week)s a %(week1)s z %(year)s"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__title
@@ -5975,6 +6017,8 @@ msgid ""
 "When selected, this salary rule will only be displayed as a title with its "
 "description, without numeric values."
 msgstr ""
+"Po výběru se toto pravidlo pro plat zobrazí pouze jako název s popisem, bez "
+"číselných hodnot."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_work_entry_type__round_days
@@ -6002,7 +6046,7 @@ msgstr "Pracovní záznamy"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
 msgid "Work Entries - Which time did they work ?"
-msgstr ""
+msgstr "Pracovní záznamy – Kdy pracovali?"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.hr_work_entry_report_action
@@ -6176,6 +6220,9 @@ msgid ""
 "Wrong rule parameter value for %(rule_parameter_name)s at date %(date)s.\n"
 "%(error)s"
 msgstr ""
+"Nesprávná hodnota parametru pravidla pro %(rule_parameter_name)s v den %"
+"(date)s.\n"
+"%(error)s"
 
 #. module: hr_payroll
 #. odoo-python
@@ -6185,6 +6232,9 @@ msgid ""
 "- Warning: %(warning)s\n"
 "- Error: %(error)s"
 msgstr ""
+"Nesprávný výpočet varování definovaný pro:\n"
+"- Varování: %(warning)s\n"
+"- Chyba: %(error)s"
 
 #. module: hr_payroll
 #. odoo-python
@@ -6206,7 +6256,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_res_company__ytd_reset_day
 #: model:ir.model.fields,field_description:hr_payroll.field_res_config_settings__ytd_reset_day
 msgid "YTD Reset Day of the month"
-msgstr ""
+msgstr "YTD Reset Den v měsíci"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_res_company__ytd_reset_month
@@ -6232,12 +6282,14 @@ msgstr ""
 msgid ""
 "You can only split a salary adjustment if it has more than one employee."
 msgstr ""
+"Úpravu platu lze rozdělit pouze v případě, že se týká více než jednoho "
+"zaměstnance."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "You can't confirm cancelled payslips."
-msgstr ""
+msgstr "Zrušené výplatní pásky nelze potvrdit."
 
 #. module: hr_payroll
 #. odoo-python
@@ -6245,12 +6297,14 @@ msgstr ""
 msgid ""
 "You can't delete a pay run with payslips if they are not draft or cancelled."
 msgstr ""
+"Nelze smazat výplatu s výplatními páskami, pokud nejsou ve stavu „návrh“ "
+"nebo „zrušeno“."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_structure.py:0
 msgid "You cannot add a Salary input without a section."
-msgstr ""
+msgstr "Bez sekce nelze přidat položku Plat."
 
 #. module: hr_payroll
 #. odoo-python
@@ -6259,12 +6313,14 @@ msgid ""
 "You cannot archive an input type if there exists a running salary adjustment "
 "of this type."
 msgstr ""
+"Nelze archivovat typ vstupu, pokud existuje probíhající úprava platu tohoto "
+"typu."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "You cannot cancel the payment if the payslip has not been paid."
-msgstr ""
+msgstr "Platbu nelze zrušit, pokud výplatní páska nebyla zaplacena."
 
 #. module: hr_payroll
 #. odoo-python
@@ -6273,6 +6329,8 @@ msgid ""
 "You cannot change the country of category %s as it is used in existing "
 "Salary Rules"
 msgstr ""
+"Země kategorie %s nelze změnit, protože se používá ve stávajících pravidlech "
+"pro výplatu mezd."
 
 #. module: hr_payroll
 #. odoo-python
@@ -6288,19 +6346,19 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "You cannot delete a salary adjustment that is linked to a payslip!"
-msgstr ""
+msgstr "Nelze smazat úpravu platu, která je propojena s výplatní páskou!"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_work_entry_type.py:0
 msgid "You cannot delete work entry type(s). Instead archive it."
-msgstr ""
+msgstr "Typ(y) pracovního záznamu nelze smazat. Místo toho jej archivujte."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "You cannot record a payment on multi employees attachments."
-msgstr ""
+msgstr "Nelze zaznamenat platbu u příloh týkajících se více zaměstnanců."
 
 #. module: hr_payroll
 #. odoo-python
@@ -6309,24 +6367,31 @@ msgid ""
 "You cannot reset a pay run to draft if some of the payslips have already "
 "been paid."
 msgstr ""
+"Pokud již byly některé výplatní pásky proplaceny, nelze výplatu resetovat do "
+"stavu návrhu."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_work_entry_export_mixin.py:0
 msgid "You must be logged in a %(country_code)s company to use this feature"
 msgstr ""
+"Abyste mohli tuto funkci používat, musíte být přihlášeni do společnosti v: %"
+"(country_code)s."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_declaration_mixin.py:0
 msgid "You must be logged in a %s company to use this feature"
 msgstr ""
+"Abyste mohli tuto funkci používat, musíte být přihlášeni do společnosti %s."
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip_run.py:0
 msgid "You must select employee(s) version(s) to generate payslip(s)."
 msgstr ""
+"Pro vygenerování výplatních pásek musíte vybrat verzi (verze) zaměstnance "
+"(zaměstnanců)."
 
 #. module: hr_payroll
 #. odoo-python
@@ -6338,7 +6403,7 @@ msgstr "Chcete-li vytvořit řádek výplatní pásky, musíte nastavit smlouvu.
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip_run.py:0
 msgid "You must set a start and end date for the Pay Run"
-msgstr ""
+msgstr "Musíte nastavit datum zahájení a ukončení zpracování mezd."
 
 #. module: hr_payroll
 #. odoo-python
@@ -6350,7 +6415,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
 msgid "You'll be able to access all the steps of the payroll process"
-msgstr ""
+msgstr "Budete mít přístup ke všem krokům mzdových procesů."
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_type__current_companies_country_codes
@@ -6424,7 +6489,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_correction_wizard_form
 msgid "have been affected by this version's changes."
-msgstr ""
+msgstr "byly ovlivněny změnami v této verzi."
 
 #. module: hr_payroll
 #. odoo-python
@@ -6499,7 +6564,7 @@ msgstr "{{ object.employee_id.name }}, je vám k dispozici nová výplatní pás
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
 msgid "👆See the Menu there, on the top?"
-msgstr ""
+msgstr "👆Vidíte tam nahoře menu?"
 
 #~ msgid "# Payslip"
 #~ msgstr "# Výplatní páska"

@@ -15,21 +15,22 @@
 # Ossi Mantylahti <ossi.mantylahti@obs-solutions.fi>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Saara Hakanen <sahak@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:40+0000\n"
-"PO-Revision-Date: 2025-11-15 11:28+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
-"Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/voip/fi/"
-">\n"
+"PO-Revision-Date: 2025-12-19 14:25+0000\n"
+"Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
+"Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/voip/fi/>"
+"\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: voip
 #. odoo-javascript
@@ -148,12 +149,12 @@ msgstr "Järjestelmävalvoja"
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__ask
 msgid "Always Ask"
-msgstr ""
+msgstr "Kysy aina"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__ask
 msgid "Always ask before calling"
-msgstr ""
+msgstr "Kysy aina ennen soittamista"
 
 #. module: voip
 #. odoo-javascript
@@ -193,7 +194,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid "An error occurred while attempting to answer the incoming call."
-msgstr ""
+msgstr "Saapuvaan puheluun vastatessa tapahtui virhe."
 
 #. module: voip
 #. odoo-javascript

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-28 18:41+0000\n"
-"PO-Revision-Date: 2025-12-11 15:55+0000\n"
+"PO-Revision-Date: 2025-12-17 17:59+0000\n"
 "Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
 "ai_knowledge/fi/>\n"
@@ -54,7 +54,7 @@ msgstr "Näyttönimi"
 #. odoo-python
 #: code:addons/ai_knowledge/models/ai_agent_source.py:0
 msgid "Failed to extract content from the articles."
-msgstr ""
+msgstr "Artikkeleiden sisällön noutaminen epäonnistui."
 
 #. module: ai_knowledge
 #. odoo-javascript
@@ -77,12 +77,12 @@ msgstr "Tietokirjaston artikkeli"
 #. odoo-javascript
 #: code:addons/ai_knowledge/static/src/wysiwyg_article_helper_patch.js:0
 msgid "Knowledge Article Editor"
-msgstr ""
+msgstr "Tietokirjasto-artikkelin muokkain"
 
 #. module: ai_knowledge
 #: model:ir.model.fields,field_description:ai_knowledge.field_ai_agent_source__article_id
 msgid "Source Article"
-msgstr ""
+msgstr "Lähdeartikkeli"
 
 #. module: ai_knowledge
 #: model:ir.model.fields,field_description:ai_knowledge.field_ai_agent_source__type
@@ -92,4 +92,4 @@ msgstr "Tyyppi"
 #. module: ai_knowledge
 #: model:ir.model.fields.selection,name:ai_knowledge.selection__ai_composer__interface_key__html_field_knowledge
 msgid "Write a new Knowledge article"
-msgstr ""
+msgstr "Kirjoita uusi Tietokirjasto-artikkeli"

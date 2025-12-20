@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:43+0000\n"
-"PO-Revision-Date: 2025-12-10 10:26+0000\n"
+"POT-Creation-Date: 2025-12-19 18:43+0000\n"
+"PO-Revision-Date: 2025-12-19 16:11+0000\n"
 "Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/iot/fi/"
 ">\n"
@@ -81,7 +81,7 @@ msgstr "Järjestelmävalvoja"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
 msgid "All communication protocols are working properly."
-msgstr ""
+msgstr "Kaikki viestintäprotokollat toimivat oikein."
 
 #. module: iot
 #: model:ir.model,name:iot.model_iot_discovered_box
@@ -92,7 +92,7 @@ msgstr "IoT-boksin, joka on laiteparin muodostustilassa"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Are you sure you want to restart Odoo on the IoT Box?"
-msgstr ""
+msgstr "Oletko varma, että haluat käynnistää Odoon uudelleen IoT-boxissa?"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__drivers_auto_update
@@ -113,7 +113,7 @@ msgstr "Viivakoodinlukija"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.xml:0
 msgid "Be careful:"
-msgstr ""
+msgstr "Ole varovainen:"
 
 #. module: iot
 #. odoo-javascript
@@ -164,12 +164,6 @@ msgid "Camera"
 msgstr "Kamera"
 
 #. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/backend/iot_device_form.js:0
-msgid "Check if the device is still connected"
-msgstr "Tarkista, onko laite edelleen kytketty"
-
-#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Check the lights"
 msgstr "Tarkista valot"
@@ -183,7 +177,7 @@ msgstr "Napsauta"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/test_iot_box.js:0
 msgid "Communication protocol '%s' is not working properly."
-msgstr ""
+msgstr "Viestintäprotokolla '%s' ei toimi kunnolla."
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__company_id
@@ -225,12 +219,6 @@ msgstr "Yhdistämisen tila"
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_search
 msgid "Connection"
 msgstr "Yhteys"
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/backend/iot_device_form.js:0
-msgid "Connection to device failed"
-msgstr "Yhteys laitteeseen epäonnistui"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__create_uid
@@ -394,6 +382,18 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.js:0
 msgid "Failed to toggle remote debug."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/backend/iot_device_form.js:0
+msgid "Failed to update keyboard layout on the device."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/backend/iot_device_form.js:0
+msgid "Failed to update scanner mode on the device."
 msgstr ""
 
 #. module: iot
@@ -1312,6 +1312,12 @@ msgstr "reset.linked.printers"
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "to add an IoT Box."
 msgstr "lisätäksesi IoT-boxin."
+
+#~ msgid "Check if the device is still connected"
+#~ msgstr "Tarkista, onko laite edelleen kytketty"
+
+#~ msgid "Connection to device failed"
+#~ msgstr "Yhteys laitteeseen epäonnistui"
 
 #~ msgid "Are you sure you want to restart Odoo on the IoT box?"
 #~ msgstr "Oletko varma, että haluat käynnistää Odoon uudelleen IoT-boxissa?"

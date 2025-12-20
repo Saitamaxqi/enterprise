@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-07 18:44+0000\n"
-"PO-Revision-Date: 2025-12-10 10:26+0000\n"
+"POT-Creation-Date: 2025-12-19 18:45+0000\n"
+"PO-Revision-Date: 2025-12-19 07:41+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "hr_contract_salary/ja/>\n"
@@ -402,8 +402,9 @@ msgstr "常に有効"
 msgid ""
 "An %(offer)s for the applicant %(applicant_name)s has been created by %"
 "(user)s."
-msgstr "%(user)s によって、応募者%(applicant_name)s のための%(offer)s "
-"が作成されました。"
+msgstr ""
+"%(user)s によって、応募者%(applicant_name)s のための%(offer)s が作成されまし"
+"た。"
 
 #. module: hr_contract_salary
 #. odoo-python
@@ -538,7 +539,8 @@ msgstr "福利厚生"
 msgid ""
 "Benefits that are not linked to a field or salary rule should always be "
 "displayed."
-msgstr "フィールドまたは給与規則にリンクされていない手当は、常に表示する必要がありま"
+msgstr ""
+"フィールドまたは給与規則にリンクされていない手当は、常に表示する必要がありま"
 "す。"
 
 #. module: hr_contract_salary
@@ -780,8 +782,8 @@ msgstr "出生国"
 
 #. module: hr_contract_salary
 #: model_terms:ir.actions.act_window,help:hr_contract_salary.hr_contract_salary_offer_action
-msgid "Create a Offer"
-msgstr "オファーを作成"
+msgid "Create an Offer"
+msgstr ""
 
 #. module: hr_contract_salary
 #: model_terms:ir.actions.act_window,help:hr_contract_salary.hr_contract_salary_offer_recruitment_action
@@ -1412,7 +1414,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:hr.contract.salary.personal.info.type,name:hr_contract_salary.hr_contract_salary_personal_info_type_emergency
 msgid "In case of emergency"
-msgstr ""
+msgstr "緊急時には"
 
 #. module: hr_contract_salary
 #. odoo-javascript
@@ -1592,22 +1594,22 @@ msgstr "月次"
 #. module: hr_contract_salary
 #: model:hr.contract.salary.benefit.type,name:hr_contract_salary.l10n_be_monthly_cash
 msgid "Monthly Benefit in Cash"
-msgstr ""
+msgstr "現金による月々の給付金"
 
 #. module: hr_contract_salary
 #: model:hr.contract.salary.benefit.type,name:hr_contract_salary.l10n_be_monthly_benefit
 msgid "Monthly Benefit in Kind"
-msgstr ""
+msgstr "毎月の現物給付"
 
 #. module: hr_contract_salary
 #: model:hr.contract.salary.benefit.type,name:hr_contract_salary.l10n_be_monthly_net
 msgid "Monthly Benefit in Net"
-msgstr ""
+msgstr "毎月の手取り給付"
 
 #. module: hr_contract_salary
 #: model:hr.contract.salary.resume.category,name:hr_contract_salary.hr_contract_salary_resume_category_monthly_benefits
 msgid "Monthly Benefits"
-msgstr ""
+msgstr "月次手当"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__monthly_yearly_costs
@@ -1618,7 +1620,7 @@ msgstr "月額費用"
 #. module: hr_contract_salary
 #: model:hr.contract.salary.resume,name:hr_contract_salary.hr_contract_salary_resume_monthly_total
 msgid "Monthly Equivalent"
-msgstr ""
+msgstr "月換算額"
 
 #. module: hr_contract_salary
 #. odoo-python
@@ -1760,7 +1762,7 @@ msgstr "テンプレートはまだ設定されていません。テンプレー
 #. module: hr_contract_salary
 #: model:hr.contract.salary.benefit.type,name:hr_contract_salary.l10n_be_non_financial_benefits
 msgid "Non Financial Benefits"
-msgstr ""
+msgstr "非金銭的な福利厚生"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields.selection,name:hr_contract_salary.selection__hr_contract_salary_benefit_value__selector_highlight__none
@@ -1858,7 +1860,7 @@ msgstr "%(recipient)sへのオファー"
 #. odoo-python
 #: code:addons/hr_contract_salary/models/hr_applicant.py:0
 msgid "Offer link can not be sent without an applicant name."
-msgstr ""
+msgstr "応募者名がない場合、オファーリンクは送信できません。"
 
 #. module: hr_contract_salary
 #: model:ir.actions.act_window,name:hr_contract_salary.hr_contract_salary_offer_action
@@ -1876,6 +1878,9 @@ msgid ""
 "                It allows to reflect on the proposition and discuss it."
 "<br><br>"
 msgstr ""
+"オファーは、事前に定義されたデータ選択と共に従業員に送信されます。\n"
+"                これにより、提案について検討し、議論することが可能となりま"
+"す。<br><br>"
 
 #. module: hr_contract_salary
 #. odoo-python
@@ -1910,7 +1915,7 @@ msgstr "その他"
 #. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract_salary_offer__sign_template_id
 msgid "PDF Sign Template"
-msgstr ""
+msgstr "PDF署名テンプレート"
 
 #. module: hr_contract_salary
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_offer_view_form
@@ -2971,6 +2976,9 @@ msgid ""
 msgstr ""
 "{{ object.company_id.name }}: 採用通知 - "
 "{{ object.employee_version_id.name }}"
+
+#~ msgid "Create a Offer"
+#~ msgstr "オファーを作成"
 
 #~ msgid "Advantages"
 #~ msgstr "利点"

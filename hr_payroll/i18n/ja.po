@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-05 18:42+0000\n"
-"PO-Revision-Date: 2025-12-11 10:23+0000\n"
+"PO-Revision-Date: 2025-12-19 07:41+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll/ja/>\n"
@@ -1127,13 +1127,13 @@ msgstr "キャンセル済"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Cannot cancel a payslip that is validated."
-msgstr ""
+msgstr "検証済みの給与明細はキャンセルできません。"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_index_wizard.py:0
 msgid "Cannot index a wage with a null or negative percentage."
-msgstr ""
+msgstr "賃金にNULLまたは負のパーセンテージを割り当てることはできません。"
 
 #. module: hr_payroll
 #. odoo-python
@@ -1164,7 +1164,7 @@ msgstr "カテゴリー"
 msgid ""
 "Check if the value of the salary adjustment must be taken into account as "
 "negative (-X)"
-msgstr ""
+msgstr "給与調整額を負の値(-X)として考慮する必要があるかどうかを確認してください"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -1203,7 +1203,8 @@ msgstr "給与のローカリゼーションパッケージを選択"
 msgid ""
 "Choose whether to correct only the selected payslip or all payslips affected "
 "by the changes in this version."
-msgstr ""
+msgstr "このバージョンでの変更の影響を受ける給与明細を、選択した明細のみ修正するか、"
+"すべての明細を修正するかを選択してください。"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -1462,7 +1463,7 @@ msgstr "契約 - 従業員の雇用形態は?"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__appears_on_employee_cost_dashboard
 msgid "Contributes to Employer Cost"
-msgstr ""
+msgstr "雇用主コストに加算"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_register
@@ -1489,28 +1490,28 @@ msgstr "Gravie通勤手当"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_correction_wizard__correction_choice__multi
 msgid "Correct all affected payslips"
-msgstr ""
+msgstr "影響を受けたすべての給与明細を修正"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_correction_wizard_form
 msgid "Correct payslip"
-msgstr ""
+msgstr "給与明細を修正"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_correction_wizard__correction_choice__single
 msgid "Correct this payslip only"
-msgstr ""
+msgstr "この給与明細のみ修正"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_correction_wizard__correction_choice
 msgid "Correction Choice"
-msgstr ""
+msgstr "修正選択肢"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Correction: %(payslip)s"
-msgstr ""
+msgstr "訂正：%(payslip)s"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_dashboard_warning__country_id
@@ -1551,7 +1552,7 @@ msgstr "SEPA支払を作成"
 #. module: hr_payroll
 #: model:ir.actions.server,name:hr_payroll.action_new_salary_attachment
 msgid "Create Salary Adjustment"
-msgstr ""
+msgstr "給与調整を作成"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_mixin__create_uid
@@ -1572,12 +1573,12 @@ msgstr "給与明細を作成"
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_salary_attachment_action
 msgid "Create a Salary Adjustment"
-msgstr ""
+msgstr "給与調整を作成"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_hr_salary_rule_section
 msgid "Create a new Salary Rule Section"
-msgstr ""
+msgstr "新しい給与ルールセクションを作成"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_salary_rule_form
@@ -1743,7 +1744,7 @@ msgstr "開始日"
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_attachment__date_end
 msgid "Date at which this assignment has been set as completed."
-msgstr ""
+msgstr "この割り当てが完了として設定された日付。"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_type__round_days__full
@@ -1831,12 +1832,12 @@ msgstr "<strong>賃金</strong>を定義"
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_hr_salary_rule_section
 msgid ""
 "Define sections to organize salary rule inputs within payroll structures."
-msgstr ""
+msgstr "給与構造内で給与ルール入力を整理するためのセクションを定義します。"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__condition_domain
 msgid "Define the applicability rules for this rule."
-msgstr ""
+msgstr "このルールの適用条件を定義します。"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_structure__schedule_pay
@@ -1889,12 +1890,12 @@ msgstr "退職"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__dependent_input_id
 msgid "Dependent Salary Input"
-msgstr ""
+msgstr "扶養家族の給与入力"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "Depends On"
-msgstr ""
+msgstr "以下に依存："
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_index__description
@@ -1986,7 +1987,7 @@ msgstr "表示名"
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/fields/actionable_warnings/actionable_warnings.js:0
 msgid "Display first warning only"
-msgstr ""
+msgstr "最初の警告のみ表示"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_work_entry_type_view_form_inherit
@@ -2050,7 +2051,7 @@ msgstr "ドラフトの明細書"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Duplicate(s)"
-msgstr ""
+msgstr "重複"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__duration_type
@@ -2067,7 +2068,7 @@ msgstr "所得"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "Edit Individual Salary Adjustment"
-msgstr ""
+msgstr "個別給与調整を編集"
 
 #. module: hr_payroll
 #. odoo-python

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-12 18:43+0000\n"
-"PO-Revision-Date: 2025-12-10 10:29+0000\n"
+"PO-Revision-Date: 2025-12-18 08:16+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "hr_expense_stripe/id/>\n"
@@ -795,7 +795,7 @@ msgstr "Baris Rekening Koran"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__statement_description
 msgid "Bank statement description"
-msgstr ""
+msgstr "Deskripsi rekening koran"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.barber_and_beauty_shops
@@ -820,7 +820,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__billing_country_code
 msgid "Billing Country Code"
-msgstr ""
+msgstr "Kode Negara Tagihan"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__birthday
@@ -921,7 +921,7 @@ msgstr "Dibatalkan"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__cancellation_reason
 msgid "Cancellation Reason"
-msgstr ""
+msgstr "Alasan Pembatalan"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.candy_nut_and_confectionery_stores
@@ -958,7 +958,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__last_4_challenge
 msgid "Card Last 4 digits"
-msgstr ""
+msgstr "4 digit Terakhir Kartu"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -969,12 +969,12 @@ msgstr "Card Liability"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__spending_policy_interval_amount
 msgid "Card Limit"
-msgstr ""
+msgstr "Batas Kartu"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__card_name
 msgid "Card Name"
-msgstr ""
+msgstr "Nama Kartu"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__card_number_public
@@ -990,7 +990,7 @@ msgstr "Penerimaan Kartu"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_block_wizard__card_id
 msgid "Card To Block"
-msgstr ""
+msgstr "Kartu Untuk Diblokir"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -1018,7 +1018,7 @@ msgstr "Nomor kartu disalin ke papan klip."
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__card_id
 msgid "Card to activate"
-msgstr ""
+msgstr "Kartu untuk diaktifkan"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -1039,7 +1039,7 @@ msgstr "Konfigurasi Cardholder"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__phone_number
 msgid "Cardholder Mobile Number"
-msgstr ""
+msgstr "Nomor Telepon Pemegang Kartu"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -1227,7 +1227,7 @@ msgstr "Negara Perusahaan"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__company_partner_id
 msgid "Company Partner"
-msgstr ""
+msgstr "Partner Perusahaan"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -1713,7 +1713,7 @@ msgstr "Error!"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__shipping_estimated_delivery
 msgid "Estimated Delivery"
-msgstr ""
+msgstr "Estimasi Pengiriman"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -1726,7 +1726,7 @@ msgstr "Pengeluaran"
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_account_payment_method_line__card_id
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.res_config_settings_view_form
 msgid "Expense Card"
-msgstr ""
+msgstr "Kartu Pengeluaran"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -1742,7 +1742,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_mcc_stripe_tag__product_id
 msgid "Expense Category to use"
-msgstr ""
+msgstr "Kategori Pengeluaran untuk digunakan"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_hr_expense_split
@@ -2014,7 +2014,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__has_employee
 msgid "Has Employee"
-msgstr ""
+msgstr "Memiliki Karyawan"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__has_message
@@ -2193,6 +2193,8 @@ msgstr "Karyawan Tidak Valid"
 msgid ""
 "Invalid email type, must be 'canceled', 'ordered', 'assigned' or 'shipped'."
 msgstr ""
+"Tipe email tidak valid, harus 'dibatalkan', 'dipesan', 'ditugaskan' atau "
+"'dikirim'."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -2219,12 +2221,12 @@ msgstr "Permintaan tidak valid dikirim ke Odoo IAP proxy server: %(reason)s"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense__is_card_expense
 msgid "Is Card Expense"
-msgstr ""
+msgstr "Apakah Kartu Pengeluaran"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__is_confirmed
 msgid "Is Confirmed"
-msgstr ""
+msgstr "Apakah Dikonfirmasi"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_is_follower
@@ -2262,7 +2264,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__last_4
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__card_last_4
 msgid "Last 4 digits"
-msgstr ""
+msgstr "4 digit terakhir"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__lastname
@@ -2312,7 +2314,7 @@ msgstr "Batas"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__spending_policy_interval
 msgid "Limit Frequency"
-msgstr ""
+msgstr "Frekuensi Batas"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -2386,7 +2388,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense__mcc_tag_id
 msgid "Mcc Tag"
-msgstr ""
+msgstr "Tag Mcc"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.medical_dental_ophthalmic_and_hospital_equipment_and_supplies
@@ -2421,12 +2423,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_product__stripe_mcc_ids
 msgid "Merchant Category Code (MCC)"
-msgstr ""
+msgstr "Kode Kategori Pedagang (MCC)"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__spending_policy_category_tag_ids
 msgid "Merchant Category Codes"
-msgstr ""
+msgstr "Kode Kategori Pedagang"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
@@ -2593,7 +2595,7 @@ msgstr "Nama"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_account_journal__nb_stripe_card
 msgid "Nb Stripe Card"
-msgstr ""
+msgstr "Kartu Stripe Nb"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -2778,12 +2780,12 @@ msgstr "Order"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__ordered_by
 msgid "Ordered By"
-msgstr ""
+msgstr "Dipesan Oleh"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__original_phone_number
 msgid "Original Phone Number"
-msgstr ""
+msgstr "Nomor Telepon Asli"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.orthopedic_goods_prosthetic_devices
@@ -2853,6 +2855,8 @@ msgid ""
 "Pausing your card will disable it. Only Expense Administrators can "
 "reactivate it."
 msgstr ""
+"Menghentikan kartu Anda akan menonaktifkannya. Hanya Administrator "
+"Pengeluaran yang dapat mengaktifkan ulang kartu."
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.pawn_shops
@@ -2999,7 +3003,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__pull_push_funds
 msgid "Pull Push Funds"
-msgstr ""
+msgstr "Tarik Dorong Dana"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_topup_wizard__pull_push_funds__push
@@ -3172,7 +3176,7 @@ msgstr "Dikiri"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__shipping_status
 msgid "Shipping Status"
-msgstr ""
+msgstr "Status Pengiriman"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.shoe_repair_hat_cleaning
@@ -3187,7 +3191,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__show_warning_wrong_last_4
 msgid "Show Warning Wrong Last 4"
-msgstr ""
+msgstr "Tunjukkan Peringatan 4 Terakhir Salah"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.small_appliance_repair
@@ -3288,22 +3292,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_account_issuing_tos_acceptance_date
 msgid "Stripe Account Issuing Tos Acceptance Date"
 msgstr ""
+"Penerbitan Akun Stripe Tanggal Penerimaan Persetujuan Ketentuan Layanan (TOS)"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_account_issuing_tos_accepted
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_config_settings__stripe_account_issuing_tos_accepted
 msgid "Stripe Account Issuing Tos Accepted"
-msgstr ""
+msgstr "Penerbitan Akun Stripe Persetujuan Ketentuan Layanan (TOS) Diterima"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense__stripe_authorization_id
 msgid "Stripe Authorization ID"
-msgstr ""
+msgstr "ID Otorisasi Stripe"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_account_journal__stripe_issuing_balance
 msgid "Stripe Balance Available"
-msgstr ""
+msgstr "Saldo Stripe yang Tersedia"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -3315,7 +3320,7 @@ msgstr "Kartu Stripe"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__stripe_id
 msgid "Stripe Card ID"
-msgstr ""
+msgstr "ID Kartu Stripe"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -3342,12 +3347,12 @@ msgstr "Transfer Kredit Stripe tidak diimplementasikan"
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_currency_id
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_config_settings__stripe_company_currency_id
 msgid "Stripe Currency"
-msgstr ""
+msgstr "Mata Uang Stripe"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_employee__private_stripe_id
 msgid "Stripe ID"
-msgstr ""
+msgstr "ID Stripe"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -3360,7 +3365,7 @@ msgstr "Stripe Issuing"
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_product__stripe_issuing_activated
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_issuing_activated
 msgid "Stripe Issuing Activated"
-msgstr ""
+msgstr "Penerbitan Stripe Diaktifkan"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_issuing_db_private_key_id
@@ -3375,13 +3380,13 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_issuing_iap_webhook_uuid
 msgid "Stripe Issuing Iap Webhook Uuid"
-msgstr ""
+msgstr "Penerbitan Stripe Iap Webhook Uuid"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_journal_id
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_config_settings__stripe_journal_id
 msgid "Stripe Issuing Journal"
-msgstr ""
+msgstr "Jurnal Penerbitan Stripe"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_form
@@ -3419,7 +3424,7 @@ msgstr "Stripe Issuing dnegan Odoo belum diimplementasikan untuk pelanggan AS."
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__journal_id
 msgid "Stripe Journal"
-msgstr ""
+msgstr "Jurnal Stripe"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_product_mcc_stripe_tag
@@ -3434,7 +3439,7 @@ msgstr "Stripe Merchant Kode Kategori"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_mcc_stripe_tag__stripe_name
 msgid "Stripe Name"
-msgstr ""
+msgstr "Nama Stripe"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -3462,12 +3467,12 @@ msgstr "Top-up Stripe"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense__stripe_transaction_id
 msgid "Stripe Transaction ID"
-msgstr ""
+msgstr "ID Transaksi Stripe"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__stripe_values
 msgid "Stripe Values"
-msgstr ""
+msgstr "Value Stripe"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_account_journal__stripe_card_ids
@@ -3495,7 +3500,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_account_bank_statement_line__stripe_id
 msgid "Stripe transaction ID"
-msgstr ""
+msgstr "ID Transaksi Stripe"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__shipping_status__submitted
@@ -3571,7 +3576,7 @@ msgstr "Pemberhentian"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__is_delivered
 msgid "Terms and Conditions acceptance"
-msgstr ""
+msgstr "Penerimaan Syarat dan Ketentuan"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.testing_laboratories
@@ -3910,7 +3915,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_account_journal__stripe_issuing_balance_timestamp
 msgid "Timestamp of the most recent Stripe Issuing Balance update"
-msgstr ""
+msgstr "Timestamp update Penerbitan Saldo Stripe terkini"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.tire_retreading_and_repair
@@ -3997,7 +4002,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__spending_policy_transaction_amount
 msgid "Transaction Limit"
-msgstr ""
+msgstr "Batas Transaksi"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4107,7 +4112,7 @@ msgstr "Kode Error yang Tidak Diketahui"
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/fields/monetary_blank_if_zero.xml:0
 msgid "Unlimited"
-msgstr ""
+msgstr "Tanpa Batas"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
@@ -4452,6 +4457,8 @@ msgid ""
 "You cannot split an expense that is reserved. Please wait for the "
 "transaction to be captured."
 msgstr ""
+"Anda tidak dapat memisah pengeluaran yang direserve. Silakan tunggu sampai "
+"transaksi dicatat."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4460,6 +4467,8 @@ msgid ""
 "You cannot submit an expense that is reserved. Please wait for the "
 "transaction to be captured."
 msgstr ""
+"Anda tidak dapat menyerahkan pengeluaran yang direserve. Silakan tunggu "
+"sampai transaksi dicatat."
 
 #. module: hr_expense_stripe
 #. odoo-python

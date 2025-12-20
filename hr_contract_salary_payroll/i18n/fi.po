@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-12-06 10:15+0000\n"
+"PO-Revision-Date: 2025-12-18 15:37+0000\n"
 "Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
 "hr_contract_salary_payroll/fi/>\n"
@@ -103,7 +103,7 @@ msgstr "Hae työpaikkaa"
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_benefit__source
 msgid "Benefit Source"
-msgstr ""
+msgstr "Etuuden lähde"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
@@ -130,17 +130,17 @@ msgstr "Koodi"
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form_inherit
 msgid "Company cost"
-msgstr ""
+msgstr "Yrityskulu"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
 msgid "Company's Working Schedule"
-msgstr ""
+msgstr "Yrityksen työaikataulu"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
 msgid "Configure Benefits"
-msgstr ""
+msgstr "Määritä edut"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.ui.menu,name:hr_contract_salary_payroll.menu_hr_payroll_configuration_contract

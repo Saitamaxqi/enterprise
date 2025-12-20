@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-12-11 15:56+0000\n"
+"PO-Revision-Date: 2025-12-18 15:37+0000\n"
 "Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
 "hr_work_entry_attendance/fi/>\n"
@@ -119,7 +119,7 @@ msgstr "Ylityö"
 #. module: hr_work_entry_attendance
 #: model:ir.model,name:hr_work_entry_attendance.model_hr_attendance_overtime_rule
 msgid "Overtime Rule"
-msgstr ""
+msgstr "Ylityösääntö"
 
 #. module: hr_work_entry_attendance
 #: model:ir.model,name:hr_work_entry_attendance.model_hr_work_entry_regeneration_wizard
@@ -129,7 +129,7 @@ msgstr "Luo uudelleen työntekijän työkirjaukset"
 #. module: hr_work_entry_attendance
 #: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_attendance_overtime_rule__amount_rate
 msgid "Salary Rate"
-msgstr ""
+msgstr "Palkkataso"
 
 #. module: hr_work_entry_attendance
 #. odoo-python
@@ -165,14 +165,14 @@ msgstr "Työkirjauksen tyyppi"
 #. module: hr_work_entry_attendance
 #: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_attendance_overtime_line__work_entry_type_overtime_id
 msgid "Work Entry Type Overtime"
-msgstr ""
+msgstr "Ylitöiden työkirjaustyyppi"
 
 #. module: hr_work_entry_attendance
 #: model_terms:ir.ui.view,arch_db:hr_work_entry_attendance.hr_attendance_overtime_rule_view_form
 msgid "Work entry type to use:"
-msgstr ""
+msgstr "Käytettävä työkirjauksen tyyppi:"
 
 #. module: hr_work_entry_attendance
 #: model:ir.model.constraint,message:hr_work_entry_attendance.constraint_hr_attendance_overtime_rule_if_paid_work_entry_type_defined
 msgid "if paid the work entry should be defined"
-msgstr ""
+msgstr "jos maksettu, työkirjauksen tulisi olla määritelty"

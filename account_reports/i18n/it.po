@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-12 18:44+0000\n"
-"PO-Revision-Date: 2025-11-18 08:55+0000\n"
+"PO-Revision-Date: 2025-12-15 14:11+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/it/>\n"
@@ -23,9 +23,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
-"0) ? 1 : 2);\n"
-"X-Generator: Weblate 5.12.2\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: account_reports
 #. odoo-javascript
@@ -43,13 +43,13 @@ msgstr "%(journal)s - %(account)s"
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "%(line_name)s - %(company)s"
-msgstr ""
+msgstr "%(line_name)s - %(company)s"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "%(line_name)s - %(company_name)s"
-msgstr ""
+msgstr "%(line_name)s - %(company_name)s"
 
 #. module: account_reports
 #. odoo-python
@@ -115,6 +115,8 @@ msgid ""
 "'Open General Ledger' caret option is only available form report lines "
 "targetting accounts or Undistributed Profits/Losses."
 msgstr ""
+"L'opzione \"Apri libro mastro generale\" è disponibile solo per le righe del "
+"resoconto relative ai conti o agli utili/perdite non distribuiti."
 
 #. module: account_reports
 #. odoo-python
@@ -3976,7 +3978,7 @@ msgstr "Libri mastri"
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_allocations_withdrawals0
 msgid "Less Allocations and Plus Withdrawals"
-msgstr ""
+msgstr "Meno allocazioni e più prelievi"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_cost_sales0
@@ -4313,7 +4315,7 @@ msgstr "Utile netto"
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_net_profit_after_allocations0
 msgid "Net Profit Left After Allocations and Withdrawals"
-msgstr ""
+msgstr "Utile netto residuo dopo allocazioni e prelievi"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_net_assets0
@@ -6667,7 +6669,7 @@ msgstr "Non definito"
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Undistributed Profits/Losses"
-msgstr ""
+msgstr "Utili/Perdite non distribuiti"
 
 #. module: account_reports
 #. odoo-javascript

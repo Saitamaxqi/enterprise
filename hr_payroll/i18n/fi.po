@@ -38,7 +38,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-05 18:42+0000\n"
-"PO-Revision-Date: 2025-12-11 15:55+0000\n"
+"PO-Revision-Date: 2025-12-19 09:20+0000\n"
 "Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll/fi/>\n"
@@ -97,25 +97,25 @@ msgstr "%(display_name)s %(duration_type)s"
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payslip_correction_wizard.py:0
 msgid "%(employee)s Correction %(date)s"
-msgstr ""
+msgstr "%(employee)s Korjaus %(date)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payslip_correction_wizard.py:0
 msgid "%(employee)s Correction %(date_start)s - %(date_end)s"
-msgstr ""
+msgstr "%(employee)s Korjaus %(date_start)s - %(date_end)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payslip_correction_wizard.py:0
 msgid "%(employee)s Revert %(date)s"
-msgstr ""
+msgstr "%(employee)s Palauta %(date)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payslip_correction_wizard.py:0
 msgid "%(employee)s Revert %(date_start)s - %(date_end)s"
-msgstr ""
+msgstr "%(employee)s Palauta %(date_start)s - %(date_end)s"
 
 #. module: hr_payroll
 #. odoo-python
@@ -145,7 +145,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "%(months)s months"
-msgstr ""
+msgstr "%(months)s kuukautta"
 
 #. module: hr_payroll
 #. odoo-python
@@ -163,7 +163,7 @@ msgstr "%(start_date_string)s ja %(end_date_string)s"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "%(years)s years"
-msgstr ""
+msgstr "%(years)s vuotta"
 
 #. module: hr_payroll
 #. odoo-python
@@ -194,6 +194,11 @@ msgid ""
 "                \n"
 "* When the user cancels a payslip, the status is 'Canceled'."
 msgstr ""
+"* Kun palkkalaskelma luodaan, tila on 'Luonnos'.\n"
+"\n"
+"* Jos palkkalaskelma vahvistetaan, tilaksi asetetaan 'Valmis'.\n"
+"\n"
+"* Kun käyttäjä peruuttaa palkkalaskelman, tila on 'Peruutettu'."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.contribution_register
@@ -411,6 +416,20 @@ msgid ""
 "                <span invisible=\"schedule_pay != 'weekly'\">/ week</span>\n"
 "                <span invisible=\"schedule_pay != 'daily'\">/ day</span>"
 msgstr ""
+"<span invisible=\"schedule_pay != 'annually'\">/ vuosi</span>\n"
+"                <span invisible=\"schedule_pay != 'semi-annually'\">/ puoli "
+"vuotta</span>\n"
+"                <span invisible=\"schedule_pay != 'quarterly'\">/ "
+"neljännes</span>\n"
+"                <span invisible=\"schedule_pay != 'bi-monthly'\">/ kaksi "
+"kuukautta</span>\n"
+"                <span invisible=\"schedule_pay != 'semi-monthly'\">/ puoli "
+"kuukautta</span>\n"
+"                <span invisible=\"schedule_pay != 'bi-weekly'\">/ kaksi "
+"viikkoa</span>\n"
+"                <span invisible=\"schedule_pay != 'weekly'\">/ viikko</span>"
+"\n"
+"                <span invisible=\"schedule_pay != 'daily'\">/ päivä</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form

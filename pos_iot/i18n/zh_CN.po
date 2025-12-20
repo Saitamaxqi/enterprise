@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-28 18:40+0000\n"
-"PO-Revision-Date: 2025-11-16 17:54+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-12-16 04:16+0000\n"
+"Last-Translator: \"Chloe Wang (chwa)\" <chwa@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
 "projects/odoo-19/pos_iot/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
@@ -454,6 +454,10 @@ msgid ""
 "printer\n"
 "2/ for network printers, ensure the printer is connected to the internet."
 msgstr ""
+"物联网盒子已连接，但收据打印机未连接。要继续操作，请确保打印机已连接：\n"
+"\n"
+"1/ 对于 USB 打印机，检查物联网盒子和收据打印机之间的电缆\n"
+"2/ 对于网络打印机，确保打印机已连接到互联网。"
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__module_pos_iot_ingenico

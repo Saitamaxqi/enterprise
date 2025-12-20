@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-12-06 09:51+0000\n"
+"PO-Revision-Date: 2025-12-17 17:58+0000\n"
 "Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
 "documents_account/fi/>\n"
@@ -91,7 +91,7 @@ msgstr "Kaikki"
 #. odoo-python
 #: code:addons/documents_account/models/documents_document.py:0
 msgid "Annual Closing"
-msgstr ""
+msgstr "Tilinpäätös"
 
 #. module: documents_account
 #. odoo-javascript

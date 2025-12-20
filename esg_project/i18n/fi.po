@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-12-11 15:55+0000\n"
+"PO-Revision-Date: 2025-12-19 10:50+0000\n"
 "Last-Translator: Saara Hakanen <sahak@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
 "esg_project/fi/>\n"
@@ -78,7 +78,7 @@ msgstr "Hiilijalanjälki"
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_1
 msgid "Circular Economy"
-msgstr ""
+msgstr "Kiertotalous"
 
 #. module: esg_project
 #. odoo-javascript
@@ -89,7 +89,7 @@ msgstr "Luova aloite"
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_10
 msgid "Digital Efficiency"
-msgstr ""
+msgstr "Digitaalinen tehokkuus"
 
 #. module: esg_project
 #: model:ir.model.fields,field_description:esg_project.field_project_project__display_name
@@ -109,12 +109,12 @@ msgstr "Energiatehokkuus"
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_6
 msgid "GHG Reduction"
-msgstr ""
+msgstr "Kasvihuonekaasupäästöjen vähentäminen"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_7
 msgid "Governance"
-msgstr ""
+msgstr "Johtaminen"
 
 #. module: esg_project
 #: model:ir.model.fields,field_description:esg_project.field_project_project__id
@@ -124,7 +124,7 @@ msgstr "Tunnus"
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_4
 msgid "IT Policy"
-msgstr ""
+msgstr "IT-käytännöt"
 
 #. module: esg_project
 #: model:project.task.type,name:esg_project.esg_project_stage_0
@@ -152,17 +152,17 @@ msgstr "Aloitteen palvelintoiminto"
 #. module: esg_project
 #: model:ir.actions.server,name:esg_project.action_load_demo_data
 msgid "Load ESG Project demo data"
-msgstr ""
+msgstr "Lataa ESG-projektin demodata"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_8
 msgid "Mobility"
-msgstr ""
+msgstr "Liikkuvuus"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_9
 msgid "Operational Excellence"
-msgstr ""
+msgstr "Operatiivinen huippuosaaminen"
 
 #. module: esg_project
 #: model:ir.model,name:esg_project.model_project_project
