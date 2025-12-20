@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 19:04+0000\n"
-"PO-Revision-Date: 2025-12-05 19:04+0000\n"
+"POT-Creation-Date: 2025-12-19 19:07+0000\n"
+"PO-Revision-Date: 2025-12-19 19:07+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -345,6 +345,12 @@ msgstr ""
 
 #. module: l10n_de_pos_cert
 #. odoo-javascript
+#: code:addons/l10n_de_pos_cert/static/src/app/services/pos_store.js:0
+msgid "Invalid or missing customer information"
+msgstr ""
+
+#. module: l10n_de_pos_cert
+#. odoo-javascript
 #: code:addons/l10n_de_pos_cert/static/src/app/screens/partner_list.js:0
 msgid "Invalid/Missing field(s) data"
 msgstr ""
@@ -584,6 +590,14 @@ msgstr ""
 msgid ""
 "The combination of your Fiskaly API key and secret is incorrect. Please "
 "update them in your company settings"
+msgstr ""
+
+#. module: l10n_de_pos_cert
+#. odoo-javascript
+#: code:addons/l10n_de_pos_cert/static/src/app/services/pos_store.js:0
+msgid ""
+"The customer of the selected sale order must have a street and ZIP code.\n"
+"Update the customer's details to continue."
 msgstr ""
 
 #. module: l10n_de_pos_cert
