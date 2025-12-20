@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-05 19:04+0000\n"
-"PO-Revision-Date: 2025-11-19 16:32+0000\n"
+"PO-Revision-Date: 2025-12-20 09:32+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_eu_oss_reports/it/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: l10n_eu_oss_reports
 #: model_terms:ir.ui.view,arch_db:l10n_eu_oss_reports.oss_return_submission_wizard_form
@@ -98,7 +98,7 @@ msgstr "Valuta EUR"
 #. odoo-python
 #: code:addons/l10n_eu_oss_reports/models/account_return.py:0
 msgid "Exclude any domestic or extra-EU sales from the OSS report."
-msgstr ""
+msgstr "Escludi dal resoconto OSS eventuali vendite nazionali o extra-UE."
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_account_report__id
@@ -200,7 +200,7 @@ msgstr "Gestore personalizzato del resoconto fiscale OSS (Vendite)"
 #. odoo-python
 #: code:addons/l10n_eu_oss_reports/models/account_return.py:0
 msgid "OSS reports must be submitted in euros."
-msgstr ""
+msgstr "I resoconti OSS devono essere inviati in euro."
 
 #. module: l10n_eu_oss_reports
 #. odoo-python
@@ -212,7 +212,7 @@ msgstr "Solo transazioni B2C"
 #. odoo-python
 #: code:addons/l10n_eu_oss_reports/models/account_return.py:0
 msgid "Only B2C transactions should be included in the OSS report."
-msgstr ""
+msgstr "Nel resoconto OSS devono essere incluse solo le transazioni B2C."
 
 #. module: l10n_eu_oss_reports
 #. odoo-python

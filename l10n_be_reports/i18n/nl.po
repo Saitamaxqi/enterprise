@@ -9,13 +9,14 @@
 # Dylan Kiss, 2023
 # Guido Leenders, 2023
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Bren Driesen <brdri@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.5a1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-05 19:03+0000\n"
-"PO-Revision-Date: 2025-11-18 17:09+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-12-20 09:32+0000\n"
+"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_be_reports/nl/>\n"
 "Language: nl\n"
@@ -23,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: l10n_be_reports
 #. odoo-python
@@ -98,12 +99,12 @@ msgstr "2. Telefoonnummer:"
 #. module: l10n_be_reports
 #: model:ir.model.fields.selection,name:l10n_be_reports.selection__res_company__l10n_be_isoc_corporate_tax_rate__20
 msgid "20 %"
-msgstr ""
+msgstr "20 %"
 
 #. module: l10n_be_reports
 #: model:ir.model.fields.selection,name:l10n_be_reports.selection__res_company__l10n_be_isoc_corporate_tax_rate__25
 msgid "25 %"
-msgstr ""
+msgstr "25 %"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.report_325_pdf
@@ -143,22 +144,22 @@ msgstr "281.16"
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.report_325_pdf
 msgid "281.17"
-msgstr ""
+msgstr "281.17"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.report_325_pdf
 msgid "281.18"
-msgstr ""
+msgstr "281.18"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.report_325_pdf
 msgid "281.20"
-msgstr ""
+msgstr "281.20"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.report_325_pdf
 msgid "281.30"
-msgstr ""
+msgstr "281.30"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.form_281_50_view_form
@@ -278,6 +279,28 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p>\n"
+"                    Geachte <t t-out=\"object.company_id.name\">BE Company "
+"CoA</t>,\n"
+"                </p>\n"
+"                <p>\n"
+"                    Op basis van de ontvangen documenten en informatie is de "
+"btw-aangifte van <t t-out=\"object.company_id.name\">BE Company CoA</t>\n"
+"                    over de periode <t t-out=\"object"
+".type_id._get_period_name"
+"(object.company_id, object.date_from, object.date_to)\"/> ingediend.\n"
+"                </p>\n"
+"                <p>\n"
+"                    Vastgesteld is dat een bedrag van <t t-out="
+"\"format_amount(object.total_amount_to_pay, object.amount_to_pay_currency_id)"
+"\"/> verschuldigd blijft.\n"
+"                </p>\n"
+"                <t t-call=\"l10n_be_reports.vat_payment_details_table\"/>\n"
+"                <p>Met vriendelijke groeten,</p>\n"
+"                <p><t t-out=\"user.name\">Mitchell Admin</t></p>\n"
+"            </div>\n"
+"        "
 
 #. module: l10n_be_reports
 #: model:mail.template,body_html:l10n_be_reports.email_template_vai_payment_instructions
@@ -301,6 +324,25 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p>\n"
+"                    Geachte <t t-out=\"object.company_id.name\">BE Company "
+"CoA</t>,\n"
+"                </p>\n"
+"                <p>\n"
+"                    Je komende voorafbetaling van belastingen voor <t t-out="
+"\"object.type_id._get_period_name"
+"(object.company_id, object.date_from, object.date_to)"
+"\"/> is verschuldigd op <t t-out=\"format_date(object.date_deadline) or ''\""
+"/>\n"
+"                    Om boetes of nalatigheidsinteresten te vermijden, raden "
+"wij aan de betaling vóór deze datum uit te voeren.\n"
+"                </p>\n"
+"                <t t-call=\"l10n_be_reports.vat_payment_details_table\"/>\n"
+"                <p>Met vriendelijke groeten,</p>\n"
+"                <p><t t-out=\"user.name\">Mitchell Admin</t></p>\n"
+"            </div>\n"
+"        "
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.isoc_prepayment_pay_wizard_form
@@ -326,7 +368,7 @@ msgstr ""
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_payment_details_table
 msgid "<strong>Scan me with your banking app.</strong>"
-msgstr ""
+msgstr "<strong>Scan mij met je bank-app.</strong>"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.report_325_pdf
@@ -434,18 +476,18 @@ msgstr "Afstemming van voorafbetalingen"
 #. module: l10n_be_reports
 #: model:mail.template,name:l10n_be_reports.email_template_vai_payment_instructions
 msgid "Advance tax payment"
-msgstr ""
+msgstr "Voorafbetaling"
 
 #. module: l10n_be_reports
 #: model:mail.template,subject:l10n_be_reports.email_template_vai_payment_instructions
 msgid "Advance tax payment instructions"
-msgstr ""
+msgstr "Instructies voor voorafbetaling"
 
 #. module: l10n_be_reports
 #. odoo-python
 #: code:addons/l10n_be_reports/models/account_chart_template.py:0
 msgid "Advanced Tax Payment"
-msgstr ""
+msgstr "Voorafbetaling"
 
 #. module: l10n_be_reports
 #: model:account.return.check.template,name:l10n_be_reports.account_return_check_template_be_equity_capital_notary_fees_allocation_to_legal_reserve
@@ -479,7 +521,7 @@ msgstr ""
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_payment_details_table
 msgid "Amount to Pay"
-msgstr ""
+msgstr "Te betalen bedrag"
 
 #. module: l10n_be_reports
 #: model:ir.model.fields,help:l10n_be_reports.field_l10n_be_form_281_50__sportsman_remuneration
@@ -1267,7 +1309,7 @@ msgstr "Fiche 281.50 PDF downloaden"
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_listing_submission_wizard_form
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.vat_return_submission_wizard_form
 msgid "Download XML"
-msgstr ""
+msgstr "XML downloaden"
 
 #. module: l10n_be_reports
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports.form_281_50_view_form
@@ -3378,7 +3420,7 @@ msgstr "Naleving van de btw-regels"
 #. module: l10n_be_reports
 #: model:mail.template,name:l10n_be_reports.email_template_vat_payment_instructions
 msgid "VAT payment"
-msgstr ""
+msgstr "Btw-betaling"
 
 #. module: l10n_be_reports
 #: model:mail.template,subject:l10n_be_reports.email_template_vat_payment_instructions

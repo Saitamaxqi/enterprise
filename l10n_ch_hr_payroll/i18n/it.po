@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-12 19:02+0000\n"
-"PO-Revision-Date: 2025-12-04 11:19+0000\n"
+"PO-Revision-Date: 2025-12-20 09:32+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_ch_hr_payroll/it/>\n"
@@ -23,8 +23,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
-"0) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
 "X-Generator: Weblate 5.14.3\n"
 
 #. module: l10n_ch_hr_payroll
@@ -993,17 +993,17 @@ msgstr "(5400) Deduzione AVS generale in %"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5401
 msgid "(5401) General AVS Deduction in % (2)"
-msgstr ""
+msgstr "(5401) Deduzione AVS generale in % (2)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5402
 msgid "(5402) General AVS Deduction in % (3)"
-msgstr ""
+msgstr "(5402) Deduzione AVS generale in % (3)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5403
 msgid "(5403) General AVS Deduction in % (4)"
-msgstr ""
+msgstr "(5403) Deduzione AVS generale in % (4)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_6000
@@ -1078,17 +1078,17 @@ msgstr "(7400) Deduzione AVS generale in % dipendente"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7401
 msgid "(7401) General AVS Deduction in % Employer (2)"
-msgstr ""
+msgstr "(7401) Deduzione AVS generale datore di lavoro in % (2)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7402
 msgid "(7402) General AVS Deduction in % Employer (3)"
-msgstr ""
+msgstr "(7402) Deduzione AVS generale datore di lavoro in % (3)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7403
 msgid "(7403) General AVS Deduction in % Employer (4)"
-msgstr ""
+msgstr "(7403) Deduzione generale AVS datore di lavoro in % (4)"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.actions.report,print_report_name:l10n_ch_hr_payroll.action_report_individual_account
@@ -4688,7 +4688,7 @@ msgstr "Azioni del dipendente"
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_employee_view_form
 msgid "Employee will be excluded from Pay Runs"
-msgstr ""
+msgstr "Il dipendente sarà escluso dalle elaborazioni"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -5267,17 +5267,17 @@ msgstr "Detrazione AVS generale in %"
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5401
 msgid "General AVS Deduction in % (2)"
-msgstr ""
+msgstr "Deduzione AVS generale in % (2)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5402
 msgid "General AVS Deduction in % (3)"
-msgstr ""
+msgstr "Deduzione generale AVS in % (3)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5403
 msgid "General AVS Deduction in % (4)"
-msgstr ""
+msgstr "Deduzione AVS generale in % (4)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7400
@@ -5287,17 +5287,17 @@ msgstr "Detrazione AVS generale in % datore di lavoro"
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7401
 msgid "General AVS Deduction in % Employer (2)"
-msgstr ""
+msgstr "Deduzione AVS generale datore di lavoro in % (2)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7402
 msgid "General AVS Deduction in % Employer (3)"
-msgstr ""
+msgstr "Deduzione AVS generale datore di lavoro in % (3)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7403
 msgid "General AVS Deduction in % Employer (4)"
-msgstr ""
+msgstr "Deduzione AVS generale datore di lavoro in % (4)"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.swissdec_wage_types_form
@@ -7992,7 +7992,7 @@ msgstr "Nidwald"
 #. module: l10n_ch_hr_payroll
 #: model:hr.work.entry.type,name:l10n_ch_hr_payroll.l10n_ch_swissdec_night_110_wt
 msgid "Night Shift 110%"
-msgstr ""
+msgstr "Turno di notte 110%"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_1075
@@ -8449,7 +8449,7 @@ msgstr "Assicurazione vecchiaia e superstiti (AVS)"
 #. module: l10n_ch_hr_payroll
 #: model:hr.work.entry.type,name:l10n_ch_hr_payroll.l10n_ch_swissdec_oncall_125_wt
 msgid "On-call duty 125%"
-msgstr ""
+msgstr "Servizio di reperibilità 125%"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_1071
@@ -8610,7 +8610,7 @@ msgstr "Straordinari 125%"
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_1066
 #: model:hr.work.entry.type,name:l10n_ch_hr_payroll.l10n_ch_swissdec_overtime_150_wt
 msgid "Overtime 150%"
-msgstr ""
+msgstr "Straordinari 150%"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_1067
@@ -8695,12 +8695,12 @@ msgstr "Lezioni pagate"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_night_110
 msgid "Paid Nigh-Shift hours (110%)"
-msgstr ""
+msgstr "Ore di turno notturno retribuite (110%)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_on_call_125
 msgid "Paid On-call duty hours (125%)"
-msgstr ""
+msgstr "Ore di reperibilità retribuite (125%)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_hours_100
@@ -8715,7 +8715,7 @@ msgstr "Ore di straordinario pagate (125%)"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_hours_150
 msgid "Paid Overtime Hours (150%)"
-msgstr ""
+msgstr "Ore di straordinario retribuite (150%)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_2015
