@@ -442,7 +442,7 @@ class PlanningSlot(models.Model):
 
     def _different_than_template(self, check_empty=True):
         self.ensure_one()
-        if not self.start_datetime:
+        if not (self.start_datetime and self.end_datetime):
             return True
         template_fields = self._get_template_fields().items()
         for template_field, slot_field in template_fields:
