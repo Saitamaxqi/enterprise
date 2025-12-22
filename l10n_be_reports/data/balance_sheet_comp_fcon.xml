@@ -576,16 +576,6 @@
                                                 </record>
                                             </field>
                                             <field name="children_ids">
-                                                <record id="account_financial_report_bs_comp_fcon_el_e_r_rno_lr" model="account.report.line">
-                                                    <field name="name">1300 - Legal Reserve</field>
-                                                    <field name="name@nl">1300 - Wettelijke reserve</field>
-                                                    <field name="name@fr">1300 - Réserve légale</field>
-                                                    <field name="name@de">1300 - Gesetzliche Rücklage</field>
-                                                    <field name="code">BE_BS_COMP_CAP_1300</field>
-                                                    <field name="groupby">account_id</field>
-                                                    <field name="foldable" eval="True"/>
-                                                    <field name="account_codes_formula">-1300</field>
-                                                </record>
                                                 <record id="account_financial_report_bs_comp_fcon_el_e_r_rno_rnos" model="account.report.line">
                                                     <field name="name">1311 - Reserves Not Available Statutorily</field>
                                                     <field name="name@nl">1311 - Statutair onbeschikbare reserves</field>
