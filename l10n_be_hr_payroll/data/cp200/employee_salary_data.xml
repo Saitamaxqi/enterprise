@@ -783,6 +783,18 @@ result_name = inputs['CHILD_SUPPORT'].name
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
     </record>
 
+    <record id="cp200_employees_salary_double_december_basic_complementary" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_be_double_december_category"/>
+        <field name="name">Double December Pay Basic Complementary</field>
+        <field name="code">DOUBLE.DECEMBER.BASIC.COMPLEMENTARY</field>
+        <field name="sequence">175</field>
+        <field name="condition_select">input</field>
+        <field name="condition_other_input_id" ref="l10n_be_hr_payroll.input_double_december_pay_complementary"/>
+        <field name="amount_select">input</field>
+        <field name="amount_other_input_id" ref="l10n_be_hr_payroll.input_double_december_pay_complementary"/>
+        <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
+    </record>
+
     <!-- 85% of monthly gross salary is used to compute social contributions -->
     <record id="cp200_employees_salary_double_december_salary" model="hr.salary.rule">
         <field name="category_id" ref="l10n_be_double_december_category"/>
@@ -790,11 +802,10 @@ result_name = inputs['CHILD_SUPPORT'].name
         <field name="code">DOUBLE.DECEMBER.SALARY</field>
         <field name="sequence">176</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = 'DOUBLEDECEMBER' in inputs and inputs['DOUBLEDECEMBER'].amount</field>
+        <field name="condition_python">result = result_rules['DOUBLE.DECEMBER.BASIC']['total'] or result_rules['DOUBLE.DECEMBER.BASIC.COMPLEMENTARY']['total']</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = result_rules['DOUBLE.DECEMBER.BASIC']['total']
-result = max(0, result / 0.92 * 0.85)
+result = result_rules['DOUBLE.DECEMBER.BASIC']['total'] + result_rules['DOUBLE.DECEMBER.BASIC.COMPLEMENTARY']['total']
         </field>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
     </record>
@@ -805,9 +816,9 @@ result = max(0, result / 0.92 * 0.85)
         <field name="code">DOUBLE.DECEMBER.ONSS</field>
         <field name="sequence">177</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = 'DOUBLEDECEMBER' in inputs and inputs['DOUBLEDECEMBER'].amount and not version.no_onss</field>
+        <field name="condition_python">result = result_rules['DOUBLE.DECEMBER.BASIC']['total'] and not version.no_onss</field>
         <field name="amount_select">percentage</field>
-        <field name="amount_percentage_base">result_rules['DOUBLE.DECEMBER.SALARY']['total']</field>
+        <field name="amount_percentage_base">result_rules['DOUBLE.DECEMBER.SALARY']['total'] - result_rules['DOUBLE.DECEMBER.BASIC.COMPLEMENTARY']['total']</field>
         <field name="amount_percentage">-13.07</field>
         <field name="partner_id" ref="l10n_be_hr_payroll.res_partner_onss"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
@@ -819,10 +830,10 @@ result = max(0, result / 0.92 * 0.85)
         <field name="code">DOUBLE.DECEMBER.GROSS</field>
         <field name="sequence">178</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = 'DOUBLEDECEMBER' in inputs and inputs['DOUBLEDECEMBER'].amount</field>
+        <field name="condition_python">result = result_rules['DOUBLE.DECEMBER.SALARY']['total']</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = result_rules['DOUBLE.DECEMBER.BASIC']['total'] + result_rules['DOUBLE.DECEMBER.ONSS']['total']</field>
+result = result_rules['DOUBLE.DECEMBER.SALARY']['total'] + result_rules['DOUBLE.DECEMBER.ONSS']['total']</field>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
     </record>
 
@@ -832,7 +843,7 @@ result = result_rules['DOUBLE.DECEMBER.BASIC']['total'] + result_rules['DOUBLE.D
         <field name="code">DOUBLE.DECEMBER.P.P</field>
         <field name="sequence">179</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = 'DOUBLEDECEMBER' in inputs and inputs['DOUBLEDECEMBER'].amount</field>
+        <field name="condition_python">result = result_rules['DOUBLE.DECEMBER.GROSS']['total']</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = payslip._get_be_double_holiday_withholding_taxes(localdict)</field>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
@@ -844,7 +855,7 @@ result = result_rules['DOUBLE.DECEMBER.BASIC']['total'] + result_rules['DOUBLE.D
         <field name="code">DOUBLE.DECEMBER.NET</field>
         <field name="sequence">180</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = 'DOUBLEDECEMBER' in inputs and inputs['DOUBLEDECEMBER'].amount</field>
+        <field name="condition_python">result = result_rules['DOUBLE.DECEMBER.GROSS']['total']</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = result_rules['DOUBLE.DECEMBER.GROSS']['total']+ result_rules['DOUBLE.DECEMBER.P.P']['total']</field>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
