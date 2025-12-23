@@ -26,4 +26,6 @@ test("getLinesItDocument", async () => {
     const document_lines = document.lines;
 
     expect(document_lines[0].unitPrice).toBe("700.00");
+
+    expect(document.isFullDiscounted).toBe(false);
 });

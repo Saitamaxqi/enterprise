@@ -60,7 +60,7 @@ export class Body extends Component {
         });
     }
     get isFullDiscounted() {
-        return this.order.lines.length > 0 && this.order.currency.isZero(this.priceIncl);
+        return this.order.lines.length > 0 && this.order.currency.isZero(this.order.priceIncl);
     }
     get lines() {
         const calculateDiscountAmount = (line) => {
