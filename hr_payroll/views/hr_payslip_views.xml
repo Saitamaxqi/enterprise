@@ -212,6 +212,7 @@
                                 </group>
                             </form>
                         </field>
+                        <field name="currency_id" invisible="1"/>
                         <field name="payslip_properties" widget="properties"/>
                         <button name="action_configure_payslip_inputs" context="{'structure_id': struct_id}" type="object" icon="fa-plus" string="Add Inputs"
                                 class="btn btn-secondary text-break m-0"/>
