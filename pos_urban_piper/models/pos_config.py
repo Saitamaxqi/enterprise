@@ -252,6 +252,7 @@ class PosConfig(models.Model):
             'amount': order.amount_total,
             'payment_method_id': payment_method.id,
         }).check()
+        order._compute_prices()
 
     def _send_delivery_order_count(self, order_id=None):
         """
