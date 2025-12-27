@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-13 20:01+0000\n"
+"POT-Creation-Date: 2025-12-26 19:02+0000\n"
 "PO-Revision-Date: 2025-11-18 17:11+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -322,6 +322,14 @@ msgstr "EXI: IVA exento (entidades o instituciones legalmente exentas del IVA)"
 #. module: l10n_gt_edi
 #. odoo-python
 #: code:addons/l10n_gt_edi/models/account_move.py:0
+msgid ""
+"Each product line must have both VAT Withholding and ISR Withholding taxes "
+"in order to send it with FESP"
+msgstr ""
+
+#. module: l10n_gt_edi
+#. odoo-python
+#: code:addons/l10n_gt_edi/models/account_move.py:0
 #: code:addons/l10n_gt_edi/models/account_move_send.py:0
 msgid "Error when sending the XML to the SAT"
 msgstr "Error al enviar el XML al SAT"
@@ -355,6 +363,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_gt_edi.report_invoice_document
 msgid "FEL Factura Electronica Logo"
 msgstr "Logotipo de FEL Factura Electrónica"
+
+#. module: l10n_gt_edi
+#: model:ir.model.fields.selection,name:l10n_gt_edi.selection__account_move__l10n_gt_edi_doc_type__fesp
+msgid "FESP - Factura Especial"
+msgstr ""
 
 #. module: l10n_gt_edi
 #: model:ir.model.fields.selection,name:l10n_gt_edi.selection__account_move__l10n_gt_edi_doc_type__fpeq

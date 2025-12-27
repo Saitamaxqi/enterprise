@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-12 19:02+0000\n"
-"PO-Revision-Date: 2025-12-13 09:32+0000\n"
-"Last-Translator: Virginie Blanc <virginie.blanc@mgmaudio.ch>\n"
+"PO-Revision-Date: 2025-12-27 09:37+0000\n"
+"Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_ch_hr_payroll/de/>\n"
 "Language: de\n"
@@ -993,17 +993,17 @@ msgstr "(5400) Allgemeiner AHV-Abzug in %"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5401
 msgid "(5401) General AVS Deduction in % (2)"
-msgstr ""
+msgstr "(5401) Allgemeiner AHV-Abzug in % (2)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5402
 msgid "(5402) General AVS Deduction in % (3)"
-msgstr ""
+msgstr "(5402) Allgemeiner AHV-Abzug in % (3)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5403
 msgid "(5403) General AVS Deduction in % (4)"
-msgstr ""
+msgstr "(5403) Allgemeiner AHV-Abzug in % (4)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_6000
@@ -1078,17 +1078,17 @@ msgstr "(7400) Allgemeiner AHV-Abzug in % Arbeitgeber"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7401
 msgid "(7401) General AVS Deduction in % Employer (2)"
-msgstr ""
+msgstr "(7401) Allgemeiner AHV-Abzug des Arbeitgebers in % (2)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7402
 msgid "(7402) General AVS Deduction in % Employer (3)"
-msgstr ""
+msgstr "(7402) Allgemeiner AHV-Abzug des Arbeitgebers in % (3)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7403
 msgid "(7403) General AVS Deduction in % Employer (4)"
-msgstr ""
+msgstr "(7403) Allgemeiner AHV-Abzug des Arbeitgebers in % (4)"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.actions.report,print_report_name:l10n_ch_hr_payroll.action_report_individual_account
@@ -4686,7 +4686,7 @@ msgstr "Arbeitnehmeraktien"
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_employee_view_form
 msgid "Employee will be excluded from Pay Runs"
-msgstr ""
+msgstr "Mitarbeiter werden im Abrechnungslauf ausgeschlossen"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -5261,17 +5261,17 @@ msgstr "Allgemeiner AHV-Abzug in %"
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5401
 msgid "General AVS Deduction in % (2)"
-msgstr ""
+msgstr "Allgemeiner AHV-Abzug in % (2)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5402
 msgid "General AVS Deduction in % (3)"
-msgstr ""
+msgstr "Allgemeiner AHV-Abzug in % (3)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5403
 msgid "General AVS Deduction in % (4)"
-msgstr ""
+msgstr "Allgemeiner AHV-Abzug in % (4)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7400
@@ -5281,17 +5281,17 @@ msgstr "Allgemeiner AHV-Abzug in % Arbeitgeber"
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7401
 msgid "General AVS Deduction in % Employer (2)"
-msgstr ""
+msgstr "Allgemeiner AHV-Abzug des Arbeitgebers in % (2)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7402
 msgid "General AVS Deduction in % Employer (3)"
-msgstr ""
+msgstr "Allgemeiner AHV-Abzug des Arbeitgebers in % (3)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7403
 msgid "General AVS Deduction in % Employer (4)"
-msgstr ""
+msgstr "Allgemeiner AHV-Abzug des Arbeitgebers in % (4)"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.swissdec_wage_types_form
@@ -7974,7 +7974,7 @@ msgstr "Nidwalden"
 #. module: l10n_ch_hr_payroll
 #: model:hr.work.entry.type,name:l10n_ch_hr_payroll.l10n_ch_swissdec_night_110_wt
 msgid "Night Shift 110%"
-msgstr ""
+msgstr "Nachtschicht 110 %"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_1075
@@ -8429,7 +8429,7 @@ msgstr "Alters- und Hinterlassenenversicherung (AHV)"
 #. module: l10n_ch_hr_payroll
 #: model:hr.work.entry.type,name:l10n_ch_hr_payroll.l10n_ch_swissdec_oncall_125_wt
 msgid "On-call duty 125%"
-msgstr ""
+msgstr "Bereitschaftsdienst 125 %"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_1071
@@ -8589,7 +8589,7 @@ msgstr "Überstunden 125 %"
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_1066
 #: model:hr.work.entry.type,name:l10n_ch_hr_payroll.l10n_ch_swissdec_overtime_150_wt
 msgid "Overtime 150%"
-msgstr ""
+msgstr "Überstunden 150 %"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_1067
@@ -8673,12 +8673,12 @@ msgstr "Bezahlte Unterrichtsstunden"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_night_110
 msgid "Paid Nigh-Shift hours (110%)"
-msgstr ""
+msgstr "Bezahlte Nachtschichtstunden (110 %)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_on_call_125
 msgid "Paid On-call duty hours (125%)"
-msgstr ""
+msgstr "Bezahlte Bereitschaftsdienststunden (125 %)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_hours_100
@@ -8693,7 +8693,7 @@ msgstr "Bezahlte Überstunden (125 %)"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_hours_150
 msgid "Paid Overtime Hours (150%)"
-msgstr ""
+msgstr "Bezahlte Überstunden (150 %)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_2015

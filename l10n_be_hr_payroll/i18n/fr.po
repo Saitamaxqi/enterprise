@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 19:03+0000\n"
+"POT-Creation-Date: 2025-12-26 19:01+0000\n"
 "PO-Revision-Date: 2025-12-01 15:48+0000\n"
 "Last-Translator: Leo <leol@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19-l10n/"
@@ -4865,6 +4865,16 @@ msgstr "Double pécule de décembre"
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_double_december_basic
 msgid "Double December Pay Basic"
 msgstr "Base du double pécule de décembre"
+
+#. module: l10n_be_hr_payroll
+#: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_double_december_basic_complementary
+msgid "Double December Pay Basic Complementary"
+msgstr ""
+
+#. module: l10n_be_hr_payroll
+#: model:hr.payslip.input.type,name:l10n_be_hr_payroll.input_double_december_pay_complementary
+msgid "Double December Pay Complementary"
+msgstr ""
 
 #. module: l10n_be_hr_payroll
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_double_december_gross
