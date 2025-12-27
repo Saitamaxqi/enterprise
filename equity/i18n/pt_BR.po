@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 18:40+0000\n"
-"PO-Revision-Date: 2025-12-18 18:51+0000\n"
+"PO-Revision-Date: 2025-12-27 09:36+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/equity/pt_BR/>\n"
@@ -947,7 +947,7 @@ msgstr "Titular"
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_view_partner_form
 msgid "Holdings"
-msgstr ""
+msgstr "Participações"
 
 #. module: equity
 #. odoo-javascript
@@ -956,6 +956,8 @@ msgid ""
 "I hereby declare on honor that the information provided is truthful and "
 "accurate."
 msgstr ""
+"Declaro, sob minha responsabilidade, que as informações fornecidas são "
+"verdadeiras e precisas."
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__id
@@ -972,7 +974,7 @@ msgstr "ID"
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 #: model_terms:ir.ui.view,arch_db:equity.equity_view_partner_form
 msgid "ID Number"
-msgstr ""
+msgstr "Número de identificação"
 
 #. module: equity
 #: model:ir.model.fields,help:equity.field_equity_transaction__message_needaction
@@ -1022,22 +1024,24 @@ msgid ""
 "If your form has been successfully submitted, our team will review it and "
 "keep you informed of any updates."
 msgstr ""
+"Se o seu formulário foi enviado com sucesso, nossa equipe irá analisá-lo e "
+"mantê-lo informado sobre as atualizações."
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_search
 msgid "In Control"
-msgstr ""
+msgstr "No controle"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__invalid_securities_error
 msgid "Invalid Securities Error"
-msgstr ""
+msgstr "Erro de títulos inválidos"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_ubo.py:0
 msgid "Invalid data: %s"
-msgstr ""
+msgstr "Dados inválidos: %s"
 
 #. module: equity
 #. odoo-python
@@ -1049,7 +1053,7 @@ msgstr "Token inválido"
 #. odoo-python
 #: code:addons/equity/models/res_partner.py:0
 msgid "Invite %s"
-msgstr ""
+msgstr "Convidar %s"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__message_is_follower
@@ -1062,7 +1066,7 @@ msgstr "É um seguidor"
 #: model:ir.model.fields.selection,name:equity.selection__equity_transaction__transaction_type__issuance
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_search
 msgid "Issuance"
-msgstr ""
+msgstr "Emissão"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -1094,18 +1098,20 @@ msgstr "Formulário legal"
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
 msgid "Legal persons governed by public national laws;"
-msgstr ""
+msgstr "Pessoas jurídicas regidas pelo direito público nacional;"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__liquidator
 msgid "Liquidator"
-msgstr ""
+msgstr "Liquidatário"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/cap_table/cap_table.js:0
 msgid "Manage transactions, equity, cap table, and shareholders."
 msgstr ""
+"Gerencie transações, patrimônio líquido, tabela de capitalização e "
+"acionistas."
 
 #. module: equity
 #: model:res.groups,name:equity.group_equity_manager
@@ -1115,7 +1121,7 @@ msgstr "Gerente"
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__managing_director
 msgid "Managing Director"
-msgstr ""
+msgstr "Diretor Executivo"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__message_has_error
@@ -1134,32 +1140,32 @@ msgstr "Mensagens"
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_search
 msgid "Missing Documents"
-msgstr ""
+msgstr "Documentos ausentes"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_equity
 msgid "My Companies"
-msgstr ""
+msgstr "Minhas empresas"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_1
 msgid "NGO - Cat 1. Directors"
-msgstr ""
+msgstr "ONG - Cat. 1. Diretores"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_2
 msgid "NGO - Cat 2. Individuals with representation authority"
-msgstr ""
+msgstr "ONG - Cat. 2. Indivíduos com autoridade de representação"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_3
 msgid "NGO - Cat 3. Individuals responsible for day-to-day management"
-msgstr ""
+msgstr "ONG - Cat. 3. Pessoas responsáveis pela gestão diária"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_4
 msgid "NGO - Cat 4. Founders of a foundation"
-msgstr ""
+msgstr "ONG - Cat 4. Fundadores de uma fundação"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_5
@@ -1167,6 +1173,8 @@ msgid ""
 "NGO - Cat 5. Individuals or categories of individuals in whose main interest "
 "the association or foundation has been established or operates"
 msgstr ""
+"ONG - Cat. 5. Indivíduos ou categorias de indivíduos em cujo interesse "
+"principal a associação ou fundação foi criada ou opera"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_6
@@ -1174,6 +1182,8 @@ msgid ""
 "NGO - Cat 6. Any other individual who ultimately exercises control by other "
 "means"
 msgstr ""
+"ONG - Cat 6. Qualquer outra pessoa que, em última instância, exerça controle "
+"por outros meios"
 
 #. module: equity
 #. odoo-javascript
@@ -1191,7 +1201,7 @@ msgstr "Nome"
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
 msgid "Name is mandatory"
-msgstr ""
+msgstr "O nome é obrigatório"
 
 #. module: equity
 #. odoo-javascript
@@ -1211,6 +1221,14 @@ msgid ""
 "formal mandate of any kind but who are de facto exercising similar control "
 "over the company."
 msgstr ""
+"Pessoas físicas que têm um mandato formal no Conselho de Administração da "
+"empresa. São, por exemplo, as pessoas nomeadas (ou equivalentes) para os "
+"cargos de Diretor Executivo (CEO), Diretor Financeiro (CFO) ou Tesoureiro. "
+"Se uma pessoa jurídica exercer um mandato no Conselho de Administração da "
+"empresa, é necessário listar todos os titulares de mandatos no Conselho, "
+"incluindo suas funções. <br/> Pessoas físicas que não têm uma participação "
+"controladora na empresa ou um mandato formal de qualquer tipo, mas que "
+"exercem de facto um controle semelhante sobre a empresa."
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_help
@@ -1226,7 +1244,7 @@ msgstr "Nova transação"
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "New Valuation"
-msgstr ""
+msgstr "Nova valoração"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -1237,24 +1255,24 @@ msgstr "Não"
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "No %s was set!"
-msgstr ""
+msgstr "Não foi definido nenhum %s!"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "No UBOs recorded for this company."
-msgstr ""
+msgstr "Não há UBOs registrados para esta empresa."
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/cap_table/cap_table.js:0
 msgid "No shareholders yet!"
-msgstr ""
+msgstr "Ainda não há acionistas!"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/valuation_chart_action/valuation_chart_action.js:0
 msgid "No valuations yet!"
-msgstr ""
+msgstr "Ainda não há valorações!"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__notes
@@ -1297,6 +1315,8 @@ msgid ""
 "Only %(seller_options)s %(security_class_name)s options available for "
 "transfer"
 msgstr ""
+"Apenas opções de transferência disponíveis n %(seller_options)s %"
+"(security_class_name)s"
 
 #. module: equity
 #. odoo-python
@@ -1304,6 +1324,8 @@ msgstr ""
 msgid ""
 "Only %(seller_shares)s %(security_class_name)s shares available for transfer"
 msgstr ""
+"Apenas ações %(seller_shares)s %(security_class_name)s disponíveis para "
+"transferência"
 
 #. module: equity
 #. odoo-python
@@ -1312,6 +1334,8 @@ msgid ""
 "Only %(subscriber_options)s %(security_class_name)s options available for "
 "cancellation"
 msgstr ""
+"Apenas opções %(subscriber_options)s %(security_class_name)s disponíveis "
+"para cancelamento"
 
 #. module: equity
 #. odoo-python
@@ -1320,6 +1344,8 @@ msgid ""
 "Only %(subscriber_options)s %(security_class_name)s options available for "
 "exercise"
 msgstr ""
+"Apenas opções %(subscriber_options)s %(security_class_name)s disponíveis "
+"para exercício"
 
 #. module: equity
 #. odoo-python
@@ -1328,17 +1354,19 @@ msgid ""
 "Only %(subscriber_shares)s %(security_class_name)s shares available for "
 "cancellation"
 msgstr ""
+"Apenas ações %(subscriber_shares)s %(security_class_name)s disponíveis para "
+"cancelamento"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_transaction__transaction_type__exercise
 msgid "Option Exercise"
-msgstr ""
+msgstr "Exercício da opção"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "Option Pool"
-msgstr ""
+msgstr "Pool de opções"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_security_class__class_type__options
@@ -1348,7 +1376,7 @@ msgstr "Opções"
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_search
 msgid "Options Exercise"
-msgstr ""
+msgstr "Exercício de opções"
 
 #. module: equity
 #. odoo-javascript

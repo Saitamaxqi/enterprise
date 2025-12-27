@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-12-12 15:39+0000\n"
+"PO-Revision-Date: 2025-12-27 09:36+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/mrp_mps/pt_BR/>\n"
@@ -771,7 +771,7 @@ msgstr "Quantidade"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__quantity_before_scale
 msgid "Quantity Before Scale"
-msgstr ""
+msgstr "Quantidade antes da escala"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__moves_qty
@@ -942,7 +942,7 @@ msgstr "Regra de estoque"
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 #: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
 msgid "Suggest Forecasted Demand"
-msgstr ""
+msgstr "Sugerir demanda prevista"
 
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__replenish_state
@@ -964,7 +964,7 @@ msgstr "A demanda confirmada, com base nos pedidos de venda confirmados."
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 msgid "The confirmed demand, based on the manufacturing orders."
-msgstr ""
+msgstr "A demanda confirmada, com base nas ordens de produção."
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -1028,6 +1028,10 @@ msgid ""
 "Color code: Green if to replenish now, Red if existing replenishment is too "
 "high for the period, Orange if current replenishment is too low."
 msgstr ""
+"A quantidade a repor por meio de ordens de compra ou ordens de produção.\n"
+"Código de cor: verde se for reabastecer agora, vermelho se a reposição "
+"existente for muito alta para o período, laranja se a reposição atual for "
+"muito baixa."
 
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__forecast_target_qty
@@ -1086,7 +1090,7 @@ msgstr "Semana"
 #. odoo-python
 #: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
 msgid "Week %(week)s (%(start_day)s-%(end_day)s/%(month)s) %(year)s"
-msgstr ""
+msgstr "Semana %(week)s (%(start_day)s-%(end_day)s/%(month)s) %(year)s"
 
 #. module: mrp_mps
 #. odoo-python
@@ -1118,7 +1122,7 @@ msgstr "Anualmente"
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
 msgid "based on historical date or actual demand."
-msgstr ""
+msgstr "com base em dados históricos ou na demanda real."
 
 #. module: mrp_mps
 #. odoo-javascript

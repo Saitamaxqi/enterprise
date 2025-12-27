@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:40+0000\n"
-"PO-Revision-Date: 2025-12-19 07:41+0000\n"
+"PO-Revision-Date: 2025-12-24 10:24+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "appointment/ja/>\n"
@@ -3037,7 +3037,8 @@ msgstr "タイムゾーンを非表示"
 msgid ""
 "How users and resources will be assigned to the meetings that customers book "
 "on your website."
-msgstr ""
+msgstr "ウェブサイト上で顧客が予約したミーティングに、ユーザやリソースをどのように割"
+"り当てるかを設定します。"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer__id
@@ -3070,7 +3071,7 @@ msgstr "例外活動を示すアイコン"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__identical_config_id
 msgid "Identical Config"
-msgstr ""
+msgstr "同一設定"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_needaction
@@ -3176,7 +3177,7 @@ msgstr "画像512"
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_question__is_default
 msgid "Include by default in new appointment types."
-msgstr ""
+msgstr "新しい予定タイプにデフォルトで含めます。"
 
 #. module: appointment
 #. odoo-javascript
@@ -3203,7 +3204,7 @@ msgstr "紹介メッセージ"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Introduction Page"
-msgstr ""
+msgstr "紹介ページ"
 
 #. module: appointment
 #. odoo-javascript
@@ -3231,7 +3232,7 @@ msgstr "{{ object.event_id.name }} への招待"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__is_always_confirm
 msgid "Is Always Confirm"
-msgstr ""
+msgstr "常に確定する"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_is_follower
@@ -3246,7 +3247,7 @@ msgstr "公開済"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__is_reusable
 msgid "Is Reusable"
-msgstr ""
+msgstr "再利用可能"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -4064,7 +4065,7 @@ msgstr "時間を選択してください"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__is_date_first
 msgid "Select date and time first"
-msgstr ""
+msgstr "まず日付と時間を選択してください"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer_input__value_answer_id
@@ -4204,7 +4205,7 @@ msgstr "アポイントメントタイプの短い説明"
 #. odoo-python
 #: code:addons/appointment/controllers/appointment.py:0
 msgid "Some required answers are missing in the form."
-msgstr ""
+msgstr "フォーム内に不足している必須の回答があります。"
 
 #. module: appointment
 #. odoo-javascript
@@ -4589,12 +4590,12 @@ msgstr "これは顧客予約フォームのプレビューです。"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
 msgid "This question is used by"
-msgstr ""
+msgstr "この質問の使用者："
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_question__extra_comment
 msgid "This will appear below the question in the appointment form."
-msgstr ""
+msgstr "これは予約フォームの質問の下に表示されます。"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__4
@@ -4743,6 +4744,21 @@ msgid ""
 "            - Calendar Link: the user will create and share to another user "
 "an appointment type covering all their time slots"
 msgstr ""
+"このアポイントメントタイプのカテゴリを定義するために使用されます。\n"
+"\n"
+"        以下のいずれかを選択できます：\n"
+"\n"
+"            - 週次スケジュール：デフォルトカテゴリ。毎週繰り返される予約枠。"
+"ウェブサイトからアクセス可能\n"
+"\n"
+"            - 日時限定：2つの日時間で制限された定期的な予約枠。 ウェブサイト"
+"からアクセス可能\n"
+"\n"
+"            - 柔軟なスケジュール：ユーザが手動で選択した時間帯でカスタム予約"
+"タイプを作成し、他のユーザと共有する\n"
+"\n"
+"            - カレンダーリンク：ユーザが自身の全時間帯をカバーする予約タイプ"
+"を作成し、他のユーザと共有する"
 
 #. module: appointment
 #: model:res.groups,name:appointment.group_appointment_user
@@ -4752,7 +4768,7 @@ msgstr "ユーザ"
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__select_first__user_resource
 msgid "User / Resource"
-msgstr ""
+msgstr "ユーザ / リソース"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__user_capacity
@@ -4816,7 +4832,7 @@ msgstr "週次"
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category__recurring
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "Weekly Schedule"
-msgstr ""
+msgstr "週間スケジュール"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__select_first

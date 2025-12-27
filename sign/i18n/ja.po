@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:42+0000\n"
-"PO-Revision-Date: 2025-12-19 07:41+0000\n"
+"POT-Creation-Date: 2025-12-26 18:41+0000\n"
+"PO-Revision-Date: 2025-12-24 10:24+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/sign/ja/"
 ">\n"
@@ -1330,6 +1330,12 @@ msgid "Delete signer \"%s\""
 msgstr "署名者 \"%s\" を削除"
 
 #. module: sign
+#. odoo-javascript
+#: code:addons/sign/static/src/dialogs/thank_you_dialog.js:0
+msgid "Deleted User"
+msgstr ""
+
+#. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
 msgid ""
 "Deliver one-time codes by SMS to identify signatories when signing a document"
@@ -2126,6 +2132,9 @@ msgid ""
 "It seems that we're not able to process one of the uploaded pdf. It is "
 "either encrypted, or encoded in a format we do not support."
 msgstr ""
+"アップロードされたPDFファイルのうち1つを処理できないようです。暗号化されてい"
+"るか、または当社がサポートしていない形式でエンコードされている可能性がありま"
+"す。"
 
 #. module: sign
 #. odoo-javascript
@@ -2253,7 +2262,7 @@ msgstr "以下にリンク:"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item_type__auto_field
 msgid "Linked field"
-msgstr ""
+msgstr "関連フィールド"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item_type__model_id
@@ -2331,7 +2340,7 @@ msgstr "必須項目"
 #. module: sign
 #: model:sign.item.type,tip:sign.sign_item_type_initial
 msgid "Mark it"
-msgstr ""
+msgstr "マークする"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_template__message
@@ -2440,6 +2449,10 @@ msgid ""
 "44654 Millersburg Ohio United States\n"
 "+1 555-555-5556"
 msgstr ""
+"My US Company\n"
+"1034 Wildwood Street\n"
+"44654 Millersburg Ohio United States\n"
+"+1 555-555-5556"
 
 #. module: sign
 #: model:sign.template.tag,name:sign.sign_template_tag_2
@@ -2652,7 +2665,7 @@ msgstr "アップロードされたファイルが読み込めません。有効
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__only_autofill_readonly
 msgid "Only Autofill"
-msgstr ""
+msgstr "自動入力のみ"
 
 #. module: sign
 #. odoo-javascript
@@ -3468,12 +3481,12 @@ msgstr "Odoo署名に登録すると、自分のドキュメントや署名依�
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_res_config_settings__module_sign_emsigner
 msgid "Sign with Aadhaar eSign"
-msgstr ""
+msgstr "Aadhaar eSignで署名する"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
 msgid "Sign your important documents using Aadhaar esign."
-msgstr ""
+msgstr "重要なドキュメントにはAadhaar電子署名で署名してください。"
 
 #. module: sign
 #: model:ir.actions.server,name:sign.sign_reminder_cron_ir_actions_server
@@ -3523,7 +3536,7 @@ msgstr "署名ドキュメント"
 #. module: sign
 #: model:ir.actions.act_window,name:sign.sign_item_type_action
 msgid "Signature Fields"
-msgstr ""
+msgstr "署名フィールド"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request_item_value__sign_item_id
@@ -3576,7 +3589,7 @@ msgstr "署名依頼 - %(file_name)s"
 #. odoo-python
 #: code:addons/sign/wizard/sign_send_request.py:0
 msgid "Signature Request - %(template_name)s - %(res_name)s"
-msgstr ""
+msgstr "署名依頼 - %(template_name)s - %(res_name)s"
 
 #. module: sign
 #: model:ir.model,name:sign.model_sign_request_item
@@ -3689,6 +3702,8 @@ msgid ""
 "Signed documents cannot be deleted for legal reasons. Please archive them "
 "instead."
 msgstr ""
+"法的理由により、署名済みドキュメントは削除できません。代わりにアーカイブして"
+"ください。"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request_item__signing_date
@@ -3714,12 +3729,12 @@ msgstr "署名者"
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_action.js:0
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_sidebar.js:0
 msgid "Signer %s"
-msgstr ""
+msgstr "署名者%s"
 
 #. module: sign
 #: model:sign.item.role,name:sign.sign_item_role_default
 msgid "Signer 1"
-msgstr ""
+msgstr "署名者1"
 
 #. module: sign
 #. odoo-javascript
@@ -3731,7 +3746,7 @@ msgstr "署名者1対多"
 #. odoo-javascript
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_sidebar_role_items.js:0
 msgid "Signer Settings"
-msgstr ""
+msgstr "署名者設定"
 
 #. module: sign
 #. odoo-javascript
@@ -3827,6 +3842,8 @@ msgid ""
 "Specify the default validity period (in days) for signature requests. Set to "
 "0 for requests that don't expire."
 msgstr ""
+"署名申請のデフォルトの有効期間(日数)を指定します。期限切れにならない申請の場"
+"合は0に設定します。"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_send_request__set_sign_order
@@ -3846,12 +3863,12 @@ msgstr ""
 #: model:ir.model.fields.selection,name:sign.selection__sign_item_type__item_type__stamp
 #: model:sign.item.type,name:sign.sign_item_type_stamp
 msgid "Stamp"
-msgstr ""
+msgstr "押印"
 
 #. module: sign
 #: model:sign.item.type,tip:sign.sign_item_type_stamp
 msgid "Stamp it"
-msgstr ""
+msgstr "押印する"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__state

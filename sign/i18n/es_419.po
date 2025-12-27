@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:42+0000\n"
+"POT-Creation-Date: 2025-12-26 18:41+0000\n"
 "PO-Revision-Date: 2025-12-15 17:41+0000\n"
 "Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -1346,6 +1346,12 @@ msgstr "Eliminar elemento de firma"
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_sidebar_role_items.js:0
 msgid "Delete signer \"%s\""
 msgstr "Eliminar signatario \"%s\""
+
+#. module: sign
+#. odoo-javascript
+#: code:addons/sign/static/src/dialogs/thank_you_dialog.js:0
+msgid "Deleted User"
+msgstr ""
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
@@ -4562,8 +4568,8 @@ msgid ""
 msgstr ""
 "Al actualizar el documento se generará una nueva plantilla con los mismos "
 "elementos de firma. Los elementos copiados estarán en las mismas coordenadas "
-"que los originales si el número de páginas coincide con el PDF previo. ¿"
-"Quieres continuar?"
+"que los originales si el número de páginas coincide con el PDF previo. "
+"¿Quieres continuar?"
 
 #. module: sign
 #. odoo-javascript

@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-19 18:42+0000\n"
-"PO-Revision-Date: 2025-12-18 08:16+0000\n"
+"PO-Revision-Date: 2025-12-24 10:24+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "sale_subscription/ja/>\n"
@@ -2853,7 +2853,7 @@ msgstr "月額定期収入 (MRR)"
 #. module: sale_subscription
 #: model:product.template,description_sale:sale_subscription.product_car_leasing_product_template
 msgid "Monthly lease for city or business driving"
-msgstr ""
+msgstr "市街地/業務利用向けの月額リース"
 
 #. module: sale_subscription
 #: model:ir.model.fields.selection,name:sale_subscription.selection__sale_order_template__duration_unit__month
@@ -3054,7 +3054,7 @@ msgstr "オフィスクリーニングサービス（サブスク）"
 msgid ""
 "Onboarding example showing how the app tracks customer subscriptions and "
 "visualizes MRR growth."
-msgstr ""
+msgstr "顧客サブスクリプションの管理とMRR成長の可視化方法を示すオンボーディング例。"
 
 #. module: sale_subscription
 #. odoo-python
@@ -3298,7 +3298,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_portal_content
 msgid ""
 "Please contact your sales manager if you want to reopen this subscription."
-msgstr ""
+msgstr "このサブスクリプションを再開したい場合は、営業担当者までご連絡ください。"
 
 #. module: sale_subscription
 #. odoo-javascript
@@ -3386,7 +3386,7 @@ msgstr "プロダクトバリアント"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.product_template_only_view_form_recurring
 msgid "Product Variants"
-msgstr ""
+msgstr "プロダクトバリアント"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_sale_order_line_list
@@ -3404,7 +3404,7 @@ msgstr "プロダクト"
 #: model:ir.model.fields,field_description:sale_subscription.field_product_product__allow_prorated_price
 #: model:ir.model.fields,field_description:sale_subscription.field_product_template__allow_prorated_price
 msgid "Prorated Price"
-msgstr ""
+msgstr "日割り計算価格"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__qty_delivered
@@ -3543,7 +3543,7 @@ msgstr "サブスク"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order__recurring_total
 msgid "Recurring Amount"
-msgstr ""
+msgstr "定期金額"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order__recurring_details
@@ -4511,7 +4511,8 @@ msgstr ""
 msgid ""
 "This subscription is overdue and exceeds the auto-close limit of the "
 "recurring plan. It will be closed soon by the system."
-msgstr ""
+msgstr "このサブスクリプションは支払期限を過ぎており、定期プランの自動クローズ期限を"
+"超えています。まもなくシステムによってクローズされます。"
 
 #. module: sale_subscription
 #. odoo-python
@@ -4754,7 +4755,7 @@ msgstr "倉庫"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order__warn_system_closing
 msgid "Warn System Closing"
-msgstr ""
+msgstr "システムによるクローズ警告"
 
 #. module: sale_subscription
 #. odoo-python
@@ -4832,6 +4833,9 @@ msgid ""
 "                Any new delivered quantity during that period may never be "
 "invoiced."
 msgstr ""
+"納品数量に基づく請求ポリシーが適用されるプロダクトについて、将来のサブスクリ"
+"プション期間分の請求書を作成しようとしています。\n"
+"                当該期間中に新たに納品された数量は、一切請求できません。"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.invoice_warning_message

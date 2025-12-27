@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-19 18:42+0000\n"
-"PO-Revision-Date: 2025-12-11 15:55+0000\n"
-"Last-Translator: Joël Michaud <joel.michaud@braintec.com>\n"
+"POT-Creation-Date: 2025-12-26 18:40+0000\n"
+"PO-Revision-Date: 2025-12-22 11:33+0000\n"
+"Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/documents/"
 "fr/>\n"
 "Language: fr\n"
@@ -3944,23 +3944,35 @@ msgid "Only Documents managers can set an alias."
 msgstr "Seuls les gestionnaires de documents peuvent définir un alias."
 
 #. module: documents
+#. odoo-javascript
+#: code:addons/documents/static/src/views/documents_renderer_mixin.js:0
+msgid "Only current page items can be dragged."
+msgstr ""
+
+#. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid ""
 "Only one string or number value can be searched for documents `child_of`."
 msgstr ""
+"Une seule valeur, de type chaîne ou numérique, peut être utilisée pour la "
+"recherche `child_of` sur les documents."
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Only one value can be searched for child of `folder_id`."
 msgstr ""
+"Une seule valeur peut être utilisée pour la recherche des sous-éléments de "
+"`folder_id`."
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Only one value can be searched for children of `user_folder_id`"
 msgstr ""
+"Une seule valeur peut être utilisée pour la recherche des sous-éléments de "
+"`user_folder_id`"
 
 #. module: documents
 #. odoo-javascript
@@ -4533,6 +4545,8 @@ msgstr "Raccourcis créés dans %(folder_name)s !"
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
 msgid "Show all records whose next activity date is past"
 msgstr ""
+"Afficher tous les enregistrements dont la date de la prochaine activité est "
+"dépassée"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__destination_children_ids
@@ -5312,6 +5326,8 @@ msgstr ""
 msgid ""
 "You cannot copy a folder into itself or into one of its own descendants."
 msgstr ""
+"Vous ne pouvez pas copier un dossier dans lui-même ni dans l’un de ses "
+"propres sous-dossiers."
 
 #. module: documents
 #. odoo-python

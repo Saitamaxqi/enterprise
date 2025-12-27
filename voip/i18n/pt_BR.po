@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-21 18:40+0000\n"
-"PO-Revision-Date: 2025-12-18 18:51+0000\n"
+"PO-Revision-Date: 2025-12-27 09:36+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/voip/pt_BR/>\n"
@@ -842,7 +842,7 @@ msgstr "Se marcado, algumas mensagens têm um erro de entrega."
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__do_not_disturb_until_dt
 msgid "If set, Odoo Phone will be in Do Not Disturb mode until this time."
-msgstr ""
+msgstr "Se definido, o Odoo Phone ficará no modo Não Perturbe até essa hora."
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__image_1920
@@ -883,7 +883,7 @@ msgstr "As ligações recebidas serão silenciadas"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Incoming call…"
-msgstr ""
+msgstr "Chamada recebida…"
 
 #. module: voip
 #. odoo-javascript
@@ -904,7 +904,7 @@ msgstr "É um seguidor"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__is_within_same_company
 msgid "Is Within Same Company"
-msgstr ""
+msgstr "Está dentro da mesma empresa"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_partner__has_call_in_queue
@@ -921,6 +921,9 @@ msgid ""
 "have your administrator verify that the media type is correctly set to SRTP-"
 "DTLS."
 msgstr ""
+"Parece que o servidor não está usando o tipo de mídia correto. Peça ao "
+"administrador para verificar se o tipo de mídia está configurado "
+"corretamente como SRTP-DTLS."
 
 #. module: voip
 #. odoo-javascript
@@ -960,12 +963,12 @@ msgstr "Duração: %(duration)s"
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy__user
 msgid "Let users decide"
-msgstr ""
+msgstr "Deixe os usuários decidirem"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy_option__user
 msgid "Let users decide when to record."
-msgstr ""
+msgstr "Deixe os usuários decidirem quando gravar."
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_main_attachment_id
@@ -1005,7 +1008,7 @@ msgstr "Não atendida"
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Missed Call"
-msgstr ""
+msgstr "Chamada perdida"
 
 #. module: voip
 #. odoo-javascript
@@ -1028,7 +1031,7 @@ msgstr "Mutar"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "My Calls"
-msgstr ""
+msgstr "Minhas chamadas"
 
 #. module: voip
 #. odoo-javascript
@@ -1040,7 +1043,7 @@ msgstr "Nome"
 #. module: voip
 #: model_terms:ir.actions.act_window,help:voip.voip_call_view
 msgid "No Calls Yet!"
-msgstr ""
+msgstr "Ainda não há chamadas!"
 
 #. module: voip
 #. odoo-javascript
@@ -1080,7 +1083,7 @@ msgstr "Não foram encontradas chamadas recentes"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "No redirect"
-msgstr ""
+msgstr "Sem redirecionamento"
 
 #. module: voip
 #. odoo-javascript
@@ -1117,7 +1120,7 @@ msgstr "Número de mensagens com erro de entrega"
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__voip
 msgid "Odoo Phone"
-msgstr ""
+msgstr "Odoo Phone"
 
 #. module: voip
 #: model:res.groups,name:voip.group_voip_officer
@@ -1128,7 +1131,7 @@ msgstr "Oficial"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "On Mobile"
-msgstr ""
+msgstr "No celular"
 
 #. module: voip
 #. odoo-javascript
@@ -1148,7 +1151,7 @@ msgstr "Em andamento"
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Ongoing Call"
-msgstr ""
+msgstr "Chamada em andamento"
 
 #. module: voip
 #. odoo-javascript
@@ -1160,6 +1163,8 @@ msgstr "Abrir registro relacionado"
 #: model_terms:ir.actions.act_window,help:voip.voip_call_view
 msgid "Open the softphone in the systray at the top to make your first call."
 msgstr ""
+"Abra o softphone na bandeja do sistema na parte superior para fazer sua "
+"primeira chamada."
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__direction__outgoing
@@ -1171,19 +1176,19 @@ msgstr "Saída"
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Outgoing call"
-msgstr ""
+msgstr "Chamada efetuada"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 msgid "Outgoing call (%(duration)s)"
-msgstr ""
+msgstr "Chamada efetuada (%(duration)s)"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Outgoing call…"
-msgstr ""
+msgstr "Chamada efetuada…"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__pbx_ip

@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-05 18:42+0000\n"
-"PO-Revision-Date: 2025-11-08 19:33+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-12-26 12:10+0000\n"
+"Last-Translator: \"Malaz Siddig Elsayed Abuidris (msea)\" <msea@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll/ar/>\n"
 "Language: ar\n"
@@ -27,7 +27,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__work_entry_source
@@ -174,6 +174,11 @@ msgid ""
 "                \n"
 "* When the user cancels a payslip, the status is 'Canceled'."
 msgstr ""
+"* عند إنشاء كشف الراتب، تكون الحالة \"مسودة\".\n"
+"\n"
+"* إذا تم تأكيد كشف الراتب، يتم تعيين الحالة إلى \"تم\".\n"
+"\n"
+"* عندما يلغي المستخدم كشف الراتب، تكون الحالة \"ملغى\"."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.contribution_register
@@ -391,6 +396,20 @@ msgid ""
 "                <span invisible=\"schedule_pay != 'weekly'\">/ week</span>\n"
 "                <span invisible=\"schedule_pay != 'daily'\">/ day</span>"
 msgstr ""
+"<span invisible=\"schedule_pay != 'annually'\">/ السنة</span>\n"
+"                <span invisible=\"schedule_pay != 'semi-annually'\">/ نصف "
+"سنة</span>\n"
+"                <span invisible=\"schedule_pay != 'quarterly'\">/ ربع "
+"سنة</span>\n"
+"                <span invisible=\"schedule_pay != 'bi-monthly'\">/ "
+"شهرين</span>\n"
+"                <span invisible=\"schedule_pay != 'semi-monthly'\">/ نصف "
+"شهر</span>\n"
+"                <span invisible=\"schedule_pay != 'bi-weekly'\">/ "
+"أسبوعين</span>\n"
+"                <span invisible=\"schedule_pay != 'weekly'\">/ الأسبوع</span>"
+"\n"
+"                <span invisible=\"schedule_pay != 'daily'\">/ اليوم</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -601,6 +620,10 @@ msgid ""
 "                Ex. Money recovery, Child support, Assessment of salary, ..."
 "<br><br>"
 msgstr ""
+"تعديل الراتب هو عبارة عن مبلغ مالي متكرر يتم تحديده للموظف\n"
+"                ويستخدم في كل كشف راتب على مدى فترة زمنية معينة.<br>\n"
+"                مثال: استرداد الأموال، نفقة الأطفال، تقييم الراتب، "
+"...<br><br>"
 
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_work_entry_type_is_unforeseen_is_leave

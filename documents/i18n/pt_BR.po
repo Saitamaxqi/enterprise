@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-19 18:42+0000\n"
-"PO-Revision-Date: 2025-12-18 18:51+0000\n"
+"POT-Creation-Date: 2025-12-26 18:40+0000\n"
+"PO-Revision-Date: 2025-12-27 09:36+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/documents/pt_BR/>\n"
@@ -1841,7 +1841,7 @@ msgstr "Pode modificar, excluir e renomear."
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__user_can_move
 msgid "Can move it"
-msgstr ""
+msgstr "Pode mover"
 
 #. module: documents
 #. odoo-javascript
@@ -1863,6 +1863,8 @@ msgstr "Só pode ser visualizado. Não é possível renomear, mover ou excluir."
 #: model:res.groups,comment:documents.group_documents_user
 msgid "Can view or edit, upload, and share their own or shared documents."
 msgstr ""
+"Podem visualizar ou editar, carregar e partilhar documentos próprios ou "
+"partilhados."
 
 #. module: documents
 #. odoo-javascript
@@ -1880,7 +1882,7 @@ msgstr "Alterar"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_access_tracking__changes
 msgid "Changes need to be tracked"
-msgstr ""
+msgstr "As alterações devem ser rastreadas"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__checksum
@@ -1895,7 +1897,7 @@ msgstr "Secundários"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_operation_view_form
 msgid "Choose a destination"
-msgstr ""
+msgstr "Escolha um destino"
 
 #. module: documents
 #. odoo-python
@@ -2018,7 +2020,7 @@ msgstr "Confirmar"
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Conflicting values passed with user_folder_id."
-msgstr ""
+msgstr "Valores conflitantes passados com user_folder_id."
 
 #. module: documents
 #: model:ir.model,name:documents.model_res_partner
@@ -2068,7 +2070,7 @@ msgstr "Criar um plano de atividades de documentos"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_new_folder.js:0
 msgid "Create a folder in %(folder)s"
-msgstr ""
+msgstr "Crie uma pasta em %(folder)s"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__create_activity_option
@@ -2085,30 +2087,30 @@ msgstr "Crie um novo documento para a página restante."
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Create a shortcut in %(folder_name)s"
-msgstr ""
+msgstr "Crie um atalho em %(folder_name)s"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
 msgid "Create shortcut to: %(documentName)s"
-msgstr ""
+msgstr "Criar atalho para: %(documentName)s"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_operation__operation__shortcut
 msgid "Create shortcuts"
-msgstr ""
+msgstr "Criar atalhos"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
 msgid "Create shortcuts for: %(numberOfDocuments)s items"
-msgstr ""
+msgstr "Criar atalhos para: itens do %(numberOfDocuments)s"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Create shortcuts in %(folder_name)s"
-msgstr ""
+msgstr "Criar atalhos em %(folder_name)s"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__create_uid
@@ -3886,6 +3888,12 @@ msgstr "Somente os gerentes de documentos podem definir aliases."
 #: code:addons/documents/models/documents_document.py:0
 msgid "Only Documents managers can set an alias."
 msgstr "Somente os gerentes de documentos podem definir um alias."
+
+#. module: documents
+#. odoo-javascript
+#: code:addons/documents/static/src/views/documents_renderer_mixin.js:0
+msgid "Only current page items can be dragged."
+msgstr ""
 
 #. module: documents
 #. odoo-python

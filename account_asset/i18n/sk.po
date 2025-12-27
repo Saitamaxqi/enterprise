@@ -7,13 +7,14 @@
 # Damian Brencic <brencicdamian12313@gmail.com>, 2022
 # Martin Trigaux, 2022
 # Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Tomáš Píšek <Tomas.Pisek@seznam.cz>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-11-17 03:42+0000\n"
-"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"PO-Revision-Date: 2025-12-27 18:58+0000\n"
+"Last-Translator: Tomáš Píšek <Tomas.Pisek@seznam.cz>\n"
 "Language-Team: Slovak <https://translate.odoo.com/projects/odoo-19/"
 "account_asset/sk/>\n"
 "Language: sk\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n "
 ">= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: account_asset
 #. odoo-python
@@ -1313,7 +1314,7 @@ msgstr "Interné účtovné doklady"
 #: model:ir.model,name:account_asset.model_account_move
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
 msgid "Journal Entry"
-msgstr "Vstup účtovnej knihy"
+msgstr "Účtovný záznam"
 
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_move_line
@@ -1870,7 +1871,8 @@ msgstr "Podradené položky sú zisky v hodnote tohto majetku"
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_asset_modify__invoice_ids
 msgid "The disposal invoice is needed in order to generate the closing journal entry."
-msgstr "Dispozičná faktúra je potrebná na vygenerovanie uzávierkového denníka."
+msgstr ""
+"Na vytvorenie záverečného účtovného záznamu je potrebná likvidačná faktúra."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__method_number
@@ -2010,7 +2012,10 @@ msgstr "Nie je možné archivovať záznam, ktorý nie je uzavretý"
 #: code:addons/account_asset/models/account_asset.py:0
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "You cannot automate the journal entry for an asset that has a running gross increase. Please use 'Dispose' on the increase(s)."
-msgstr "Nemôžete automatizovať zápis do denníka pre majetok, ktorý má bežný hrubý prírastok. Použite prosím 'Zlikvidovať' pri zvýšeniach."
+msgstr ""
+"Nemôžete automatizovať účtovný záznam pre majetok, ktorý má aktívne "
+"technické zhodnotenie. Použite prosím 'Zlikvidovať' pri technických "
+"zhodnoteniach."
 
 #. module: account_asset
 #. odoo-python

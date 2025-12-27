@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:44+0000\n"
-"PO-Revision-Date: 2025-12-15 07:51+0000\n"
+"POT-Creation-Date: 2025-12-26 18:42+0000\n"
+"PO-Revision-Date: 2025-12-24 10:24+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/ja/>\n"
@@ -113,8 +113,9 @@ msgstr ""
 msgid ""
 "'Open General Ledger' caret option is only available form report lines "
 "targetting accounts or Undistributed Profits/Losses."
-msgstr "「総勘定元帳を開く」のキャレットオプションは、勘定科目を対象とするレポート行"
-"、または未処分損益を対象とするレポート行でのみ利用できます。"
+msgstr ""
+"「総勘定元帳を開く」のキャレットオプションは、勘定科目を対象とするレポート"
+"行、または未処分損益を対象とするレポート行でのみ利用できます。"
 
 #. module: account_reports
 #. odoo-python
@@ -2086,11 +2087,6 @@ msgid "Credit"
 msgstr "貸方"
 
 #. module: account_reports
-#: model:ir.ui.menu,name:account_reports.menu_action_account_report_multicurrency_revaluation
-msgid "Currencies"
-msgstr "通貨"
-
-#. module: account_reports
 #: model:account.report.column,name:account_reports.aged_payable_report_currency
 #: model:account.report.column,name:account_reports.aged_receivable_report_currency
 #: model:account.report.column,name:account_reports.bank_reconciliation_report_currency
@@ -2561,7 +2557,7 @@ msgstr "ドラフト仕訳"
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_journal_report_audit_move_line_search
 msgid "Draft To Review"
-msgstr ""
+msgstr "レビュー対象のドラフト"
 
 #. module: account_reports
 #. odoo-python
@@ -3931,7 +3927,7 @@ msgstr "元帳"
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_allocations_withdrawals0
 msgid "Less Allocations and Plus Withdrawals"
-msgstr ""
+msgstr "配分控除および引出加算"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_cost_sales0
@@ -3998,7 +3994,7 @@ msgstr "メールトラッキング値"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__message_main_attachment_id
 msgid "Main Attachment"
-msgstr "主な添付ファイル"
+msgstr "メイン添付ファイル"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_tax_unit__main_company_id
@@ -4263,7 +4259,7 @@ msgstr "純利益"
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_net_profit_after_allocations0
 msgid "Net Profit Left After Allocations and Withdrawals"
-msgstr ""
+msgstr "配分および引出し後の純利益"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_net_assets0
@@ -6600,6 +6596,11 @@ msgid "Unknown date scope: %s"
 msgstr "未知の日付範囲: %s"
 
 #. module: account_reports
+#: model:ir.ui.menu,name:account_reports.menu_action_account_report_multicurrency_revaluation
+msgid "Unrealized Currencies"
+msgstr ""
+
+#. module: account_reports
 #: model:account.report,name:account_reports.multicurrency_revaluation_report
 #: model:ir.actions.client,name:account_reports.action_account_report_multicurrency_revaluation
 msgid "Unrealized Currency Gains/Losses"
@@ -7216,6 +7217,9 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/multicurrency_revaluation_report/warnings.xml:0
 msgid "⇒ Reset to Odoo’s Rate"
 msgstr "Odooのレート⇒リセット"
+
+#~ msgid "Currencies"
+#~ msgstr "通貨"
 
 #~ msgid ""
 #~ "'Open General Ledger' caret option is only available form report lines "

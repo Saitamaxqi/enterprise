@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-19 18:45+0000\n"
-"PO-Revision-Date: 2025-12-19 07:41+0000\n"
+"PO-Revision-Date: 2025-12-24 10:24+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "hr_contract_salary/ja/>\n"
@@ -783,7 +783,7 @@ msgstr "出生国"
 #. module: hr_contract_salary
 #: model_terms:ir.actions.act_window,help:hr_contract_salary.hr_contract_salary_offer_action
 msgid "Create an Offer"
-msgstr ""
+msgstr "オファーを作成"
 
 #. module: hr_contract_salary
 #: model_terms:ir.actions.act_window,help:hr_contract_salary.hr_contract_salary_offer_recruitment_action
@@ -1487,7 +1487,7 @@ msgstr "言語"
 #. module: hr_contract_salary
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary.contract_recruitment_report_view_search
 msgid "Last 365 Days Offers"
-msgstr "過去365日のオファー(内定)"
+msgstr "直近365日のオファー(内定)"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract_salary_benefit__write_uid
@@ -2009,6 +2009,12 @@ msgid ""
 "Monthly Total: The information will be a total of all the information in the "
 "category Monthly Benefits"
 msgstr ""
+"情報の値の計算方法を選択してください：\n"
+"固定値：すべてのリンクに固定値を設定する\n"
+"従業員レコードの値：従業員記録のフィールドから値を取得する\n"
+"給与明細の値：給与明細レコードのフィールドから値を取得する\n"
+"給付の合計値：すべての手当を選択し、それらの合計を計算することができる\n"
+"月次合計： 月次福利厚生のカテゴリにあるすべての情報の合計"
 
 #. module: hr_contract_salary
 #: model:hr.contract.salary.personal.info,name:hr_contract_salary.hr_contract_salary_personal_info_place_of_birth
@@ -2025,7 +2031,7 @@ msgstr "プレースホルダ"
 msgid ""
 "Please define a signature template on the contract before generating the "
 "offer."
-msgstr ""
+msgstr "オファーを生成する前に、契約書上で署名テンプレートを定義してください。"
 
 #. module: hr_contract_salary
 #: model:hr.contract.salary.personal.info,name:hr_contract_salary.hr_contract_salary_personal_info_private_license_plate
@@ -2331,7 +2337,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_offer_view_form
 msgid "Select a contract template to load its predefined values"
-msgstr ""
+msgstr "契約テンプレートを選択して、その事前定義された値を読み込みます"
 
 #. module: hr_contract_salary
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_offer_view_form
@@ -2366,7 +2372,7 @@ msgstr "選択が必要なその他の福利厚生を選択してこの福利厚
 #. module: hr_contract_salary
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_offer_view_form
 msgid "Select the PDF that the employee will sign"
-msgstr ""
+msgstr "従業員が署名するPDFを選択してください"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,help:hr_contract_salary.field_hr_contract_salary_benefit__cost_res_field_id
@@ -2505,7 +2511,7 @@ msgstr "署名依頼 - %s"
 #. module: hr_contract_salary
 #: model:hr.contract.salary.personal.info.type,name:hr_contract_salary.hr_contract_salary_personal_info_type_family
 msgid "Situation"
-msgstr ""
+msgstr "状況"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields.selection,name:hr_contract_salary.selection__hr_contract_salary_benefit__display_type__slider
@@ -2621,7 +2627,8 @@ msgstr "本契約の複製元となった契約"
 #. odoo-python
 #: code:addons/hr_contract_salary/models/hr_job.py:0
 msgid "The contract template's company must match the job's company."
-msgstr ""
+msgstr "契約書のテンプレートに記載されている会社名は、当該業務の会社名と一致している"
+"必要があります。"
 
 #. module: hr_contract_salary
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary.hr_contract_benefit_view_form
@@ -2634,7 +2641,8 @@ msgstr "現在要求されているドキュメントは以下の通りです:"
 msgid ""
 "The display type of a benefit linked to a salary rule must be one of the "
 "following: %s"
-msgstr ""
+msgstr "給与規則に関連付けられた福利厚生の表示タイプは、以下のいずれかでなければなり"
+"ません：%s"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,help:hr_contract_salary.field_hr_contract_salary_benefit__fold_res_field_id
@@ -2705,7 +2713,7 @@ msgstr ""
 #. module: hr_contract_salary
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_view_employee_form_readonly
 msgid "This is a partially-signed contract."
-msgstr ""
+msgstr "これは一部署名済みの契約書です。"
 
 #. module: hr_contract_salary
 #. odoo-python
@@ -2946,7 +2954,7 @@ msgstr "例: 食事券"
 #. module: hr_contract_salary
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_offer_view_form
 msgid "e.g. Offer 70k Employer Cost"
-msgstr ""
+msgstr "例：雇用主負担額 70,000円"
 
 #. module: hr_contract_salary
 #: model_terms:ir.actions.act_window,help:hr_contract_salary.hr_contract_salary_offer_recruitment_action

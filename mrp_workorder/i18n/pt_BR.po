@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-05 18:42+0000\n"
-"PO-Revision-Date: 2025-12-12 15:39+0000\n"
+"PO-Revision-Date: 2025-12-26 10:53+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/mrp_workorder/pt_BR/>\n"
@@ -825,7 +825,7 @@ msgstr "Visto por último"
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.xml:0
 msgid "Load All Manufacturing Orders"
-msgstr ""
+msgstr "Carregar todas as ordens de produção"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -928,7 +928,7 @@ msgstr "Marcar com concluído e fechar a OP"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_res_config_settings__wo_shop_floor_maximum_card_count
 msgid "Maximum number of cards per page"
-msgstr ""
+msgstr "Número máximo de cartões por página"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -940,7 +940,7 @@ msgstr "Menu"
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.xml:0
 msgid "Modify Routing"
-msgstr ""
+msgstr "Modificar rota"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__move_line_ids_picked
@@ -1052,7 +1052,7 @@ msgstr "Nenhuma ordem de trabalho a fazer."
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_point_view_form_inherit_mrp
 msgid "No worksheet yet !"
-msgstr ""
+msgstr "Ainda não há nenhuma planilha!"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__note

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-19 18:44+0000\n"
-"PO-Revision-Date: 2025-12-12 14:15+0000\n"
+"PO-Revision-Date: 2025-12-27 09:36+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/ai/pt_BR/>\n"
@@ -1423,7 +1423,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/utils/llm_providers.py:0
 msgid "No embedding configuration found for the provider"
-msgstr ""
+msgstr "Nenhuma configuração de incorporação encontrada para o provedor"
 
 #. module: ai
 #. odoo-python
@@ -1488,7 +1488,7 @@ msgstr "Somente administradores podem criar fontes a partir de URLs."
 #. odoo-python
 #: code:addons/ai/models/ai_agent.py:0
 msgid "Oops, it looks like our AI is unreachable"
-msgstr ""
+msgstr "Ops! Parece que não foi possível contatar nossa IA"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_embedding__embedding_model__text-embedding-3-small

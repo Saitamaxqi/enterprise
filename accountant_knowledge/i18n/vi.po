@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-12-11 10:24+0000\n"
+"PO-Revision-Date: 2025-12-26 10:55+0000\n"
 "Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "accountant_knowledge/vi/>\n"
@@ -29,7 +29,7 @@ msgstr "(Mô tả về vấn đề, sự không chắc chắn hoặc hạn chế
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "0,00<br>"
-msgstr ""
+msgstr "0,00<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -45,17 +45,17 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
 msgid "<em>To be completed...</em>"
-msgstr ""
+msgstr "<em>Đang hoàn thiện...</em>"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_kanban
 msgid "<i class=\"fa fa-fw fa-building me-2\" title=\"Company\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-fw fa-building me-2\" title=\"Công ty\"/>"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_kanban
 msgid "<i class=\"fa fa-fw fa-calendar me-2\" title=\"Calendar\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-fw fa-calendar me-2\" title=\"Lịch\"/>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_supporting_documents
@@ -64,16 +64,18 @@ msgid ""
 "<strong class=\"o-upload-link\">Upload files</strong> to include in the PDF "
 "report."
 msgstr ""
+"<strong class=\"o-upload-link\">Tải lên các tệp</strong> để bao gồm trong "
+"báo cáo PDF."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
 msgid "<strong>Additional Information</strong><br>"
-msgstr ""
+msgstr "<strong>Thông tin bổ sung</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "<strong>Buildings, Fixtures, and Fittings</strong>"
-msgstr ""
+msgstr "<strong>Công trình, Thiết bị và Phụ kiện</strong>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
@@ -95,12 +97,12 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "<strong>Depreciation - Cumulative</strong><br>"
-msgstr ""
+msgstr "<strong>Khấu hao - Tích lũy</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "<strong>Depreciation - Current Year</strong><br>"
-msgstr ""
+msgstr "<strong>Khấu hao - Năm hiện tại</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
@@ -115,17 +117,17 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "<strong>Entry Cost</strong><br>"
-msgstr ""
+msgstr "<strong>Chi phí tham gia</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "<strong>Equipment and Tools</strong>"
-msgstr ""
+msgstr "<strong>Thiết bị và Công cụ</strong>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "<strong>Intangible Assets</strong>"
-msgstr ""
+msgstr "<strong>Tài sản vô hình</strong>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
@@ -150,22 +152,22 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
 msgid "<strong>Nature of Relationship</strong><br>"
-msgstr ""
+msgstr "<strong>Tính chất của mối quan hệ</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "<strong>Net Exceptional Result</strong><br>"
-msgstr ""
+msgstr "<strong>Kết quả đặc biệt ròng</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "<strong>Net Value</strong><br>"
-msgstr ""
+msgstr "<strong>Giá trị ròng</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "<strong>Nominal Value per Share</strong><br>"
-msgstr ""
+msgstr "<strong>Giá trị danh nghĩa trên mỗi cổ phiếu</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -181,17 +183,17 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "<strong>Number of Shares</strong><br>"
-msgstr ""
+msgstr "<strong>Số lượng cổ phiếu</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "<strong>Other Tangible Assets</strong>"
-msgstr ""
+msgstr "<strong>Các tài sản hữu hình khác</strong>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "<strong>Share Capital</strong><br>"
-msgstr ""
+msgstr "<strong>Vốn điều lệ</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -203,7 +205,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
 msgid "<strong>Transaction Amount During the Period</strong><br>"
-msgstr ""
+msgstr "<strong>Số tiền giao dịch trong kỳ</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
@@ -218,12 +220,12 @@ msgstr "Kế toán"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
 msgid "Accounting Principles and Methods"
-msgstr ""
+msgstr "Nguyên tắc và phương pháp kế toán"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
 msgid "Accounting principles and methods"
-msgstr ""
+msgstr "Nguyên tắc và phương pháp kế toán"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_additional_information
@@ -274,7 +276,7 @@ msgstr "Phụ lục"
 #. module: accountant_knowledge
 #: model:ir.ui.menu,name:accountant_knowledge.menu_action_accountant_audit_report
 msgid "Annual Report"
-msgstr ""
+msgstr "Báo cáo thường niên"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__knowledge_article_id
@@ -307,7 +309,7 @@ msgstr ""
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_asset_information
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 msgid "Asset Information"
-msgstr ""
+msgstr "Thông tin tài sản"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
@@ -335,13 +337,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:accountant_knowledge.field_knowledge_article__audit_report_id
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_audit_report
 msgid "Audit Report"
-msgstr ""
+msgstr "Báo cáo kiểm toán"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__knowledge_template_article_id
 #: model:ir.model.fields,field_description:accountant_knowledge.field_knowledge_article__is_audit_report_template
 msgid "Audit Report Template"
-msgstr ""
+msgstr "Mẫu báo cáo kiểm toán"
 
 #. module: accountant_knowledge
 #: model:ir.actions.act_window,name:accountant_knowledge.action_audit_report
@@ -351,7 +353,7 @@ msgstr "Báo cáo kiểm toán"
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_form
 msgid "Audit Template"
-msgstr ""
+msgstr "Mẫu kiểm toán"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_balance_sheet
@@ -377,7 +379,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid "Capital Increase Costs"
-msgstr ""
+msgstr "Chi phí tăng vốn"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -391,43 +393,44 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
 msgid "Capitalization of Development Costs"
-msgstr ""
+msgstr "Hạch toán chi phí phát triển"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid "Cash and Cash Equivalents"
-msgstr ""
+msgstr "Tiền mặt và các khoản tương đương tiền"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid "Cash on hand and bank balances are recorded at their nominal value"
 msgstr ""
+"Tiền mặt và số dư tài khoản ngân hàng được ghi nhận theo giá trị danh nghĩa"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_cash_flow_statement
 msgid "Cash-Flow Statement"
-msgstr ""
+msgstr "Báo cáo lưu chuyển tiền tệ"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 msgid "Change in Accounting Estimate"
-msgstr ""
+msgstr "Thay đổi trong ước tính kế toán"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 msgid "Change in Accounting Standards"
-msgstr ""
+msgstr "Thay đổi trong Chuẩn mực kế toán"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 msgid "Changes in Accounting Policies"
-msgstr ""
+msgstr "Thay đổi trong chính sách kế toán"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 msgid "Changes in Fixed Assets"
-msgstr ""
+msgstr "Thay đổi trong Tài sản cố định"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
@@ -437,7 +440,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Commercial buildings: 20 to 50 years"
-msgstr ""
+msgstr "Các tòa nhà thương mại: 20 đến 50 năm"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__company_id
@@ -447,7 +450,7 @@ msgstr "Công ty"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Computer equipment: 5 years"
-msgstr ""
+msgstr "Thiết bị máy tính: 5 năm"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_kanban
@@ -457,28 +460,30 @@ msgstr "Cấu hình"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
 msgid "Consistency of accounting methods from one period to another;"
-msgstr ""
+msgstr "Sự nhất quán trong phương pháp kế toán từ kỳ này sang kỳ khác;"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_contextual_information
 msgid "Contextual Information"
-msgstr ""
+msgstr "Thông tin bối cảnh"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 msgid "Correction of Errors"
-msgstr ""
+msgstr "Sửa lỗi"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "Costs related to under-activity are excluded from the inventory value."
 msgstr ""
+"Các chi phí liên quan đến hoạt động không hiệu quả được loại trừ khỏi giá "
+"trị tồn kho."
 
 #. module: accountant_knowledge
 #: model:ir.actions.act_window,name:accountant_knowledge.action_audit_report_quick_create
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
 msgid "Create an Audit Report"
-msgstr ""
+msgstr "Tạo báo cáo kiểm toán"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__create_uid
@@ -500,6 +505,7 @@ msgstr "Tuỳ chỉnh"
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
 msgid "Customize all of its content.<br>Add sections, pages, or attachments"
 msgstr ""
+"Tùy chỉnh toàn bộ nội dung của nó.<br>Thêm các phần, trang hoặc tệp đính kèm"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_form
@@ -535,7 +541,7 @@ msgstr "Kế hoạch khấu hao"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 msgid "Depreciation and Impairment"
-msgstr ""
+msgstr "Khấu hao và suy giảm giá trị"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -552,6 +558,8 @@ msgid ""
 "Describe the nature and amounts of commitments given, received, and "
 "reciprocal"
 msgstr ""
+"Mô tả bản chất và số lượng các cam kết đã được đưa ra, nhận được và có tính "
+"chất tương hỗ"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
@@ -569,7 +577,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 msgid "Describe the nature of the error corrected."
-msgstr ""
+msgstr "Mô tả bản chất của lỗi đã được sửa chữa."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
@@ -591,11 +599,13 @@ msgid ""
 "Detail the factors affecting future tax liabilities and the impact of tax "
 "valuation adjustments."
 msgstr ""
+"Phân tích các yếu tố ảnh hưởng đến nghĩa vụ thuế trong tương lai và tác động "
+"của các điều chỉnh định giá thuế."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 msgid "Details on Inventories and Work-in-Progress"
-msgstr ""
+msgstr "Thông tin chi tiết về tồn kho và hàng đang sản xuất"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -632,7 +642,7 @@ msgstr "Hoàn tất"
 #: code:addons/accountant_knowledge/static/src/components/export_audit_report_to_pdf_dialog/export_audit_report_to_pdf_dialog.xml:0
 #: code:addons/accountant_knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Download Annual Report"
-msgstr ""
+msgstr "Tải xuống báo cáo thường niên"
 
 #. module: accountant_knowledge
 #. odoo-javascript
@@ -682,12 +692,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/accountant_knowledge/models/audit_report.py:0
 msgid "Edit Audit Report"
-msgstr ""
+msgstr "Chỉnh sửa báo cáo kiểm toán"
 
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
 msgid "Edit its content"
-msgstr ""
+msgstr "Chỉnh sửa nội dung"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
@@ -713,7 +723,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Equipment: 10 years"
-msgstr ""
+msgstr "Thiết bị: 10 năm"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
@@ -735,7 +745,7 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
 msgid "Exceptional Income &amp; Expenses"
-msgstr ""
+msgstr "Thu nhập đặc biệt &amp; chi phí"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
@@ -762,11 +772,13 @@ msgid ""
 "Explain the impact of the correction on the current period's financial "
 "statements."
 msgstr ""
+"Giải thích tác động của việc điều chỉnh đối với báo cáo tài chính của kỳ "
+"hiện tại."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Favorable Opinion with Comments"
-msgstr ""
+msgstr "Ý kiến thuận lợi kèm theo nhận xét"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -776,13 +788,13 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid "Financial Assets and Marketable Securities"
-msgstr ""
+msgstr "Tài sản tài chính và chứng khoán có thể giao dịch"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Financial Commitments and Guarantees"
-msgstr ""
+msgstr "Cam kết tài chính và bảo lãnh"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_financial_position
@@ -798,22 +810,22 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "First In, First Out (FIFO)"
-msgstr ""
+msgstr "Nhập trước xuất trước (FIFO)"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Fiscal Year N - 1<br>"
-msgstr ""
+msgstr "Năm tài chính N - 1<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Fiscal Year N<br>"
-msgstr ""
+msgstr "Năm tài chính N<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Fixtures and fittings: 10 years"
-msgstr ""
+msgstr "Thiết bị và phụ kiện: 10 năm"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -834,6 +846,8 @@ msgid ""
 "For each member, indicate the retirement commitments and similar benefits "
 "granted to them."
 msgstr ""
+"Đối với mỗi thành viên, hãy nêu rõ các cam kết về hưu trí và các lợi ích "
+"tương tự được cấp cho họ."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
@@ -859,11 +873,13 @@ msgid ""
 "From the Equity app, print the Capitalization Table and insert it <strong "
 "class=\"o-upload-link\">here</strong>"
 msgstr ""
+"Từ ứng dụng Equity, in Bảng vốn hóa và chèn nó vào đây: <strong class="
+"\"o-upload-link\"></strong>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Furniture: 10 years"
-msgstr ""
+msgstr "Nội thất: 10 năm"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
@@ -877,7 +893,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
 msgid "Get a complete PDF file, ready to be shared"
-msgstr ""
+msgstr "Tải xuống tệp PDF đầy đủ, sẵn sàng để chia sẻ"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
@@ -982,18 +998,18 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/components/export_audit_report_to_pdf_dialog/export_audit_report_to_pdf_dialog.xml:0
 msgid "Include PDF Files"
-msgstr ""
+msgstr "Đính kèm tệp PDF"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Include any explanations or justifications as needed."
-msgstr ""
+msgstr "Ghi chú bất kỳ giải thích hoặc lý do nào nếu cần thiết."
 
 #. module: accountant_knowledge
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/components/export_audit_report_to_pdf_dialog/export_audit_report_to_pdf_dialog.xml:0
 msgid "Include child articles"
-msgstr ""
+msgstr "Bao gồm các bài viết phụ"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_income_statement
@@ -1004,12 +1020,12 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
 msgid "Independence of accounting periods."
-msgstr ""
+msgstr "Sự độc lập của các kỳ kế toán."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 msgid "Indicate and justify the voluntary accounting policy change."
-msgstr ""
+msgstr "Chỉ ra và giải thích lý do thay đổi chính sách kế toán tự nguyện."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
@@ -1034,24 +1050,24 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "Information on Specific Nature Operations"
-msgstr ""
+msgstr "Thông tin về các hoạt động đặc thù"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_knowledge_article__inherited_audit_report_id
 msgid "Inherited Audit Report"
-msgstr ""
+msgstr "Báo cáo kiểm toán kế thừa"
 
 #. module: accountant_knowledge
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/components/account_report/cog_menu/cog_menu.js:0
 msgid "Insert in article"
-msgstr ""
+msgstr "Chèn vào bài viết"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Intangible and Tangible Assets"
-msgstr ""
+msgstr "Tài sản vô hình và tài sản hữu hình"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -1079,7 +1095,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "Inventories are valued using one of the following methods:"
-msgstr ""
+msgstr "Tồn kho được định giá bằng một trong các phương pháp sau:"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
@@ -1150,7 +1166,7 @@ msgstr "Khoản vay"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 msgid "Long-Term Investments Held in the Investment Portfolio"
-msgstr ""
+msgstr "Các khoản đầu tư dài hạn được nắm giữ trong danh mục đầu tư"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
@@ -1180,7 +1196,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Methods of Valuation"
-msgstr ""
+msgstr "Các phương pháp định giá"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_search
@@ -1195,7 +1211,7 @@ msgstr "Tên:"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Net accounting result: {{ net accounting result }}"
-msgstr ""
+msgstr "Kết quả kế toán ròng: {{ net accounting result }}"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
@@ -1205,7 +1221,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
 msgid "Non-Pro Rata Recognition"
-msgstr ""
+msgstr "Nhận diện không theo tỷ lệ"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
@@ -1225,12 +1241,12 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Off-Balance Sheet Commitments"
-msgstr ""
+msgstr "Cam kết ngoài bảng cân đối kế toán"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Offices: 25 years"
-msgstr ""
+msgstr "Văn phòng: 25 năm"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
@@ -1247,21 +1263,22 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
 msgid "Operating subsidies are recorded as income as soon as they are granted."
 msgstr ""
+"Các khoản trợ cấp hoạt động được ghi nhận là thu nhập ngay khi được cấp."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
 msgid "Other Significant Events"
-msgstr ""
+msgstr "Các sự kiện quan trọng khác"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Other off-balance-sheet transactions"
-msgstr ""
+msgstr "Các giao dịch ngoài bảng cân đối kế toán khác"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Other tangible fixed assets<br>"
-msgstr ""
+msgstr "Các tài sản cố định hữu hình khác<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
@@ -1271,12 +1288,12 @@ msgstr "Khác"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
 msgid "Others (including tax consolidation)"
-msgstr ""
+msgstr "Các khoản khác (bao gồm hợp nhất thuế)"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Others: To be specified..."
-msgstr ""
+msgstr "Các mục khác: Sẽ được xác định sau..."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
@@ -1294,7 +1311,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "Parent Company Details"
-msgstr ""
+msgstr "Thông tin về công ty mẹ"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
@@ -1304,12 +1321,12 @@ msgstr "Sổ cái đối tác"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Patents: To be specified..."
-msgstr ""
+msgstr "Bằng sáng chế: Sẽ được xác định sau..."
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_performance_and_operations
 msgid "Performance & Operations"
-msgstr ""
+msgstr "Hiệu suất & hoạt động"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
@@ -1324,6 +1341,8 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "Please specify the method used to calculate inventory write-downs."
 msgstr ""
+"Vui lòng nêu rõ phương pháp được sử dụng để tính toán việc trích lập dự "
+"phòng tồn kho."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
@@ -1353,12 +1372,12 @@ msgstr "In"
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
 msgid "Print your Report"
-msgstr ""
+msgstr "In báo cáo của bạn"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
 msgid "Pro rata recognition"
-msgstr ""
+msgstr "Nhận diện theo tỷ lệ"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_profit_and_loss
@@ -1368,7 +1387,7 @@ msgstr "Báo cáo kết quả hoạt động kinh doanh"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_additional_information
 msgid "Provide any additional information necessary here..."
-msgstr ""
+msgstr "Vui lòng cung cấp bất kỳ thông tin bổ sung nào cần thiết ở đây..."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -1384,6 +1403,8 @@ msgstr ""
 msgid ""
 "Provide details on loan issuance costs and any loan redemption premiums."
 msgstr ""
+"Cung cấp chi tiết về chi phí phát hành khoản vay và bất kỳ khoản phí thanh "
+"toán trước nào."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
@@ -1417,12 +1438,12 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid "Receivables and Payables"
-msgstr ""
+msgstr "Các khoản phải thu và các khoản phải trả"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid "Receivables and payables are recorded at their nominal value."
-msgstr ""
+msgstr "Các khoản phải thu và phải trả được ghi nhận theo giá trị danh nghĩa."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -1436,7 +1457,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Refusal to Attest"
-msgstr ""
+msgstr "Từ chối xác nhận"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
@@ -1451,17 +1472,17 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Remuneration due for the fiscal year<br>"
-msgstr ""
+msgstr "Tiền lương phải trả cho năm tài chính<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Remuneration for Services"
-msgstr ""
+msgstr "Phí dịch vụ"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Renovations: 10 years"
-msgstr ""
+msgstr "Sửa chữa và nâng cấp: 10 năm"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -1476,17 +1497,17 @@ msgstr "Tác vụ báo cáo"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Report on Work Conducted"
-msgstr ""
+msgstr "Báo cáo về công việc đã thực hiện"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Report on Work Performed"
-msgstr ""
+msgstr "Báo cáo về công việc đã thực hiện"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
 msgid "Research and Development Expenses"
-msgstr ""
+msgstr "Chi phí nghiên cứu và phát triển"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
@@ -1505,12 +1526,12 @@ msgstr "Người phụ trách"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "Result breakdown by region"
-msgstr ""
+msgstr "Phân tích kết quả theo khu vực"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Revenue: {{ revenue }}"
-msgstr ""
+msgstr "Doanh thu: {{ revenue }}"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_form
@@ -1525,7 +1546,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_kanban
 msgid "Set to Done"
-msgstr ""
+msgstr "Đặt thành Hoàn tất"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_kanban
@@ -1550,12 +1571,12 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Shares at End of Year<br>"
-msgstr ""
+msgstr "Cổ phiếu vào cuối năm<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Shares at Start of Year<br>"
-msgstr ""
+msgstr "Cổ phiếu tại đầu năm<br>"
 
 #. module: accountant_knowledge
 #. odoo-javascript
@@ -1573,7 +1594,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Software: 3 years"
-msgstr ""
+msgstr "Phần mềm: 3 năm"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -1581,6 +1602,8 @@ msgid ""
 "Specify details for executives, subsidiaries, investments, related "
 "companies, and others."
 msgstr ""
+"Cung cấp chi tiết về các giám đốc điều hành, công ty con, đầu tư, công ty "
+"liên kết và các bên khác."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -1609,12 +1632,12 @@ msgstr "Ngày bắt đầu, nằm trong năm tài chính."
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
 msgid "Start from our ready-to-use templates"
-msgstr ""
+msgstr "Bắt đầu từ các mẫu sẵn sàng sử dụng của chúng tôi"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 msgid "State and justify the change in estimate."
-msgstr ""
+msgstr "Giải thích và lý giải sự thay đổi trong ước tính."
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__status
@@ -1624,7 +1647,7 @@ msgstr "Trạng thái"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 msgid "Subsidiaries and Equity Interests"
-msgstr ""
+msgstr "Các công ty con và các khoản đầu tư vốn chủ sở hữu"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
@@ -1647,17 +1670,17 @@ msgstr "Tài liệu liên quan"
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid ""
 "Tangible assets are also valued at their production cost where applicable."
-msgstr ""
+msgstr "Tài sản hữu hình cũng được định giá theo chi phí sản xuất khi áp dụng."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Tangible assets are valued at their acquisition cost, which includes:"
-msgstr ""
+msgstr "Tài sản hữu hình được định giá theo giá trị mua vào, bao gồm:"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_tax_and_compliance
 msgid "Tax & Compliance"
-msgstr ""
+msgstr "Thuế & tuân thủ"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
@@ -1679,7 +1702,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Technical installations, equipment, and tools<br>"
-msgstr ""
+msgstr "Các hệ thống kỹ thuật, thiết bị và công cụ<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
@@ -1687,6 +1710,7 @@ msgid ""
 "The annual financial statements have been prepared in accordance with "
 "applicable accounting standards."
 msgstr ""
+"Báo cáo tài chính hàng năm đã được lập theo các chuẩn mực kế toán hiện hành."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
@@ -1704,12 +1728,12 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "The consolidated financial statements can be obtained via..."
-msgstr ""
+msgstr "Báo cáo tài chính hợp nhất có thể được truy cập qua..."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid "The equity method is used for valuation where applicable."
-msgstr ""
+msgstr "Phương pháp vốn chủ sở hữu được áp dụng cho việc định giá khi phù hợp."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -1734,12 +1758,14 @@ msgid ""
 "The following decisions have been made regarding the presentation of the "
 "annual financial statements:"
 msgstr ""
+"Các quyết định sau đây đã được đưa ra liên quan đến việc trình bày báo cáo "
+"tài chính hàng năm:"
 
 #. module: accountant_knowledge
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/editor/embedded_components/core/account_report/account_report.xml:0
 msgid "The full report will be included in the final document."
-msgstr ""
+msgstr "Báo cáo đầy đủ sẽ được đưa vào tài liệu cuối cùng."
 
 #. module: accountant_knowledge
 #. odoo-javascript
@@ -1774,12 +1800,13 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "The key figures are as follows:"
-msgstr ""
+msgstr "Các con số chính như sau:"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
 msgid "The net accounting result is a {{ net accounting result }}."
 msgstr ""
+"Kết quả kế toán ròng là một khoản lỗ ròng ( {{ net accounting result }})."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_preamble
@@ -1787,6 +1814,8 @@ msgid ""
 "The notes and tables provided below form an integral part of the annual "
 "financial statements."
 msgstr ""
+"Các chú thích và bảng kê được cung cấp dưới đây là một phần không thể tách "
+"rời của báo cáo tài chính hàng năm."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
@@ -1832,11 +1861,12 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "This company is part of a group, and owns the following subsidiaries"
 msgstr ""
+"Công ty này là một phần của một tập đoàn và sở hữu các công ty con sau đây"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "This company is part of a group, under the following parent company."
-msgstr ""
+msgstr "Công ty này là một phần của một tập đoàn, thuộc công ty mẹ sau đây."
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__title
@@ -1847,12 +1877,12 @@ msgstr "Tiêu đề"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Tools: 10 years"
-msgstr ""
+msgstr "Công cụ: 10 năm"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Total assets: {{ total balance sheet }}"
-msgstr ""
+msgstr "Tổng tài sản: {{ total balance sheet }}"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
@@ -1862,18 +1892,18 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
 msgid "Transactions with Major Shareholders"
-msgstr ""
+msgstr "Giao dịch với các cổ đông lớn"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Transactions with Management"
-msgstr ""
+msgstr "Giao dịch với Ban quản lý"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Transport equipment: 5 years"
-msgstr ""
+msgstr "Thiết bị vận tải: 5 năm"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
@@ -1883,22 +1913,22 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Valuation of free shares granted<br>"
-msgstr ""
+msgstr "Định giá cổ phiếu miễn phí được cấp<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Valuation of multi-year variable compensation<br>"
-msgstr ""
+msgstr "Định giá tiền lương biến động trong nhiều năm<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Valuation of stock options granted during the year<br>"
-msgstr ""
+msgstr "Định giá các quyền chọn cổ phiếu được cấp trong năm<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 msgid "Voluntary Change in Accounting Policy"
-msgstr ""
+msgstr "Thay đổi tự nguyện trong chính sách kế toán"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
@@ -1912,7 +1942,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "Weighted Average Cost"
-msgstr ""
+msgstr "Chi phí bình quân gia quyền"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -1944,9 +1974,9 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
 msgid "Workforce employed during the Period"
-msgstr ""
+msgstr "Số lượng lao động được tuyển dụng trong kỳ"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_form
 msgid "e.g. Annual Financial Overview"
-msgstr ""
+msgstr "Ví dụ: Tổng quan tài chính hàng năm"
