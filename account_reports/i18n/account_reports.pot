@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:44+0000\n"
-"PO-Revision-Date: 2025-12-12 18:44+0000\n"
+"POT-Creation-Date: 2025-12-26 18:42+0000\n"
+"PO-Revision-Date: 2025-12-26 18:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1915,11 +1915,6 @@ msgstr ""
 #: model:account.report.column,name:account_reports.trial_balance_report_credit
 #: model:ir.model.fields,field_description:account_reports.field_account_account__audit_credit
 msgid "Credit"
-msgstr ""
-
-#. module: account_reports
-#: model:ir.ui.menu,name:account_reports.menu_action_account_report_multicurrency_revaluation
-msgid "Currencies"
 msgstr ""
 
 #. module: account_reports
@@ -6320,6 +6315,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Unknown date scope: %s"
+msgstr ""
+
+#. module: account_reports
+#: model:ir.ui.menu,name:account_reports.menu_action_account_report_multicurrency_revaluation
+msgid "Unrealized Currencies"
 msgstr ""
 
 #. module: account_reports
