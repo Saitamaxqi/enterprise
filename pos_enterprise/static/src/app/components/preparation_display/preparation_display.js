@@ -3,8 +3,7 @@ import { Stages } from "@pos_enterprise/app/components/stages/stages";
 import { Order } from "@pos_enterprise/app/components/order/order";
 import { MainComponentsContainer } from "@web/core/main_components_container";
 import { usePrepDisplay } from "@pos_enterprise/app/services/preparation_display_service";
-import { Component, onMounted, onPatched, useState, whenReady } from "@odoo/owl";
-import { mountComponent } from "@web/env";
+import { Component, onMounted, onPatched, useState } from "@odoo/owl";
 
 export class PrepDisplay extends Component {
     static components = { Category, Stages, Order, MainComponentsContainer };
@@ -86,4 +85,3 @@ export class PrepDisplay extends Component {
         this.state.isMenuOpened = true;
     }
 }
-whenReady(() => mountComponent(PrepDisplay, document.body));
