@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-26 19:03+0000\n"
-"PO-Revision-Date: 2025-12-26 19:03+0000\n"
+"POT-Creation-Date: 2025-12-30 19:07+0000\n"
+"PO-Revision-Date: 2025-12-30 19:07+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1399,6 +1399,15 @@ msgstr ""
 #. module: l10n_ke_edi_oscu
 #: model:ir.model,name:l10n_ke_edi_oscu.model_l10n_ke_edi_oscu_code
 msgid "eTIMS Technical Codes"
+msgstr ""
+
+#. module: l10n_ke_edi_oscu
+#. odoo-python
+#: code:addons/l10n_ke_edi_oscu/models/account_move.py:0
+msgid ""
+"eTIMS configuration is incomplete for company '%(company)s'. Please verify "
+"that the eTIMS Server Mode, OSCU Configuration, and the company's eTIMS "
+"Branch Code are correctly set up to proceed."
 msgstr ""
 
 #. module: l10n_ke_edi_oscu
