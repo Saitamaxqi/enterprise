@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_move_history_list" model="ir.ui.view">
+        <field name="name">asset.move.history.list</field>
+        <field name="model">asset.move.history</field>
+        <field name="arch" type="xml">
+
+            <list>
+                <field name="asset_id"/>
+                <field name="previous_employee_id"/>
+                <field name="current_employee_id"/>
+                <field name="move_date"/>
+                <field name="state"/>
+                <button name="set_assigned" icon="fa-check" type="object" class="oe_highlight" invisible="state"/>
+                <button name="set_declined" icon="fa-close" type="object" class="oe_highlight" invisible="state"/>
+            </list>
+
+        </field>
+    </record>
+</odoo>

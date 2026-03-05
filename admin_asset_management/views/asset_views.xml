@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_admin_assets" model="ir.actions.act_window">
+        <field name="name">Assets</field>
+        <field name="res_model">account.asset</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_asset_form_inherit_admin" model="ir.ui.view">
+    <field name="name">account.asset.form.admin</field>
+    <field name="model">account.asset</field>
+    <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
+    <field name="arch" type="xml">
+    
+        <xpath expr="//notebook" position="inside">
+
+            <page string="Move History">
+                <field name="move_history_ids"/>
+            </page>
+
+        </xpath>
+
+    </field>
+</record>
+
+</odoo>

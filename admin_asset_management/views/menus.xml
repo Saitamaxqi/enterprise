@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem id="asset_admin_root"
+              name="Asset Management"
+              sequence="10"/>
+
+    <menuitem id="asset_admin_assets"
+              name="Assets"
+              parent="asset_admin_root"
+              action="action_admin_assets"/>
+
+    <menuitem id="asset_locations_menu"
+              name="Locations"
+              parent="asset_admin_root"
+              action="action_asset_locations"/>
+
+</odoo>
