@@ -8,10 +8,10 @@
     'data': [
         'security/ir.model.access.csv',
 
-        'views/menus.xml',
         'views/asset_views.xml',
         'views/asset_location_views.xml',
         'views/asset_move_history_views.xml',
+        'views/menus.xml',
     ],
     'installable': True,
     'application': True,
