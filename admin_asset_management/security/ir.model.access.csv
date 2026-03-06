@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_asset_location,asset.location,model_asset_location,base.group_user,1,1,1,1
-access_asset_move_history,asset.move.history,model_asset_move_history,base.group_user,1,1,1,1
+access_asset_location_user,asset.location,model_asset_location,base.group_user,0,0,0,0
+access_asset_move_history_user,asset.move.history,model_asset_move_history,base.group_user,1,1,0,0
+access_asset_location_admin,asset.location,model_asset_location,base.group_system,1,1,1,1
+access_asset_move_history_admin,asset.move.history,model_asset_move_history,base.group_system,1,1,1,1
