@@ -14,5 +14,9 @@
               name="Locations"
               parent="asset_admin_root"
               action="action_asset_locations"/>
-
+    <menuitem id="menu_asset_moves"
+          name="Asset Moves"
+          parent="asset_admin_root"
+          action="action_asset_moves"
+          sequence="1"/>
 </odoo>
