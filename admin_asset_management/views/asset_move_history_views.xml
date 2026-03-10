@@ -20,10 +20,9 @@
                 <field name="to_location_id"/>
                 <field name="move_date"/>
                 <field name="state"/>
-                <button name="set_assigned" icon="fa-check" type="object" class="oe_highlight" invisible="state != 'draft' or not is_current_user"/>
-                <button name="set_declined" icon="fa-close" type="object" class="oe_highlight" invisible="state != 'draft' or not is_current_user"/>
+                <button name="set_assigned" icon="fa-check" type="object" class="oe_highlight" string="Assign" invisible="state != 'draft' or not is_current_user"/>
+                <button name="set_declined" icon="fa-close" type="object" class="oe_highlight" string="Decline" invisible="state != 'draft' or not is_current_user"/>
             </list>
-
         </field>
     </record>
 </odoo>
