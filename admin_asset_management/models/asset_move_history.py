@@ -39,9 +39,10 @@ class AssetMoveHistory(models.Model):
                 raise UserError("You are not allowed to approve this move.")
             rec.state = 'assigned'
             if rec.asset_id:
-                rec.asset_id.employee_id = rec.to_employee_id
-                rec.asset_id.location_id = rec.to_location_id
-    
+                rec.asset_id.sudo().write({
+                    'employee_id': rec.to_employee_id.id,
+                    'location_id': rec.to_location_id.id,
+                })
     def set_declined(self):
         for rec in self:
             if rec.to_employee_id.user_id != self.env.user:
@@ -53,3 +54,9 @@ class AssetMoveHistory(models.Model):
         if self.asset_id:
             self.from_employee_id = self.asset_id.employee_id
             self.from_location_id = self.asset_id.location_id
+
+    @api.constrains('to_employee_id', 'asset_id')
+    def _check_to_employee_not_current(self):
+        for rec in self:
+            if rec.asset_id and rec.to_employee_id and rec.asset_id.employee_id and rec.to_employee_id == rec.asset_id.employee_id:
+                raise UserError("The selected employee is already assigned to this asset.")
