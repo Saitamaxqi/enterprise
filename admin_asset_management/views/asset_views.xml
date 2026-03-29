@@ -12,13 +12,20 @@
     <field name="model">account.asset</field>
     <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
     <field name="arch" type="xml">
-    
+
         <xpath expr="//notebook" position="inside">
 
             <page string="Move History">
                 <field name="move_history_ids"/>
             </page>
 
+        </xpath>
+
+        <xpath expr="//page[@name='main_page']/group" position="inside">
+            <group string="Asset Allocation" name="asset_allocation">
+                <field name="employee_id" readonly="True"/>
+                <field name="location_id" readonly="True"/>
+            </group>
         </xpath>
 
     </field>

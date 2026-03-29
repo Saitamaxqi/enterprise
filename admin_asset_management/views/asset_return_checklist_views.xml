@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_asset_return_checklist" model="ir.actions.act_window">
+        <field name="name">Return Checklists</field>
+        <field name="res_model">asset.return.checklist</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_asset_return_checklist_list" model="ir.ui.view">
+        <field name="name">asset.return.checklist.list</field>
+        <field name="model">asset.return.checklist</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="item_name"/>
+                <field name="is_returned"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_asset_return_checklist_form" model="ir.ui.view">
+        <field name="name">asset.return.checklist.form</field>
+        <field name="model">asset.return.checklist</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="asset_id"/>
+                        <field name="item_name"/>
+                        <field name="is_returned"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_account_asset_form_inherit_checklist" model="ir.ui.view">
+        <field name="name">account.asset.form.inherit.checklist</field>
+        <field name="model">account.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Return Checklist">
+                    <field name="return_checklist_ids" context="{'default_asset_id': id}"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

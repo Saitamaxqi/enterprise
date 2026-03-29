@@ -3,3 +3,7 @@ access_asset_location_user,asset.location,model_asset_location,base.group_user,0
 access_asset_move_history_user,asset.move.history,model_asset_move_history,base.group_user,1,1,0,0
 access_asset_location_admin,asset.location,model_asset_location,base.group_system,1,1,1,1
 access_asset_move_history_admin,asset.move.history,model_asset_move_history,base.group_system,1,1,1,1
+access_asset_return_checklist_user,asset.return.checklist,model_asset_return_checklist,base.group_user,1,1,0,0
+access_asset_return_checklist_admin,asset.return.checklist,model_asset_return_checklist,base.group_system,1,1,1,1
+access_asset_damage_report_user,asset.damage.report,model_asset_damage_report,base.group_user,1,1,1,0
+access_asset_damage_report_admin,asset.damage.report,model_asset_damage_report,base.group_system,1,1,1,1

@@ -11,6 +11,8 @@
         'views/asset_views.xml',
         'views/asset_location_views.xml',
         'views/asset_move_history_views.xml',
+        'views/asset_return_checklist_views.xml',
+        'views/asset_damage_report_views.xml',
         'views/menus.xml',
     ],
     'installable': True,

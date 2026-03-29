@@ -18,3 +18,15 @@ class AccountAsset(models.Model):
         'asset_id',
         string="Move History"
     )
+
+    return_checklist_ids = fields.One2many(
+        'asset.return.checklist',
+        'asset_id',
+        string="Return Checklist"
+    )
+
+    damage_report_ids = fields.One2many(
+        'asset.damage.report',
+        'asset_id',
+        string="Damage Reports"
+    )
