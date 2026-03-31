@@ -17,7 +17,7 @@ class ApprovalWorkflow(models.Model):
         readonly=True
     )
     stages_ids = fields.One2many('approval.stage', 'workflow_id', string='Stages')
-    stage_count = fields.Integer(compute="_")
+    stage_count = fields.Integer(compute="_compute_stage_count", string="Stage Count")
     active = fields.Boolean(string='Active', default=True)
     
     @api.depends('stage_ids')
