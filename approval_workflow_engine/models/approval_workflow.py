@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 class ApprovalWorkflow(models.Model):
     _name = 'approval.workflow'
@@ -16,6 +16,11 @@ class ApprovalWorkflow(models.Model):
         store=True,
         readonly=True
     )
-    number_of_stages = fields.Integer(string='Number of Stages', required=True, default=1)
     stages_ids = fields.One2many('approval.stage', 'workflow_id', string='Stages')
+    stage_count = fields.Integer(compute="_")
     active = fields.Boolean(string='Active', default=True)
+    
+    @api.depends('stage_ids')
+    def _compute_stage_count(self):
+        for record in self:
+            record.stage_count = len(record.stage_ids)
