@@ -1,26 +1,40 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
+
 class ApprovalRequest(models.Model):
     _name = 'approval.request'
     _description = 'Approval Request'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'id desc'
 
-    name = fields.Char(string='Request Reference',
+    name = fields.Char(
+        string='Request Reference',
         required=True,
         copy=False,
         readonly=True,
-        default='New')
-    res_model = fields.Char(string='Resource Model', required=True, readonly=True)
-    res_id = fields.Integer(string='Resource ID', required=True, readonly=True)
+        default='New'
+    )
+
     workflow_id = fields.Many2one(
         'approval.workflow',
         string='Workflow',
         required=True,
-        tracking=True,
-        ondelete = 'cascade'
+        tracking=True
     )
+
+    res_model = fields.Char(
+        string='Document Model',
+        required=True,
+        readonly=True
+    )
+
+    res_id = fields.Integer(
+        string='Document ID',
+        required=True,
+        readonly=True
+    )
+
     requester_id = fields.Many2one(
         'res.users',
         string='Requester',
@@ -29,29 +43,120 @@ class ApprovalRequest(models.Model):
         readonly=True,
         tracking=True
     )
-    current_stage_id = fields.Many2one(
+
+    stage_id = fields.Many2one(
         'approval.stage',
         string='Current Stage',
-        readonly=True
+        tracking=True
     )
+
     state = fields.Selection([
         ('draft', 'Draft'),
-        ('waiting','Waiting'),
+        ('waiting', 'Waiting Approval'),
         ('in_progress', 'In Progress'),
         ('approved', 'Approved'),
-        ('rejected', 'Rejected')], string='Status', default='draft', tracking=True)
-       
+        ('rejected', 'Rejected'),
+    ], string='Status', default='draft', tracking=True)
+
     log_ids = fields.One2many(
         'approval.log',
         'request_id',
         string='Approval Logs'
     )
-    #bussnis logic
+
+    can_current_user_approve = fields.Boolean(
+        string='Can Current User Approve',
+        compute='_compute_can_current_user_approve'
+    )
+
+    @api.depends(
+        'stage_id',
+        'stage_id.approval_group_ids',
+        'stage_id.approval_group_ids.odoo_group_id'
+    )
+    def _compute_can_current_user_approve(self):
+        current_user = self.env.user
+        approval_admin_group = self.env.ref('base.group_system', raise_if_not_found=False)
+
+        for record in self:
+            can_approve = False
+
+            if not record.stage_id:
+                record.can_current_user_approve = False
+                continue
+
+            stage_groups = record.stage_id.approval_group_ids.filtered('active')
+
+            if stage_groups:
+                for approval_group in stage_groups:
+                    if approval_group.odoo_group_id in current_user.groups_id:
+                        if record._check_group_filters(approval_group):
+                            can_approve = True
+                            break
+            else:
+                if approval_admin_group and approval_admin_group in current_user.groups_id:
+                    can_approve = True
+
+            record.can_current_user_approve = can_approve
+
     @api.model
     def create(self, vals):
         if vals.get('name', 'New') == 'New':
             vals['name'] = self.env['ir.sequence'].next_by_code('approval.request') or 'New'
         return super().create(vals)
+
+    def _convert_filter_value(self, record_value, filter_value):
+        if isinstance(record_value, bool):
+            return str(filter_value).strip().lower() in ['true', '1', 'yes']
+        if isinstance(record_value, int):
+            return int(filter_value)
+        if isinstance(record_value, float):
+            return float(filter_value)
+        return str(filter_value)
+
+    def _evaluate_filter(self, record_value, operator, filter_value):
+        if operator == '=':
+            return record_value == filter_value
+        if operator == '!=':
+            return record_value != filter_value
+        if operator == '>':
+            return record_value > filter_value
+        if operator == '<':
+            return record_value < filter_value
+        if operator == '>=':
+            return record_value >= filter_value
+        if operator == '<=':
+            return record_value <= filter_value
+        return False
+
+    def _check_group_filters(self, approval_group):
+        self.ensure_one()
+
+        filters = approval_group.filter_ids.filtered('active')
+        if not filters:
+            return True
+
+        document = self.env[self.res_model].browse(self.res_id)
+        if not document.exists():
+            return False
+
+        for filter_rec in filters:
+            if not hasattr(document, filter_rec.field_name):
+                return False
+
+            record_value = document[filter_rec.field_name]
+            if hasattr(record_value, 'id'):
+                record_value = record_value.id
+
+            try:
+                converted_value = self._convert_filter_value(record_value, filter_rec.value)
+            except Exception:
+                return False
+
+            if not self._evaluate_filter(record_value, filter_rec.operator, converted_value):
+                return False
+
+        return True
 
     def action_submit(self):
         for record in self:
@@ -63,7 +168,7 @@ class ApprovalRequest(models.Model):
                 order='sequence asc',
                 limit=1
             )
-            #this may be handeled in a different way later
+
             if not first_stage:
                 raise UserError(_('This workflow has no stages configured.'))
 
@@ -72,20 +177,60 @@ class ApprovalRequest(models.Model):
 
             record.message_post(body=_('Approval request submitted.'))
 
-    def action_approve(self):
+    def action_open_approve_wizard(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Approve Request'),
+            'res_model': 'approval.action.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_request_id': self.id,
+                'default_action_type': 'approved',
+            }
+        }
+
+    def action_open_reject_wizard(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Reject Request'),
+            'res_model': 'approval.action.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_request_id': self.id,
+                'default_action_type': 'rejected',
+            }
+        }
+
+    def action_approve(self, comment=None):
         for record in self:
             if record.state not in ['waiting', 'in_progress']:
                 raise UserError(_('Only requests waiting for approval can be approved.'))
 
             if not record.can_current_user_approve:
                 raise UserError(_('You are not allowed to approve this request.'))
-            #this will be handled differently for the comment part
+
+            comment = (comment or '').strip()
+
+            if record.stage_id.comment_required and not comment:
+                raise UserError(_('A comment is required for approval at this stage.'))
+
             self.env['approval.log'].create({
                 'request_id': record.id,
                 'user_id': self.env.user.id,
                 'action': 'approved',
-                'comment': 'Approved',
+                'comment': comment,
             })
+
+            record.message_post(
+                body=_('Approved by %s%s') % (
+                    self.env.user.name,
+                    ('<br/>Comment: %s' % comment) if comment else ''
+                )
+            )
 
             next_stage = self.env['approval.stage'].search([
                 ('workflow_id', '=', record.workflow_id.id),
@@ -100,20 +245,28 @@ class ApprovalRequest(models.Model):
                 record.state = 'approved'
                 record.message_post(body=_('Approval request fully approved.'))
 
-    def action_reject(self):
+    def action_reject(self, comment=None):
         for record in self:
             if record.state not in ['waiting', 'in_progress']:
                 raise UserError(_('Only requests waiting for approval can be rejected.'))
 
             if not record.can_current_user_approve:
                 raise UserError(_('You are not allowed to reject this request.'))
-            #this will be handled differently for the comment part
+
+            comment = (comment or '').strip()
+
+            if not comment:
+                raise UserError(_('A comment is required when rejecting a request.'))
+
             self.env['approval.log'].create({
                 'request_id': record.id,
                 'user_id': self.env.user.id,
                 'action': 'rejected',
-                'comment': 'Rejected',
+                'comment': comment,
             })
 
             record.state = 'rejected'
-            record.message_post(body=_('Approval request rejected.'))
+
+            record.message_post(
+                body=_('Rejected by %s<br/>Comment: %s') % (self.env.user.name, comment)
+            )

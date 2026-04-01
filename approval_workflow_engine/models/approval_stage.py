@@ -26,5 +26,5 @@ class ApprovalStage(models.Model):
         'stage_id',
         string='Approval Groups'
     )
-
+    comment_required = fields.Boolean(string='Comment Required', default=True)
     active = fields.Boolean(default=True)
