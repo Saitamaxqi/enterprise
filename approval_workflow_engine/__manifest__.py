@@ -8,6 +8,7 @@
     'data': [
         
         'security/ir.model.access.csv',
+        'data/approval_sequence.xml',
         'views/menus.xml',
     ],
     'installable': True,
