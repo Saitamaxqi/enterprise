@@ -1,4 +1,5 @@
-from odoo import models, fields
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 
 class ApprovalRequest(models.Model):
     _name = 'approval.request'
@@ -45,4 +46,74 @@ class ApprovalRequest(models.Model):
         'request_id',
         string='Approval Logs'
     )
-    #bussnis logic and action buttons later
+    #bussnis logic
+    @api.model
+    def create(self, vals):
+        if vals.get('name', 'New') == 'New':
+            vals['name'] = self.env['ir.sequence'].next_by_code('approval.request') or 'New'
+        return super().create(vals)
+
+    def action_submit(self):
+        for record in self:
+            if record.state != 'draft':
+                raise UserError(_('Only draft requests can be submitted.'))
+
+            first_stage = self.env['approval.stage'].search(
+                [('workflow_id', '=', record.workflow_id.id)],
+                order='sequence asc',
+                limit=1
+            )
+            #this may be handeled in a different way later
+            if not first_stage:
+                raise UserError(_('This workflow has no stages configured.'))
+
+            record.stage_id = first_stage
+            record.state = 'waiting'
+
+            record.message_post(body=_('Approval request submitted.'))
+
+    def action_approve(self):
+        for record in self:
+            if record.state not in ['waiting', 'in_progress']:
+                raise UserError(_('Only requests waiting for approval can be approved.'))
+
+            if not record.can_current_user_approve:
+                raise UserError(_('You are not allowed to approve this request.'))
+            #this will be handled differently for the comment part
+            self.env['approval.log'].create({
+                'request_id': record.id,
+                'user_id': self.env.user.id,
+                'action': 'approved',
+                'comment': 'Approved',
+            })
+
+            next_stage = self.env['approval.stage'].search([
+                ('workflow_id', '=', record.workflow_id.id),
+                ('sequence', '>', record.stage_id.sequence)
+            ], order='sequence asc', limit=1)
+
+            if next_stage:
+                record.stage_id = next_stage
+                record.state = 'in_progress'
+                record.message_post(body=_('Approval moved to next stage: %s') % next_stage.name)
+            else:
+                record.state = 'approved'
+                record.message_post(body=_('Approval request fully approved.'))
+
+    def action_reject(self):
+        for record in self:
+            if record.state not in ['waiting', 'in_progress']:
+                raise UserError(_('Only requests waiting for approval can be rejected.'))
+
+            if not record.can_current_user_approve:
+                raise UserError(_('You are not allowed to reject this request.'))
+            #this will be handled differently for the comment part
+            self.env['approval.log'].create({
+                'request_id': record.id,
+                'user_id': self.env.user.id,
+                'action': 'rejected',
+                'comment': 'Rejected',
+            })
+
+            record.state = 'rejected'
+            record.message_post(body=_('Approval request rejected.'))
