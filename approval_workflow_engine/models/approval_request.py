@@ -12,7 +12,6 @@ class ApprovalRequest(models.Model):
         string='Request Reference',
         required=True,
         copy=False,
-        readonly=True,
         default='New'
     )
 
@@ -25,20 +24,17 @@ class ApprovalRequest(models.Model):
 
     res_model = fields.Char(
         string='Document Model',
-        required=True,
         readonly=True
     )
 
     res_id = fields.Integer(
         string='Document ID',
-        required=True,
         readonly=True
     )
 
     requester_id = fields.Many2one(
         'res.users',
         string='Requester',
-        required=True,
         default=lambda self: self.env.user,
         readonly=True,
         tracking=True
