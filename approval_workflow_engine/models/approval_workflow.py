@@ -5,9 +5,11 @@ class ApprovalWorkflow(models.Model):
     _description = 'Approval Workflow'
 
     name = fields.Char(string='Name', required=True)
-    model_id = fields.One2many(
-        'ir.model',
-        'workflow_id',
+    model_id = fields.Many2one(
+        'ir.model', 
+        string='Target Model',
+        required=True,
+        ondelete='cascade'
     )
 
     model_name = fields.Char(
@@ -16,7 +18,7 @@ class ApprovalWorkflow(models.Model):
         store=True,
         readonly=True
     )
-    stages_ids = fields.One2many('approval.stage', 'workflow_id', string='Stages')
+    stage_ids = fields.One2many('approval.stage', 'workflow_id', string='Stages')
     stage_count = fields.Integer(compute="_compute_stage_count", string="Stage Count")
     active = fields.Boolean(string='Active', default=True)
     

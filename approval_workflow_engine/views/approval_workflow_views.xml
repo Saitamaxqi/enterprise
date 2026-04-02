@@ -26,7 +26,7 @@
                     </group>
                     <notebook>
                         <page string="Stages">
-                            <field name="stages_ids">
+                            <field name="stage_ids">
                                 <list editable="bottom">
                                     <field name="name"/>
                                     <field name="sequence"/>

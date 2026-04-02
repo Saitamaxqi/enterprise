@@ -71,8 +71,8 @@ class ApprovalRequest(models.Model):
 
     @api.depends(
         'stage_id',
-        'stage_id.approval_group_ids',
-        'stage_id.approval_group_ids.odoo_group_id'
+        'stage_id.group_ids',
+        'stage_id.group_ids.group_id'
     )
     def _compute_can_current_user_approve(self):
         current_user = self.env.user
@@ -85,11 +85,11 @@ class ApprovalRequest(models.Model):
                 record.can_current_user_approve = False
                 continue
 
-            stage_groups = record.stage_id.approval_group_ids.filtered('active')
+            stage_groups = record.stage_id.group_ids.filtered('active')
 
             if stage_groups:
                 for approval_group in stage_groups:
-                    if approval_group.odoo_group_id in current_user.groups_id:
+                    if approval_group.group_id in current_user.groups_id:
                         if record._check_group_filters(approval_group):
                             can_approve = True
                             break
