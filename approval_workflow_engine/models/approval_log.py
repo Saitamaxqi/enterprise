@@ -13,12 +13,13 @@ class ApprovalLog(models.Model):
         ondelete='cascade'
     )
 
-    user_id = fields.Many2one(
+    approver_id = fields.Many2one(
         'res.users',
         string='Action By',
         required=True,
         readonly=True,
-        ondelete='cascade'
+        ondelete='cascade',
+        default=lambda self: self.env.user
     )
 
     action = fields.Selection([
