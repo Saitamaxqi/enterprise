@@ -6,8 +6,6 @@
             <list string="Approval Requests">
                 <field name="name"/>
                 <field name="workflow_id"/>
-                <field name="res_model"/>
-                <field name="res_id"/>
                 <field name="requester_id"/>
                 <field name="stage_id"/>
                 <field name="state"/>
@@ -24,8 +22,6 @@
                     <group>
                         <field name="name"/>
                         <field name="workflow_id"/>
-                        <field name="res_model"/>
-                        <field name="res_id"/>
                         <field name="requester_id"/>
                         <field name="stage_id"/>
                         <field name="state"/>
