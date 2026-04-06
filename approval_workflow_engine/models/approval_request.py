@@ -95,11 +95,12 @@ class ApprovalRequest(models.Model):
 
             record.can_current_user_approve = can_approve
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code('approval.request') or 'New'
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code('approval.request') or 'New'
+        return super().create(vals_list)
 
     def _convert_filter_value(self, record_value, filter_value):
         if isinstance(record_value, bool):
