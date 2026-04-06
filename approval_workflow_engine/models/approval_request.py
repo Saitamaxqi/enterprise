@@ -10,7 +10,7 @@ class ApprovalRequest(models.Model):
 
     name = fields.Char(
         string='Request Reference',
-        required=True,
+        readonly=True,
         copy=False,
         default='New'
     )
@@ -43,7 +43,8 @@ class ApprovalRequest(models.Model):
     stage_id = fields.Many2one(
         'approval.stage',
         string='Current Stage',
-        tracking=True
+        tracking=True,
+        readonly=True
     )
 
     state = fields.Selection([
@@ -52,7 +53,7 @@ class ApprovalRequest(models.Model):
         ('in_progress', 'In Progress'),
         ('approved', 'Approved'),
         ('rejected', 'Rejected'),
-    ], string='Status', default='draft', tracking=True)
+    ], string='Status', default='draft', tracking=True, readonly=True)
 
     log_ids = fields.One2many(
         'approval.log',
