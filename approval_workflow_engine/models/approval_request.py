@@ -78,11 +78,10 @@ class ApprovalRequest(models.Model):
     )
     def _compute_can_current_user_approve(self):
         current_user = self.env.user
-        approval_admin_group = self.env.ref('base.group_system', raise_if_not_found=False)
 
         for record in self:
             can_approve = False
-
+                ##might change this if logic
             if not record.stage_id:
                 record.can_current_user_approve = False
                 continue
@@ -91,12 +90,15 @@ class ApprovalRequest(models.Model):
 
             if stage_groups:
                 for approval_group in stage_groups:
-                    if approval_group.group_id in current_user.groups_id:
-                        if record._check_group_filters(approval_group):
-                            can_approve = True
-                            break
+                        # get_external_id() returns a dict: {record_id: 'module.xml_id'}
+                        xml_id_dict = approval_group.get_external_id()
+                        xml_id = xml_id_dict.get(approval_group.id)
+                        if xml_id and current_user.has_group(xml_id):
+                            if record._check_group_filters(approval_group):
+                                can_approve = True
+                                break
             else:
-                if approval_admin_group and approval_admin_group in current_user.groups_id:
+                if current_user.has_group('base.group_system'):
                     can_approve = True
 
             record.can_current_user_approve = can_approve

@@ -15,6 +15,7 @@
 
         # Views
         'views/approval_log_views.xml',
+        'views/approval_action_wizard_views.xml',
         'views/approval_request_views.xml',
         'views/approval_stage_views.xml',
         'views/approval_workflow_views.xml',
