@@ -11,6 +11,7 @@
 
         # Data
         'data/approval_sequence.xml',
+        'data/stages_sequence.xml',
 
         # Views
         'views/approval_log_views.xml',
