@@ -18,6 +18,11 @@
         <field name="model">approval.request</field>
         <field name="arch" type="xml">
             <form string="Approval Request">
+            <header>
+            <button name="action_submit" string="Submit" type="object"  class="btn-primary" invisible="state != 'draft'"/>
+            <button name="action_open_approve_wizard" string="Approve" type="object" class="btn-success"/>
+            <field name="state" widget="statusbar" statusbar_visible="draft,waiting,in_progress,approved,rejected"/>
+            </header>
                 <sheet>
                     <group>
                         <field name="name"/>

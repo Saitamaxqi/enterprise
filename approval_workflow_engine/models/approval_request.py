@@ -61,6 +61,11 @@ class ApprovalRequest(models.Model):
         string='Approval Logs'
     )
 
+    def action_submit(self):
+        for rec in self:
+            if rec.state == 'draft':
+                rec.state = 'waiting'
+
     can_current_user_approve = fields.Boolean(
         string='Can Current User Approve',
         compute='_compute_can_current_user_approve'
