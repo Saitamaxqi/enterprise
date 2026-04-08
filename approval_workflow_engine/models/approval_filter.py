@@ -5,7 +5,7 @@ class ApprovalFilter(models.Model):
     _name = 'approval.filter'
     _description = 'Approval Filter'
 
-    name = fields.Char(string='Filter Name', required=True)
+    name = fields.Char(string='Filter Name')
 
     group_id = fields.Many2one(
         'approval.group',
@@ -13,6 +13,8 @@ class ApprovalFilter(models.Model):
         required=True,
         ondelete='cascade'
     )
+
+    stage_id = fields.Many2one('approval.stage', string='Approval Stage', related='group_id.stage_id', ondelete='cascade')
 
     field_name = fields.Char(
         string='Field Name',

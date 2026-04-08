@@ -21,6 +21,12 @@ class ApprovalStage(models.Model):
         default=1
     )
 
+    filter_ids = fields.One2many(
+        'approval.filter',
+        'stage_id',
+        string='Filters'
+    )
+
     group_ids = fields.One2many(
         'approval.group',
         'stage_id',

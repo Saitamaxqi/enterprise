@@ -35,6 +35,16 @@
                                 </list>
                             </field>
                         </page>
+                        <page string="Filters">
+                            <field name="filter_ids">
+                                <list editable="bottom">
+                                    <field name="group_id"/>
+                                    <field name="field_name" string="Document Field"/>
+                                    <field name="operator"/>
+                                    <field name="value"/>
+                                </list>
+                            </field>
+                        </page>
                     </notebook>
                 </sheet>
             </form>
