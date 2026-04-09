@@ -61,11 +61,6 @@ class ApprovalRequest(models.Model):
         string='Approval Logs'
     )
 
-    def action_submit(self):
-        for rec in self:
-            if rec.state == 'draft':
-                rec.state = 'waiting'
-
     can_current_user_approve = fields.Boolean(
         string='Can Current User Approve',
         compute='_compute_can_current_user_approve'
@@ -81,7 +76,7 @@ class ApprovalRequest(models.Model):
 
         for record in self:
             can_approve = False
-                ##might change this if logic
+            
             if not record.stage_id:
                 record.can_current_user_approve = False
                 continue
@@ -90,13 +85,13 @@ class ApprovalRequest(models.Model):
 
             if stage_groups:
                 for approval_group in stage_groups:
-                        # get_external_id() returns a dict: {record_id: 'module.xml_id'}
-                        xml_id_dict = approval_group.get_external_id()
-                        xml_id = xml_id_dict.get(approval_group.id)
-                        if xml_id and current_user.has_group(xml_id):
-                            if record._check_group_filters(approval_group):
-                                can_approve = True
-                                break
+                    # get_external_id() returns a dict: {record_id: 'module.xml_id'}
+                    xml_id_dict = approval_group.get_external_id()
+                    xml_id = xml_id_dict.get(approval_group.id)
+                    if xml_id and current_user.has_group(xml_id):
+                        if record._check_group_filters(approval_group):
+                            can_approve = True
+                            break
             else:
                 if current_user.has_group('base.group_system'):
                     can_approve = True
@@ -181,6 +176,8 @@ class ApprovalRequest(models.Model):
             record.state = 'waiting'
 
             record.message_post(body=_('Approval request submitted.'))
+            record._notify_approvers()
+
 
     def action_open_approve_wizard(self):
         self.ensure_one()
@@ -249,6 +246,8 @@ class ApprovalRequest(models.Model):
             else:
                 record.state = 'approved'
                 record.message_post(body=_('Approval request fully approved.'))
+                record._notify_requester(_("Your request %s has been approved.") % record.name)
+
 
     def action_reject(self, comment=None):
         for record in self:
@@ -275,3 +274,29 @@ class ApprovalRequest(models.Model):
             record.message_post(
                 body=_('Rejected by %s<br/>Comment: %s') % (self.env.user.name, comment)
             )
+            record._notify_requester(_("Your request %s has been rejected.") % record.name)
+
+
+
+    # Notification methods
+
+    def _notify_approvers(self):
+        """Notify all approvers in the current stage via activities."""
+        for record in self:
+            if record.stage_id and record.stage_id.group_ids:
+                for group in record.stage_id.group_ids.filtered('active'):
+                    for user in group.group_id.users:
+                        record.activity_schedule(
+                            'mail.mail_activity_data_todo',
+                            user_id=user.id,
+                            note=_("Approval required for request %s") % record.name
+                        )
+
+    def _notify_requester(self, message):
+        """Notify the requester via chatter message."""
+        for record in self:
+            if record.requester_id and record.requester_id.partner_id:
+                record.message_post(
+                    body=message,
+                    partner_ids=[record.requester_id.partner_id.id]
+                )
