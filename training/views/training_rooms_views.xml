@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<record id="training_rooms_action" model="ir.actions.act_window">
+    <field name="name">Rooms</field>
+    <field name="res_model">training.rooms</field>
+    <field name="view_mode">list,form</field>
+</record>
+<record id="training_rooms_list_view" model="ir.ui.view">
+    <field name="name">training.rooms.list</field>
+    <field name="model">training.rooms</field>
+    <field name="arch" type="xml">
+        <list>
+            <field name="name"/>
+            <field name="code"/>
+        </list>
+    </field>
+</record>
+<record id="training_rooms_form_view" model="ir.ui.view">
+    <field name="name">training.rooms.form</field>
+    <field name="model">training.rooms</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group>
+                    <field name="name"/>
+                    <field name="code"/>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+</odoo>

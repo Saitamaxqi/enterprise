@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<record id="training_my_courses_action" model="ir.actions.act_window">
+    <field name="name">My Courses</field>
+    <field name="res_model">training.my.courses</field>
+    <field name="view_mode">list,form</field>
+</record>
+
+<record id="training_my_courses_list_view" model="ir.ui.view">
+    <field name="name">training.my.courses.list</field>
+    <field name="model">training.my.courses</field>
+    <field name="arch" type="xml">
+        <list>
+            <field name="trainee_id"/>
+            <field name="course_serial_number"/>
+            <field name="course_name"/>
+        </list>
+    </field>
+    </record>
+</odoo>

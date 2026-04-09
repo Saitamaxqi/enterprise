@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<record id="training_courses_action" model="ir.actions.act_window">
+    <field name="name">Courses</field>
+    <field name="res_model">training.courses</field>
+    <field name="view_mode">list,form</field>
+</record>
+<record id="training_courses_list_view" model="ir.ui.view">
+    <field name="name">training.courses.list</field>
+    <field name="model">training.courses</field>
+    <field name="arch" type="xml">
+        <list>
+            <field name="serial_number" string="Serial Number"/>
+            <field name="name" string="Course Name"/>
+            <field name="location_id" string="Location">
+                <field name="name" string="Location Name"/>
+            </field>
+            <field name="start_date" string="Start Date"/>
+            <field name="end_date" string="End Date"/>
+            <field name="available_seats" string="Available Seats"/>
+            <field name="teacher_id" string="Teacher"/>
+            <field name="deadline" string="Deadline"/>
+        </list>
+    </field>
+    </record>
+<record id="training_courses_form_view" model="ir.ui.view">
+    <field name="name">training.courses.form</field>
+    <field name="model">training.courses</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group>
+                    <h1><field name="name"/></h1>
+                </group>
+                <group>
+                <group class="col-6">
+                <field name="serial_number" string="Serial Number"/>
+                <field name="teacher_id" string="Teacher"/>
+                <field name="location_id" string="Location"/>
+                <field name="room_id" string="Room"/>
+                </group>
+                <group class="col-6">
+                <field name="start_date" string="Start Date"/>
+                <field name="end_date" string="End Date"/>
+                <field name="number_of_days" string="Number of Days"/>
+                <field name="deadline" string="Deadline"/>
+                </group>
+                </group>
+                <notebook>
+                    <page string="Description">
+                        <group>
+                        <field name="description" string="Description"/>
+                        <field name="time" string="Time"/>
+                        <field name="total_seats" string="Total Seats"/>
+                        <field name="available_seats" string="Available Seats"/>
+                        <field name="target_gender" string="Target Gender"/>
+                        </group>
+                    </page>
+                </notebook>
+            </sheet>
+        </form>
+    </field>
+</record>
+</odoo>

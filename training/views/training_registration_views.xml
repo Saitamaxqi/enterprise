@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<record id="training_registration_action" model="ir.actions.act_window">
+    <field name="name">Registrations</field>
+    <field name="res_model">training.registration</field>
+    <field name="view_mode">list,form</field>
+</record>
+<record id="training_registration_list_view" model="ir.ui.view">
+    <field name="name">training.registration.list</field>
+    <field name="model">training.registration</field>
+    <field name="arch" type="xml">
+        <list decoration-danger="status == 'rejected'" decoration-success="status == 'approved'">
+            <field name="trainee_id"/>
+            <field name="course_serial_number"/>
+            <field name="course_name"/>
+            <field name="create_date"/>
+            <button name="set_approved" icon="fa-check" type="object" class="oe_highlight" invisible="status" groups="!training.training_group_requester"/>
+            <button name="set_rejected" icon="fa-close" type="object" class="oe_highlight" invisible="status" groups="!training.training_group_requester"/>
+        </list>
+    </field>
+</record>
+<record id="training_registration_form_view" model="ir.ui.view">
+    <field name="name">training.registration.form</field>
+    <field name="model">training.registration</field>
+    <field name="arch" type="xml">
+         <form>
+            <sheet>
+                <group>
+                <group class="col-md-6">
+                <button name="set_approved" string="APPROVE" type="object" class="oe_highlight" groups="!training.training_group_requester"/>
+                <button name="set_rejected" string="REJECT" type="object" class="oe_highlight" groups="!training.training_group_requester"/>
+                </group>
+                <group class="col-md-6">
+                <field name="status" widget="statusbar"/>
+                </group>
+                </group>
+                <group>
+                    <h1><field name="trainee_id"/></h1>
+                </group>
+                <group>
+                <field name="course_id" domain="[('deadline', '&gt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                </group>
+                <group>
+                <group class="col-6">
+                <field name="course_serial_number" string="Serial Number"/>
+                <field name="course_name" string="Course Name"/>
+                </group>
+                <group class="col-6">
+                <field name="teacher_name" string="Teacher"/>
+                <field name="number_of_days" string="Number of Days"/>
+                </group>
+                </group>
+                <notebook>
+                    <page string="Description">
+                        <group>
+                        <field name="course_desc" string="Description"/>
+                        <field name="time" string="Time"/>
+                        <field name="start_date" string="Start Date"/>
+                        <field name="end_date" string="End Date"/>
+                        <field name="total_seats" string="Total Seats"/>
+                        <field name="location_name" string="Location"/>
+                        <field name="room_name" string="Room"/>
+                        </group>
+                    </page>
+                </notebook>
+            </sheet>
+        </form>
+    </field>
+</record>
+</odoo>
