@@ -247,6 +247,8 @@ class ApprovalRequest(models.Model):
                 record.state = 'approved'
                 record.message_post(body=_('Approval request fully approved.'))
                 record._notify_requester(_("Your request %s has been approved.") % record.name)
+                # Call completion callback on the related document
+                record._on_approval_completed(True)
 
 
     def action_reject(self, comment=None):
@@ -275,8 +277,22 @@ class ApprovalRequest(models.Model):
                 body=_('Rejected by %s<br/>Comment: %s') % (self.env.user.name, comment)
             )
             record._notify_requester(_("Your request %s has been rejected.") % record.name)
+            # Call completion callback on the related document
+            record._on_approval_completed(False)
 
 
+
+    def _on_approval_completed(self, approved):
+        """Call completion callback on the related document if it exists"""
+        for record in self:
+            if record.res_model and record.res_id:
+                try:
+                    document = self.env[record.res_model].browse(record.res_id)
+                    if document.exists() and hasattr(document, '_on_approval_completed'):
+                        document._on_approval_completed(approved)
+                except Exception:
+                    # Silently ignore errors to not break the approval process
+                    pass
 
     # Notification methods
 

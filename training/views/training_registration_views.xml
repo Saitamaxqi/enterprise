@@ -9,13 +9,15 @@
     <field name="name">training.registration.list</field>
     <field name="model">training.registration</field>
     <field name="arch" type="xml">
-        <list decoration-danger="status == 'rejected'" decoration-success="status == 'approved'">
+        <list decoration-danger="approval_status == 'rejected'" decoration-success="approval_status == 'approved'" decoration-info="approval_status in ['draft', 'waiting', 'in_progress']">
             <field name="trainee_id"/>
             <field name="course_serial_number"/>
             <field name="course_name"/>
             <field name="create_date"/>
-            <button name="set_approved" icon="fa-check" type="object" class="oe_highlight" invisible="status" groups="!training.training_group_requester"/>
-            <button name="set_rejected" icon="fa-close" type="object" class="oe_highlight" invisible="status" groups="!training.training_group_requester"/>
+            <field name="approval_status"/>
+            <field name="approval_request_id" optional="show"/>
+            <button name="action_open_approve_wizard" string="Approve" type="object" icon="fa-check" class="oe_highlight" invisible="approval_status not in ['waiting', 'in_progress']"/>
+            <button name="action_open_reject_wizard" string="Reject" type="object" icon="fa-close" class="oe_highlight" invisible="approval_status not in ['waiting', 'in_progress']"/>
         </list>
     </field>
 </record>
@@ -24,16 +26,12 @@
     <field name="model">training.registration</field>
     <field name="arch" type="xml">
          <form>
+            <header>
+                <button name="action_open_approve_wizard" string="Approve" type="object" class="btn-success" invisible="approval_status not in ['waiting', 'in_progress']"/>
+                <button name="action_open_reject_wizard" string="Reject" type="object" class="btn-danger" invisible="approval_status not in ['waiting', 'in_progress']"/>
+                <field name="approval_status" widget="statusbar" options="{'clickable': '0'}"/>
+            </header>
             <sheet>
-                <group>
-                <group class="col-md-6">
-                <button name="set_approved" string="APPROVE" type="object" class="oe_highlight" groups="!training.training_group_requester"/>
-                <button name="set_rejected" string="REJECT" type="object" class="oe_highlight" groups="!training.training_group_requester"/>
-                </group>
-                <group class="col-md-6">
-                <field name="status" widget="statusbar"/>
-                </group>
-                </group>
                 <group>
                     <h1><field name="trainee_id"/></h1>
                 </group>
@@ -62,8 +60,14 @@
                         <field name="room_name" string="Room"/>
                         </group>
                     </page>
+                    <page string="Approval Details">
+                        <group>
+                            <field name="approval_request_id" readonly="1"/>
+                        </group>
+                    </page>
                 </notebook>
             </sheet>
+     <chatter/>
         </form>
     </field>
 </record>

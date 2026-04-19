@@ -6,6 +6,7 @@ from odoo.tools.convert import relativedelta
 class TrainingRegistration(models.Model):
     _name = 'training.registration'
     _description = 'Training Registration'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     trainee_id = fields.Many2one(
         'hr.employee', 
@@ -25,10 +26,20 @@ class TrainingRegistration(models.Model):
     room_name = fields.Char(string='Room Name', related='course_id.room_id.name',readonly=True)
     location_name = fields.Char(string='Location Name', related='course_id.location_id.name',readonly=True)
     total_seats = fields.Integer(string='Total Seats', related='course_id.total_seats',readonly=True)
-    status = fields.Selection([
-        ('approved','Approved'),
-        ('rejected','Rejected')
-    ])
+    
+    approval_request_id = fields.Many2one(
+        'approval.request',
+        string='Approval Request',
+        readonly=True,
+        copy=False
+    )
+    
+    approval_status = fields.Selection(
+        related='approval_request_id.state',
+        string='Approval Status',
+        readonly=True,
+        store=True
+    )
 
     @api.model_create_multi
     def create(self, vals):
@@ -45,11 +56,11 @@ class TrainingRegistration(models.Model):
             courses_this_year = self.env['training.registration'].search_count([
                 ('trainee_id', '=', employee.id),
                 ('create_date', '>=', start_of_year),
-                ('status', '=', 'approved')
+                ('approval_status', '=', 'approved')
             ])
             pending_requests = self.env['training.registration'].search_count([
                 ('trainee_id', '=', employee.id),
-                ('status', '=', False)
+                ('approval_status', 'in', ['waiting', 'in_progress'])
             ])
             if contract and contract.date_start:
                 six_months_after_start = contract.date_start + relativedelta(months=6)
@@ -66,23 +77,64 @@ class TrainingRegistration(models.Model):
                 raise ValidationError("Employee cannot enroll for more than 1 course per year.")
             if pending_requests >= 1:
                 raise ValidationError("Employee cant register while having a pending request.")
-            return super(TrainingRegistration, self).create(vals)
-    
-    def set_approved(self):
-        for record in self:
-            if not record.status:
-                record.status='approved'
-                self.env['training.my.courses'].create({
-                'registration_id': record.id
+        
+        # Create registration first
+        registration = super(TrainingRegistration, self).create(vals)
+        
+        # Find workflow for training registration
+        workflow = self.env['approval.workflow'].search([
+            ('model_name', '=', 'training.registration'),
+            ('active', '=', True)
+        ], limit=1)
+        
+        if workflow:
+            # Create approval request
+            approval_request = self.env['approval.request'].create({
+                'workflow_id': workflow.id,
+                'res_model': 'training.registration',
+                'res_id': registration.id,
+                'requester_id': self.env.user.id,
             })
+            registration.approval_request_id = approval_request.id
+            
+            # Submit the approval request
+            approval_request.action_submit()
+            
+            # Post message on registration
+            registration.message_post(body=_('Training registration submitted for approval.'))
+        else:
+            registration.message_post(body=_('Warning: No approval workflow configured for training registrations.'))
+        
+        return registration
     
-    def set_rejected(self):
+    def action_open_approve_wizard(self):
+        """Open the approve wizard for the approval request"""
+        self.ensure_one()
+        if not self.approval_request_id:
+            raise ValidationError("No approval request found for this registration.")
+        return self.approval_request_id.action_open_approve_wizard()
+    
+    def action_open_reject_wizard(self):
+        """Open the reject wizard for the approval request"""
+        self.ensure_one()
+        if not self.approval_request_id:
+            raise ValidationError("No approval request found for this registration.")
+        return self.approval_request_id.action_open_reject_wizard()
+
+    def _on_approval_completed(self, approved):
+        """Called when approval workflow is completed"""
         for record in self:
-            if not record.status:
-                record.status='rejected'
+            if approved:
+                # Create training.my.courses record for approved registrations
+                self.env['training.my.courses'].create({
+                    'registration_id': record.id
+                })
+                record.message_post(body=_('Training registration approved.'))
+            else:
+                record.message_post(body=_('Training registration rejected.'))
     
     def unlink(self):
         for record in self:
-            if record.status in ['approved', 'rejected']:
+            if record.approval_status in ['approved', 'rejected']:
                 raise ValidationError("You cannot delete an approved or rejected registration record.")
             return super().unlink()

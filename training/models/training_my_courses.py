@@ -8,4 +8,4 @@ class TrainingMyCourses(models.Model):
     trainee_id = fields.Many2one(related="registration_id.trainee_id")
     course_serial_number = fields.Char(related="registration_id.course_serial_number")
     course_name = fields.Char(related="registration_id.course_name")
-    status = fields.Selection(related="registration_id.status")
+    status = fields.Selection(related="registration_id.approval_status")

@@ -17,7 +17,7 @@ class ApprovalStage(models.Model):
     #should add sequence for this field to be able to order the stages in the workflow
     sequence = fields.Integer(
         string='Sequence',
-        required=True,
+        readonly=True,
         default=1
     )
 
