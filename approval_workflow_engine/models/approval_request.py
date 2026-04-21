@@ -316,3 +316,10 @@ class ApprovalRequest(models.Model):
                     body=message,
                     partner_ids=[record.requester_id.partner_id.id]
                 )
+
+
+workflow_request_ids = fields.One2many(
+    'approval.request',
+    'asset_move_id',
+    string="Approval Requests"
+)

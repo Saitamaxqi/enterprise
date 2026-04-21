@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-   
+    <!-- Action to open Asset Moves -->
     <record id="action_asset_moves" model="ir.actions.act_window">
         <field name="name">Asset Moves</field>
         <field name="res_model">asset.move.history</field>
-        <field name="view_mode">list</field>
+        <field name="view_mode">list,form</field>
+        <field name="views">[(ref('view_move_history_list'), 'list'),
+                             (ref('view_move_history_form'), 'form')]</field>
     </record>
 
-   
+    <!-- List view -->
     <record id="view_move_history_list" model="ir.ui.view">
         <field name="name">asset.move.history.list</field>
         <field name="model">asset.move.history</field>
         <field name="arch" type="xml">
-            <list editable="top"
-                  decoration-danger="state == 'declined'"
+            <list decoration-danger="state == 'declined'"
                   decoration-success="state == 'assigned'">
                 <field name="asset_id"/>
                 <field name="from_employee_id"/>
@@ -23,13 +24,64 @@
                 <field name="to_location_id"/>
                 <field name="move_date"/>
                 <field name="state"/>
-                <button name="set_assigned" string="Approve" type="object"
-                        icon="fa-check" class="btn-primary"
-                        invisible="state != 'draft' or not is_current_user"/>
-                <button name="set_declined" string="Decline" type="object"
-                        icon="fa-close" class="btn-secondary"
-                        invisible="state != 'draft' or not is_current_user"/>
+                    <!-- Inline button to open approval requests -->
+                <button name="action_open_approval_requests"
+                type="object"
+                string="workflow"
+                class="btn-secondary"/>
             </list>
+        </field>
+    </record>
+
+    <!-- Form view -->
+    <record id="view_move_history_form" model="ir.ui.view">
+        <field name="name">asset.move.history.form</field>
+        <field name="model">asset.move.history</field>
+        <field name="arch" type="xml">
+            <form string="Asset Move">
+                <header>
+                    <!-- Submit button only visible in draft -->
+                    <button name="action_submit_for_approval" type="object"
+                            string="Submit for Approval" class="btn-primary"
+                            invisible="state != 'draft'"/>
+
+                    <!-- Status bar -->
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,waiting,assigned,declined"/>
+
+                    <!-- Admin override buttons -->
+                    <button name="set_assigned" type="object"
+                            string="Force Approve" class="btn-success"
+                            groups="base.group_system"
+                            invisible="state not in ('draft','waiting')"/>
+                    <button name="set_declined" type="object"
+                            string="Force Decline" class="btn-danger"
+                            groups="base.group_system"
+                            invisible="state not in ('draft','waiting')"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="asset_id"/>
+                        <field name="from_employee_id"/>
+                        <field name="to_employee_id"/>
+                        <field name="from_location_id"/>
+                        <field name="to_location_id"/>
+                        <field name="move_date"/>
+                        <field name="state" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Approval Requests">
+                            <field name="workflow_request_ids">
+                                <list>
+                                    <field name="workflow_id"/>
+                                    <field name="requester_id"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
         </field>
     </record>
 
