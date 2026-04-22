@@ -51,11 +51,11 @@
 
                     <!-- Admin override buttons -->
                     <button name="set_assigned" type="object"
-                            string="Force Approve" class="btn-success"
+                            string="Approve" class="btn-success"
                             groups="base.group_system"
                             invisible="state not in ('draft','waiting')"/>
                     <button name="set_declined" type="object"
-                            string="Force Decline" class="btn-danger"
+                            string="Decline" class="btn-danger"
                             groups="base.group_system"
                             invisible="state not in ('draft','waiting')"/>
                 </header>
