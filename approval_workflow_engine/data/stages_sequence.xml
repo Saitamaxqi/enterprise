@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="seq_approval_stage" model="ir.sequence">
+            <field name="name">Approval Stage</field>
+            <field name="code">approval.stage</field>
+            <field name="prefix" eval="False"/>
+            <field name="padding">1</field>
+        </record>
+    </data>
+</odoo>

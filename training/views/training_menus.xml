@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem id="training_menu_root" name="Training">
+            <menuitem id="registration_menu" name="Registration" action="training_registration_action"/>
+            <menuitem id="courses_menu" name="Courses" action="training_courses_action"/>
+            <menuitem id="rooms_menu" name="Rooms" action="training_rooms_action"/>
+            <menuitem id="teachers_menu" name="Teachers" action="training_teachers_action"/>
+            <menuitem id="my_courses_menu" name="My Courses" action="training_my_courses_action"/>
+            <menuitem id="locations_menu" name="Locations" action="training_locations_action"/>
+    </menuitem>
+    </odoo>

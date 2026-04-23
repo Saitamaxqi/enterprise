@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Workflow for Training Registration -->
+        <record id="training_registration_approval_workflow" model="approval.workflow">
+            <field name="name">Training Registration Approval</field>
+            <field name="model_id" search="[('model', '=', 'training.registration')]"/>
+        </record>
+
+        <!-- Stage: Teacher Approval -->
+        <record id="training_registration_stage_teacher" model="approval.stage">
+            <field name="name">Teacher Approval</field>
+            <field name="workflow_id" ref="training_registration_approval_workflow"/>
+        </record>
+
+        <!-- Approval Group for Teacher Stage -->
+        <record id="training_registration_teacher_group" model="approval.group">
+            <field name="stage_id" ref="training_registration_stage_teacher"/>
+            <field name="group_id" ref="training.training_group_teacher"/>
+        </record>
+
+        <!-- Stage: HR Approval -->
+        <record id="training_registration_stage_hr" model="approval.stage">
+            <field name="name">HR Approval</field>
+            <field name="workflow_id" ref="training_registration_approval_workflow"/>
+        </record>
+
+        <!-- Approval Group for HR Stage -->
+        <record id="training_registration_hr_group" model="approval.group">
+            <field name="stage_id" ref="training_registration_stage_hr"/>
+            <field name="group_id" ref="training.training_group_hr"/>
+        </record>
+    </data>
+</odoo>

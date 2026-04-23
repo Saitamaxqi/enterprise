@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="training_registration_teacher_rule" model="ir.rule">
+    <field name="name">Teacher: registrations for his courses</field>
+    <field name="model_id" ref="model_training_registration"/>
+    <field name="domain_force">[('course_id.teacher_id.user_id','=', user.id)]</field>
+    <field name="groups" eval="[(4, ref('training.training_group_teacher'))]"/>
+  </record>
+
+  <record id="training_registration_requester_rule" model="ir.rule">
+    <field name="name">Requester: registrations for your courses</field>
+    <field name="model_id" ref="model_training_registration"/>
+    <field name="domain_force">[('trainee_id.user_id','=', user.id)]</field>
+    <field name="groups" eval="[(4, ref('training.training_group_requester'))]"/>
+  </record>
+</odoo>

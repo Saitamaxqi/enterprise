@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="training_my_courses_requester_rule" model="ir.rule">
+    <field name="name">Requester: courses your enrolled in</field>
+    <field name="model_id" ref="model_training_my_courses"/>
+    <field name="domain_force">[('registration_id.trainee_id.user_id','=', user.id),('status','=','approved')]</field>
+    <field name="groups" eval="[(4, ref('training.training_group_requester'))]"/>
+  </record>
+</odoo>

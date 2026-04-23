@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_approval_log,Approval Log,model_approval_log,base.group_user,1,1,1,1
+access_approval_request,Approval Request,model_approval_request,base.group_user,1,1,1,1
+access_approval_stage,Approval Stage,model_approval_stage,base.group_system,1,1,1,1
+access_approval_workflow,Approval Workflow,model_approval_workflow,base.group_system,1,1,1,1
+access_approval_group,Approval Group,model_approval_group,base.group_system,1,1,1,1
+access_approval_filter,Approval Filter,model_approval_filter,base.group_system,1,1,1,1
+access_approval_action_wizaard,Approval Action Wizard,model_approval_action_wizard,base.group_system,1,1,1,1

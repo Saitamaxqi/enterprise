@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class ApprovalGroup(models.Model):
@@ -29,6 +29,7 @@ class ApprovalGroup(models.Model):
 
     active = fields.Boolean(default=True)
 
+    @api.depends('group_id.name')
     def _compute_name(self):
         for record in self:
             record.name = record.group_id.name if record.group_id else ''

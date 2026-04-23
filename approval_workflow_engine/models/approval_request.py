@@ -10,9 +10,8 @@ class ApprovalRequest(models.Model):
 
     name = fields.Char(
         string='Request Reference',
-        required=True,
-        copy=False,
         readonly=True,
+        copy=False,
         default='New'
     )
 
@@ -25,20 +24,17 @@ class ApprovalRequest(models.Model):
 
     res_model = fields.Char(
         string='Document Model',
-        required=True,
         readonly=True
     )
 
     res_id = fields.Integer(
         string='Document ID',
-        required=True,
         readonly=True
     )
 
     requester_id = fields.Many2one(
         'res.users',
         string='Requester',
-        required=True,
         default=lambda self: self.env.user,
         readonly=True,
         tracking=True
@@ -47,7 +43,8 @@ class ApprovalRequest(models.Model):
     stage_id = fields.Many2one(
         'approval.stage',
         string='Current Stage',
-        tracking=True
+        tracking=True,
+        readonly=True
     )
 
     state = fields.Selection([
@@ -56,7 +53,7 @@ class ApprovalRequest(models.Model):
         ('in_progress', 'In Progress'),
         ('approved', 'Approved'),
         ('rejected', 'Rejected'),
-    ], string='Status', default='draft', tracking=True)
+    ], string='Status', default='draft', tracking=True, readonly=True)
 
     log_ids = fields.One2many(
         'approval.log',
@@ -71,39 +68,42 @@ class ApprovalRequest(models.Model):
 
     @api.depends(
         'stage_id',
-        'stage_id.approval_group_ids',
-        'stage_id.approval_group_ids.odoo_group_id'
+        'stage_id.group_ids',
+        'stage_id.group_ids.group_id'
     )
     def _compute_can_current_user_approve(self):
         current_user = self.env.user
-        approval_admin_group = self.env.ref('base.group_system', raise_if_not_found=False)
 
         for record in self:
             can_approve = False
-
+            
             if not record.stage_id:
                 record.can_current_user_approve = False
                 continue
 
-            stage_groups = record.stage_id.approval_group_ids.filtered('active')
+            stage_groups = record.stage_id.group_ids.filtered('active')
 
             if stage_groups:
                 for approval_group in stage_groups:
-                    if approval_group.odoo_group_id in current_user.groups_id:
+                    # get_external_id() returns a dict: {record_id: 'module.xml_id'}
+                    xml_id_dict = approval_group.get_external_id()
+                    xml_id = xml_id_dict.get(approval_group.id)
+                    if xml_id and current_user.has_group(xml_id):
                         if record._check_group_filters(approval_group):
                             can_approve = True
                             break
             else:
-                if approval_admin_group and approval_admin_group in current_user.groups_id:
+                if current_user.has_group('base.group_system'):
                     can_approve = True
 
             record.can_current_user_approve = can_approve
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            vals['name'] = self.env['ir.sequence'].next_by_code('approval.request') or 'New'
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                vals['name'] = self.env['ir.sequence'].next_by_code('approval.request') or 'New'
+        return super().create(vals_list)
 
     def _convert_filter_value(self, record_value, filter_value):
         if isinstance(record_value, bool):
@@ -176,6 +176,8 @@ class ApprovalRequest(models.Model):
             record.state = 'waiting'
 
             record.message_post(body=_('Approval request submitted.'))
+            record._notify_approvers()
+
 
     def action_open_approve_wizard(self):
         self.ensure_one()
@@ -244,6 +246,10 @@ class ApprovalRequest(models.Model):
             else:
                 record.state = 'approved'
                 record.message_post(body=_('Approval request fully approved.'))
+                record._notify_requester(_("Your request %s has been approved.") % record.name)
+                # Call completion callback on the related document
+                record._on_approval_completed(True)
+
 
     def action_reject(self, comment=None):
         for record in self:
@@ -270,3 +276,43 @@ class ApprovalRequest(models.Model):
             record.message_post(
                 body=_('Rejected by %s<br/>Comment: %s') % (self.env.user.name, comment)
             )
+            record._notify_requester(_("Your request %s has been rejected.") % record.name)
+            # Call completion callback on the related document
+            record._on_approval_completed(False)
+
+
+
+    def _on_approval_completed(self, approved):
+        """Call completion callback on the related document if it exists"""
+        for record in self:
+            if record.res_model and record.res_id:
+                try:
+                    document = self.env[record.res_model].browse(record.res_id)
+                    if document.exists() and hasattr(document, '_on_approval_completed'):
+                        document._on_approval_completed(approved)
+                except Exception:
+                    # Silently ignore errors to not break the approval process
+                    pass
+
+    # Notification methods
+
+    def _notify_approvers(self):
+        """Notify all approvers in the current stage via activities."""
+        for record in self:
+            if record.stage_id and record.stage_id.group_ids:
+                for group in record.stage_id.group_ids.filtered('active'):
+                    for user in group.group_id.users:
+                        record.activity_schedule(
+                            'mail.mail_activity_data_todo',
+                            user_id=user.id,
+                            note=_("Approval required for request %s") % record.name
+                        )
+
+    def _notify_requester(self, message):
+        """Notify the requester via chatter message."""
+        for record in self:
+            if record.requester_id and record.requester_id.partner_id:
+                record.message_post(
+                    body=message,
+                    partner_ids=[record.requester_id.partner_id.id]
+                )

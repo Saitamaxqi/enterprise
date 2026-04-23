@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<record id="training_registration_action" model="ir.actions.act_window">
+    <field name="name">Registrations</field>
+    <field name="res_model">training.registration</field>
+    <field name="view_mode">list,form</field>
+</record>
+<record id="training_registration_list_view" model="ir.ui.view">
+    <field name="name">training.registration.list</field>
+    <field name="model">training.registration</field>
+    <field name="arch" type="xml">
+        <list decoration-danger="approval_status == 'rejected'" decoration-success="approval_status == 'approved'" decoration-info="approval_status in ['draft', 'waiting', 'in_progress']">
+            <field name="trainee_id"/>
+            <field name="course_serial_number"/>
+            <field name="course_name"/>
+            <field name="create_date"/>
+            <field name="approval_status"/>
+            <field name="approval_request_id" optional="show"/>
+            <button name="action_open_approve_wizard" string="Approve" type="object" icon="fa-check" class="oe_highlight" invisible="approval_status not in ['waiting', 'in_progress']"/>
+            <button name="action_open_reject_wizard" string="Reject" type="object" icon="fa-close" class="oe_highlight" invisible="approval_status not in ['waiting', 'in_progress']"/>
+        </list>
+    </field>
+</record>
+<record id="training_registration_form_view" model="ir.ui.view">
+    <field name="name">training.registration.form</field>
+    <field name="model">training.registration</field>
+    <field name="arch" type="xml">
+         <form>
+            <header>
+                <button name="action_open_approve_wizard" string="Approve" type="object" class="btn-success" invisible="approval_status not in ['waiting', 'in_progress']"/>
+                <button name="action_open_reject_wizard" string="Reject" type="object" class="btn-danger" invisible="approval_status not in ['waiting', 'in_progress']"/>
+                <field name="approval_status" widget="statusbar" options="{'clickable': '0'}"/>
+            </header>
+            <sheet>
+                <group>
+                    <h1><field name="trainee_id"/></h1>
+                </group>
+                <group>
+                <field name="course_id" domain="[('deadline', '&gt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                </group>
+                <group>
+                <group class="col-6">
+                <field name="course_serial_number" string="Serial Number"/>
+                <field name="course_name" string="Course Name"/>
+                </group>
+                <group class="col-6">
+                <field name="teacher_name" string="Teacher"/>
+                <field name="number_of_days" string="Number of Days"/>
+                </group>
+                </group>
+                <notebook>
+                    <page string="Description">
+                        <group>
+                        <field name="course_desc" string="Description"/>
+                        <field name="time" string="Time"/>
+                        <field name="start_date" string="Start Date"/>
+                        <field name="end_date" string="End Date"/>
+                        <field name="total_seats" string="Total Seats"/>
+                        <field name="location_name" string="Location"/>
+                        <field name="room_name" string="Room"/>
+                        </group>
+                    </page>
+                    <page string="Approval Details">
+                        <group>
+                            <field name="approval_request_id" readonly="1"/>
+                        </group>
+                    </page>
+                </notebook>
+            </sheet>
+     <chatter/>
+        </form>
+    </field>
+</record>
+</odoo>
