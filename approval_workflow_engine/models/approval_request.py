@@ -176,7 +176,7 @@ class ApprovalRequest(models.Model):
             record.state = 'waiting'
 
             record.message_post(body=_('Approval request submitted.'))
-            record._notify_approvers()
+            # record._notify_approvers()
 
 
     def action_open_approve_wizard(self):
@@ -217,8 +217,8 @@ class ApprovalRequest(models.Model):
 
             comment = (comment or '').strip()
 
-            if record.stage_id.comment_required and not comment:
-                raise UserError(_('A comment is required for approval at this stage.'))
+            # if record.stage_id.comment_required and not comment:
+            #     raise UserError(_('A comment is required for approval at this stage.'))
 
             self.env['approval.log'].create({
                 'request_id': record.id,
@@ -246,7 +246,7 @@ class ApprovalRequest(models.Model):
             else:
                 record.state = 'approved'
                 record.message_post(body=_('Approval request fully approved.'))
-                record._notify_requester(_("Your request %s has been approved.") % record.name)
+                # record._notify_requester(_("Your request %s has been approved.") % record.name)
                 # Call completion callback on the related document
                 record._on_approval_completed(True)
 
@@ -276,7 +276,7 @@ class ApprovalRequest(models.Model):
             record.message_post(
                 body=_('Rejected by %s<br/>Comment: %s') % (self.env.user.name, comment)
             )
-            record._notify_requester(_("Your request %s has been rejected.") % record.name)
+            # record._notify_requester(_("Your request %s has been rejected.") % record.name)
             # Call completion callback on the related document
             record._on_approval_completed(False)
 
@@ -296,23 +296,23 @@ class ApprovalRequest(models.Model):
 
     # Notification methods
 
-    def _notify_approvers(self):
-        """Notify all approvers in the current stage via activities."""
-        for record in self:
-            if record.stage_id and record.stage_id.group_ids:
-                for group in record.stage_id.group_ids.filtered('active'):
-                    for user in group.group_id.users:
-                        record.activity_schedule(
-                            'mail.mail_activity_data_todo',
-                            user_id=user.id,
-                            note=_("Approval required for request %s") % record.name
-                        )
+    # def _notify_approvers(self):
+    #     """Notify all approvers in the current stage via activities."""
+    #     for record in self:
+    #         if record.stage_id and record.stage_id.group_ids:
+    #             for group in record.stage_id.group_ids.filtered('active'):
+    #                 for user in group.group_id.users:
+    #                     record.activity_schedule(
+    #                         'mail.mail_activity_data_todo',
+    #                         user_id=user.id,
+    #                         note=_("Approval required for request %s") % record.name
+    #                     )
 
-    def _notify_requester(self, message):
-        """Notify the requester via chatter message."""
-        for record in self:
-            if record.requester_id and record.requester_id.partner_id:
-                record.message_post(
-                    body=message,
-                    partner_ids=[record.requester_id.partner_id.id]
-                )
+    # def _notify_requester(self, message):
+    #     """Notify the requester via chatter message."""
+    #     for record in self:
+    #         if record.requester_id and record.requester_id.partner_id:
+    #             record.message_post(
+    #                 body=message,
+    #                 partner_ids=[record.requester_id.partner_id.id]
+    #             )

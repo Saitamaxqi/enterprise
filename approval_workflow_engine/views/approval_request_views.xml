@@ -36,7 +36,7 @@
                         <page string="Logs">
                             <field name="log_ids">
                                 <list>
-                                    <field name="user_id"/>
+                                    <field name="approver_id"/>
                                     <field name="action"/>
                                     <field name="action_date"/>
                                     <field name="comment"/>

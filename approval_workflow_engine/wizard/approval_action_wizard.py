@@ -40,8 +40,8 @@ class ApprovalActionWizard(models.TransientModel):
         if self.action_type == 'rejected' and not comment:
             raise UserError(_('A comment is required when rejecting a request.'))
 
-        # if self.action_type == 'approved' and self.request_id.stage_id.comment_required and not comment:
-        #     raise UserError(_('A comment is required for approval at this stage.'))
+        if self.action_type == 'approved' and self.request_id.stage_id.comment_required and not comment:
+            raise UserError(_('A comment is required for approval at this stage.'))
 
         if self.action_type == 'approved':
             self.request_id.action_approve(comment)
