@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <!-- Aliases pointing to the engine groups so existing references keep working -->
     <record id="training_group_hr" model="res.groups">
         <field name="name">Training Human resource</field>
+        <field name="implied_ids" eval="[(4, ref('approval_workflow_engine.group_approval_admin'))]"/>
     </record>
     <record id="training_group_teacher" model="res.groups">
         <field name="name">Training Teacher</field>
+        <field name="implied_ids" eval="[(4, ref('approval_workflow_engine.group_approval_approver'))]"/>
     </record>
     <record id="training_group_requester" model="res.groups">
         <field name="name">Training Requester</field>
+        <field name="implied_ids" eval="[(4, ref('approval_workflow_engine.group_approval_requester'))]"/>
     </record>
 </odoo>

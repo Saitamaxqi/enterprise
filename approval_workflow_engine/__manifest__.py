@@ -7,6 +7,7 @@
     'depends': ['base', 'mail'],
     'data': [
         # Security
+        'security/approval_groups.xml',
         'security/ir.model.access.csv',
 
         # Data

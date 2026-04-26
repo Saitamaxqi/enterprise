@@ -16,7 +16,7 @@
         <!-- Approval Group for Teacher Stage -->
         <record id="training_registration_teacher_group" model="approval.group">
             <field name="stage_id" ref="training_registration_stage_teacher"/>
-            <field name="group_id" ref="training.training_group_teacher"/>
+            <field name="group_id" ref="approval_workflow_engine.group_approval_approver"/>
         </record>
 
         <!-- Stage: HR Approval -->
@@ -28,7 +28,7 @@
         <!-- Approval Group for HR Stage -->
         <record id="training_registration_hr_group" model="approval.group">
             <field name="stage_id" ref="training_registration_stage_hr"/>
-            <field name="group_id" ref="training.training_group_hr"/>
+            <field name="group_id" ref="approval_workflow_engine.group_approval_admin"/>
         </record>
     </data>
 </odoo>
