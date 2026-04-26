@@ -13,7 +13,7 @@ class ApprovalLog(models.Model):
         ondelete='cascade'
     )
 
-    approver_id = fields.Many2one(
+    user_id = fields.Many2one(
         'res.users',
         string='Action By',
         required=True,

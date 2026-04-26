@@ -87,8 +87,8 @@ class ApprovalRequest(models.Model):
             if stage_groups:
                 for approval_group in stage_groups:
                     # get_external_id() returns a dict: {record_id: 'module.xml_id'}
-                    xml_id_dict = approval_group.get_external_id()
-                    xml_id = xml_id_dict.get(approval_group.id)
+                    xml_id_dict = approval_group.group_id.get_external_id()
+                    xml_id = xml_id_dict.get(approval_group.group_id.id)
                     if xml_id and current_user.has_group(xml_id):
                         if record._check_group_filters(approval_group):
                             can_approve = True

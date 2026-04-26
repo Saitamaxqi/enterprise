@@ -5,7 +5,7 @@
         <field name="arch" type="xml">
             <list string="Approval Logs">
                 <field name="request_id"/>
-                <field name="approver_id"/>
+                <field name="user_id"/>
                 <field name="action"/>
                 <field name="action_date"/>
                 <field name="comment"/>
@@ -21,7 +21,7 @@
                 <sheet>
                     <group>
                         <field name="request_id"/>
-                        <field name="approver_id"/>
+                        <field name="user_id"/>
                         <field name="action"/>
                         <field name="action_date"/>
                         <field name="comment"/>
