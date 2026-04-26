@@ -1,5 +1,5 @@
 from datetime import date
-from odoo import api, models, fields
+from odoo import api, models, fields, _
 from odoo.exceptions import ValidationError
 from odoo.tools.convert import relativedelta
 

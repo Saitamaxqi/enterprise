@@ -19,7 +19,8 @@ class ApprovalRequest(models.Model):
         'approval.workflow',
         string='Workflow',
         required=True,
-        tracking=True
+        tracking=True,
+        ondelete='cascade'
     )
 
     res_model = fields.Char(
