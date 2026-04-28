@@ -41,17 +41,20 @@ class ApprovalFilter(models.Model):
     field_id = fields.Many2one(
         'ir.model.fields',
         string='Document Field',
-        required=True,
         domain="[('model_id', '=', model_id)]",
-        ondelete='cascade'
+        ondelete='set null'
     )
 
     field_name = fields.Char(
-        string='Field Technical Name',
-        related='field_id.name',
+        string='Field Path',
         store=True,
-        readonly=True
+        help='Technical field name or dot-path for traversal (e.g. course_id.teacher_id.user_id)'
     )
+
+    @api.onchange('field_id')
+    def _onchange_field_id(self):
+        if self.field_id and not self.field_name:
+            self.field_name = self.field_id.name
 
     operator = fields.Selection([
         ('=', '='),

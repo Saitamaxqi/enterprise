@@ -41,6 +41,19 @@ class TrainingRegistration(models.Model):
         store=True
     )
 
+    can_current_user_approve = fields.Boolean(
+        string='Can Approve',
+        compute='_compute_can_current_user_approve',
+        store=False
+    )
+
+    def _compute_can_current_user_approve(self):
+        for record in self:
+            if record.approval_request_id:
+                record.can_current_user_approve = record.approval_request_id.can_current_user_approve
+            else:
+                record.can_current_user_approve = False
+
     @api.model_create_multi
     def create(self, vals):
         employee = self.env.user.employee_id
@@ -88,7 +101,6 @@ class TrainingRegistration(models.Model):
         ], limit=1)
         
         if workflow:
-            # Create approval request
             approval_request = self.env['approval.request'].create({
                 'workflow_id': workflow.id,
                 'res_model': 'training.registration',
@@ -96,16 +108,18 @@ class TrainingRegistration(models.Model):
                 'requester_id': self.env.user.id,
             })
             registration.approval_request_id = approval_request.id
-            
-            # Submit the approval request
-            approval_request.action_submit()
-            
-            # Post message on registration
-            registration.message_post(body=_('Training registration submitted for approval.'))
+            registration.message_post(body=_('Training registration created. Click Submit to send for approval.'))
         else:
             registration.message_post(body=_('Warning: No approval workflow configured for training registrations.'))
         
         return registration
+
+    def action_submit(self):
+        self.ensure_one()
+        if not self.approval_request_id:
+            raise ValidationError("No approval request found for this registration.")
+        self.approval_request_id.action_submit()
+        self.message_post(body=_('Training registration submitted for approval.'))
     
     def action_open_approve_wizard(self):
         """Open the approve wizard for the approval request"""

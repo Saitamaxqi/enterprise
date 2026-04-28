@@ -64,7 +64,8 @@ class ApprovalRequest(models.Model):
 
     can_current_user_approve = fields.Boolean(
         string='Can Current User Approve',
-        compute='_compute_can_current_user_approve'
+        compute='_compute_can_current_user_approve',
+        store=False
     )
 
     @api.depends(
@@ -86,7 +87,6 @@ class ApprovalRequest(models.Model):
 
             if stage_groups:
                 for approval_group in stage_groups:
-                    # get_external_id() returns a dict: {record_id: 'module.xml_id'}
                     xml_id_dict = approval_group.group_id.get_external_id()
                     xml_id = xml_id_dict.get(approval_group.group_id.id)
                     if xml_id and current_user.has_group(xml_id):
@@ -106,7 +106,28 @@ class ApprovalRequest(models.Model):
                 vals['name'] = self.env['ir.sequence'].next_by_code('approval.request') or 'New'
         return super().create(vals_list)
 
+    def _resolve_dynamic_value(self, filter_value):
+        """Resolve dynamic placeholders in filter values against the current user.
+        Supports dot-path traversal: e.g. '{user.id}', '{user.partner_id.id}'
+        Any {user.<path>} token is replaced with the corresponding attribute.
+        """
+        if not (isinstance(filter_value, str) and filter_value.startswith('{user.') and filter_value.endswith('}')):
+            return filter_value
+        attr_path = filter_value[6:-1]  # strip '{user.' (6 chars) prefix and '}' suffix
+        try:
+            obj = self.env.user
+            for attr in attr_path.split('.'):
+                obj = getattr(obj, attr)
+            return obj
+        except Exception:
+            return filter_value
+
     def _convert_filter_value(self, record_value, filter_value):
+        # Resolve dynamic values first (e.g. {user.id} -> actual int)
+        filter_value = self._resolve_dynamic_value(filter_value)
+        # If already the same type after resolution, return as-is
+        if type(filter_value) == type(record_value):
+            return filter_value
         if isinstance(record_value, bool):
             return str(filter_value).strip().lower() in ['true', '1', 'yes']
         if isinstance(record_value, int):
@@ -142,10 +163,13 @@ class ApprovalRequest(models.Model):
             return False
 
         for filter_rec in filters:
-            if not hasattr(document, filter_rec.field_name):
-                return False
-
-            record_value = document[filter_rec.field_name]
+            # Support dot-path field traversal (e.g. course_id.teacher_id.user_id)
+            field_path = filter_rec.field_name.split('.')
+            record_value = document
+            for part in field_path:
+                if not hasattr(record_value, part):
+                    return False
+                record_value = record_value[part]
             if hasattr(record_value, 'id'):
                 record_value = record_value.id
 

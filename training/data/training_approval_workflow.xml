@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <data noupdate="1">
+    <data noupdate="0">
         <!-- Workflow for Training Registration -->
         <record id="training_registration_approval_workflow" model="approval.workflow">
             <field name="name">Training Registration Approval</field>
@@ -17,6 +17,14 @@
         <record id="training_registration_teacher_group" model="approval.group">
             <field name="stage_id" ref="training_registration_stage_teacher"/>
             <field name="group_id" ref="approval_workflow_engine.group_approval_approver"/>
+        </record>
+
+        <!-- Filter: only the teacher assigned to the course can approve -->
+        <record id="training_registration_teacher_filter" model="approval.filter">
+            <field name="group_id" ref="training_registration_teacher_group"/>
+            <field name="field_name">course_id.teacher_id.user_id</field>
+            <field name="operator">=</field>
+            <field name="value">{user.id}</field>
         </record>
 
         <!-- Stage: HR Approval -->
