@@ -151,4 +151,7 @@ class TrainingRegistration(models.Model):
         for record in self:
             if record.approval_status in ['approved', 'rejected']:
                 raise ValidationError("You cannot delete an approved or rejected registration record.")
-            return super().unlink()
+        approval_requests = self.mapped('approval_request_id').filtered(lambda r: r.exists())
+        res = super().unlink()
+        approval_requests.unlink()
+        return res

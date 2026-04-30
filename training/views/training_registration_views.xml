@@ -63,11 +63,6 @@
                         <field name="room_name" string="Room"/>
                         </group>
                     </page>
-                    <page string="Approval Details">
-                        <group>
-                            <field name="approval_request_id" readonly="1"/>
-                        </group>
-                    </page>
                 </notebook>
             </sheet>
      <chatter/>

@@ -201,7 +201,7 @@ class ApprovalRequest(models.Model):
             record.state = 'waiting'
 
             record.message_post(body=_('Approval request submitted.'))
-            # record._notify_approvers()
+            record._notify_approvers()
 
 
     def action_open_approve_wizard(self):
@@ -268,6 +268,8 @@ class ApprovalRequest(models.Model):
                 record.stage_id = next_stage
                 record.state = 'in_progress'
                 record.message_post(body=_('Approval moved to next stage: %s') % next_stage.name)
+                record._mark_approver_activity_done()
+                record._notify_approvers()
             else:
                 record.state = 'approved'
                 record.message_post(body=_('Approval request fully approved.'))
@@ -297,6 +299,7 @@ class ApprovalRequest(models.Model):
             })
 
             record.state = 'rejected'
+            record._mark_approver_activity_done()
 
             record.message_post(
                 body=_('Rejected by %s<br/>Comment: %s') % (self.env.user.name, comment)
@@ -321,23 +324,34 @@ class ApprovalRequest(models.Model):
 
     # Notification methods
 
-    # def _notify_approvers(self):
-    #     """Notify all approvers in the current stage via activities."""
-    #     for record in self:
-    #         if record.stage_id and record.stage_id.group_ids:
-    #             for group in record.stage_id.group_ids.filtered('active'):
-    #                 for user in group.group_id.users:
-    #                     record.activity_schedule(
-    #                         'mail.mail_activity_data_todo',
-    #                         user_id=user.id,
-    #                         note=_("Approval required for request %s") % record.name
-    #                     )
+    def _notify_approvers(self):
+        """Schedule a To-do activity for every user in the current stage's approval groups."""
+        for record in self:
+            if not (record.stage_id and record.stage_id.group_ids):
+                continue
+            for group in record.stage_id.group_ids.filtered('active'):
+                if not group.group_id:
+                    continue
+                xml_id_dict = group.group_id.get_external_id()
+                xml_id = xml_id_dict.get(group.group_id.id)
+                if not xml_id:
+                    continue
+                users = self.env['res.users'].search([('active', '=', True)])
+                for user in users:
+                    if user.has_group(xml_id):
+                        record.activity_schedule(
+                            'mail.mail_activity_data_todo',
+                            user_id=user.id,
+                            note=_('Approval required for request %s at stage: %s') % (
+                                record.name, record.stage_id.name
+                            ),
+                        )
 
-    # def _notify_requester(self, message):
-    #     """Notify the requester via chatter message."""
-    #     for record in self:
-    #         if record.requester_id and record.requester_id.partner_id:
-    #             record.message_post(
-    #                 body=message,
-    #                 partner_ids=[record.requester_id.partner_id.id]
-    #             )
+    def _mark_approver_activity_done(self):
+        """Mark the current user's pending approval activities as done."""
+        for record in self:
+            activities = record.activity_ids.filtered(
+                lambda a: a.user_id == self.env.user
+                and a.activity_type_id == self.env.ref('mail.mail_activity_data_todo')
+            )
+            activities.action_done()
