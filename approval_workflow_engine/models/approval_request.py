@@ -19,7 +19,6 @@ class ApprovalRequest(models.Model):
         'approval.workflow',
         string='Workflow',
         required=True,
-        tracking=True,
         ondelete='cascade'
     )
 
@@ -38,13 +37,11 @@ class ApprovalRequest(models.Model):
         string='Requester',
         default=lambda self: self.env.user,
         readonly=True,
-        tracking=True
     )
 
     stage_id = fields.Many2one(
         'approval.stage',
         string='Current Stage',
-        tracking=True,
         readonly=True
     )
 
