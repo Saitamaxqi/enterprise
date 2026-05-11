@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Requester: Can only see their own requests -->
+    <record id="approval_request_requester_rule" model="ir.rule">
+        <field name="name">Requester: Own Requests Only</field>
+        <field name="model_id" ref="model_approval_request"/>
+        <field name="domain_force">[('requester_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('approval_workflow_engine.group_approval_requester'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Approver: Can see requests waiting for approval where they are in the approval group -->
+    <record id="approval_request_approver_rule" model="ir.rule">
+        <field name="name">Approver: Requests Pending Their Approval</field>
+        <field name="model_id" ref="model_approval_request"/>
+        <field name="domain_force">[
+            ('state', 'in', ['waiting', 'in_progress']),
+            ('stage_id.group_ids.group_id.users', 'in', [user.id])
+        ]</field>
+        <field name="groups" eval="[(4, ref('approval_workflow_engine.group_approval_approver'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- Admin: Can see all requests -->
+    <record id="approval_request_admin_rule" model="ir.rule">
+        <field name="name">Admin: All Requests</field>
+        <field name="model_id" ref="model_approval_request"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('approval_workflow_engine.group_approval_admin'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</odoo>

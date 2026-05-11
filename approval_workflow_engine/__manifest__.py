@@ -9,6 +9,7 @@
         # Security
         'security/approval_groups.xml',
         'security/ir.model.access.csv',
+        'security/approval_record_rules.xml',
 
         # Data
         'data/approval_sequence.xml',
