@@ -13,19 +13,19 @@
     </record>
 
     <!-- Approver: Can see requests waiting for approval where they are in the approval group -->
-    <record id="approval_request_approver_rule" model="ir.rule">
-        <field name="name">Approver: Requests Pending Their Approval</field>
-        <field name="model_id" ref="model_approval_request"/>
-        <field name="domain_force">[
-            ('state', 'in', ['waiting', 'in_progress']),
-            ('stage_id.group_ids.group_id.users', 'in', [user.id])
-        ]</field>
-        <field name="groups" eval="[(4, ref('approval_workflow_engine.group_approval_approver'))]"/>
-        <field name="perm_read" eval="True"/>
-        <field name="perm_write" eval="True"/>
-        <field name="perm_create" eval="False"/>
-        <field name="perm_unlink" eval="False"/>
-    </record>
+<record id="approval_request_approver_rule" model="ir.rule">
+    <field name="name">Approver: Requests Pending Their Approval</field>
+    <field name="model_id" ref="model_approval_request"/>
+    <field name="domain_force">[
+        ('state', 'in', ['waiting', 'in_progress']),
+        ('current_approver_user_ids', 'in', [user.id])
+    ]</field>
+    <field name="groups" eval="[(4, ref('approval_workflow_engine.group_approval_approver'))]"/>
+    <field name="perm_read" eval="True"/>
+    <field name="perm_write" eval="True"/>
+    <field name="perm_create" eval="False"/>
+    <field name="perm_unlink" eval="False"/>
+</record>
 
     <!-- Admin: Can see all requests -->
     <record id="approval_request_admin_rule" model="ir.rule">

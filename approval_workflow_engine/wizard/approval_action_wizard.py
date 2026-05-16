@@ -47,3 +47,11 @@ class ApprovalActionWizard(models.TransientModel):
             self.request_id.action_approve(comment)
         elif self.action_type == 'rejected':
             self.request_id.action_reject(comment)
+            
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Records'),
+            'res_model': self.request_id.res_model,
+            'view_mode': 'list,form',
+            'target': 'current',
+        }

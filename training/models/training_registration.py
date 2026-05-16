@@ -50,7 +50,7 @@ class TrainingRegistration(models.Model):
     def _compute_can_current_user_approve(self):
         for record in self:
             if record.approval_request_id:
-                record.can_current_user_approve = record.approval_request_id.can_current_user_approve
+                record.can_current_user_approve = record.approval_request_id.sudo().can_current_user_approve
             else:
                 record.can_current_user_approve = False
 
@@ -61,7 +61,7 @@ class TrainingRegistration(models.Model):
             raise ValidationError("Your user account is not linked to an employee record. Please contact HR.")
         for val in vals:
             course = self.env['training.courses'].browse(val['course_id'])
-            contract = self.env['hr.version'].search([
+            contract = self.env['hr.version'].sudo().search([
                 ('employee_id', '=', employee.id),
                 ('contract_date_end', '>=', date.today())
             ], order='contract_date_start asc', limit=1)
@@ -95,7 +95,7 @@ class TrainingRegistration(models.Model):
         registration = super(TrainingRegistration, self).create(vals)
         
         # Find workflow for training registration
-        workflow = self.env['approval.workflow'].search([
+        workflow = self.env['approval.workflow'].sudo().search([
             ('model_name', '=', 'training.registration'),
             ('active', '=', True)
         ], limit=1)
@@ -118,7 +118,8 @@ class TrainingRegistration(models.Model):
         self.ensure_one()
         if not self.approval_request_id:
             raise ValidationError("No approval request found for this registration.")
-        self.approval_request_id.action_submit()
+
+        self.approval_request_id.sudo().action_submit()
         self.message_post(body=_('Training registration submitted for approval.'))
     
     def action_open_approve_wizard(self):
@@ -126,14 +127,14 @@ class TrainingRegistration(models.Model):
         self.ensure_one()
         if not self.approval_request_id:
             raise ValidationError("No approval request found for this registration.")
-        return self.approval_request_id.action_open_approve_wizard()
+        return self.approval_request_id.sudo().action_open_approve_wizard()
     
     def action_open_reject_wizard(self):
         """Open the reject wizard for the approval request"""
         self.ensure_one()
         if not self.approval_request_id:
             raise ValidationError("No approval request found for this registration.")
-        return self.approval_request_id.action_open_reject_wizard()
+        return self.approval_request_id.sudo().action_open_reject_wizard()
 
     def _on_approval_completed(self, approved):
         """Called when approval workflow is completed"""
