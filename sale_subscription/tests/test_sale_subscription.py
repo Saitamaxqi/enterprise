@@ -2048,6 +2048,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             self.assertEqual(renew_logs.mapped('effective_date'), [datetime.date(2025, 2, 1), datetime.date(2025, 2, 1)], "Transfer logs share the move date")
             # self.assertEqual(first_manual_logs.effective_date, datetime.date(2025, 2, 1), "Previous manual log is effective at renewal date")
 
+    @freeze_time('2024-08-13')
     def test_uninvoiced_upsell_close_log(self):
         """ Test that the behaviour of effective date is correct even if some items are non invoiced (no effective date).
             Uninvoiced items needs to be kept uninvoiced in case of churn and reopen. """
